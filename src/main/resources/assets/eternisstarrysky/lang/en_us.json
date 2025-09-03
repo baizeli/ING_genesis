@@ -40,5 +40,14 @@
   "item.isMain": "§2在主手时：",
   "item.attDamage": " §2攻击伤害",
   "item.attSpeed": " §2攻击速度",
-  "AIR": ""
+  "AIR": "",
+
+  "eternisstarrysky.config.title": "EternisStarrySky",
+  "eternisstarrysky.config.save": "SAVE",
+  "eternisstarrysky.config.done": "DONE",
+  "eternisstarrysky.config.reset": "Reset to default value",
+  "eternisstarrysky.config.eternis_apple.effects": "Eternis Apple Effects",
+  "eternisstarrysky.config.eternis_apple.effects.tooltip": "Effects when player eats Eternis Apple",
+  "eternisstarrysky.config.whisper_of_the_past": "Whisper of the Past",
+  "eternisstarrysky.config.whisper_of_the_past.damage": "Damage"
 }
