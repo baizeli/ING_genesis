@@ -1,6 +1,7 @@
 package com.baizeli.eternisstarrysky.Items;
 
 import com.baizeli.eternisstarrysky.ClientEventsBowKey;
+import com.baizeli.eternisstarrysky.Configuration;
 import com.baizeli.eternisstarrysky.Entity.CustomArrowEntity;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -42,7 +43,7 @@ public class NewBowItem extends BowItem {
                 ArrowItem arrowItem = (ArrowItem) (arrowStack.getItem() instanceof ArrowItem ? arrowStack.getItem() : Items.ARROW);
 
                 CustomArrowEntity arrow = new CustomArrowEntity(level, player);
-                arrow.setBaseDamage(60);
+                arrow.setBaseDamage(Configuration.WHISPER_OF_THE_PAST_DAMAGE.get());
                 if (ClientEventsBowKey.BowType)
                 {
                     arrow.setTrack(true);
