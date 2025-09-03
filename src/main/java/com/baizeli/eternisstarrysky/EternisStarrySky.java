@@ -1,0 +1,110 @@
+package com.baizeli.eternisstarrysky;
+
+import com.baizeli.eternisstarrysky.Content.ModBlock;
+import com.baizeli.eternisstarrysky.Content.Workbenchs.*;
+import com.baizeli.eternisstarrysky.Entity.ModEntities;
+import com.baizeli.eternisstarrysky.Items.ModItems;
+import com.mojang.logging.LogUtils;
+import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.*;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLEnvironment;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.RegistryObject;
+import org.slf4j.Logger;
+
+@Mod(EternisStarrySky.MOD_ID)
+public class EternisStarrySky
+{
+
+    public static final String MOD_ID = "eternisstarrysky";
+    private static final Logger LOGGER = LogUtils.getLogger();
+    public static ResourceLocation rl(String path) {
+        return new ResourceLocation(MOD_ID, path);
+    }
+
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MOD_ID);
+
+    public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MOD_ID);
+
+
+    public static final RegistryObject<CreativeModeTab> EXAMPLE_TAB = CREATIVE_MODE_TABS.register("eternisstarrysky_tab", () -> CreativeModeTab.builder()
+            .withTabsBefore(CreativeModeTabs.COMBAT)
+            .title(Component.translatable("itemGroup.eternisstarrysky.eternisstarrysky_tab"))
+            .icon(() -> ModItems.BAG.get().getDefaultInstance())
+            .displayItems((parameters, output) -> {
+                output.accept(ModItems.ETERNIS_APPLE.get());
+                output.accept(ModItems.PEACH.get());
+                output.accept(ModItems.BAG.get());
+                output.accept(ModItems.BOW.get());
+                output.accept(ModItems.primogem.get());
+                output.accept(ModItems.create_star.get());
+                output.accept(ModItems.dragon_book.get());
+                output.accept(ModItems.bjzg.get());
+                output.accept(ModItems.cjzg.get());
+
+                output.accept(ModItems.infinity_sword.get());
+                output.accept(ModItems.INFINITY_ETERNAL_HELMET.get());
+                output.accept(ModItems.INFINITY_ETERNAL_CHESTPLATE.get());
+                output.accept(ModItems.INFINITY_ETERNAL_LEGGINGS.get());
+                output.accept(ModItems.INFINITY_ETERNAL_BOOTS.get());
+
+                output.accept(ModItems.workbench_item.get());
+            }).build());
+
+    public EternisStarrySky()
+    {
+        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+
+        ITEMS.register(modEventBus);
+        CREATIVE_MODE_TABS.register(modEventBus);
+        ModItems.ITEMS.register(modEventBus);
+        ModEntities.ENTITY_TYPES.register(modEventBus);
+        ModBlock.BLOCKS.register(modEventBus);
+
+        ModBlockEntities.register(modEventBus);
+        ModMenuTypes.register(modEventBus);
+        ModRecipeTypes.register(modEventBus);
+        ModRecipeSerializers.register(modEventBus);
+
+        if (FMLEnvironment.dist == Dist.CLIENT)
+        {
+            modEventBus.addListener(ModKeyBindings::onRegisterKeyMappings);
+        }
+
+        modEventBus.addListener(this::commonSetup);
+
+        MinecraftForge.EVENT_BUS.register(this);
+    }
+
+    private void commonSetup(final FMLCommonSetupEvent event)
+    {
+        event.enqueueWork(() -> {
+            NetworkHandler.register();
+            LOGGER.info("Fuck TTTTTT");
+        });
+    }
+
+    @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+    public static class ClientModEvents
+    {
+        @SubscribeEvent
+        public static void onClientSetup(FMLClientSetupEvent event)
+        {
+            event.enqueueWork(() -> {
+                MenuScreens.register(ModMenuTypes.VANILLA_WORKBENCH_MENU.get(), VanillaWorkbenchScreen::new);
+            });
+        }
+    }
+}
