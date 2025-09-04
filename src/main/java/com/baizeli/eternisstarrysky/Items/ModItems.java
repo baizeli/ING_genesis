@@ -72,7 +72,7 @@ public class ModItems {
     );
 
     public static final RegistryObject<Item> dragon_book = ITEMS.register("dragon_book",
-            () -> new Item(
+            () -> new DragonBook(
                     new Item.Properties()
                             .rarity(Rarity.RARE)
                             .stacksTo(1)
