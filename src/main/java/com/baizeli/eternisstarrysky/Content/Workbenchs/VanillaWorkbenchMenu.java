@@ -12,7 +12,6 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
@@ -39,10 +38,12 @@ public class VanillaWorkbenchMenu extends AbstractContainerMenu {
                 for (int col = 0; col < WorkbenchConfig.GRID_SIZE; col++)
                 {
                     int index = row * WorkbenchConfig.GRID_SIZE + col;
-                    this.addSlot(new SlotItemHandler(iItemHandler, index, 12 + col * 18, 18 + row * 18));
+                    int sx = EternisWorkbench.WORKBENCH_SLOT_X + col * 18;
+                    int sy = EternisWorkbench.WORKBENCH_SLOT_Y + row * 18;
+                    this.addSlot(new SlotItemHandler(iItemHandler, index, sx, sy));
                 }
             }
-            this.addSlot(new VanillaWorkbenchResultSlot(iItemHandler, WorkbenchConfig.RESULT_SLOT, 188, 90));
+            this.addSlot(new VanillaWorkbenchResultSlot(iItemHandler, WorkbenchConfig.RESULT_SLOT, 210, 95));
         });
 
         addPlayerInventory(inv);
@@ -96,12 +97,13 @@ public class VanillaWorkbenchMenu extends AbstractContainerMenu {
     private void addPlayerInventory(Inventory playerInventory)
     {
         // 背包 (3x9)
-        int startX = 30;
+        int px = ((EternisWorkbench.ASSETS_WORKBENCH_WIDTH - EternisWorkbench.ASSETS_INVENTORY_WIDTH) >> 1) + EternisWorkbench.INVENTORY_SLOT_X;
+        int py = EternisWorkbench.ASSETS_WORKBENCH_HEIGHT + EternisWorkbench.INVENTORY_SLOT_Y;
         for (int i = 0; i < 3; ++i)
         {
             for (int l = 0; l < 9; ++l)
             {
-                this.addSlot(new Slot(playerInventory, l + i * 9 + 9, startX + l * 18, 200 - 5 + i * 18));
+                this.addSlot(new Slot(playerInventory, l + i * 9 + 9, px + l * 18, py + i * 18));
             }
         }
     }
@@ -109,10 +111,12 @@ public class VanillaWorkbenchMenu extends AbstractContainerMenu {
     private void addPlayerHotbar(Inventory playerInventory)
     {
         // 快捷栏 (1x9)
-        int startX = 30;
+        int px = ((EternisWorkbench.ASSETS_WORKBENCH_WIDTH - EternisWorkbench.ASSETS_INVENTORY_WIDTH) >> 1) + EternisWorkbench.INVENTORY_SLOT_X;
+        int py = EternisWorkbench.ASSETS_WORKBENCH_HEIGHT + EternisWorkbench.INVENTORY_SLOT_Y;
+        py += 3 * 18 + 4;
         for (int i = 0; i < 9; ++i)
         {
-            this.addSlot(new Slot(playerInventory, i, startX + i * 18, 258 - 5));
+            this.addSlot(new Slot(playerInventory, i, px + i * 18, py));
         }
     }
 

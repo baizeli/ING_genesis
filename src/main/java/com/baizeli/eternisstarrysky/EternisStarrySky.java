@@ -102,6 +102,11 @@ public class EternisStarrySky
         });
     }
 
+    public static String resource(String location)
+    {
+        return MOD_ID + ":" + location;
+    }
+
     @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents
     {
