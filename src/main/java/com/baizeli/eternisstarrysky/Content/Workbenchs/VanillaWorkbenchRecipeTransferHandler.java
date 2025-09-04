@@ -2,11 +2,15 @@ package com.baizeli.eternisstarrysky.Content.Workbenchs;
 
 import mezz.jei.api.gui.ingredient.IRecipeSlotView;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
+import mezz.jei.api.helpers.IStackHelper;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
 import mezz.jei.api.recipe.transfer.IRecipeTransferError;
 import mezz.jei.api.recipe.transfer.IRecipeTransferHandler;
+import mezz.jei.api.recipe.transfer.IRecipeTransferHandlerHelper;
 import mezz.jei.api.recipe.transfer.IRecipeTransferInfo;
+import mezz.jei.common.network.IConnectionToServer;
+import mezz.jei.library.transfer.BasicRecipeTransferHandler;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
@@ -19,7 +23,13 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
-public class VanillaWorkbenchRecipeTransferHandler implements IRecipeTransferHandler<VanillaWorkbenchMenu, VanillaWorkbenchRecipe> {
+public class VanillaWorkbenchRecipeTransferHandler extends BasicRecipeTransferHandler<VanillaWorkbenchMenu, VanillaWorkbenchRecipe>
+{
+
+    public VanillaWorkbenchRecipeTransferHandler(IConnectionToServer serverConnection, IStackHelper stackHelper, IRecipeTransferHandlerHelper handlerHelper, IRecipeTransferInfo<VanillaWorkbenchMenu, VanillaWorkbenchRecipe> transferInfo)
+    {
+        super(serverConnection, stackHelper, handlerHelper, transferInfo);
+    }
 
     @Override
     public Class<? extends VanillaWorkbenchMenu> getContainerClass() {

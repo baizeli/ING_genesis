@@ -1,16 +1,10 @@
 {
-  "type": "eternisstarrysky:vanilla_workbench",
+  "type": "eternisstarrysky:vanilla_workbench_s",
   "category": "misc",
   "pattern": [
-    "AAA      ",
-    "A A      ",
-    "AAA      ",
-    "   A     ",
-    "    A    ",
-    "     A   ",
-    "         ",
-    "         ",
-    "         "
+    " A ",
+    "A A",
+    " A "
   ],
   "key": {
     "A": {
@@ -19,6 +13,6 @@
   },
   "result": {
     "item": "minecraft:diamond_block",
-    "count": 188
+    "count": 1
   }
 }

@@ -60,18 +60,21 @@ public class VanillaWorkbenchRecipeCategory implements IRecipeCategory<VanillaWo
         int displayWidth = Math.min(recipe.width, maxDisplaySize);
         int displayHeight = Math.min(recipe.height, maxDisplaySize);
 
-        for (int row = 0; row < displayHeight; row++) {
-            for (int col = 0; col < displayWidth; col++) {
-                int recipeIndex = col + row * recipe.width;
-                if (recipeIndex < recipe.getIngredients().size()) {
-                    Ingredient ingredient = recipe.getIngredients().get(recipeIndex);
-                    if (!ingredient.isEmpty()) {
-                        int sx = EternisWorkbench.WORKBENCH_SLOT_X + col * 18;
-                        int sy = EternisWorkbench.WORKBENCH_SLOT_Y + row * 18;
-                        builder.addSlot(RecipeIngredientRole.INPUT, sx, sy)
-                            .addIngredients(ingredient);
-                    }
-                }
+        int recipeIndex = 0;
+
+        for (int row = 0; row < 9; row++)
+        {
+            for (int col = 0; col < 9; col++)
+            {
+                Ingredient ingredient;// = recipe.getIngredients().get(recipeIndex);
+                if (row < displayHeight && col < displayWidth)
+                    ingredient = recipe.getIngredients().get(recipeIndex++);
+                else
+                    ingredient = Ingredient.EMPTY;
+                int sx = EternisWorkbench.WORKBENCH_SLOT_X + col * 18;
+                int sy = EternisWorkbench.WORKBENCH_SLOT_Y + row * 18;
+                builder.addSlot(RecipeIngredientRole.INPUT, sx, sy)
+                    .addIngredients(ingredient);
             }
         }
 

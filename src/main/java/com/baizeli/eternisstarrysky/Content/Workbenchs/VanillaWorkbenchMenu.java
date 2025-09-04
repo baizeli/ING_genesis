@@ -31,6 +31,7 @@ public class VanillaWorkbenchMenu extends AbstractContainerMenu {
         blockEntity = entity;
         this.level = inv.player.level();
         this.access = ContainerLevelAccess.create(level, pos);
+        Container container = new SimpleContainer(81);
         this.blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(iItemHandler ->
         {
             for (int row = 0; row < WorkbenchConfig.GRID_SIZE; row++)
@@ -40,10 +41,11 @@ public class VanillaWorkbenchMenu extends AbstractContainerMenu {
                     int index = row * WorkbenchConfig.GRID_SIZE + col;
                     int sx = EternisWorkbench.WORKBENCH_SLOT_X + col * 18;
                     int sy = EternisWorkbench.WORKBENCH_SLOT_Y + row * 18;
-                    this.addSlot(new SlotItemHandler(iItemHandler, index, sx, sy));
+                    this.addSlot(new EternisWorkbenchSlot(iItemHandler, index, sx, sy));
+                    // this.addSlot(new Slot(container, index, sx, sy));
                 }
             }
-            this.addSlot(new VanillaWorkbenchResultSlot(iItemHandler, WorkbenchConfig.RESULT_SLOT, 210, 95));
+            this.addSlot(new VanillaWorkbenchResultSlot(iItemHandler, WorkbenchConfig.RESULT_SLOT, 210, 99));
         });
 
         addPlayerInventory(inv);

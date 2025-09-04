@@ -44,7 +44,7 @@ public class VanillaWorkbenchBlock extends BaseEntityBlock {
             {
                 MenuProvider containerProvider = new MenuProvider()
                 {
-                    @Override public Component getDisplayName() {return Component.translatable("container.eternisstarrysky.vanilla_workbench");}
+                    @Override public Component getDisplayName() {return Component.translatable("block.eternisstarrysky.workbench");}
                     @Override public AbstractContainerMenu createMenu(int windowId, Inventory playerInventory, Player player) {return new VanillaWorkbenchMenu(windowId, playerInventory, workbench, pos);}
                 };
                 NetworkHooks.openScreen((ServerPlayer) player, containerProvider, buf -> {

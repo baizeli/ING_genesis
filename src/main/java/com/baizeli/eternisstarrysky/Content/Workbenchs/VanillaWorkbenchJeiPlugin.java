@@ -16,7 +16,7 @@ public class VanillaWorkbenchJeiPlugin implements IModPlugin {
 
     @Override
     public ResourceLocation getPluginUid() {
-        return new ResourceLocation(EternisStarrySky.MOD_ID, "vanilla_workbench_jei");
+        return ResourceLocation.parse(EternisStarrySky.resource("vanilla_workbench_jei"));
     }
 
     @Override
