@@ -41,7 +41,7 @@ public class VanillaWorkbenchRecipeCategory implements IRecipeCategory<VanillaWo
 
     @Override
     public Component getTitle() {
-        return Component.translatable("jei.category.eternisstarrysky.vanilla_workbench");
+        return Component.translatable("container.eternisstarrysky.vanilla_workbench");
     }
 
     @Override
