@@ -11,9 +11,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import vazkii.patchouli.api.PatchouliAPI;
 
-public class DragonBook extends Item
+public class GalaxyScroll extends Item
 {
-	public DragonBook(Properties p_41383_)
+	public GalaxyScroll(Properties p_41383_)
 	{
 		super(p_41383_);
 	}
@@ -23,8 +23,7 @@ public class DragonBook extends Item
 	{
 		if (p_41433_ instanceof ServerPlayer)
 			return super.use(p_41432_, p_41433_, p_41434_);
-		System.out.println("Dragon Book");
-		PatchouliAPI.get().openBookGUI(ResourceLocation.parse(EternisStarrySky.resource("dragon_book")));
+		PatchouliAPI.get().openBookGUI(ResourceLocation.parse(EternisStarrySky.resource("galaxy_scroll")));
 		return InteractionResultHolder.success(p_41433_.getItemInHand(p_41434_));
 	}
 }

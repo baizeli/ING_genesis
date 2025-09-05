@@ -2,8 +2,6 @@ package com.baizeli.eternisstarrysky.Items;
 
 import com.baizeli.eternisstarrysky.Content.ModBlock;
 import com.baizeli.eternisstarrysky.EternisStarrySky;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
 import net.minecraftforge.registries.DeferredRegister;
@@ -71,8 +69,8 @@ public class ModItems {
             )
     );
 
-    public static final RegistryObject<Item> dragon_book = ITEMS.register("dragon_book",
-            () -> new DragonBook(
+    public static final RegistryObject<Item> dragon_book = ITEMS.register("galaxy_scroll",
+            () -> new GalaxyScroll(
                     new Item.Properties()
                             .rarity(Rarity.RARE)
                             .stacksTo(1)
