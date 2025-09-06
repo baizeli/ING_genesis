@@ -12,6 +12,8 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.decoration.ItemFrame;
@@ -259,8 +261,8 @@ public final class InfinitySwordItem extends SwordItem {
                     livingEntity.invulnerableTime = 0;
                     livingEntity.hurtTime = 0;
 
-                    livingEntity.hurt(player.damageSources().playerAttack(player), Float.MAX_VALUE);
-                    livingEntity.setHealth(0);
+                    livingEntity.hurt(new DamageSource(player.damageSources().fellOutOfWorld().typeHolder(), player), Float.MAX_VALUE);
+                    // livingEntity.setHealth(0);
 
                     LightningBolt lightning = new LightningBolt(EntityType.LIGHTNING_BOLT, level);
                     lightning.setVisualOnly(true);
