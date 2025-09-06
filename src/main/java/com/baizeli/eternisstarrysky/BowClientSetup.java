@@ -15,7 +15,7 @@ public class BowClientSetup {
         AnimationConfig.loadConfig();
 
         event.enqueueWork(() -> {
-            ItemProperties.register(ModItems.BOW.get(),
+            ItemProperties.register(ModItems.WHISPER_OF_THE_PAST.get(),
                     ResourceLocation.parse("pull"), (stack, level, entity, seed) -> {
                         if (entity == null) {
                             return 0.0F;
@@ -24,7 +24,7 @@ public class BowClientSetup {
                         }
                     });
 
-            ItemProperties.register(ModItems.BOW.get(),
+            ItemProperties.register(ModItems.WHISPER_OF_THE_PAST.get(),
                     ResourceLocation.parse("pulling"), (stack, level, entity, seed) -> {
                         return entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F;
                     });

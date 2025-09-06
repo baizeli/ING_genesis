@@ -13,8 +13,8 @@
 
   "item.eternisstarrysky.eternis_apple": "寰宇大苹果",
   "item.eternisstarrysky.broyouhuashuo": "哎呀，我怎么把锭写成袋子了",
-  "item.eternisstarrysky.bag": "§5紫极星源锭",
-  "item.eternisstarrysky.bag1": "汝掌心中者，永恒之力也",
+  "item.eternisstarrysky.purpleite_galaxy_ingot": "§5紫极星源锭",
+  "item.eternisstarrysky.purpleite_galaxy_ingot1": "汝掌心中者，永恒之力也",
   "item.eternisstarrysky.peach": "星野爱桃",
 
   "item.eternisstarrysky.infinity_eternal_helmet": "紫极星源头盔",
@@ -22,9 +22,9 @@
   "item.eternisstarrysky.infinity_eternal_leggings": "紫极星源护腿",
   "item.eternisstarrysky.infinity_eternal_boots": "紫极星源靴子",
 
-  "item.eternisstarrysky.bjzg": "不洁之果",
-  "item.eternisstarrysky.cjzg": "纯洁之果",
-  "item.eternisstarrysky.bow_pr": "往世的飞花",
+  "item.eternisstarrysky.impure_fruit": "不洁之果",
+  "item.eternisstarrysky.pure_fruit": "纯洁之果",
+  "item.eternisstarrysky.whisper_of_the_past": "往世的飞花",
   "item.eternisstarrysky.primogem": "原石",
   "item.eternisstarrysky.primogem1": "§7这颗石头不属于异世界",
   "item.eternisstarrysky.create_star": "创造之心",

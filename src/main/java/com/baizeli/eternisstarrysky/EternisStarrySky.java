@@ -46,25 +46,25 @@ public class EternisStarrySky
     public static final RegistryObject<CreativeModeTab> EXAMPLE_TAB = CREATIVE_MODE_TABS.register("eternisstarrysky_tab", () -> CreativeModeTab.builder()
             .withTabsBefore(CreativeModeTabs.COMBAT)
             .title(Component.translatable("itemGroup.eternisstarrysky.eternisstarrysky_tab"))
-            .icon(() -> ModItems.BAG.get().getDefaultInstance())
+            .icon(() -> ModItems.PURPLEITE_GALAXY_INGOT.get().getDefaultInstance())
             .displayItems((parameters, output) -> {
                 output.accept(ModItems.ETERNIS_APPLE.get());
                 output.accept(ModItems.PEACH.get());
-                output.accept(ModItems.BAG.get());
-                output.accept(ModItems.BOW.get());
-                output.accept(ModItems.primogem.get());
-                output.accept(ModItems.create_star.get());
-                output.accept(ModItems.dragon_book.get());
-                output.accept(ModItems.bjzg.get());
-                output.accept(ModItems.cjzg.get());
+                output.accept(ModItems.PURPLEITE_GALAXY_INGOT.get());
+                output.accept(ModItems.WHISPER_OF_THE_PAST.get());
+                output.accept(ModItems.PRIMOGEM.get());
+                output.accept(ModItems.CREATE_STAR.get());
+                output.accept(ModItems.GALAXY_SCROLL.get());
+                output.accept(ModItems.IMPURE_FRUIT.get());
+                output.accept(ModItems.PURE_FRUIT.get());
 
-                output.accept(ModItems.infinity_sword.get());
+                output.accept(ModItems.INFINITY_SWORD.get());
                 output.accept(ModItems.INFINITY_ETERNAL_HELMET.get());
                 output.accept(ModItems.INFINITY_ETERNAL_CHESTPLATE.get());
                 output.accept(ModItems.INFINITY_ETERNAL_LEGGINGS.get());
                 output.accept(ModItems.INFINITY_ETERNAL_BOOTS.get());
 
-                output.accept(ModItems.workbench_item.get());
+                output.accept(ModItems.WORKBENCH.get());
             }).build());
 
     public EternisStarrySky(FMLJavaModLoadingContext context)

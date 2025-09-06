@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "eternisstarrysky:item/bow/b_a"
+    "layer0": "eternisstarrysky:item/bow/whisper_of_the_past_1"
  },
   "display": {
     "thirdperson_righthand": {
@@ -30,21 +30,21 @@
       "predicate": {
         "pulling": 1
       },
-      "model": "eternisstarrysky:item/bow/b_b"
+      "model": "eternisstarrysky:item/bow/whisper_of_the_past_2"
     },
     {
       "predicate": {
         "pulling": 1,
         "pull": 0.7
       },
-      "model": "eternisstarrysky:item/bow/b_c"
+      "model": "eternisstarrysky:item/bow/whisper_of_the_past_3"
     },
     {
       "predicate": {
         "pulling": 1,
         "pull": 0.9
       },
-      "model": "eternisstarrysky:item/bow/b_d"
+      "model": "eternisstarrysky:item/bow/whisper_of_the_past_4"
     }
   ]
 }

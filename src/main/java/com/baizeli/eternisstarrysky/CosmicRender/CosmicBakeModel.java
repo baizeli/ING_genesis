@@ -9,7 +9,6 @@ import com.mojang.math.Axis;
 import com.mojang.math.Transformation;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.*;
@@ -61,15 +60,15 @@ public final class CosmicBakeModel implements BakedModel {
     private static final Map<Item, EffectConfig> COSMIC_EFFECTS = Map.of(
 
             // 上限了，换成 ofEntries 即可
-            ModItems.infinity_sword.get(), new EffectConfig(0, 0.6F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)),
-            ModItems.infinity_sword_true.get(), new EffectConfig(2, 0.6F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)),
+            ModItems.INFINITY_SWORD.get(), new EffectConfig(0, 0.6F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)),
+            ModItems.INFINITY_SWORD_TRUE.get(), new EffectConfig(2, 0.6F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)),
             ModItems.INFINITY_ETERNAL_HELMET.get(), new EffectConfig(0, 0.5F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)),
             ModItems.INFINITY_ETERNAL_CHESTPLATE.get(), new EffectConfig(0, 0.5F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)),
             ModItems.INFINITY_ETERNAL_LEGGINGS.get(), new EffectConfig(0, 0.5F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)),
             ModItems.INFINITY_ETERNAL_BOOTS.get(), new EffectConfig(0, 0.5F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)),
 
-            ModItems.primogem.get(), new EffectConfig(2, 0.6F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)),
-            ModItems.BAG.get(), new EffectConfig(0, 0.6F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)),
+            ModItems.PRIMOGEM.get(), new EffectConfig(2, 0.6F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)),
+            ModItems.PURPLEITE_GALAXY_INGOT.get(), new EffectConfig(0, 0.6F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)),
             ModItems.ETERNIS_APPLE.get(), new EffectConfig(0, 0.5F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)),
             ModItems.PEACH.get(), new EffectConfig(1, 0.5F, new Vector4f(0.0F, 0.02F, 0.03F, 1F))
     );

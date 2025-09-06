@@ -12,8 +12,8 @@ public class ModItems {
     public static final DeferredRegister<Item> ITEMS =
             DeferredRegister.create(ForgeRegistries.ITEMS, EternisStarrySky.MOD_ID);
 
-    public static final RegistryObject<Item> BAG = ITEMS.register("bag", () -> new BagItem(new Item.Properties(), 0));
-    public static final RegistryObject<Item> primogem = ITEMS.register("primogem", () -> new BagItem(new Item.Properties(), 1));
+    public static final RegistryObject<Item> PURPLEITE_GALAXY_INGOT = ITEMS.register("purpleite_galaxy_ingot", () -> new EternisMaterial(new Item.Properties(), 0));
+    public static final RegistryObject<Item> PRIMOGEM = ITEMS.register("primogem", () -> new EternisMaterial(new Item.Properties(), 1));
 
     public static final RegistryObject<Item> ETERNIS_APPLE = ITEMS.register("eternis_apple",
             () -> new EternisAppleItem(new Item.Properties()
@@ -27,7 +27,7 @@ public class ModItems {
                     .rarity(Rarity.RARE)
             ));
 
-    public static final RegistryObject<Item> infinity_sword = ITEMS.register("infinity_sword",
+    public static final RegistryObject<Item> INFINITY_SWORD = ITEMS.register("infinity_sword",
             () -> new InfinitySwordItem(
                     Tiers.NETHERITE,
                     1,
@@ -36,7 +36,7 @@ public class ModItems {
             )
     );
 
-    public static final RegistryObject<Item> infinity_sword_true = ITEMS.register("infinity_sword_true",
+    public static final RegistryObject<Item> INFINITY_SWORD_TRUE = ITEMS.register("infinity_sword_true",
             () -> new InfinitySwordItem(
                     Tiers.NETHERITE,
                     Integer.MAX_VALUE,
@@ -45,7 +45,7 @@ public class ModItems {
             )
     );
 
-    public static final RegistryObject<Item> BOW = ITEMS.register("bow_pr",
+    public static final RegistryObject<Item> WHISPER_OF_THE_PAST = ITEMS.register("whisper_of_the_past",
             () -> new NewBowItem(
                     new Item.Properties()
                             .rarity(Rarity.EPIC)
@@ -54,14 +54,14 @@ public class ModItems {
             )
     );
 
-    public static final RegistryObject<Item> create_star = ITEMS.register("create_star",
+    public static final RegistryObject<Item> CREATE_STAR = ITEMS.register("create_star",
             () -> new CreateStar(
                     new Item.Properties()
                             .rarity(Rarity.COMMON)
             )
     );
 
-    public static final RegistryObject<Item> cjzg = ITEMS.register("cjzg",
+    public static final RegistryObject<Item> PURE_FRUIT = ITEMS.register("pure_fruit",
             () -> new Item(
                     new Item.Properties()
                             .rarity(Rarity.COMMON)
@@ -69,7 +69,7 @@ public class ModItems {
             )
     );
 
-    public static final RegistryObject<Item> dragon_book = ITEMS.register("galaxy_scroll",
+    public static final RegistryObject<Item> GALAXY_SCROLL = ITEMS.register("galaxy_scroll",
             () -> new GalaxyScroll(
                     new Item.Properties()
                             .rarity(Rarity.RARE)
@@ -77,7 +77,7 @@ public class ModItems {
             )
     );
 
-    public static final RegistryObject<Item> bjzg = ITEMS.register("bjzg",
+    public static final RegistryObject<Item> IMPURE_FRUIT = ITEMS.register("impure_fruit",
             () -> new BJZGItem(
                     new Item.Properties()
                             .rarity(Rarity.RARE)
@@ -90,7 +90,7 @@ public class ModItems {
             )
     );
 
-    public static final RegistryObject<Item> workbench_item = ITEMS.register("workbench", () -> new BlockItem(ModBlock.workbench.get(), new Item.Properties()));
+    public static final RegistryObject<Item> WORKBENCH = ITEMS.register("workbench", () -> new BlockItem(ModBlock.workbench.get(), new Item.Properties()));
 
     // 无尽永恒盔甲套装
     public static final RegistryObject<Item> INFINITY_ETERNAL_HELMET = ITEMS.register("infinity_eternal_helmet",

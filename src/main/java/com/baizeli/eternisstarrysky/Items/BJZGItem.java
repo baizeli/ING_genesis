@@ -18,7 +18,7 @@ public class BJZGItem extends Item {
             player.hurt(level.damageSources().magic(), 4500.0f);
 
             if (player.isAlive()) {
-                ItemStack dragonBook = new ItemStack(ModItems.cjzg.get());
+                ItemStack dragonBook = new ItemStack(ModItems.PURE_FRUIT.get());
                 if (!player.getInventory().add(dragonBook)) {
                     player.drop(dragonBook, false);
                 }
