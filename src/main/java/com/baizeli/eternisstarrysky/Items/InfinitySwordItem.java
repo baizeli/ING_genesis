@@ -229,6 +229,7 @@ public final class InfinitySwordItem extends SwordItem {
 
 
 
+        /*
         if (entity instanceof LivingEntity livingEntity)
         {
             if (entity.level().isClientSide()) return true;
@@ -239,6 +240,7 @@ public final class InfinitySwordItem extends SwordItem {
             livingEntity.dropFromLootTable(livingEntity.damageSources().playerAttack(player), true);
             livingEntity.remove(Entity.RemovalReason.KILLED);
         }
+        */
 
         if (TRUE)
         {
