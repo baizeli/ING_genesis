@@ -1,9 +1,6 @@
 package com.baizeli.eternisstarrysky.Mixin;
 
-import com.baizeli.eternisstarrysky.Items.InfinitySwordItem;
-import net.minecraft.ChatFormatting;
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.chat.Component;
+import com.baizeli.eternisstarrysky.Items.InfinitySwordTrue;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
@@ -42,7 +39,7 @@ public class InfinitySwordDamageMixin {
         }
 
         ItemStack usingItem = player.getUseItem();
-        return usingItem.getItem() instanceof InfinitySwordItem &&
+        return usingItem.getItem() instanceof InfinitySwordTrue &&
                 usingItem.getUseAnimation() == UseAnim.BLOCK;
     }
 

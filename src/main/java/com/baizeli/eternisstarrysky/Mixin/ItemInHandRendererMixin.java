@@ -8,20 +8,15 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.ItemInHandRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import java.util.Set;
 
 @Mixin(ItemInHandRenderer.class)
 public class ItemInHandRendererMixin {
@@ -41,6 +36,7 @@ public class ItemInHandRendererMixin {
         }
     }
 
+    @Unique
     private void renderInstantBlocking(AbstractClientPlayer player, float partialTicks, float pitch,
                                        InteractionHand hand, float swingProgress, ItemStack stack,
                                        PoseStack poseStack, MultiBufferSource buffer, int combinedLight) {
@@ -61,7 +57,7 @@ public class ItemInHandRendererMixin {
             Minecraft.getInstance().getItemRenderer().renderStatic(stack, ItemDisplayContext.FIRST_PERSON_RIGHT_HAND,
                     combinedLight, OverlayTexture.NO_OVERLAY, poseStack,
                     buffer, player.level(), 0);
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
 
         poseStack.popPose();

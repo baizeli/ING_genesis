@@ -1,6 +1,6 @@
 package com.baizeli.eternisstarrysky;
 
-import com.baizeli.eternisstarrysky.Items.InfinitySwordItem;
+import com.baizeli.eternisstarrysky.Items.InfinitySwordTrue;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.event.TickEvent;
@@ -28,19 +28,17 @@ public class ItemDropHandler {
     @SubscribeEvent
     public static void onItemToss(ItemTossEvent event) {
         ItemStack itemStack = event.getEntity().getItem();
-        if (itemStack.getItem() instanceof InfinitySwordItem infinitySword) {
-            if (infinitySword.getTRUE()) {
-                event.setCanceled(true);
+        if (itemStack.getItem() instanceof InfinitySwordTrue infinitySword) {
+            event.setCanceled(true);
 
-                if (event.getPlayer() != null) {
-                    Player player = event.getPlayer();
-                    Integer lastSlot = lastHeldSlots.get(player.getUUID());
+            if (event.getPlayer() != null) {
+                Player player = event.getPlayer();
+                Integer lastSlot = lastHeldSlots.get(player.getUUID());
 
-                    if (lastSlot != null) {
-                        player.getInventory().setItem(lastSlot, itemStack.copy());
-                    } else {
-                        player.getInventory().setItem(player.getInventory().selected, itemStack.copy());
-                    }
+                if (lastSlot != null) {
+                    player.getInventory().setItem(lastSlot, itemStack.copy());
+                } else {
+                    player.getInventory().setItem(player.getInventory().selected, itemStack.copy());
                 }
             }
         }

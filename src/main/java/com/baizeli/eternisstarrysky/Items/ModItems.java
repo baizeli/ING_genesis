@@ -28,20 +28,20 @@ public class ModItems {
             ));
 
     public static final RegistryObject<Item> INFINITY_SWORD = ITEMS.register("infinity_sword",
-            () -> new InfinitySwordItem(
-                    Tiers.NETHERITE,
-                    1,
-                    -2F,
-                    new Item.Properties().durability(Integer.MAX_VALUE), false
-            )
+        () -> new InfinitySword(
+            Tiers.NETHERITE,
+            (int) (42 - Tiers.NETHERITE.getAttackDamageBonus()),
+            -2F,
+            new Item.Properties().durability(Integer.MAX_VALUE)
+        )
     );
 
     public static final RegistryObject<Item> INFINITY_SWORD_TRUE = ITEMS.register("infinity_sword_true",
-            () -> new InfinitySwordItem(
+            () -> new InfinitySwordTrue(
                     Tiers.NETHERITE,
                     Integer.MAX_VALUE,
                     -2F,
-                    new Item.Properties().durability(Integer.MAX_VALUE), true
+                    new Item.Properties().durability(Integer.MAX_VALUE)
             )
     );
 

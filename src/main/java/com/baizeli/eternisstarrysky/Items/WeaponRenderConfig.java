@@ -9,7 +9,8 @@ public class WeaponRenderConfig {
     private static final Set<Class<?>> SPECIAL_WEAPONS = new HashSet<>();
 
     static {
-        registerWeapon(InfinitySwordItem.class);
+        registerWeapon(InfinitySwordTrue.class);
+        registerWeapon(InfinitySword.class);
     }
 
     public static void registerWeapon(Class<?> weaponClass) {
