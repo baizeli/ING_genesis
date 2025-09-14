@@ -22,7 +22,7 @@ uniform float pitch;
 uniform float externalScale;
 
 uniform float opacity;
-uniform int useType; // 0=紫色, 1=紫金配色, 2=极光配色
+uniform int useType; // 0=紫色, 1=紫金配色, 2=极光配色, 3=蓝色
 
 uniform mat2 cosmicuvs[cosmiccount];
 
@@ -84,6 +84,20 @@ color = mix(brightGold, pureGold, (intensity - 0.6) * 2.5);
 // 脉动效果
 float pulseFactor = 0.6 + 0.4 * sin(pulse * M_PI * 4.0);
 color *= pulseFactor;
+}else if(useType==3){//蓝色
+    const vec3 auroraBlue = vec3(0.3, 0.4, 1.0);
+    const vec3 lightLavender = vec3(0.2, 0.7, 0.4);
+    const vec3 whitePurple = vec3(0.45, 0.92, 1.0);
+
+    if (intensity < 0.5) {
+        color = mix(auroraBlue, lightLavender, auroraBlue);
+    } else {
+        color = mix(lightLavender, whitePurple, (intensity - 0.5) * 2.0);
+    }
+
+    // 脉动效果
+    float pulseFactor = 0.6 + 0.4 * sin(pulse * M_PI * 4.0);
+    color *= pulseFactor;
 }
 else { // useType == 2: 极光配色方案
 // 极光颜色定义
@@ -163,7 +177,13 @@ col.rgb = mix(mixed2, skyTop, pow(heightFactor, 2.0));
 
 // 添加微妙的发光效果
 col.rgb += vec3(0.05, 0.08, 0.1) * wave3;
-}
+}else if (useType == 3) {
+        // 紫金背景 - 深紫到暗金的渐变
+        float gradFactor = clamp(fPos.y * 0.1 + 0.3, 0.0, 1.0);
+        vec3 darkPurple = vec3(0.05, 0.3, 0.2);    // 深紫色背景
+        vec3 darkGold = vec3(0.05, 0.4, 0.3);        // 暗金色背景
+        col.rgb = mix(darkPurple, darkGold, pow(gradFactor, 1.8));
+    }
 else {
 col.rgb = vec3(0.08, 0.02, 0.12); // 紫色背景保持不变
 }

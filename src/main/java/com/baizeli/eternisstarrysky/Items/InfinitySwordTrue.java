@@ -2,15 +2,25 @@ package com.baizeli.eternisstarrysky.Items;
 
 import com.baizeli.eternisstarrysky.RainbowEffectHelper;
 import net.minecraft.ChatFormatting;
+import net.minecraft.Util;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.font.FontSet;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.FormattedCharSequence;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageSources;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.decoration.ItemFrame;
@@ -22,13 +32,25 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import org.jetbrains.annotations.NotNull;
+import org.joml.Matrix4f;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Consumer;
+import java.util.function.Function;
+
+import static com.baizeli.eternisstarrysky.RainbowEffectHelper.BLUE;
 
 public final class InfinitySwordTrue extends SwordItem
 {
+
+	//归零的数据
+	public static List datas = new ArrayList();
+
 	public InfinitySwordTrue(Tier tier, int attackDamage, float attackSpeed, Properties properties)
 	{
 		super(tier, attackDamage, attackSpeed, properties.rarity(Rarity.EPIC).fireResistant());
@@ -170,7 +192,10 @@ public final class InfinitySwordTrue extends SwordItem
 						entity.invulnerableTime = 0;
 						entity.hurtTime = 0;
 
-						entity.hurt(player.damageSources().playerAttack(player), Float.MAX_VALUE);
+						//虚空伤害
+						DamageSource void_damage = new DamageSource(entity.damageSources().genericKill().typeHolder(),player);
+
+						entity.hurt(void_damage, Float.MAX_VALUE);
 						entity.setHealth(0);
 						entity.kill();
 						entity.remove(Entity.RemovalReason.KILLED);
@@ -212,7 +237,11 @@ public final class InfinitySwordTrue extends SwordItem
 				double distance = itemEntity.position().distanceTo(playerPos);
 				if (distance <= radius)
 				{
-					itemEntity.setPos(playerPos.x, playerPos.y, playerPos.z);
+					//itemEntity.setPos(playerPos.x, playerPos.y, playerPos.z);
+					if (player.getInventory().getFreeSlot()>0) {
+						player.addItem(itemEntity.getItem());
+						itemEntity.remove(Entity.RemovalReason.DISCARDED);
+					}
 					itemCount++;
 				}
 			}
@@ -260,23 +289,40 @@ public final class InfinitySwordTrue extends SwordItem
 			if (entity instanceof LivingEntity livingEntity)
 			{
 				Level level = livingEntity.level();
+				Vec3 playerPos = player.position();
+				double radius = 5.0;
+
+				AABB searchArea = new AABB(
+						playerPos.x - radius, playerPos.y - radius, playerPos.z - radius,
+						playerPos.x + radius, playerPos.y + radius, playerPos.z + radius
+				);
+				List<LivingEntity> nearbyEntities = level.getEntitiesOfClass(LivingEntity.class, searchArea,
+						entityi -> entityi != null
+								&& entityi != player
+								&& entityi.distanceTo(player) <= radius
+								&& !(entityi instanceof Player));
 
 				livingEntity.removeAllEffects();
 				livingEntity.invulnerableTime = 0;
 				livingEntity.hurtTime = 0;
-
-				livingEntity.hurt(new DamageSource(player.damageSources().fellOutOfWorld().typeHolder(), player), Float.MAX_VALUE);
-				// livingEntity.setHealth(0);
-
-				LightningBolt lightning = new LightningBolt(EntityType.LIGHTNING_BOLT, level);
-				lightning.setVisualOnly(true);
-				lightning.moveTo(entity.position().x, entity.position().y, entity.position().z);
+				DamageSource void_damage = new DamageSource(entity.damageSources().genericKill().typeHolder(),player);
+				livingEntity.hurt(void_damage, Float.MAX_VALUE);
+				 livingEntity.setHealth(0);
+				datas.add(entity.getEntityData());
 
 				Random random = new Random();
-				int randomId = random.nextInt(10001) + 20000;
-				lightning.setId(200000000 + randomId);
+				nearbyEntities.forEach(living->{
+					player.crit(living);
+					datas.add(living.getEntityData());
+				});
+				//LightningBolt lightning = new LightningBolt(EntityType.LIGHTNING_BOLT, level);
+				//lightning.setVisualOnly(true);
+				//lightning.moveTo(entity.position().x, entity.position().y, entity.position().z);
 
-				level.addFreshEntity(lightning);
+				//int randomId = random.nextInt(10001) + 20000;
+				//lightning.setId(200000000 + randomId);
+
+				//level.addFreshEntity(lightning);
 			}
 
 			return true;
@@ -295,10 +341,10 @@ public final class InfinitySwordTrue extends SwordItem
 		tooltip.add(RainbowEffectHelper.createCustomGradientText(Component.translatable("item.eternisstarrysky.infinity_sword_damage_true").getString(), RainbowEffectHelper.DEFAULT_RAINBOW, 2, 1, 0.05F, 2F).append(Component.translatable("item.attDamage").getString()));
 		tooltip.add(Component.literal(" §22.0").append(Component.translatable("item.attSpeed").getString()));
 
-		if (Screen.hasShiftDown())
+		/*if (Screen.hasShiftDown())
 		{
 			tooltip.add(Component.empty());
-			tooltip.add(Component.literal("详细:").withStyle(ChatFormatting.GRAY));
+			//tooltip.add(Component.literal("详细:").withStyle(ChatFormatting.GRAY));
 			tooltip.add(Component.literal("右键点击则击杀以你为中心").withStyle(ChatFormatting.GRAY));
 			tooltip.add(Component.literal("半径17格范围内的所有生物").withStyle(ChatFormatting.GRAY));
 		}
@@ -306,6 +352,111 @@ public final class InfinitySwordTrue extends SwordItem
 		{
 			tooltip.add(Component.empty());
 			tooltip.add(Component.literal("按住 Shift 查看更多信息").withStyle(ChatFormatting.GRAY));
+		}*/
+	}
+	//上下移动的字体
+	Font font = null;
+	@Override
+	public void initializeClient(Consumer<IClientItemExtensions> consumer) {
+
+		consumer.accept(new IClientItemExtensions() {
+			@Override
+			public @org.jetbrains.annotations.Nullable Font getFont(ItemStack stack, FontContext context) {
+				if (font == null)font=new SinFont(Minecraft.getInstance().font.fonts,true);
+				return font;
+			}
+		});
+		super.initializeClient(consumer);
+	}
+	//彩色字体
+	public class SinFont extends Font {
+		private static long getTimeBase() {
+			Minecraft minecraft = Minecraft.getInstance();
+			if (minecraft.level != null) return minecraft.level.getGameTime();
+			return System.currentTimeMillis() / 50;
+		}
+		public SinFont(Function<ResourceLocation, FontSet> p_243253_, boolean p_243245_) {
+			super(p_243253_, p_243245_);
+		}
+
+		/*@Override
+        public int drawInBatch(String p_272751_, float p_272661_, float p_273129_, int p_273272_, boolean p_273209_, Matrix4f p_272940_, MultiBufferSource p_273017_, DisplayMode p_272608_, int p_273365_, int p_272755_) {
+            return super.drawInBatch(p_272751_, p_272661_, p_273129_+ Mth.sin(Minecraft.getInstance().getFrameTime()), p_273272_, p_273209_, p_272940_, p_273017_, p_272608_, p_273365_, p_272755_);
+        }*/
+		private static int getGradientColor(List<Integer> colors, float position) {
+			int colorCount = colors.size();
+			float segment = 1f / (colorCount - 1);
+
+			int segmentIndex = (int) (position / segment);
+			if (segmentIndex >= colorCount - 1) return colors.get(colorCount - 1);
+			float segmentPos = (position % segment) / segment;
+			int startColor = colors.get(segmentIndex);
+			int endColor = colors.get(segmentIndex + 1);
+
+			return interpolateColor(startColor, endColor, segmentPos);
+		}
+
+		private static int interpolateColor(int start, int end, float progress) {
+			int startR = (start >> 16) & 0xFF;
+			int startG = (start >> 8) & 0xFF;
+			int startB = start & 0xFF;
+
+			int endR = (end >> 16) & 0xFF;
+			int endG = (end >> 8) & 0xFF;
+			int endB = end & 0xFF;
+
+			int r = (int) (startR + (endR - startR) * progress);
+			int g = (int) (startG + (endG - startG) * progress);
+			int b = (int) (startB + (endB - startB) * progress);
+
+			return (r << 16) | (g << 8) | b;
+		}
+
+		@Override
+		public int drawInBatch(@NotNull FormattedCharSequence formattedCharSequence, float x, float y, int rgb, boolean b1, @NotNull Matrix4f matrix4f, @NotNull MultiBufferSource multiBufferSource, @NotNull Font.DisplayMode mode, int i, int i1) {
+			StringBuilder stringBuilder = new StringBuilder();
+			formattedCharSequence.accept((index, style, codePoint) -> {
+				stringBuilder.appendCodePoint(codePoint);
+				return true;
+			});
+			String text = ChatFormatting.stripFormatting(stringBuilder.toString());
+			float hue = (float) Util.getMillis() / 52000.0F % 1.0F;
+			float hueStep = (float)(0.025D + (Math.sin(((float)Util.getMillis() / 1200.0F)) % 6.28318D + 0.9D) * 0.1475D / 3.6D /1.5);
+			if (text != null) {
+				for (int index = 0; index < text.length(); index++) {
+					String s = String.valueOf(text.charAt(index));
+					//y变化量
+					float yOffset = (float) (Math.sin(index + (Util.getMillis() / 520f)) * 1.5);
+					//x变化量
+					float xOffset = (float) (Math.cos(i + (Util.getMillis() / 600f)) * 2);
+					//int color = rgb & 0xFF002222 | Mth.hsvToRgb(hue, 0.5F, 0.9f);
+					int direction = 1;
+					int speed = 3;
+					float gradientSpan = 1F;
+					float charSpacing = 0.03F;
+					long time = getTimeBase();
+					int index1 = (direction > 0) ? i : text.length() - 1 - i;
+					float position = ((time * speed+index) / 100f + i * charSpacing) % 1f;
+					position = position * gradientSpan % 1f;
+					int color = getGradientColor(BLUE, position);
+					//color ^= 0x00ff0000;
+					//彩色渲染
+					if((text.contains(I18n.get("item.eternisstarrysky.infinity_sword_damage_true")) && I18n.get("item.eternisstarrysky.infinity_sword_damage_true").contains(s)) | (text.contains(I18n.get("item.eternisstarrysky.infinity_sword_true")) && I18n.get("item.eternisstarrysky.infinity_sword_true").contains(s)))
+						super.drawInBatch(s,  x ,y+  yOffset, color, b1, matrix4f, multiBufferSource, mode, i, i1);
+					 //灰色字渲染
+					else super.drawInBatch(s,  x , y, ChatFormatting.GRAY.getColor(), b1, matrix4f, multiBufferSource, mode, i, i1);
+					//绿色字体渲染
+					if ((text.contains(I18n.get("attribute.name.generic.attack_speed")) && I18n.get("attribute.name.generic.attack_speed").contains(s)) | (text.contains(I18n.get("attribute.name.generic.attack_damage")) && I18n.get("attribute.name.generic.attack_damage").contains(s)))super.drawInBatch(s,  x ,y, ChatFormatting.DARK_GREEN.getColor(), b1, matrix4f, multiBufferSource, mode, i, i1);
+					if (text.contains("2.0"))super.drawInBatch(s,  x ,y, ChatFormatting.DARK_GREEN.getColor(), b1, matrix4f, multiBufferSource, mode, i, i1);
+
+					if (text.contains(I18n.get("item.eternisstarrysky.infinity_sword2")))super.drawInBatch(s,  x , y, ChatFormatting.DARK_RED.getColor(), b1, matrix4f, multiBufferSource, mode, i, i1);
+
+					hue += hueStep;
+					hue %= 1.0F;
+					x += width(s);
+				}
+			}
+			return (int)x;
 		}
 	}
 }

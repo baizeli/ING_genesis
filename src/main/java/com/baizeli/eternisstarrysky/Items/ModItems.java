@@ -44,7 +44,13 @@ public class ModItems {
                     new Item.Properties().durability(Integer.MAX_VALUE)
             )
     );
-
+    public static final RegistryObject<Item> AVARITIA_SWORD = ITEMS.register("avaritia_infinity_sword",
+            () -> new AvaritiaSword(
+                    Integer.MAX_VALUE,
+                    -2F,
+                    new Item.Properties().durability(Integer.MAX_VALUE)
+            )
+    );
     public static final RegistryObject<Item> WHISPER_OF_THE_PAST = ITEMS.register("whisper_of_the_past",
             () -> new NewBowItem(
                     new Item.Properties()

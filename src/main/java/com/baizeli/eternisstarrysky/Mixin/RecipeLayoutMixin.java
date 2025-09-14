@@ -20,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.Collection;
 import java.util.List;
 
-@Mixin(RecipeLayout.class)
+@Mixin(value = RecipeLayout.class,remap = false)
 public class RecipeLayoutMixin
 {
 	@Mutable

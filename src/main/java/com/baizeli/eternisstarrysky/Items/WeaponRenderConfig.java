@@ -11,6 +11,7 @@ public class WeaponRenderConfig {
     static {
         registerWeapon(InfinitySwordTrue.class);
         registerWeapon(InfinitySword.class);
+        registerWeapon(AvaritiaSword.class);
     }
 
     public static void registerWeapon(Class<?> weaponClass) {

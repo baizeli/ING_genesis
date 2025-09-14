@@ -1,5 +1,6 @@
 package com.baizeli.eternisstarrysky.Mixin;
 
+import com.baizeli.eternisstarrysky.Items.AvaritiaSword;
 import com.baizeli.eternisstarrysky.Items.InfinitySwordTrue;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -39,8 +40,9 @@ public class InfinitySwordDamageMixin {
         }
 
         ItemStack usingItem = player.getUseItem();
-        return usingItem.getItem() instanceof InfinitySwordTrue &&
-                usingItem.getUseAnimation() == UseAnim.BLOCK;
+        return (usingItem.getItem() instanceof AvaritiaSword &&
+                usingItem.getUseAnimation() == UseAnim.BLOCK) | (usingItem.getItem() instanceof InfinitySwordTrue &&
+                usingItem.getUseAnimation() == UseAnim.BLOCK);
     }
 
     @Inject(method = "hurt", at = @At(value = "INVOKE",
