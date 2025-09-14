@@ -5,8 +5,7 @@
 	"refmap": "eternisstarrysky.refmap.json",
 	"mixins": [
 		"InfinitySwordDamageMixin",
-		"RecipeLayoutMixin",
-		"synchedDataMixin"
+		"RecipeLayoutMixin"
 	],
 	"client": [
 		"ItemInHandRendererMixin",
