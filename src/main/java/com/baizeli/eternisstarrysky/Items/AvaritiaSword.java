@@ -102,9 +102,12 @@ public class AvaritiaSword extends SwordItem {
             Sounds.play(SoundEvents.AMETHYST_BLOCK_STEP, player, 10.0F, 1.0F);
             return false;
         }
-        entity.hurt(new DamageSource(entity.damageSources().genericKill().typeHolder(),player),Float.POSITIVE_INFINITY);
-        if (entity instanceof LivingEntity living)living.setHealth(0.0f);
-        return super.onLeftClickEntity(stack, player, entity);
+        if (!(entity instanceof LivingEntity))
+            return false;
+
+        entity.hurt(new DamageSource(entity.damageSources().genericKill().typeHolder(),player), Float.POSITIVE_INFINITY);
+        InfinitySword.sweep(player, entity, stack, Float.POSITIVE_INFINITY);
+        return true;
     }
 
     @Override

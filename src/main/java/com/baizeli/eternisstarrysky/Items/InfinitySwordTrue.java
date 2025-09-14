@@ -296,6 +296,10 @@ public final class InfinitySwordTrue extends SwordItem
 			player.crit(e);
 			e.hurt(voidDamage, Float.MAX_VALUE);
 		});
+
+		InfinitySword.sweep(player, entity, stack, Float.MAX_VALUE);
+
+		player.resetAttackStrengthTicker();
 		return true;
 	}
 
