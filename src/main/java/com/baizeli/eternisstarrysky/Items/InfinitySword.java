@@ -3,14 +3,21 @@ package com.baizeli.eternisstarrysky.Items;
 import com.baizeli.Sounds;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.entity.EntityTypeTest;
 import net.minecraft.world.phys.AABB;
@@ -74,7 +81,36 @@ public class InfinitySword extends SwordItem
 		return nearbyEntities;
 	}
 
-	public static void sweep()
+	public static void sweep(Player player, Entity target, ItemStack item, double damage)
 	{
+		if (!(player instanceof ServerPlayer))
+			return;
+
+
+		int sweepLevel = item.getEnchantmentLevel(Enchantments.SWEEPING_EDGE) + 2;
+		double sweepDamage = (1.0 - (1.0 / sweepLevel)) * damage;
+
+		AABB sweepHitBox = player.getItemInHand(InteractionHand.MAIN_HAND).getSweepHitBox(player, target);
+		for (LivingEntity living : player.level().getEntitiesOfClass(LivingEntity.class, sweepHitBox))
+		{
+			double entityReachSq = Mth.square(player.getEntityReach());
+			boolean flag = living != player;
+			flag &= living != target;
+			flag &= !player.isAlliedTo(living);
+			flag &= (!(living instanceof ArmorStand) || !((ArmorStand) living).isMarker());
+			flag &= player.distanceToSqr(living) < entityReachSq;
+			if (flag)
+			{
+				double ratioX = Mth.sin(player.getYRot() * ((float) Math.PI / 180F));
+				double ratioZ = -Mth.cos(player.getYRot() * ((float) Math.PI / 180));
+				living.knockback(0.4, ratioX, ratioZ);
+				living.hurt(player.damageSources().fellOutOfWorld(), (float) sweepDamage);
+			}
+		}
+
+		SoundEvent sound = SoundEvents.PLAYER_ATTACK_SWEEP;
+		SoundSource source = player.getSoundSource();
+		player.level().playSound(null, player.getX(), player.getY(), player.getZ(), sound, source, 1.0F, 1.0F);
+		player.sweepAttack();
 	}
 }
