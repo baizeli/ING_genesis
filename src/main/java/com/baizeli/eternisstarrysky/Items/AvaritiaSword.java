@@ -1,6 +1,7 @@
 package com.baizeli.eternisstarrysky.Items;
 
 import com.baizeli.Sounds;
+import com.baizeli.eternisstarrysky.AvaritiaVulnerable;
 import com.baizeli.eternisstarrysky.Util.TextUtils;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
@@ -17,7 +18,11 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.SwordItem;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
@@ -76,12 +81,14 @@ public class AvaritiaSword extends SwordItem {
 
     @Override
     public void onUseTick(Level p_41428_, LivingEntity p_41429_, ItemStack p_41430_, int p_41431_) {
-        p_41429_.setInvulnerable(true);
+        if (p_41429_ instanceof AvaritiaVulnerable avaritia)
+            avaritia.vulnerable(false);
     }
 
     @Override
     public void releaseUsing(ItemStack p_41412_, Level p_41413_, LivingEntity p_41414_, int p_41415_) {
-        if (p_41414_ instanceof Player player && (!player.isCreative()))p_41414_.setInvulnerable(false);
+        if (p_41414_ instanceof AvaritiaVulnerable avaritia)
+            avaritia.vulnerable(true);
         super.releaseUsing(p_41412_, p_41413_, p_41414_, p_41415_);
     }
 
