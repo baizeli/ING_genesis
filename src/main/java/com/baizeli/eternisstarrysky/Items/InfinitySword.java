@@ -1,6 +1,9 @@
 package com.baizeli.eternisstarrysky.Items;
 
+import com.baizeli.Sounds;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -29,6 +32,12 @@ public class InfinitySword extends SwordItem
 	@Override
 	public boolean onLeftClickEntity(ItemStack stack, Player player, Entity entity)
 	{
+		if (player instanceof LocalPlayer)
+		{
+			Sounds.play(SoundEvents.AMETHYST_BLOCK_STEP, player, 10.0F, 1.0F);
+			return false;
+		}
+
 		if (!(player instanceof ServerPlayer))
 			return false;
 
@@ -63,5 +72,9 @@ public class InfinitySword extends SwordItem
 			predicate = (e) -> true;
 		level.getEntities(typeTest, aabb, predicate, nearbyEntities, Integer.MAX_VALUE);
 		return nearbyEntities;
+	}
+
+	public static void sweep()
+	{
 	}
 }

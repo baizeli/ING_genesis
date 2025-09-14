@@ -1,11 +1,14 @@
 package com.baizeli.eternisstarrysky.Items;
 
+import com.baizeli.Sounds;
 import com.baizeli.eternisstarrysky.Util.TextUtils;
 import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.damagesource.DamageSource;
@@ -95,6 +98,11 @@ public class AvaritiaSword extends SwordItem {
     }
     @Override
     public boolean onLeftClickEntity(ItemStack stack, Player player, Entity entity) {
+        if (player instanceof LocalPlayer)
+        {
+            Sounds.play(SoundEvents.AMETHYST_BLOCK_STEP, player, 10.0F, 1.0F);
+            return false;
+        }
         entity.hurt(new DamageSource(entity.damageSources().genericKill().typeHolder(),player),Float.POSITIVE_INFINITY);
         if (entity instanceof LivingEntity living)living.setHealth(0.0f);
         return super.onLeftClickEntity(stack, player, entity);

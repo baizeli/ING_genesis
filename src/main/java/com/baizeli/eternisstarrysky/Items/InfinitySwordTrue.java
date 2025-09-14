@@ -1,5 +1,6 @@
 package com.baizeli.eternisstarrysky.Items;
 
+import com.baizeli.Sounds;
 import com.baizeli.eternisstarrysky.RainbowEffectHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
@@ -128,6 +129,9 @@ public final class InfinitySwordTrue extends SwordItem
 	@Override
 	public void releaseUsing(ItemStack stack, Level level, LivingEntity entity2, int timeLeft)
 	{
+		if (entity2 instanceof LocalPlayer player)
+			Sounds.play(SoundEvents.GLASS_BREAK, player, 1.0F, 0.8F);
+
 		if (entity2 instanceof Player player)
 		{
 			if (!level.isClientSide)
@@ -149,9 +153,6 @@ public final class InfinitySwordTrue extends SwordItem
 				nearbyEntities.sort((e1, e2) -> Float.compare(e1.distanceTo(player), e2.distanceTo(player)));
 
 				List<LivingEntity> targetsToKill = nearbyEntities.subList(0, Math.min(9, nearbyEntities.size()));
-
-				level.playSound(null, player.getX(), player.getY(), player.getZ(),
-					SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.PLAYERS, 1.0F, 2.0F);
 
 				for (int i = 0; i < 50; i++)
 				{
@@ -277,6 +278,11 @@ public final class InfinitySwordTrue extends SwordItem
 	@Override
 	public boolean onLeftClickEntity(ItemStack stack, Player player, Entity entity)
 	{
+		if (player instanceof LocalPlayer)
+		{
+			Sounds.play(SoundEvents.AMETHYST_BLOCK_STEP, player, 10.0F, 1.0F);
+			return false;
+		}
 		if (!(player instanceof ServerPlayer))
 			return false;
 
