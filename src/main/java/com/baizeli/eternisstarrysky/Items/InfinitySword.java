@@ -9,6 +9,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.decoration.ArmorStand;
@@ -16,7 +17,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tier;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.entity.EntityTypeTest;
@@ -51,14 +51,26 @@ public class InfinitySword extends SwordItem
 		if (!(entity instanceof LivingEntity))
 			return false;
 
-		Predicate<LivingEntity> predicate = (e) -> e.getId() != player.getId();
-		List<LivingEntity> nearbyEntities = InfinitySword.getNearbyLivingEntities(entity, KILL_RADIUS, predicate);
+		if (((LivingEntity) entity).isDeadOrDying())
+			return false;
+
+		float strength = player.getAttackStrengthScale(0.5F);
+		List<LivingEntity> nearbyEntities = List.of((LivingEntity) entity);
+		if (strength >= 1.0)
+		{
+			Predicate<LivingEntity> predicate = (e) -> e.getId() != player.getId();
+			nearbyEntities = InfinitySword.getNearbyLivingEntities(entity, KILL_RADIUS, predicate);
+		}
 
 		DamageSource source = new DamageSource(player.damageSources().fellOutOfWorld().typeHolder(), player);
 		nearbyEntities.forEach(living -> {
 			player.crit(living);
-			living.hurt(source, this.getDamage());
+			living.hurt(source, this.getDamage() * strength);
 		});
+
+		InfinitySword.sweep(player, entity, stack, this.getDamage());
+
+		player.resetAttackStrengthTicker();
 		return true;
 	}
 
@@ -86,6 +98,27 @@ public class InfinitySword extends SwordItem
 		if (!(player instanceof ServerPlayer))
 			return;
 
+
+		float strength = player.getAttackStrengthScale(0.5F);
+		boolean cooldown = strength >= 1.0;
+		boolean sprinting = (cooldown && player.isSprinting());
+		boolean crit = cooldown &&
+			player.fallDistance > 0.0F &&
+			!player.onGround() &&
+			!player.onClimbable() &&
+			!player.isInWater() &&
+			!player.hasEffect(MobEffects.BLINDNESS) &&
+			!player.isPassenger() &&
+			!sprinting;
+		double d0 = player.walkDist - player.walkDistO;
+		boolean sweep = cooldown &&
+			!sprinting &&
+			!crit &&
+			player.onGround() &&
+			(d0 < player.getSpeed());
+
+		if (!sweep)
+			return;
 
 		int sweepLevel = item.getEnchantmentLevel(Enchantments.SWEEPING_EDGE) + 2;
 		double sweepDamage = (1.0 - (1.0 / sweepLevel)) * damage;
