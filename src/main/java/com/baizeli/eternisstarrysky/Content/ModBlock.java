@@ -15,6 +15,6 @@ public class ModBlock {
     public static final RegistryObject<Block> workbench = BLOCKS.register("workbench",
             () -> new VanillaWorkbenchBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_PURPLE)
-                    .strength(3.0f)
+                    .strength(3.0f, 1200)
                     .requiresCorrectToolForDrops()));
 }
