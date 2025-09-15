@@ -200,7 +200,7 @@ public final class InfinitySwordTrue extends SwordItem
 						entity.hurtTime = 0;
 
 						//虚空伤害
-						DamageSource void_damage = new DamageSource(entity.damageSources().genericKill().typeHolder(),player);
+						DamageSource void_damage = new DamageSource(entity.damageSources().fellOutOfWorld().typeHolder(),player);
 
 						entity.hurt(void_damage, Float.MAX_VALUE);
 						entity.setHealth(0);
@@ -289,7 +289,7 @@ public final class InfinitySwordTrue extends SwordItem
 		if (!(entity instanceof LivingEntity))
 			return false;
 
-		DamageSource voidDamage = new DamageSource(player.damageSources().genericKill().typeHolder(), player);
+		DamageSource voidDamage = new DamageSource(player.damageSources().fellOutOfWorld().typeHolder(), player);
 		Predicate<LivingEntity> predicate = (e) -> e.getId() != player.getId();
 		List<LivingEntity> nearbyEntities = InfinitySword.getNearbyLivingEntities(entity, KILL_RADIUS, predicate);
 		nearbyEntities.forEach(e -> {
