@@ -167,6 +167,10 @@ vec3 starGradient(float intensity, float pulse, int useType)
 		float flowFactor = 0.7 + 0.3 * sin(timeOffset * 2.0);
 		color *= flowFactor;
 	}
+	else if (useType == 4)
+	{
+		color = vec3(1, 1, 1);
+	}
 
 	return color;
 }
@@ -227,6 +231,10 @@ void main(void)
 	else if (useType == 0)
 	{
 		col.rgb = vec3(0.08, 0.02, 0.12); // 紫色背景保持不变
+	}
+	else if (useType == 4)
+	{
+		col.rgb = vec3(0.3, 0.3, 1);
 	}
 
 	col.a = 1.0;

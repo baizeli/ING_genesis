@@ -30,8 +30,12 @@ import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public final class CosmicBakeModel implements BakedModel {
     private static final ItemModelGenerator ITEM_MODEL_GENERATOR = new ItemModelGenerator();
@@ -57,25 +61,8 @@ public final class CosmicBakeModel implements BakedModel {
         this.maskSprite = maskSprite;
     }
 
-    private static final Map<Item, EffectConfig> COSMIC_EFFECTS = Map.of(
+    private static final Map<Item, EffectConfig> COSMIC_EFFECTS = new HashMap<>();
 
-            // 上限了，换成 ofEntries 即可
-            ModItems.INFINITY_SWORD.get(), new EffectConfig(0, 0.6F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)),
-            ModItems.INFINITY_SWORD_TRUE.get(), new EffectConfig(2, 0.6F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)),
-            ModItems.INFINITY_ETERNAL_HELMET.get(), new EffectConfig(0, 0.5F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)),
-            ModItems.INFINITY_ETERNAL_CHESTPLATE.get(), new EffectConfig(0, 0.5F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)),
-            ModItems.INFINITY_ETERNAL_LEGGINGS.get(), new EffectConfig(0, 0.5F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)),
-            ModItems.INFINITY_ETERNAL_BOOTS.get(), new EffectConfig(0, 0.5F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)),
-
-            ModItems.PRIMOGEM.get(), new EffectConfig(2, 0.6F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)),
-            ModItems.PURPLEITE_GALAXY_INGOT.get(), new EffectConfig(0, 0.6F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)),
-            ModItems.ETERNIS_APPLE.get(), new EffectConfig(0, 0.5F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)),
-            ModItems.PEACH.get(), new EffectConfig(1, 0.5F, new Vector4f(0.0F, 0.02F, 0.03F, 1F))
-    );
-    private static final Map<Item, EffectConfig> COSMIC_EFFECTS_1 = Map.of(
-            // 上限了，换成 ofEntries 即可
-            ModItems.AVARITIA_SWORD.get(), new EffectConfig(3, 0.6F, new Vector4f(0.0F, 0.02F, 0.03F, 1F))
-    );
     public void renderItem(ItemStack stack, ItemDisplayContext transformType, PoseStack pStack, MultiBufferSource buffers, int packedLight, int packedOverlay) {
         // 渲染基础模型
         BakedModel model = this.wrapped.getOverrides().resolve(this.wrapped, stack, this.world, this.entity, 0);
@@ -90,11 +77,8 @@ public final class CosmicBakeModel implements BakedModel {
 
         // 检查并渲染特效
         EffectConfig config = COSMIC_EFFECTS.get(stack.getItem());
-        EffectConfig config1 = COSMIC_EFFECTS_1.get(stack.getItem());
         if (config != null) {
             renderCosmicEffect(stack, transformType, pStack, buffers, packedLight, packedOverlay, config.type, config.scale, config.v4f);
-        }else if (config1 != null){
-            renderCosmicEffect(stack, transformType, pStack, buffers, packedLight, packedOverlay, config1.type, config1.scale, config1.v4f);
         }
     }
 
@@ -247,5 +231,21 @@ public final class CosmicBakeModel implements BakedModel {
     @Override
     public boolean usesBlockLight() {
         return this.wrapped.usesBlockLight();
+    }
+
+    static
+    {
+            COSMIC_EFFECTS.put(ModItems.INFINITY_SWORD.get(), new EffectConfig(0, 0.6F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
+            COSMIC_EFFECTS.put(ModItems.INFINITY_SWORD_TRUE.get(), new EffectConfig(2, 0.6F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
+            COSMIC_EFFECTS.put(ModItems.INFINITY_ETERNAL_HELMET.get(), new EffectConfig(0, 0.5F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
+            COSMIC_EFFECTS.put(ModItems.INFINITY_ETERNAL_CHESTPLATE.get(), new EffectConfig(0, 0.5F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
+            COSMIC_EFFECTS.put(ModItems.INFINITY_ETERNAL_LEGGINGS.get(), new EffectConfig(0, 0.5F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
+            COSMIC_EFFECTS.put(ModItems.INFINITY_ETERNAL_BOOTS.get(), new EffectConfig(0, 0.5F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
+
+            COSMIC_EFFECTS.put(ModItems.PRIMOGEM.get(), new EffectConfig(2, 0.6F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
+            COSMIC_EFFECTS.put(ModItems.PURPLEITE_GALAXY_INGOT.get(), new EffectConfig(0, 0.6F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
+            COSMIC_EFFECTS.put(ModItems.ETERNIS_APPLE.get(), new EffectConfig(0, 0.5F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
+            COSMIC_EFFECTS.put(ModItems.PEACH.get(), new EffectConfig(1, 0.5F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
+            COSMIC_EFFECTS.put(ModItems.AVARITIA_SWORD.get(), new EffectConfig(4, 0.6F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
     }
 }
