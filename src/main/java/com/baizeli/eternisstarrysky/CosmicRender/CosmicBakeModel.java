@@ -122,6 +122,10 @@ public final class CosmicBakeModel implements BakedModel {
         AvaritiaShaders.cosmicExternalScale.set(scale);
         AvaritiaShaders.cosmicOpacity.set(1.0F);
         AvaritiaShaders.useType.set(useType);
+        int ctime = 0;
+        if (Minecraft.getInstance().level != null)
+            ctime = Math.toIntExact(((Minecraft.getInstance().level.getDayTime() % 24000) + 6000) % 24000);
+        AvaritiaShaders.currentTime.set(ctime);
 
         // 准备纹理UV
         for (int i = 0; i < 10; ++i)

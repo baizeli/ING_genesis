@@ -43,6 +43,7 @@ public final class AvaritiaShaders {
     public static CCUniform cosmicExternalScale;
     public static CCUniform cosmicOpacity;
     public static CCUniform cosmicUVs;
+    public static CCUniform currentTime;
     public static final RenderType COSMIC_RENDER_TYPE = RenderType.create(EternisStarrySky.MOD_ID + ":cosmic", DefaultVertexFormat.BLOCK, VertexFormat.Mode.QUADS, 2097152, true, false, RenderType.CompositeState.builder().setShaderState(new RenderStateShard.ShaderStateShard(() -> cosmicShader)).setDepthTestState(RenderStateShardAccess.EQUAL_DEPTH_TEST).setLightmapState(RenderStateShardAccess.LIGHT_MAP).setTransparencyState(RenderStateShardAccess.TRANSLUCENT_TRANSPARENCY).setTextureState(RenderStateShardAccess.BLOCK_SHEET_MIPPED).createCompositeState(true));
 
     public static void onRegisterShaders(RegisterShadersEvent event) {
@@ -55,6 +56,7 @@ public final class AvaritiaShaders {
             cosmicOpacity = Objects.requireNonNull(cosmicShader.getUniform("opacity"));
             cosmicUVs = Objects.requireNonNull(cosmicShader.getUniform("cosmicuvs"));
             useType = Objects.requireNonNull(cosmicShader.getUniform("useType"));
+            currentTime = Objects.requireNonNull(cosmicShader.getUniform("currentTime"));
             cosmicTime.set((float) renderTime + renderFrame);
             cosmicShader.onApply(() -> cosmicTime.set((float) renderTime + renderFrame));
         });

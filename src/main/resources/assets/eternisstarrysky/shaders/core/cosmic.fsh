@@ -25,6 +25,7 @@ uniform float opacity;
 uniform int useType; // 0=紫色, 1=紫金配色, 2=极光配色, 3=蓝色
 
 uniform mat2 cosmicuvs[cosmiccount];
+uniform int currentTime;
 
 in float vertexDistance;
 in vec4 vertexColor;
@@ -234,7 +235,22 @@ void main(void)
 	}
 	else if (useType == 4)
 	{
-		col.rgb = vec3(0.3, 0.3, 1);
+		/*
+		int distance = abs(12000 - currentTime);
+		float delta = distance / 12000.0F;
+		float r = 0.3;
+		float g = 0.3;
+		float b = 1;
+		r += (0.5 - 0.3) * delta;
+		g -= 0.3 * delta;
+		b -= delta;
+		col.rgb = vec3(r, g, b);
+		*/
+		int dayTime = (currentTime + 18000) % 24000;
+		if (dayTime >= 12000)
+			col.rgb = vec3(0.5, 0, 0);
+		else
+			col.rgb = vec3(0.3, 0.3, 1);
 	}
 
 	col.a = 1.0;

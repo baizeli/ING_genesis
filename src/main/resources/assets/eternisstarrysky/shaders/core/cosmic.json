@@ -31,6 +31,7 @@
         { "name": "externalScale", "type": "float", "count": 1, "values": [ 0.0 ] },
         { "name": "opacity", "type": "float", "count": 1, "values": [ 0.0 ] },
         { "name": "cosmicuvs", "type": "matrix2x2", "count": 40, "values": [ 0.0 ] },
-        { "name": "useType", "type": "int", "count": 1, "values": [ 0 ] }
+        { "name": "useType", "type": "int", "count": 1, "values": [ 0 ] },
+        { "name": "currentTime", "type": "int", "count": 1, "values": [ 0 ] }
     ]
 }
