@@ -11,7 +11,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.*;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.ConfigScreenHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -32,7 +31,6 @@ public class EternisStarrySky
 
     public static final String MOD_ID = "eternisstarrysky";
     private static final Logger LOGGER = LogUtils.getLogger();
-    public static final ConfigScreenHandler.ConfigScreenFactory CONFIG_SCREEN_FACTORY = new ConfigScreenHandler.ConfigScreenFactory(Configuration::screen);
 
     public static ResourceLocation rl(String path) {
         return new ResourceLocation(MOD_ID, path);
@@ -91,7 +89,6 @@ public class EternisStarrySky
 
         MinecraftForge.EVENT_BUS.register(this);
         context.registerConfig(ModConfig.Type.COMMON, Configuration.SPECIFICATION);
-        context.registerExtensionPoint(CONFIG_SCREEN_FACTORY.getClass(), () -> CONFIG_SCREEN_FACTORY);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event)
@@ -113,9 +110,8 @@ public class EternisStarrySky
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event)
         {
-            event.enqueueWork(() -> {
-                MenuScreens.register(ModMenuTypes.VANILLA_WORKBENCH_MENU.get(), VanillaWorkbenchScreen::new);
-            });
+            event.enqueueWork(() -> MenuScreens.register(ModMenuTypes.VANILLA_WORKBENCH_MENU.get(), VanillaWorkbenchScreen::new));
+            MinecraftForge.registerConfigScreen(Configuration::screen);
         }
     }
 }
