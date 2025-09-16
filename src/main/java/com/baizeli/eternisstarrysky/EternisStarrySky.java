@@ -111,7 +111,7 @@ public class EternisStarrySky
         public static void onClientSetup(FMLClientSetupEvent event)
         {
             event.enqueueWork(() -> MenuScreens.register(ModMenuTypes.VANILLA_WORKBENCH_MENU.get(), VanillaWorkbenchScreen::new));
-            MinecraftForge.registerConfigScreen(Configuration::screen);
+            MinecraftForge.registerConfigScreen(new ConfigurationFactory());
         }
     }
 }

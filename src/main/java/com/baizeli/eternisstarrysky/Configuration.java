@@ -2,7 +2,6 @@ package com.baizeli.eternisstarrysky;
 
 import com.baizeli.Trie;
 import com.baizeli.eternisstarrysky.config.ConfigEffect;
-import com.baizeli.eternisstarrysky.config.menu.ConfigMenu;
 import com.google.common.collect.ImmutableList;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -11,8 +10,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -130,13 +127,6 @@ public class Configuration
 		if (!(id instanceof String))
 			return false;
 		return ForgeRegistries.MOB_EFFECTS.containsKey(ResourceLocation.tryParse((String) id));
-	}
-
-	public static Screen screen(Minecraft mc, Screen screen)
-	{
-		ConfigMenu configScreen = new ConfigMenu(screen);
-		mc.pushGuiLayer(configScreen);
-		return configScreen;
 	}
 
 	static

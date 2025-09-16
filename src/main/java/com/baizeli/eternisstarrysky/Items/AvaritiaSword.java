@@ -5,9 +5,9 @@ import com.baizeli.eternisstarrysky.AvaritiaVulnerable;
 import com.baizeli.eternisstarrysky.Util.TextUtils;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -104,7 +104,7 @@ public class AvaritiaSword extends SwordItem {
     }
     @Override
     public boolean onLeftClickEntity(ItemStack stack, Player player, Entity entity) {
-        if (player instanceof LocalPlayer)
+        if (!(player instanceof ServerPlayer))
         {
             Sounds.play(SoundEvents.AMETHYST_BLOCK_STEP, player, 10.0F, 1.0F);
             return false;

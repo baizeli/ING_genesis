@@ -7,7 +7,6 @@ import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.font.FontSet;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.core.particles.ParticleTypes;
@@ -129,10 +128,13 @@ public final class InfinitySwordTrue extends SwordItem
 	@Override
 	public void releaseUsing(ItemStack stack, Level level, LivingEntity entity2, int timeLeft)
 	{
-		if (entity2 instanceof LocalPlayer player)
+		if (!(entity2 instanceof Player player))
+			return;
+
+		if (!(entity2 instanceof ServerPlayer))
 			Sounds.play(SoundEvents.GLASS_BREAK, player, 1.0F, 0.8F);
 
-		if (entity2 instanceof Player player)
+		if (entity2 instanceof Player)
 		{
 			if (!level.isClientSide)
 			{
@@ -278,13 +280,11 @@ public final class InfinitySwordTrue extends SwordItem
 	@Override
 	public boolean onLeftClickEntity(ItemStack stack, Player player, Entity entity)
 	{
-		if (player instanceof LocalPlayer)
+		if (!(player instanceof ServerPlayer))
 		{
 			Sounds.play(SoundEvents.AMETHYST_BLOCK_STEP, player, 10.0F, 1.0F);
 			return false;
 		}
-		if (!(player instanceof ServerPlayer))
-			return false;
 
 		if (!(entity instanceof LivingEntity))
 			return false;

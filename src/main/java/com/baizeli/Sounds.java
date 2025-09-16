@@ -1,6 +1,5 @@
 package com.baizeli;
 
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.Holder;
 import net.minecraft.network.protocol.game.ClientboundSoundPacket;
 import net.minecraft.server.level.ServerPlayer;
@@ -18,15 +17,16 @@ public class Sounds
 
 	public static void play(SoundEvent sound, Player player, float volume, float pitch)
 	{
+		if (player == null)
+			return;
 		if (sound == null)
 			return;
-		if (player instanceof LocalPlayer)
+		if (!(player instanceof ServerPlayer sp))
 		{
 			player.playSound(sound, volume, pitch);
 			return;
 		}
 
-		ServerPlayer sp = (ServerPlayer) player;
 		Optional<Holder<SoundEvent>> optional = ForgeRegistries.SOUND_EVENTS.getHolder(sound);
 		if (optional.isEmpty())
 			return;
