@@ -5,6 +5,7 @@
 	"refmap": "eternisstarrysky.refmap.json",
 	"mixins": [
 		"InfinitySwordDamageMixin",
+		"LivingEntityMixin",
 		"PlayerMixin",
 		"RecipeLayoutMixin"
 	],

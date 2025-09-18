@@ -1,6 +1,8 @@
 package com.baizeli.eternisstarrysky.Items;
 
 import com.baizeli.Sounds;
+import com.baizeli.eternisstarrysky.AvaritiaKill;
+import com.baizeli.eternisstarrysky.AvaritiaLivingEntity;
 import com.baizeli.eternisstarrysky.AvaritiaVulnerable;
 import com.baizeli.eternisstarrysky.Util.TextUtils;
 import com.google.common.collect.ImmutableMultimap;
@@ -8,6 +10,7 @@ import com.google.common.collect.Multimap;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -25,12 +28,13 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.gameevent.GameEvent;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class AvaritiaSword extends SwordItem {
-
+public class AvaritiaSword extends SwordItem
+{
     public AvaritiaSword(int p_43270_, float p_43271_, Properties p_43272_) {
         super(new Tier() {
             @Override
@@ -103,16 +107,32 @@ public class AvaritiaSword extends SwordItem {
         return Integer.MAX_VALUE;
     }
     @Override
-    public boolean onLeftClickEntity(ItemStack stack, Player player, Entity entity) {
+    public boolean onLeftClickEntity(ItemStack stack, Player player, Entity entity)
+    {
         if (!(player instanceof ServerPlayer))
         {
             Sounds.play(SoundEvents.AMETHYST_BLOCK_STEP, player, 10.0F, 1.0F);
             return false;
         }
-        if (!(entity instanceof LivingEntity))
+        if (!(entity instanceof LivingEntity living))
             return false;
 
-        entity.hurt(new DamageSource(entity.damageSources().genericKill().typeHolder(),player), Float.POSITIVE_INFINITY);
+        DamageSource source = new DamageSource(player.damageSources().genericKill().typeHolder(), player);
+        // living.die(new DamageSource(entity.damageSources().genericKill().typeHolder(), player));
+        living.getCombatTracker().recordDamage(source, Float.POSITIVE_INFINITY);
+        living.gameEvent(GameEvent.ENTITY_DAMAGE);
+        living.setLastHurtByMob(player);
+        living.lastHurtByPlayerTime = 100;
+        living.lastHurtByPlayer = player;
+        if (!living.checkTotemDeathProtection(source))
+        {
+            SoundEvent sound = living.getDeathSound();
+            if (sound != null)
+                living.playSound(sound, living.getSoundVolume(), living.getVoicePitch());
+            AvaritiaLivingEntity.die(living, source);
+            ((AvaritiaKill) living).dead(true);
+            living.brain.clearMemories();
+        }
         InfinitySword.sweep(player, entity, stack, Float.POSITIVE_INFINITY);
         return true;
     }

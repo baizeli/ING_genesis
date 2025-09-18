@@ -1,11 +1,14 @@
 package com.baizeli;
 
-import org.objectweb.asm.*;
+import org.objectweb.asm.ClassWriter;
+import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.Type;
 
-import java.io.FileOutputStream;
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
+import java.lang.reflect.Field;
 import java.lang.reflect.Proxy;
 import java.util.UUID;
 
@@ -37,6 +40,7 @@ public class ModuleAccess extends ClassLoader
 	public static final MethodHandle EXPORT;
 	public static final MethodHandle OPEN;
 	public static final MethodHandle READ;
+	public static final MethodHandles.Lookup LOOKUP;
 
 	public ModuleAccess()
 	{
@@ -132,10 +136,6 @@ public class ModuleAccess extends ClassLoader
 
 	static
 	{
-		MethodHandle export;
-		MethodHandle open;
-		MethodHandle read;
-		MethodHandle module;
 		try
 		{
 			ModuleAccess access = new ModuleAccess();
@@ -302,6 +302,14 @@ public class ModuleAccess extends ClassLoader
 			mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Class", "getModule", "()Ljava/lang/Module;", false);
 			mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Module", "addExports", "(Ljava/lang/String;Ljava/lang/Module;)Ljava/lang/Module;", false);
 			mv.visitInsn(Opcodes.POP);
+			mv.visitLdcInsn(Type.getType("L" + className + ";"));
+			mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Class", "getModule", "()Ljava/lang/Module;", false);
+			mv.visitLdcInsn(packageName);
+			mv.visitLdcInsn(ModuleAccess.class.getTypeName());
+			mv.visitMethodInsn(Opcodes.INVOKESTATIC, "java/lang/Class", "forName", "(Ljava/lang/String;)Ljava/lang/Class;", false);
+			mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Class", "getModule", "()Ljava/lang/Module;", false);
+			mv.visitMethodInsn(Opcodes.INVOKEVIRTUAL, "java/lang/Module", "addOpens", "(Ljava/lang/String;Ljava/lang/Module;)Ljava/lang/Module;", false);
+			mv.visitInsn(Opcodes.POP);
 			mv.visitInsn(Opcodes.RETURN);
 			mv.visitMaxs(3, 0);
 			mv.visitEnd();
@@ -309,40 +317,37 @@ public class ModuleAccess extends ClassLoader
 			visitor.visitEnd();
 			byte[] code = visitor.toByteArray();
 
-			FileOutputStream out = new FileOutputStream(className.substring(className.lastIndexOf('/') + 1) + ".class");
-			out.write(code);
-			out.flush();
-			out.close();
-
 			Class<?> clazz = access.loading(code);
+			ModuleAccess.class.getModule().addReads(clazz.getModule());
 			// Use MethodHandle to invoke methods.
 			MethodHandles.Lookup lookup = MethodHandles.lookup();
 			Class<?> moduleClass = Class.forName("java.lang.Module");
-			module = lookup.findVirtual(Class.class, "getModule", MethodType.methodType(moduleClass));
-			export = lookup.findStatic(
+			MODULE = lookup.findVirtual(Class.class, "getModule", MethodType.methodType(moduleClass));
+			EXPORT = lookup.findStatic(
 				clazz,
 				"export",
 				MethodType.methodType(void.class, Object.class, Object.class, Object.class)
 			);
-			open = lookup.findStatic(
+			OPEN = lookup.findStatic(
 				clazz,
 				"open",
 				MethodType.methodType(void.class, Object.class, Object.class, Object.class)
 			);
-			read = lookup.findStatic(
+			READ = lookup.findStatic(
 				clazz,
 				"read",
 				MethodType.methodType(void.class, Object.class, Object.class)
 			);
+
+			ModuleAccess.open(MethodHandles.Lookup.class.getModule(), MethodHandles.Lookup.class.getPackageName(), ModuleAccess.class.getModule());
+			Field implLookupField = MethodHandles.Lookup.class.getDeclaredField("IMPL_LOOKUP");
+			implLookupField.setAccessible(true);
+			LOOKUP = (MethodHandles.Lookup) implLookupField.get(null);
 		}
 		catch (Throwable t)
 		{
 			exception(t);
 			throw new RuntimeException(t);
 		}
-		MODULE = module;
-		EXPORT = export;
-		OPEN = open;
-		READ = read;
 	}
 }
