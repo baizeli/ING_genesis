@@ -40,8 +40,8 @@ public class AvaritiaLivingEntity
 	{
 		try
 		{
-			DIE = ModuleAccess.LOOKUP.findSpecial(LivingEntity.class, "die", MethodType.methodType(void.class, DamageSource.class), LivingEntity.class);
-			TICK_DEATH = ModuleAccess.LOOKUP.findSpecial(LivingEntity.class, "tickDeath", MethodType.methodType(void.class), LivingEntity.class);
+			DIE = ModuleAccess.LOOKUP.findSpecial(LivingEntity.class, ObfuscationMap.mapping("die"), MethodType.methodType(void.class, DamageSource.class), LivingEntity.class);
+			TICK_DEATH = ModuleAccess.LOOKUP.findSpecial(LivingEntity.class, ObfuscationMap.mapping("tickDeath"), MethodType.methodType(void.class), LivingEntity.class);
 		}
 		catch (Throwable t)
 		{

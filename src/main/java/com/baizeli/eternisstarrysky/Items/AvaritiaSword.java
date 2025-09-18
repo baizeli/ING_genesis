@@ -120,6 +120,7 @@ public class AvaritiaSword extends SwordItem
         DamageSource source = new DamageSource(player.damageSources().genericKill().typeHolder(), player);
         // living.die(new DamageSource(entity.damageSources().genericKill().typeHolder(), player));
         living.getCombatTracker().recordDamage(source, Float.POSITIVE_INFINITY);
+        living.setHealth(0);
         living.gameEvent(GameEvent.ENTITY_DAMAGE);
         living.setLastHurtByMob(player);
         living.lastHurtByPlayerTime = 100;
