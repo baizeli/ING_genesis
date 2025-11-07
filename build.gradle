@@ -113,6 +113,7 @@ dependencies {
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
     implementation fg.deobf("vazkii.patchouli:Patchouli:1.20.1-84.1-FORGE:api")
     implementation fg.deobf("vazkii.patchouli:Patchouli:1.20.1-84.1-FORGE")
+    implementation fg.deobf("curse.maven:geckolib-388172:6333474")
 }
 
 tasks.named('processResources', ProcessResources).configure {

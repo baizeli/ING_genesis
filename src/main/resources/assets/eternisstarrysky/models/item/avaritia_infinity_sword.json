@@ -6,6 +6,6 @@
   },
   "loader": "eternisstarrysky:cosmic",
   "cosmic": {
-    "mask": "eternisstarrysky:item/mask/u_mask"
+    "mask": "eternisstarrysky:item/mask/mask"
   }
 }

@@ -1,6 +1,7 @@
 package com.baizeli.eternisstarrysky.CosmicRender;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
+import com.baizeli.eternisstarrysky.Items.AvaritiaSword;
 import com.baizeli.eternisstarrysky.Items.ModItems;
 import com.google.common.collect.ImmutableMap;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -78,7 +79,8 @@ public final class CosmicBakeModel implements BakedModel {
         // 检查并渲染特效
         EffectConfig config = COSMIC_EFFECTS.get(stack.getItem());
         if (config != null) {
-            renderCosmicEffect(stack, transformType, pStack, buffers, packedLight, packedOverlay, config.type, config.scale, config.v4f);
+           // int shadersType = stack.getItem() instanceof AvaritiaSword ? 1 : 2;
+            renderCosmicEffect(stack, transformType, pStack, buffers, packedLight, packedOverlay, config.type, config.scale, config.v4f,2);
         }
     }
 
@@ -94,7 +96,7 @@ public final class CosmicBakeModel implements BakedModel {
         }
     }
 
-    private void renderCosmicEffect(ItemStack stack, ItemDisplayContext transformType, PoseStack pStack, MultiBufferSource buffers, int packedLight, int packedOverlay, int useType, float starScale, Vector4f vec4)
+    private void renderCosmicEffect(ItemStack stack, ItemDisplayContext transformType, PoseStack pStack, MultiBufferSource buffers, int packedLight, int packedOverlay, int useType, float starScale, Vector4f vec4,int shaderType)
     {
         if (buffers instanceof MultiBufferSource.BufferSource bs) {
             bs.endBatch();
@@ -139,7 +141,10 @@ public final class CosmicBakeModel implements BakedModel {
         AvaritiaShaders.cosmicUVs.set(AvaritiaShaders.COSMIC_UVS);
 
         // 创建顶点消费者
-        VertexConsumer cons = buffers.getBuffer(AvaritiaShaders.COSMIC_RENDER_TYPE);
+        VertexConsumer cons;
+       // else {
+            cons = buffers.getBuffer(AvaritiaShaders.COSMIC_RENDER_TYPE);
+        //}
         List<TextureAtlasSprite> atlasSprite = new ArrayList<>();
 
         // 加载遮罩纹理
@@ -250,6 +255,6 @@ public final class CosmicBakeModel implements BakedModel {
             COSMIC_EFFECTS.put(ModItems.PURPLEITE_GALAXY_INGOT.get(), new EffectConfig(0, 0.6F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
             COSMIC_EFFECTS.put(ModItems.ETERNIS_APPLE.get(), new EffectConfig(0, 0.5F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
             COSMIC_EFFECTS.put(ModItems.PEACH.get(), new EffectConfig(1, 0.5F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
-            COSMIC_EFFECTS.put(ModItems.AVARITIA_SWORD.get(), new EffectConfig(4, 0.6F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
+            COSMIC_EFFECTS.put(ModItems.AVARITIA_SWORD.get(), new EffectConfig(3, 0.6F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
     }
 }

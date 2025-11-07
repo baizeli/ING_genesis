@@ -40,7 +40,7 @@ public final class CosmicModelLoader implements IGeometryLoader<CosmicModelLoade
             clean.remove("cosmic");
             clean.remove("loader");
             BlockModel baseModel = deserializationContext.deserialize(clean, BlockModel.class);
-            return new CosmicModelLoader.CosmicGeometry(baseModel, maskTexture);
+            return new CosmicGeometry(baseModel, maskTexture);
         }
     }
 

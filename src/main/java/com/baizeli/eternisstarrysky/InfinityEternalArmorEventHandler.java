@@ -13,6 +13,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -20,6 +21,17 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = EternisStarrySky.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class InfinityEternalArmorEventHandler {
 
+    @SubscribeEvent
+    public static void stopFly(LivingEvent.LivingTickEvent event){
+        if (event.getEntity() instanceof Player player) {
+            if (player.getTags().contains("eternisstarrysky.hasSuit") && !InfinityEternalArmorItem.hasFullSet(player) && !player.isCreative()) {
+                player.removeTag("eternisstarrysky.hasSuit");
+                player.getAbilities().mayfly = false;
+                player.getAbilities().flying = false;
+                player.onUpdateAbilities();
+            }
+        }
+    }
 //    @SubscribeEvent
 //    public static void onLivingHurt(LivingHurtEvent event) {
 //        if (!(event.getEntity() instanceof Player player)) {

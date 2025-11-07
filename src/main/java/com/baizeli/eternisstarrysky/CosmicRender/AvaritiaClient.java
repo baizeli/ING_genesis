@@ -17,5 +17,6 @@ public final class AvaritiaClient {
     @SubscribeEvent
     public static void registerLoaders(ModelEvent.RegisterGeometryLoaders event) {
         event.register("cosmic", CosmicModelLoader.INSTANCE);
+        //event.register("cosmic_1",CosmicModelLoader.INSTANCE);
     }
 }

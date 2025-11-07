@@ -26,6 +26,8 @@ public class ModItems {
                     .stacksTo(64)
                     .rarity(Rarity.RARE)
             ));
+    
+    public static final RegistryObject<Item> GOOD_CAKE = ITEMS.register("good_cake",GoodCake :: new);
 
     public static final RegistryObject<Item> INFINITY_SWORD = ITEMS.register("infinity_sword",
         () -> new InfinitySword(

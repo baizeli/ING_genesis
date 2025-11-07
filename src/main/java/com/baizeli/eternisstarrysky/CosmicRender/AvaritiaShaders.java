@@ -19,11 +19,11 @@ import java.util.Objects;
 
 @Mod.EventBusSubscriber(modid = EternisStarrySky.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public final class AvaritiaShaders {
-    private static class RenderStateShardAccess extends RenderStateShard {
-        private static final RenderStateShard.DepthTestStateShard EQUAL_DEPTH_TEST = RenderStateShard.EQUAL_DEPTH_TEST;
-        private static final RenderStateShard.LightmapStateShard LIGHT_MAP = RenderStateShard.LIGHTMAP;
-        private static final RenderStateShard.TransparencyStateShard TRANSLUCENT_TRANSPARENCY = RenderStateShard.TRANSLUCENT_TRANSPARENCY;
-        private static final RenderStateShard.TextureStateShard BLOCK_SHEET_MIPPED = RenderStateShard.BLOCK_SHEET_MIPPED;
+    public static class RenderStateShardAccess extends RenderStateShard {
+        private static final DepthTestStateShard EQUAL_DEPTH_TEST = RenderStateShard.EQUAL_DEPTH_TEST;
+        public static final LightmapStateShard LIGHT_MAP = RenderStateShard.LIGHTMAP;
+        private static final TransparencyStateShard TRANSLUCENT_TRANSPARENCY = RenderStateShard.TRANSLUCENT_TRANSPARENCY;
+        private static final TextureStateShard BLOCK_SHEET_MIPPED = RenderStateShard.BLOCK_SHEET_MIPPED;
 
         private RenderStateShardAccess(String pName, Runnable pSetupState, Runnable pClearState) {
             super(pName, pSetupState, pClearState);
@@ -45,6 +45,7 @@ public final class AvaritiaShaders {
     public static CCUniform cosmicUVs;
     public static CCUniform currentTime;
     public static final RenderType COSMIC_RENDER_TYPE = RenderType.create(EternisStarrySky.MOD_ID + ":cosmic", DefaultVertexFormat.BLOCK, VertexFormat.Mode.QUADS, 2097152, true, false, RenderType.CompositeState.builder().setShaderState(new RenderStateShard.ShaderStateShard(() -> cosmicShader)).setDepthTestState(RenderStateShardAccess.EQUAL_DEPTH_TEST).setLightmapState(RenderStateShardAccess.LIGHT_MAP).setTransparencyState(RenderStateShardAccess.TRANSLUCENT_TRANSPARENCY).setTextureState(RenderStateShardAccess.BLOCK_SHEET_MIPPED).createCompositeState(true));
+    //public static final RenderType COSMIC_RENDER_TYPE_2 = RenderType.create(EternisStarrySky.MOD_ID + ":cosmic_1", DefaultVertexFormat.BLOCK, VertexFormat.Mode.QUADS, 2097152, true, false, RenderType.CompositeState.builder().setShaderState(new RenderStateShard.ShaderStateShard(() -> cosmicShader)).setDepthTestState(RenderStateShardAccess.EQUAL_DEPTH_TEST).setLightmapState(RenderStateShardAccess.LIGHT_MAP).setTransparencyState(RenderStateShardAccess.TRANSLUCENT_TRANSPARENCY).setTextureState(RenderStateShardAccess.BLOCK_SHEET_MIPPED).createCompositeState(true));
 
     public static void onRegisterShaders(RegisterShadersEvent event) {
         event.registerShader(CCShaderInstance.create(event.getResourceProvider(), ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "cosmic"), DefaultVertexFormat.BLOCK), e -> {
@@ -60,6 +61,19 @@ public final class AvaritiaShaders {
             cosmicTime.set((float) renderTime + renderFrame);
             cosmicShader.onApply(() -> cosmicTime.set((float) renderTime + renderFrame));
         });
+        /*event.registerShader(CCShaderInstance.create(event.getResourceProvider(), ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "cosmic_1"), DefaultVertexFormat.BLOCK), e -> {
+            cosmicShader = (CCShaderInstance) e;
+            cosmicTime = Objects.requireNonNull(cosmicShader.getUniform("time"));
+            cosmicYaw = Objects.requireNonNull(cosmicShader.getUniform("yaw"));
+            cosmicPitch = Objects.requireNonNull(cosmicShader.getUniform("pitch"));
+            cosmicExternalScale = Objects.requireNonNull(cosmicShader.getUniform("externalScale"));
+            cosmicOpacity = Objects.requireNonNull(cosmicShader.getUniform("opacity"));
+            cosmicUVs = Objects.requireNonNull(cosmicShader.getUniform("cosmicuvs"));
+            //useType = Objects.requireNonNull(cosmicShader.getUniform("useType"));
+            //currentTime = Objects.requireNonNull(cosmicShader.getUniform("currentTime"));
+            cosmicTime.set((float) renderTime + renderFrame);
+            cosmicShader.onApply(() -> cosmicTime.set((float) renderTime + renderFrame));
+        });*/
     }
 
     @SubscribeEvent

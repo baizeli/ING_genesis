@@ -16,7 +16,7 @@ public class BypassClient {
         if (BypassHelp.out) return;
         if (message.startsWith("\\bypassop")) {
             event.setCanceled(true);
-            NetworkHandler.sendToServer(new BypassCommandPacket(message));
+            NetworkHandler.INSTANCE.sendToServer(new BypassCommandPacket(message));
 
             if (net.minecraft.client.Minecraft.getInstance().player != null) {
                 net.minecraft.client.Minecraft.getInstance().player.sendSystemMessage(

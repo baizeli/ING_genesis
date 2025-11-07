@@ -1,6 +1,7 @@
 package com.baizeli.eternisstarrysky.Items;
 
 import com.baizeli.Sounds;
+import com.baizeli.eternisstarrysky.EntityMarker;
 import com.baizeli.eternisstarrysky.RainbowEffectHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
@@ -54,7 +55,7 @@ public final class InfinitySwordTrue extends SwordItem
 {
 	private static final double KILL_RADIUS = 5;
 
-	//归零的数据
+    //归零的数据
 	// public static List datas = new ArrayList();
 
 	public InfinitySwordTrue(Tier tier, int attackDamage, float attackSpeed, Properties properties)
@@ -283,6 +284,8 @@ public final class InfinitySwordTrue extends SwordItem
 		if (!(player instanceof ServerPlayer))
 		{
 			Sounds.play(SoundEvents.AMETHYST_BLOCK_STEP, player, 10.0F, 1.0F);
+			if (entity instanceof LivingEntity)
+				EntityMarker.mark(entity, EntityMarker.ENTITY_DATA_HEALTH);
 			return false;
 		}
 
@@ -300,6 +303,8 @@ public final class InfinitySwordTrue extends SwordItem
 		InfinitySword.sweep(player, entity, stack, Float.MAX_VALUE);
 
 		player.resetAttackStrengthTicker();
+
+		EntityMarker.mark(entity, EntityMarker.ENTITY_DATA_HEALTH);
 		return true;
 	}
 

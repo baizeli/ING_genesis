@@ -4,10 +4,13 @@
 	"compatibilityLevel": "JAVA_17",
 	"refmap": "eternisstarrysky.refmap.json",
 	"mixins": [
+		"EntityMixin",
 		"InfinitySwordDamageMixin",
 		"LivingEntityMixin",
 		"PlayerMixin",
-		"RecipeLayoutMixin"
+		"RecipeLayoutMixin",
+      "synchedDataMixin",
+		"TooltipColorMixin"
 	],
 	"client": [
 		"ItemInHandRendererMixin",

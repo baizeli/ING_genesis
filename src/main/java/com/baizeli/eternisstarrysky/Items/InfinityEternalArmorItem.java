@@ -67,9 +67,13 @@ public class InfinityEternalArmorItem extends ArmorItem {
 
     @Override
     public void onArmorTick(ItemStack stack, Level level, Player player) {
+
         if (!level.isClientSide && player instanceof ServerPlayer serverPlayer) {
             // 检查玩家是否穿着完整套装
             if (InfinityEternalArmorItem.hasFullSet(player)) {
+                //如果没有标签就添加
+                if (!player.getTags().contains("eternisstarrysky.hasSuit"))
+                    player.addTag("eternisstarrysky.hasSuit");
                 // 允许飞行
                 if (!player.getAbilities().mayfly) {
                     player.getAbilities().mayfly = true;
@@ -119,9 +123,9 @@ public class InfinityEternalArmorItem extends ArmorItem {
         ItemStack leggings = player.getInventory().getArmor(1);
         ItemStack boots = player.getInventory().getArmor(0);
 
-        return helmet.getItem() == ModItems.INFINITY_ETERNAL_HELMET.get() &&
-                chestplate.getItem() == ModItems.INFINITY_ETERNAL_CHESTPLATE.get() &&
-                leggings.getItem() == ModItems.INFINITY_ETERNAL_LEGGINGS.get() &&
-                boots.getItem() == ModItems.INFINITY_ETERNAL_BOOTS.get();
+        return helmet.getItem().getClass().getName().equals(ModItems.INFINITY_ETERNAL_HELMET.get().getClass().getName()) &&
+                chestplate.getItem().getClass().getName().equals(ModItems.INFINITY_ETERNAL_CHESTPLATE.get().getClass().getName()) &&
+                leggings.getItem().getClass().getName().equals(ModItems.INFINITY_ETERNAL_LEGGINGS.get().getClass().getName()) &&
+                boots.getItem().getClass().getName().equals(ModItems.INFINITY_ETERNAL_BOOTS.get().getClass().getName());
     }
 }

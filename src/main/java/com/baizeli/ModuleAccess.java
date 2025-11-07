@@ -32,7 +32,7 @@ public class ModuleAccess extends ClassLoader
 	 *         (Module)target
 	 *     );
 	 * }</pre></blockquote>
-	 * This used {@link java.lang.reflect.Proxy} to force access
+	 * This used {@link Proxy} to force access
 	 * JavaLangAccess and SharedSecrets.<br/>
 	 * This field is null in Java 8.
 	 */

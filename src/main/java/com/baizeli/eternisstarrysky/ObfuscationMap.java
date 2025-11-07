@@ -1,6 +1,6 @@
 package com.baizeli.eternisstarrysky;
 
-import net.minecraft.client.Minecraft;
+import net.minecraft.world.entity.LivingEntity;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,7 +22,7 @@ public class ObfuscationMap
 		boolean srg = true;
 		try
 		{
-			Minecraft.class.getDeclaredMethod("getInstance");
+			LivingEntity.class.getDeclaredMethod("tickDeath");
 			srg = false;
 		}
 		catch (NoSuchMethodException ignored)

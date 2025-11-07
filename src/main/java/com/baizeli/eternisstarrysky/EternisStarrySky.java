@@ -3,15 +3,20 @@ package com.baizeli.eternisstarrysky;
 import com.baizeli.eternisstarrysky.Content.ModBlock;
 import com.baizeli.eternisstarrysky.Content.Workbenchs.*;
 import com.baizeli.eternisstarrysky.Entity.ModEntities;
+import com.baizeli.eternisstarrysky.Entity.SwordManCsdyRenderer;
 import com.baizeli.eternisstarrysky.Items.ModItems;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.*;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -30,6 +35,7 @@ public class EternisStarrySky
 {
 
     public static final String MOD_ID = "eternisstarrysky";
+    public static final String MODID = MOD_ID; // 添加这个别名以保持兼容性
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public static ResourceLocation rl(String path) {
@@ -74,6 +80,7 @@ public class EternisStarrySky
         ModItems.ITEMS.register(modEventBus);
         ModEntities.ENTITY_TYPES.register(modEventBus);
         ModBlock.BLOCKS.register(modEventBus);
+        SoundsRegister.SOUND_EVENTS.register(modEventBus);
 
         ModBlockEntities.register(modEventBus);
         ModMenuTypes.register(modEventBus);
@@ -86,6 +93,7 @@ public class EternisStarrySky
         }
 
         modEventBus.addListener(this::commonSetup);
+        modEventBus.addListener(this::addAttribute); // 添加实体属性创建事件监听器
 
         MinecraftForge.EVENT_BUS.register(this);
         context.registerConfig(ModConfig.Type.COMMON, Configuration.SPECIFICATION);
@@ -99,6 +107,20 @@ public class EternisStarrySky
         });
     }
 
+
+
+    // 添加实体属性创建事件处理程序
+    private void addAttribute(EntityAttributeCreationEvent event) {
+        event.put(ModEntities.SWORD_MAN_CSDY.get(), 
+                  Mob.createMobAttributes()
+                     .add(net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED, 4.4)
+                     .add(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH, 10000.0)
+                     .add(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE, 1600.0)
+                     .add(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_SPEED, 20.0)
+                     .add(net.minecraft.world.entity.ai.attributes.Attributes.FOLLOW_RANGE, 128)
+                     .build());
+    }
+
     public static String resource(String location)
     {
         return MOD_ID + ":" + location;
@@ -110,7 +132,10 @@ public class EternisStarrySky
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event)
         {
-            event.enqueueWork(() -> MenuScreens.register(ModMenuTypes.VANILLA_WORKBENCH_MENU.get(), VanillaWorkbenchScreen::new));
+            event.enqueueWork(() -> {
+                MenuScreens.register(ModMenuTypes.VANILLA_WORKBENCH_MENU.get(), VanillaWorkbenchScreen::new);
+                EntityRenderers.register(ModEntities.SWORD_MAN_CSDY.get(), SwordManCsdyRenderer::new);
+            });
             MinecraftForge.registerConfigScreen(new ConfigurationFactory());
         }
     }

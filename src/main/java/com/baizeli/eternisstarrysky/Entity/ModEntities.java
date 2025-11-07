@@ -17,4 +17,11 @@ public class ModEntities {
                     .clientTrackingRange(4)
                     .updateInterval(20)
                     .build("custom_arrow"));
+
+    public static final RegistryObject<EntityType<SwordManCsdy>> SWORD_MAN_CSDY = ENTITY_TYPES.register("sword_man_csdy",
+        () -> EntityType.Builder.of(new SwordManFactory(), MobCategory.MONSTER)
+            .sized(0.6F, 1.8F)
+            .clientTrackingRange(10)
+            .updateInterval(1)
+            .build("sword_man_csdy"));
 }
