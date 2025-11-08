@@ -6,10 +6,11 @@
 	"mixins": [
 		"EntityMixin",
 		"InfinitySwordDamageMixin",
+		"LivingEntityAccessor",
 		"LivingEntityMixin",
 		"PlayerMixin",
 		"RecipeLayoutMixin",
-      "synchedDataMixin",
+		"synchedDataMixin",
 		"TooltipColorMixin"
 	],
 	"client": [

@@ -1,5 +1,6 @@
 package com.baizeli.eternisstarrysky.Items;
 
+import com.baizeli.eternisstarrysky.Mixin.LivingEntityAccessor;
 import com.baizeli.eternisstarrysky.RainbowEffectHelper;
 import com.baizeli.eternisstarrysky.Util.KillUtil;
 import net.minecraft.ChatFormatting;
@@ -165,8 +166,9 @@ public final class InfinitySwordItem extends SwordItem {
                             entity.remove(Entity.RemovalReason.KILLED);
 
                             ExperienceOrb.award((ServerLevel) entity.level(), entity.position(), entity.getExperienceReward());
-                            entity.dropCustomDeathLoot(entity.damageSources().playerAttack(player),10,true);
-                            entity.dropFromLootTable(entity.damageSources().playerAttack(player),true);
+                            LivingEntityAccessor entityAccessor = (LivingEntityAccessor) entity;
+                            entityAccessor.callDropCustomDeathLoot(entity.damageSources().playerAttack(Minecraft.getInstance().player),10,true);
+                            entityAccessor.callDropFromLootTable(entity.damageSources().playerAttack(Minecraft.getInstance().player),true);
 
                             for (int i = 0; i < 10; i++) {
                                 level.addParticle(ParticleTypes.LARGE_SMOKE,
@@ -246,8 +248,9 @@ public final class InfinitySwordItem extends SwordItem {
             ServerLevel serverLevel = (ServerLevel) livingEntity.level();
 
             ExperienceOrb.award(serverLevel, livingEntity.position(), livingEntity.getExperienceReward());
-            livingEntity.dropCustomDeathLoot(livingEntity.damageSources().playerAttack(player), 10, true);
-            livingEntity.dropFromLootTable(livingEntity.damageSources().playerAttack(player), true);
+            LivingEntityAccessor entityAccessor = (LivingEntityAccessor) livingEntity;
+            entityAccessor.callDropCustomDeathLoot(entity.damageSources().playerAttack(Minecraft.getInstance().player),10,true);
+            entityAccessor.callDropFromLootTable(entity.damageSources().playerAttack(Minecraft.getInstance().player),true);
             livingEntity.remove(Entity.RemovalReason.KILLED);
         }
 

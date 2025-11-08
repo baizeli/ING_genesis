@@ -4,6 +4,7 @@ import com.baizeli.Sounds;
 import com.baizeli.eternisstarrysky.AvaritiaKill;
 import com.baizeli.eternisstarrysky.AvaritiaLivingEntity;
 import com.baizeli.eternisstarrysky.AvaritiaVulnerable;
+import com.baizeli.eternisstarrysky.Mixin.LivingEntityAccessor;
 import com.baizeli.eternisstarrysky.Util.TextUtils;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
@@ -127,9 +128,10 @@ public class AvaritiaSword extends SwordItem
         living.lastHurtByPlayer = player;
         if (!living.checkTotemDeathProtection(source))
         {
-            SoundEvent sound = living.getDeathSound();
+
+            SoundEvent sound =((LivingEntityAccessor)living).callGetDeathSound();;
             if (sound != null)
-                living.playSound(sound, living.getSoundVolume(), living.getVoicePitch());
+                living.playSound(sound, ((LivingEntityAccessor)living).callGetSoundVolume(), living.getVoicePitch());
             AvaritiaLivingEntity.die(living, source);
             ((AvaritiaKill) living).dead(true);
             living.brain.clearMemories();

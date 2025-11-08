@@ -2,6 +2,7 @@ package com.baizeli.eternisstarrysky.Items;
 
 import com.baizeli.Sounds;
 import com.baizeli.eternisstarrysky.EntityMarker;
+import com.baizeli.eternisstarrysky.Mixin.LivingEntityAccessor;
 import com.baizeli.eternisstarrysky.RainbowEffectHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
@@ -211,8 +212,9 @@ public final class InfinitySwordTrue extends SwordItem
 						entity.remove(Entity.RemovalReason.KILLED);
 
 						ExperienceOrb.award((ServerLevel) entity.level(), entity.position(), entity.getExperienceReward());
-						entity.dropCustomDeathLoot(entity.damageSources().playerAttack(player), 10, true);
-						entity.dropFromLootTable(entity.damageSources().playerAttack(player), true);
+						LivingEntityAccessor entityAccessor = (LivingEntityAccessor) entity;
+						entityAccessor.callDropCustomDeathLoot(entity.damageSources().playerAttack(player), 10, true);
+						entityAccessor.callDropFromLootTable(entity.damageSources().playerAttack(player), true);
 
 						for (int i = 0; i < 10; i++)
 						{
