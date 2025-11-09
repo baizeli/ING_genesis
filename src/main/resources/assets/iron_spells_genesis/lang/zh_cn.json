@@ -1,7 +1,14 @@
 {
+  "itemGroup.iron_spells_genesis.eternisstarrysky_tab": "星河传承",
+
   "attribute.iron_spells_genesis.chaos_magic_resist": "混沌法术抗性",
   "attribute.iron_spells_genesis.chaos_spell_power": "混沌法术强度",
+
   "school.iron_spells_genesis.chaos" : "混沌",
+
+  "spell.iron_spells_genesis.chaosarea": "混沌领域",
+  "spell.iron_spells_genesis.amenofuwari": "天手力",
+
   "item.iron_spells_genesis.infinity_sword": "天火圣裁 [伪]",
   "item.iron_spells_genesis.infinity_sword_true": "天火圣裁 [无尽终焉]",
   "item.iron_spells_genesis.infinity_sword2": "此剑只为你所有",
@@ -26,14 +33,16 @@
   "iron_spells_genesis.galaxy_scroll.book_name": "§b星河绘卷",
   "block.iron_spells_genesis.workbench": "终极工作台",
   "container.iron_spells_genesis.vanilla_workbench": "有序终极合成",
+
   "key.categories.iron_spells_genesis": "永恒星空 - 按键绑定",
   "key.iron_spells_genesis.bow_type": "弓 - 切换箭矢类型",
-  "itemGroup.iron_spells_genesis.iron_spells_genesis_tab": "星河传承",
+
   "item.isMain": "§2在主手时：",
   "item.attDamage": " §2攻击伤害",
   "item.attSpeed": " §2攻击速度",
   "AIR": "",
-  "iron_spells_genesis.config.title": "iron_spells_genesis",
+
+  "iron_spells_genesis.config.title": "EternisStarrySky",
   "iron_spells_genesis.config.save": "SAVE",
   "iron_spells_genesis.config.done": "DONE",
   "iron_spells_genesis.config.reset": "Reset to default value",
@@ -41,6 +50,7 @@
   "iron_spells_genesis.config.eternis_apple.effects.tooltip": "Effects when player eats Eternis Apple",
   "iron_spells_genesis.config.whisper_of_the_past": "Whisper of the Past",
   "iron_spells_genesis.config.whisper_of_the_past.damage": "Damage",
+
   "entity.iron_spells_genesis.sword_man_csdy": "「剑人」CSDY",
   "spell.iron_spells_genesis.warped_blood_burst": "扭曲之血爆"
 }
