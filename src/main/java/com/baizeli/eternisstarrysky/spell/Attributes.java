@@ -24,10 +24,10 @@ public class Attributes {
     }
 
     private static RegistryObject<Attribute> newResistanceAttribute(String id) {
-        return ATTRIBUTES.register(id + "_magic_resist", () -> (new MagicPercentAttribute("attribute.iron_spells_genesis." + id + "_magic_resist", (double)1.0F, Double.MIN_VALUE, Double.MAX_VALUE)).setSyncable(true));
+        return ATTRIBUTES.register(id + "_magic_resist", () -> (new MagicPercentAttribute("attribute." + EternisStarrySky.MOD_ID + "." + id + "_magic_resist", (double)1.0F, Double.MIN_VALUE, Double.MAX_VALUE)).setSyncable(true));
     }
 
     private static RegistryObject<Attribute> newPowerAttribute(String id) {
-        return ATTRIBUTES.register(id + "_spell_power", () -> (new MagicPercentAttribute("attribute.iron_spells_genesis." + id + "_spell_power", 1.0F, Double.MIN_VALUE, Double.MAX_VALUE)).setSyncable(true));
+        return ATTRIBUTES.register(id + "_spell_power", () -> (new MagicPercentAttribute("attribute." + EternisStarrySky.MOD_ID + "." + id + "_spell_power", 1.0F, Double.MIN_VALUE, Double.MAX_VALUE)).setSyncable(true));
     }
 }

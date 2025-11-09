@@ -1,5 +1,6 @@
 package com.baizeli.eternisstarrysky.Items;
 
+import com.baizeli.eternisstarrysky.EternisStarrySky;
 import com.baizeli.eternisstarrysky.RainbowEffectHelper;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -35,7 +36,7 @@ public final class BagItem extends Item {
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag)
     {
-        if (type == 0) tooltip.add(RainbowEffectHelper.createCustomGradientText(Component.translatable("item.eternisstarrysky.bag1").getString(), RainbowEffectHelper.DEFAULT_RAINBOW, 2, 1, 0.05F, 2f));
-        if (type == 1) tooltip.add(Component.translatable("item.eternisstarrysky.primogem1"));
+        if (type == 0) tooltip.add(RainbowEffectHelper.createCustomGradientText(Component.translatable("item." + EternisStarrySky.MOD_ID + ".bag1").getString(), RainbowEffectHelper.DEFAULT_RAINBOW, 2, 1, 0.05F, 2f));
+        if (type == 1) tooltip.add(Component.translatable("item." + EternisStarrySky.MOD_ID + ".primogem1"));
     }
 }

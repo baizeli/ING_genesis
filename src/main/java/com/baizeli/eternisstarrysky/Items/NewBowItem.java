@@ -4,6 +4,7 @@ import com.baizeli.eternisstarrysky.ClientEventsBowKey;
 import com.baizeli.eternisstarrysky.Configuration;
 import com.baizeli.eternisstarrysky.Entity.CustomArrowEntity;
 import com.baizeli.eternisstarrysky.BowTypePacket;
+import com.baizeli.eternisstarrysky.EternisStarrySky;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
@@ -287,7 +288,7 @@ public class NewBowItem extends BowItem {
         super.appendHoverText(stack, level, tooltip, flag);
     }
     
-    @Mod.EventBusSubscriber(modid = "eternisstarrysky")
+    @Mod.EventBusSubscriber(modid = EternisStarrySky.MOD_ID)
     public static class BowEvent {
         @SubscribeEvent
         public static void onPlayerTick(TickEvent.PlayerTickEvent e) {
