@@ -5,6 +5,9 @@ import com.baizeli.eternisstarrysky.Content.Workbenchs.*;
 import com.baizeli.eternisstarrysky.Entity.ModEntities;
 import com.baizeli.eternisstarrysky.Entity.SwordManCsdyRenderer;
 import com.baizeli.eternisstarrysky.Items.ModItems;
+import com.baizeli.eternisstarrysky.spell.Attributes;
+import com.baizeli.eternisstarrysky.spell.SpellSchool;
+import com.baizeli.eternisstarrysky.spell.Spells;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.EntityRenderers;
@@ -69,6 +72,8 @@ public class EternisStarrySky
                 output.accept(ModItems.INFINITY_ETERNAL_BOOTS.get());
 
                 output.accept(ModItems.WORKBENCH.get());
+
+                output.accept(ModItems.CHAOS_SPELL_BOOK.get());
             }).build());
 
     public EternisStarrySky(FMLJavaModLoadingContext context)
@@ -82,6 +87,9 @@ public class EternisStarrySky
         ModBlock.BLOCKS.register(modEventBus);
         SoundsRegister.SOUND_EVENTS.register(modEventBus);
 
+        SpellSchool.register(modEventBus);
+        Spells.register(modEventBus);
+        Attributes.register(modEventBus);
         ModBlockEntities.register(modEventBus);
         ModMenuTypes.register(modEventBus);
         ModRecipeTypes.register(modEventBus);
