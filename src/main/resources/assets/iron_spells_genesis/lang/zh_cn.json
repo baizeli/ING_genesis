@@ -1,23 +1,20 @@
 {
-  "attribute.iron_spells_genesis.chaos_magic_resist": "Chaos Magic Resistance",
-  "attribute.iron_spells_genesis.chaos_spell_power": "Chaos Spell Power",
-  "school.iron_spells_genesis.chaos" : "Chaos",
+  "attribute.iron_spells_genesis.chaos_magic_resist": "混沌法术抗性",
+  "attribute.iron_spells_genesis.chaos_spell_power": "混沌法术强度",
+  "school.iron_spells_genesis.chaos" : "混沌",
   "item.iron_spells_genesis.infinity_sword": "天火圣裁 [伪]",
   "item.iron_spells_genesis.infinity_sword_true": "天火圣裁 [无尽终焉]",
   "item.iron_spells_genesis.infinity_sword2": "此剑只为你所有",
   "item.iron_spells_genesis.infinity_sword_damage_true": " 天火的裁决",
-
   "item.iron_spells_genesis.eternis_apple": "寰宇大苹果",
   "item.iron_spells_genesis.broyouhuashuo": "哎呀，我怎么把锭写成袋子了",
   "item.iron_spells_genesis.purpleite_galaxy_ingot": "§5紫极星源锭",
   "item.iron_spells_genesis.purpleite_galaxy_ingot1": "汝掌心中者，永恒之力也",
   "item.iron_spells_genesis.peach": "星野爱桃",
-
   "item.iron_spells_genesis.infinity_eternal_helmet": "紫极星源头盔",
   "item.iron_spells_genesis.infinity_eternal_chestplate": "紫极星源胸甲",
   "item.iron_spells_genesis.infinity_eternal_leggings": "紫极星源护腿",
   "item.iron_spells_genesis.infinity_eternal_boots": "紫极星源靴子",
-
   "item.iron_spells_genesis.impure_fruit": "不洁之果",
   "item.iron_spells_genesis.pure_fruit": "纯洁之果",
   "item.iron_spells_genesis.whisper_of_the_past": "往世的飞花",
@@ -25,21 +22,17 @@
   "item.iron_spells_genesis.primogem1": "§b这颗石头不属于异界",
   "item.iron_spells_genesis.create_star": "创造之心",
   "item.iron_spells_genesis.galaxy_scroll": "星河绘卷",
-  "item.iron_spells_genesis.chaos_spell_book": "Chaos Spell Book",
+  "item.iron_spells_genesis.chaos_spell_book": "混沌法术书",
   "iron_spells_genesis.galaxy_scroll.book_name": "§b星河绘卷",
-
   "block.iron_spells_genesis.workbench": "终极工作台",
   "container.iron_spells_genesis.vanilla_workbench": "有序终极合成",
-
   "key.categories.iron_spells_genesis": "永恒星空 - 按键绑定",
   "key.iron_spells_genesis.bow_type": "弓 - 切换箭矢类型",
-
   "itemGroup.iron_spells_genesis.iron_spells_genesis_tab": "星河传承",
   "item.isMain": "§2在主手时：",
   "item.attDamage": " §2攻击伤害",
   "item.attSpeed": " §2攻击速度",
   "AIR": "",
-
   "iron_spells_genesis.config.title": "iron_spells_genesis",
   "iron_spells_genesis.config.save": "SAVE",
   "iron_spells_genesis.config.done": "DONE",
@@ -48,7 +41,6 @@
   "iron_spells_genesis.config.eternis_apple.effects.tooltip": "Effects when player eats Eternis Apple",
   "iron_spells_genesis.config.whisper_of_the_past": "Whisper of the Past",
   "iron_spells_genesis.config.whisper_of_the_past.damage": "Damage",
-  
   "entity.iron_spells_genesis.sword_man_csdy": "「剑人」CSDY",
-  "spell.iron_spells_genesis.chaosarea": "Chaos Area"
+  "spell.iron_spells_genesis.chaosarea": "混沌领域"
 }

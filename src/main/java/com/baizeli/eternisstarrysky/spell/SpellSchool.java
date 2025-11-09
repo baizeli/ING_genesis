@@ -32,7 +32,7 @@ public class SpellSchool {
     static {
         SCHOOLS =  DeferredRegister.create(SchoolRegistry.SCHOOL_REGISTRY_KEY, EternisStarrySky.MOD_ID);
         CHAOS_RESOURCE = ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "chaos");
-        CHAOS = registerSchool(new SchoolType(CHAOS_RESOURCE, CHAOS_FOCUS, Component.translatable("school.eternisstarrysky.chaos").withStyle(ChatFormatting.ITALIC, ChatFormatting.UNDERLINE, ChatFormatting.DARK_GRAY), Attributes.CHAOS_SPELL_POWER, Attributes.CHAOS_MAGIC_RESIST, SoundRegistry.FIRE_CAST, ISSDamageTypes.FIRE_MAGIC));
+        CHAOS = registerSchool(new SchoolType(CHAOS_RESOURCE, CHAOS_FOCUS, Component.translatable("school.iron_spells_genesis.chaos").withStyle(ChatFormatting.ITALIC, ChatFormatting.UNDERLINE, ChatFormatting.DARK_GRAY), Attributes.CHAOS_SPELL_POWER, Attributes.CHAOS_MAGIC_RESIST, SoundRegistry.FIRE_CAST, ISSDamageTypes.FIRE_MAGIC));
     }
 
     public static void register(IEventBus eventBus) {

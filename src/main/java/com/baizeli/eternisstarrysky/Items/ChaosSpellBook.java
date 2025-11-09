@@ -23,7 +23,7 @@ import java.util.List;
 public class ChaosSpellBook extends UniqueSpellBook implements UniqueItem {
     public ChaosSpellBook() {
         super(SpellDataRegistryHolder.of(new SpellDataRegistryHolder(SpellRegistry.ECHOING_STRIKES_SPELL, 10)), 11);
-        this.withSpellbookAttributes(new AttributeContainer[]{new AttributeContainer(Attributes.CHAOS_SPELL_POWER, 0.2, AttributeModifier.Operation.MULTIPLY_BASE), new AttributeContainer(AttributeRegistry.COOLDOWN_REDUCTION, 0.2, AttributeModifier.Operation.MULTIPLY_BASE), new AttributeContainer(AttributeRegistry.SPELL_POWER, 0.2, AttributeModifier.Operation.MULTIPLY_BASE), new AttributeContainer(AttributeRegistry.MAX_MANA, 600, AttributeModifier.Operation.ADDITION)});
+        this.withSpellbookAttributes(new AttributeContainer[]{new AttributeContainer(Attributes.CHAOS_SPELL_POWER, 0.2, AttributeModifier.Operation.MULTIPLY_BASE), new AttributeContainer(AttributeRegistry.COOLDOWN_REDUCTION, -0.2, AttributeModifier.Operation.MULTIPLY_BASE), new AttributeContainer(AttributeRegistry.SPELL_POWER, 0.2, AttributeModifier.Operation.MULTIPLY_BASE), new AttributeContainer(AttributeRegistry.MAX_MANA, 600, AttributeModifier.Operation.ADDITION)});
     }
 
     public void appendHoverText(@NotNull ItemStack itemStack, Level context, @NotNull List<Component> lines, @NotNull TooltipFlag flag) {
