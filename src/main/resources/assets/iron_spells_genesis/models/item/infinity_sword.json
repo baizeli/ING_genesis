@@ -1,0 +1,11 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "iron_spells_genesis:item/infinity_sword",
+    "layer1": "iron_spells_genesis:item/infinity_sword_layer_1"
+  },
+  "loader": "iron_spells_genesis:cosmic",
+  "cosmic": {
+    "mask": "iron_spells_genesis:item/mask/u_mask"
+  }
+}

@@ -37,7 +37,7 @@ import org.slf4j.Logger;
 public class EternisStarrySky
 {
 
-    public static final String MOD_ID = "eternisstarrysky";
+    public static final String MOD_ID = "iron_spells_genesis";
     public static final String MODID = MOD_ID; // 添加这个别名以保持兼容性
     private static final Logger LOGGER = LogUtils.getLogger();
 

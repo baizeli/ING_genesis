@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "minecraft:cod"
+    },
+    "B": {
+      "item": "iron_spells_genesis:purpleite_galaxy_ingot"
+    },
+    "C": {
+      "item": "minecraft:netherite_boots"
+    }
+  },
+  "pattern": [
+    "ABA",
+    "ACA"
+  ],
+  "result": {
+    "item": "iron_spells_genesis:infinity_eternal_boots"
+  },
+  "show_notification": true
+}
