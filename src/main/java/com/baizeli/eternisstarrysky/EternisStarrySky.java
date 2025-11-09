@@ -1,7 +1,13 @@
 package com.baizeli.eternisstarrysky;
 
+import org.slf4j.Logger;
+
 import com.baizeli.eternisstarrysky.Content.ModBlock;
-import com.baizeli.eternisstarrysky.Content.Workbenchs.*;
+import com.baizeli.eternisstarrysky.Content.Workbenchs.ModBlockEntities;
+import com.baizeli.eternisstarrysky.Content.Workbenchs.ModMenuTypes;
+import com.baizeli.eternisstarrysky.Content.Workbenchs.ModRecipeSerializers;
+import com.baizeli.eternisstarrysky.Content.Workbenchs.ModRecipeTypes;
+import com.baizeli.eternisstarrysky.Content.Workbenchs.VanillaWorkbenchScreen;
 import com.baizeli.eternisstarrysky.Entity.ModEntities;
 import com.baizeli.eternisstarrysky.Entity.SwordManCsdyRenderer;
 import com.baizeli.eternisstarrysky.Items.ModItems;
@@ -9,14 +15,16 @@ import com.baizeli.eternisstarrysky.spell.Attributes;
 import com.baizeli.eternisstarrysky.spell.SpellSchool;
 import com.baizeli.eternisstarrysky.spell.Spells;
 import com.mojang.logging.LogUtils;
+
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
@@ -31,7 +39,6 @@ import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-import org.slf4j.Logger;
 
 @Mod(EternisStarrySky.MOD_ID)
 public class EternisStarrySky
@@ -64,15 +71,19 @@ public class EternisStarrySky
                 output.accept(ModItems.GALAXY_SCROLL.get());
                 output.accept(ModItems.IMPURE_FRUIT.get());
                 output.accept(ModItems.PURE_FRUIT.get());
+                output.accept(ModItems.GOOD_CAKE.get());
 
                 output.accept(ModItems.INFINITY_SWORD.get());
+                output.accept(ModItems.INFINITY_SWORD_TRUE.get());
+                output.accept(ModItems.AVARITIA_SWORD.get());
+                
                 output.accept(ModItems.INFINITY_ETERNAL_HELMET.get());
                 output.accept(ModItems.INFINITY_ETERNAL_CHESTPLATE.get());
                 output.accept(ModItems.INFINITY_ETERNAL_LEGGINGS.get());
                 output.accept(ModItems.INFINITY_ETERNAL_BOOTS.get());
 
                 output.accept(ModItems.WORKBENCH.get());
-
+                
                 output.accept(ModItems.CHAOS_SPELL_BOOK.get());
             }).build());
 
