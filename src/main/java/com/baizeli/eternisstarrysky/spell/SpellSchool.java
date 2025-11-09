@@ -1,27 +1,19 @@
 package com.baizeli.eternisstarrysky.spell;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
-import io.redspace.ironsspellbooks.api.attribute.MagicPercentAttribute;
-import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import io.redspace.ironsspellbooks.api.registry.SchoolRegistry;
-import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
-import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import io.redspace.ironsspellbooks.api.spells.SchoolType;
 import io.redspace.ironsspellbooks.damage.ISSDamageTypes;
 import io.redspace.ironsspellbooks.registries.SoundRegistry;
 import net.minecraft.ChatFormatting;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
-
-import java.lang.reflect.Field;
 
 public class SpellSchool {
     private static final DeferredRegister<SchoolType> SCHOOLS;
@@ -32,7 +24,7 @@ public class SpellSchool {
     static {
         SCHOOLS =  DeferredRegister.create(SchoolRegistry.SCHOOL_REGISTRY_KEY, EternisStarrySky.MOD_ID);
         CHAOS_RESOURCE = ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "chaos");
-        CHAOS = registerSchool(new SchoolType(CHAOS_RESOURCE, CHAOS_FOCUS, Component.translatable("school.iron_spells_genesis.chaos").withStyle(ChatFormatting.ITALIC, ChatFormatting.UNDERLINE, ChatFormatting.DARK_GRAY), Attributes.CHAOS_SPELL_POWER, Attributes.CHAOS_MAGIC_RESIST, SoundRegistry.FIRE_CAST, ISSDamageTypes.FIRE_MAGIC));
+        CHAOS = registerSchool(new SchoolType(CHAOS_RESOURCE, CHAOS_FOCUS, Component.translatable("school." + EternisStarrySky.MOD_ID + ".chaos").withStyle(ChatFormatting.ITALIC, ChatFormatting.UNDERLINE, ChatFormatting.DARK_GRAY), Attributes.CHAOS_SPELL_POWER, Attributes.CHAOS_MAGIC_RESIST, SoundRegistry.FIRE_CAST, ISSDamageTypes.FIRE_MAGIC));
     }
 
     public static void register(IEventBus eventBus) {

@@ -1,5 +1,6 @@
 package com.baizeli.eternisstarrysky.Items;
 
+import com.baizeli.eternisstarrysky.EternisStarrySky;
 import com.baizeli.eternisstarrysky.Mixin.LivingEntityAccessor;
 import com.baizeli.eternisstarrysky.RainbowEffectHelper;
 import com.baizeli.eternisstarrysky.Util.KillUtil;
@@ -302,13 +303,13 @@ public final class InfinitySwordItem extends SwordItem {
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
 
-        if (TRUE) tooltip.add(RainbowEffectHelper.createCustomGradientText(Component.translatable("item.eternisstarrysky.infinity_sword2").getString(), RainbowEffectHelper.DEFAULT_RAINBOW, 2, 1, 0.05F, 2F));
-        else tooltip.add(RainbowEffectHelper.createCustomGradientText(Component.translatable("item.eternisstarrysky.infinity_sword7").getString(), RainbowEffectHelper.DEFAULT_RAINBOW, 2, 1, 0.05F, 2F));
+        if (TRUE) tooltip.add(RainbowEffectHelper.createCustomGradientText(Component.translatable("item." + EternisStarrySky.MOD_ID + ".infinity_sword2").getString(), RainbowEffectHelper.DEFAULT_RAINBOW, 2, 1, 0.05F, 2F));
+        else tooltip.add(RainbowEffectHelper.createCustomGradientText(Component.translatable("item." + EternisStarrySky.MOD_ID + ".infinity_sword7").getString(), RainbowEffectHelper.DEFAULT_RAINBOW, 2, 1, 0.05F, 2F));
 
         tooltip.add(RainbowEffectHelper.createCustomGradientText(Component.translatable("AIR").getString(), RainbowEffectHelper.DEFAULT_RAINBOW, 2, 1, 0.05F, 2f));
         tooltip.add(Component.translatable("item.isMain"));
-        if (TRUE) tooltip.add(RainbowEffectHelper.createCustomGradientText(Component.translatable("item.eternisstarrysky.infinity_sword_damage_true").getString(), RainbowEffectHelper.DEFAULT_RAINBOW, 2, 1, 0.05F, 2F).append(Component.translatable("item.attDamage").getString()));
-        else tooltip.add(RainbowEffectHelper.createCustomGradientText(Component.translatable("item.eternisstarrysky.infinity_sword_damage").getString(), RainbowEffectHelper.DEFAULT_RAINBOW, 4F, 1, 0.05F, 1F).append(Component.translatable("item.attDamage").getString()));
+        if (TRUE) tooltip.add(RainbowEffectHelper.createCustomGradientText(Component.translatable("item." + EternisStarrySky.MOD_ID + ".infinity_sword_damage_true").getString(), RainbowEffectHelper.DEFAULT_RAINBOW, 2, 1, 0.05F, 2F).append(Component.translatable("item.attDamage").getString()));
+        else tooltip.add(RainbowEffectHelper.createCustomGradientText(Component.translatable("item." + EternisStarrySky.MOD_ID + ".infinity_sword_damage").getString(), RainbowEffectHelper.DEFAULT_RAINBOW, 4F, 1, 0.05F, 1F).append(Component.translatable("item.attDamage").getString()));
         tooltip.add(Component.translatable(" §22.0").append(Component.translatable("item.attSpeed").getString()));
 
         if (Screen.hasShiftDown()) {

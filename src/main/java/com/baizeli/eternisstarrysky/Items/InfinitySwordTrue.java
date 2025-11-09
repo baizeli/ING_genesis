@@ -2,6 +2,7 @@ package com.baizeli.eternisstarrysky.Items;
 
 import com.baizeli.Sounds;
 import com.baizeli.eternisstarrysky.EntityMarker;
+import com.baizeli.eternisstarrysky.EternisStarrySky;
 import com.baizeli.eternisstarrysky.Mixin.LivingEntityAccessor;
 import com.baizeli.eternisstarrysky.RainbowEffectHelper;
 import net.minecraft.ChatFormatting;
@@ -314,11 +315,11 @@ public final class InfinitySwordTrue extends SwordItem
 	public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag)
 	{
 
-		tooltip.add(RainbowEffectHelper.createCustomGradientText(Component.translatable("item.eternisstarrysky.infinity_sword2").getString(), RainbowEffectHelper.DEFAULT_RAINBOW, 2, 1, 0.05F, 2F));
+		tooltip.add(RainbowEffectHelper.createCustomGradientText(Component.translatable("item." + EternisStarrySky.MOD_ID + ".infinity_sword2").getString(), RainbowEffectHelper.DEFAULT_RAINBOW, 2, 1, 0.05F, 2F));
 
 		tooltip.add(RainbowEffectHelper.createCustomGradientText(Component.translatable("AIR").getString(), RainbowEffectHelper.DEFAULT_RAINBOW, 2, 1, 0.05F, 2f));
 		tooltip.add(Component.translatable("item.isMain"));
-		tooltip.add(RainbowEffectHelper.createCustomGradientText(Component.translatable("item.eternisstarrysky.infinity_sword_damage_true").getString(), RainbowEffectHelper.DEFAULT_RAINBOW, 2, 1, 0.05F, 2F).append(Component.translatable("item.attDamage").getString()));
+		tooltip.add(RainbowEffectHelper.createCustomGradientText(Component.translatable("item." + EternisStarrySky.MOD_ID + ".infinity_sword_damage_true").getString(), RainbowEffectHelper.DEFAULT_RAINBOW, 2, 1, 0.05F, 2F).append(Component.translatable("item.attDamage").getString()));
 		tooltip.add(Component.literal(" §22.0").append(Component.translatable("item.attSpeed").getString()));
 
 		/*if (Screen.hasShiftDown())
@@ -421,15 +422,15 @@ public final class InfinitySwordTrue extends SwordItem
 					int color = getGradientColor(BLUE, position);
 					//color ^= 0x00ff0000;
 					//彩色渲染
-					if((text.contains(I18n.get("item.eternisstarrysky.infinity_sword_damage_true")) && I18n.get("item.eternisstarrysky.infinity_sword_damage_true").contains(s)) | (text.contains(I18n.get("item.eternisstarrysky.infinity_sword_true")) && I18n.get("item.eternisstarrysky.infinity_sword_true").contains(s)))
+					if((text.contains(I18n.get("item." + EternisStarrySky.MOD_ID + ".infinity_sword_damage_true")) && I18n.get("item." + EternisStarrySky.MOD_ID + ".infinity_sword_damage_true").contains(s)) | (text.contains(I18n.get("item." + EternisStarrySky.MOD_ID + ".infinity_sword_true")) && I18n.get("item." + EternisStarrySky.MOD_ID + ".infinity_sword_true").contains(s)))
 						super.drawInBatch(s,  x ,y+  yOffset, color, b1, matrix4f, multiBufferSource, mode, i, i1);
 					 //灰色字渲染
 					else super.drawInBatch(s,  x , y, ChatFormatting.GRAY.getColor(), b1, matrix4f, multiBufferSource, mode, i, i1);
 					//绿色字体渲染
-					if ((text.contains(I18n.get("attribute.name.generic.attack_speed")) && I18n.get("attribute.name.generic.attack_speed").contains(s)) | (text.contains(I18n.get("attribute.name.generic.attack_damage")) && I18n.get("attribute.name.generic.attack_damage").contains(s)))super.drawInBatch(s,  x ,y, ChatFormatting.DARK_GREEN.getColor(), b1, matrix4f, multiBufferSource, mode, i, i1);
-					if (text.contains("2.0"))super.drawInBatch(s,  x ,y, ChatFormatting.DARK_GREEN.getColor(), b1, matrix4f, multiBufferSource, mode, i, i1);
+					if ((text.contains(I18n.get("attribute.name.generic.attack_speed")) && I18n.get("attribute.name.generic.attack_speed").contains(s)) | (text.contains(I18n.get("attribute.name.generic.attack_damage")) && I18n.get("attribute.name.generic.attack_damage").contains(s)))super.drawInBatch(s,  x ,y, ChatFormatting.DARK_GREEN.getColor(), b1, matrix4f, multiBufferSource, mode, i, i);
+					if (text.contains("2.0"))super.drawInBatch(s,  x ,y, ChatFormatting.DARK_GREEN.getColor(), b1, matrix4f, multiBufferSource, mode, i, i);
 
-					if (text.contains(I18n.get("item.eternisstarrysky.infinity_sword2")))super.drawInBatch(s,  x , y, ChatFormatting.DARK_RED.getColor(), b1, matrix4f, multiBufferSource, mode, i, i1);
+					if (text.contains(I18n.get("item." + EternisStarrySky.MOD_ID + ".infinity_sword2")))super.drawInBatch(s,  x , y, ChatFormatting.DARK_RED.getColor(), b1, matrix4f, multiBufferSource, mode, i, i);
 
 					hue += hueStep;
 					hue %= 1.0F;

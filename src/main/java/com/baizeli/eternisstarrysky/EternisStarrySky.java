@@ -59,7 +59,7 @@ public class EternisStarrySky
 
     public static final RegistryObject<CreativeModeTab> EXAMPLE_TAB = CREATIVE_MODE_TABS.register("eternisstarrysky_tab", () -> CreativeModeTab.builder()
             .withTabsBefore(CreativeModeTabs.COMBAT)
-            .title(Component.translatable("itemGroup.eternisstarrysky.eternisstarrysky_tab"))
+            .title(Component.translatable("itemGroup." + MOD_ID + ".eternisstarrysky_tab"))
             .icon(() -> ModItems.PURPLEITE_GALAXY_INGOT.get().getDefaultInstance())
             .displayItems((parameters, output) -> {
                 output.accept(ModItems.ETERNIS_APPLE.get());
