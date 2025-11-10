@@ -1,12 +1,13 @@
 package com.baizeli.eternisstarrysky.client;
 
+import com.baizeli.eternisstarrysky.Util.EntityData;
 import com.baizeli.eternisstarrysky.Util.RenderUtils;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderLivingEvent;
@@ -14,27 +15,28 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 @Mod.EventBusSubscriber(value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public final class WireBoxRenderer {
-    public static HashMap<Entity, Integer> entitiesForRenderWireBoxRenderer = new HashMap<>();
-    private static final HashMap<Entity, Float> entityRotationMap = new HashMap<>();
-    private static final HashMap<Entity, Direction.Axis> entityAxisMap = new HashMap<>();
+    public static HashMap<Entity, EntityData> entitiesForRenderWireBoxRenderer = new HashMap<>();
+    public static final HashMap<Entity, Float> entityRotationMap = new HashMap<>();
+    public static final HashMap<Entity, Direction.Axis> entityAxisMap = new HashMap<>();
     private static final Random random = new Random();
 
     @SubscribeEvent
     public static void onRenderLiving(RenderLivingEvent.Post<?, ?> event) {
         LivingEntity entity = event.getEntity();
+
         if (entitiesForRenderWireBoxRenderer.containsKey(entity)) {
-            entity.invalidateCaps();
-            entity.setTicksFrozen(5);
-            entity.stopSleeping();
-            entity.stopUsingItem();
-            entity.stopSleeping();
-            if (entity instanceof Mob mob) {
-                mob.setNoAi(true);
+            long expireTime = entitiesForRenderWireBoxRenderer.get(entity).time;
+
+            Level level = entity.level();
+            if (level.getGameTime() >= expireTime) {   // 时间到了
+                entitiesForRenderWireBoxRenderer.remove(entity);
+                entityRotationMap.remove(entity);
+                entityAxisMap.remove(entity);
+                return;
             }
             PoseStack stack = event.getPoseStack();
 
@@ -66,15 +68,6 @@ public final class WireBoxRenderer {
             stack.translate(cx, cy, cz);
             RenderUtils.renderWireCube(stack, event.getMultiBufferSource(), side / 2F, angle, rotationAxis, 220, 20, 60, 0, 0, 0);
             stack.popPose();
-
-            int remaining = entitiesForRenderWireBoxRenderer.get(entity) - 1;
-            if (remaining <= 0) {
-                entitiesForRenderWireBoxRenderer.remove(entity);
-                entityRotationMap.remove(entity); // 清理角度缓存
-            } else {
-                entitiesForRenderWireBoxRenderer.put(entity, remaining);
-
-            }
         }
     }
 }

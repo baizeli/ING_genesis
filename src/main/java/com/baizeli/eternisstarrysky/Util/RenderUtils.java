@@ -8,9 +8,11 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.block.model.*;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.resources.ResourceLocation;
@@ -23,6 +25,10 @@ import org.joml.Matrix4f;
 import static com.mojang.math.Axis.*;
 
 public class RenderUtils {
+    public static final ResourceLocation cosmic = new ResourceLocation(EternisStarrySky.MODID, "textures/shader/cosmictexture.png");
+    private static final ItemModelGenerator ITEM_MODEL_GENERATOR = new ItemModelGenerator();
+    private static final FaceBakery FACE_BAKERY = new FaceBakery();
+
     public static RenderType createTexturedQuadType(ResourceLocation texture) {
         return RenderType.create("textured_quad_no_cull",
                 DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP,
@@ -38,7 +44,7 @@ public class RenderUtils {
     }
 
     public static RenderType maskType(ResourceLocation tex) {
-        return RenderType.create("", DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP, VertexFormat.Mode.QUADS, 0, RenderType.CompositeState.builder()
+        return RenderType.create("", DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP, VertexFormat.Mode.QUADS, 256, RenderType.CompositeState.builder()
                 .setShaderState(new RenderStateShard.ShaderStateShard(() -> AvaritiaShaders.cosmicShader))
                 .setTextureState(new RenderStateShard.TextureStateShard(tex, false, false))
                 .setTransparencyState(RenderType.TRANSLUCENT_TRANSPARENCY)
@@ -46,6 +52,22 @@ public class RenderUtils {
                 .setWriteMaskState(RenderStateShard.COLOR_WRITE)
                 .setCullState(RenderType.NO_CULL)
                 .createCompositeState(true));
+    }
+
+    public static RenderType END_PORTAL(ResourceLocation resourceLocation) {
+        return RenderType.create("2", DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP, VertexFormat.Mode.QUADS, 256, false, false,
+                RenderType.CompositeState.builder()
+                        .setLayeringState(RenderStateShard.POLYGON_OFFSET_LAYERING)
+                        .setShaderState(new RenderType.ShaderStateShard(GameRenderer::getRendertypeEndPortalShader))
+                        .setTransparencyState(RenderStateShard.TRANSLUCENT_TRANSPARENCY)
+                        .setDepthTestState(RenderStateShard.LEQUAL_DEPTH_TEST)
+                        .setCullState(RenderType.NO_CULL)
+                        .setLightmapState(RenderStateShard.LIGHTMAP)
+                        .setTextureState(RenderType.MultiTextureStateShard.builder()
+                                .add(resourceLocation, false, false)
+                                .add(resourceLocation, false, false)
+                                .build())
+                        .createCompositeState(true));
     }
 
     public static void renderItemRings(PoseStack poseStack, MultiBufferSource buffer, float angle, Axis axis, int r, int g, int b, double x, double y, double z) {
@@ -380,5 +402,20 @@ public class RenderUtils {
         float nz = z / len;
 
         c.vertex(mat, x, y, z).color(r, g, b, a).uv(0, 0).uv2(light).normal(norm, nx, ny, nz).endVertex();
+    }
+
+    public static void drawRenderTypeRect(float posX, float posY, float width, float height, RenderType renderType, Matrix4f matrix4f) {
+        VertexConsumer vertexconsumer = Minecraft.getInstance().renderBuffers.bufferSource().getBuffer(renderType);
+
+        posX -= 0.05F;
+        posY -= 0.05F;
+        float x2 = posX + width;
+        float y2 = posY + height;
+        x2 += 0.05F;
+        y2 += 0.05F;
+        vertexconsumer.vertex(matrix4f, posX, posY, (float) 0).color(0, 0, 0, 0).uv(0.0F, 1.0F).uv2(0, 0).normal(0, 0, 0).endVertex();
+        vertexconsumer.vertex(matrix4f, posX, y2, (float) 0).color(0, 0, 0, 0).uv(0.0F, 1.0F).uv2(0, 0).normal(0, 0, 0).endVertex();
+        vertexconsumer.vertex(matrix4f, x2, y2, (float) 0).color(0, 0, 0, 0).uv(0.0F, 1.0F).uv2(0, 0).normal(0, 0, 0).endVertex();
+        vertexconsumer.vertex(matrix4f, x2, posY, (float) 0).color(0, 0, 0, 0).uv(0.0F, 1.0F).uv2(0, 0).normal(0, 0, 0).endVertex();
     }
 }
