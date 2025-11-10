@@ -87,8 +87,7 @@ public abstract class TooltipColorMixin {
         RenderTooltipEvent.Color event = (RenderTooltipEvent.Color)(Object)this;
         ItemStack stack = event.getItemStack();
         return stack != null && (
-                stack.getItem() == ModItems.INFINITY_SWORD_TRUE.get() ||
-                        stack.getItem() == ModItems.AVARITIA_SWORD.get()||
+                stack.getItem() == ModItems.AVARITIA_SWORD.get()||
                           stack.getItem() == ModItems.INFINITY_ETERNAL_HELMET.get()||
                           stack.getItem() == ModItems.INFINITY_ETERNAL_CHESTPLATE.get()||
                           stack.getItem() == ModItems.INFINITY_ETERNAL_LEGGINGS.get()||

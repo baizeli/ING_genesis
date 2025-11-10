@@ -17,7 +17,7 @@ public class ModItems {
 
     public static final RegistryObject<Item> PURPLEITE_GALAXY_INGOT = ITEMS.register("purpleite_galaxy_ingot", () -> new EternisMaterial(new Item.Properties(), 0));
     public static final RegistryObject<Item> PRIMOGEM = ITEMS.register("primogem", () -> new EternisMaterial(new Item.Properties(), 1));
-    
+
     // 扭曲之混沌-[混沌]法术材料
     public static final RegistryObject<Item> TWISTED_CHAOS = ITEMS.register("twisted_chaos",
                 () -> new ChaosMaterial(new Item.Properties()
@@ -48,14 +48,6 @@ public class ModItems {
         )
     );
 
-    public static final RegistryObject<Item> INFINITY_SWORD_TRUE = ITEMS.register("infinity_sword_true",
-            () -> new InfinitySwordTrue(
-                    Tiers.NETHERITE,
-                    Integer.MAX_VALUE,
-                    -2F,
-                    new Item.Properties().durability(Integer.MAX_VALUE)
-            )
-    );
     public static final RegistryObject<Item> AVARITIA_SWORD = ITEMS.register("avaritia_infinity_sword",
             () -> new AvaritiaSword(
                     Integer.MAX_VALUE,
@@ -128,10 +120,12 @@ public class ModItems {
                     new Item.Properties().rarity(Rarity.RARE)));
 
     public static final RegistryObject<Item> CHAOS_SPELL_BOOK = ITEMS.register("chaos_spell_book", ChaosSpellBook::new);
-    
+
+    public static final RegistryObject<Item> CELESTIAL_SOURCE_SPELL_BOOK = ITEMS.register("celestial_source_spell_book", CelestialSourceSpellBook::new);
+
     // 混沌法杖
     public static final RegistryObject<Item> CHAOS_STAFF = ITEMS.register("chaos_staff", ChaosStaff::new);
-    
+
     // 星源法杖
     public static final RegistryObject<Item> CELESTIAL_SOURCE_STAFF = ITEMS.register("celestial_source_staff", CelestialSourceStaff::new);
 }

@@ -12,8 +12,8 @@ public class Attributes {
     private static final DeferredRegister<Attribute> ATTRIBUTES;
     public static final RegistryObject<Attribute> CHAOS_MAGIC_RESIST;
     public static final RegistryObject<Attribute> CHAOS_SPELL_POWER;
-    public static final RegistryObject<Attribute> CELESTIAL_SOURCE_SPELL_POWER;
     public static final RegistryObject<Attribute> CELESTIAL_SOURCE_MAGIC_RESIST;
+    public static final RegistryObject<Attribute> CELESTIAL_SOURCE_SPELL_POWER;
 
     static {
         ATTRIBUTES = DeferredRegister.create(Registries.ATTRIBUTE, EternisStarrySky.MOD_ID);

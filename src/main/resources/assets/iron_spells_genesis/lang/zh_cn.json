@@ -5,21 +5,19 @@
   "attribute.iron_spells_genesis.chaos_spell_power": "混沌法术强度",
   "attribute.iron_spells_genesis.celestial_source_magic_resist": "星源法术抗性",
   "attribute.iron_spells_genesis.celestial_source_spell_power": "星源法术强度",
-  
+
   "school.iron_spells_genesis.chaos" : "混沌",
   "school.iron_spells_genesis.celestial_source": "星源",
 
   "spell.iron_spells_genesis.warped_blood_burst": "扭曲之血爆",
   "spell.iron_spells_genesis.amenofuwari": "天手力",
+  "spell.iron_spells_genesis.warped_blood_burst.guide": "消耗自身50%的血量，对一定范围内的生物造成伤害并附带禁疗效果",
   "spell.iron_spells_genesis.warped_blood_burst.low_health": "血量不足以释放扭曲之血爆！",
-  
+
   "item.iron_spells_genesis.chaos_staff": "混沌法杖",
   "item.iron_spells_genesis.celestial_source_staff": "星源法杖",
 
   "item.iron_spells_genesis.infinity_sword": "天火圣裁 [伪]",
-  "item.iron_spells_genesis.infinity_sword_true": "天火圣裁 [无尽终焉]",
-  "item.iron_spells_genesis.infinity_sword2": "此剑只为你所有",
-  "item.iron_spells_genesis.infinity_sword_damage_true": " 天火的裁决",
   "item.iron_spells_genesis.eternis_apple": "寰宇大苹果",
   "item.iron_spells_genesis.broyouhuashuo": "哎呀，我怎么把锭写成袋子了",
   "item.iron_spells_genesis.purpleite_galaxy_ingot": "§5紫极星源锭",
@@ -42,13 +40,13 @@
   "iron_spells_genesis.galaxy_scroll.book_name": "§b星河绘卷",
   "block.iron_spells_genesis.workbench": "终极工作台",
   "container.iron_spells_genesis.vanilla_workbench": "有序终极合成",
-  
+
   "key.categories.iron_spells_genesis": "永恒星空 - 按键绑定",
   "key.iron_spells_genesis.bow_type": "弓 - 切换箭矢类型",
-  
+
   "death.attack.iron_spells_genesis.warped_blood_burst" : "%1$s的全身血液因为%2$s爆炸了。",
   "death.attack.iron_spells_genesis.warped_blood_burst.item" : "%1$s的全身血液因为%2$s的%3$s爆炸了。",
-  
+
   "ui.iron_spells_genesis.percent_force_damage": "百分比强制伤害：%d%%",
 
   "item.isMain": "§2在主手时：",
