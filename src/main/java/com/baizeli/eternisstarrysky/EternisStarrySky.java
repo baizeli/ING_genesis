@@ -3,6 +3,7 @@ package com.baizeli.eternisstarrysky;
 import com.baizeli.eternisstarrysky.client.network.WireBoxSyncPacket;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
+import com.baizeli.eternisstarrysky.client.particles.ModParticles;
 import org.slf4j.Logger;
 
 import com.baizeli.eternisstarrysky.Content.ModBlock;
@@ -115,6 +116,8 @@ public class EternisStarrySky
         ModMenuTypes.register(modEventBus);
         ModRecipeTypes.register(modEventBus);
         ModRecipeSerializers.register(modEventBus);
+
+        ModParticles.register(modEventBus);
 
         if (FMLEnvironment.dist == Dist.CLIENT)
         {
