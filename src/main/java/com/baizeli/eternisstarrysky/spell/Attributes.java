@@ -12,11 +12,15 @@ public class Attributes {
     private static final DeferredRegister<Attribute> ATTRIBUTES;
     public static final RegistryObject<Attribute> CHAOS_MAGIC_RESIST;
     public static final RegistryObject<Attribute> CHAOS_SPELL_POWER;
+    public static final RegistryObject<Attribute> CELESTIAL_SOURCE_MAGIC_RESIST;
+    public static final RegistryObject<Attribute> CELESTIAL_SOURCE_SPELL_POWER;
 
     static {
         ATTRIBUTES = DeferredRegister.create(Registries.ATTRIBUTE, EternisStarrySky.MOD_ID);
         CHAOS_MAGIC_RESIST = Attributes.newResistanceAttribute("chaos");
         CHAOS_SPELL_POWER = Attributes.newPowerAttribute("chaos");
+        CELESTIAL_SOURCE_MAGIC_RESIST = Attributes.newResistanceAttribute("celestial_source");
+        CELESTIAL_SOURCE_SPELL_POWER = Attributes.newPowerAttribute("celestial_source");
     }
 
     public static void register(IEventBus eventBus) {

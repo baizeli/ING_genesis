@@ -38,14 +38,6 @@ public class ModItems {
         )
     );
 
-    public static final RegistryObject<Item> INFINITY_SWORD_TRUE = ITEMS.register("infinity_sword_true",
-            () -> new InfinitySwordTrue(
-                    Tiers.NETHERITE,
-                    Integer.MAX_VALUE,
-                    -2F,
-                    new Item.Properties().durability(Integer.MAX_VALUE)
-            )
-    );
     public static final RegistryObject<Item> AVARITIA_SWORD = ITEMS.register("avaritia_infinity_sword",
             () -> new AvaritiaSword(
                     Integer.MAX_VALUE,
@@ -118,4 +110,6 @@ public class ModItems {
                     new Item.Properties().rarity(Rarity.RARE)));
 
     public static final RegistryObject<Item> CHAOS_SPELL_BOOK = ITEMS.register("chaos_spell_book", ChaosSpellBook::new);
+
+    public static final RegistryObject<Item> CELESTIAL_SOURCE_SPELL_BOOK = ITEMS.register("celestial_source_spell_book", CelestialSourceSpellBook::new);
 }

@@ -12,5 +12,10 @@
     "sounds": [
       "iron_spells_genesis:van_sh_shoot"
     ]
+  },
+  "van_sh_kill": {
+    "sounds": [
+      "iron_spells_genesis:van_sh_kill"
+    ]
   }
 }

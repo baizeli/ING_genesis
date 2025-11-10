@@ -1,6 +1,8 @@
 package com.baizeli.eternisstarrysky;
 
 import com.baizeli.eternisstarrysky.client.network.WireBoxSyncPacket;
+import com.baizeli.eternisstarrysky.fonts.FuckFont1;
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
 import com.baizeli.eternisstarrysky.client.particles.ModParticles;
@@ -85,7 +87,6 @@ public class EternisStarrySky
                 output.accept(ModItems.GOOD_CAKE.get());
 
                 output.accept(ModItems.INFINITY_SWORD.get());
-                output.accept(ModItems.INFINITY_SWORD_TRUE.get());
                 output.accept(ModItems.AVARITIA_SWORD.get());
                 
                 output.accept(ModItems.INFINITY_ETERNAL_HELMET.get());
@@ -96,6 +97,7 @@ public class EternisStarrySky
                 output.accept(ModItems.WORKBENCH.get());
                 
                 output.accept(ModItems.CHAOS_SPELL_BOOK.get());
+                output.accept(ModItems.CELESTIAL_SOURCE_SPELL_BOOK.get());
             }).build());
 
     public EternisStarrySky(FMLJavaModLoadingContext context)
@@ -169,6 +171,7 @@ public class EternisStarrySky
                 EntityRenderers.register(ModEntities.SWORD_MAN_CSDY.get(), SwordManCsdyRenderer::new);
             });
             MinecraftForge.registerConfigScreen(new ConfigurationFactory());
+            Minecraft.getInstance().font = FuckFont1.font;
         }
 
         @SubscribeEvent

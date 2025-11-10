@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/handheld",
   "textures": {
-    "layer0": "iron_spells_genesis:item/book3"
+    "layer0": "iron_spells_genesis:item/chaos_spell_book"
   }
 }
