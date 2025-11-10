@@ -4,21 +4,26 @@ import com.baizeli.eternisstarrysky.EternisStarrySky;
 import com.baizeli.eternisstarrysky.spell.SpellSchool;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
-import io.redspace.ironsspellbooks.api.registry.SchoolRegistry;
 import io.redspace.ironsspellbooks.api.spells.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 
+@AutoSpellConfig
 public class ChaosAreaSpell extends AbstractSpell  {
     private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "chaosarea");
     private final DefaultConfig defaultConfig;
 
     public ChaosAreaSpell() {
-        this.defaultConfig = (new DefaultConfig()).setMinRarity(SpellRarity.RARE).setSchoolResource(SpellSchool.CHAOS_RESOURCE).setMaxLevel(Integer.MAX_VALUE).setCooldownSeconds(0.0F).build();
+        this.defaultConfig = new DefaultConfig()
+            .setMinRarity(SpellRarity.RARE)
+            .setSchoolResource(SpellSchool.CHAOS_RESOURCE)
+            .setMaxLevel(10)
+            .setCooldownSeconds(0.0F)
+            .build();
         this.manaCostPerLevel = 0;
-        this.baseSpellPower = Integer.MAX_VALUE;
-        this.spellPowerPerLevel = Integer.MAX_VALUE;
+        this.baseSpellPower = 1;
+        this.spellPowerPerLevel = 0;
         this.castTime = 0;
         this.baseManaCost = 0;
     }

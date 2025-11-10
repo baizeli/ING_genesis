@@ -3,11 +3,16 @@
 
   "attribute.iron_spells_genesis.chaos_magic_resist": "混沌法术抗性",
   "attribute.iron_spells_genesis.chaos_spell_power": "混沌法术强度",
+  "attribute.iron_spells_genesis.celestial_source_magic_resist": "星源法术抗性",
+  "attribute.iron_spells_genesis.celestial_source_spell_power": "星源法术强度",
   
   "school.iron_spells_genesis.chaos" : "混沌",
 
   "spell.iron_spells_genesis.chaosarea": "混沌领域",
   "spell.iron_spells_genesis.amenofuwari": "天手力",
+  
+  "item.iron_spells_genesis.chaos_staff": "混沌法杖",
+  "item.iron_spells_genesis.celestial_source_staff": "星源法杖",
 
   "item.iron_spells_genesis.infinity_sword": "天火圣裁 [伪]",
   "item.iron_spells_genesis.infinity_sword_true": "天火圣裁 [无尽终焉]",
@@ -30,6 +35,7 @@
   "item.iron_spells_genesis.create_star": "创造之心",
   "item.iron_spells_genesis.galaxy_scroll": "星河绘卷",
   "item.iron_spells_genesis.chaos_spell_book": "混沌法术书",
+  "item.iron_spells_genesis.twisted_chaos": "扭曲之混沌",
   "iron_spells_genesis.galaxy_scroll.book_name": "§b星河绘卷",
   "block.iron_spells_genesis.workbench": "终极工作台",
   "container.iron_spells_genesis.vanilla_workbench": "有序终极合成",

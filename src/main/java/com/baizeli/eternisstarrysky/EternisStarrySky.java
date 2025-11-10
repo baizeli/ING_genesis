@@ -85,6 +85,15 @@ public class EternisStarrySky
                 output.accept(ModItems.WORKBENCH.get());
                 
                 output.accept(ModItems.CHAOS_SPELL_BOOK.get());
+
+                // 混沌法杖
+                output.accept(ModItems.CHAOS_STAFF.get());
+
+                // 星源法杖
+                output.accept(ModItems.CELESTIAL_SOURCE_STAFF.get());
+                
+                // 扭曲之混沌
+                output.accept(ModItems.TWISTED_CHAOS.get());
             }).build());
 
     public EternisStarrySky(FMLJavaModLoadingContext context)

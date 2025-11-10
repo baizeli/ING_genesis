@@ -3,11 +3,16 @@
 
   "attribute.iron_spells_genesis.chaos_magic_resist": "Chaos Magic Resistance",
   "attribute.iron_spells_genesis.chaos_spell_power": "Chaos Spell Power",
+  "attribute.iron_spells_genesis.celestial_source_magic_resist": "Celestial Source Magic Resistance",
+  "attribute.iron_spells_genesis.celestial_source_spell_power": "Celestial Source Spell Power",
   
   "school.iron_spells_genesis.chaos" : "Chaos",
 
   "spell.iron_spells_genesis.chaosarea": "Chaos Area",
   "spell.iron_spells_genesis.amenofuwari": "Amenofuwari",
+  
+  "item.iron_spells_genesis.chaos_staff": "Chaos Staff",
+  "item.iron_spells_genesis.celestial_source_staff": "Celestial Source Staff",
 
   "item.iron_spells_genesis.infinity_sword": "Heavenly Fire Judgment [Fake]",
   "item.iron_spells_genesis.infinity_sword_true": "Heavenly Fire Judgment [Endless Eternity]",
@@ -30,6 +35,7 @@
   "item.iron_spells_genesis.create_star": "Heart of Creation",
   "item.iron_spells_genesis.galaxy_scroll": "Galaxy Scroll",
   "item.iron_spells_genesis.chaos_spell_book": "Chaos Spell Book",
+  "item.iron_spells_genesis.twisted_chaos": "Twisted Chaos",
   "iron_spells_genesis.galaxy_scroll.book_name": "§bGalaxy Scroll",
   "block.iron_spells_genesis.workbench": "Ultimate Workbench",
   "container.iron_spells_genesis.vanilla_workbench": "Ordered Ultimate Crafting",
