@@ -30,7 +30,6 @@ import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.MinecraftForge;
 
 import java.util.List;
-import java.util.UUID;
 
 import static com.baizeli.eternisstarrysky.EternisStarrySky.CHANNEL;
 

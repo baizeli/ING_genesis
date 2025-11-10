@@ -12,4 +12,7 @@ public class SoundsRegister {
 
     public static final RegistryObject<SoundEvent> GIRL_A = SOUND_EVENTS.register("girl_a",
             () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(EternisStarrySky.MOD_ID, "girl_a")));
+
+    public static final RegistryObject<SoundEvent> CHAOS_CAST = SOUND_EVENTS.register("van_sh_shoot",
+            () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(EternisStarrySky.MOD_ID, "van_sh_shoot")));
 }
