@@ -7,5 +7,10 @@
         "stream": true
       }
     ]
+  },
+  "van_sh_shoot": {
+    "sounds": [
+      "iron_spells_genesis:van_sh_shoot"
+    ]
   }
 }

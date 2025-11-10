@@ -1,8 +1,8 @@
 package com.baizeli.eternisstarrysky.spell;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
-import com.baizeli.eternisstarrysky.spell.chaos.ChaosAreaSpell;
 import com.baizeli.eternisstarrysky.spell.chaos.AmenofuwariSpell;
+import com.baizeli.eternisstarrysky.spell.chaos.WarpedBloodBurst;
 import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -16,7 +16,7 @@ public class Spells {
 
     static {
         SPELLS = DeferredRegister.create(SpellRegistry.SPELL_REGISTRY_KEY, EternisStarrySky.MOD_ID);
-        CHAOS_AREA_SPELL = registerSpell(new ChaosAreaSpell());
+        CHAOS_AREA_SPELL = registerSpell(new WarpedBloodBurst());
         AMENOFUWARI_SPELL = registerSpell(new AmenofuwariSpell());
     }
 

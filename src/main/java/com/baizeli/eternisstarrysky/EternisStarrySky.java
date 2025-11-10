@@ -1,5 +1,9 @@
 package com.baizeli.eternisstarrysky;
 
+import com.baizeli.eternisstarrysky.client.network.WireBoxSyncPacket;
+import net.minecraftforge.network.NetworkRegistry;
+import net.minecraftforge.network.simple.SimpleChannel;
+import com.baizeli.eternisstarrysky.client.particles.ModParticles;
 import org.slf4j.Logger;
 
 import com.baizeli.eternisstarrysky.Content.ModBlock;
@@ -47,6 +51,13 @@ public class EternisStarrySky
     public static final String MOD_ID = "iron_spells_genesis";
     public static final String MODID = MOD_ID; // 添加这个别名以保持兼容性
     private static final Logger LOGGER = LogUtils.getLogger();
+
+    public static SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
+            new ResourceLocation(MOD_ID, "wirebox_sync"),
+            () -> "1.0",
+            "1.0"::equals,
+            "1.0"::equals
+    );
 
     public static ResourceLocation rl(String path) {
         return new ResourceLocation(MOD_ID, path);
@@ -115,6 +126,8 @@ public class EternisStarrySky
         ModRecipeTypes.register(modEventBus);
         ModRecipeSerializers.register(modEventBus);
 
+        ModParticles.register(modEventBus);
+
         if (FMLEnvironment.dist == Dist.CLIENT)
         {
             modEventBus.addListener(ModKeyBindings::onRegisterKeyMappings);
@@ -165,6 +178,16 @@ public class EternisStarrySky
                 EntityRenderers.register(ModEntities.SWORD_MAN_CSDY.get(), SwordManCsdyRenderer::new);
             });
             MinecraftForge.registerConfigScreen(new ConfigurationFactory());
+        }
+
+        @SubscribeEvent
+        public static void onCommonSetup(FMLCommonSetupEvent event)
+        {
+            CHANNEL.registerMessage(0, WireBoxSyncPacket.class,
+                    WireBoxSyncPacket::encode,
+                    WireBoxSyncPacket::decode,
+                    WireBoxSyncPacket::handle
+            );
         }
     }
 }
