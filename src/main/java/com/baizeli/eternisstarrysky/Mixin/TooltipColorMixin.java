@@ -97,9 +97,7 @@ public abstract class TooltipColorMixin {
                           stack.getItem() == ModItems.ETERNIS_APPLE.get()||
                           stack.getItem() == ModItems.WHISPER_OF_THE_PAST.get()||
                           stack.getItem() == ModItems.CREATE_STAR.get()||
-                          stack.getItem() == ModItems.PURE_FRUIT.get()||
-                          stack.getItem() == ModItems.GALAXY_SCROLL.get()||
-                          stack.getItem() == ModItems.IMPURE_FRUIT.get()
+                          stack.getItem() == ModItems.GALAXY_SCROLL.get()
         );
     }
 }

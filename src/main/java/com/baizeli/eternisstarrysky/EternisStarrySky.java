@@ -9,11 +9,7 @@ import com.baizeli.eternisstarrysky.client.particles.ModParticles;
 import org.slf4j.Logger;
 
 import com.baizeli.eternisstarrysky.Content.ModBlock;
-import com.baizeli.eternisstarrysky.Content.Workbenchs.ModBlockEntities;
-import com.baizeli.eternisstarrysky.Content.Workbenchs.ModMenuTypes;
-import com.baizeli.eternisstarrysky.Content.Workbenchs.ModRecipeSerializers;
-import com.baizeli.eternisstarrysky.Content.Workbenchs.ModRecipeTypes;
-import com.baizeli.eternisstarrysky.Content.Workbenchs.VanillaWorkbenchScreen;
+import com.baizeli.eternisstarrysky.Content.Workbenchs.*;
 import com.baizeli.eternisstarrysky.Entity.ModEntities;
 import com.baizeli.eternisstarrysky.Entity.SwordManCsdyRenderer;
 import com.baizeli.eternisstarrysky.Items.ModItems;
@@ -70,20 +66,16 @@ public class EternisStarrySky
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MOD_ID);
 
 
-    public static final RegistryObject<CreativeModeTab> EXAMPLE_TAB = CREATIVE_MODE_TABS.register("eternisstarrysky_tab", () -> CreativeModeTab.builder()
+    public static final RegistryObject<CreativeModeTab> EXAMPLE_TAB = CREATIVE_MODE_TABS.register("iron_spells_genesis_tab", () -> CreativeModeTab.builder()
             .withTabsBefore(CreativeModeTabs.COMBAT)
-            .title(Component.translatable("itemGroup." + MOD_ID + ".eternisstarrysky_tab"))
+            .title(Component.translatable("itemGroup." + MOD_ID + ".iron_spells_genesis_tab"))
             .icon(() -> ModItems.PURPLEITE_GALAXY_INGOT.get().getDefaultInstance())
             .displayItems((parameters, output) -> {
                 output.accept(ModItems.ETERNIS_APPLE.get());
-                output.accept(ModItems.PEACH.get());
                 output.accept(ModItems.PURPLEITE_GALAXY_INGOT.get());
                 output.accept(ModItems.WHISPER_OF_THE_PAST.get());
-                output.accept(ModItems.PRIMOGEM.get());
                 output.accept(ModItems.CREATE_STAR.get());
                 output.accept(ModItems.GALAXY_SCROLL.get());
-                output.accept(ModItems.IMPURE_FRUIT.get());
-                output.accept(ModItems.PURE_FRUIT.get());
                 output.accept(ModItems.GOOD_CAKE.get());
 
                 output.accept(ModItems.INFINITY_SWORD.get());
@@ -93,6 +85,12 @@ public class EternisStarrySky
                 output.accept(ModItems.INFINITY_ETERNAL_CHESTPLATE.get());
                 output.accept(ModItems.INFINITY_ETERNAL_LEGGINGS.get());
                 output.accept(ModItems.INFINITY_ETERNAL_BOOTS.get());
+
+                // 神圣金属套
+                output.accept(ModItems.DIVINE_METAL_HELMET.get());
+                output.accept(ModItems.DIVINE_METAL_CHESTPLATE.get());
+                output.accept(ModItems.DIVINE_METAL_LEGGINGS.get());
+                output.accept(ModItems.DIVINE_METAL_BOOTS.get());
 
                 output.accept(ModItems.WORKBENCH.get());
                 
@@ -107,6 +105,9 @@ public class EternisStarrySky
 
                 // 扭曲之混沌
                 output.accept(ModItems.TWISTED_CHAOS.get());
+
+                // 神圣金属锭
+                output.accept(ModItems.DIVINE_METAL_INGOT.get());
             }).build());
 
     public EternisStarrySky(FMLJavaModLoadingContext context)
