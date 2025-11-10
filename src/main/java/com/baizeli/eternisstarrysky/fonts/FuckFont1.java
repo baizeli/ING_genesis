@@ -50,6 +50,8 @@ public class FuckFont1 extends Font {
 
         List<int[]> keywordRanges = new ArrayList<>();
         addRange(text, "混沌", keywordRanges);
+        addRange(text, "扭曲之混沌", keywordRanges);
+        addRange(text, "Twisted Chaos", keywordRanges);
         addRange(text, "Chaos", keywordRanges);
         addRange(text, "chaos", keywordRanges);
         addRange(text, "CHAOS", keywordRanges);
@@ -74,7 +76,8 @@ public class FuckFont1 extends Font {
             for (int[] r : keywordRanges) {
                 if (idx >= r[0] && idx < r[1]) {
                     String sub = text.substring(r[0], r[1]);
-                    if (sub.equals("混沌") || sub.equalsIgnoreCase("chaos")) {
+                    if (sub.equals("混沌") || sub.equals("扭曲之混沌") ||
+                            sub.equalsIgnoreCase("chaos") || sub.equalsIgnoreCase("twisted chaos")) {
                         isChaos = true;
                     } else if (sub.equals("星源") || sub.equalsIgnoreCase("celestial source")) {
                         isCelestial = true;
