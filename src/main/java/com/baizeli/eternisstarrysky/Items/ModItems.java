@@ -2,6 +2,9 @@ package com.baizeli.eternisstarrysky.Items;
 
 import com.baizeli.eternisstarrysky.Content.ModBlock;
 import com.baizeli.eternisstarrysky.EternisStarrySky;
+import com.baizeli.eternisstarrysky.Items.Staff.CelestialSourceStaff;
+import com.baizeli.eternisstarrysky.Items.Staff.ChaosStaff;
+
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
 import net.minecraftforge.registries.DeferredRegister;
@@ -14,6 +17,13 @@ public class ModItems {
 
     public static final RegistryObject<Item> PURPLEITE_GALAXY_INGOT = ITEMS.register("purpleite_galaxy_ingot", () -> new EternisMaterial(new Item.Properties(), 0));
     public static final RegistryObject<Item> PRIMOGEM = ITEMS.register("primogem", () -> new EternisMaterial(new Item.Properties(), 1));
+
+    // 扭曲之混沌-[混沌]法术材料
+    public static final RegistryObject<Item> TWISTED_CHAOS = ITEMS.register("twisted_chaos",
+                () -> new ChaosMaterial(new Item.Properties()
+                        .rarity(Rarity.EPIC)
+                )
+        );
 
     public static final RegistryObject<Item> ETERNIS_APPLE = ITEMS.register("eternis_apple",
             () -> new EternisAppleItem(new Item.Properties()
@@ -112,4 +122,10 @@ public class ModItems {
     public static final RegistryObject<Item> CHAOS_SPELL_BOOK = ITEMS.register("chaos_spell_book", ChaosSpellBook::new);
 
     public static final RegistryObject<Item> CELESTIAL_SOURCE_SPELL_BOOK = ITEMS.register("celestial_source_spell_book", CelestialSourceSpellBook::new);
+
+    // 混沌法杖
+    public static final RegistryObject<Item> CHAOS_STAFF = ITEMS.register("chaos_staff", ChaosStaff::new);
+
+    // 星源法杖
+    public static final RegistryObject<Item> CELESTIAL_SOURCE_STAFF = ITEMS.register("celestial_source_staff", CelestialSourceStaff::new);
 }

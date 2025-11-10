@@ -5,7 +5,7 @@
   "attribute.iron_spells_genesis.chaos_spell_power": "Chaos Spell Power",
   "attribute.iron_spells_genesis.celestial_source_magic_resist": "Celestial Source Magic Resistance",
   "attribute.iron_spells_genesis.celestial_source_spell_power": "Celestial Source Spell Power",
-  
+
   "school.iron_spells_genesis.chaos" : "Chaos",
   "school.iron_spells_genesis.celestial_source": "Celestial Source",
 
@@ -13,7 +13,7 @@
   "spell.iron_spells_genesis.amenofuwari": "Amenofuwari",
   "spell.iron_spells_genesis.warped_blood_burst.guide": "Consume 50% of your own HP to deal damage to all enemies in an area and inflict a healing-negation effect.",
   "spell.iron_spells_genesis.warped_blood_burst.low_health": "Your health is too weak to unleash the Warped Blood Burst!",
-  
+
   "item.iron_spells_genesis.chaos_staff": "Chaos Staff",
   "item.iron_spells_genesis.celestial_source_staff": "Celestial Source Staff",
 
@@ -40,13 +40,13 @@
   "iron_spells_genesis.galaxy_scroll.book_name": "§bGalaxy Scroll",
   "block.iron_spells_genesis.workbench": "Ultimate Workbench",
   "container.iron_spells_genesis.vanilla_workbench": "Ordered Ultimate Crafting",
-  
+
   "key.categories.iron_spells_genesis": "Eternis Starry Sky - Key Bindings",
   "key.iron_spells_genesis.bow_type": "Bow - Switch Arrow Type",
-  
+
   "death.attack.iron_spells_genesis.warped_blood_burst" : "The entire bloodstream of %1$s exploded due to %2$s.",
   "death.attack.iron_spells_genesis.warped_blood_burst.item" : "The entire bloodstream of %1$s exploded due to %2$s's %3$s..",
-  
+
   "ui.iron_spells_genesis.percent_force_damage": "Percent Force Damage：%d%%",
 
   "item.isMain": "§2When in main hand:",

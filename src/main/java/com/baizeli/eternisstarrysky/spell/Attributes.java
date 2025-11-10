@@ -17,10 +17,13 @@ public class Attributes {
 
     static {
         ATTRIBUTES = DeferredRegister.create(Registries.ATTRIBUTE, EternisStarrySky.MOD_ID);
+        // 混沌法术强度/抗性
         CHAOS_MAGIC_RESIST = Attributes.newResistanceAttribute("chaos");
         CHAOS_SPELL_POWER = Attributes.newPowerAttribute("chaos");
-        CELESTIAL_SOURCE_MAGIC_RESIST = Attributes.newResistanceAttribute("celestial_source");
+
+        // 星源法术强度/抗性
         CELESTIAL_SOURCE_SPELL_POWER = Attributes.newPowerAttribute("celestial_source");
+        CELESTIAL_SOURCE_MAGIC_RESIST = Attributes.newResistanceAttribute("celestial_source");
     }
 
     public static void register(IEventBus eventBus) {
