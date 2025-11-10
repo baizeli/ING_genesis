@@ -6,8 +6,10 @@ import io.redspace.ironsspellbooks.api.config.DefaultConfig;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.spells.*;
 import io.redspace.ironsspellbooks.api.util.Utils;
+import io.redspace.ironsspellbooks.capabilities.magic.TargetEntityCastData;
 import net.minecraft.network.chat.*;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.*;
@@ -103,23 +105,24 @@ public class AmenofuwariSpell extends AbstractSpell {
     }
 
     @Override
+    public boolean checkPreCastConditions(Level level, int spellLevel, LivingEntity entity, MagicData playerMagicData) {
+        float maxDistance = getDistance(spellLevel);
+        return Utils.preCastTargetHelper(level, entity, playerMagicData, this, (int) Math.ceil(maxDistance), 0.15f);
+    }
+
+    @Override
     public void onCast(Level level, int spellLevel, LivingEntity entity, CastSource castSource, MagicData playerMagicData) {
-        if (!level.isClientSide) {
-            float maxDistance = getDistance(spellLevel);
-            HitResult hitResult = Utils.raycastForEntity(level, entity, 64.0F, true);
-
-            if (hitResult.getType() == HitResult.Type.ENTITY) {
-                EntityHitResult entityHitResult = (EntityHitResult) hitResult;
-
-                if (entityHitResult.getEntity() instanceof LivingEntity targetEntity) {
-                    double distance = entity.distanceTo(targetEntity);
-                    if (distance <= maxDistance) {
-                        Vec3 casterPos = entity.position();
-                        Vec3 targetPos = targetEntity.position();
-                        
-                        entity.teleportTo(targetPos.x, targetPos.y, targetPos.z);
-                        targetEntity.teleportTo(casterPos.x, casterPos.y, casterPos.z);
-                    }
+        if (!level.isClientSide && playerMagicData.getAdditionalCastData() instanceof TargetEntityCastData targetData) {
+            LivingEntity targetEntity = targetData.getTarget((ServerLevel) level);
+            if (targetEntity != null) {
+                float maxDistance = getDistance(spellLevel);
+                double distance = entity.distanceTo(targetEntity);
+                if (distance <= maxDistance) {
+                    Vec3 casterPos = entity.position();
+                    Vec3 targetPos = targetEntity.position();
+                    
+                    entity.teleportTo(targetPos.x, targetPos.y, targetPos.z);
+                    targetEntity.teleportTo(casterPos.x, casterPos.y, casterPos.z);
                 }
             }
         }
