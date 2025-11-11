@@ -250,10 +250,8 @@ public final class CosmicBakeModel implements BakedModel {
             COSMIC_EFFECTS.put(ModItems.INFINITY_ETERNAL_LEGGINGS.get(), new EffectConfig(0, 0.5F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
             COSMIC_EFFECTS.put(ModItems.INFINITY_ETERNAL_BOOTS.get(), new EffectConfig(0, 0.5F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
 
-            COSMIC_EFFECTS.put(ModItems.PRIMOGEM.get(), new EffectConfig(2, 0.6F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
             COSMIC_EFFECTS.put(ModItems.PURPLEITE_GALAXY_INGOT.get(), new EffectConfig(0, 0.6F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
             COSMIC_EFFECTS.put(ModItems.ETERNIS_APPLE.get(), new EffectConfig(0, 0.5F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
-            COSMIC_EFFECTS.put(ModItems.PEACH.get(), new EffectConfig(1, 0.5F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
             COSMIC_EFFECTS.put(ModItems.AVARITIA_SWORD.get(), new EffectConfig(3, 0.6F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
     }
 }
