@@ -29,9 +29,9 @@ public class FateWedgeSpell extends AbstractSpell {
 
     public FateWedgeSpell() {
         this.manaCostPerLevel = 0;
-        this.baseSpellPower = 10;
+        this.baseSpellPower = 60;
         this.spellPowerPerLevel = 0;
-        this.castTime = 60;
+        this.castTime = 20;
         this.baseManaCost = 1000;
     }
 
@@ -59,8 +59,15 @@ public class FateWedgeSpell extends AbstractSpell {
     public List<MutableComponent> getUniqueInfo(int spellLevel, LivingEntity caster) {
         return List.of(
             Component.translatable("ui.iron_spells_genesis.max_damage_bonus", 50),
-            Component.translatable("ui.irons_spellbooks.effect_length", 60)
+            Component.translatable(
+                "ui.irons_spellbooks.effect_length",
+                Utils.timeFromTicks(getDurationInTicks(spellLevel, caster), 1)
+            )
         );
+    }
+
+    public int getDurationInTicks(int spellLevel, LivingEntity caster) {
+        return (int) (getSpellPower(spellLevel, caster) * 20);
     }
 
     @Override
@@ -75,7 +82,8 @@ public class FateWedgeSpell extends AbstractSpell {
                 LivingEntity target = targetData.getTarget((ServerLevel) level);
 
                 if (target != null) {
-                    FateWedgeUtil.applyFateWedgeEffect(player, target, 0, 60);
+                    int duration = getDurationInTicks(spellLevel, entity);
+                    FateWedgeUtil.applyFateWedgeEffect(player, target, 0, duration);
                 }
             }
         }

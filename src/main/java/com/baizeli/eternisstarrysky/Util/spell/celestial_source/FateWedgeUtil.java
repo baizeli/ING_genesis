@@ -1,6 +1,8 @@
 package com.baizeli.eternisstarrysky.Util.spell.celestial_source;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -19,6 +21,10 @@ public class FateWedgeUtil {
     public static void applyFateWedgeEffect(LivingEntity caster, LivingEntity target, int baseDamageBonus, int durationSeconds) {
         fateWedgeEffects.computeIfAbsent(caster.getUUID(), k -> new HashMap<>())
                 .put(target.getUUID(), new FateWedgeData(baseDamageBonus, durationSeconds, target.getHealth()));
+
+        target.addEffect(new MobEffectInstance(
+            MobEffects.GLOWING, durationSeconds * 20, 0, false, false, true)
+        );
         
         scheduler.schedule(() -> removeFateWedgeEffect(caster, target), durationSeconds, TimeUnit.SECONDS);
     }
