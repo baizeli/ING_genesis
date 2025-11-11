@@ -13,6 +13,8 @@ public class GenesisEntityAttributes {
         e.getTypes().forEach(type -> {
             e.add(type, Attributes.CHAOS_SPELL_POWER.get());
             e.add(type, Attributes.CHAOS_MAGIC_RESIST.get());
+            e.add(type, Attributes.CELESTIAL_SOURCE_SPELL_POWER.get());
+            e.add(type, Attributes.CELESTIAL_SOURCE_MAGIC_RESIST.get());
         });
     }
 }
