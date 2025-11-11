@@ -40,7 +40,7 @@ public class WarpedBloodBurst extends AbstractSpell {
 
     public WarpedBloodBurst() {
         this.defaultConfig = new DefaultConfig()
-                .setMinRarity(SpellRarity.LEGENDARY)
+                .setMinRarity(SpellRarity.COMMON)
                 .setSchoolResource(SpellSchool.CHAOS_RESOURCE)
                 .setMaxLevel(10)
                 .setCooldownSeconds(0)
@@ -57,7 +57,7 @@ public class WarpedBloodBurst extends AbstractSpell {
                 Component.translatable("ui.iron_spells_genesis.percent_force_damage", Utils.stringTruncation(getForceDamage(spellLevel, caster), 1)),
                 Component.translatable("ui.irons_spellbooks.radius", Utils.stringTruncation(3 * spellLevel, 1)),
                 Component.translatable("ui.irons_spellbooks.cooldown", Utils.timeFromTicks(getCooldownInTicks(spellLevel, CastSource.NONE, caster), 1)
-        ));
+                ));
     }
 
 
@@ -100,13 +100,13 @@ public class WarpedBloodBurst extends AbstractSpell {
         }
 
         if (spellLevel <= 3) {          // 1~3 级
-            coolDown =  200;
+            coolDown = 200;
         } else if (spellLevel < 10) {  // 4~9 级
-            coolDown =  100 * (spellLevel - 1);   // 4→300，5→400，…，9→800
+            coolDown = 100 * (spellLevel - 1);   // 4→300，5→400，…，9→800
         } else {
             coolDown = 1000;
         }
-        return (int) (coolDown * ((double)2.0F - Utils.softCapFormula(playerCooldownModifier)) * itemCoolDownModifer);
+        return (int) (coolDown * ((double) 2.0F - Utils.softCapFormula(playerCooldownModifier)) * itemCoolDownModifer);
     }
 
     public void addCooldown(ServerPlayer serverPlayer, AbstractSpell spell, CastSource castSource, int spellLevel) {
@@ -139,7 +139,7 @@ public class WarpedBloodBurst extends AbstractSpell {
                 if (e.isAlive()) {
                     e.hurt(getDamageSource(entity), getSpellPower(spellLevel, entity));
                     if (e instanceof LivingEntity living) {
-                        living.setHealth((float) (living.getHealth() - living.getHealth() * getForceDamage(spellLevel, entity) * 0.01));
+                        living.setHealth((float) (living.getHealth() - living.getMaxHealth() * getForceDamage(spellLevel, entity) * 0.01));
                     }
                     ((ServerLevel) serverLevel).sendParticles(ParticleHelper.BLOOD,
                             e.getX(), e.getY() + e.getBbHeight() * 0.5, e.getZ(),
@@ -166,7 +166,7 @@ public class WarpedBloodBurst extends AbstractSpell {
             if (entity instanceof ServerPlayer sp) {
                 sp.sendSystemMessage(
                         Component.translatable("spell.iron_spells_genesis.warped_blood_burst.low_health")
-                                .withStyle(ChatFormatting.RED),
+                                .withStyle(ChatFormatting.DARK_RED),
                         true
                 );
             }

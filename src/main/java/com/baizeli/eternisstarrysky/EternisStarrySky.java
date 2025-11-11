@@ -1,17 +1,18 @@
 package com.baizeli.eternisstarrysky;
 
 import com.baizeli.eternisstarrysky.client.network.WireBoxSyncPacket;
+import com.baizeli.eternisstarrysky.fonts.FuckFont1;
+import io.redspace.ironsspellbooks.registries.CreativeTabRegistry;
+import io.redspace.ironsspellbooks.registries.ItemRegistry;
+import net.minecraft.client.Minecraft;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
 import com.baizeli.eternisstarrysky.client.particles.ModParticles;
 import org.slf4j.Logger;
 
 import com.baizeli.eternisstarrysky.Content.ModBlock;
-import com.baizeli.eternisstarrysky.Content.Workbenchs.ModBlockEntities;
-import com.baizeli.eternisstarrysky.Content.Workbenchs.ModMenuTypes;
-import com.baizeli.eternisstarrysky.Content.Workbenchs.ModRecipeSerializers;
-import com.baizeli.eternisstarrysky.Content.Workbenchs.ModRecipeTypes;
-import com.baizeli.eternisstarrysky.Content.Workbenchs.VanillaWorkbenchScreen;
+import com.baizeli.eternisstarrysky.Content.Workbenchs.*;
 import com.baizeli.eternisstarrysky.Entity.ModEntities;
 import com.baizeli.eternisstarrysky.Entity.SwordManCsdyRenderer;
 import com.baizeli.eternisstarrysky.Items.ModItems;
@@ -68,24 +69,19 @@ public class EternisStarrySky
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MOD_ID);
 
 
-    public static final RegistryObject<CreativeModeTab> EXAMPLE_TAB = CREATIVE_MODE_TABS.register("eternisstarrysky_tab", () -> CreativeModeTab.builder()
+    public static final RegistryObject<CreativeModeTab> EXAMPLE_TAB = CREATIVE_MODE_TABS.register("iron_spells_genesis_tab", () -> CreativeModeTab.builder()
             .withTabsBefore(CreativeModeTabs.COMBAT)
-            .title(Component.translatable("itemGroup." + MOD_ID + ".eternisstarrysky_tab"))
+            .title(Component.translatable("itemGroup." + MOD_ID + ".iron_spells_genesis_tab"))
             .icon(() -> ModItems.PURPLEITE_GALAXY_INGOT.get().getDefaultInstance())
             .displayItems((parameters, output) -> {
                 output.accept(ModItems.ETERNIS_APPLE.get());
-                output.accept(ModItems.PEACH.get());
                 output.accept(ModItems.PURPLEITE_GALAXY_INGOT.get());
                 output.accept(ModItems.WHISPER_OF_THE_PAST.get());
-                output.accept(ModItems.PRIMOGEM.get());
                 output.accept(ModItems.CREATE_STAR.get());
                 output.accept(ModItems.GALAXY_SCROLL.get());
-                output.accept(ModItems.IMPURE_FRUIT.get());
-                output.accept(ModItems.PURE_FRUIT.get());
                 output.accept(ModItems.GOOD_CAKE.get());
 
                 output.accept(ModItems.INFINITY_SWORD.get());
-                output.accept(ModItems.INFINITY_SWORD_TRUE.get());
                 output.accept(ModItems.AVARITIA_SWORD.get());
                 
                 output.accept(ModItems.INFINITY_ETERNAL_HELMET.get());
@@ -93,18 +89,34 @@ public class EternisStarrySky
                 output.accept(ModItems.INFINITY_ETERNAL_LEGGINGS.get());
                 output.accept(ModItems.INFINITY_ETERNAL_BOOTS.get());
 
+                // 神圣金属套
+                output.accept(ModItems.DIVINE_METAL_HELMET.get());
+                output.accept(ModItems.DIVINE_METAL_CHESTPLATE.get());
+                output.accept(ModItems.DIVINE_METAL_LEGGINGS.get());
+                output.accept(ModItems.DIVINE_METAL_BOOTS.get());
+
                 output.accept(ModItems.WORKBENCH.get());
                 
                 output.accept(ModItems.CHAOS_SPELL_BOOK.get());
+                output.accept(ModItems.CELESTIAL_SOURCE_SPELL_BOOK.get());
 
                 // 混沌法杖
                 output.accept(ModItems.CHAOS_STAFF.get());
 
                 // 星源法杖
                 output.accept(ModItems.CELESTIAL_SOURCE_STAFF.get());
-                
+
                 // 扭曲之混沌
                 output.accept(ModItems.TWISTED_CHAOS.get());
+
+                // 星源珍珠
+                output.accept(ModItems.CELESTIAL_SOURCE_PEARL.get());
+
+                // 星源铁锭
+                output.accept(ModItems.CELESTIAL_SOURCE_INGOT.get());
+
+                // 神圣金属锭
+                output.accept(ModItems.DIVINE_METAL_INGOT.get());
             }).build());
 
     public EternisStarrySky(FMLJavaModLoadingContext context)
@@ -135,6 +147,7 @@ public class EternisStarrySky
 
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::addAttribute); // 添加实体属性创建事件监听器
+        modEventBus.addListener(this::addToVanillaTabs); // 给自己的物品加到别人的标签栏里面
 
         MinecraftForge.EVENT_BUS.register(this);
         context.registerConfig(ModConfig.Type.COMMON, Configuration.SPECIFICATION);
@@ -162,6 +175,27 @@ public class EternisStarrySky
                      .build());
     }
 
+    private void addToVanillaTabs(BuildCreativeModeTabContentsEvent e) {
+        if (e.getTabKey() == CreativeTabRegistry.MATERIALS_TAB.getKey()) {
+            // 加到自然符文的后面
+            e.getEntries().putAfter(ItemRegistry.NATURE_RUNE.get().getDefaultInstance(),
+                    ModItems.CHAOS_RUNE.get().getDefaultInstance(),
+                    CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+            // 混沌后面
+            e.getEntries().putAfter(ModItems.CHAOS_RUNE.get().getDefaultInstance(),
+                    ModItems.CELESTIAL_SOURCE_RUNE.get().getDefaultInstance(),
+                    CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+            // 加到自然升级法球的后面
+            e.getEntries().putAfter(ItemRegistry.NATURE_UPGRADE_ORB.get().getDefaultInstance(),
+                    ModItems.CHAOS_UPGRADE_ORB.get().getDefaultInstance(),
+                    CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+            // 混沌后面
+            e.getEntries().putAfter(ModItems.CHAOS_UPGRADE_ORB.get().getDefaultInstance(),
+                    ModItems.CELESTIAL_SOURCE_UPGRADE_ORB.get().getDefaultInstance(),
+                    CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+        }
+    }
+
     public static String resource(String location)
     {
         return MOD_ID + ":" + location;
@@ -178,6 +212,7 @@ public class EternisStarrySky
                 EntityRenderers.register(ModEntities.SWORD_MAN_CSDY.get(), SwordManCsdyRenderer::new);
             });
             MinecraftForge.registerConfigScreen(new ConfigurationFactory());
+            Minecraft.getInstance().font = FuckFont1.font;
         }
 
         @SubscribeEvent

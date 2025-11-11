@@ -2,7 +2,6 @@ package com.baizeli.eternisstarrysky.Mixin;
 
 import com.baizeli.eternisstarrysky.AvaritiaKill;
 import com.baizeli.eternisstarrysky.AvaritiaLivingEntity;
-import com.baizeli.eternisstarrysky.Items.InfinitySwordTrue;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.common.Tags;

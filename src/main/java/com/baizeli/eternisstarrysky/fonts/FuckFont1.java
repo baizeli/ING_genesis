@@ -5,7 +5,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.font.FontSet;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
@@ -17,13 +16,31 @@ import org.joml.Matrix4f;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 public class FuckFont1 extends Font {
-    public static List<String> tips = new ArrayList<>();
     public static Font font = new FuckFont1(Minecraft.getInstance().font.fonts, false);
+    private static final Map<String, KeywordType> KEYWORDS = Map.ofEntries(
+            Map.entry("混沌", KeywordType.CHAOS),
+            Map.entry("扭曲之混沌", KeywordType.CHAOS),
+            Map.entry("星源珍珠", KeywordType.CELESTIAL),
+            Map.entry("星源锭", KeywordType.CELESTIAL),
+            Map.entry("Twisted Chaos", KeywordType.CHAOS),
+            Map.entry("twisted_chaos", KeywordType.CHAOS),
+            Map.entry("Celestial Source Pearl", KeywordType.CELESTIAL),
+            Map.entry("celestial_source_pearl", KeywordType.CELESTIAL),
+            Map.entry("Celestial Source Ingot", KeywordType.CELESTIAL),
+            Map.entry("celestial_source_ingot", KeywordType.CELESTIAL),
+            Map.entry("Chaos", KeywordType.CHAOS),
+            Map.entry("chaos", KeywordType.CHAOS),
+            Map.entry("CHAOS", KeywordType.CHAOS),
+            Map.entry("星源", KeywordType.CELESTIAL),
+            Map.entry("celestial_source", KeywordType.CELESTIAL),
+            Map.entry("celestial source", KeywordType.CELESTIAL),
+            Map.entry("Celestial Source", KeywordType.CELESTIAL)
+    );
     static {
-        tips.add("混沌");
     }
 
     public FuckFont1(Function<ResourceLocation, FontSet> p_243253_, boolean p_243245_) {
@@ -35,11 +52,6 @@ public class FuckFont1 extends Font {
     }
 
     public int drawInBatch(@NotNull FormattedCharSequence formattedCharSequence, float x, float y, int rgb, boolean b1, @NotNull Matrix4f matrix4f, @NotNull MultiBufferSource multiBufferSource, @NotNull DisplayMode mode, int i, int i1) {
-//        StringBuilder builder = new StringBuilder();
-//        formattedCharSequence.accept((p_13746_, p_13747_, p_13748_) -> {
-//            builder.appendCodePoint(p_13748_);
-//            return true;
-//        });
         return renderFont(formattedCharSequence, x, y, rgb, b1, matrix4f, multiBufferSource, mode, i, i1, this.isBidirectional());
     }
 
@@ -55,46 +67,164 @@ public class FuckFont1 extends Font {
         StringBuilder plain = new StringBuilder();
         seq.accept((i, st, cp) -> { plain.appendCodePoint(cp); return true; });
         final String text = plain.toString();
-        final boolean hasKeyword = text.contains("混沌");
 
-        if (!hasKeyword) {   // 没有关键字，一次性画完
-            return (int) (x + super.drawInBatch(seq, x, y, baseRgb, dropShadow, matrix, buffers, mode, light, overlay));
-        }
+        List<Map.Entry<int[], KeywordType>> keywords = scanKeywords(text);
 
         final float[] xBox = { x };
         final long time = Util.getMillis();
+        final int[] index = { 0 };          // 当前字符在整个字符串中的下标
 
-        seq.accept((index, style, codePoint) -> {
-            char ch = (char) codePoint;
-            boolean isKeyword = (ch == '混' || ch == '沌');
+        seq.accept((i, style, codePoint) -> {
+            int idx = index[0]++;
+            KeywordType type = getTypeAt(idx, keywords);
 
-            // .withUnderlined(false) 我觉得去掉下划线会有点突兀
-            Style outStyle = isKeyword ? style.withColor((TextColor) null) : style;// 非关键字保持原样
+            boolean isChaos = (type == KeywordType.CHAOS);
+            boolean isCelestial = (type == KeywordType.CELESTIAL);
 
-            // 计算颜色
+            Style outStyle = isChaos || isCelestial ? style.withColor((TextColor) null).withUnderlined(false) : style;
+
             int color;
-            if (isKeyword) {          // 关键字：走渐变
-                float progress = (time * 0.0009F + index * 0.05F) % 1F;
-                color = Mth.hsvToRgb(0.83F, 0.6F * (1F - progress), 1F) | 0xFF000000;
-            } else {                  // 非关键字：用原样式或 baseRgb
-                color = (style.getColor() != null) ? style.getColor().getValue() | 0xFF000000 : baseRgb;
-            }
+            float amp = 0.35f;                 // 主字颤抖幅度（像素）
+            float speed = 0.045f;              // 颤抖速度
+            float dx;
+            float dy;
+            if (isChaos) {
+                float progress = (time * 0.0009f + idx * 0.05f) % 1.0f;   // 0~1
+                float hue   = 0.00f;                                   // 0=红
+                float sat   = (1.0f - progress);                       // 1→0  深红→灰
+                float bright= (1.0f - progress);                       // 1→0  灰→黑
 
-            // 画字
-            if (isKeyword) {
-                float yOffset = (float) Math.cos(time / 200F + index);
-                // 主字
-                super.drawInBatch(FormattedCharSequence.forward(String.valueOf(ch), outStyle), xBox[0], y + yOffset, color, dropShadow, matrix, buffers, mode, light, overlay);
-                // 残影
-                super.drawInBatch(FormattedCharSequence.forward(String.valueOf(ch), outStyle), xBox[0] + 0.2F, y + 0.2F, (color & 0x00FFFFFF) | 0x33000000, dropShadow, matrix, buffers, mode, light, overlay);
+                color = Mth.hsvToRgb(hue, sat, bright);
+                dx = xBox[0] + (float) Math.cos(time * speed + idx * 3.7f) * amp;
+                dy = y + (float) Math.sin(time * speed + idx * 2.9f) * amp;
+            } else if (isCelestial) {
+                float progress = (time * 0.0012F + idx * 0.03F) % 1F;
+                color = Mth.hsvToRgb(progress, 0.7F, 1F) | 0xFF000000;
+                dx = xBox[0];
+                dy = y + (float) Math.cos(time / 200F + idx);
             } else {
-                super.drawInBatch(FormattedCharSequence.forward(String.valueOf(ch), outStyle), xBox[0], y, color, dropShadow, matrix, buffers, mode, light, overlay);
+                color = (style.getColor() != null) ? style.getColor().getValue() | 0xFF000000 : baseRgb;
+                dx = xBox[0];
+                dy = y;
             }
 
-            xBox[0] += width(String.valueOf(ch));
+            if (isChaos || isCelestial) {
+//                绘制背景
+//                float charWidth = width(String.valueOf(ch));
+//                RenderUtils.drawRenderTypeRect(xBox[0], y, charWidth, lineHeight - 1, COSMIC_FONT, matrix);
+//                if (buffers instanceof MultiBufferSource.BufferSource source) source.endBatch();
+                // 主字
+                super.drawInBatch(FormattedCharSequence.forward(String.valueOf((char) codePoint), outStyle),
+                        dx, dy, color, dropShadow,
+                        matrix, buffers, mode, light, overlay);
+                // 残影
+                super.drawInBatch(FormattedCharSequence.forward(String.valueOf((char) codePoint), outStyle),
+                        xBox[0] + 0.2F, y + 0.2F, (color & 0x00FFFFFF) | 0x33000000, dropShadow,
+                        matrix, buffers, mode, light, overlay);
+            } else {
+                super.drawInBatch(FormattedCharSequence.forward(String.valueOf((char) codePoint), outStyle),
+                        xBox[0], y, color, dropShadow,
+                        matrix, buffers, mode, light, overlay);
+            }
+
+            xBox[0] += width(String.valueOf((char) codePoint));
             return true;
         });
 
+
         return (int) xBox[0];
     }
+
+    private static void addRange(String text, String key, List<int[]> ranges) {
+        for (int i = text.indexOf(key); i >= 0; i = text.indexOf(key, i + 1)) {
+            ranges.add(new int[]{ i, i + key.length() });
+        }
+    }
+
+    private static List<Map.Entry<int[], KeywordType>> scanKeywords(String text) {
+        List<Map.Entry<int[], KeywordType>> result = new ArrayList<>();
+        for (var entry : KEYWORDS.entrySet()) {
+            String key = entry.getKey();
+            KeywordType type = entry.getValue();
+            for (int i = text.indexOf(key); i >= 0; i = text.indexOf(key, i + 1)) {
+                result.add(Map.entry(new int[]{i, i + key.length()}, type));
+            }
+        }
+        // 按起始位置排序，重叠时优先长的
+        result.sort((a, b) -> {
+            int[] r1 = a.getKey();
+            int[] r2 = b.getKey();
+            if (r1[0] != r2[0]) return Integer.compare(r1[0], r2[0]);
+            return Integer.compare(r2[1], r1[1]); // 长的优先
+        });
+        // 去重重叠区间
+        List<Map.Entry<int[], KeywordType>> filtered = new ArrayList<>();
+        int lastEnd = -1;
+        for (var e : result) {
+            int[] r = e.getKey();
+            if (r[0] >= lastEnd) {
+                filtered.add(e);
+                lastEnd = r[1];
+            }
+        }
+        return filtered;
+    }
+
+    private static KeywordType getTypeAt(int idx, List<Map.Entry<int[], KeywordType>> keywords) {
+        for (var e : keywords) {
+            int[] r = e.getKey();
+            if (idx >= r[0] && idx < r[1]) return e.getValue();
+        }
+        return null;
+    }
+
+    enum KeywordType {
+        CHAOS,
+        CELESTIAL
+    }
+//
+//    public int drawInternal(FormattedCharSequence text, float x, float y, int color, boolean dropShadow, Matrix4f matrix, MultiBufferSource buffer, DisplayMode displayMode, int backgroundColor, int packedLightCoords) {
+//        color = adjustColor(color);
+//        Matrix4f matrix4f = new Matrix4f(matrix);
+//        if (dropShadow) {
+//            this.renderText(text, x, y, color, true, matrix, buffer, displayMode, backgroundColor, packedLightCoords);
+//            matrix4f.translate(SHADOW_OFFSET);
+//        }
+//
+//        x = this.renderText(text, x, y, color, false, matrix4f, buffer, displayMode, backgroundColor, packedLightCoords);
+//        return (int)x + (dropShadow ? 1 : 0);
+//    }
+//
+//    public float renderText(String text, float x, float y, int color, boolean dropShadow, Matrix4f matrix, MultiBufferSource buffer, DisplayMode displayMode, int backgroundColor, int packedLightCoords) {
+//        StringRenderOutput font$stringrenderoutput = new StringRenderOutput(buffer, x, y, color, dropShadow, matrix, displayMode, packedLightCoords);
+//        StringDecomposer.iterateFormatted(text, Style.EMPTY, font$stringrenderoutput);
+//        return finish(backgroundColor, x, font$stringrenderoutput);
+//    }
+//
+//    public float renderText(FormattedCharSequence text, float x, float y, int color, boolean dropShadow, Matrix4f matrix, MultiBufferSource buffer, DisplayMode displayMode, int backgroundColor, int packedLightCoords) {
+//        StringRenderOutput font$stringrenderoutput = new StringRenderOutput(buffer, x, y, color, dropShadow, matrix, displayMode, packedLightCoords);
+//        text.accept(font$stringrenderoutput);
+//        return finish(backgroundColor, x, font$stringrenderoutput);
+//    }
+//
+//    public float finish(int backgroundColor, float x,  StringRenderOutput font$stringrenderoutput) {
+//        if (backgroundColor != 0) {
+//            float f = (float)(backgroundColor >> 24 & 255) / 255.0F;
+//            float f1 = (float)(backgroundColor >> 16 & 255) / 255.0F;
+//            float f2 = (float)(backgroundColor >> 8 & 255) / 255.0F;
+//            float f3 = (float)(backgroundColor & 255) / 255.0F;
+//            font$stringrenderoutput.addEffect(new BakedGlyph.Effect(x - 1.0F, font$stringrenderoutput.y + 9.0F, font$stringrenderoutput.x + 1.0F, font$stringrenderoutput.y - 1.0F, 0.01F, f1, f2, f3, f));
+//        }
+//
+//        if (font$stringrenderoutput.effects != null) {
+//            BakedGlyph bakedglyph = this.getFontSet(Style.DEFAULT_FONT).whiteGlyph();
+//            VertexConsumer vertexconsumer = font$stringrenderoutput.bufferSource.getBuffer(COSMIC_FONT);
+//
+//            for(BakedGlyph.Effect bakedglyph$effect : font$stringrenderoutput.effects) {
+//                bakedglyph.renderEffect(bakedglyph$effect, font$stringrenderoutput.pose, vertexconsumer, font$stringrenderoutput.packedLightCoords);
+//            }
+//        }
+//
+//        return font$stringrenderoutput.x;
+//    }
 }
