@@ -18,6 +18,10 @@ public class GenesisEntityAttributes {
             // 星源法术抗性/强度
             e.add(type, Attributes.CELESTIAL_SOURCE_SPELL_POWER.get());
             e.add(type, Attributes.CELESTIAL_SOURCE_MAGIC_RESIST.get());
+
+            // 美食法术抗性/强度
+            e.add(type, Attributes.CULINARY_SPELL_POWER.get());
+            e.add(type, Attributes.CULINARY_MAGIC_RESIST.get());
         });
     }
 }
