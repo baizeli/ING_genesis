@@ -16,10 +16,30 @@ import org.joml.Matrix4f;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 public class FuckFont1 extends Font {
     public static Font font = new FuckFont1(Minecraft.getInstance().font.fonts, false);
+    private static final Map<String, KeywordType> KEYWORDS = Map.ofEntries(
+            Map.entry("混沌", KeywordType.CHAOS),
+            Map.entry("扭曲之混沌", KeywordType.CHAOS),
+            Map.entry("星源珍珠", KeywordType.CELESTIAL),
+            Map.entry("星源锭", KeywordType.CELESTIAL),
+            Map.entry("Twisted Chaos", KeywordType.CHAOS),
+            Map.entry("twisted_chaos", KeywordType.CHAOS),
+            Map.entry("Celestial Source Pearl", KeywordType.CELESTIAL),
+            Map.entry("celestial_source_pearl", KeywordType.CELESTIAL),
+            Map.entry("Celestial Source Ingot", KeywordType.CELESTIAL),
+            Map.entry("celestial_source_ingot", KeywordType.CELESTIAL),
+            Map.entry("Chaos", KeywordType.CHAOS),
+            Map.entry("chaos", KeywordType.CHAOS),
+            Map.entry("CHAOS", KeywordType.CHAOS),
+            Map.entry("星源", KeywordType.CELESTIAL),
+            Map.entry("celestial_source", KeywordType.CELESTIAL),
+            Map.entry("celestial source", KeywordType.CELESTIAL),
+            Map.entry("Celestial Source", KeywordType.CELESTIAL)
+    );
     static {
     }
 
@@ -48,43 +68,18 @@ public class FuckFont1 extends Font {
         seq.accept((i, st, cp) -> { plain.appendCodePoint(cp); return true; });
         final String text = plain.toString();
 
-        List<int[]> keywordRanges = new ArrayList<>();
-        addRange(text, "混沌", keywordRanges);
-        addRange(text, "扭曲之混沌", keywordRanges);
-        addRange(text, "Twisted Chaos", keywordRanges);
-        addRange(text, "Chaos", keywordRanges);
-        addRange(text, "chaos", keywordRanges);
-        addRange(text, "CHAOS", keywordRanges);
-        addRange(text, "星源", keywordRanges);
-        addRange(text, "celestial source", keywordRanges);
-        addRange(text, "Celestial Source", keywordRanges);
-
-        if (keywordRanges.isEmpty()) {
-            return (int) (x + super.drawInBatch(seq, x, y, baseRgb, dropShadow,
-                    matrix, buffers, mode, light, overlay));
-        }
+        List<Map.Entry<int[], KeywordType>> keywords = scanKeywords(text);
 
         final float[] xBox = { x };
         final long time = Util.getMillis();
         final int[] index = { 0 };          // 当前字符在整个字符串中的下标
 
         seq.accept((i, style, codePoint) -> {
-            final int idx = index[0]++;     // 先记录，再自增
-            boolean isChaos = false;
-            boolean isCelestial = false;
+            int idx = index[0]++;
+            KeywordType type = getTypeAt(idx, keywords);
 
-            for (int[] r : keywordRanges) {
-                if (idx >= r[0] && idx < r[1]) {
-                    String sub = text.substring(r[0], r[1]);
-                    if (sub.equals("混沌") || sub.equals("扭曲之混沌") ||
-                            sub.equalsIgnoreCase("chaos") || sub.equalsIgnoreCase("twisted chaos")) {
-                        isChaos = true;
-                    } else if (sub.equals("星源") || sub.equalsIgnoreCase("celestial source")) {
-                        isCelestial = true;
-                    }
-                    break;
-                }
-            }
+            boolean isChaos = (type == KeywordType.CHAOS);
+            boolean isCelestial = (type == KeywordType.CELESTIAL);
 
             Style outStyle = isChaos || isCelestial ? style.withColor((TextColor) null).withUnderlined(false) : style;
 
@@ -144,6 +139,48 @@ public class FuckFont1 extends Font {
         for (int i = text.indexOf(key); i >= 0; i = text.indexOf(key, i + 1)) {
             ranges.add(new int[]{ i, i + key.length() });
         }
+    }
+
+    private static List<Map.Entry<int[], KeywordType>> scanKeywords(String text) {
+        List<Map.Entry<int[], KeywordType>> result = new ArrayList<>();
+        for (var entry : KEYWORDS.entrySet()) {
+            String key = entry.getKey();
+            KeywordType type = entry.getValue();
+            for (int i = text.indexOf(key); i >= 0; i = text.indexOf(key, i + 1)) {
+                result.add(Map.entry(new int[]{i, i + key.length()}, type));
+            }
+        }
+        // 按起始位置排序，重叠时优先长的
+        result.sort((a, b) -> {
+            int[] r1 = a.getKey();
+            int[] r2 = b.getKey();
+            if (r1[0] != r2[0]) return Integer.compare(r1[0], r2[0]);
+            return Integer.compare(r2[1], r1[1]); // 长的优先
+        });
+        // 去重重叠区间
+        List<Map.Entry<int[], KeywordType>> filtered = new ArrayList<>();
+        int lastEnd = -1;
+        for (var e : result) {
+            int[] r = e.getKey();
+            if (r[0] >= lastEnd) {
+                filtered.add(e);
+                lastEnd = r[1];
+            }
+        }
+        return filtered;
+    }
+
+    private static KeywordType getTypeAt(int idx, List<Map.Entry<int[], KeywordType>> keywords) {
+        for (var e : keywords) {
+            int[] r = e.getKey();
+            if (idx >= r[0] && idx < r[1]) return e.getValue();
+        }
+        return null;
+    }
+
+    enum KeywordType {
+        CHAOS,
+        CELESTIAL
     }
 //
 //    public int drawInternal(FormattedCharSequence text, float x, float y, int color, boolean dropShadow, Matrix4f matrix, MultiBufferSource buffer, DisplayMode displayMode, int backgroundColor, int packedLightCoords) {

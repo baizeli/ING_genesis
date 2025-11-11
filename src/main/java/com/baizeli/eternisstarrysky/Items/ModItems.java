@@ -5,6 +5,9 @@ import com.baizeli.eternisstarrysky.EternisStarrySky;
 import com.baizeli.eternisstarrysky.Items.Staff.CelestialSourceStaff;
 import com.baizeli.eternisstarrysky.Items.Staff.ChaosStaff;
 
+import com.baizeli.eternisstarrysky.spell.UpgradeOrbTypes;
+import io.redspace.ironsspellbooks.item.UpgradeOrbItem;
+import io.redspace.ironsspellbooks.util.ItemPropertiesHelper;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
 import net.minecraftforge.registries.DeferredRegister;
@@ -24,6 +27,20 @@ public class ModItems {
                         .rarity(Rarity.EPIC)
                 )
         );
+
+    // 星源珍珠-[星源]法术材料
+    public static final RegistryObject<Item> CELESTIAL_SOURCE_PEARL = ITEMS.register("celestial_source_pearl",
+            () -> new CelestialSourcePearl(new Item.Properties()
+                    .rarity(Rarity.EPIC)
+            )
+    );
+
+    // 星源锭-[星源]法术材料
+    public static final RegistryObject<Item> CELESTIAL_SOURCE_INGOT = ITEMS.register("celestial_source_ingot",
+            () -> new CelestialSourceIngot(new Item.Properties()
+                    .rarity(Rarity.EPIC)
+            )
+    );
 
     public static final RegistryObject<Item> ETERNIS_APPLE = ITEMS.register("eternis_apple",
             () -> new EternisAppleItem(new Item.Properties()
@@ -128,4 +145,12 @@ public class ModItems {
 
     // 星源法杖
     public static final RegistryObject<Item> CELESTIAL_SOURCE_STAFF = ITEMS.register("celestial_source_staff", CelestialSourceStaff::new);
+
+    public static final RegistryObject<Item> CHAOS_RUNE = ITEMS.register("chaos_rune", () -> new Item(ItemPropertiesHelper.material()));
+
+    public static final RegistryObject<Item> CELESTIAL_SOURCE_RUNE = ITEMS.register("celestial_source_rune", () -> new Item(ItemPropertiesHelper.material()));
+
+    public static final RegistryObject<Item> CHAOS_UPGRADE_ORB = ITEMS.register("chaos_upgrade_orb", () -> new UpgradeOrbItem(ItemPropertiesHelper.material().rarity(Rarity.UNCOMMON), UpgradeOrbTypes.CHAOS_SPELL_POWER));
+
+    public static final RegistryObject<Item> CELESTIAL_SOURCE_UPGRADE_ORB = ITEMS.register("celestial_source_upgrade_orb", () -> new UpgradeOrbItem(ItemPropertiesHelper.material().rarity(Rarity.UNCOMMON), UpgradeOrbTypes.CELESTIAL_SOURCE_SPELL_POWER));
 }
