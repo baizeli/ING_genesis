@@ -15,6 +15,7 @@
   "spell.iron_spells_genesis.warped_blood_burst.low_health": "血量不足以释放扭曲之血爆！",
   
   "spell.iron_spells_genesis.i_fly": "我要飞",
+  "spell.iron_spells_genesis.fate_wedge": "刻命之楔",
 
   "item.iron_spells_genesis.chaos_staff": "混沌法杖",
   "item.iron_spells_genesis.celestial_source_staff": "星源法杖",
@@ -56,6 +57,9 @@
   "death.attack.iron_spells_genesis.warped_blood_burst.item" : "%1$s的全身血液因为%2$s的%3$s爆炸了。",
 
   "ui.iron_spells_genesis.percent_force_damage": "百分比强制伤害：%d%%",
+  "ui.irons_spellbooks.damage_bonus": "伤害加成：%d%%",
+  "ui.irons_spellbooks.effect_length": "效果持续时间：%d秒",
+  "ui.iron_spells_genesis.max_damage_bonus": "最大伤害加成：%d%%",
 
   "item.isMain": "§2在主手时：",
   "item.attDamage": " §2攻击伤害",

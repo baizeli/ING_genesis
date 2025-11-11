@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky.spell.chaos;
+package com.baizeli.eternisstarrysky.spell.celestial_source;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
 import com.baizeli.eternisstarrysky.spell.SpellSchool;
