@@ -12,13 +12,13 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class Spells {
     private static final DeferredRegister<AbstractSpell> SPELLS;
-    public static final RegistryObject<AbstractSpell> CHAOS_AREA_SPELL;
+    public static final RegistryObject<AbstractSpell> WARPED_BLOOD_BURST_SPELL;
     public static final RegistryObject<AbstractSpell> AMENOFUWARI_SPELL;
     public static final RegistryObject<AbstractSpell> I_FLY_SPELL;
 
     static {
         SPELLS = DeferredRegister.create(SpellRegistry.SPELL_REGISTRY_KEY, EternisStarrySky.MOD_ID);
-        CHAOS_AREA_SPELL = registerSpell(new WarpedBloodBurst());
+        WARPED_BLOOD_BURST_SPELL = registerSpell(new WarpedBloodBurst());
         AMENOFUWARI_SPELL = registerSpell(new AmenofuwariSpell());
         I_FLY_SPELL = registerSpell(new IFlySpell());
     }

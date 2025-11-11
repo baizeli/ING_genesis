@@ -2,7 +2,10 @@ package com.baizeli.eternisstarrysky;
 
 import com.baizeli.eternisstarrysky.client.network.WireBoxSyncPacket;
 import com.baizeli.eternisstarrysky.fonts.FuckFont1;
+import io.redspace.ironsspellbooks.registries.CreativeTabRegistry;
+import io.redspace.ironsspellbooks.registries.ItemRegistry;
 import net.minecraft.client.Minecraft;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
 import com.baizeli.eternisstarrysky.client.particles.ModParticles;
@@ -106,6 +109,12 @@ public class EternisStarrySky
                 // 扭曲之混沌
                 output.accept(ModItems.TWISTED_CHAOS.get());
 
+                // 星源珍珠
+                output.accept(ModItems.CELESTIAL_SOURCE_PEARL.get());
+
+                // 星源铁锭
+                output.accept(ModItems.CELESTIAL_SOURCE_INGOT.get());
+
                 // 神圣金属锭
                 output.accept(ModItems.DIVINE_METAL_INGOT.get());
             }).build());
@@ -138,6 +147,7 @@ public class EternisStarrySky
 
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::addAttribute); // 添加实体属性创建事件监听器
+        modEventBus.addListener(this::addToVanillaTabs); // 给自己的物品加到别人的标签栏里面
 
         MinecraftForge.EVENT_BUS.register(this);
         context.registerConfig(ModConfig.Type.COMMON, Configuration.SPECIFICATION);
@@ -163,6 +173,27 @@ public class EternisStarrySky
                      .add(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_SPEED, 20.0)
                      .add(net.minecraft.world.entity.ai.attributes.Attributes.FOLLOW_RANGE, 128)
                      .build());
+    }
+
+    private void addToVanillaTabs(BuildCreativeModeTabContentsEvent e) {
+        if (e.getTabKey() == CreativeTabRegistry.MATERIALS_TAB.getKey()) {
+            // 加到自然符文的后面
+            e.getEntries().putAfter(ItemRegistry.NATURE_RUNE.get().getDefaultInstance(),
+                    ModItems.CHAOS_RUNE.get().getDefaultInstance(),
+                    CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+            // 混沌后面
+            e.getEntries().putAfter(ModItems.CHAOS_RUNE.get().getDefaultInstance(),
+                    ModItems.CELESTIAL_SOURCE_RUNE.get().getDefaultInstance(),
+                    CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+            // 加到自然升级法球的后面
+            e.getEntries().putAfter(ItemRegistry.NATURE_UPGRADE_ORB.get().getDefaultInstance(),
+                    ModItems.CHAOS_UPGRADE_ORB.get().getDefaultInstance(),
+                    CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+            // 混沌后面
+            e.getEntries().putAfter(ModItems.CHAOS_UPGRADE_ORB.get().getDefaultInstance(),
+                    ModItems.CELESTIAL_SOURCE_UPGRADE_ORB.get().getDefaultInstance(),
+                    CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+        }
     }
 
     public static String resource(String location)
