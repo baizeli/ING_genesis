@@ -64,81 +64,121 @@ public class TestParticle extends Particle {
         this.trailPositions[this.trailPointer] = trailAt;
     }
 
-    @Override
-    public void render(VertexConsumer vertexConsumer, Camera camera, float partialTick) {
-        if (this.removed || this.trailPointer <= -1) {
-            return;
-        }
-
-        MultiBufferSource.BufferSource bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
-        VertexConsumer consumer = bufferSource.getBuffer(RenderType.eyes(this.getTexture()));
-        Vec3 cameraPos = camera.getPosition();
-        double x = Mth.lerp(partialTick, this.xo, this.x);
-        double y = Mth.lerp(partialTick, this.yo, this.y);
-        double z = Mth.lerp(partialTick, this.zo, this.z);
-        PoseStack poseStack = new PoseStack();
-        poseStack.pushPose();
-        poseStack.translate(-cameraPos.x, -cameraPos.y, -cameraPos.z);
-
-        Vec3 drawFrom = new Vec3(x, y, z);
-        float zRot = this.getCameraRot(camera);
-        Vec3 topAngleVec = (new Vec3(0.0, this.getTrailHeight() / 2.0D, 0.0)).zRot(zRot);
-        Vec3 bottomAngleVec = (new Vec3(0.0, this.getTrailHeight() / -2.0D, 0.0)).zRot(zRot);
-
-        for (int samples = 0; samples < this.sampleSize(); samples++) {
-            Vec3 sample = this.getTrailPosition(samples * this.sampleStep(), partialTick);
-            float u1 = (float) samples / (float) this.sampleSize();
-            float u2 = u1 + 1.0F / (float) this.sampleSize();
-            PoseStack.Pose last = poseStack.last();
-            Matrix4f matrix4f = last.pose();
-            Matrix3f matrix3f = last.normal();
-
-            consumer.vertex(matrix4f, (float)drawFrom.x + (float)bottomAngleVec.x,
-                            (float)drawFrom.y + (float)bottomAngleVec.y,
-                            (float)drawFrom.z + (float)bottomAngleVec.z)
-                    .color(this.rCol, this.gCol, this.bCol, this.trailA)
-                    .uv(u1, 1.0F)
-                    .overlayCoords(OverlayTexture.NO_OVERLAY)
-                    .uv2(this.getLightColor(partialTick))
-                    .normal(matrix3f, 0.0F, 1.0F, 0.0F)
-                    .endVertex();
-
-            consumer.vertex(matrix4f, (float)sample.x + (float)bottomAngleVec.x,
-                            (float)sample.y + (float)bottomAngleVec.y,
-                            (float)sample.z + (float)bottomAngleVec.z)
-                    .color(this.rCol, this.gCol, this.bCol, this.trailA)
-                    .uv(u2, 1.0F)
-                    .overlayCoords(OverlayTexture.NO_OVERLAY)
-                    .uv2(this.getLightColor(partialTick))
-                    .normal(matrix3f, 0.0F, 1.0F, 0.0F)
-                    .endVertex();
-
-            consumer.vertex(matrix4f, (float)sample.x + (float)topAngleVec.x,
-                            (float)sample.y + (float)topAngleVec.y,
-                            (float)sample.z + (float)topAngleVec.z)
-                    .color(this.rCol, this.gCol, this.bCol, this.trailA)
-                    .uv(u2, 0.0F)
-                    .overlayCoords(OverlayTexture.NO_OVERLAY)
-                    .uv2(this.getLightColor(partialTick))
-                    .normal(matrix3f, 0.0F, 1.0F, 0.0F)
-                    .endVertex();
-
-            consumer.vertex(matrix4f, (float)drawFrom.x + (float)topAngleVec.x,
-                            (float)drawFrom.y + (float)topAngleVec.y,
-                            (float)drawFrom.z + (float)topAngleVec.z)
-                    .color(this.rCol, this.gCol, this.bCol, this.trailA)
-                    .uv(u1, 0.0F)
-                    .overlayCoords(OverlayTexture.NO_OVERLAY)
-                    .uv2(this.getLightColor(partialTick))
-                    .normal(matrix3f, 0.0F, 1.0F, 0.0F)
-                    .endVertex();
-
-            drawFrom = sample;
-        }
-
-        bufferSource.endBatch();
-        poseStack.popPose();
+@Override
+public void render(VertexConsumer vertexConsumer, Camera camera, float partialTick) {
+    if (this.removed || this.trailPointer <= -1) {
+        return;
     }
+
+    MultiBufferSource.BufferSource bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
+    VertexConsumer consumer = bufferSource.getBuffer(RenderType.eyes(this.getTexture()));
+    Vec3 cameraPos = camera.getPosition();
+    double x = Mth.lerp(partialTick, this.xo, this.x);
+    double y = Mth.lerp(partialTick, this.yo, this.y);
+    double z = Mth.lerp(partialTick, this.zo, this.z);
+    PoseStack poseStack = new PoseStack();
+    poseStack.pushPose();
+    poseStack.translate(-cameraPos.x, -cameraPos.y, -cameraPos.z);
+
+    Vec3 drawFrom = new Vec3(x, y, z);
+    float zRot = this.getCameraRot(camera);
+    Vec3 topAngleVec = (new Vec3(0.0, this.getTrailHeight() / 2.0D, 0.0)).zRot(zRot);
+    Vec3 bottomAngleVec = (new Vec3(0.0, this.getTrailHeight() / -2.0D, 0.0)).zRot(zRot);
+
+    for (int samples = 0; samples < this.sampleSize(); samples++) {
+        Vec3 sample = this.getTrailPosition(samples * this.sampleStep(), partialTick);
+        float u1 = (float) samples / (float) this.sampleSize();
+        float u2 = u1 + 1.0F / (float) this.sampleSize();
+        PoseStack.Pose last = poseStack.last();
+        Matrix4f matrix4f = last.pose();
+        Matrix3f matrix3f = last.normal();
+
+        consumer.vertex(matrix4f, (float)drawFrom.x + (float)bottomAngleVec.x,
+                        (float)drawFrom.y + (float)bottomAngleVec.y,
+                        (float)drawFrom.z + (float)bottomAngleVec.z)
+                .color(this.rCol, this.gCol, this.bCol, this.trailA)
+                .uv(u1, 1.0F)
+                .overlayCoords(OverlayTexture.NO_OVERLAY)
+                .uv2(this.getLightColor(partialTick))
+                .normal(matrix3f, 0.0F, 1.0F, 0.0F)
+                .endVertex();
+
+        consumer.vertex(matrix4f, (float)sample.x + (float)bottomAngleVec.x,
+                        (float)sample.y + (float)bottomAngleVec.y,
+                        (float)sample.z + (float)bottomAngleVec.z)
+                .color(this.rCol, this.gCol, this.bCol, this.trailA)
+                .uv(u2, 1.0F)
+                .overlayCoords(OverlayTexture.NO_OVERLAY)
+                .uv2(this.getLightColor(partialTick))
+                .normal(matrix3f, 0.0F, 1.0F, 0.0F)
+                .endVertex();
+
+        consumer.vertex(matrix4f, (float)sample.x + (float)topAngleVec.x,
+                        (float)sample.y + (float)topAngleVec.y,
+                        (float)sample.z + (float)topAngleVec.z)
+                .color(this.rCol, this.gCol, this.bCol, this.trailA)
+                .uv(u2, 0.0F)
+                .overlayCoords(OverlayTexture.NO_OVERLAY)
+                .uv2(this.getLightColor(partialTick))
+                .normal(matrix3f, 0.0F, 1.0F, 0.0F)
+                .endVertex();
+
+        consumer.vertex(matrix4f, (float)drawFrom.x + (float)topAngleVec.x,
+                        (float)drawFrom.y + (float)topAngleVec.y,
+                        (float)drawFrom.z + (float)topAngleVec.z)
+                .color(this.rCol, this.gCol, this.bCol, this.trailA)
+                .uv(u1, 0.0F)
+                .overlayCoords(OverlayTexture.NO_OVERLAY)
+                .uv2(this.getLightColor(partialTick))
+                .normal(matrix3f, 0.0F, 1.0F, 0.0F)
+                .endVertex();
+
+        consumer.vertex(matrix4f, (float)drawFrom.x + (float)topAngleVec.x,
+                        (float)drawFrom.y + (float)topAngleVec.y,
+                        (float)drawFrom.z + (float)topAngleVec.z)
+                .color(this.rCol, this.gCol, this.bCol, this.trailA)
+                .uv(u1, 0.0F)
+                .overlayCoords(OverlayTexture.NO_OVERLAY)
+                .uv2(this.getLightColor(partialTick))
+                .normal(matrix3f, 0.0F, -1.0F, 0.0F)
+                .endVertex();
+
+        consumer.vertex(matrix4f, (float)sample.x + (float)topAngleVec.x,
+                        (float)sample.y + (float)topAngleVec.y,
+                        (float)sample.z + (float)topAngleVec.z)
+                .color(this.rCol, this.gCol, this.bCol, this.trailA)
+                .uv(u2, 0.0F)
+                .overlayCoords(OverlayTexture.NO_OVERLAY)
+                .uv2(this.getLightColor(partialTick))
+                .normal(matrix3f, 0.0F, -1.0F, 0.0F)
+                .endVertex();
+
+        consumer.vertex(matrix4f, (float)sample.x + (float)bottomAngleVec.x,
+                        (float)sample.y + (float)bottomAngleVec.y,
+                        (float)sample.z + (float)bottomAngleVec.z)
+                .color(this.rCol, this.gCol, this.bCol, this.trailA)
+                .uv(u2, 1.0F)
+                .overlayCoords(OverlayTexture.NO_OVERLAY)
+                .uv2(this.getLightColor(partialTick))
+                .normal(matrix3f, 0.0F, -1.0F, 0.0F)
+                .endVertex();
+
+        consumer.vertex(matrix4f, (float)drawFrom.x + (float)bottomAngleVec.x,
+                        (float)drawFrom.y + (float)bottomAngleVec.y,
+                        (float)drawFrom.z + (float)bottomAngleVec.z)
+                .color(this.rCol, this.gCol, this.bCol, this.trailA)
+                .uv(u1, 1.0F)
+                .overlayCoords(OverlayTexture.NO_OVERLAY)
+                .uv2(this.getLightColor(partialTick))
+                .normal(matrix3f, 0.0F, -1.0F, 0.0F)
+                .endVertex();
+
+        drawFrom = sample;
+    }
+
+    bufferSource.endBatch();
+    poseStack.popPose();
+}
 
     public float getCameraRot(Camera camera) {
         return (float) (-(Math.PI / 180.0F) * camera.getXRot());

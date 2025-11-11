@@ -80,7 +80,9 @@ public class TestAParticle extends Particle {
             RenderType.CompositeState.builder()
                     .setShaderState(new RenderStateShard.ShaderStateShard(() -> ModShaders.getFloridShader()))
                     .setTextureState(new RenderStateShard.TextureStateShard(TEXTURE, false, false))
+                    .setCullState(RenderStateShard.NO_CULL)
                     .createCompositeState(false)
+
     );
     @Override
     public void render(VertexConsumer vertexConsumer, Camera camera, float partialTick) {

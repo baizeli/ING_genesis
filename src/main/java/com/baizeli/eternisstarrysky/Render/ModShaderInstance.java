@@ -37,4 +37,17 @@ public class ModShaderInstance extends ShaderInstance {
             this.intensityUniform.set(intensity);
         }
     }
+
+    public void setUniform(String uniformName, float width, float height) {
+        Uniform uniform = this.getUniform(uniformName);
+        if (uniform != null) {
+            uniform.set(width, height);
+        }
+    }
+    public void setUniform(String uniformName, float value) {
+        Uniform uniform = this.getUniform(uniformName);
+        if (uniform != null) {
+            uniform.set(value);
+        }
+    }
 }

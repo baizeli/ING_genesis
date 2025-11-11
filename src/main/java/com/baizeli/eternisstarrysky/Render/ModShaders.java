@@ -31,6 +31,10 @@ public class ModShaders {
 
     @Nullable
     private static ShaderInstance floridShader;
+    @Nullable
+    private static ShaderInstance heatWaveShader;
+    @Nullable
+    private static ShaderInstance heatWavePostprocessShader;
 
     public static ShaderInstance getColorfulShader() {
         return Objects.requireNonNull(colorfulShader, "Colorful shader not registered");
@@ -38,6 +42,9 @@ public class ModShaders {
 
     public static ShaderInstance getFloridShader() {
         return Objects.requireNonNull(floridShader, "Florid shader not registered");
+    }
+    public static ShaderInstance getHeatWaveShader() {
+        return Objects.requireNonNull(heatWaveShader, "HeatWave shader shader not registered");
     }
 
     @SubscribeEvent
@@ -60,6 +67,13 @@ public class ModShaders {
                 DefaultVertexFormat.POSITION_TEX
         );
         event.registerShader(florid, shaderInstance -> floridShader = shaderInstance);
+
+        ModShaderInstance heat_wave = new ModShaderInstance(
+                resourceProvider,
+                new ResourceLocation(EternisStarrySky.MODID, "heat_wave").toString(),
+                DefaultVertexFormat.POSITION_TEX
+        );
+        event.registerShader(heat_wave, shaderInstance -> heatWaveShader = shaderInstance);
 
     }
 

@@ -59,9 +59,6 @@ public class AmenofuwariSpell extends AbstractSpell {
         return List.of(
             Component.translatable(
                 "ui.irons_spellbooks.distance", Utils.stringTruncation(getDistance(spellLevel), 1)
-            ),
-            Component.translatable(
-                "ui.irons_spellbooks.cooldown", Utils.timeFromTicks(getCooldownInTicks(spellLevel), 1)
             )
         );
     }
@@ -72,15 +69,6 @@ public class AmenofuwariSpell extends AbstractSpell {
             case 2: return 50.0f;
             case 3: return 75.0f;
             default: return 25.0f;
-        }
-    }
-
-    private int getCooldownInTicks(int spellLevel) {
-        switch (spellLevel) {
-            case 1: return 240;
-            case 2: return 140;
-            case 3: return 100;
-            default: return 240;
         }
     }
 
