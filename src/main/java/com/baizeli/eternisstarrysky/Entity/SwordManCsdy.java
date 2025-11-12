@@ -24,6 +24,7 @@ import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -94,6 +95,7 @@ public class SwordManCsdy extends BossEntity implements GeoEntity {
                 BossEvent.BossBarColor.PURPLE, // 血条颜色
                 BossEvent.BossBarOverlay.PROGRESS // 血条样式
         )).setDarkenScreen(true); // 是否使屏幕变暗
+        this.hasTrail = true;
     }
 
     @Override
@@ -259,4 +261,90 @@ public class SwordManCsdy extends BossEntity implements GeoEntity {
         return builder;
     }
 
+
+    //trail
+    private Vec3[][] trailPositions = new Vec3[64][2];
+    private int trailPointer = -1;
+    public boolean hasTrail = false;
+    
+    // 为第二个刀光添加独立的轨迹数据
+    private Vec3[][] trailPositions2 = new Vec3[64][2];
+    private int trailPointer2 = -1;
+
+    public Vec3[] getTrailPosition(int pointer, float partialTick) {
+        if (this.isRemoved()) {
+            partialTick = 1.0F;
+        }
+        int i = this.trailPointer - pointer & 63;
+        int j = this.trailPointer - pointer - 1 & 63;
+        Vec3[] d0 = this.trailPositions[j];
+        Vec3 t0 = this.trailPositions[i][0].subtract(d0[0]);
+        Vec3 t1 = this.trailPositions[i][1].subtract(d0[1]);
+        Vec3[] d1 = new Vec3[]{t0,t1};
+        Vec3 tt0 = d0[0].add(d1[0].scale(partialTick));
+        Vec3 tt1 = d0[1].add(d1[1].scale(partialTick));
+        Vec3[] d2 = new Vec3[]{tt1,tt0};
+
+        return d2;
+    }
+    
+    // 获取第二个刀光的轨迹位置
+    public Vec3[] getTrailPosition2(int pointer, float partialTick) {
+        if (this.isRemoved()) {
+            partialTick = 1.0F;
+        }
+        if (trailPointer2 == -1) {
+            return new Vec3[]{Vec3.ZERO, Vec3.ZERO};
+        }
+        
+        int i = this.trailPointer2 - pointer & 63;
+        int j = this.trailPointer2 - pointer - 1 & 63;
+        Vec3[] d0 = this.trailPositions2[j];
+        Vec3 t0 = this.trailPositions2[i][0].subtract(d0[0]);
+        Vec3 t1 = this.trailPositions2[i][1].subtract(d0[1]);
+        Vec3[] d1 = new Vec3[]{t0,t1};
+        Vec3 tt0 = d0[0].add(d1[0].scale(partialTick));
+        Vec3 tt1 = d0[1].add(d1[1].scale(partialTick));
+        Vec3[] d2 = new Vec3[]{tt1,tt0};
+
+        return d2;
+    }
+
+    public void updateTrail(Vec3 trailAt1,Vec3 trailAt2) {
+        if (trailPointer == -1) {
+            Vec3 backAt1 = trailAt1;
+            Vec3 backAt2 = trailAt2;
+            for (int i = 0; i < trailPositions.length; i++) {
+                trailPositions[i] = new Vec3[]{backAt1,backAt2};
+            }
+        }
+        if (++this.trailPointer == this.trailPositions.length) {
+            this.trailPointer = 0;
+        }
+        this.trailPositions[this.trailPointer] = new Vec3[]{trailAt1,trailAt2};
+    }
+
+    public void updateTrail2(Vec3 trailAt1, Vec3 trailAt2) {
+        // 使用独立的轨迹数据
+        if (trailPointer2 == -1) {
+            Vec3 backAt1 = trailAt1;
+            Vec3 backAt2 = trailAt2;
+            for (int i = 0; i < trailPositions2.length; i++) {
+                trailPositions2[i] = new Vec3[]{backAt1, backAt2};
+            }
+        }
+        if (++this.trailPointer2 == this.trailPositions2.length) {
+            this.trailPointer2 = 0;
+        }
+        this.trailPositions2[this.trailPointer2] = new Vec3[]{trailAt1, trailAt2};
+    }
+
+    public boolean hasTrail() {
+        return trailPointer != -1&&hasTrail;
+    }
+    
+    // 检查是否有第二个刀光轨迹
+    public boolean hasTrail2() {
+        return trailPointer2 != -1;
+    }
 }
