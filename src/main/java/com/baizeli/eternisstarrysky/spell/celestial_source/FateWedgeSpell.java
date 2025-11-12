@@ -2,6 +2,7 @@ package com.baizeli.eternisstarrysky.spell.celestial_source;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
 import com.baizeli.eternisstarrysky.Util.spell.celestial_source.FateWedgeUtil;
+import com.baizeli.eternisstarrysky.effect.spell.ModEffect;
 import com.baizeli.eternisstarrysky.spell.SpellSchool;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
@@ -11,6 +12,7 @@ import io.redspace.ironsspellbooks.capabilities.magic.TargetEntityCastData;
 import net.minecraft.network.chat.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.effect.*;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -82,8 +84,29 @@ public class FateWedgeSpell extends AbstractSpell {
                 LivingEntity target = targetData.getTarget((ServerLevel) level);
 
                 if (target != null) {
+                    FateWedgeUtil.setInitialHealth(player, target);
+
                     int duration = getDurationInTicks(spellLevel, entity);
-                    FateWedgeUtil.applyFateWedgeEffect(player, target, 0, duration);
+
+                    // 刻命之楔[施法者本身]
+                    player.addEffect(new MobEffectInstance(
+                        ModEffect.FATE_WEDGE.get(),
+                        duration, 
+                        0, 
+                        false, 
+                        false, 
+                        true
+                    ));
+                    
+                    // 发光[目标]
+                    target.addEffect(new MobEffectInstance(
+                        MobEffects.GLOWING, 
+                        duration, 
+                        0, 
+                        false, 
+                        false, 
+                        true
+                    ));
                 }
             }
         }

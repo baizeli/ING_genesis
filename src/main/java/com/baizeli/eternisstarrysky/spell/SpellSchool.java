@@ -1,10 +1,10 @@
 package com.baizeli.eternisstarrysky.spell;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
+import com.baizeli.eternisstarrysky.SoundsRegister;
 import io.redspace.ironsspellbooks.api.registry.SchoolRegistry;
 import io.redspace.ironsspellbooks.api.spells.SchoolType;
 import io.redspace.ironsspellbooks.damage.ISSDamageTypes;
-import io.redspace.ironsspellbooks.registries.SoundRegistry;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -51,7 +51,7 @@ public class SpellSchool {
                 ).withStyle(ChatFormatting.DARK_RED), 
                 Attributes.CHAOS_SPELL_POWER, 
                 Attributes.CHAOS_MAGIC_RESIST, 
-                SoundRegistry.FIRE_CAST, 
+                SoundsRegister.CHAOS_CAST, 
                 ISSDamageTypes.FIRE_MAGIC
             )
         );
@@ -66,7 +66,7 @@ public class SpellSchool {
                 ).withStyle(ChatFormatting.DARK_AQUA), 
                 Attributes.CELESTIAL_SOURCE_SPELL_POWER, 
                 Attributes.CELESTIAL_SOURCE_MAGIC_RESIST, 
-                SoundRegistry.HOLY_CAST, 
+                SoundsRegister.CELESTIAL_SOURCE_CAST, 
                 ISSDamageTypes.FIRE_MAGIC
             )
         );
@@ -79,9 +79,9 @@ public class SpellSchool {
                 Component.translatable(
                     "school." + EternisStarrySky.MOD_ID + ".culinary"
                 ).withStyle(ChatFormatting.GOLD), 
-                Attributes.CULINARY_SPELL_POWER, 
+                Attributes.CULINARY_SPELL_POWER,
                 Attributes.CULINARY_MAGIC_RESIST, 
-                SoundRegistry.EVOCATION_CAST, 
+                SoundsRegister.CULINARY_CAST, 
                 ISSDamageTypes.FIRE_MAGIC
             )
         );

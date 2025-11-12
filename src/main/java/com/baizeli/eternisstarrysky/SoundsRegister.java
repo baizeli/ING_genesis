@@ -13,9 +13,12 @@ public class SoundsRegister {
     public static final RegistryObject<SoundEvent> GIRL_A = SOUND_EVENTS.register("girl_a",
             () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(EternisStarrySky.MOD_ID, "girl_a")));
 
-    public static final RegistryObject<SoundEvent> CHAOS_CAST = SOUND_EVENTS.register("van_sh_shoot",
-            () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(EternisStarrySky.MOD_ID, "van_sh_shoot")));
+    public static final RegistryObject<SoundEvent> CHAOS_CAST = SOUND_EVENTS.register("chaos_cast",
+            () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(EternisStarrySky.MOD_ID, "chaos_cast")));
 
-    public static final RegistryObject<SoundEvent> CELESTIAL_SOURCE_CAST = SOUND_EVENTS.register("van_sh_kill",
-            () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(EternisStarrySky.MOD_ID, "van_sh_kill")));
+    public static final RegistryObject<SoundEvent> CELESTIAL_SOURCE_CAST = SOUND_EVENTS.register("celestia_source",
+            () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(EternisStarrySky.MOD_ID, "celestia_source")));
+            
+    public static final RegistryObject<SoundEvent> CULINARY_CAST = SOUND_EVENTS.register("culinary",
+            () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(EternisStarrySky.MOD_ID, "culinary")));
 }

@@ -8,14 +8,19 @@
       }
     ]
   },
-  "van_sh_shoot": {
+  "chaos_cast": {
     "sounds": [
-      "iron_spells_genesis:van_sh_shoot"
+      "iron_spells_genesis:generic/chaos_cast"
     ]
   },
-  "van_sh_kill": {
+  "celestia_source": {
     "sounds": [
-      "iron_spells_genesis:van_sh_kill"
+      "iron_spells_genesis:generic/celestia_source"
+    ]
+  },
+  "culinary": {
+    "sounds": [
+      "iron_spells_genesis:generic/culinary"
     ]
   }
 }

@@ -19,6 +19,7 @@ import com.baizeli.eternisstarrysky.Items.ModItems;
 import com.baizeli.eternisstarrysky.spell.Attributes;
 import com.baizeli.eternisstarrysky.spell.SpellSchool;
 import com.baizeli.eternisstarrysky.spell.Spells;
+import com.baizeli.eternisstarrysky.effect.spell.ModEffect;
 import com.mojang.logging.LogUtils;
 
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -137,6 +138,7 @@ public class EternisStarrySky
         ModMenuTypes.register(modEventBus);
         ModRecipeTypes.register(modEventBus);
         ModRecipeSerializers.register(modEventBus);
+        ModEffect.register(modEventBus);
 
         ModParticles.register(modEventBus);
 
