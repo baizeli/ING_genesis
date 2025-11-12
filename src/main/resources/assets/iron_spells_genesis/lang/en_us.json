@@ -17,6 +17,8 @@
   "spell.iron_spells_genesis.i_fly": "I Fly",
   "spell.iron_spells_genesis.fate_wedge": "Fate Wedge",
 
+  "effect.iron_spells_genesis.fate_wedge": "Fate Wedge",
+
   "item.iron_spells_genesis.chaos_staff": "Chaos Staff",
   "item.iron_spells_genesis.celestial_source_staff": "Celestial Source Staff",
 
@@ -58,7 +60,7 @@
 
   "ui.iron_spells_genesis.percent_force_damage": "Percent Force Damage：%d%%",
   "ui.irons_spellbooks.damage_bonus": "Damage Bonus: %d%%",
-  "ui.irons_spellbooks.effect_length": "Effect Duration: %d seconds",
+  "ui.irons_spellbooks.effect_length": "Effect Duration: %d",
   "ui.iron_spells_genesis.max_damage_bonus": "Max Damage Bonus: %d%%",
 
   "item.isMain": "§2When in main hand:",

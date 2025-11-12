@@ -9,7 +9,7 @@ import net.minecraft.world.item.Rarity;
 
 public class ChaosStaff extends StaffItem {
     public ChaosStaff() {
-        super(new Item.Properties().rarity(Rarity.EPIC),
+        super(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1),
             new StaffTier(6, -3,
                 new AttributeContainer(
                     Attributes.CHAOS_SPELL_POWER, 0.15,

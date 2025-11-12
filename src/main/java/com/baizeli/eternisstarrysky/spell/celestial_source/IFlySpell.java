@@ -56,18 +56,14 @@ public class IFlySpell extends AbstractSpell {
     public List<MutableComponent> getUniqueInfo(int spellLevel, LivingEntity caster) {
         return List.of(
             Component.translatable(
-                "ui.irons_spellbooks.effect_length", Utils.timeFromTicks(getDuration(spellLevel), 1)
+                "ui.irons_spellbooks.effect_length", 
+                Utils.timeFromTicks(getDuration(spellLevel, caster), 1)
             )
         );
     }
 
-    private int getDuration(int spellLevel) {
-        switch (spellLevel) {
-            case 1: return 20 * 180;
-            case 2: return 20 * 300;
-            case 3: return 20 * 420;
-            default: return 20 * 180;
-        }
+    private int getDuration(int spellLevel, LivingEntity caster) {
+        return (int) (getSpellPower(spellLevel, caster) * 20);
     }
 
     @Override
