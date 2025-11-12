@@ -1,45 +1,46 @@
 package com.baizeli.eternisstarrysky.Util.spell.celestial_source;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
+import com.baizeli.eternisstarrysky.effect.spell.ModEffect;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
-import java.util.concurrent.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Mod.EventBusSubscriber(modid = EternisStarrySky.MOD_ID)
 public class FateWedgeUtil {
-    private static final Map<UUID, Map<UUID, FateWedgeData>> fateWedgeEffects = new HashMap<>();
-    private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+    private static final Map<LivingEntity, LivingEntity> targetToCasterMap = new HashMap<>();
+    private static final Map<LivingEntity, Map<LivingEntity, Float>> initialHealthMap = new HashMap<>();
 
-    public static void applyFateWedgeEffect(LivingEntity caster, LivingEntity target, int baseDamageBonus, int durationSeconds) {
-        fateWedgeEffects.computeIfAbsent(caster.getUUID(), k -> new HashMap<>())
-                .put(target.getUUID(), new FateWedgeData(baseDamageBonus, durationSeconds, target.getHealth()));
-        
-        scheduler.schedule(() -> removeFateWedgeEffect(caster, target), durationSeconds, TimeUnit.SECONDS);
-    }
-
-    public static void removeFateWedgeEffect(LivingEntity caster, LivingEntity target) {
-        if (fateWedgeEffects.containsKey(caster.getUUID())) {
-            fateWedgeEffects.get(caster.getUUID()).remove(target.getUUID());
-            if (fateWedgeEffects.get(caster.getUUID()).isEmpty()) {
-                fateWedgeEffects.remove(caster.getUUID());
-            }
-        }
+    public static void setInitialHealth(LivingEntity caster, LivingEntity target) {
+        targetToCasterMap.put(target, caster);
+        initialHealthMap.computeIfAbsent(caster, k -> new HashMap<>()).put(target, target.getHealth());
     }
 
     public static int getDamageBonus(LivingEntity caster, LivingEntity target) {
-        if (fateWedgeEffects.containsKey(caster.getUUID()) && 
-            fateWedgeEffects.get(caster.getUUID()).containsKey(target.getUUID())) {
-            return fateWedgeEffects.get(caster.getUUID()).get(target.getUUID()).getCurrentBonus(target);
+        if (initialHealthMap.containsKey(caster) &&
+            initialHealthMap.get(caster).containsKey(target)) {
+
+            float initialHealth = initialHealthMap.get(caster).get(target);
+            float currentHealth = target.getHealth();
+            float maxHealth = target.getMaxHealth();
+
+            float lostHealth = initialHealth - currentHealth;
+            float lostPercentage = (lostHealth / maxHealth) * 100.0f;
+
+            return Math.min((int) lostPercentage, 50);
         }
         return 0;
     }
-    
+
     @SubscribeEvent
     public static void onLivingHurt(LivingHurtEvent event) {
         if (event.getSource().getEntity() instanceof LivingEntity attacker) {
@@ -54,27 +55,40 @@ public class FateWedgeUtil {
         }
     }
 
-    private static class FateWedgeData {
-        private final int baseBonus;
-        private final int durationSeconds;
-        private final float initialHealth;
-        
-        public FateWedgeData(int baseBonus, int durationSeconds, float initialHealth) {
-            this.baseBonus = baseBonus;
-            this.durationSeconds = durationSeconds;
-            this.initialHealth = initialHealth;
+    @SubscribeEvent
+    public static void onLivingDeath(LivingDeathEvent event) {
+        LivingEntity deadEntity = event.getEntity();
+
+        if (targetToCasterMap.containsKey(deadEntity)) {
+            LivingEntity caster = targetToCasterMap.get(deadEntity);
+
+            if (caster instanceof Player && !caster.isDeadOrDying()) {
+                caster.removeEffect(ModEffect.FATE_WEDGE.get());
+            }
+
+            targetToCasterMap.remove(deadEntity);
+            for (Map<LivingEntity, Float> targetMap : initialHealthMap.values()) {
+                targetMap.remove(deadEntity);
+            }
         }
-        
-        public int getCurrentBonus(LivingEntity target) {
-            float currentHealth = target.getHealth();
-            float maxHealth = target.getMaxHealth();
 
-            float lostHealth = initialHealth - currentHealth;
-            float lostPercentage = (lostHealth / maxHealth) * 100.0f;
+        List<LivingEntity> targetsToRemove = new ArrayList<>();
+        for (Map.Entry<LivingEntity, LivingEntity> entry : targetToCasterMap.entrySet()) {
+            LivingEntity caster = entry.getValue();
+            if (caster.equals(deadEntity)) {
+                targetsToRemove.add(entry.getKey());
+            }
+        }
 
-            int bonus = (int) lostPercentage;
+        for (LivingEntity target : targetsToRemove) {
+            if (target != null && !target.level().isClientSide()) {
+                target.removeEffect(MobEffects.GLOWING);
+            }
+            targetToCasterMap.remove(target);
+        }
 
-            return Math.min(bonus, 50);
+        if (initialHealthMap.containsKey(deadEntity)) {
+            initialHealthMap.remove(deadEntity);
         }
     }
 }

@@ -14,6 +14,8 @@ public class Attributes {
     public static final RegistryObject<Attribute> CHAOS_SPELL_POWER;
     public static final RegistryObject<Attribute> CELESTIAL_SOURCE_MAGIC_RESIST;
     public static final RegistryObject<Attribute> CELESTIAL_SOURCE_SPELL_POWER;
+    public static final RegistryObject<Attribute> CULINARY_MAGIC_RESIST;
+    public static final RegistryObject<Attribute> CULINARY_SPELL_POWER;
 
     static {
         ATTRIBUTES = DeferredRegister.create(Registries.ATTRIBUTE, EternisStarrySky.MOD_ID);
@@ -24,6 +26,10 @@ public class Attributes {
         // 星源法术强度/抗性
         CELESTIAL_SOURCE_SPELL_POWER = Attributes.newPowerAttribute("celestial_source");
         CELESTIAL_SOURCE_MAGIC_RESIST = Attributes.newResistanceAttribute("celestial_source");
+        
+        // 美食法术强度/抗性
+        CULINARY_SPELL_POWER = Attributes.newPowerAttribute("culinary");
+        CULINARY_MAGIC_RESIST = Attributes.newResistanceAttribute("culinary");
     }
 
     public static void register(IEventBus eventBus) {

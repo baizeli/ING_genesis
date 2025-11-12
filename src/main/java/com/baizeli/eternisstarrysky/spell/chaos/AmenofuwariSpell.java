@@ -58,18 +58,14 @@ public class AmenofuwariSpell extends AbstractSpell {
     public List<MutableComponent> getUniqueInfo(int spellLevel, LivingEntity caster) {
         return List.of(
             Component.translatable(
-                "ui.irons_spellbooks.distance", Utils.stringTruncation(getDistance(spellLevel), 1)
+                "ui.irons_spellbooks.distance", 
+                Utils.stringTruncation(getDistance(spellLevel, caster), 1)
             )
         );
     }
 
-    private float getDistance(int spellLevel) {
-        switch (spellLevel) {
-            case 1: return 25.0f;
-            case 2: return 50.0f;
-            case 3: return 75.0f;
-            default: return 25.0f;
-        }
+    private float getDistance(int spellLevel, LivingEntity caster) {
+        return getSpellPower(spellLevel, caster);
     }
 
     @Override
@@ -94,7 +90,7 @@ public class AmenofuwariSpell extends AbstractSpell {
 
     @Override
     public boolean checkPreCastConditions(Level level, int spellLevel, LivingEntity entity, MagicData playerMagicData) {
-        float maxDistance = getDistance(spellLevel);
+        float maxDistance = getDistance(spellLevel, entity);
         return Utils.preCastTargetHelper(level, entity, playerMagicData, this, (int) Math.ceil(maxDistance), 0.15f);
     }
 
@@ -103,7 +99,7 @@ public class AmenofuwariSpell extends AbstractSpell {
         if (!level.isClientSide && playerMagicData.getAdditionalCastData() instanceof TargetEntityCastData targetData) {
             LivingEntity targetEntity = targetData.getTarget((ServerLevel) level);
             if (targetEntity != null) {
-                float maxDistance = getDistance(spellLevel);
+                float maxDistance = getDistance(spellLevel, entity);
                 double distance = entity.distanceTo(targetEntity);
                 if (distance <= maxDistance) {
                     Vec3 casterPos = entity.position();

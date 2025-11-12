@@ -31,11 +31,6 @@ public class CubeParticle extends Particle {
 
         this.setSize(0.2f, 0.2f);
 
-        this.rCol = 1.0F;
-        this.gCol = 1.0F;
-        this.bCol = 1.0F;
-        this.alpha = 1.0F;
-
         this.xd = xSpeed;
         this.yd = ySpeed;
         this.zd = zSpeed;
@@ -81,10 +76,20 @@ public class CubeParticle extends Particle {
 
         
         updateRotation();
+        updateColor();
 
         if (this.age++ >= this.lifetime) {
             this.remove();
         }
+    }
+
+    private void updateColor() {
+
+
+            this.rCol = 0.5F + this.random.nextFloat() * 0.5F;
+            this.gCol = 0.5F + this.random.nextFloat() * 0.5F;
+            this.bCol = 0.5F + this.random.nextFloat() * 0.5F;
+
     }
 
     private void updateRotation() {
@@ -113,7 +118,7 @@ public class CubeParticle extends Particle {
         }
 
         MultiBufferSource.BufferSource bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
-        VertexConsumer vertexConsumer = bufferSource.getBuffer(RenderType.LINES);
+        VertexConsumer vertexConsumer = bufferSource.getBuffer(RenderType.lines());
 
         Vec3 camPos = camera.getPosition();
         float offsetX = (float) (Mth.lerp(partialTicks, this.xo, this.x) - camPos.x);
@@ -141,7 +146,7 @@ public class CubeParticle extends Particle {
         
         drawCubeLines(vertexConsumer, poseStack, size);
 
-        bufferSource.endBatch(RenderType.LINES);
+        bufferSource.endBatch(RenderType.lines());
         poseStack.popPose();
     }
 
