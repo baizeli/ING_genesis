@@ -26,15 +26,15 @@ public class FateWedgeSpell extends AbstractSpell {
         .setMinRarity(SpellRarity.EPIC)
         .setSchoolResource(SpellSchool.CELESTIAL_SOURCE_RESOURCE)
         .setMaxLevel(1)
-        .setCooldownSeconds(120.0F)
+        .setCooldownSeconds(300.0F)
         .build();
 
     public FateWedgeSpell() {
-        this.manaCostPerLevel = 0;
+        this.manaCostPerLevel = 100;
         this.baseSpellPower = 60;
         this.spellPowerPerLevel = 0;
-        this.castTime = 20;
-        this.baseManaCost = 1000;
+        this.castTime = 100;
+        this.baseManaCost = 900;
     }
 
     @Override
@@ -60,16 +60,12 @@ public class FateWedgeSpell extends AbstractSpell {
     @Override
     public List<MutableComponent> getUniqueInfo(int spellLevel, LivingEntity caster) {
         return List.of(
-            Component.translatable("ui.iron_spells_genesis.max_damage_bonus", 50),
             Component.translatable(
                 "ui.irons_spellbooks.effect_length",
-                Utils.timeFromTicks(getDurationInTicks(spellLevel, caster), 1)
-            )
+                Utils.timeFromTicks(1200, 1)
+            ),
+            Component.translatable("ui.iron_spells_genesis.max_damage_bonus", 50)
         );
-    }
-
-    public int getDurationInTicks(int spellLevel, LivingEntity caster) {
-        return (int) (getSpellPower(spellLevel, caster) * 20);
     }
 
     @Override
@@ -86,12 +82,10 @@ public class FateWedgeSpell extends AbstractSpell {
                 if (target != null) {
                     FateWedgeUtil.setInitialHealth(player, target);
 
-                    int duration = getDurationInTicks(spellLevel, entity);
-
                     // 刻命之楔[施法者本身]
                     player.addEffect(new MobEffectInstance(
                         ModEffect.FATE_WEDGE.get(),
-                        duration, 
+                        1200, 
                         0, 
                         false, 
                         false, 
@@ -101,7 +95,7 @@ public class FateWedgeSpell extends AbstractSpell {
                     // 发光[目标]
                     target.addEffect(new MobEffectInstance(
                         MobEffects.GLOWING, 
-                        duration, 
+                        1200, 
                         0, 
                         false, 
                         false, 

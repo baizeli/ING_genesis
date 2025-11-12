@@ -23,15 +23,15 @@ public class AmenofuwariSpell extends AbstractSpell {
         .setMinRarity(SpellRarity.COMMON)
         .setSchoolResource(SpellSchool.CHAOS_RESOURCE)
         .setMaxLevel(3)
-        .setCooldownSeconds(12.0F)
+        .setCooldownSeconds(15.0F)
         .build();
 
     public AmenofuwariSpell() {
-        this.manaCostPerLevel = 5;
-        this.baseSpellPower = 25;
-        this.spellPowerPerLevel = 25;
-        this.castTime = 40;
-        this.baseManaCost = 40;
+        this.manaCostPerLevel = 50;
+        this.baseSpellPower = 50;
+        this.spellPowerPerLevel = 10;
+        this.castTime = 60;
+        this.baseManaCost = 50;
     }
 
     @Override
@@ -70,22 +70,7 @@ public class AmenofuwariSpell extends AbstractSpell {
 
     @Override
     public int getCastTime(int spellLevel) {
-        switch (spellLevel) {
-            case 1: return 40;
-            case 2: return 28;
-            case 3: return 20;
-            default: return 40;
-        }
-    }
-
-    @Override
-    public int getManaCost(int spellLevel) {
-        switch (spellLevel) {
-            case 1: return 40;
-            case 2: return 45;
-            case 3: return 50;
-            default: return 40;
-        }
+        return Math.max(20, 60 - (spellLevel - 1) * 20);
     }
 
     @Override
@@ -101,6 +86,7 @@ public class AmenofuwariSpell extends AbstractSpell {
             if (targetEntity != null) {
                 float maxDistance = getDistance(spellLevel, entity);
                 double distance = entity.distanceTo(targetEntity);
+                
                 if (distance <= maxDistance) {
                     Vec3 casterPos = entity.position();
                     Vec3 targetPos = targetEntity.position();

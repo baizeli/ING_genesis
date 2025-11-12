@@ -5,6 +5,7 @@ import com.baizeli.eternisstarrysky.spell.chaos.AmenofuwariSpell;
 import com.baizeli.eternisstarrysky.spell.chaos.WarpedBloodBurst;
 import com.baizeli.eternisstarrysky.spell.celestial_source.IFlySpell;
 import com.baizeli.eternisstarrysky.spell.celestial_source.FateWedgeSpell;
+import com.baizeli.eternisstarrysky.spell.celestial_source.PerfectEvasionSpell;
 import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -17,6 +18,7 @@ public class Spells {
     public static final RegistryObject<AbstractSpell> AMENOFUWARI_SPELL;
     public static final RegistryObject<AbstractSpell> I_FLY_SPELL;
     public static final RegistryObject<AbstractSpell> FATE_WEDGE_SPELL;
+    public static final RegistryObject<AbstractSpell> PERFECT_EVASION_SPELL;
 
     static {
         SPELLS = DeferredRegister.create(SpellRegistry.SPELL_REGISTRY_KEY, EternisStarrySky.MOD_ID);
@@ -24,6 +26,7 @@ public class Spells {
         AMENOFUWARI_SPELL = registerSpell(new AmenofuwariSpell());
         I_FLY_SPELL = registerSpell(new IFlySpell());
         FATE_WEDGE_SPELL = registerSpell(new FateWedgeSpell());
+        PERFECT_EVASION_SPELL = registerSpell(new PerfectEvasionSpell());
     }
 
     public static void register(IEventBus eventBus) {
