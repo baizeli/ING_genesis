@@ -2,7 +2,6 @@ package com.baizeli.eternisstarrysky.fonts;
 
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.font.GlyphInfo;
-import com.mojang.blaze3d.platform.NativeImage;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
@@ -11,7 +10,6 @@ import net.minecraft.client.gui.font.FontSet;
 import net.minecraft.client.gui.font.glyphs.BakedGlyph;
 import net.minecraft.client.gui.font.glyphs.EmptyGlyph;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
@@ -234,7 +232,7 @@ public class FuckFont1 extends Font {
         private int calcColor(float localPhase, int color) {
             long time = Util.getMillis();
             if (color == 1) {
-                float progress = (time * 0.0005f + (index + localPhase) * 0.05f) % 1.0f; // 0~1
+                float progress = (time * 0.0009f + (index + localPhase) * 0.05f) % 1.0f; // 0~1
                 float hue = 0.00f;          // 固定红色
                 float sat = 1.0f - progress; // 1→0  深红→灰
                 float bri = 1.0f - progress; // 1→0  灰→黑
