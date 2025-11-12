@@ -4,6 +4,7 @@ import com.baizeli.eternisstarrysky.EternisStarrySky;
 import com.baizeli.eternisstarrysky.effect.spell.ModEffect;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -11,6 +12,8 @@ import net.minecraftforge.fml.common.Mod;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 @Mod.EventBusSubscriber(modid = EternisStarrySky.MOD_ID)
 public class FateWedgeUtil {
@@ -67,6 +70,21 @@ public class FateWedgeUtil {
             for (Map<LivingEntity, Float> targetMap : initialHealthMap.values()) {
                 targetMap.remove(deadEntity);
             }
+        }
+
+        List<LivingEntity> targetsToRemove = new ArrayList<>();
+        for (Map.Entry<LivingEntity, LivingEntity> entry : targetToCasterMap.entrySet()) {
+            LivingEntity caster = entry.getValue();
+            if (caster.equals(deadEntity)) {
+                targetsToRemove.add(entry.getKey());
+            }
+        }
+
+        for (LivingEntity target : targetsToRemove) {
+            if (target != null && !target.level().isClientSide()) {
+                target.removeEffect(MobEffects.GLOWING);
+            }
+            targetToCasterMap.remove(target);
         }
 
         if (initialHealthMap.containsKey(deadEntity)) {
