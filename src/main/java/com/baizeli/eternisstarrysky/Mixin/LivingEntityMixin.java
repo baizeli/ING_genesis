@@ -25,6 +25,7 @@ import java.util.Random;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin implements AvaritiaKill {
+	
 	@Shadow public int deathTime;
 
 	@Shadow public abstract void remove(Entity.RemovalReason p_276115_);

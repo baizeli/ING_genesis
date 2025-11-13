@@ -11,12 +11,14 @@
 
   "spell.iron_spells_genesis.warped_blood_burst": "Warped Blood Burst",
   "spell.iron_spells_genesis.amenofuwari": "Amenofuwari",
-  "spell.iron_spells_genesis.warped_blood_burst.guide": "Consume 50% of your own HP to deal damage to all enemies in an area and inflict a healing-negation effect.",
+  "spell.iron_spells_genesis.warped_blood_burst.guide": "Consume 50%% of your own HP to deal damage to all enemies in an area and inflict a healing-negation effect.",
   "spell.iron_spells_genesis.warped_blood_burst.low_health": "Your health is too weak to unleash the Warped Blood Burst!",
   
   "spell.iron_spells_genesis.i_fly": "I Fly",
   "spell.iron_spells_genesis.fate_wedge": "Fate Wedge",
   "spell.iron_spells_genesis.perfect_evasion": "Perfect Evasion",
+  "spell.iron_spells_genesis.absolute_equality": "Absolute Equality",
+  "spell.iron_spells_genesis.myriad_arrows": "Myriad Arrows",
 
   "effect.iron_spells_genesis.fate_wedge": "Fate Wedge",
   "effect.iron_spells_genesis.perfect_evasion": "Perfect Evasion",

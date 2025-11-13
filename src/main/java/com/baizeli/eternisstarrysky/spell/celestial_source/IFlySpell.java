@@ -20,7 +20,7 @@ import java.util.List;
 public class IFlySpell extends AbstractSpell {
     private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "i_fly");
     private final DefaultConfig defaultConfig = new DefaultConfig()
-        .setMinRarity(SpellRarity.RARE)
+        .setMinRarity(SpellRarity.COMMON)
         .setSchoolResource(SpellSchool.CELESTIAL_SOURCE_RESOURCE)
         .setMaxLevel(3)
         .setCooldownSeconds(360.0F)

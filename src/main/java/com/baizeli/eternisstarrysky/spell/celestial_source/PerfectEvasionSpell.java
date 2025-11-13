@@ -20,7 +20,7 @@ import java.util.List;
 public class PerfectEvasionSpell extends AbstractSpell {
     private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "perfect_evasion");
     private final DefaultConfig defaultConfig = new DefaultConfig()
-        .setMinRarity(SpellRarity.EPIC)
+        .setMinRarity(SpellRarity.COMMON)
         .setSchoolResource(SpellSchool.CELESTIAL_SOURCE_RESOURCE)
         .setMaxLevel(3)
         .setCooldownSeconds(600.0F)
