@@ -2,6 +2,7 @@ package com.baizeli.eternisstarrysky;
 
 import com.baizeli.eternisstarrysky.Entity.NyanCatRenderer;
 import com.baizeli.eternisstarrysky.client.network.WireBoxSyncPacket;
+import com.baizeli.eternisstarrysky.client.renderer.EvasionAnimationRenderer;
 import com.baizeli.eternisstarrysky.fonts.FuckFont1;
 import io.redspace.ironsspellbooks.registries.CreativeTabRegistry;
 import io.redspace.ironsspellbooks.registries.ItemRegistry;
@@ -225,6 +226,13 @@ public class EternisStarrySky
                     WireBoxSyncPacket::decode,
                     WireBoxSyncPacket::handle
             );
+        }
+
+        @SubscribeEvent
+        public static void registerEvasionAnimationRenderer(FMLClientSetupEvent event) {
+            if (FMLEnvironment.dist == Dist.CLIENT) {
+                MinecraftForge.EVENT_BUS.register(EvasionAnimationRenderer.class);
+            }
         }
     }
 }

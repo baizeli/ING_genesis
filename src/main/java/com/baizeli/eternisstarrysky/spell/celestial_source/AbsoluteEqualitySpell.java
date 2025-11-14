@@ -1,40 +1,35 @@
 package com.baizeli.eternisstarrysky.spell.celestial_source;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
-import com.baizeli.eternisstarrysky.Util.spell.celestial_source.FateWedgeUtil;
-import com.baizeli.eternisstarrysky.effect.spell.ModEffect;
 import com.baizeli.eternisstarrysky.spell.SpellSchool;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.spells.*;
 import io.redspace.ironsspellbooks.api.util.Utils;
 import io.redspace.ironsspellbooks.capabilities.magic.TargetEntityCastData;
-import net.minecraft.network.chat.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.effect.*;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-
-import java.util.List;
+import net.minecraftforge.common.Tags;
 
 @AutoSpellConfig
-public class FateWedgeSpell extends AbstractSpell {
-    private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "fate_wedge");
+public class AbsoluteEqualitySpell extends AbstractSpell {
+    private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "absolute_equality");
     private final DefaultConfig defaultConfig = new DefaultConfig()
         .setMinRarity(SpellRarity.LEGENDARY)
         .setSchoolResource(SpellSchool.CELESTIAL_SOURCE_RESOURCE)
         .setMaxLevel(1)
-        .setCooldownSeconds(300.0F)
+        .setCooldownSeconds(1200.0F)
         .build();
 
-    public FateWedgeSpell() {
-        this.manaCostPerLevel = 100;
-        this.baseSpellPower = 60;
+    public AbsoluteEqualitySpell() {
+        this.manaCostPerLevel = 0;
+        this.baseSpellPower = 0;
         this.spellPowerPerLevel = 0;
-        this.castTime = 100;
-        this.baseManaCost = 900;
+        this.castTime = 200;
+        this.baseManaCost = 1500;
     }
 
     @Override
@@ -58,19 +53,11 @@ public class FateWedgeSpell extends AbstractSpell {
     }
 
     @Override
-    public List<MutableComponent> getUniqueInfo(int spellLevel, LivingEntity caster) {
-        return List.of(
-            Component.translatable(
-                "ui.irons_spellbooks.effect_length",
-                Utils.timeFromTicks(1200, 1)
-            ),
-            Component.translatable("ui.iron_spells_genesis.max_damage_bonus", 50)
-        );
-    }
-
-    @Override
     public boolean checkPreCastConditions(Level level, int spellLevel, LivingEntity entity, MagicData playerMagicData) {
-        return Utils.preCastTargetHelper(level, entity, playerMagicData, this, 16, 0.1f);
+        return Utils.preCastTargetHelper(
+            level, entity, playerMagicData, this, 800, 0.1f, true,
+            target -> !isBossEntity(target)
+        );
     }
 
     @Override
@@ -79,32 +66,28 @@ public class FateWedgeSpell extends AbstractSpell {
             if (playerMagicData.getAdditionalCastData() instanceof TargetEntityCastData targetData) {
                 LivingEntity target = targetData.getTarget((ServerLevel) level);
 
-                if (target != null) {
-                    FateWedgeUtil.setInitialHealth(player, target);
+                if (target != null && !isBossEntity(target)) {
+                    // 先计算施法者/目标的当前血量%
+                    float playerHealthPercent = player.getHealth() / player.getMaxHealth();
+                    float targetHealthPercent = target.getHealth() / target.getMaxHealth();
 
-                    // 刻命之楔[施法者本身]
-                    player.addEffect(new MobEffectInstance(
-                        ModEffect.FATE_WEDGE.get(),
-                        1200, 
-                        0, 
-                        false, 
-                        false, 
-                        true
-                    ));
-                    
-                    // 发光[目标]
-                    target.addEffect(new MobEffectInstance(
-                        MobEffects.GLOWING, 
-                        1200, 
-                        0, 
-                        false, 
-                        false, 
-                        true
-                    ));
+                    // 再交换/替换-施法者/目标的血量%
+                    player.setHealth(player.getMaxHealth() * targetHealthPercent);
+                    target.setHealth(target.getMaxHealth() * playerHealthPercent);
                 }
             }
         }
-
+        
         super.onCast(level, spellLevel, entity, castSource, playerMagicData);
+    }
+
+    private boolean isBossEntity(LivingEntity entity) {
+        // 你是不是boss呀??
+        if (entity.getType().is(Tags.EntityTypes.BOSSES)) {
+            return true;
+        }
+
+        // 不是boss你可以通过了
+        return false;
     }
 }

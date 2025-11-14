@@ -1,6 +1,24 @@
 {
   "parent": "minecraft:item/handheld",
-  "textures": {
-    "layer0": "iron_spells_genesis:item/celestial_source_spell_book"
+  "loader": "forge:separate_transforms",
+  "base": {
+    "textures": {
+      "book": "iron_spells_genesis:item/spell_book_models/celestial_source_spell_book"
+    },
+    "parent": "irons_spellbooks:item/template_spell_book_model"
+  },
+  "perspectives": {
+    "gui": {
+      "parent": "item/generated",
+      "textures": {
+        "layer0": "iron_spells_genesis:item/celestial_source_spell_book"
+      }
+    },
+    "head": {
+      "textures": {
+        "book": "iron_spells_genesis:item/spell_book_models/celestial_source_spell_book"
+      },
+      "parent": "irons_spellbooks:item/template_spell_book_model_open"
+    }
   }
 }

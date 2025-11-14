@@ -33,11 +33,37 @@ public class CustomArrowEntity extends AbstractArrow {
     private static final double TRACK_RANGE = 30.0; // 追踪半径
     private static final int TARGET_COOLDOWN = 20; // 1.5秒 * 20 tick/秒
 
+    // 万箭法术的一些字段
+    private boolean myriadArrows = false;
+    private boolean myriadArrow = false;
+    private LivingEntity targetEntity = null;
+    private int totalArrows = 0;
+    private int arrowsShot = 0;
+    private int duration = 0;
+    private float arrowDamage = 0;
+    private long startTime = -1;
+
     private Map<LivingEntity, Long> attackedTargets = new HashMap<>();
     public CustomArrowEntity(EntityType<? extends CustomArrowEntity> entityType, Level level) {super(entityType, level);}
     public CustomArrowEntity(Level level, LivingEntity shooter) {super(ModEntities.CUSTOM_ARROW.get(), shooter, level);}
     public CustomArrowEntity(Level level, double x, double y, double z) {super(ModEntities.CUSTOM_ARROW.get(), x, y, z, level);}
     public void setSpawn(boolean spawn) {this.spawn = spawn;}
+
+    // 万箭法术的一些参数
+    public void setMyriadArrows(boolean myriadArrows, LivingEntity targetEntity, int totalArrows, int duration, float damage) {
+        this.myriadArrows = myriadArrows;
+        this.targetEntity = targetEntity;
+        this.totalArrows = totalArrows;
+        this.duration = duration;
+        this.arrowDamage = damage;
+        this.startTime = level().getGameTime();
+        this.arrowsShot = 0;
+    }
+    
+    // 是否是万箭法术的箭矢
+    public void setMyriadArrow(boolean myriadArrow) {
+        this.myriadArrow = myriadArrow;
+    }
 
     @Override
     protected ItemStack getPickupItem() {
@@ -95,6 +121,11 @@ public class CustomArrowEntity extends AbstractArrow {
 
     @Override
     protected void onHitBlock(BlockHitResult result) {
+        // 穿方块
+        if (myriadArrow) {
+            return;
+        }
+        
         if (track) {
             this.inGround = false;
             return;
@@ -107,6 +138,9 @@ public class CustomArrowEntity extends AbstractArrow {
 
     @Override
     public void tick() {
+        if (myriadArrows && !level().isClientSide) {
+            handleMyriadArrows();
+        }
 
         if (track) trackTarget();
         super.tick();
@@ -118,12 +152,67 @@ public class CustomArrowEntity extends AbstractArrow {
             level().addParticle(ParticleTypes.SMOKE, this.getX(), this.getY(), this.getZ(), 0, 0, 0);
         }
 
-        if (!spawn && !track && hitTime != -1) {
+        if (!spawn && !track && !myriadArrows && hitTime != -1) {
             long currentTime = level().getGameTime();
             if (currentTime - hitTime >= 30) {
                 this.kill();
             }
         }
+    }
+
+    // 万箭法术的一些逻辑
+    private void handleMyriadArrows() {
+        if (startTime == -1 || targetEntity == null || !targetEntity.isAlive()) {
+            this.kill();
+            return;
+        }
+
+        long currentTime = level().getGameTime();
+        long elapsedTicks = currentTime - startTime;
+
+        int expectedArrows = (int) ((elapsedTicks * totalArrows) / duration);
+        
+        // 发射尚未发射的箭矢
+        while (arrowsShot < expectedArrows && arrowsShot < totalArrows) {
+            if (targetEntity == null || !targetEntity.isAlive()) {
+                return;
+            }
+
+            // 获取目标位置
+            Vec3 targetPos = targetEntity.position().add(
+                getRandomValue(-2.5, 2.5),
+                targetEntity.getBbHeight() / 2,
+                getRandomValue(-2.5, 2.5)
+            );
+
+            // 在目标上方生成箭矢
+            Vec3 spawnPos = targetPos.add(0, getRandomValue(15.0, 25.0), 0);
+
+            CustomArrowEntity arrow = new CustomArrowEntity(level(), spawnPos.x, spawnPos.y, spawnPos.z);
+
+            arrow.setSpawn(false);
+            arrow.setMyriadArrow(true);
+            arrow.setBaseDamage(arrowDamage);
+            arrow.setOwner(this.getOwner());
+
+            Vec3 direction = targetPos.subtract(spawnPos).normalize();
+
+            arrow.setDeltaMovement(direction.scale(getRandomValue(1.0, 2.5)));
+
+            arrow.setDeltaMovement(arrow.getDeltaMovement().add(
+                getRandomValue(-0.1, 0.1),
+                getRandomValue(-0.1, 0.1),
+                getRandomValue(-0.1, 0.1)
+            ));
+
+            level().addFreshEntity(arrow);
+            arrowsShot++;
+        }
+    }
+
+    // 随机数生成
+    private double getRandomValue(double min, double max) {
+        return min + random.nextDouble() * (max - min);
     }
 
     private boolean checkObstacleAbove(Vec3 center) {
@@ -270,4 +359,3 @@ public class CustomArrowEntity extends AbstractArrow {
         }
     }
 }
-
