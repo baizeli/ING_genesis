@@ -19,10 +19,14 @@
   "spell.iron_spells_genesis.perfect_evasion": "Perfect Evasion",
   "spell.iron_spells_genesis.absolute_equality": "Absolute Equality",
   "spell.iron_spells_genesis.myriad_arrows": "Myriad Arrows",
+  "spell.iron_spells_genesis.life_and_death_realm": "Life And Death Realm",
+  "spell.iron_spells_genesis.stellar_soul_control": "Stellar Soul Control",
 
+  "effect.iron_spells_genesis.i_fly": "I Fly",
   "effect.iron_spells_genesis.fate_wedge": "Fate Wedge",
   "effect.iron_spells_genesis.perfect_evasion": "Perfect Evasion",
-  "effect.iron_spells_genesis.i_fly": "I Fly",
+  "effect.iron_spells_genesis.life_and_death_realm": "Life And Death Realm",
+  "effect.iron_spells_genesis.stellar_soul_control": "Stellar Soul Control",
 
   "item.iron_spells_genesis.chaos_staff": "Chaos Staff",
   "item.iron_spells_genesis.celestial_source_staff": "Celestial Source Staff",

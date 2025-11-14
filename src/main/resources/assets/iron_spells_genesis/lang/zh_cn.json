@@ -19,10 +19,14 @@
   "spell.iron_spells_genesis.perfect_evasion": "完美闪避",
   "spell.iron_spells_genesis.absolute_equality": "绝对平等",
   "spell.iron_spells_genesis.myriad_arrows": "万箭",
+  "spell.iron_spells_genesis.life_and_death_realm": "生死之境",
+  "spell.iron_spells_genesis.stellar_soul_control": "星魂掌控",
 
+  "effect.iron_spells_genesis.i_fly": "我要飞",
   "effect.iron_spells_genesis.fate_wedge": "刻命之楔",
   "effect.iron_spells_genesis.perfect_evasion": "完美闪避",
-  "effect.iron_spells_genesis.i_fly": "我要飞",
+  "effect.iron_spells_genesis.life_and_death_realm": "生死之境",
+  "effect.iron_spells_genesis.stellar_soul_control": "星魂掌控",
 
   "item.iron_spells_genesis.chaos_staff": "混沌法杖",
   "item.iron_spells_genesis.celestial_source_staff": "星源法杖",
