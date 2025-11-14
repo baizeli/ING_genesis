@@ -18,6 +18,14 @@ public class ModEntities {
                     .updateInterval(20)
                     .build("custom_arrow"));
 
+
+    public static final RegistryObject<EntityType<NyanCat>> NYAN_CAT = ENTITY_TYPES.register("nyan_cat",
+            () -> EntityType.Builder.<NyanCat>of(NyanCat::new, MobCategory.MISC)
+                    .sized(0.5F, 0.5F)
+                    .clientTrackingRange(4)
+                    .updateInterval(20)
+                    .build("nyan_cat"));
+
     public static final RegistryObject<EntityType<SwordManCsdy>> SWORD_MAN_CSDY = ENTITY_TYPES.register("sword_man_csdy",
         () -> EntityType.Builder.of(new SwordManFactory(), MobCategory.MONSTER)
             .sized(0.6F, 1.8F)
