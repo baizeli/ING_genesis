@@ -1,23 +1,12 @@
 package com.baizeli.eternisstarrysky.spell;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
-import com.baizeli.eternisstarrysky.spell.chaos.AmenofuwariSpell;
-import com.baizeli.eternisstarrysky.spell.chaos.WarpedBloodBurst;
-import com.baizeli.eternisstarrysky.spell.chaos.BloodWarSpell;
-import com.baizeli.eternisstarrysky.spell.chaos.SiphonSpell;
-import com.baizeli.eternisstarrysky.spell.chaos.BloodRitualSpell; // 新增导入
-import com.baizeli.eternisstarrysky.spell.celestial_source.IFlySpell;
-import com.baizeli.eternisstarrysky.spell.celestial_source.FateWedgeSpell;
-import com.baizeli.eternisstarrysky.spell.celestial_source.PerfectEvasionSpell;
-import com.baizeli.eternisstarrysky.spell.celestial_source.AbsoluteEqualitySpell;
-import com.baizeli.eternisstarrysky.spell.celestial_source.MyriadArrowsSpell;
-import com.baizeli.eternisstarrysky.spell.celestial_source.LifeAndDeathRealmSpell;
-import com.baizeli.eternisstarrysky.spell.celestial_source.StellarSoulControlSpell;
+import com.baizeli.eternisstarrysky.spell.chaos.*;
+import com.baizeli.eternisstarrysky.spell.celestial_source.*;
 import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.RegistryObject;
+import net.minecraftforge.registries.*;
 
 public class Spells {
     private static final DeferredRegister<AbstractSpell> SPELLS;
@@ -28,6 +17,7 @@ public class Spells {
     public static final RegistryObject<AbstractSpell> BLOOD_WAR_SPELL;
     public static final RegistryObject<AbstractSpell> SIPHON_SPELL;
     public static final RegistryObject<AbstractSpell> BLOOD_RITUAL_SPELL;
+    public static final RegistryObject<AbstractSpell> BLOOD_CONTROL_SPELL;
 
     // 星源法术卷轴
     public static final RegistryObject<AbstractSpell> I_FLY_SPELL;
@@ -47,6 +37,7 @@ public class Spells {
         BLOOD_WAR_SPELL = registerSpell(new BloodWarSpell());
         SIPHON_SPELL = registerSpell(new SiphonSpell());
         BLOOD_RITUAL_SPELL = registerSpell(new BloodRitualSpell());
+        BLOOD_CONTROL_SPELL = registerSpell(new BloodControlSpell());
 
         // 星源法术卷轴
         I_FLY_SPELL = registerSpell(new IFlySpell());

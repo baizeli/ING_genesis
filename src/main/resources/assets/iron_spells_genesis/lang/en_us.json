@@ -15,6 +15,7 @@
   "spell.iron_spells_genesis.warped_blood_burst.low_health": "Your health is too weak to unleash the Warped Blood Burst!",
   "spell.iron_spells_genesis.siphon": "Siphon",
   "spell.iron_spells_genesis.blood_ritual": "Blood Ritual",
+  "spell.iron_spells_genesis.blood_control": "Blood Control",
   
   "spell.iron_spells_genesis.i_fly": "I Fly",
   "spell.iron_spells_genesis.fate_wedge": "Fate Wedge",
@@ -78,7 +79,8 @@
   "ui.iron_spells_genesis.spell_power": "Spell Power: %d%%",
   "ui.iron_spells_genesis.movement_speed": "Movement Speed: %d%%",
   "ui.iron_spells_genesis.absorption_healing": "Absorption Healing: %d%%",
-  "ui.irons_spellbooks.blood_ritual.description": "Sacrifice health to gain mana and clear all effects",
+  "ui.iron_spells_genesis.damage_multiplier": "Damage Multiplier: %d%%",
+  "ui.iron_spells_genesis.health_cost": "Health Cost: %d%%",
   
   "subtitles.iron_spells_genesis.evasion": "Perfect Evasion",
 
