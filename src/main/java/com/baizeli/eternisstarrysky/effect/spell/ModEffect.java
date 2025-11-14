@@ -6,6 +6,7 @@ import com.baizeli.eternisstarrysky.effect.spell.celestial_source.PerfectEvasion
 import com.baizeli.eternisstarrysky.effect.spell.celestial_source.IFlyEffect;
 import com.baizeli.eternisstarrysky.effect.spell.celestial_source.LifeAndDeathRealmEffect;
 import com.baizeli.eternisstarrysky.effect.spell.celestial_source.StellarSoulControlEffect;
+import com.baizeli.eternisstarrysky.effect.spell.chaos.BloodWarEffect;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -30,6 +31,9 @@ public class ModEffect {
         
     public static final RegistryObject<MobEffect> STELLAR_SOUL_CONTROL = 
         MOB_EFFECTS.register("stellar_soul_control", StellarSoulControlEffect::new);
+        
+    public static final RegistryObject<MobEffect> BLOOD_WAR = 
+        MOB_EFFECTS.register("blood_war", BloodWarEffect::new);
         
     public static void register(IEventBus eventBus) {
         MOB_EFFECTS.register(eventBus);

@@ -3,6 +3,7 @@ package com.baizeli.eternisstarrysky.spell;
 import com.baizeli.eternisstarrysky.EternisStarrySky;
 import com.baizeli.eternisstarrysky.spell.chaos.AmenofuwariSpell;
 import com.baizeli.eternisstarrysky.spell.chaos.WarpedBloodBurst;
+import com.baizeli.eternisstarrysky.spell.chaos.BloodWarSpell;
 import com.baizeli.eternisstarrysky.spell.celestial_source.IFlySpell;
 import com.baizeli.eternisstarrysky.spell.celestial_source.FateWedgeSpell;
 import com.baizeli.eternisstarrysky.spell.celestial_source.PerfectEvasionSpell;
@@ -18,8 +19,13 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class Spells {
     private static final DeferredRegister<AbstractSpell> SPELLS;
+
+    // 混沌法术卷轴
     public static final RegistryObject<AbstractSpell> WARPED_BLOOD_BURST_SPELL;
     public static final RegistryObject<AbstractSpell> AMENOFUWARI_SPELL;
+    public static final RegistryObject<AbstractSpell> BLOOD_WAR_SPELL;
+
+    // 星源法术卷轴
     public static final RegistryObject<AbstractSpell> I_FLY_SPELL;
     public static final RegistryObject<AbstractSpell> FATE_WEDGE_SPELL;
     public static final RegistryObject<AbstractSpell> PERFECT_EVASION_SPELL;
@@ -30,8 +36,13 @@ public class Spells {
 
     static {
         SPELLS = DeferredRegister.create(SpellRegistry.SPELL_REGISTRY_KEY, EternisStarrySky.MOD_ID);
+
+        // 混沌法术卷轴
         WARPED_BLOOD_BURST_SPELL = registerSpell(new WarpedBloodBurst());
         AMENOFUWARI_SPELL = registerSpell(new AmenofuwariSpell());
+        BLOOD_WAR_SPELL = registerSpell(new BloodWarSpell());
+
+        // 星源法术卷轴
         I_FLY_SPELL = registerSpell(new IFlySpell());
         FATE_WEDGE_SPELL = registerSpell(new FateWedgeSpell());
         PERFECT_EVASION_SPELL = registerSpell(new PerfectEvasionSpell());

@@ -21,12 +21,14 @@
   "spell.iron_spells_genesis.myriad_arrows": "Myriad Arrows",
   "spell.iron_spells_genesis.life_and_death_realm": "Life And Death Realm",
   "spell.iron_spells_genesis.stellar_soul_control": "Stellar Soul Control",
+  "spell.iron_spells_genesis.blood_war": "Blood War",
 
   "effect.iron_spells_genesis.i_fly": "I Fly",
   "effect.iron_spells_genesis.fate_wedge": "Fate Wedge",
   "effect.iron_spells_genesis.perfect_evasion": "Perfect Evasion",
   "effect.iron_spells_genesis.life_and_death_realm": "Life And Death Realm",
   "effect.iron_spells_genesis.stellar_soul_control": "Stellar Soul Control",
+  "effect.iron_spells_genesis.blood_war": "Blood War",
 
   "item.iron_spells_genesis.chaos_staff": "Chaos Staff",
   "item.iron_spells_genesis.celestial_source_staff": "Celestial Source Staff",
@@ -70,6 +72,8 @@
   "ui.iron_spells_genesis.percent_force_damage": "Percent Force Damage：%d%%",
   "ui.iron_spells_genesis.max_damage_bonus": "Max Damage Bonus: %d%%",
   "ui.iron_spells_genesis.perfect_evasion.chance": "Evasion Chance: %d%%",
+  "ui.iron_spells_genesis.spell_power": "Spell Power: %d%%",
+  "ui.iron_spells_genesis.movement_speed": "Movement Speed: %d%%",
   
   "subtitles.iron_spells_genesis.evasion": "Perfect Evasion",
 

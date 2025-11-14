@@ -21,12 +21,14 @@
   "spell.iron_spells_genesis.myriad_arrows": "万箭",
   "spell.iron_spells_genesis.life_and_death_realm": "生死之境",
   "spell.iron_spells_genesis.stellar_soul_control": "星魂掌控",
+  "spell.iron_spells_genesis.blood_war": "血战",
 
   "effect.iron_spells_genesis.i_fly": "我要飞",
   "effect.iron_spells_genesis.fate_wedge": "刻命之楔",
   "effect.iron_spells_genesis.perfect_evasion": "完美闪避",
   "effect.iron_spells_genesis.life_and_death_realm": "生死之境",
   "effect.iron_spells_genesis.stellar_soul_control": "星魂掌控",
+  "effect.iron_spells_genesis.blood_war": "血战",
 
   "item.iron_spells_genesis.chaos_staff": "混沌法杖",
   "item.iron_spells_genesis.celestial_source_staff": "星源法杖",
@@ -70,6 +72,8 @@
   "ui.iron_spells_genesis.percent_force_damage": "百分比强制伤害：%d%%",
   "ui.iron_spells_genesis.max_damage_bonus": "最大伤害加成：%d%%",
   "ui.iron_spells_genesis.perfect_evasion.chance": "闪避概率：%d%%",
+  "ui.iron_spells_genesis.spell_power": "法术强度：%d%%",
+  "ui.iron_spells_genesis.movement_speed": "移动速度：%d%%",
   
   "subtitles.iron_spells_genesis.evasion": "完美闪避",
 
