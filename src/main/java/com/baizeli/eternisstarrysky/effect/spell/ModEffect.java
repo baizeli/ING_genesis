@@ -7,6 +7,7 @@ import com.baizeli.eternisstarrysky.effect.spell.celestial_source.IFlyEffect;
 import com.baizeli.eternisstarrysky.effect.spell.celestial_source.LifeAndDeathRealmEffect;
 import com.baizeli.eternisstarrysky.effect.spell.celestial_source.StellarSoulControlEffect;
 import com.baizeli.eternisstarrysky.effect.spell.chaos.BloodWarEffect;
+import com.baizeli.eternisstarrysky.effect.spell.chaos.SiphonEffect;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -34,6 +35,9 @@ public class ModEffect {
         
     public static final RegistryObject<MobEffect> BLOOD_WAR = 
         MOB_EFFECTS.register("blood_war", BloodWarEffect::new);
+        
+    public static final RegistryObject<MobEffect> SIPHON = 
+        MOB_EFFECTS.register("siphon", SiphonEffect::new);
         
     public static void register(IEventBus eventBus) {
         MOB_EFFECTS.register(eventBus);

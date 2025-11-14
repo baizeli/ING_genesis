@@ -13,6 +13,7 @@
   "spell.iron_spells_genesis.amenofuwari": "天手力",
   "spell.iron_spells_genesis.warped_blood_burst.guide": "消耗自身50%%的血量，对一定范围内的生物造成伤害并附带禁疗效果",
   "spell.iron_spells_genesis.warped_blood_burst.low_health": "血量不足以释放扭曲之血爆！",
+  "spell.iron_spells_genesis.siphon": "汲取",
   
   "spell.iron_spells_genesis.i_fly": "我要飞",
   "spell.iron_spells_genesis.fate_wedge": "刻命之楔",
@@ -29,6 +30,7 @@
   "effect.iron_spells_genesis.life_and_death_realm": "生死之境",
   "effect.iron_spells_genesis.stellar_soul_control": "星魂掌控",
   "effect.iron_spells_genesis.blood_war": "血战",
+  "effect.iron_spells_genesis.siphon": "汲取",
 
   "item.iron_spells_genesis.chaos_staff": "混沌法杖",
   "item.iron_spells_genesis.celestial_source_staff": "星源法杖",
@@ -74,6 +76,7 @@
   "ui.iron_spells_genesis.perfect_evasion.chance": "闪避概率：%d%%",
   "ui.iron_spells_genesis.spell_power": "法术强度：%d%%",
   "ui.iron_spells_genesis.movement_speed": "移动速度：%d%%",
+  "ui.iron_spells_genesis.absorption_healing": "吸收治疗：%d%%",
   
   "subtitles.iron_spells_genesis.evasion": "完美闪避",
 
