@@ -31,6 +31,10 @@ public class ModShaders {
 
     @Nullable
     private static ShaderInstance floridShader;
+    
+    @Nullable
+    private static ShaderInstance rainbowShader;
+    
     @Nullable
     private static ShaderInstance heatWaveShader;
     @Nullable
@@ -43,6 +47,11 @@ public class ModShaders {
     public static ShaderInstance getFloridShader() {
         return Objects.requireNonNull(floridShader, "Florid shader not registered");
     }
+    
+    public static ShaderInstance getRainbowShader() {
+        return Objects.requireNonNull(rainbowShader, "Rainbow shader not registered");
+    }
+    
     public static ShaderInstance getHeatWaveShader() {
         return Objects.requireNonNull(heatWaveShader, "HeatWave shader shader not registered");
     }
@@ -67,6 +76,13 @@ public class ModShaders {
                 DefaultVertexFormat.POSITION_TEX
         );
         event.registerShader(florid, shaderInstance -> floridShader = shaderInstance);
+        
+        ModShaderInstance rainbow = new ModShaderInstance(
+                resourceProvider,
+                new ResourceLocation(EternisStarrySky.MODID, "rainbow_shader").toString(),
+                DefaultVertexFormat.POSITION_TEX
+        );
+        event.registerShader(rainbow, shaderInstance -> rainbowShader = shaderInstance);
 
         ModShaderInstance heat_wave = new ModShaderInstance(
                 resourceProvider,

@@ -1,6 +1,8 @@
 package com.baizeli.eternisstarrysky.client.particles;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
+import com.baizeli.eternisstarrysky.Entity.ModEntities;
+import com.baizeli.eternisstarrysky.Entity.NyanCat;
 import com.baizeli.eternisstarrysky.Render.ModShaderInstance;
 import com.baizeli.eternisstarrysky.Render.ModShaders;
 import com.mojang.blaze3d.pipeline.RenderTarget;
@@ -49,8 +51,16 @@ public class ParticleDebugEvents {
                 testTest(serverLevel, entity, lookVec);
                 testTestA(serverLevel, entity, lookVec);
                 testTestb(serverLevel, entity, lookVec);
+                spawnNyanCat(serverLevel, entity, lookVec);
             }
         }
+    }
+
+    private static void spawnNyanCat(ServerLevel serverLevel, Player player, Vec3 lookVec) {
+        NyanCat nyanCat = new NyanCat(ModEntities.NYAN_CAT.get(), player, serverLevel);
+        nyanCat.setPos(player.getX(), player.getY() + player.getEyeHeight(), player.getZ());
+        nyanCat.shoot(lookVec.x, lookVec.y, lookVec.z, 1.5F, 1.0F);
+        serverLevel.addFreshEntity(nyanCat);
     }
 
     private static void cubeTest(ServerLevel serverLevel, Player entity, Vec3 lookVec) {
@@ -147,106 +157,4 @@ public class ParticleDebugEvents {
             RenderSystem.defaultBlendFunc();
         });
     }
-
-
-/*
-
-    @SubscribeEvent
-    public static void onRenderLivingEvent(RenderLivingEvent event) {
-        if(true){
-            Minecraft mc = Minecraft.getInstance();
-            Player player = mc.player;
-            if (player == null) return;
-
-
-            RenderType renderType = SHADER_RENDER_TYPE2;
-
-            ResourceLocation textureLocation = new ResourceLocation(MODID, "textures/effect/heat_wave.png");
-            AbstractTexture texture = Minecraft.getInstance().getTextureManager().getTexture(textureLocation);
-
-            ModShaderInstance shader = (ModShaderInstance) ModShaders.getHeatWaveShader();
-            shader.setTime((player.level().getGameTime() + mc.getFrameTime()) / 10.0f);
-
-
-            shader.setSampler("Sample0", texture.getId());
-
-            PoseStack poseStack = event.getPoseStack();
-            poseStack.pushPose();
-            poseStack.translate(0, 2, 3);
-
-            
-            renderType.setupRenderState();
-
-            Tesselator tesselator = Tesselator.getInstance();
-            BufferBuilder buffer = tesselator.getBuilder();
-            buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-
-            float size = 2f;
-            Matrix4f matrix = poseStack.last().pose();
-            buffer.vertex(matrix, -size, -size, 0).uv(0, 0).endVertex();
-            buffer.vertex(matrix, -size, size, 0).uv(0, 1).endVertex();
-            buffer.vertex(matrix, size, size, 0).uv(1, 1).endVertex();
-            buffer.vertex(matrix, size, -size, 0).uv(1, 0).endVertex();
-
-            tesselator.end();
-            poseStack.popPose();
-
-            
-            renderType.clearRenderState();
-        }
-        if(false){
-            Minecraft mc = Minecraft.getInstance();
-            Player player = mc.player;
-            if (player == null) return;
-
-            
-            RenderSystem.enableBlend();
-            RenderSystem.blendFuncSeparate(
-                    GlStateManager.SourceFactor.DST_COLOR,    
-                    GlStateManager.DestFactor.SRC_COLOR,      
-                    GlStateManager.SourceFactor.ONE,          
-                    GlStateManager.DestFactor.ZERO            
-            );
-            RenderSystem.disableDepthTest();
-            RenderSystem.depthMask(false);
-
-            ResourceLocation textureLocation = new ResourceLocation(MODID, "textures/effect/heat_wave.png");
-            AbstractTexture texture = Minecraft.getInstance().getTextureManager().getTexture(textureLocation);
-
-            ModShaderInstance shader = (ModShaderInstance) ModShaders.getHeatWaveShader();
-            shader.setTime((player.level().getGameTime() + mc.getFrameTime()) / 10.0f);
-            shader.setSampler("Sample0", texture.getId());
-
-            PoseStack poseStack = event.getPoseStack();
-            poseStack.pushPose();
-
-            
-            poseStack.translate(0, 0, -10); 
-
-            Tesselator tesselator = Tesselator.getInstance();
-            BufferBuilder buffer = tesselator.getBuilder();
-            buffer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-
-            
-            float size = 20f; 
-            Matrix4f matrix = poseStack.last().pose();
-            buffer.vertex(matrix, -size, -size, 0).uv(0, 0).endVertex();
-            buffer.vertex(matrix, -size, size, 0).uv(0, 1).endVertex();
-            buffer.vertex(matrix, size, size, 0).uv(1, 1).endVertex();
-            buffer.vertex(matrix, size, -size, 0).uv(1, 0).endVertex();
-
-            tesselator.end();
-            poseStack.popPose();
-
-            
-            RenderSystem.depthMask(true);
-            RenderSystem.enableDepthTest();
-            RenderSystem.disableBlend();
-            RenderSystem.defaultBlendFunc();
-        }
-    }
-*/
-
 }
-
-

@@ -1,5 +1,6 @@
 package com.baizeli.eternisstarrysky;
 
+import com.baizeli.eternisstarrysky.Entity.NyanCatRenderer;
 import com.baizeli.eternisstarrysky.client.network.WireBoxSyncPacket;
 import com.baizeli.eternisstarrysky.fonts.FuckFont1;
 import io.redspace.ironsspellbooks.registries.CreativeTabRegistry;
@@ -210,6 +211,7 @@ public class EternisStarrySky
             event.enqueueWork(() -> {
                 MenuScreens.register(ModMenuTypes.VANILLA_WORKBENCH_MENU.get(), VanillaWorkbenchScreen::new);
                 EntityRenderers.register(ModEntities.SWORD_MAN_CSDY.get(), SwordManCsdyRenderer::new);
+                EntityRenderers.register(ModEntities.NYAN_CAT.get(), NyanCatRenderer::new);
             });
             MinecraftForge.registerConfigScreen(new ConfigurationFactory());
             Minecraft.getInstance().font = FuckFont1.font;
