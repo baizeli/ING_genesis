@@ -21,7 +21,7 @@ import java.util.List;
 public class BloodWarSpell extends AbstractSpell {
     private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "blood_war");
     private final DefaultConfig defaultConfig = new DefaultConfig()
-        .setMinRarity(SpellRarity.RARE)
+        .setMinRarity(SpellRarity.COMMON)
         .setSchoolResource(SpellSchool.CHAOS_RESOURCE)
         .setMaxLevel(3)
         .setCooldownSeconds(240.0F)

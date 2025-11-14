@@ -41,7 +41,7 @@ public class SiphonEffect extends MobEffect {
     public static void onLivingHurt(LivingHurtEvent event) {
         if (event.getSource().getEntity() instanceof LivingEntity attacker) {
             if (attacker.hasEffect(ModEffect.SIPHON.get())) {
-                // 获取效果等级
+                // 获取buff等级
                 int amplifier = attacker.getEffect(ModEffect.SIPHON.get()).getAmplifier();
                 
                 // 计算转换的血量

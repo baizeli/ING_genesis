@@ -14,6 +14,7 @@
   "spell.iron_spells_genesis.warped_blood_burst.guide": "消耗自身50%%的血量，对一定范围内的生物造成伤害并附带禁疗效果",
   "spell.iron_spells_genesis.warped_blood_burst.low_health": "血量不足以释放扭曲之血爆！",
   "spell.iron_spells_genesis.siphon": "汲取",
+  "spell.iron_spells_genesis.blood_ritual": "祭血仪式",
   
   "spell.iron_spells_genesis.i_fly": "我要飞",
   "spell.iron_spells_genesis.fate_wedge": "刻命之楔",
@@ -77,6 +78,7 @@
   "ui.iron_spells_genesis.spell_power": "法术强度：%d%%",
   "ui.iron_spells_genesis.movement_speed": "移动速度：%d%%",
   "ui.iron_spells_genesis.absorption_healing": "吸收治疗：%d%%",
+  "ui.irons_spellbooks.blood_ritual.description": "献祭血量获得法力值并清除所有效果",
   
   "subtitles.iron_spells_genesis.evasion": "完美闪避",
 

@@ -19,7 +19,7 @@ import java.util.List;
 public class SiphonSpell extends AbstractSpell {
     private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "siphon");
     private final DefaultConfig defaultConfig = new DefaultConfig()
-        .setMinRarity(SpellRarity.RARE)
+        .setMinRarity(SpellRarity.COMMON)
         .setSchoolResource(SpellSchool.CHAOS_RESOURCE)
         .setMaxLevel(5)
         .setCooldownSeconds(180.0F)

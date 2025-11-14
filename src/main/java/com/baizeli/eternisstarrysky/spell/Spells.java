@@ -5,6 +5,7 @@ import com.baizeli.eternisstarrysky.spell.chaos.AmenofuwariSpell;
 import com.baizeli.eternisstarrysky.spell.chaos.WarpedBloodBurst;
 import com.baizeli.eternisstarrysky.spell.chaos.BloodWarSpell;
 import com.baizeli.eternisstarrysky.spell.chaos.SiphonSpell;
+import com.baizeli.eternisstarrysky.spell.chaos.BloodRitualSpell; // 新增导入
 import com.baizeli.eternisstarrysky.spell.celestial_source.IFlySpell;
 import com.baizeli.eternisstarrysky.spell.celestial_source.FateWedgeSpell;
 import com.baizeli.eternisstarrysky.spell.celestial_source.PerfectEvasionSpell;
@@ -26,6 +27,7 @@ public class Spells {
     public static final RegistryObject<AbstractSpell> AMENOFUWARI_SPELL;
     public static final RegistryObject<AbstractSpell> BLOOD_WAR_SPELL;
     public static final RegistryObject<AbstractSpell> SIPHON_SPELL;
+    public static final RegistryObject<AbstractSpell> BLOOD_RITUAL_SPELL;
 
     // 星源法术卷轴
     public static final RegistryObject<AbstractSpell> I_FLY_SPELL;
@@ -44,6 +46,7 @@ public class Spells {
         AMENOFUWARI_SPELL = registerSpell(new AmenofuwariSpell());
         BLOOD_WAR_SPELL = registerSpell(new BloodWarSpell());
         SIPHON_SPELL = registerSpell(new SiphonSpell());
+        BLOOD_RITUAL_SPELL = registerSpell(new BloodRitualSpell());
 
         // 星源法术卷轴
         I_FLY_SPELL = registerSpell(new IFlySpell());

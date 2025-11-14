@@ -20,7 +20,7 @@ import java.util.List;
 public class StellarSoulControlSpell extends AbstractSpell {
     private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "stellar_soul_control");
     private final DefaultConfig defaultConfig = new DefaultConfig()
-        .setMinRarity(SpellRarity.RARE)
+        .setMinRarity(SpellRarity.COMMON)
         .setSchoolResource(SpellSchool.CELESTIAL_SOURCE_RESOURCE)
         .setMaxLevel(3)
         .setCooldownSeconds(180.0F)
