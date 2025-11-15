@@ -1,7 +1,6 @@
 package com.baizeli.eternisstarrysky.spell.chaos;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
-import com.baizeli.eternisstarrysky.Util.EntityData;
 import com.baizeli.eternisstarrysky.client.WireBoxRenderer;
 import com.baizeli.eternisstarrysky.client.network.WireBoxSyncPacket;
 import com.baizeli.eternisstarrysky.spell.SpellSchool;
@@ -23,9 +22,9 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -34,11 +33,11 @@ import java.util.List;
 import static com.baizeli.eternisstarrysky.EternisStarrySky.CHANNEL;
 
 @AutoSpellConfig
-public class WarpedBloodBurst extends AbstractSpell {
+public class WarpedBloodBurstSpell extends AbstractSpell {
     private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "warped_blood_burst");
     private final DefaultConfig defaultConfig;
 
-    public WarpedBloodBurst() {
+    public WarpedBloodBurstSpell() {
         this.defaultConfig = new DefaultConfig()
                 .setMinRarity(SpellRarity.COMMON)
                 .setSchoolResource(SpellSchool.CHAOS_RESOURCE)
@@ -100,11 +99,11 @@ public class WarpedBloodBurst extends AbstractSpell {
         }
 
         if (spellLevel <= 3) {          // 1~3 级
-            coolDown = 200;
+            coolDown = 250;
         } else if (spellLevel < 10) {  // 4~9 级
-            coolDown = 100 * (spellLevel - 1);   // 4→300，5→400，…，9→800
+            coolDown = 250 * (spellLevel - 1);
         } else {
-            coolDown = 1000;
+            coolDown = 2400;
         }
         return (int) (coolDown * ((double) 2.0F - Utils.softCapFormula(playerCooldownModifier)) * itemCoolDownModifer);
     }
@@ -139,6 +138,7 @@ public class WarpedBloodBurst extends AbstractSpell {
                 if (e.isAlive()) {
                     e.hurt(getDamageSource(entity), getSpellPower(spellLevel, entity));
                     if (e instanceof LivingEntity living) {
+                        // 强制伤害
                         living.setHealth((float) (living.getHealth() - living.getMaxHealth() * getForceDamage(spellLevel, entity) * 0.01));
                     }
                     ((ServerLevel) serverLevel).sendParticles(ParticleHelper.BLOOD,
@@ -149,11 +149,11 @@ public class WarpedBloodBurst extends AbstractSpell {
                             e.getBbWidth() * 0.6,
                             0.12
                     );
-                    long expireAt = serverLevel.getGameTime() + 400;   // 20秒后失效
+                    long expireAt = serverLevel.getGameTime() + 100;   // 5秒
                     // 网络包同步
                     CHANNEL.send(net.minecraftforge.network.PacketDistributor.ALL.noArg(),
                             new WireBoxSyncPacket(e.getUUID(), true, expireAt));
-                    WireBoxRenderer.entitiesForRenderWireBoxRenderer.put(e, new EntityData(expireAt, e.position()));
+                    WireBoxRenderer.entitiesForRenderWireBoxRenderer.put(e.getUUID(), expireAt);
                 }
             }
             entity.setHealth(entity.getHealth() - entity.getMaxHealth() / 2);

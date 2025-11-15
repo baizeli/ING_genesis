@@ -10,8 +10,12 @@
   "school.iron_spells_genesis.celestial_source": "星源",
 
   "spell.iron_spells_genesis.warped_blood_burst": "扭曲之血爆",
+  "spell.iron_spells_genesis.warped_barrier": "扭曲之壁垒",
+  "spell.iron_spells_genesis.reverse_plague": "逆转瘟疫",
   "spell.iron_spells_genesis.amenofuwari": "天手力",
   "spell.iron_spells_genesis.warped_blood_burst.guide": "消耗自身50%的血量，对一定范围内的生物造成伤害并附带禁疗效果",
+  "spell.iron_spells_genesis.warped_barrier.guide": "将90%的生命值转化成伤害吸收",
+  "spell.iron_spells_genesis.reverse_plague.guide": "将目标正面效果与自身负面效果进行交换，短时间禁止目标获得正面效果，阻止自身获得效果并转嫁负面效果",
   "spell.iron_spells_genesis.warped_blood_burst.low_health": "血量不足以释放扭曲之血爆！",
   
   "spell.iron_spells_genesis.i_fly": "我要飞",
@@ -62,6 +66,8 @@
   "ui.irons_spellbooks.damage_bonus": "伤害加成：%d%%",
   "ui.irons_spellbooks.effect_length": "效果持续时间：%d",
   "ui.iron_spells_genesis.max_damage_bonus": "最大伤害加成：%d%%",
+  "ui.iron_spells_genesis.health_cost_percent": "消耗生命值百分比：%d%%",
+  "ui.iron_spells_genesis.health_conversion_efficiency": "生命值转伤害吸收效率：%d%%",
 
   "item.isMain": "§2在主手时：",
   "item.attDamage": " §2攻击伤害",

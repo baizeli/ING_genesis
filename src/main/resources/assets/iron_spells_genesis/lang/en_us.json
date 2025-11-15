@@ -10,8 +10,12 @@
   "school.iron_spells_genesis.celestial_source": "Celestial Source",
 
   "spell.iron_spells_genesis.warped_blood_burst": "Warped Blood Burst",
+  "spell.iron_spells_genesis.warped_barrier": "Warped Barrier",
+  "spell.iron_spells_genesis.reverse_plague": "Reverse Plague",
   "spell.iron_spells_genesis.amenofuwari": "Amenofuwari",
   "spell.iron_spells_genesis.warped_blood_burst.guide": "Consume 50% of your own HP to deal damage to all enemies in an area and inflict a healing-negation effect.",
+  "spell.iron_spells_genesis.warped_barrier.guide": "Convert 90% of health into Absorption.",
+  "spell.iron_spells_genesis.reverse_plague.guide": "Exchange the target's positive effects with your own negative effects, temporarily preventing the target from gaining positive effects, halting your own effect acquisition, and transferring the negative effects.",
   "spell.iron_spells_genesis.warped_blood_burst.low_health": "Your health is too weak to unleash the Warped Blood Burst!",
   
   "spell.iron_spells_genesis.i_fly": "I Fly",
@@ -62,6 +66,9 @@
   "ui.irons_spellbooks.damage_bonus": "Damage Bonus: %d%%",
   "ui.irons_spellbooks.effect_length": "Effect Duration: %d",
   "ui.iron_spells_genesis.max_damage_bonus": "Max Damage Bonus: %d%%",
+  "ui.iron_spells_genesis.health_cost_percent": "Health Cost Percent：%d%%",
+  "ui.iron_spells_genesis.health_conversion_efficiency": "Health conversion efficiency：%d%%",
+
 
   "item.isMain": "§2When in main hand:",
   "item.attDamage": " §2Attack Damage",

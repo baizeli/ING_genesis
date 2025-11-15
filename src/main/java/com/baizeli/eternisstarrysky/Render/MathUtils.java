@@ -44,6 +44,8 @@ import java.util.function.Predicate;
 public final class MathUtils {
     public static final float TAU = (float) (2 * StrictMath.PI);
     public static final float PI = (float) StrictMath.PI;
+    public static final double torad = 0.017453292519943;
+    public static double[] SIN_TABLE = new double[65536];
 
     /**
      * @Date 2025/3/13 14:16
@@ -317,6 +319,16 @@ public final class MathUtils {
             }
         }
         return pos;
+    }
+
+    static {
+        for (int i = 0; i < 65536; ++i) {
+            SIN_TABLE[i] = Math.sin(i / 65536D * 2 * Math.PI);
+        }
+    }
+
+    public static double sin(double d) {
+        return SIN_TABLE[(int) ((float) d * 10430.378F) & 65535];
     }
 }
 

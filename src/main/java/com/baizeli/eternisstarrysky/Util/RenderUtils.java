@@ -267,7 +267,7 @@ public class RenderUtils {
         poseStack.popPose();
     }
 
-    public static void renderSkyRenderTexturedQuad(PoseStack poseStack, MultiBufferSource buffer, ResourceLocation texture, float width, float height, float angleDeg, Axis axis, double x, double y, double z, int light) {
+    public static void renderSkyRenderTexturedQuad(PoseStack poseStack, MultiBufferSource buffer, ResourceLocation texture, float width, float height, float angleDeg, Axis axis, double x, double y, double z, int light, int useType) {
         AvaritiaShaders.cosmicOpacity.set(2f);
         if (AvaritiaShaders.inventoryRender) {
             AvaritiaShaders.cosmicExternalScale.set(25f);
@@ -287,6 +287,7 @@ public class RenderUtils {
 
         float opacity = (float) (0.7F + 0.3F * MathUtils.sin(time * 2.5F));
 
+        AvaritiaShaders.useType.set(useType);
         AvaritiaShaders.cosmicTime.set(time);
         AvaritiaShaders.cosmicYaw.set(yaw);
         AvaritiaShaders.cosmicPitch.set(pitch);
