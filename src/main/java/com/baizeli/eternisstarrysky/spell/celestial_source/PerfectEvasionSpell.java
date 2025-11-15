@@ -1,37 +1,36 @@
 package com.baizeli.eternisstarrysky.spell.celestial_source;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
-import com.baizeli.eternisstarrysky.effect.spell.ModEffect;
 import com.baizeli.eternisstarrysky.spell.SpellSchool;
+import com.baizeli.eternisstarrysky.effect.spell.ModEffect;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.spells.*;
 import io.redspace.ironsspellbooks.api.util.Utils;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.*;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.effect.MobEffectInstance;
 
 import java.util.List;
 
 @AutoSpellConfig
-public class IFlySpell extends AbstractSpell {
-    private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "i_fly");
+public class PerfectEvasionSpell extends AbstractSpell {
+    private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "perfect_evasion");
     private final DefaultConfig defaultConfig = new DefaultConfig()
         .setMinRarity(SpellRarity.COMMON)
         .setSchoolResource(SpellSchool.CELESTIAL_SOURCE_RESOURCE)
         .setMaxLevel(3)
-        .setCooldownSeconds(360.0F)
+        .setCooldownSeconds(600.0F)
         .build();
 
-    public IFlySpell() {
+    public PerfectEvasionSpell() {
         this.manaCostPerLevel = 100;
-        this.baseSpellPower = 180;
-        this.spellPowerPerLevel = 120;
-        this.castTime = 100;
+        this.baseSpellPower = 10;
+        this.spellPowerPerLevel = 5;
+        this.castTime = 120;
         this.baseManaCost = 900;
     }
 
@@ -60,31 +59,34 @@ public class IFlySpell extends AbstractSpell {
         return List.of(
             Component.translatable(
                 "ui.irons_spellbooks.effect_length", 
-                Utils.timeFromTicks(getDuration(spellLevel), 1)
-            )
+                Utils.timeFromTicks(getDurationInSeconds(spellLevel), 1)
+            ),
+            Component.translatable("ui.iron_spells_genesis.perfect_evasion.chance", 75)
         );
     }
 
-    private int getDuration(int spellLevel) {
+    private int getDurationInSeconds(int spellLevel) {
         return (180 + (spellLevel - 1) * 60) * 20;
     }
 
     @Override
     public int getCastTime(int spellLevel) {
-        return Math.max(20, 100 - (spellLevel - 1) * 20);
+        return Math.max(20, 120 - (spellLevel - 1) * 20);
     }
 
     @Override
     public void onCast(Level level, int spellLevel, LivingEntity entity, CastSource castSource, MagicData playerMagicData) {
-        if (entity instanceof Player player) {
+        if (!level.isClientSide && entity instanceof Player player) {
             player.addEffect(new MobEffectInstance(
-                ModEffect.I_FLY.get(), 
-                getDuration(spellLevel), 
+                ModEffect.PERFECT_EVASION.get(), 
+                getDurationInSeconds(spellLevel), 
                 0, 
                 false, 
                 false, 
                 true
             ));
-        } 
+        }
+
+        super.onCast(level, spellLevel, entity, castSource, playerMagicData);
     }
 }

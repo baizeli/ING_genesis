@@ -7,32 +7,31 @@ import io.redspace.ironsspellbooks.api.config.DefaultConfig;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.spells.*;
 import io.redspace.ironsspellbooks.api.util.Utils;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.*;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
 import java.util.List;
 
 @AutoSpellConfig
-public class IFlySpell extends AbstractSpell {
-    private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "i_fly");
+public class StellarSoulControlSpell extends AbstractSpell {
+    private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "stellar_soul_control");
     private final DefaultConfig defaultConfig = new DefaultConfig()
         .setMinRarity(SpellRarity.COMMON)
         .setSchoolResource(SpellSchool.CELESTIAL_SOURCE_RESOURCE)
         .setMaxLevel(3)
-        .setCooldownSeconds(360.0F)
+        .setCooldownSeconds(180.0F)
         .build();
 
-    public IFlySpell() {
+    public StellarSoulControlSpell() {
         this.manaCostPerLevel = 100;
-        this.baseSpellPower = 180;
-        this.spellPowerPerLevel = 120;
-        this.castTime = 100;
-        this.baseManaCost = 900;
+        this.baseSpellPower = 60;
+        this.spellPowerPerLevel = 5;
+        this.castTime = 20;
+        this.baseManaCost = 400;
     }
 
     @Override
@@ -57,34 +56,34 @@ public class IFlySpell extends AbstractSpell {
 
     @Override
     public List<MutableComponent> getUniqueInfo(int spellLevel, LivingEntity caster) {
+        int duration = getBuffDuration(spellLevel);
         return List.of(
             Component.translatable(
                 "ui.irons_spellbooks.effect_length", 
-                Utils.timeFromTicks(getDuration(spellLevel), 1)
+                Utils.timeFromTicks(duration, 1)
             )
         );
     }
 
-    private int getDuration(int spellLevel) {
-        return (180 + (spellLevel - 1) * 60) * 20;
-    }
-
-    @Override
-    public int getCastTime(int spellLevel) {
-        return Math.max(20, 100 - (spellLevel - 1) * 20);
+    private int getBuffDuration(int spellLevel) {
+        return 1200 + (spellLevel - 1) * 100;
     }
 
     @Override
     public void onCast(Level level, int spellLevel, LivingEntity entity, CastSource castSource, MagicData playerMagicData) {
-        if (entity instanceof Player player) {
+        if (!level.isClientSide && entity instanceof ServerPlayer player) {
+            int duration = getBuffDuration(spellLevel);
+
             player.addEffect(new MobEffectInstance(
-                ModEffect.I_FLY.get(), 
-                getDuration(spellLevel), 
-                0, 
-                false, 
-                false, 
+                ModEffect.STELLAR_SOUL_CONTROL.get(),
+                duration,
+                0,
+                false,
+                false,
                 true
             ));
-        } 
+        }
+
+        super.onCast(level, spellLevel, entity, castSource, playerMagicData);
     }
 }

@@ -22,5 +22,11 @@
     "sounds": [
       "iron_spells_genesis:generic/culinary"
     ]
+  },
+  "evasion": {
+    "sounds": [
+      "iron_spells_genesis:evasion"
+    ],
+    "subtitle": "subtitles.iron_spells_genesis.evasion"
   }
 }

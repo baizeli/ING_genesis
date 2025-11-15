@@ -17,11 +17,26 @@
   "spell.iron_spells_genesis.warped_barrier.guide": "将90%的生命值转化成伤害吸收",
   "spell.iron_spells_genesis.reverse_plague.guide": "将目标正面效果与自身负面效果进行交换，短时间禁止目标获得正面效果，阻止自身获得效果并转嫁负面效果",
   "spell.iron_spells_genesis.warped_blood_burst.low_health": "血量不足以释放扭曲之血爆！",
-  
+  "spell.iron_spells_genesis.siphon": "汲取",
+  "spell.iron_spells_genesis.blood_ritual": "祭血仪式",
+  "spell.iron_spells_genesis.blood_control": "驭血",
+
   "spell.iron_spells_genesis.i_fly": "我要飞",
   "spell.iron_spells_genesis.fate_wedge": "刻命之楔",
+  "spell.iron_spells_genesis.perfect_evasion": "完美闪避",
+  "spell.iron_spells_genesis.absolute_equality": "绝对平等",
+  "spell.iron_spells_genesis.myriad_arrows": "万箭",
+  "spell.iron_spells_genesis.life_and_death_realm": "生死之境",
+  "spell.iron_spells_genesis.stellar_soul_control": "星魂掌控",
+  "spell.iron_spells_genesis.blood_war": "血战",
 
+  "effect.iron_spells_genesis.i_fly": "我要飞",
   "effect.iron_spells_genesis.fate_wedge": "刻命之楔",
+  "effect.iron_spells_genesis.perfect_evasion": "完美闪避",
+  "effect.iron_spells_genesis.life_and_death_realm": "生死之境",
+  "effect.iron_spells_genesis.stellar_soul_control": "星魂掌控",
+  "effect.iron_spells_genesis.blood_war": "血战",
+  "effect.iron_spells_genesis.siphon": "汲取",
 
   "item.iron_spells_genesis.chaos_staff": "混沌法杖",
   "item.iron_spells_genesis.celestial_source_staff": "星源法杖",
@@ -63,11 +78,17 @@
   "death.attack.iron_spells_genesis.warped_blood_burst.item" : "%1$s的全身血液因为%2$s的%3$s爆炸了。",
 
   "ui.iron_spells_genesis.percent_force_damage": "百分比强制伤害：%d%%",
-  "ui.irons_spellbooks.damage_bonus": "伤害加成：%d%%",
-  "ui.irons_spellbooks.effect_length": "效果持续时间：%d",
   "ui.iron_spells_genesis.max_damage_bonus": "最大伤害加成：%d%%",
   "ui.iron_spells_genesis.health_cost_percent": "消耗生命值百分比：%d%%",
   "ui.iron_spells_genesis.health_conversion_efficiency": "生命值转伤害吸收效率：%d%%",
+  "ui.iron_spells_genesis.perfect_evasion.chance": "闪避概率：%d%%",
+  "ui.iron_spells_genesis.spell_power": "法术强度：%d%%",
+  "ui.iron_spells_genesis.movement_speed": "移动速度：%d%%",
+  "ui.iron_spells_genesis.absorption_healing": "吸收治疗：%d%%",
+  "ui.iron_spells_genesis.damage_multiplier": "伤害倍数：%d%%",
+  "ui.iron_spells_genesis.health_cost": "血量消耗：%d%%",
+
+  "subtitles.iron_spells_genesis.evasion": "完美闪避",
 
   "item.isMain": "§2在主手时：",
   "item.attDamage": " §2攻击伤害",

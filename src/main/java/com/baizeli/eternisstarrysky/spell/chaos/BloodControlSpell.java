@@ -7,32 +7,31 @@ import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.spells.*;
 import io.redspace.ironsspellbooks.api.util.Utils;
 import io.redspace.ironsspellbooks.capabilities.magic.TargetEntityCastData;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
+import io.redspace.ironsspellbooks.damage.DamageSources;
+import net.minecraft.network.chat.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
 
 import java.util.List;
 
 @AutoSpellConfig
-public class AmenofuwariSpell extends AbstractSpell {
-    private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "amenofuwari");
+public class BloodControlSpell extends AbstractSpell {
+    private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "blood_control");
     private final DefaultConfig defaultConfig = new DefaultConfig()
         .setMinRarity(SpellRarity.COMMON)
         .setSchoolResource(SpellSchool.CHAOS_RESOURCE)
         .setMaxLevel(3)
-        .setCooldownSeconds(15.0F)
+        .setCooldownSeconds(10.0F)
         .build();
 
-    public AmenofuwariSpell() {
-        this.manaCostPerLevel = 50;
-        this.baseSpellPower = 50;
-        this.spellPowerPerLevel = 10;
-        this.castTime = 60;
-        this.baseManaCost = 50;
+    public BloodControlSpell() {
+        this.manaCostPerLevel = 10;
+        this.baseSpellPower = 1;
+        this.spellPowerPerLevel = 1;
+        this.castTime = 0;
+        this.baseManaCost = 10;
     }
 
     @Override
@@ -47,7 +46,7 @@ public class AmenofuwariSpell extends AbstractSpell {
 
     @Override
     public CastType getCastType() {
-        return CastType.LONG;
+        return CastType.INSTANT;
     }
 
     @Override
@@ -59,25 +58,27 @@ public class AmenofuwariSpell extends AbstractSpell {
     public List<MutableComponent> getUniqueInfo(int spellLevel, LivingEntity caster) {
         return List.of(
             Component.translatable(
-                "ui.irons_spellbooks.distance", 
-                Utils.stringTruncation(getDistance(spellLevel, caster), 1)
+                "ui.iron_spells_genesis.damage_multiplier", 
+                Utils.stringTruncation(getDamageMultiplier(spellLevel), 1)
+            ),
+            Component.translatable(
+                "ui.iron_spells_genesis.health_cost",
+                Utils.stringTruncation(getHealthCostPercentage(spellLevel) * 100, 1)
             )
         );
     }
 
-    private float getDistance(int spellLevel, LivingEntity caster) {
-        return getSpellPower(spellLevel, caster);
+    private float getDamageMultiplier(int spellLevel) {
+        return getSpellPower(spellLevel, null);
     }
 
-    @Override
-    public int getCastTime(int spellLevel) {
-        return Math.max(20, 60 - (spellLevel - 1) * 20);
+    private float getHealthCostPercentage(int spellLevel) {
+        return 0.5f + (spellLevel - 1) * 0.1f;
     }
 
     @Override
     public boolean checkPreCastConditions(Level level, int spellLevel, LivingEntity entity, MagicData playerMagicData) {
-        float maxDistance = getDistance(spellLevel, entity);
-        return Utils.preCastTargetHelper(level, entity, playerMagicData, this, (int) Math.ceil(maxDistance), 0.1f);
+        return Utils.preCastTargetHelper(level, entity, playerMagicData, this, 16, 0.1f);
     }
 
     @Override
@@ -85,16 +86,19 @@ public class AmenofuwariSpell extends AbstractSpell {
         if (!level.isClientSide && playerMagicData.getAdditionalCastData() instanceof TargetEntityCastData targetData) {
             LivingEntity targetEntity = targetData.getTarget((ServerLevel) level);
             if (targetEntity != null) {
-                float maxDistance = getDistance(spellLevel, entity);
-                double distance = entity.distanceTo(targetEntity);
+                // 计算消耗的血量
+                float healthCostPercentage = getHealthCostPercentage(spellLevel);
+                float maxHealth = entity.getMaxHealth();
+                float healthToConsume = maxHealth * healthCostPercentage;
                 
-                if (distance <= maxDistance) {
-                    Vec3 casterPos = entity.position();
-                    Vec3 targetPos = targetEntity.position();
-                    
-                    entity.teleportTo(targetPos.x, targetPos.y, targetPos.z);
-                    targetEntity.teleportTo(casterPos.x, casterPos.y, casterPos.z);
-                }
+                entity.hurt(entity.damageSources().genericKill(), healthToConsume);
+                
+                // 计算伤害[消耗的血量和法术强度]
+                float damageMultiplier = getDamageMultiplier(spellLevel);
+                float damage = healthToConsume * damageMultiplier;
+                
+                // 对目标造成伤害
+                DamageSources.applyDamage(targetEntity, damage, this.getDamageSource(entity));
             }
         }
 

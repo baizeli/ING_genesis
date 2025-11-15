@@ -21,4 +21,7 @@ public class SoundsRegister {
             
     public static final RegistryObject<SoundEvent> CULINARY_CAST = SOUND_EVENTS.register("culinary",
             () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(EternisStarrySky.MOD_ID, "culinary")));
+
+    public static final RegistryObject<SoundEvent> EVASION = SOUND_EVENTS.register("evasion",
+            () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(EternisStarrySky.MOD_ID, "evasion")));
 }

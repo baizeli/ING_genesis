@@ -17,11 +17,26 @@
   "spell.iron_spells_genesis.warped_barrier.guide": "Convert 90% of health into Absorption.",
   "spell.iron_spells_genesis.reverse_plague.guide": "Exchange the target's positive effects with your own negative effects, temporarily preventing the target from gaining positive effects, halting your own effect acquisition, and transferring the negative effects.",
   "spell.iron_spells_genesis.warped_blood_burst.low_health": "Your health is too weak to unleash the Warped Blood Burst!",
-  
+  "spell.iron_spells_genesis.siphon": "Siphon",
+  "spell.iron_spells_genesis.blood_ritual": "Blood Ritual",
+  "spell.iron_spells_genesis.blood_control": "Blood Control",
+
   "spell.iron_spells_genesis.i_fly": "I Fly",
   "spell.iron_spells_genesis.fate_wedge": "Fate Wedge",
+  "spell.iron_spells_genesis.perfect_evasion": "Perfect Evasion",
+  "spell.iron_spells_genesis.absolute_equality": "Absolute Equality",
+  "spell.iron_spells_genesis.myriad_arrows": "Myriad Arrows",
+  "spell.iron_spells_genesis.life_and_death_realm": "Life And Death Realm",
+  "spell.iron_spells_genesis.stellar_soul_control": "Stellar Soul Control",
+  "spell.iron_spells_genesis.blood_war": "Blood War",
 
+  "effect.iron_spells_genesis.i_fly": "I Fly",
   "effect.iron_spells_genesis.fate_wedge": "Fate Wedge",
+  "effect.iron_spells_genesis.perfect_evasion": "Perfect Evasion",
+  "effect.iron_spells_genesis.life_and_death_realm": "Life And Death Realm",
+  "effect.iron_spells_genesis.stellar_soul_control": "Stellar Soul Control",
+  "effect.iron_spells_genesis.blood_war": "Blood War",
+  "effect.iron_spells_genesis.siphon": "Siphon",
 
   "item.iron_spells_genesis.chaos_staff": "Chaos Staff",
   "item.iron_spells_genesis.celestial_source_staff": "Celestial Source Staff",
@@ -63,12 +78,18 @@
   "death.attack.iron_spells_genesis.warped_blood_burst.item" : "The entire bloodstream of %1$s exploded due to %2$s's %3$s..",
 
   "ui.iron_spells_genesis.percent_force_damage": "Percent Force Damage：%d%%",
-  "ui.irons_spellbooks.damage_bonus": "Damage Bonus: %d%%",
-  "ui.irons_spellbooks.effect_length": "Effect Duration: %d",
   "ui.iron_spells_genesis.max_damage_bonus": "Max Damage Bonus: %d%%",
   "ui.iron_spells_genesis.health_cost_percent": "Health Cost Percent：%d%%",
   "ui.iron_spells_genesis.health_conversion_efficiency": "Health conversion efficiency：%d%%",
 
+  "ui.iron_spells_genesis.perfect_evasion.chance": "Evasion Chance: %d%%",
+  "ui.iron_spells_genesis.spell_power": "Spell Power: %d%%",
+  "ui.iron_spells_genesis.movement_speed": "Movement Speed: %d%%",
+  "ui.iron_spells_genesis.absorption_healing": "Absorption Healing: %d%%",
+  "ui.iron_spells_genesis.damage_multiplier": "Damage Multiplier: %d%%",
+  "ui.iron_spells_genesis.health_cost": "Health Cost: %d%%",
+
+  "subtitles.iron_spells_genesis.evasion": "Perfect Evasion",
 
   "item.isMain": "§2When in main hand:",
   "item.attDamage": " §2Attack Damage",

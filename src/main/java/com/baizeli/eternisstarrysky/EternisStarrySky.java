@@ -1,21 +1,28 @@
 package com.baizeli.eternisstarrysky;
 
+import com.baizeli.eternisstarrysky.Entity.NyanCatRenderer;
+import com.baizeli.eternisstarrysky.client.network.WireBoxSyncPacket;
+import com.baizeli.eternisstarrysky.client.renderer.EvasionAnimationRenderer;
+import com.baizeli.eternisstarrysky.fonts.FuckFont1;
+import io.redspace.ironsspellbooks.registries.CreativeTabRegistry;
+import io.redspace.ironsspellbooks.registries.ItemRegistry;
+import net.minecraft.client.Minecraft;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
+import net.minecraftforge.network.NetworkRegistry;
+import net.minecraftforge.network.simple.SimpleChannel;
+import com.baizeli.eternisstarrysky.client.particles.ModParticles;
+import org.slf4j.Logger;
+
 import com.baizeli.eternisstarrysky.Content.ModBlock;
 import com.baizeli.eternisstarrysky.Content.Workbenchs.*;
 import com.baizeli.eternisstarrysky.Entity.ModEntities;
 import com.baizeli.eternisstarrysky.Entity.SwordManCsdyRenderer;
 import com.baizeli.eternisstarrysky.Items.ModItems;
-import com.baizeli.eternisstarrysky.client.network.WireBoxSyncPacket;
-import com.baizeli.eternisstarrysky.client.particles.ModParticles;
 import com.baizeli.eternisstarrysky.effect.spell.ModEffect;
-import com.baizeli.eternisstarrysky.fonts.FuckFont1;
 import com.baizeli.eternisstarrysky.spell.Attributes;
 import com.baizeli.eternisstarrysky.spell.SpellSchool;
 import com.baizeli.eternisstarrysky.spell.Spells;
 import com.mojang.logging.LogUtils;
-import io.redspace.ironsspellbooks.registries.CreativeTabRegistry;
-import io.redspace.ironsspellbooks.registries.ItemRegistry;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.core.registries.Registries;
@@ -27,7 +34,6 @@ import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -37,12 +43,9 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
-import net.minecraftforge.network.NetworkRegistry;
-import net.minecraftforge.network.simple.SimpleChannel;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-import org.slf4j.Logger;
 
 @Mod(EternisStarrySky.MOD_ID)
 public class EternisStarrySky
@@ -208,6 +211,7 @@ public class EternisStarrySky
             event.enqueueWork(() -> {
                 MenuScreens.register(ModMenuTypes.VANILLA_WORKBENCH_MENU.get(), VanillaWorkbenchScreen::new);
                 EntityRenderers.register(ModEntities.SWORD_MAN_CSDY.get(), SwordManCsdyRenderer::new);
+                EntityRenderers.register(ModEntities.NYAN_CAT.get(), NyanCatRenderer::new);
             });
             MinecraftForge.registerConfigScreen(new ConfigurationFactory());
             Minecraft.getInstance().font = FuckFont1.font;
@@ -221,6 +225,13 @@ public class EternisStarrySky
                     WireBoxSyncPacket::decode,
                     WireBoxSyncPacket::handle
             );
+        }
+
+        @SubscribeEvent
+        public static void registerEvasionAnimationRenderer(FMLClientSetupEvent event) {
+            if (FMLEnvironment.dist == Dist.CLIENT) {
+                MinecraftForge.EVENT_BUS.register(EvasionAnimationRenderer.class);
+            }
         }
     }
 }
