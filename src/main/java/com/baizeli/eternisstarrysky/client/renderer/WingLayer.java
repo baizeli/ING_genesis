@@ -1,0 +1,103 @@
+package com.baizeli.eternisstarrysky.client.renderer;
+
+import com.baizeli.eternisstarrysky.EternisStarrySky;
+import com.baizeli.eternisstarrysky.client.model.WingModel;
+import com.baizeli.eternisstarrysky.effect.spell.ModEffect;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.model.PlayerModel;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.entity.LivingEntityRenderer;
+import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.EntityRenderersEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+
+import static com.baizeli.eternisstarrysky.EternisStarrySky.MODID;
+
+public class WingLayer extends RenderLayer<Player, PlayerModel<Player>> {
+    private static final ResourceLocation WING_TEXTURE = new ResourceLocation(MODID, "textures/models/armor/spell_wing.png");
+    private final WingModel wingModel;
+
+    public WingLayer(LivingEntityRenderer<Player, PlayerModel<Player>> renderer) {
+        super(renderer);
+        this.wingModel = new WingModel();
+    }
+
+    @Override
+    public void render(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight,
+                       Player player, float limbSwing, float limbSwingAmount, float partialTicks,
+                       float ageInTicks, float netHeadYaw, float headPitch) {
+
+        
+        if (shouldRenderWings(player)) {
+            poseStack.pushPose();
+
+            
+            adjustPoseForPlayerModel(poseStack, player);
+
+            
+            wingModel.setupAnim(player, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+
+
+
+            VertexConsumer vertexConsumer = bufferSource.getBuffer(RenderType.entityTranslucentEmissive(WING_TEXTURE));
+
+            
+            wingModel.renderToBuffer(poseStack, vertexConsumer, packedLight,
+                    OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+
+            poseStack.popPose();
+        }
+    }
+
+    private boolean shouldRenderWings(Player player) {
+        if (player.hasEffect(ModEffect.I_FLY.get())){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    private void adjustPoseForPlayerModel(PoseStack poseStack, Player player) {
+        
+        if (player.isCrouching()) {
+            poseStack.translate(0.0D, 0.25D, 0.0D); 
+        }
+
+        
+        float scale = 0.8F; 
+        poseStack.scale(scale, scale, scale);
+
+        
+        poseStack.translate(0.0D, -0.1D, 0.1D);
+    }
+
+    @Mod.EventBusSubscriber(modid = EternisStarrySky.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+    public class WingLayerRegistry {
+
+        @SubscribeEvent
+        public static void onAddLayers(EntityRenderersEvent.AddLayers event) {
+            
+            LivingEntityRenderer<Player, PlayerModel<Player>> defaultRenderer =
+                    (LivingEntityRenderer<Player, PlayerModel<Player>>) event.getSkin("default");
+
+            if (defaultRenderer != null) {
+                defaultRenderer.addLayer(new WingLayer(defaultRenderer));
+            }
+
+            
+            LivingEntityRenderer<Player, PlayerModel<Player>> slimRenderer =
+                    (LivingEntityRenderer<Player, PlayerModel<Player>>) event.getSkin("slim");
+
+            if (slimRenderer != null) {
+                slimRenderer.addLayer(new WingLayer(slimRenderer));
+            }
+        }
+    }
+}
