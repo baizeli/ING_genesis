@@ -2,7 +2,6 @@ package com.baizeli.eternisstarrysky;
 
 import com.baizeli.eternisstarrysky.Entity.NyanCatRenderer;
 import com.baizeli.eternisstarrysky.client.network.WireBoxSyncPacket;
-import com.baizeli.eternisstarrysky.client.renderer.EvasionAnimationRenderer;
 import com.baizeli.eternisstarrysky.fonts.FuckFont1;
 import io.redspace.ironsspellbooks.registries.CreativeTabRegistry;
 import io.redspace.ironsspellbooks.registries.ItemRegistry;
@@ -22,6 +21,7 @@ import com.baizeli.eternisstarrysky.spell.Attributes;
 import com.baizeli.eternisstarrysky.spell.SpellSchool;
 import com.baizeli.eternisstarrysky.spell.Spells;
 import com.baizeli.eternisstarrysky.effect.spell.ModEffect;
+import com.baizeli.eternisstarrysky.client.ClientEvent;
 import com.mojang.logging.LogUtils;
 
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -154,6 +154,9 @@ public class EternisStarrySky
         modEventBus.addListener(this::addToVanillaTabs); // 给自己的物品加到别人的标签栏里面
 
         MinecraftForge.EVENT_BUS.register(this);
+        
+        MinecraftForge.EVENT_BUS.register(ClientEvent.class);
+    
         context.registerConfig(ModConfig.Type.COMMON, Configuration.SPECIFICATION);
     }
 
@@ -226,13 +229,6 @@ public class EternisStarrySky
                     WireBoxSyncPacket::decode,
                     WireBoxSyncPacket::handle
             );
-        }
-
-        @SubscribeEvent
-        public static void registerEvasionAnimationRenderer(FMLClientSetupEvent event) {
-            if (FMLEnvironment.dist == Dist.CLIENT) {
-                MinecraftForge.EVENT_BUS.register(EvasionAnimationRenderer.class);
-            }
         }
     }
 }

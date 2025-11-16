@@ -6,6 +6,7 @@ import com.baizeli.eternisstarrysky.effect.spell.celestial_source.PerfectEvasion
 import com.baizeli.eternisstarrysky.effect.spell.celestial_source.IFlyEffect;
 import com.baizeli.eternisstarrysky.effect.spell.celestial_source.LifeAndDeathRealmEffect;
 import com.baizeli.eternisstarrysky.effect.spell.celestial_source.StellarSoulControlEffect;
+import com.baizeli.eternisstarrysky.effect.spell.celestial_source.UnparalleledEffect;
 import com.baizeli.eternisstarrysky.effect.spell.chaos.BloodWarEffect;
 import com.baizeli.eternisstarrysky.effect.spell.chaos.SiphonEffect;
 import net.minecraft.core.registries.Registries;
@@ -32,6 +33,9 @@ public class ModEffect {
         
     public static final RegistryObject<MobEffect> STELLAR_SOUL_CONTROL = 
         MOB_EFFECTS.register("stellar_soul_control", StellarSoulControlEffect::new);
+        
+    public static final RegistryObject<MobEffect> UNPARALLELED = 
+        MOB_EFFECTS.register("unparalleled", UnparalleledEffect::new);
         
     public static final RegistryObject<MobEffect> BLOOD_WAR = 
         MOB_EFFECTS.register("blood_war", BloodWarEffect::new);

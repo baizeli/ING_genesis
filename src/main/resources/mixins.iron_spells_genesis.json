@@ -5,6 +5,7 @@
 	"refmap": "iron_spells_genesis.refmap.json",
 	"mixins": [
 		"EntityMixin",
+		"FoodDataMixin",
 		"InfinitySwordDamageMixin",
 		"LivingEntityAccessor",
 		"LivingEntityMixin",
