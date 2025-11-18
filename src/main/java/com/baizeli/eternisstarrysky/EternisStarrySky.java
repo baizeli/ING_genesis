@@ -120,6 +120,9 @@ public class EternisStarrySky
 
                 // 神圣金属锭
                 output.accept(ModItems.DIVINE_METAL_INGOT.get());
+
+                // 扭曲混沌锭
+                output.accept(ModItems.TWISTED_CHAOS_INGOT.get());
             }).build());
 
     public EternisStarrySky(FMLJavaModLoadingContext context)
