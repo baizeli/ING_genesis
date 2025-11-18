@@ -1,20 +1,12 @@
 package com.baizeli.eternisstarrysky.effect.spell;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
-import com.baizeli.eternisstarrysky.effect.spell.celestial_source.FateWedgeEffect;
-import com.baizeli.eternisstarrysky.effect.spell.celestial_source.PerfectEvasionEffect;
-import com.baizeli.eternisstarrysky.effect.spell.celestial_source.IFlyEffect;
-import com.baizeli.eternisstarrysky.effect.spell.celestial_source.LifeAndDeathRealmEffect;
-import com.baizeli.eternisstarrysky.effect.spell.celestial_source.StellarSoulControlEffect;
-import com.baizeli.eternisstarrysky.effect.spell.celestial_source.UnparalleledEffect;
-import com.baizeli.eternisstarrysky.effect.spell.celestial_source.GlazedFlowerRainEffect;
-import com.baizeli.eternisstarrysky.effect.spell.chaos.BloodWarEffect;
-import com.baizeli.eternisstarrysky.effect.spell.chaos.SiphonEffect;
+import com.baizeli.eternisstarrysky.effect.spell.celestial_source.*;
+import com.baizeli.eternisstarrysky.effect.spell.chaos.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.RegistryObject;
+import net.minecraftforge.registries.*;
 
 public class ModEffect {
     public static final DeferredRegister<MobEffect> MOB_EFFECTS = 
@@ -46,6 +38,9 @@ public class ModEffect {
         
     public static final RegistryObject<MobEffect> SIPHON = 
         MOB_EFFECTS.register("siphon", SiphonEffect::new);
+        
+    public static final RegistryObject<MobEffect> BLOOD_FRENZY = 
+        MOB_EFFECTS.register("blood_frenzy", BloodFrenzyEffect::new);
         
     public static void register(IEventBus eventBus) {
         MOB_EFFECTS.register(eventBus);
