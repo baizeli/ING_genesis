@@ -3,6 +3,7 @@ package com.baizeli.eternisstarrysky.effect.spell.celestial_source;
 import com.baizeli.eternisstarrysky.EternisStarrySky;
 import net.minecraft.world.effect.*;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.player.Player;
 
 public class UnparalleledEffect extends MobEffect {
@@ -30,7 +31,7 @@ public class UnparalleledEffect extends MobEffect {
     }
     
     @Override
-    public void removeAttributeModifiers(LivingEntity entity, net.minecraft.world.entity.ai.attributes.AttributeMap attributeMap, int amplifier) {
+    public void removeAttributeModifiers(LivingEntity entity, AttributeMap attributeMap, int amplifier) {
         super.removeAttributeModifiers(entity, attributeMap, amplifier);
         if (entity instanceof Player) {
             Player player = (Player) entity;
