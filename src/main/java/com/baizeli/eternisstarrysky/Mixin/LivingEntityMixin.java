@@ -1,10 +1,10 @@
-package com.baizeli.eternisstarrysky.Mixin;
+package com.baizeli.eternisstarrysky.mixin;
 
-import com.baizeli.eternisstarrysky.AvaritiaKill;
-import com.baizeli.eternisstarrysky.AvaritiaLivingEntity;
 import com.baizeli.eternisstarrysky.effect.spell.ModEffect;
+import com.baizeli.eternisstarrysky.sound.SoundsRegister;
+import com.baizeli.eternisstarrysky.util.AvaritiaKill;
+import com.baizeli.eternisstarrysky.util.AvaritiaLivingEntity;
 import com.baizeli.eternisstarrysky.client.renderer.EvasionAnimationRenderer;
-import com.baizeli.eternisstarrysky.SoundsRegister;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;

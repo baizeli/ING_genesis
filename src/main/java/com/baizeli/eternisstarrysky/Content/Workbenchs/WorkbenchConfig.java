@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky.Content.Workbenchs;
+package com.baizeli.eternisstarrysky.content.Workbenchs;
 
 public class WorkbenchConfig {
     public static final int GRID_SIZE = 9;

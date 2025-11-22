@@ -1,4 +1,4 @@
-package com.baizeli;
+package com.baizeli.eternisstarrysky.sound;
 
 import net.minecraft.core.Holder;
 import net.minecraft.network.protocol.game.ClientboundSoundPacket;

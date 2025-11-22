@@ -1,7 +1,7 @@
-package com.baizeli.eternisstarrysky.Entity;
+package com.baizeli.eternisstarrysky.entity;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
-import com.baizeli.eternisstarrysky.SoundsRegister;
+import com.baizeli.eternisstarrysky.sound.SoundsRegister;
 import com.google.common.base.Suppliers;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;

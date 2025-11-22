@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky.Entity;
+package com.baizeli.eternisstarrysky.entity;
 
 import javax.annotation.Nullable;
 

@@ -3,7 +3,7 @@
 // (powered by FernFlower decompiler)
 //
 
-package com.baizeli.eternisstarrysky.Util;
+package com.baizeli.eternisstarrysky.util;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;

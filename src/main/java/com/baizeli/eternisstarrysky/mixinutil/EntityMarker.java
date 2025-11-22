@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky;
+package com.baizeli.eternisstarrysky.mixinutil;
 
 import net.minecraft.world.entity.Entity;
 

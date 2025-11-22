@@ -1,5 +1,4 @@
-package com.baizeli.eternisstarrysky.Mixin;
-import com.baizeli.eternisstarrysky.Items.ModItems;
+package com.baizeli.eternisstarrysky.mixin;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.event.RenderTooltipEvent;
 import org.spongepowered.asm.mixin.Mixin;
@@ -7,6 +6,7 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import com.baizeli.eternisstarrysky.items.ModItems;
 
 @Mixin(RenderTooltipEvent.Color.class)
 public abstract class TooltipColorMixin {

@@ -1,14 +1,14 @@
 //很美味的蛋糕🍰，太美味了🥰🥰🥰，太好吃了😋😋😋，太棒了👍🏻👍🏻👍🏻，我非常喜欢吃😋😋😋
-package com.baizeli.eternisstarrysky.Items;
+package com.baizeli.eternisstarrysky.items;
 
-import com.baizeli.eternisstarrysky.RainbowEffectHelper;
 import net.minecraft.world.item.*;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.level.Level;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
-import com.baizeli.eternisstarrysky.Entity.SwordManCsdy;
+import com.baizeli.eternisstarrysky.entity.SwordManCsdy;
+import com.baizeli.eternisstarrysky.util.RainbowEffectHelper;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;

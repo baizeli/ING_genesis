@@ -1,6 +1,6 @@
-package com.baizeli.eternisstarrysky.Render;
+package com.baizeli.eternisstarrysky.render;
 
-import com.baizeli.eternisstarrysky.CosmicRender.AvaritiaShaders;
+import com.baizeli.eternisstarrysky.cosmicRender.AvaritiaShaders;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.client.renderer.RenderType;

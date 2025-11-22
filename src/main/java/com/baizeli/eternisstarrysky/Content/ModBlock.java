@@ -1,7 +1,7 @@
-package com.baizeli.eternisstarrysky.Content;
+package com.baizeli.eternisstarrysky.content;
 
-import com.baizeli.eternisstarrysky.Content.Workbenchs.VanillaWorkbenchBlock;
 import com.baizeli.eternisstarrysky.EternisStarrySky;
+import com.baizeli.eternisstarrysky.content.Workbenchs.VanillaWorkbenchBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;

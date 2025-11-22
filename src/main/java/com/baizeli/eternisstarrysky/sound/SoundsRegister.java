@@ -1,5 +1,6 @@
-package com.baizeli.eternisstarrysky;
+package com.baizeli.eternisstarrysky.sound;
 
+import com.baizeli.eternisstarrysky.EternisStarrySky;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraftforge.registries.DeferredRegister;
