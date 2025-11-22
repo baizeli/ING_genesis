@@ -12,7 +12,6 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = EternisStarrySky.MODID)
 public class LifeAndDeathRealmEvent {
 
-    // 施法者是否被替死的标记
     private static boolean playerHasBeenSacrificed = false;
 
     @SubscribeEvent
