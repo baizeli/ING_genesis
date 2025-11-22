@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky.cosmicRender;
+package com.baizeli.eternisstarrysky.CosmicRender;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;

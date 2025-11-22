@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky.items;
+package com.baizeli.eternisstarrysky.Items;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
 import net.minecraft.resources.ResourceLocation;

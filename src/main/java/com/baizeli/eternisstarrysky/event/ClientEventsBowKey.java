@@ -1,14 +1,13 @@
 package com.baizeli.eternisstarrysky.event;
 
+import com.baizeli.eternisstarrysky.EternisStarrySky;
+import com.baizeli.eternisstarrysky.network.BowTypePacket;
+import com.baizeli.eternisstarrysky.network.NetworkHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import com.baizeli.eternisstarrysky.EternisStarrySky;
-import com.baizeli.eternisstarrysky.items.NewBowItem;
-import com.baizeli.eternisstarrysky.network.BowTypePacket;
-import com.baizeli.eternisstarrysky.network.NetworkHandler;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = EternisStarrySky.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
@@ -23,7 +22,7 @@ public class ClientEventsBowKey {
         {
             BowType = !BowType;
             Minecraft mc = Minecraft.getInstance();
-            if (mc.player != null && mc.player.getMainHandItem().getItem() instanceof com.baizeli.eternisstarrysky.items.NewBowItem)
+            if (mc.player != null && mc.player.getMainHandItem().getItem() instanceof com.baizeli.eternisstarrysky.Items.NewBowItem)
             {
                 String message = BowType ? "已切换：追踪箭矢" : "已切换：箭雨箭矢";
                 mc.player.displayClientMessage(Component.literal(message), true);

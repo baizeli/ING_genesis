@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky.items;
+package com.baizeli.eternisstarrysky.Items;
 
 import com.baizeli.eternisstarrysky.config.ConfigEffect;
 import com.baizeli.eternisstarrysky.config.Configuration;

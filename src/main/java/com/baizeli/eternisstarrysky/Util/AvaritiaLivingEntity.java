@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky.util;
+package com.baizeli.eternisstarrysky.Util;
 
 import com.baizeli.eternisstarrysky.deobf.ObfuscationMap;
 import net.minecraft.world.damagesource.DamageSource;

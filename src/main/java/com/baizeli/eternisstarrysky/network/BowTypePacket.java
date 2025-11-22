@@ -3,7 +3,6 @@ package com.baizeli.eternisstarrysky.network;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
-import net.minecraft.world.item.ItemStack;
 
 import java.util.function.Supplier;
 

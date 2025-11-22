@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky.items;
+package com.baizeli.eternisstarrysky.Items;
 
 import com.baizeli.eternisstarrysky.fonts.FuckFont1;
 import com.baizeli.eternisstarrysky.spell.Attributes;

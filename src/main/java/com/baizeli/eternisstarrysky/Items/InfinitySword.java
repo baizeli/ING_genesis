@@ -1,5 +1,6 @@
-package com.baizeli.eternisstarrysky.items;
+package com.baizeli.eternisstarrysky.Items;
 
+import com.baizeli.eternisstarrysky.sound.Sounds;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -24,7 +25,6 @@ import net.minecraft.world.phys.Vec3;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Predicate;
-import com.baizeli.eternisstarrysky.sound.Sounds;
 
 public class InfinitySword extends SwordItem
 {

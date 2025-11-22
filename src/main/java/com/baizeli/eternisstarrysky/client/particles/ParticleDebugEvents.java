@@ -1,39 +1,28 @@
 package com.baizeli.eternisstarrysky.client.particles;
 
+import com.baizeli.eternisstarrysky.Entity.ModEntities;
+import com.baizeli.eternisstarrysky.Entity.NyanCat;
 import com.baizeli.eternisstarrysky.EternisStarrySky;
-import com.baizeli.eternisstarrysky.entity.ModEntities;
-import com.baizeli.eternisstarrysky.entity.NyanCat;
-import com.baizeli.eternisstarrysky.render.ModShaderInstance;
-import com.baizeli.eternisstarrysky.render.ModShaders;
-import com.mojang.blaze3d.pipeline.RenderTarget;
+import com.baizeli.eternisstarrysky.Render.ModShaders;
 import com.mojang.blaze3d.pipeline.TextureTarget;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.*;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GameRenderer;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.texture.AbstractTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RegisterShadersEvent;
-import net.minecraftforge.client.event.RenderLevelStageEvent;
-import net.minecraftforge.client.event.RenderLivingEvent;
-import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import org.joml.Matrix4f;
 
 import static com.baizeli.eternisstarrysky.EternisStarrySky.MODID;
-import static com.baizeli.eternisstarrysky.items.ModItems.INFINITY_SWORD;
-import static com.mojang.blaze3d.platform.GlConst.GL_COLOR_BUFFER_BIT;
-import static com.mojang.blaze3d.platform.GlConst.GL_NEAREST;
+import static com.baizeli.eternisstarrysky.Items.ModItems.INFINITY_SWORD;
 
 @Mod.EventBusSubscriber(modid = EternisStarrySky.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class ParticleDebugEvents {

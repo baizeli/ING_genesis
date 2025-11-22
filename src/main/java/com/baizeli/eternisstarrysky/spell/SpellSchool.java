@@ -1,8 +1,8 @@
 package com.baizeli.eternisstarrysky.spell;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
-import com.baizeli.eternisstarrysky.SoundsRegister;
 import com.baizeli.eternisstarrysky.damage.DamageTypes;
+import com.baizeli.eternisstarrysky.sound.SoundsRegister;
 import io.redspace.ironsspellbooks.api.registry.SchoolRegistry;
 import io.redspace.ironsspellbooks.api.spells.SchoolType;
 import io.redspace.ironsspellbooks.damage.ISSDamageTypes;
@@ -52,7 +52,7 @@ public class SpellSchool {
                 ).withStyle(ChatFormatting.DARK_RED), 
                 Attributes.CHAOS_SPELL_POWER, 
                 Attributes.CHAOS_MAGIC_RESIST, 
-                SoundsRegister.CHAOS_CAST, 
+                SoundsRegister.CHAOS_CAST,
                 DamageTypes.CHAOS_MAGIC
             )
         );

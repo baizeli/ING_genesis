@@ -1,5 +1,6 @@
-package com.baizeli.eternisstarrysky.mixin;
+package com.baizeli.eternisstarrysky.Mixin;
 
+import com.baizeli.eternisstarrysky.Items.AvaritiaSword;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
@@ -13,7 +14,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import com.baizeli.eternisstarrysky.items.AvaritiaSword;
 
 @Mixin(LivingEntity.class)
 public class InfinitySwordDamageMixin {

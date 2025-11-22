@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky.content.Workbenchs;
+package com.baizeli.eternisstarrysky.Content.Workbenchs;
 
 import mezz.jei.common.gui.elements.DrawableNineSliceTexture;
 import mezz.jei.common.util.ImmutableRect2i;

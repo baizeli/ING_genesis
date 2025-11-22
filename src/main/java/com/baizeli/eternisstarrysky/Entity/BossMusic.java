@@ -1,6 +1,4 @@
-package com.baizeli.eternisstarrysky.entity;
-
-import javax.annotation.Nullable;
+package com.baizeli.eternisstarrysky.Entity;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.sounds.AbstractTickableSoundInstance;
@@ -9,6 +7,8 @@ import net.minecraft.client.sounds.SoundEngine;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+
+import javax.annotation.Nullable;
 
 public class BossMusic extends AbstractTickableSoundInstance {
     BossEntity boss;

@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky.render;
+package com.baizeli.eternisstarrysky.Render;
 /**
  * The code of this mod element is always locked.
  *

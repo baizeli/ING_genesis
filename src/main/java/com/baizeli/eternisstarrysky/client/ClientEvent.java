@@ -1,10 +1,12 @@
 package com.baizeli.eternisstarrysky.client;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
-import com.baizeli.eternisstarrysky.client.renderer.*;
+import com.baizeli.eternisstarrysky.client.renderer.AfterImageManager;
+import com.baizeli.eternisstarrysky.client.renderer.AfterImageRenderer;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.*;
+import net.minecraft.client.Camera;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.event.TickEvent;

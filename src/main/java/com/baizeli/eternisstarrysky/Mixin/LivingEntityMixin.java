@@ -1,26 +1,24 @@
-package com.baizeli.eternisstarrysky.mixin;
+package com.baizeli.eternisstarrysky.Mixin;
 
+import com.baizeli.eternisstarrysky.Util.AvaritiaKill;
+import com.baizeli.eternisstarrysky.Util.AvaritiaLivingEntity;
+import com.baizeli.eternisstarrysky.client.renderer.EvasionAnimationRenderer;
 import com.baizeli.eternisstarrysky.effect.spell.ModEffect;
 import com.baizeli.eternisstarrysky.sound.SoundsRegister;
-import com.baizeli.eternisstarrysky.util.AvaritiaKill;
-import com.baizeli.eternisstarrysky.util.AvaritiaLivingEntity;
-import com.baizeli.eternisstarrysky.client.renderer.EvasionAnimationRenderer;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.sounds.SoundSource;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.common.Tags;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.*;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.Set;
 import java.util.Random;
 
 @Mixin(LivingEntity.class)

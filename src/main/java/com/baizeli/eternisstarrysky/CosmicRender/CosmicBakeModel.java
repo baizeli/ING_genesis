@@ -1,8 +1,7 @@
-package com.baizeli.eternisstarrysky.cosmicRender;
+package com.baizeli.eternisstarrysky.CosmicRender;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
-import com.baizeli.eternisstarrysky.items.AvaritiaSword;
-import com.baizeli.eternisstarrysky.items.ModItems;
+import com.baizeli.eternisstarrysky.Items.ModItems;
 import com.google.common.collect.ImmutableMap;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -31,12 +30,7 @@ import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public final class CosmicBakeModel implements BakedModel {
     private static final ItemModelGenerator ITEM_MODEL_GENERATOR = new ItemModelGenerator();

@@ -2,7 +2,7 @@ package com.baizeli.eternisstarrysky.fonts;
 
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.font.GlyphInfo;
-import com.mojang.blaze3d.vertex.*;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;

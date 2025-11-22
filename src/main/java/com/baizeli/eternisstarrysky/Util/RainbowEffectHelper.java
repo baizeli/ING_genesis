@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky.util;
+package com.baizeli.eternisstarrysky.Util;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;

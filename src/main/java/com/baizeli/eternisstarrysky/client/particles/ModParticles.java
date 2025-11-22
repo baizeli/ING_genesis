@@ -1,7 +1,6 @@
 package com.baizeli.eternisstarrysky.client.particles;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
-import com.mojang.serialization.Codec;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;

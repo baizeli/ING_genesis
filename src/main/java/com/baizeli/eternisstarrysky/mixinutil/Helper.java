@@ -1,6 +1,6 @@
 package com.baizeli.eternisstarrysky.mixinutil;
 
-import com.baizeli.eternisstarrysky.items.WeaponRenderConfig;
+import com.baizeli.eternisstarrysky.Items.WeaponRenderConfig;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 

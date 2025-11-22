@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky.cosmicRender;
+package com.baizeli.eternisstarrysky.CosmicRender;
 
 import com.mojang.blaze3d.shaders.Uniform;
 import org.jetbrains.annotations.Nullable;

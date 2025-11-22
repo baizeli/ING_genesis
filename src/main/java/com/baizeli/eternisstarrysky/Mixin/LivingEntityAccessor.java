@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky.mixin;
+package com.baizeli.eternisstarrysky.Mixin;
 
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;

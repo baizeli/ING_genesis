@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky.cosmicRender;
+package com.baizeli.eternisstarrysky.CosmicRender;
 
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;

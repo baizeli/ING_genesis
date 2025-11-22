@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky.util;
+package com.baizeli.eternisstarrysky.Util;
 
 import net.minecraft.world.phys.Vec3;
 

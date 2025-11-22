@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky.content.Workbenchs;
+package com.baizeli.eternisstarrysky.Content.Workbenchs;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
 import net.minecraft.client.gui.GuiGraphics;
