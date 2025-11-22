@@ -12,7 +12,7 @@
  *
  * This class will be added in the mod root package.
  */
-package com.baizeli.eternisstarrysky.Render;
+package com.baizeli.eternisstarrysky.render;
 
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.VertexFormat;

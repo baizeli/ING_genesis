@@ -1,7 +1,7 @@
 package com.baizeli.eternisstarrysky.config.menu;
 
-import com.baizeli.eternisstarrysky.Configuration;
 import com.baizeli.eternisstarrysky.config.ConfigEffect;
+import com.baizeli.eternisstarrysky.config.Configuration;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;

@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky;
+package com.baizeli.eternisstarrysky.config;
 
 import com.baizeli.eternisstarrysky.config.menu.ConfigMenu;
 import net.minecraft.client.Minecraft;

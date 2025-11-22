@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky.Entity;
+package com.baizeli.eternisstarrysky.entity;
 
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;

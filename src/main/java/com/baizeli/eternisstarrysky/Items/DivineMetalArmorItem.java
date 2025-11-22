@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky.Items;
+package com.baizeli.eternisstarrysky.items;
 
 import io.redspace.ironsspellbooks.item.armor.*;
 import io.redspace.ironsspellbooks.entity.armor.*;

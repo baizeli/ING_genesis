@@ -1,7 +1,7 @@
-package com.baizeli.eternisstarrysky.Mixin;
+package com.baizeli.eternisstarrysky.mixin;
 
-import com.baizeli.eternisstarrysky.Helper;
-import com.baizeli.eternisstarrysky.Items.WeaponRenderConfig;
+import com.baizeli.eternisstarrysky.items.WeaponRenderConfig;
+import com.baizeli.eternisstarrysky.mixinutil.Helper;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;

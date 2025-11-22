@@ -1,4 +1,4 @@
-package com.baizeli;
+package com.baizeli.eternisstarrysky.config;
 
 import java.text.MessageFormat;
 

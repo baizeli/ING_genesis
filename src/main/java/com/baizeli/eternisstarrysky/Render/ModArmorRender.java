@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky.Render;
+package com.baizeli.eternisstarrysky.render;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;

@@ -1,10 +1,10 @@
 package com.baizeli.eternisstarrysky.client.particles;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
-import com.baizeli.eternisstarrysky.Entity.ModEntities;
-import com.baizeli.eternisstarrysky.Entity.NyanCat;
-import com.baizeli.eternisstarrysky.Render.ModShaderInstance;
-import com.baizeli.eternisstarrysky.Render.ModShaders;
+import com.baizeli.eternisstarrysky.entity.ModEntities;
+import com.baizeli.eternisstarrysky.entity.NyanCat;
+import com.baizeli.eternisstarrysky.render.ModShaderInstance;
+import com.baizeli.eternisstarrysky.render.ModShaders;
 import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.pipeline.TextureTarget;
 import com.mojang.blaze3d.platform.GlStateManager;
@@ -31,7 +31,7 @@ import net.minecraftforge.fml.common.Mod;
 import org.joml.Matrix4f;
 
 import static com.baizeli.eternisstarrysky.EternisStarrySky.MODID;
-import static com.baizeli.eternisstarrysky.Items.ModItems.INFINITY_SWORD;
+import static com.baizeli.eternisstarrysky.items.ModItems.INFINITY_SWORD;
 import static com.mojang.blaze3d.platform.GlConst.GL_COLOR_BUFFER_BIT;
 import static com.mojang.blaze3d.platform.GlConst.GL_NEAREST;
 

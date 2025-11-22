@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky.Content.Workbenchs;
+package com.baizeli.eternisstarrysky.content.Workbenchs;
 
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.items.IItemHandler;
