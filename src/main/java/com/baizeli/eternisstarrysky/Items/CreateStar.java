@@ -1,6 +1,6 @@
-package com.baizeli.eternisstarrysky.items;
+package com.baizeli.eternisstarrysky.Items;
 
-import com.baizeli.eternisstarrysky.util.RainbowEffectHelper;
+import com.baizeli.eternisstarrysky.Util.RainbowEffectHelper;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;

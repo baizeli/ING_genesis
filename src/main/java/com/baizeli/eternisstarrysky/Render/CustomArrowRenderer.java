@@ -1,7 +1,7 @@
-package com.baizeli.eternisstarrysky.render;
+package com.baizeli.eternisstarrysky.Render;
 
+import com.baizeli.eternisstarrysky.Entity.CustomArrowEntity;
 import com.baizeli.eternisstarrysky.EternisStarrySky;
-import com.baizeli.eternisstarrysky.entity.CustomArrowEntity;
 import net.minecraft.client.renderer.entity.ArrowRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;

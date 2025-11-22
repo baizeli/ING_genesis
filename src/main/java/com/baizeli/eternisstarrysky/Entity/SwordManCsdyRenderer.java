@@ -1,7 +1,7 @@
-package com.baizeli.eternisstarrysky.entity;
+package com.baizeli.eternisstarrysky.Entity;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
-import com.baizeli.eternisstarrysky.render.FFRenderTypes;
+import com.baizeli.eternisstarrysky.Render.FFRenderTypes;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;

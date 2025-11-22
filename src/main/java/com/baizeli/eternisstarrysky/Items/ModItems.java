@@ -1,13 +1,13 @@
-package com.baizeli.eternisstarrysky.items;
+package com.baizeli.eternisstarrysky.Items;
 
+import com.baizeli.eternisstarrysky.Content.ModBlock;
 import com.baizeli.eternisstarrysky.EternisStarrySky;
-import com.baizeli.eternisstarrysky.content.ModBlock;
-import com.baizeli.eternisstarrysky.items.staff.CelestialSourceStaff;
-import com.baizeli.eternisstarrysky.items.staff.ChaosStaff;
+import com.baizeli.eternisstarrysky.Items.Staff.CelestialSourceStaff;
+import com.baizeli.eternisstarrysky.Items.Staff.ChaosStaff;
 import com.baizeli.eternisstarrysky.spell.UpgradeOrbTypes;
 import io.redspace.ironsspellbooks.item.UpgradeOrbItem;
-import io.redspace.ironsspellbooks.util.ItemPropertiesHelper;
 import io.redspace.ironsspellbooks.item.armor.IronsExtendedArmorMaterial;
+import io.redspace.ironsspellbooks.util.ItemPropertiesHelper;
 import net.minecraft.world.item.*;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;

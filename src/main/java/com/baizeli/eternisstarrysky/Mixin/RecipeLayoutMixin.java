@@ -1,5 +1,7 @@
-package com.baizeli.eternisstarrysky.mixin;
+package com.baizeli.eternisstarrysky.Mixin;
 
+import com.baizeli.eternisstarrysky.Content.Workbenchs.VanillaWorkbenchRecipeCategory;
+import com.baizeli.eternisstarrysky.Content.Workbenchs.VoidTexture;
 import mezz.jei.api.gui.drawable.IScalableDrawable;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.category.IRecipeCategory;
@@ -14,8 +16,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import com.baizeli.eternisstarrysky.content.Workbenchs.VanillaWorkbenchRecipeCategory;
-import com.baizeli.eternisstarrysky.content.Workbenchs.VoidTexture;
+
 import java.util.Collection;
 import java.util.List;
 

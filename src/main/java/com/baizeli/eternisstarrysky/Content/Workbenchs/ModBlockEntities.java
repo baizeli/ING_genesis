@@ -1,7 +1,7 @@
-package com.baizeli.eternisstarrysky.content.Workbenchs;
+package com.baizeli.eternisstarrysky.Content.Workbenchs;
 
+import com.baizeli.eternisstarrysky.Content.ModBlock;
 import com.baizeli.eternisstarrysky.EternisStarrySky;
-import com.baizeli.eternisstarrysky.content.ModBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;

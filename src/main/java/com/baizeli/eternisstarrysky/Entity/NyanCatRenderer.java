@@ -1,8 +1,6 @@
-package com.baizeli.eternisstarrysky.entity;
+package com.baizeli.eternisstarrysky.Entity;
 
-import com.baizeli.eternisstarrysky.EternisStarrySky;
-import com.baizeli.eternisstarrysky.render.FFRenderTypes;
-import com.baizeli.eternisstarrysky.render.ModShaders;
+import com.baizeli.eternisstarrysky.Render.ModShaders;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -22,8 +20,6 @@ import net.minecraft.world.entity.animal.Cat;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
-
-import java.util.Arrays;
 
 
 

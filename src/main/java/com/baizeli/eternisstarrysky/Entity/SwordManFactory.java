@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky.entity;
+package com.baizeli.eternisstarrysky.Entity;
 
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;

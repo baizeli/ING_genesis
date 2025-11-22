@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky.render;
+package com.baizeli.eternisstarrysky.Render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -14,8 +14,6 @@ import net.minecraft.world.entity.LightningBolt;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.joml.Matrix4f;
-
-import java.awt.*;
 
 @OnlyIn(Dist.CLIENT)
 public class PurpleLightningRenderer extends EntityRenderer<LightningBolt> {

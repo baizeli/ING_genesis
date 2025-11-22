@@ -1,44 +1,26 @@
 package com.baizeli.eternisstarrysky;
 
+import com.baizeli.eternisstarrysky.Content.ModBlock;
+import com.baizeli.eternisstarrysky.Content.Workbenchs.*;
 import com.baizeli.eternisstarrysky.Entity.*;
-import com.baizeli.eternisstarrysky.client.network.WireBoxSyncPacket;
-import com.baizeli.eternisstarrysky.fonts.FuckFont1;
-import com.baizeli.eternisstarrysky.items.ModItems;
-import com.baizeli.eternisstarrysky.network.NetworkHandler;
-import com.baizeli.eternisstarrysky.network.WireBoxSyncPacket;
-import com.baizeli.eternisstarrysky.sound.SoundsRegister;
-import io.redspace.ironsspellbooks.registries.CreativeTabRegistry;
-import io.redspace.ironsspellbooks.registries.ItemRegistry;
-import net.minecraft.client.Minecraft;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.registries.RegistriesDatapackGenerator;
-import net.minecraftforge.data.event.GatherDataEvent;
-import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
-import net.minecraftforge.network.NetworkRegistry;
-import net.minecraftforge.network.simple.SimpleChannel;
+import com.baizeli.eternisstarrysky.Items.ModItems;
+import com.baizeli.eternisstarrysky.client.ClientEvent;
 import com.baizeli.eternisstarrysky.client.particles.ModParticles;
 import com.baizeli.eternisstarrysky.config.Configuration;
 import com.baizeli.eternisstarrysky.config.ConfigurationFactory;
-import com.baizeli.eternisstarrysky.content.ModBlock;
-import com.baizeli.eternisstarrysky.content.Workbenchs.*;
-import org.slf4j.Logger;
-
-import com.baizeli.eternisstarrysky.Content.ModBlock;
-import com.baizeli.eternisstarrysky.Content.Workbenchs.*;
-import com.baizeli.eternisstarrysky.Items.ModItems;
 import com.baizeli.eternisstarrysky.effect.spell.ModEffect;
+import com.baizeli.eternisstarrysky.event.ModKeyBindings;
+import com.baizeli.eternisstarrysky.fonts.FuckFont1;
+import com.baizeli.eternisstarrysky.network.NetworkHandler;
+import com.baizeli.eternisstarrysky.network.WireBoxSyncPacket;
+import com.baizeli.eternisstarrysky.sound.SoundsRegister;
 import com.baizeli.eternisstarrysky.spell.Attributes;
 import com.baizeli.eternisstarrysky.spell.SpellSchool;
 import com.baizeli.eternisstarrysky.spell.Spells;
-import com.baizeli.eternisstarrysky.effect.spell.ModEffect;
-import com.baizeli.eternisstarrysky.entity.ModEntities;
-import com.baizeli.eternisstarrysky.entity.NyanCatRenderer;
-import com.baizeli.eternisstarrysky.entity.SwordManCsdyRenderer;
-import com.baizeli.eternisstarrysky.event.ModKeyBindings;
-import com.baizeli.eternisstarrysky.client.ClientEvent;
 import com.mojang.logging.LogUtils;
-
+import io.redspace.ironsspellbooks.registries.CreativeTabRegistry;
+import io.redspace.ironsspellbooks.registries.ItemRegistry;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.core.registries.Registries;
@@ -50,6 +32,7 @@ import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -59,11 +42,12 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
+import net.minecraftforge.network.NetworkRegistry;
+import net.minecraftforge.network.simple.SimpleChannel;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
-
-import java.util.concurrent.CompletableFuture;
+import org.slf4j.Logger;
 
 @Mod(EternisStarrySky.MOD_ID)
 public class EternisStarrySky

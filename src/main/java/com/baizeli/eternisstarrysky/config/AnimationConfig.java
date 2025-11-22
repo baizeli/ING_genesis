@@ -1,6 +1,8 @@
 package com.baizeli.eternisstarrysky.config;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.Properties;
 
 public class AnimationConfig {

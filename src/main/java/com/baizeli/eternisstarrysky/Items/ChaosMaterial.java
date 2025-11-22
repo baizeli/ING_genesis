@@ -1,6 +1,6 @@
-package com.baizeli.eternisstarrysky.items;
+package com.baizeli.eternisstarrysky.Items;
 
-import net.minecraft.world.item.*;
+import net.minecraft.world.item.Item;
 
 public class ChaosMaterial extends Item {
     

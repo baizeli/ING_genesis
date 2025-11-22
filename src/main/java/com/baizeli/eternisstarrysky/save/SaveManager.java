@@ -2,7 +2,7 @@ package com.baizeli.eternisstarrysky.save;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
 import com.baizeli.eternisstarrysky.client.WireBoxRenderer;
-import com.baizeli.eternisstarrysky.client.network.WireBoxSyncPacket;
+import com.baizeli.eternisstarrysky.network.WireBoxSyncPacket;
 import com.baizeli.eternisstarrysky.spell.chaos.ReversePlagueSpell;
 import com.google.gson.*;
 import net.minecraft.core.Direction;

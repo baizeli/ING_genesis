@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky.util;
+package com.baizeli.eternisstarrysky.Util;
 
 public class MathUtils {
     public static final double torad = 0.017453292519943;

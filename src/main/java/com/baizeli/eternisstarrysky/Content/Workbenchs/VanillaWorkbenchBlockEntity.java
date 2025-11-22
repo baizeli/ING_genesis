@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky.content.Workbenchs;
+package com.baizeli.eternisstarrysky.Content.Workbenchs;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

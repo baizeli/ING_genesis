@@ -2,11 +2,14 @@ package com.baizeli.eternisstarrysky.effect.spell;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
 import com.baizeli.eternisstarrysky.effect.spell.celestial_source.*;
-import com.baizeli.eternisstarrysky.effect.spell.chaos.*;
+import com.baizeli.eternisstarrysky.effect.spell.chaos.BloodFrenzyEffect;
+import com.baizeli.eternisstarrysky.effect.spell.chaos.BloodWarEffect;
+import com.baizeli.eternisstarrysky.effect.spell.chaos.SiphonEffect;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.*;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.RegistryObject;
 
 public class ModEffect {
     public static final DeferredRegister<MobEffect> MOB_EFFECTS = 

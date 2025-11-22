@@ -14,8 +14,6 @@ import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 
-import static net.minecraft.client.animation.KeyframeAnimations.animate;
-
 public class WingModel<T extends Entity> extends HierarchicalModel<T> {
     private final ModelPart root;
     private final ModelPart left_spell_wing;

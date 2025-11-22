@@ -1,9 +1,12 @@
-package com.baizeli.eternisstarrysky.items;
+package com.baizeli.eternisstarrysky.Items;
 
-import io.redspace.ironsspellbooks.item.armor.*;
-import io.redspace.ironsspellbooks.entity.armor.*;
+import io.redspace.ironsspellbooks.entity.armor.GenericArmorModel;
+import io.redspace.ironsspellbooks.entity.armor.GenericCustomArmorRenderer;
+import io.redspace.ironsspellbooks.item.armor.ExtendedArmorItem;
+import io.redspace.ironsspellbooks.item.armor.IronsExtendedArmorMaterial;
 import net.minecraft.world.item.Rarity;
-import net.minecraftforge.api.distmarker.*;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import software.bernie.geckolib.renderer.GeoArmorRenderer;
 
 public class DivineMetalArmorItem extends ExtendedArmorItem {

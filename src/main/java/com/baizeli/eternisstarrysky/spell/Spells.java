@@ -1,15 +1,13 @@
 package com.baizeli.eternisstarrysky.spell;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
-import com.baizeli.eternisstarrysky.spell.celestial_source.FateWedgeSpell;
-import com.baizeli.eternisstarrysky.spell.celestial_source.IFlySpell;
-import com.baizeli.eternisstarrysky.spell.chaos.AmenofuwariSpell;
-import com.baizeli.eternisstarrysky.spell.chaos.*;
 import com.baizeli.eternisstarrysky.spell.celestial_source.*;
+import com.baizeli.eternisstarrysky.spell.chaos.*;
 import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.*;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.RegistryObject;
 
 public class Spells {
     private static final DeferredRegister<AbstractSpell> SPELLS;

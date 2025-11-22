@@ -1,8 +1,10 @@
-package com.baizeli.eternisstarrysky.items.staff;
+package com.baizeli.eternisstarrysky.Items.Staff;
 
 import com.baizeli.eternisstarrysky.spell.Attributes;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
-import io.redspace.ironsspellbooks.item.weapons.*;
+import io.redspace.ironsspellbooks.item.weapons.AttributeContainer;
+import io.redspace.ironsspellbooks.item.weapons.StaffItem;
+import io.redspace.ironsspellbooks.item.weapons.StaffTier;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;

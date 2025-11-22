@@ -3,11 +3,10 @@
 // (powered by FernFlower decompiler)
 //
 
-package com.baizeli.eternisstarrysky.util;
+package com.baizeli.eternisstarrysky.Util;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
-import net.minecraft.client.Minecraft;
 
 public class TextUtils {
     private static final ChatFormatting[] fabulousness;

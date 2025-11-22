@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky.cosmicRender;
+package com.baizeli.eternisstarrysky.CosmicRender;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
