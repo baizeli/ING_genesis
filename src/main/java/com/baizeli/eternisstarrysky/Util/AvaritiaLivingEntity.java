@@ -1,6 +1,6 @@
-package com.baizeli.eternisstarrysky;
+package com.baizeli.eternisstarrysky.util;
 
-import com.baizeli.ModuleAccess;
+import com.baizeli.eternisstarrysky.deobf.ObfuscationMap;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.LivingEntity;
 

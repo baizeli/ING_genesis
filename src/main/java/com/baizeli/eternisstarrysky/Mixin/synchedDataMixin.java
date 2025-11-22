@@ -1,6 +1,5 @@
-package com.baizeli.eternisstarrysky.Mixin;
+package com.baizeli.eternisstarrysky.mixin;
 
-import com.baizeli.eternisstarrysky.EntityMarker;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.Entity;
@@ -10,9 +9,10 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import com.baizeli.eternisstarrysky.mixinutil.EntityMarker;
 
 @Mixin(SynchedEntityData.class)
-public class synchedDataMixin
+public class SynchedDataMixin
 {
 	// 使用 @Shadow 获取 SynchedEntityData 的 entity 字段
 	@Shadow @Final

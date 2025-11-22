@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky;
+package com.baizeli.eternisstarrysky.util;
 
 public interface AvaritiaKill
 {

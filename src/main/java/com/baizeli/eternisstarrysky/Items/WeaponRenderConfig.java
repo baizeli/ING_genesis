@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky.Items;
+package com.baizeli.eternisstarrysky.items;
 
 import net.minecraft.world.item.ItemStack;
 

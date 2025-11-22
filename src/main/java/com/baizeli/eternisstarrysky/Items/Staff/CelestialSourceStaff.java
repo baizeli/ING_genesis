@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky.Items.Staff;
+package com.baizeli.eternisstarrysky.items.staff;
 
 import com.baizeli.eternisstarrysky.spell.Attributes;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;

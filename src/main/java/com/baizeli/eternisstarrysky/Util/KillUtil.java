@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky.Util;
+package com.baizeli.eternisstarrysky.util;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.*;

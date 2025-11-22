@@ -2,8 +2,9 @@ package com.baizeli.eternisstarrysky.spell.chaos;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
 import com.baizeli.eternisstarrysky.client.WireBoxRenderer;
-import com.baizeli.eternisstarrysky.client.network.WireBoxSyncPacket;
+import com.baizeli.eternisstarrysky.network.WireBoxSyncPacket;
 import com.baizeli.eternisstarrysky.spell.SpellSchool;
+import com.baizeli.eternisstarrysky.util.EntityData;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
 import io.redspace.ironsspellbooks.api.events.SpellCooldownAddedEvent;
 import io.redspace.ironsspellbooks.api.magic.MagicData;

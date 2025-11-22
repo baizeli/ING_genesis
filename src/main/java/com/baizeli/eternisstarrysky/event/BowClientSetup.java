@@ -1,6 +1,8 @@
-package com.baizeli.eternisstarrysky;
+package com.baizeli.eternisstarrysky.event;
 
-import com.baizeli.eternisstarrysky.Items.ModItems;
+import com.baizeli.eternisstarrysky.EternisStarrySky;
+import com.baizeli.eternisstarrysky.config.AnimationConfig;
+import com.baizeli.eternisstarrysky.items.ModItems;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;

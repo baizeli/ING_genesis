@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky.Render;
+package com.baizeli.eternisstarrysky.render;
 
 import com.mojang.blaze3d.shaders.Uniform;
 import com.mojang.blaze3d.vertex.VertexFormat;

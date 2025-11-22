@@ -1,7 +1,5 @@
-package com.baizeli.eternisstarrysky;
+package com.baizeli.eternisstarrysky.config;
 
-import com.baizeli.Trie;
-import com.baizeli.eternisstarrysky.config.ConfigEffect;
 import com.google.common.collect.ImmutableList;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

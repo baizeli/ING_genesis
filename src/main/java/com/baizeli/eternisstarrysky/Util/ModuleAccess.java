@@ -1,4 +1,4 @@
-package com.baizeli;
+package com.baizeli.eternisstarrysky.util;
 
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.MethodVisitor;

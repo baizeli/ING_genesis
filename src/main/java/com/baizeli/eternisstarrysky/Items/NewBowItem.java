@@ -1,9 +1,9 @@
-package com.baizeli.eternisstarrysky.Items;
+package com.baizeli.eternisstarrysky.items;
 
-import com.baizeli.eternisstarrysky.ClientEventsBowKey;
-import com.baizeli.eternisstarrysky.Configuration;
-import com.baizeli.eternisstarrysky.Entity.CustomArrowEntity;
-import com.baizeli.eternisstarrysky.BowTypePacket;
+import com.baizeli.eternisstarrysky.config.Configuration;
+import com.baizeli.eternisstarrysky.entity.CustomArrowEntity;
+import com.baizeli.eternisstarrysky.event.ClientEventsBowKey;
+import com.baizeli.eternisstarrysky.network.BowTypePacket;
 import com.baizeli.eternisstarrysky.EternisStarrySky;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;

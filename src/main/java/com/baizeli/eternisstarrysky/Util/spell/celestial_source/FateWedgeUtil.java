@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky.Util.spell.celestial_source;
+package com.baizeli.eternisstarrysky.util.spell.celestial_source;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
 import com.baizeli.eternisstarrysky.effect.spell.ModEffect;

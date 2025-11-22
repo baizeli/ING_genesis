@@ -1,6 +1,6 @@
-package com.baizeli.eternisstarrysky.Mixin;
+package com.baizeli.eternisstarrysky.mixin;
 
-import com.baizeli.eternisstarrysky.CosmicRender.CosmicBakeModel;
+import com.baizeli.eternisstarrysky.cosmicRender.CosmicBakeModel;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.ItemRenderer;
@@ -8,6 +8,8 @@ import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.ForgeHooksClient;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

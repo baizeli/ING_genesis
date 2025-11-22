@@ -1,8 +1,8 @@
-package com.baizeli.eternisstarrysky.CosmicRender;
+package com.baizeli.eternisstarrysky.cosmicRender;
 
+import com.baizeli.eternisstarrysky.cosmicRender.UniformType.Carrier;
 import com.mojang.blaze3d.shaders.Shader;
 import com.mojang.blaze3d.shaders.Uniform;
-import com.baizeli.eternisstarrysky.CosmicRender.UniformType.Carrier;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
