@@ -20,6 +20,7 @@
   "spell.iron_spells_genesis.siphon": "Siphon",
   "spell.iron_spells_genesis.blood_ritual": "Blood Ritual",
   "spell.iron_spells_genesis.blood_control": "Blood Control",
+  "spell.iron_spells_genesis.confusion": "Confusion",
 
   "spell.iron_spells_genesis.dead_star_decree": "Dead Star Decree",
   "spell.iron_spells_genesis.blood_frenzy": "Blood Frenzy",
@@ -46,6 +47,7 @@
   "effect.iron_spells_genesis.unparalleled": "Unparalleled",
   "effect.iron_spells_genesis.glazed_flower_rain": "Glazed Flower Rain",
   "effect.iron_spells_genesis.blood_frenzy": "Blood Frenzy",
+  "effect.iron_spells_genesis.confusion": "Confusion",
 
   "item.iron_spells_genesis.chaos_staff": "Chaos Staff",
   "item.iron_spells_genesis.celestial_source_staff": "Celestial Source Staff",

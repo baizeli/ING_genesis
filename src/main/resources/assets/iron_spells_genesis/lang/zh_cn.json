@@ -20,6 +20,7 @@
   "spell.iron_spells_genesis.siphon": "汲取",
   "spell.iron_spells_genesis.blood_ritual": "祭血仪式",
   "spell.iron_spells_genesis.blood_control": "驭血",
+  "spell.iron_spells_genesis.confusion": "迷茫",
 
   "spell.iron_spells_genesis.dead_star_decree": "死星天裁",
   "spell.iron_spells_genesis.blood_frenzy": "血之狂乱",
@@ -46,6 +47,7 @@
   "effect.iron_spells_genesis.unparalleled": "无双",
   "effect.iron_spells_genesis.glazed_flower_rain": "琉璃花雨",
   "effect.iron_spells_genesis.blood_frenzy": "血之狂乱",
+  "effect.iron_spells_genesis.confusion": "迷茫",
 
   "item.iron_spells_genesis.chaos_staff": "混沌法杖",
   "item.iron_spells_genesis.celestial_source_staff": "星源法杖",
