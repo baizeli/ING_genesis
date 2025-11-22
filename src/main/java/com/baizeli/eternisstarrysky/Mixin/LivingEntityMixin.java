@@ -4,22 +4,17 @@ import com.baizeli.eternisstarrysky.effect.spell.ModEffect;
 import com.baizeli.eternisstarrysky.sound.SoundsRegister;
 import com.baizeli.eternisstarrysky.client.renderer.EvasionAnimationRenderer;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.*;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.common.Tags;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.*;
 
-import java.util.Set;
 import java.util.Random;
 
 @Mixin(LivingEntity.class)
@@ -29,20 +24,22 @@ public abstract class LivingEntityMixin {
 
 	@Shadow public abstract void remove(Entity.RemovalReason p_276115_);
 
-	@Shadow public abstract float tickHeadTurn(float p_21260_, float p_21261_);
-
 	@Shadow public abstract boolean isAlive();
 
 	@Unique
 	private boolean ava = false;
+
 	@Unique
 	private int death = 0;
 
 	@Inject(
-		method = "baseTick()V",
-		at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/LivingEntity;isDeadOrDying()Z")
+		method = "baseTick",
+		at = @At(
+			value = "INVOKE", 
+			target = "Lnet/minecraft/world/entity/LivingEntity;isDeadOrDying()Z"
+		)
 	)
-	public void baseTick(CallbackInfo ci)
+	public void baseTick(CallbackInfo ci) 
 	{
 		if (this.ava)
 			this.death++;
@@ -75,14 +72,12 @@ public abstract class LivingEntityMixin {
 			}
 		}
 	}
-
-	/*
-	@Overwrite
+	
+/* 	@Overwrite
 	public float getHealth(){
 		 if (InfinitySwordTrue.entities.contains(this)){
 			return 0;
 		 }
 		 return InfinitySwordTrue.getHealth(this);
-	}
-	 */
+	} */
 }
