@@ -21,6 +21,9 @@
   "spell.iron_spells_genesis.blood_ritual": "祭血仪式",
   "spell.iron_spells_genesis.blood_control": "驭血",
 
+  "spell.iron_spells_genesis.dead_star_decree": "死星天裁",
+  "spell.iron_spells_genesis.blood_frenzy": "血之狂乱",
+
   "spell.iron_spells_genesis.i_fly": "我要飞",
   "spell.iron_spells_genesis.fate_wedge": "刻命之楔",
   "spell.iron_spells_genesis.perfect_evasion": "完美闪避",
@@ -30,6 +33,8 @@
   "spell.iron_spells_genesis.stellar_soul_control": "星魂掌控",
   "spell.iron_spells_genesis.blood_war": "血战",
   "spell.iron_spells_genesis.unlimited_blade_works": "无限剑制",
+  "spell.iron_spells_genesis.unparalleled": "无双",
+  "spell.iron_spells_genesis.glazed_flower_rain": "琉璃花雨",
 
   "effect.iron_spells_genesis.i_fly": "我要飞",
   "effect.iron_spells_genesis.fate_wedge": "刻命之楔",
@@ -38,6 +43,9 @@
   "effect.iron_spells_genesis.stellar_soul_control": "星魂掌控",
   "effect.iron_spells_genesis.blood_war": "血战",
   "effect.iron_spells_genesis.siphon": "汲取",
+  "effect.iron_spells_genesis.unparalleled": "无双",
+  "effect.iron_spells_genesis.glazed_flower_rain": "琉璃花雨",
+  "effect.iron_spells_genesis.blood_frenzy": "血之狂乱",
 
   "item.iron_spells_genesis.chaos_staff": "混沌法杖",
   "item.iron_spells_genesis.celestial_source_staff": "星源法杖",
@@ -66,6 +74,7 @@
   "item.iron_spells_genesis.chaos_spell_book": "混沌法术书",
   "item.iron_spells_genesis.celestial_source_spell_book": "星源法术书",
   "item.iron_spells_genesis.twisted_chaos": "扭曲之混沌",
+  "item.iron_spells_genesis.twisted_chaos_ingot": "扭曲混沌锭",
   "item.iron_spells_genesis.celestial_source_pearl": "星源珍珠",
   "item.iron_spells_genesis.celestial_source_ingot": "星源锭",
   "iron_spells_genesis.galaxy_scroll.book_name": "§b星河绘卷",

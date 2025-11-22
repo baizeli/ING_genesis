@@ -23,6 +23,8 @@ public class Spells {
     public static final RegistryObject<AbstractSpell> SIPHON_SPELL;
     public static final RegistryObject<AbstractSpell> BLOOD_RITUAL_SPELL;
     public static final RegistryObject<AbstractSpell> BLOOD_CONTROL_SPELL;
+    public static final RegistryObject<AbstractSpell> DEAD_STAR_DECREE_SPELL;
+    public static final RegistryObject<AbstractSpell> BLOOD_FRENZY_SPELL;
 
     // 星源法术卷轴
     public static final RegistryObject<AbstractSpell> I_FLY_SPELL;
@@ -33,6 +35,8 @@ public class Spells {
     public static final RegistryObject<AbstractSpell> LIFE_AND_DEATH_REALM_SPELL;
     public static final RegistryObject<AbstractSpell> STELLAR_SOUL_CONTROL_SPELL;
     public static final RegistryObject<AbstractSpell> UNLIMITED_BLADE_WORKS_SPELL;
+    public static final RegistryObject<AbstractSpell> UNPARALLELED_SPELL;
+    public static final RegistryObject<AbstractSpell> GLAZED_FLOWER_RAIN_SPELL;
 
     static {
         SPELLS = DeferredRegister.create(SpellRegistry.SPELL_REGISTRY_KEY, EternisStarrySky.MOD_ID);
@@ -46,6 +50,8 @@ public class Spells {
         SIPHON_SPELL = registerSpell(new SiphonSpell());
         BLOOD_RITUAL_SPELL = registerSpell(new BloodRitualSpell());
         BLOOD_CONTROL_SPELL = registerSpell(new BloodControlSpell());
+        DEAD_STAR_DECREE_SPELL = registerSpell(new DeadStarDecreeSpell());
+        BLOOD_FRENZY_SPELL = registerSpell(new BloodFrenzySpell());
 
         // 星源法术卷轴
         I_FLY_SPELL = registerSpell(new IFlySpell());
@@ -56,6 +62,8 @@ public class Spells {
         LIFE_AND_DEATH_REALM_SPELL = registerSpell(new LifeAndDeathRealmSpell());
         STELLAR_SOUL_CONTROL_SPELL = registerSpell(new StellarSoulControlSpell());
         UNLIMITED_BLADE_WORKS_SPELL = registerSpell(new UnlimitedBladeWorksSpell());
+        UNPARALLELED_SPELL = registerSpell(new UnparalleledSpell());
+        GLAZED_FLOWER_RAIN_SPELL = registerSpell(new GlazedFlowerRainSpell());
     }
 
     public static void register(IEventBus eventBus) {

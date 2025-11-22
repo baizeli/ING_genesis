@@ -2,7 +2,6 @@ package com.baizeli.eternisstarrysky;
 
 import com.baizeli.eternisstarrysky.Entity.*;
 import com.baizeli.eternisstarrysky.client.network.WireBoxSyncPacket;
-import com.baizeli.eternisstarrysky.client.renderer.EvasionAnimationRenderer;
 import com.baizeli.eternisstarrysky.fonts.FuckFont1;
 import io.redspace.ironsspellbooks.registries.CreativeTabRegistry;
 import io.redspace.ironsspellbooks.registries.ItemRegistry;
@@ -24,6 +23,7 @@ import com.baizeli.eternisstarrysky.effect.spell.ModEffect;
 import com.baizeli.eternisstarrysky.spell.Attributes;
 import com.baizeli.eternisstarrysky.spell.SpellSchool;
 import com.baizeli.eternisstarrysky.spell.Spells;
+import com.baizeli.eternisstarrysky.client.ClientEvent;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.EntityRenderers;
@@ -123,6 +123,9 @@ public class EternisStarrySky
 
                 // 神圣金属锭
                 output.accept(ModItems.DIVINE_METAL_INGOT.get());
+
+                // 扭曲混沌锭
+                output.accept(ModItems.TWISTED_CHAOS_INGOT.get());
             }).build());
 
     public EternisStarrySky(FMLJavaModLoadingContext context)
@@ -156,9 +159,11 @@ public class EternisStarrySky
         modEventBus.addListener(this::addAttribute); // 添加实体属性创建事件监听器
         modEventBus.addListener(this::addToVanillaTabs); // 给自己的物品加到别人的标签栏里面
         modEventBus.addListener(this::onAttributeCreate);
-        modEventBus.addListener(this::onGatherData);
 
         MinecraftForge.EVENT_BUS.register(this);
+
+        MinecraftForge.EVENT_BUS.register(ClientEvent.class);
+
         context.registerConfig(ModConfig.Type.COMMON, Configuration.SPECIFICATION);
     }
 
@@ -208,15 +213,6 @@ public class EternisStarrySky
         event.put(ModEntities.SWORD_ENTITY.get(), SwordEntity.createAttributes().build());
     }
 
-    @SubscribeEvent
-    public void onGatherData(GatherDataEvent event) {
-        DataGenerator gen = event.getGenerator();
-        CompletableFuture<HolderLookup.Provider> lookup = event.getLookupProvider();
-
-        gen.addProvider(event.includeServer(),
-                new RegistriesDatapackGenerator(gen.getPackOutput(), lookup));
-    }
-
     public static String resource(String location)
     {
         return MOD_ID + ":" + location;
@@ -247,13 +243,6 @@ public class EternisStarrySky
                     WireBoxSyncPacket::decode,
                     WireBoxSyncPacket::handle
             );
-        }
-
-        @SubscribeEvent
-        public static void registerEvasionAnimationRenderer(FMLClientSetupEvent event) {
-            if (FMLEnvironment.dist == Dist.CLIENT) {
-                MinecraftForge.EVENT_BUS.register(EvasionAnimationRenderer.class);
-            }
         }
     }
 }

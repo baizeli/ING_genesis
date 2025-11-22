@@ -26,6 +26,12 @@ public class ModItems {
                     .rarity(Rarity.EPIC)
             ));
 
+    // 扭曲混沌锭
+    public static final RegistryObject<Item> TWISTED_CHAOS_INGOT = ITEMS.register("twisted_chaos_ingot",
+            () -> new Item(new Item.Properties()
+                    .rarity(Rarity.EPIC)
+            ));
+
     // 扭曲之混沌-[混沌]法术材料
     public static final RegistryObject<Item> TWISTED_CHAOS = ITEMS.register("twisted_chaos",
             () -> new Item(new Item.Properties()
