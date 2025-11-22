@@ -32,6 +32,7 @@ public class Spells {
     public static final RegistryObject<AbstractSpell> MYRIAD_ARROWS_SPELL;
     public static final RegistryObject<AbstractSpell> LIFE_AND_DEATH_REALM_SPELL;
     public static final RegistryObject<AbstractSpell> STELLAR_SOUL_CONTROL_SPELL;
+    public static final RegistryObject<AbstractSpell> UNLIMITED_BLADE_WORKS_SPELL;
 
     static {
         SPELLS = DeferredRegister.create(SpellRegistry.SPELL_REGISTRY_KEY, EternisStarrySky.MOD_ID);
@@ -54,6 +55,7 @@ public class Spells {
         MYRIAD_ARROWS_SPELL = registerSpell(new MyriadArrowsSpell());
         LIFE_AND_DEATH_REALM_SPELL = registerSpell(new LifeAndDeathRealmSpell());
         STELLAR_SOUL_CONTROL_SPELL = registerSpell(new StellarSoulControlSpell());
+        UNLIMITED_BLADE_WORKS_SPELL = registerSpell(new UnlimitedBladeWorksSpell());
     }
 
     public static void register(IEventBus eventBus) {

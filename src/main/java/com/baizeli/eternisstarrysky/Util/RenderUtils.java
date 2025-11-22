@@ -13,12 +13,20 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.*;
+import net.minecraft.client.renderer.entity.ItemEntityRenderer;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.inventory.InventoryMenu;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
@@ -418,5 +426,49 @@ public class RenderUtils {
         vertexconsumer.vertex(matrix4f, posX, y2, (float) 0).color(0, 0, 0, 0).uv(0.0F, 1.0F).uv2(0, 0).normal(0, 0, 0).endVertex();
         vertexconsumer.vertex(matrix4f, x2, y2, (float) 0).color(0, 0, 0, 0).uv(0.0F, 1.0F).uv2(0, 0).normal(0, 0, 0).endVertex();
         vertexconsumer.vertex(matrix4f, x2, posY, (float) 0).color(0, 0, 0, 0).uv(0.0F, 1.0F).uv2(0, 0).normal(0, 0, 0).endVertex();
+    }
+
+    public static void renderFakeItem(ItemEntity item, ItemEntityRenderer renderer, PoseStack pose, MultiBufferSource buffers, float partialTick, int packedLight) {
+        pose.pushPose();
+        pose.scale(4F,4F, 4F);
+        try {
+            // 一个方块放大4倍正好是放置在世界中的大小
+            ItemStack stack = item.getItem();
+            int seed = stack.isEmpty() ? 187 : Item.getId(stack.getItem()) + stack.getDamageValue();
+            renderer.random.setSeed(seed);
+
+            BakedModel model = renderer.itemRenderer.getModel(stack, item.level(), null, item.getId());
+            boolean gui3d = model.isGui3d();
+            int amount = renderer.getRenderAmount(stack);
+
+            if (!gui3d) {
+                float dx = -0f * (amount - 1) * 0.5f;
+                float dz = -0.09375f * (amount - 1) * 0.5f;
+                pose.translate(dx, 0, dz);
+            }
+
+            for (int i = 0; i < amount; i++) {
+                pose.pushPose();
+                if (i > 0) {
+                    if (gui3d) {
+                        float sx = (renderer.random.nextFloat() * 2 - 1) * 0.15f;
+                        float sy = (renderer.random.nextFloat() * 2 - 1) * 0.15f;
+                        float sz = (renderer.random.nextFloat() * 2 - 1) * 0.15f;
+                        if (renderer.shouldSpreadItems()) pose.translate(sx, sy, sz);
+                    } else {
+                        float sx = (renderer.random.nextFloat() * 2 - 1) * 0.15f * 0.5f;
+                        float sy = (renderer.random.nextFloat() * 2 - 1) * 0.15f * 0.5f;
+                        if (renderer.shouldSpreadItems()) pose.translate(sx, sy, 0);
+                    }
+                }
+
+                renderer.itemRenderer.render(stack, ItemDisplayContext.GROUND, false, pose, buffers, packedLight, OverlayTexture.NO_OVERLAY, model);
+
+                pose.popPose();
+                if (!gui3d) pose.translate(0, 0, 0.09375);
+            }
+        } finally {
+            pose.popPose();
+        }
     }
 }

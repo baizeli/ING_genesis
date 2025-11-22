@@ -1,12 +1,16 @@
 package com.baizeli.eternisstarrysky;
 
-import com.baizeli.eternisstarrysky.Entity.NyanCatRenderer;
+import com.baizeli.eternisstarrysky.Entity.*;
 import com.baizeli.eternisstarrysky.client.network.WireBoxSyncPacket;
 import com.baizeli.eternisstarrysky.client.renderer.EvasionAnimationRenderer;
 import com.baizeli.eternisstarrysky.fonts.FuckFont1;
 import io.redspace.ironsspellbooks.registries.CreativeTabRegistry;
 import io.redspace.ironsspellbooks.registries.ItemRegistry;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.DataGenerator;
+import net.minecraft.data.registries.RegistriesDatapackGenerator;
+import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
@@ -15,8 +19,6 @@ import org.slf4j.Logger;
 
 import com.baizeli.eternisstarrysky.Content.ModBlock;
 import com.baizeli.eternisstarrysky.Content.Workbenchs.*;
-import com.baizeli.eternisstarrysky.Entity.ModEntities;
-import com.baizeli.eternisstarrysky.Entity.SwordManCsdyRenderer;
 import com.baizeli.eternisstarrysky.Items.ModItems;
 import com.baizeli.eternisstarrysky.effect.spell.ModEffect;
 import com.baizeli.eternisstarrysky.spell.Attributes;
@@ -46,6 +48,8 @@ import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+
+import java.util.concurrent.CompletableFuture;
 
 @Mod(EternisStarrySky.MOD_ID)
 public class EternisStarrySky
@@ -151,6 +155,8 @@ public class EternisStarrySky
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::addAttribute); // 添加实体属性创建事件监听器
         modEventBus.addListener(this::addToVanillaTabs); // 给自己的物品加到别人的标签栏里面
+        modEventBus.addListener(this::onAttributeCreate);
+        modEventBus.addListener(this::onGatherData);
 
         MinecraftForge.EVENT_BUS.register(this);
         context.registerConfig(ModConfig.Type.COMMON, Configuration.SPECIFICATION);
@@ -197,6 +203,20 @@ public class EternisStarrySky
         }
     }
 
+    public void onAttributeCreate(EntityAttributeCreationEvent event) {
+        event.put(ModEntities.MAGIC_CIRCLE.get(), MagicCircle.createAttributes().build());
+        event.put(ModEntities.SWORD_ENTITY.get(), SwordEntity.createAttributes().build());
+    }
+
+    @SubscribeEvent
+    public void onGatherData(GatherDataEvent event) {
+        DataGenerator gen = event.getGenerator();
+        CompletableFuture<HolderLookup.Provider> lookup = event.getLookupProvider();
+
+        gen.addProvider(event.includeServer(),
+                new RegistriesDatapackGenerator(gen.getPackOutput(), lookup));
+    }
+
     public static String resource(String location)
     {
         return MOD_ID + ":" + location;
@@ -212,6 +232,8 @@ public class EternisStarrySky
                 MenuScreens.register(ModMenuTypes.VANILLA_WORKBENCH_MENU.get(), VanillaWorkbenchScreen::new);
                 EntityRenderers.register(ModEntities.SWORD_MAN_CSDY.get(), SwordManCsdyRenderer::new);
                 EntityRenderers.register(ModEntities.NYAN_CAT.get(), NyanCatRenderer::new);
+                EntityRenderers.register(ModEntities.MAGIC_CIRCLE.get(), MagicCircleRenderer::new);
+                EntityRenderers.register(ModEntities.SWORD_ENTITY.get(), SwordEntityRenderer::new);
             });
             MinecraftForge.registerConfigScreen(new ConfigurationFactory());
             Minecraft.getInstance().font = FuckFont1.font;

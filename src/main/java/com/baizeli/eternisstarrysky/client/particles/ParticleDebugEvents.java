@@ -96,6 +96,16 @@ public class ParticleDebugEvents {
                 0.1);
     }
 
+    private static void magicCircle(ServerLevel serverLevel, Player entity, Vec3 lookVec) {
+        serverLevel.sendParticles(
+                ModParticles.MAGIC_CIRCLE.get(),
+                entity.position().x, entity.position().y, entity.position().z,
+                1,
+                lookVec.x, lookVec.y, lookVec.z,
+                0);
+    }
+
+
     private static TextureTarget heatWaveRenderTarget;
     static ResourceLocation TEXTURE = new ResourceLocation(MODID, "textures/effect/heat_wave.png");
     private static final RenderType SHADER_RENDER_TYPE = RenderType.create(

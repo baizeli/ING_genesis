@@ -2,6 +2,7 @@ package com.baizeli.eternisstarrysky.spell;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
 import com.baizeli.eternisstarrysky.SoundsRegister;
+import com.baizeli.eternisstarrysky.damage.DamageTypes;
 import io.redspace.ironsspellbooks.api.registry.SchoolRegistry;
 import io.redspace.ironsspellbooks.api.spells.SchoolType;
 import io.redspace.ironsspellbooks.damage.ISSDamageTypes;
@@ -52,7 +53,7 @@ public class SpellSchool {
                 Attributes.CHAOS_SPELL_POWER, 
                 Attributes.CHAOS_MAGIC_RESIST, 
                 SoundsRegister.CHAOS_CAST, 
-                ISSDamageTypes.FIRE_MAGIC
+                DamageTypes.CHAOS_MAGIC
             )
         );
 
@@ -67,7 +68,7 @@ public class SpellSchool {
                 Attributes.CELESTIAL_SOURCE_SPELL_POWER, 
                 Attributes.CELESTIAL_SOURCE_MAGIC_RESIST, 
                 SoundsRegister.CELESTIAL_SOURCE_CAST, 
-                ISSDamageTypes.FIRE_MAGIC
+                DamageTypes.CELESTIAL_SOURCE_MAGIC
             )
         );
 

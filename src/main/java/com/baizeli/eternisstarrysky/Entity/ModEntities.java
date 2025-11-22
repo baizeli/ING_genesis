@@ -3,6 +3,8 @@ package com.baizeli.eternisstarrysky.Entity;
 import com.baizeli.eternisstarrysky.EternisStarrySky;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -27,9 +29,23 @@ public class ModEntities {
                     .build("nyan_cat"));
 
     public static final RegistryObject<EntityType<SwordManCsdy>> SWORD_MAN_CSDY = ENTITY_TYPES.register("sword_man_csdy",
-        () -> EntityType.Builder.of(new SwordManFactory(), MobCategory.MONSTER)
-            .sized(0.6F, 1.8F)
-            .clientTrackingRange(10)
-            .updateInterval(1)
-            .build("sword_man_csdy"));
+            () -> EntityType.Builder.of(new SwordManFactory(), MobCategory.MONSTER)
+                    .sized(0.6F, 1.8F)
+                    .clientTrackingRange(10)
+                    .updateInterval(1)
+                    .build("sword_man_csdy"));
+
+    public static final RegistryObject<EntityType<MagicCircle>> MAGIC_CIRCLE = ENTITY_TYPES.register("magic_circle",
+            () -> EntityType.Builder.<MagicCircle>of(MagicCircle::new, MobCategory.MISC)
+                    .sized(0.5F, 0.5F)
+                    .clientTrackingRange(30)
+                    .updateInterval(1)
+                    .build("magic_circle"));
+
+    public static final RegistryObject<EntityType<SwordEntity>> SWORD_ENTITY = ENTITY_TYPES.register("sword_entity",
+            () -> EntityType.Builder.<SwordEntity>of(SwordEntity::new, MobCategory.MISC)
+                    .sized(0.5F, 0.5F)
+                    .clientTrackingRange(30)
+                    .updateInterval(1)
+                    .build("sword_entity"));
 }

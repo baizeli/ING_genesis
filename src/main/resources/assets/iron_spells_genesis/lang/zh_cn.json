@@ -29,6 +29,7 @@
   "spell.iron_spells_genesis.life_and_death_realm": "生死之境",
   "spell.iron_spells_genesis.stellar_soul_control": "星魂掌控",
   "spell.iron_spells_genesis.blood_war": "血战",
+  "spell.iron_spells_genesis.unlimited_blade_works": "无限剑制",
 
   "effect.iron_spells_genesis.i_fly": "我要飞",
   "effect.iron_spells_genesis.fate_wedge": "刻命之楔",
@@ -87,6 +88,7 @@
   "ui.iron_spells_genesis.absorption_healing": "吸收治疗：%d%%",
   "ui.iron_spells_genesis.damage_multiplier": "伤害倍数：%d%%",
   "ui.iron_spells_genesis.health_cost": "血量消耗：%d%%",
+  "ui.iron_spells_genesis.number_of_swords": "剑的数量：%d",
 
   "subtitles.iron_spells_genesis.evasion": "完美闪避",
 

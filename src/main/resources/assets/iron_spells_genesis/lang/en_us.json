@@ -29,6 +29,7 @@
   "spell.iron_spells_genesis.life_and_death_realm": "Life And Death Realm",
   "spell.iron_spells_genesis.stellar_soul_control": "Stellar Soul Control",
   "spell.iron_spells_genesis.blood_war": "Blood War",
+  "spell.iron_spells_genesis.unlimited_blade_works": "Unlimited Blade Works",
 
   "effect.iron_spells_genesis.i_fly": "I Fly",
   "effect.iron_spells_genesis.fate_wedge": "Fate Wedge",
@@ -88,6 +89,7 @@
   "ui.iron_spells_genesis.absorption_healing": "Absorption Healing: %d%%",
   "ui.iron_spells_genesis.damage_multiplier": "Damage Multiplier: %d%%",
   "ui.iron_spells_genesis.health_cost": "Health Cost: %d%%",
+  "ui.iron_spells_genesis.number_of_swords": "Number of Sword：%d",
 
   "subtitles.iron_spells_genesis.evasion": "Perfect Evasion",
 
