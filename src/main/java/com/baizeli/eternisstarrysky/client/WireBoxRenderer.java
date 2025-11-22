@@ -1,7 +1,7 @@
 package com.baizeli.eternisstarrysky.client;
 
-import com.baizeli.eternisstarrysky.Util.EntityData;
-import com.baizeli.eternisstarrysky.Util.RenderUtils;
+import com.baizeli.eternisstarrysky.util.EntityData;
+import com.baizeli.eternisstarrysky.util.RenderUtils;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.core.Direction;

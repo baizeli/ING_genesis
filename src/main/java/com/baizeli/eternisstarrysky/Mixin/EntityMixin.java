@@ -1,9 +1,9 @@
-package com.baizeli.eternisstarrysky.Mixin;
+package com.baizeli.eternisstarrysky.mixin;
 
-import com.baizeli.eternisstarrysky.EntityMarker;
 import net.minecraft.world.entity.Entity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
+import com.baizeli.eternisstarrysky.mixinutil.EntityMarker;
 
 @Mixin(Entity.class)
 public class EntityMixin implements EntityMarker

@@ -1,6 +1,6 @@
 {
 	"required": true,
-	"package": "com.baizeli.eternisstarrysky.Mixin",
+	"package": "com.baizeli.eternisstarrysky.mixin",
 	"compatibilityLevel": "JAVA_17",
 	"refmap": "iron_spells_genesis.refmap.json",
 	"mixins": [
@@ -11,7 +11,7 @@
 		"LivingEntityMixin",
 		"PlayerMixin",
 		"RecipeLayoutMixin",
-		"synchedDataMixin",
+		"SynchedDataMixin",
 		"TooltipColorMixin"
 	],
 	"client": [

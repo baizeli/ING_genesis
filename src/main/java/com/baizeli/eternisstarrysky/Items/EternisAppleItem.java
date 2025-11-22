@@ -1,7 +1,7 @@
-package com.baizeli.eternisstarrysky.Items;
+package com.baizeli.eternisstarrysky.items;
 
-import com.baizeli.eternisstarrysky.Configuration;
 import com.baizeli.eternisstarrysky.config.ConfigEffect;
+import com.baizeli.eternisstarrysky.config.Configuration;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;

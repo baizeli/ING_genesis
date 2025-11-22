@@ -1,8 +1,8 @@
-package com.baizeli.eternisstarrysky.CosmicRender;
+package com.baizeli.eternisstarrysky.cosmicRender;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
-import com.baizeli.eternisstarrysky.Items.AvaritiaSword;
-import com.baizeli.eternisstarrysky.Items.ModItems;
+import com.baizeli.eternisstarrysky.items.AvaritiaSword;
+import com.baizeli.eternisstarrysky.items.ModItems;
 import com.google.common.collect.ImmutableMap;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;

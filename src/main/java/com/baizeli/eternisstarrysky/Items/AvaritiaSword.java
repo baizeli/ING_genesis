@@ -1,11 +1,11 @@
-package com.baizeli.eternisstarrysky.Items;
+package com.baizeli.eternisstarrysky.items;
 
-import com.baizeli.Sounds;
-import com.baizeli.eternisstarrysky.AvaritiaKill;
-import com.baizeli.eternisstarrysky.AvaritiaLivingEntity;
-import com.baizeli.eternisstarrysky.AvaritiaVulnerable;
-import com.baizeli.eternisstarrysky.Mixin.LivingEntityAccessor;
-import com.baizeli.eternisstarrysky.Util.TextUtils;
+import com.baizeli.eternisstarrysky.mixin.LivingEntityAccessor;
+import com.baizeli.eternisstarrysky.sound.Sounds;
+import com.baizeli.eternisstarrysky.util.AvaritiaKill;
+import com.baizeli.eternisstarrysky.util.AvaritiaLivingEntity;
+import com.baizeli.eternisstarrysky.util.AvaritiaVulnerable;
+import com.baizeli.eternisstarrysky.util.TextUtils;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.client.resources.language.I18n;

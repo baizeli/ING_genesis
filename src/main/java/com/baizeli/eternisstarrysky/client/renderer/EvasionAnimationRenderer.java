@@ -1,5 +1,6 @@
 package com.baizeli.eternisstarrysky.client.renderer;
 
+import com.baizeli.eternisstarrysky.EternisStarrySky;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
@@ -9,12 +10,14 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderLivingEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import org.lwjgl.opengl.GL11;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @OnlyIn(Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = EternisStarrySky.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class EvasionAnimationRenderer {
     private static final Map<Integer, EvasionAnimationState> evasionStates = new HashMap<>();
     private static final Map<Integer, Boolean> pushedPoses = new HashMap<>();

@@ -1,9 +1,9 @@
-package com.baizeli.eternisstarrysky.Items;
+package com.baizeli.eternisstarrysky.items;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
-import com.baizeli.eternisstarrysky.Mixin.LivingEntityAccessor;
-import com.baizeli.eternisstarrysky.RainbowEffectHelper;
-import com.baizeli.eternisstarrysky.Util.KillUtil;
+import com.baizeli.eternisstarrysky.mixin.LivingEntityAccessor;
+import com.baizeli.eternisstarrysky.util.KillUtil;
+import com.baizeli.eternisstarrysky.util.RainbowEffectHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.client.Minecraft;

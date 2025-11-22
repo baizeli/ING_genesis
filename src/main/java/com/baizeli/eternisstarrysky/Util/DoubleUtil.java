@@ -1,6 +1,5 @@
-package com.baizeli.eternisstarrysky.Util;
+package com.baizeli.eternisstarrysky.util;
 
-import com.baizeli.eternisstarrysky.Mixin.LivingEntityAccessor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -12,6 +11,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 
 import java.util.List;
+import com.baizeli.eternisstarrysky.mixin.LivingEntityAccessor;
 
 public class DoubleUtil {
     public static void doubledDrop(Player player, LivingEntity entity, int d){

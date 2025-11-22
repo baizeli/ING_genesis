@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky.Content.Workbenchs;
+package com.baizeli.eternisstarrysky.content.Workbenchs;
 
 import mezz.jei.api.gui.ingredient.IRecipeSlotView;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;

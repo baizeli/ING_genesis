@@ -1,12 +1,11 @@
-package com.baizeli.eternisstarrysky.Items;
+package com.baizeli.eternisstarrysky.items;
 
 import java.util.List;
 
 import javax.annotation.Nullable;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
-import com.baizeli.eternisstarrysky.RainbowEffectHelper;
-
+import com.baizeli.eternisstarrysky.util.RainbowEffectHelper;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;

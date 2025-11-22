@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky;
+package com.baizeli.eternisstarrysky.network;
 
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;

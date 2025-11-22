@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky.Content.Workbenchs;
+package com.baizeli.eternisstarrysky.content.Workbenchs;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;

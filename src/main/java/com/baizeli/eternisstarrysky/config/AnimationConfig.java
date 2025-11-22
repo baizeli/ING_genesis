@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky;
+package com.baizeli.eternisstarrysky.config;
 
 import java.io.*;
 import java.util.Properties;

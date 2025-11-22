@@ -1,6 +1,5 @@
 package com.baizeli.eternisstarrysky.config.menu;
 
-import com.baizeli.eternisstarrysky.Configuration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -8,6 +7,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
 import java.util.List;
+import com.baizeli.eternisstarrysky.config.Configuration;
 
 public class ConfigMenu extends Screen
 {

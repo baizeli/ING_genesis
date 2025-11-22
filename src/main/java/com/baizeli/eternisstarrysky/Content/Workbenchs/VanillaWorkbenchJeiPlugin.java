@@ -1,7 +1,7 @@
-package com.baizeli.eternisstarrysky.Content.Workbenchs;
+package com.baizeli.eternisstarrysky.content.Workbenchs;
 
-import com.baizeli.eternisstarrysky.Content.ModBlock;
 import com.baizeli.eternisstarrysky.EternisStarrySky;
+import com.baizeli.eternisstarrysky.content.ModBlock;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.registration.*;

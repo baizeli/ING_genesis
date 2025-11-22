@@ -1,7 +1,7 @@
-package com.baizeli.eternisstarrysky.client.network;
+package com.baizeli.eternisstarrysky.network;
 
-import com.baizeli.eternisstarrysky.Util.EntityData;
 import com.baizeli.eternisstarrysky.client.WireBoxRenderer;
+import com.baizeli.eternisstarrysky.util.EntityData;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.network.FriendlyByteBuf;

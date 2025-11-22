@@ -1,6 +1,5 @@
-package com.baizeli.eternisstarrysky.Items;
+package com.baizeli.eternisstarrysky.items;
 
-import com.baizeli.eternisstarrysky.RainbowEffectHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
@@ -20,6 +19,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.baizeli.eternisstarrysky.util.RainbowEffectHelper;
 
 public class InfinityEternalArmorItem extends ArmorItem {
 

@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky.Entity;
+package com.baizeli.eternisstarrysky.entity;
 
 import java.util.function.Predicate;
 import java.util.function.Supplier;

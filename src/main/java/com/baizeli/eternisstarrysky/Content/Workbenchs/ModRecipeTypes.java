@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky.Content.Workbenchs;
+package com.baizeli.eternisstarrysky.content.Workbenchs;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
 import net.minecraft.world.item.crafting.RecipeSerializer;

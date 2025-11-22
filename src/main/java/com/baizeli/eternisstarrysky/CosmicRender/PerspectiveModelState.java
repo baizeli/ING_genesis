@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky.CosmicRender;
+package com.baizeli.eternisstarrysky.cosmicRender;
 
 import com.google.common.collect.ImmutableMap;
 import com.mojang.math.Transformation;
