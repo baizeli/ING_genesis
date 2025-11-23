@@ -1,8 +1,7 @@
 package com.baizeli.eternisstarrysky.effect.spell.celestial_source;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.effect.*;
 
 public class FateWedgeEffect extends MobEffect {
     public FateWedgeEffect() {

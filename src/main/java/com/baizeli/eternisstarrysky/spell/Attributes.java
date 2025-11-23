@@ -5,8 +5,7 @@ import io.redspace.ironsspellbooks.api.attribute.MagicPercentAttribute;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.RegistryObject;
+import net.minecraftforge.registries.*;
 
 public class Attributes {
     private static final DeferredRegister<Attribute> ATTRIBUTES;
