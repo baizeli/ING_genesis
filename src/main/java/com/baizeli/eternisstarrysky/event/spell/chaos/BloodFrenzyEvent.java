@@ -6,13 +6,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.List;
 
-@Mod.EventBusSubscriber(modid = EternisStarrySky.MODID)
+@Mod.EventBusSubscriber(modid = EternisStarrySky.MOD_ID)
 public class BloodFrenzyEvent {
 
     @SubscribeEvent
@@ -70,6 +70,24 @@ public class BloodFrenzyEvent {
                         }
                     }
                 }
+            }
+        }
+    }
+    
+    @SubscribeEvent
+    public static void onLivingHurt(LivingHurtEvent event) {
+        // 攻击的伤害增加.
+        if (event.getSource().getEntity() instanceof LivingEntity attacker) {
+            if (attacker.hasEffect(ModEffect.BLOOD_FRENZY.get())) {
+                event.setAmount(event.getAmount() * 2.0f);
+            }
+        }
+
+        // 受伤的减免.
+        if (event.getEntity() instanceof LivingEntity) {
+            LivingEntity victim = (LivingEntity) event.getEntity();
+            if (victim.hasEffect(ModEffect.BLOOD_FRENZY.get())) {
+                event.setAmount(event.getAmount() * 0.5f);
             }
         }
     }

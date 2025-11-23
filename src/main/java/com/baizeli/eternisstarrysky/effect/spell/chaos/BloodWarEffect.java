@@ -1,8 +1,7 @@
 package com.baizeli.eternisstarrysky.effect.spell.chaos;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.effect.*;
 
 public class BloodWarEffect extends MobEffect {
     public BloodWarEffect() {

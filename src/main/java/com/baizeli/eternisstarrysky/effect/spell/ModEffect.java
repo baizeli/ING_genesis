@@ -4,7 +4,7 @@ import com.baizeli.eternisstarrysky.EternisStarrySky;
 import com.baizeli.eternisstarrysky.effect.spell.celestial_source.*;
 import com.baizeli.eternisstarrysky.effect.spell.chaos.*;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.*;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.*;
 

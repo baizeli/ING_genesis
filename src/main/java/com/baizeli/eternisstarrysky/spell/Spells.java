@@ -6,8 +6,7 @@ import com.baizeli.eternisstarrysky.spell.chaos.*;
 import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.RegistryObject;
+import net.minecraftforge.registries.*;
 
 public class Spells {
     private static final DeferredRegister<AbstractSpell> SPELLS;
