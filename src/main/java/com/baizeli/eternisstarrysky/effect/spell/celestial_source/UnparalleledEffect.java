@@ -1,6 +1,8 @@
 package com.baizeli.eternisstarrysky.effect.spell.celestial_source;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
+import com.baizeli.eternisstarrysky.client.renderer.AfterImageManager;
+
 import net.minecraft.world.effect.*;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
