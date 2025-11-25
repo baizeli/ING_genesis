@@ -75,10 +75,21 @@ public class DeadStarDecreeComet extends AbstractMagicProjectile {
             impactParticles(xOld, yOld, zOld);
             getImpactSound().ifPresent(this::doImpactSound);
 
-            if (hitResult instanceof EntityHitResult entityHitResult) {
-                Entity entity = entityHitResult.getEntity();
+            float explosionRadius = getExplosionRadius();
+            float explosionRadiusSqr = explosionRadius * explosionRadius;
+            Vec3 impactLocation = hitResult.getLocation();
 
-                DamageSources.applyDamage(entity, getDamage(), DamageSources.get(level(), DamageTypes.CELESTIAL_SOURCE_MAGIC));
+            var entities = level().getEntities(this, this.getBoundingBox().inflate(explosionRadius));
+
+            for (Entity entity : entities) {
+                double distanceSqr = entity.distanceToSqr(impactLocation);
+                
+                if (distanceSqr < explosionRadiusSqr && canHitEntity(entity)) {
+                    double damageFactor = (1 - distanceSqr / explosionRadiusSqr);
+                    float actualDamage = (float) (getDamage() * damageFactor);
+                    
+                    DamageSources.applyDamage(entity, actualDamage, DamageSources.get(level(), DamageTypes.CELESTIAL_SOURCE_MAGIC));
+                }
             }
             
             discard();
