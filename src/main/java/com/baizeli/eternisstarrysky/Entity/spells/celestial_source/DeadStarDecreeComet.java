@@ -42,15 +42,30 @@ public class DeadStarDecreeComet extends AbstractMagicProjectile {
 
             level().addParticle(
                 ParticleHelper.UNSTABLE_ENDER, 
-                this.getX() + random.x + p.x, this.getY() + random.y + p.y, this.getZ() + random.z + p.z, random.x, random.y, random.z
+                this.getX() + random.x + p.x, 
+                this.getY() + random.y + p.y, 
+                this.getZ() + random.z + p.z, 
+                random.x, random.y, random.z
             );
         }
     }
 
     @Override
     public void impactParticles(double x, double y, double z) {
+        float scale;
+
+        if (this.getBbWidth() > 1.0f) {
+            // 大陨石
+            scale = 25f;
+        } else {
+            // 陨石
+            scale = 1.25f;
+        }
+        
         MagicManager.spawnParticles(
-            level(), new BlastwaveParticleOptions(new Vector3f(1.0f, 0.0f, 0.0f), 1.25f), x, y, z, 1, 0, 0, 0, 0, true
+            level(), new BlastwaveParticleOptions(
+                new Vector3f(1.0f, 1.0f, 0.0f), scale
+            ), x, y, z, 1, 0, 0, 0, 0, true
         );
     }
 
