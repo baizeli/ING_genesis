@@ -22,7 +22,7 @@ import java.util.List;
 public class ConfusionSpell extends AbstractSpell {
     private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "confusion");
     private final DefaultConfig defaultConfig = new DefaultConfig()
-        .setMinRarity(SpellRarity.COMMON)
+        .setMinRarity(SpellRarity.LEGENDARY)
         .setSchoolResource(SpellSchool.CHAOS_RESOURCE)
         .setMaxLevel(1)
         .setCooldownSeconds(60.0F)
