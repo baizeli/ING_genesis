@@ -1,6 +1,7 @@
 package com.baizeli.eternisstarrysky.event.spell.celestial_source;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
+import com.baizeli.eternisstarrysky.client.renderer.AfterImageManager;
 import com.baizeli.eternisstarrysky.effect.spell.ModEffect;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import net.minecraft.client.player.Input;
@@ -61,14 +62,20 @@ public class UnparalleledEvent {
                     )
                 );
 
-                // 一点玩家的检测/是否在地上
+                // 在地上false
                 if (player.onGround()) {
                     hasUsedSpecialJump.put(player, false);
                 }
             } else {
-                // 清除缓存
+                // 修饰符/二段跳/残影清理
+                player.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(SPEED_MODIFIER_UUID);
+                player.getAttribute(Attributes.ATTACK_DAMAGE).removeModifier(DAMAGE_MODIFIER_UUID);
+                player.getAttribute(AttributeRegistry.SPELL_POWER.get()).removeModifier(SPELL_POWER_MODIFIER_UUID);
+                
                 hasUsedSpecialJump.remove(player);
                 wasJumpPressed.remove(player);
+
+                AfterImageManager.clear();
             }
         }
     }
