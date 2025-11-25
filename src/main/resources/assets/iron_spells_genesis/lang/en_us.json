@@ -118,5 +118,7 @@
   "iron_spells_genesis.config.whisper_of_the_past": "Whisper of the Past",
   "iron_spells_genesis.config.whisper_of_the_past.damage": "Damage",
 
-  "entity.iron_spells_genesis.sword_man_csdy": "「Sword Man」CSDY"
+  "entity.iron_spells_genesis.dead_star_decree_comet": "Dead Star Decree - Comet",
+  "entity.iron_spells_genesis.dead_star_decree_large_comet": "Dead Star Decree - Large Comet",
+  "entity.iron_spells_genesis.sword_man_csdy": "Sword Man CSDY"
 }

@@ -20,7 +20,6 @@ public class Spells {
     public static final RegistryObject<AbstractSpell> SIPHON_SPELL;
     public static final RegistryObject<AbstractSpell> BLOOD_RITUAL_SPELL;
     public static final RegistryObject<AbstractSpell> BLOOD_CONTROL_SPELL;
-    public static final RegistryObject<AbstractSpell> DEAD_STAR_DECREE_SPELL;
     public static final RegistryObject<AbstractSpell> BLOOD_FRENZY_SPELL;
     public static final RegistryObject<AbstractSpell> CONFUSION_SPELL;
 
@@ -35,6 +34,7 @@ public class Spells {
     public static final RegistryObject<AbstractSpell> UNLIMITED_BLADE_WORKS_SPELL;
     public static final RegistryObject<AbstractSpell> UNPARALLELED_SPELL;
     public static final RegistryObject<AbstractSpell> GLAZED_FLOWER_RAIN_SPELL;
+    public static final RegistryObject<AbstractSpell> DEAD_STAR_DECREE_SPELL;
 
     static {
         SPELLS = DeferredRegister.create(SpellRegistry.SPELL_REGISTRY_KEY, EternisStarrySky.MOD_ID);
@@ -48,7 +48,6 @@ public class Spells {
         SIPHON_SPELL = registerSpell(new SiphonSpell());
         BLOOD_RITUAL_SPELL = registerSpell(new BloodRitualSpell());
         BLOOD_CONTROL_SPELL = registerSpell(new BloodControlSpell());
-        DEAD_STAR_DECREE_SPELL = registerSpell(new DeadStarDecreeSpell());
         BLOOD_FRENZY_SPELL = registerSpell(new BloodFrenzySpell());
         CONFUSION_SPELL = registerSpell(new ConfusionSpell());
 
@@ -63,6 +62,7 @@ public class Spells {
         UNLIMITED_BLADE_WORKS_SPELL = registerSpell(new UnlimitedBladeWorksSpell());
         UNPARALLELED_SPELL = registerSpell(new UnparalleledSpell());
         GLAZED_FLOWER_RAIN_SPELL = registerSpell(new GlazedFlowerRainSpell());
+        DEAD_STAR_DECREE_SPELL = registerSpell(new DeadStarDecreeSpell());
     }
 
     public static void register(IEventBus eventBus) {

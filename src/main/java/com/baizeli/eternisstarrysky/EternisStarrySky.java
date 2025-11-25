@@ -4,6 +4,7 @@ import com.baizeli.eternisstarrysky.Content.ModBlock;
 import com.baizeli.eternisstarrysky.Content.Workbenchs.*;
 import com.baizeli.eternisstarrysky.Entity.*;
 import com.baizeli.eternisstarrysky.Items.ModItems;
+import com.baizeli.eternisstarrysky.client.renderer.spell.celestial_source.DeadStarDecreeCometRenderer;
 import com.baizeli.eternisstarrysky.client.ClientEvent;
 import com.baizeli.eternisstarrysky.client.particles.ModParticles;
 import com.baizeli.eternisstarrysky.config.Configuration;
@@ -228,6 +229,14 @@ public class EternisStarrySky
                 EntityRenderers.register(ModEntities.NYAN_CAT.get(), NyanCatRenderer::new);
                 EntityRenderers.register(ModEntities.MAGIC_CIRCLE.get(), MagicCircleRenderer::new);
                 EntityRenderers.register(ModEntities.SWORD_ENTITY.get(), SwordEntityRenderer::new);
+
+                EntityRenderers.register(ModEntities.DEAD_STAR_DECREE_COMET.get(), 
+                    context -> new DeadStarDecreeCometRenderer(context, 1.0f)
+                );
+                
+                EntityRenderers.register(ModEntities.DEAD_STAR_DECREE_LARGE_COMET.get(), 
+                    context -> new DeadStarDecreeCometRenderer(context, 24.0f)
+                );
             });
             MinecraftForge.registerConfigScreen(new ConfigurationFactory());
             Minecraft.getInstance().font = FuckFont1.font;
