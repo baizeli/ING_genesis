@@ -76,7 +76,10 @@ public class DeadStarDecreeComet extends AbstractMagicProjectile {
 
     @Override
     protected void doImpactSound(Supplier<SoundEvent> sound) {
-        level().playSound(null, this.getX(), this.getY(), this.getZ(), sound.get(), SoundSource.NEUTRAL, .8f, 1.35f + Utils.random.nextFloat() * .3f);
+        float volume = this.getBbWidth() > 1.0f ? 3.0f : 0.8f;
+        float pitch = this.getBbWidth() > 1.0f ? 1.0f : (1.35f + Utils.random.nextFloat() * .3f);
+
+        level().playSound(null, this.getX(), this.getY(), this.getZ(), sound.get(),SoundSource.NEUTRAL, volume, pitch);
     }
 
     @Override
