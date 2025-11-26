@@ -56,7 +56,7 @@ public class DeadStarDecreeComet extends AbstractMagicProjectile {
 
         if (this.getBbWidth() > 1.0f) {
             // 大陨石
-            scale = 25f;
+            scale = 10f;
         } else {
             // 陨石
             scale = 1.25f;
