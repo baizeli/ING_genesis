@@ -35,6 +35,7 @@ public class Spells {
     public static final RegistryObject<AbstractSpell> UNPARALLELED_SPELL;
     public static final RegistryObject<AbstractSpell> GLAZED_FLOWER_RAIN_SPELL;
     public static final RegistryObject<AbstractSpell> DEAD_STAR_DECREE_SPELL;
+    public static final RegistryObject<AbstractSpell> SUMMON_PIG_SWARM_SPELL;
 
     static {
         SPELLS = DeferredRegister.create(SpellRegistry.SPELL_REGISTRY_KEY, EternisStarrySky.MOD_ID);
@@ -63,6 +64,7 @@ public class Spells {
         UNPARALLELED_SPELL = registerSpell(new UnparalleledSpell());
         GLAZED_FLOWER_RAIN_SPELL = registerSpell(new GlazedFlowerRainSpell());
         DEAD_STAR_DECREE_SPELL = registerSpell(new DeadStarDecreeSpell());
+        SUMMON_PIG_SWARM_SPELL = registerSpell(new SummonPigSwarmSpell());
     }
 
     public static void register(IEventBus eventBus) {

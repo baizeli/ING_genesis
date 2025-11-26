@@ -35,6 +35,7 @@
   "spell.iron_spells_genesis.unlimited_blade_works": "无限剑制",
   "spell.iron_spells_genesis.unparalleled": "无双",
   "spell.iron_spells_genesis.glazed_flower_rain": "琉璃花雨",
+  "spell.iron_spells_genesis.summon_pig_swarm": "召唤猪群",
 
   "effect.iron_spells_genesis.i_fly": "我要飞",
   "effect.iron_spells_genesis.fate_wedge": "刻命之楔",
@@ -116,6 +117,8 @@
   "iron_spells_genesis.config.whisper_of_the_past": "Whisper of the Past",
   "iron_spells_genesis.config.whisper_of_the_past.damage": "Damage",
 
+  "iron_spells_genesis.summoned_pig_name": "laowang237",
+  
   "entity.iron_spells_genesis.dead_star_decree_comet": "死星天裁-陨石",
   "entity.iron_spells_genesis.dead_star_decree_large_comet": "死星天裁-大陨石",
   "entity.iron_spells_genesis.sword_man_csdy": "「剑人」CSDY"
