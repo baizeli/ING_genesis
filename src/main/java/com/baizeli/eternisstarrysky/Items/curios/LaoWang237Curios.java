@@ -1,0 +1,13 @@
+package com.baizeli.eternisstarrysky.Items.curios;
+
+import net.minecraft.world.item.*;
+import top.theillusivec4.curios.api.type.capability.ICurioItem;
+
+public class LaoWang237Curios extends Item implements ICurioItem {
+    public LaoWang237Curios() {
+        super(new Item.Properties()
+            .stacksTo(1)
+            .rarity(Rarity.EPIC)
+        );
+    }
+}
