@@ -2,11 +2,11 @@ package com.baizeli.eternisstarrysky.Items;
 
 import com.baizeli.eternisstarrysky.Content.ModBlock;
 import com.baizeli.eternisstarrysky.EternisStarrySky;
-import com.baizeli.eternisstarrysky.Items.Staff.CelestialSourceStaff;
-import com.baizeli.eternisstarrysky.Items.Staff.ChaosStaff;
+import com.baizeli.eternisstarrysky.Items.Staff.*;
 import com.baizeli.eternisstarrysky.spell.UpgradeOrbTypes;
 import io.redspace.ironsspellbooks.item.UpgradeOrbItem;
 import io.redspace.ironsspellbooks.item.armor.IronsExtendedArmorMaterial;
+import com.baizeli.eternisstarrysky.Items.curios.*;
 import io.redspace.ironsspellbooks.util.ItemPropertiesHelper;
 import net.minecraft.world.item.*;
 import net.minecraftforge.registries.DeferredRegister;
@@ -14,8 +14,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 public class ModItems {
-    public static final DeferredRegister<Item> ITEMS =
-            DeferredRegister.create(ForgeRegistries.ITEMS, EternisStarrySky.MOD_ID);
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, EternisStarrySky.MOD_ID);
 
     public static final RegistryObject<Item> PURPLEITE_GALAXY_INGOT = ITEMS.register("purpleite_galaxy_ingot", () -> new EternisMaterial(new Item.Properties(), 0));
 
@@ -152,4 +151,7 @@ public class ModItems {
     public static final RegistryObject<Item> CHAOS_UPGRADE_ORB = ITEMS.register("chaos_upgrade_orb", () -> new UpgradeOrbItem(ItemPropertiesHelper.material().rarity(Rarity.UNCOMMON), UpgradeOrbTypes.CHAOS_SPELL_POWER));
 
     public static final RegistryObject<Item> CELESTIAL_SOURCE_UPGRADE_ORB = ITEMS.register("celestial_source_upgrade_orb", () -> new UpgradeOrbItem(ItemPropertiesHelper.material().rarity(Rarity.UNCOMMON), UpgradeOrbTypes.CELESTIAL_SOURCE_SPELL_POWER));
+
+    // 老王237
+    public static final RegistryObject<Item> LAO_WANG_237 = ITEMS.register("lao_wang_237", LaoWang237Curios::new);
 }

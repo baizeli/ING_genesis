@@ -49,8 +49,8 @@
   "effect.iron_spells_genesis.blood_frenzy": "血之狂乱",
   "effect.iron_spells_genesis.confusion": "迷茫",
 
-  "item.iron_spells_genesis.chaos_staff": "§t混沌法杖",
-  "item.iron_spells_genesis.celestial_source_staff": "§s星源法杖",
+  "item.iron_spells_genesis.chaos_staff": "混沌法杖",
+  "item.iron_spells_genesis.celestial_source_staff": "星源法杖",
 
   "item.iron_spells_genesis.infinity_sword": "天火圣裁 [伪]",
   "item.iron_spells_genesis.eternis_apple": "寰宇大苹果",
@@ -79,6 +79,8 @@
   "item.iron_spells_genesis.twisted_chaos_ingot": "扭曲混沌锭",
   "item.iron_spells_genesis.celestial_source_pearl": "星源珍珠",
   "item.iron_spells_genesis.celestial_source_ingot": "星源锭",
+  "item.iron_spells_genesis.lao_wang_237": "老王237",
+  
   "iron_spells_genesis.galaxy_scroll.book_name": "§b星河绘卷",
   "block.iron_spells_genesis.workbench": "终极工作台",
   "container.iron_spells_genesis.vanilla_workbench": "有序终极合成",

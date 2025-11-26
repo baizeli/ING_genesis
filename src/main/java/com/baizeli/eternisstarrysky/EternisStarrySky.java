@@ -125,6 +125,9 @@ public class EternisStarrySky
 
                 // 扭曲混沌锭
                 output.accept(ModItems.TWISTED_CHAOS_INGOT.get());
+                
+                // 老王237
+                output.accept(ModItems.LAO_WANG_237.get());
             }).build());
 
     public EternisStarrySky(FMLJavaModLoadingContext context)
