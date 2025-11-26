@@ -104,6 +104,7 @@ public class UnparalleledEvent {
             // 是否按下了跳跃键 之前有没有按下 是否在空中且没有使用过二段跳
             if (input.jumping && !lastJumpPressed && !player.onGround()) {
                 Boolean usedSpecialJump = hasUsedSpecialJump.get(player);
+
                 if (usedSpecialJump == null || !usedSpecialJump) {
                     Vec3 motion = player.getDeltaMovement();
                     float yaw = player.getYRot();
