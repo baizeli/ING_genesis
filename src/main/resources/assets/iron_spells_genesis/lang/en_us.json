@@ -36,6 +36,7 @@
   "spell.iron_spells_genesis.unlimited_blade_works": "Unlimited Blade Works",
   "spell.iron_spells_genesis.unparalleled": "Unparalleled",
   "spell.iron_spells_genesis.glazed_flower_rain": "Glazed Flower Rain",
+  "spell.iron_spells_genesis.summon_pig_swarm": "Summon Pig Swarm",
 
   "effect.iron_spells_genesis.i_fly": "I Fly",
   "effect.iron_spells_genesis.fate_wedge": "Fate Wedge",
@@ -118,6 +119,8 @@
   "iron_spells_genesis.config.whisper_of_the_past": "Whisper of the Past",
   "iron_spells_genesis.config.whisper_of_the_past.damage": "Damage",
 
+  "iron_spells_genesis.summoned_pig_name": "laowang237",
+  
   "entity.iron_spells_genesis.dead_star_decree_comet": "Dead Star Decree - Comet",
   "entity.iron_spells_genesis.dead_star_decree_large_comet": "Dead Star Decree - Large Comet",
   "entity.iron_spells_genesis.sword_man_csdy": "Sword Man CSDY"
