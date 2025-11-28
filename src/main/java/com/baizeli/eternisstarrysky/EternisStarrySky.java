@@ -105,6 +105,12 @@ public class EternisStarrySky
                 output.accept(ModItems.CELESTIAL_SOURCE_SPELL_CHESTPLATE.get());
                 output.accept(ModItems.CELESTIAL_SOURCE_SPELL_LEGGINGS.get());
                 output.accept(ModItems.CELESTIAL_SOURCE_SPELL_BOOTS.get());
+                
+                // 混沌法术套
+                output.accept(ModItems.CHAOS_SPELL_HELMET.get());
+                output.accept(ModItems.CHAOS_SPELL_CHESTPLATE.get());
+                output.accept(ModItems.CHAOS_SPELL_LEGGINGS.get());
+                output.accept(ModItems.CHAOS_SPELL_BOOTS.get());
 
                 output.accept(ModItems.WORKBENCH.get());
 

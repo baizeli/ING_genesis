@@ -89,6 +89,11 @@
   "item.iron_spells_genesis.celestial_source_spell_leggings": "Celestial Source Spell Leggings",
   "item.iron_spells_genesis.celestial_source_spell_boots": "Celestial Source Spell Boots",
   
+  "item.iron_spells_genesis.chaos_spell_helmet": "Chaos Spell Helmet",
+  "item.iron_spells_genesis.chaos_spell_chestplate": "Chaos Spell Chestplate",
+  "item.iron_spells_genesis.chaos_spell_leggings": "Chaos Spell Leggings",
+  "item.iron_spells_genesis.chaos_spell_boots": "Chaos Spell Boots",
+  
   "iron_spells_genesis.galaxy_scroll.book_name": "§bGalaxy Scroll",
   "block.iron_spells_genesis.workbench": "Ultimate Workbench",
   "container.iron_spells_genesis.vanilla_workbench": "Ordered Ultimate Crafting",

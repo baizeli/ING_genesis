@@ -148,4 +148,57 @@ public class ModArmorMaterials {
             return Map.of();
         }
     };
+    
+    public static final IronsExtendedArmorMaterial CHAOS_SPELL = new IronsExtendedArmorMaterial() {
+        
+        @Override
+        public int getDurabilityForType(ArmorItem.Type type) {
+            return 3200;
+        }
+
+        @Override
+        public int getDefenseForType(ArmorItem.Type type) {
+            return switch (type) {
+                case HELMET -> 6;
+                case CHESTPLATE -> 8;
+                case LEGGINGS -> 6;
+                case BOOTS -> 3;
+            };
+        }
+
+        @Override
+        public int getEnchantmentValue() {
+            return 40;
+        }
+
+        @Override
+        public SoundEvent getEquipSound() {
+            return SoundEvents.ARMOR_EQUIP_NETHERITE;
+        }
+
+        @Override
+        public Ingredient getRepairIngredient() {
+            return Ingredient.of();
+        }
+
+        @Override
+        public String getName() {
+            return "chaos_spell";
+        }
+
+        @Override
+        public float getToughness() {
+            return 4.0F;
+        }
+
+        @Override
+        public float getKnockbackResistance() {
+            return 0.0F;
+        }
+
+        @Override
+        public Map<Attribute, AttributeModifier> getAdditionalAttributes() {
+            return Map.of();
+        }
+    };
 }
