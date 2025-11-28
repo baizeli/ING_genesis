@@ -153,6 +153,23 @@ public class ModItems {
     public static final RegistryObject<Item> CELESTIAL_SOURCE_SPELL_BOOTS = ITEMS.register("celestial_source_spell_boots",
             () -> new CelestialSourceSpellArmor((IronsExtendedArmorMaterial) ModArmorMaterials.CELESTIAL_SOURCE_SPELL, ArmorItem.Type.BOOTS,
                     new Item.Properties().rarity(Rarity.EPIC)));
+    
+    // 混沌法术套
+    public static final RegistryObject<Item> CHAOS_SPELL_HELMET = ITEMS.register("chaos_spell_helmet",
+            () -> new ChaosSpellArmor((IronsExtendedArmorMaterial) ModArmorMaterials.CHAOS_SPELL, ArmorItem.Type.HELMET,
+                    new Item.Properties().rarity(Rarity.EPIC)));
+
+    public static final RegistryObject<Item> CHAOS_SPELL_CHESTPLATE = ITEMS.register("chaos_spell_chestplate",
+            () -> new ChaosSpellArmor((IronsExtendedArmorMaterial) ModArmorMaterials.CHAOS_SPELL, ArmorItem.Type.CHESTPLATE,
+                    new Item.Properties().rarity(Rarity.EPIC)));
+
+    public static final RegistryObject<Item> CHAOS_SPELL_LEGGINGS = ITEMS.register("chaos_spell_leggings",
+            () -> new ChaosSpellArmor((IronsExtendedArmorMaterial) ModArmorMaterials.CHAOS_SPELL, ArmorItem.Type.LEGGINGS,
+                    new Item.Properties().rarity(Rarity.EPIC)));
+
+    public static final RegistryObject<Item> CHAOS_SPELL_BOOTS = ITEMS.register("chaos_spell_boots",
+            () -> new ChaosSpellArmor((IronsExtendedArmorMaterial) ModArmorMaterials.CHAOS_SPELL, ArmorItem.Type.BOOTS,
+                    new Item.Properties().rarity(Rarity.EPIC)));
 
     public static final RegistryObject<Item> CHAOS_SPELL_BOOK = ITEMS.register("chaos_spell_book", ChaosSpellBook::new);
 

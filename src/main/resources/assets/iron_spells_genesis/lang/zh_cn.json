@@ -88,6 +88,11 @@
   "item.iron_spells_genesis.celestial_source_spell_leggings": "星源法术护腿",
   "item.iron_spells_genesis.celestial_source_spell_boots": "星源法术靴子",
   
+  "item.iron_spells_genesis.chaos_spell_helmet": "混沌法术头盔",
+  "item.iron_spells_genesis.chaos_spell_chestplate": "混沌法术胸甲",
+  "item.iron_spells_genesis.chaos_spell_leggings": "混沌法术护腿",
+  "item.iron_spells_genesis.chaos_spell_boots": "混沌法术靴子",
+  
   "iron_spells_genesis.galaxy_scroll.book_name": "§b星河绘卷",
   "block.iron_spells_genesis.workbench": "终极工作台",
   "container.iron_spells_genesis.vanilla_workbench": "有序终极合成",

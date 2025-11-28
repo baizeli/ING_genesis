@@ -7,14 +7,14 @@ import net.minecraft.world.item.Rarity;
 import net.minecraftforge.api.distmarker.*;
 import software.bernie.geckolib.renderer.GeoArmorRenderer;
 
-public class DivineMetalArmor extends ExtendedArmorItem {
-    public DivineMetalArmor(IronsExtendedArmorMaterial material, Type type, Properties properties) {
+public class ChaosSpellArmor extends ExtendedArmorItem {
+    public ChaosSpellArmor(IronsExtendedArmorMaterial material, Type type, Properties properties) {
         super(material, type, properties.rarity(Rarity.EPIC));
     }
 
     @Override
     @OnlyIn(Dist.CLIENT)
     public GeoArmorRenderer<?> supplyRenderer() {
-        return new GenericCustomArmorRenderer<>(new GenericArmorModel<>(EternisStarrySky.MOD_ID, "divine_metal"));
+        return new GenericCustomArmorRenderer<>(new GenericArmorModel<>(EternisStarrySky.MOD_ID, "chaos_spell"));
     }
 }
