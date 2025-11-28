@@ -31,7 +31,7 @@ public class HaloRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerMod
     public void render(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, AbstractClientPlayer player, float limbSwing, float limbSwingAmount, float partialTick, float ageInTicks, float netHeadYaw, float headPitch)
     {
         ItemStack armor = player.getItemBySlot(EquipmentSlot.HEAD);
-        if (armor.getItem() == ModItems.INFINITY_ETERNAL_HELMET.get())
+        if (/*armor.getItem()*/ 1==0 /*ModItems.INFINITY_ETERNAL_HELMET.get()*/)
         {
             poseStack.pushPose();
 

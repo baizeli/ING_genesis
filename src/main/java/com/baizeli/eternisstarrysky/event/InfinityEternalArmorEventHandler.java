@@ -1,7 +1,6 @@
 package com.baizeli.eternisstarrysky.event;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
-import com.baizeli.eternisstarrysky.Items.InfinityEternalArmorItem;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -13,7 +12,7 @@ public class InfinityEternalArmorEventHandler {
     @SubscribeEvent
     public static void stopFly(LivingEvent.LivingTickEvent event){
         if (event.getEntity() instanceof Player player) {
-            if (player.getTags().contains("eternisstarrysky.hasSuit") && !InfinityEternalArmorItem.hasFullSet(player) && !player.isCreative()) {
+            if (player.getTags().contains("eternisstarrysky.hasSuit")/* && !InfinityEternalArmorItem.hasFullSet(player)*/ && !player.isCreative()) {
                 player.removeTag("eternisstarrysky.hasSuit");
                 player.getAbilities().mayfly = false;
                 player.getAbilities().flying = false;

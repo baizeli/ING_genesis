@@ -2,16 +2,12 @@ package com.baizeli.eternisstarrysky.Items;
 
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import io.redspace.ironsspellbooks.item.armor.IronsExtendedArmorMaterial;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.Items;
+import net.minecraft.sounds.*;
+import net.minecraft.world.entity.ai.attributes.*;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
 
-import java.util.Map;
+import java.util.*;
 
 public class ModArmorMaterials {
     public static final ArmorMaterial INFINITY_ETERNAL = new ArmorMaterial() {
@@ -97,6 +93,59 @@ public class ModArmorMaterials {
                     "Divine Cast Time Reduction", 0.10, AttributeModifier.Operation.MULTIPLY_BASE
                 )
             );
+        }
+    };
+    
+    public static final IronsExtendedArmorMaterial CELESTIAL_SOURCE_SPELL = new IronsExtendedArmorMaterial() {
+        
+        @Override
+        public int getDurabilityForType(ArmorItem.Type type) {
+            return 0;
+        }
+
+        @Override
+        public int getDefenseForType(ArmorItem.Type type) {
+            return switch (type) {
+                case HELMET -> 7;
+                case CHESTPLATE -> 12;
+                case LEGGINGS -> 9;
+                case BOOTS -> 6;
+            };
+        }
+
+        @Override
+        public int getEnchantmentValue() {
+            return 40;
+        }
+
+        @Override
+        public SoundEvent getEquipSound() {
+            return SoundEvents.ARMOR_EQUIP_LEATHER;
+        }
+
+        @Override
+        public Ingredient getRepairIngredient() {
+            return Ingredient.of();
+        }
+
+        @Override
+        public String getName() {
+            return "celestial_source_spell";
+        }
+
+        @Override
+        public float getToughness() {
+            return 7.0F;
+        }
+
+        @Override
+        public float getKnockbackResistance() {
+            return 0.0F;
+        }
+
+        @Override
+        public Map<Attribute, AttributeModifier> getAdditionalAttributes() {
+            return Map.of();
         }
     };
 }

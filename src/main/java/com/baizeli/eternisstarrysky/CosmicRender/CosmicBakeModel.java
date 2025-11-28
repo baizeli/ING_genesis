@@ -239,10 +239,10 @@ public final class CosmicBakeModel implements BakedModel {
     static
     {
             COSMIC_EFFECTS.put(ModItems.INFINITY_SWORD.get(), new EffectConfig(0, 0.6F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
-            COSMIC_EFFECTS.put(ModItems.INFINITY_ETERNAL_HELMET.get(), new EffectConfig(0, 0.5F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
+            /*COSMIC_EFFECTS.put(ModItems.INFINITY_ETERNAL_HELMET.get(), new EffectConfig(0, 0.5F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
             COSMIC_EFFECTS.put(ModItems.INFINITY_ETERNAL_CHESTPLATE.get(), new EffectConfig(0, 0.5F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
             COSMIC_EFFECTS.put(ModItems.INFINITY_ETERNAL_LEGGINGS.get(), new EffectConfig(0, 0.5F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
-            COSMIC_EFFECTS.put(ModItems.INFINITY_ETERNAL_BOOTS.get(), new EffectConfig(0, 0.5F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
+            COSMIC_EFFECTS.put(ModItems.INFINITY_ETERNAL_BOOTS.get(), new EffectConfig(0, 0.5F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));*/
 
             COSMIC_EFFECTS.put(ModItems.PURPLEITE_GALAXY_INGOT.get(), new EffectConfig(0, 0.6F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
             COSMIC_EFFECTS.put(ModItems.ETERNIS_APPLE.get(), new EffectConfig(0, 0.5F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));

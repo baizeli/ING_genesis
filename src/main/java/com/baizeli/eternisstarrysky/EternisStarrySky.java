@@ -89,10 +89,10 @@ public class EternisStarrySky
                 output.accept(ModItems.INFINITY_SWORD.get());
                 output.accept(ModItems.AVARITIA_SWORD.get());
                 
-                output.accept(ModItems.INFINITY_ETERNAL_HELMET.get());
+                /*output.accept(ModItems.INFINITY_ETERNAL_HELMET.get());
                 output.accept(ModItems.INFINITY_ETERNAL_CHESTPLATE.get());
                 output.accept(ModItems.INFINITY_ETERNAL_LEGGINGS.get());
-                output.accept(ModItems.INFINITY_ETERNAL_BOOTS.get());
+                output.accept(ModItems.INFINITY_ETERNAL_BOOTS.get());*/
 
                 // 神圣金属套
                 output.accept(ModItems.DIVINE_METAL_HELMET.get());
@@ -100,7 +100,16 @@ public class EternisStarrySky
                 output.accept(ModItems.DIVINE_METAL_LEGGINGS.get());
                 output.accept(ModItems.DIVINE_METAL_BOOTS.get());
 
+                // 星源法术套
+                output.accept(ModItems.CELESTIAL_SOURCE_SPELL_HELMET.get());
+                output.accept(ModItems.CELESTIAL_SOURCE_SPELL_CHESTPLATE.get());
+                output.accept(ModItems.CELESTIAL_SOURCE_SPELL_LEGGINGS.get());
+                output.accept(ModItems.CELESTIAL_SOURCE_SPELL_BOOTS.get());
+
                 output.accept(ModItems.WORKBENCH.get());
+
+/*                // 奥术工作台
+                output.accept(ModItems.ARCANE_WORKBENCH.get());*/
                 
                 output.accept(ModItems.CHAOS_SPELL_BOOK.get());
                 output.accept(ModItems.CELESTIAL_SOURCE_SPELL_BOOK.get());
@@ -228,6 +237,7 @@ public class EternisStarrySky
         {
             event.enqueueWork(() -> {
                 MenuScreens.register(ModMenuTypes.VANILLA_WORKBENCH_MENU.get(), VanillaWorkbenchScreen::new);
+                /*MenuScreens.register(ModMenuTypes.ARCANE_WORKBENCH_MENU.get(), ArcaneWorkbenchScreen::new);*/
                 EntityRenderers.register(ModEntities.SWORD_MAN_CSDY.get(), SwordManCsdyRenderer::new);
                 EntityRenderers.register(ModEntities.NYAN_CAT.get(), NyanCatRenderer::new);
                 EntityRenderers.register(ModEntities.MAGIC_CIRCLE.get(), MagicCircleRenderer::new);
