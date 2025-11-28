@@ -145,7 +145,29 @@ public class ModArmorMaterials {
 
         @Override
         public Map<Attribute, AttributeModifier> getAdditionalAttributes() {
-            return Map.of();
+            return Map.of(
+                AttributeRegistry.SPELL_POWER.get(), new AttributeModifier(
+                    "Celestial Source Spell Power", 0.30, AttributeModifier.Operation.MULTIPLY_BASE
+                ),
+                com.baizeli.eternisstarrysky.spell.Attributes.CELESTIAL_SOURCE_SPELL_POWER.get(), new AttributeModifier(
+                    "Celestial Source School Power", 0.30, AttributeModifier.Operation.MULTIPLY_BASE
+                ),
+                /*Attributes.MOVEMENT_SPEED, new AttributeModifier(
+                    "Celestial Source Movement Speed", 1.0, AttributeModifier.Operation.MULTIPLY_BASE
+                ),*/
+                AttributeRegistry.MAX_MANA.get(), new AttributeModifier(
+                    "Celestial Source Max Mana", 3500, AttributeModifier.Operation.ADDITION
+                ),
+                AttributeRegistry.CAST_TIME_REDUCTION.get(), new AttributeModifier(
+                    "Celestial Source Cast Time Reduction", 0.40, AttributeModifier.Operation.MULTIPLY_BASE
+                ),
+                AttributeRegistry.COOLDOWN_REDUCTION.get(), new AttributeModifier(
+                    "Celestial Source Cooldown Reduction", 0.30, AttributeModifier.Operation.MULTIPLY_BASE
+                ),
+                AttributeRegistry.MANA_REGEN.get(), new AttributeModifier(
+                    "Celestial Source Mana Regen", 0.25, AttributeModifier.Operation.MULTIPLY_BASE
+                )
+            );
         }
     };
     
