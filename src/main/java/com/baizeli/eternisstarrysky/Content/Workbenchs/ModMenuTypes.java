@@ -1,13 +1,12 @@
 package com.baizeli.eternisstarrysky.Content.Workbenchs;
 
+/*import com.baizeli.eternisstarrysky.Content.Workbenchs.arcane.*;*/
 import com.baizeli.eternisstarrysky.EternisStarrySky;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.minecraftforge.registries.*;
 
 public class ModMenuTypes {
     public static final DeferredRegister<MenuType<?>> MENUS =
@@ -21,6 +20,17 @@ public class ModMenuTypes {
                                 .getBlockEntity(pos);
                         return new VanillaWorkbenchMenu(windowId, inv, entity, pos);
                     }));
+                    
+/*    public static final RegistryObject<MenuType<ArcaneWorkbenchMenu>> ARCANE_WORKBENCH_MENU =
+        MENUS.register("arcane_workbench_menu", 
+                () -> IForgeMenuType.create((windowId, inv, data) -> {
+                        BlockPos pos = data.readBlockPos();
+                        
+                        ArcaneWorkbenchBlockEntity entity = (ArcaneWorkbenchBlockEntity) inv.player.level().getBlockEntity(pos);
+
+                        return new ArcaneWorkbenchMenu(windowId, inv, entity, pos);
+                })
+        );*/
 
     public static void register(IEventBus eventBus) {MENUS.register(eventBus);}
 }

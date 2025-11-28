@@ -89,10 +89,10 @@ public abstract class TooltipColorMixin {
         ItemStack stack = event.getItemStack();
         return stack != null && (
                 stack.getItem() == ModItems.AVARITIA_SWORD.get()||
-                          stack.getItem() == ModItems.INFINITY_ETERNAL_HELMET.get()||
+/*                          stack.getItem() == ModItems.INFINITY_ETERNAL_HELMET.get()||
                           stack.getItem() == ModItems.INFINITY_ETERNAL_CHESTPLATE.get()||
                           stack.getItem() == ModItems.INFINITY_ETERNAL_LEGGINGS.get()||
-                          stack.getItem() == ModItems.INFINITY_ETERNAL_BOOTS.get()||
+                          stack.getItem() == ModItems.INFINITY_ETERNAL_BOOTS.get()||*/
                           stack.getItem() == ModItems.INFINITY_SWORD.get()||
                           stack.getItem() == ModItems.PURPLEITE_GALAXY_INGOT.get()||
                           stack.getItem() == ModItems.ETERNIS_APPLE.get()||
