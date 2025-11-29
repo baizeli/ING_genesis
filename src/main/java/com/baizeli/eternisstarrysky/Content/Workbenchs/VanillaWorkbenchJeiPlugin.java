@@ -1,5 +1,7 @@
 package com.baizeli.eternisstarrysky.Content.Workbenchs;
 
+import com.baizeli.eternisstarrysky.Content.ArcaneWorkbench.ArcaneWorkbenchRecipe;
+import com.baizeli.eternisstarrysky.Content.ArcaneWorkbench.ArcaneWorkbenchRecipeCategory;
 import com.baizeli.eternisstarrysky.Content.ModBlock;
 import com.baizeli.eternisstarrysky.EternisStarrySky;
 import mezz.jei.api.IModPlugin;
@@ -22,6 +24,7 @@ public class VanillaWorkbenchJeiPlugin implements IModPlugin {
     @Override
     public void registerCategories(IRecipeCategoryRegistration registration) {
         registration.addRecipeCategories(new VanillaWorkbenchRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
+        registration.addRecipeCategories(new ArcaneWorkbenchRecipeCategory(registration.getJeiHelpers().getGuiHelper()));
     }
 
     @Override
@@ -29,6 +32,10 @@ public class VanillaWorkbenchJeiPlugin implements IModPlugin {
         List<VanillaWorkbenchRecipe> recipes = Minecraft.getInstance().level.getRecipeManager()
                 .getAllRecipesFor(ModRecipeTypes.VANILLA_WORKBENCH_TYPE.get());
         registration.addRecipes(VanillaWorkbenchRecipeCategory.RECIPE_TYPE, recipes);
+
+        List<ArcaneWorkbenchRecipe> arcaneWorkbenchRecipes = Minecraft.getInstance().level.getRecipeManager()
+                .getAllRecipesFor(ModRecipeTypes.ARCANE_WORKBENCH_RECIPE_TYPE.get());
+        registration.addRecipes(ArcaneWorkbenchRecipeCategory.ARCANE_WORKBENCH_RECIPE_TYPE, arcaneWorkbenchRecipes);
     }
 
     @Override

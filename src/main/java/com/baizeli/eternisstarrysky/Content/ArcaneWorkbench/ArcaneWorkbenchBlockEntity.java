@@ -4,7 +4,6 @@ import com.baizeli.eternisstarrysky.Content.Workbenchs.ModBlockEntities;
 import com.baizeli.eternisstarrysky.Content.Workbenchs.ModMenuTypes;
 import com.baizeli.eternisstarrysky.Content.Workbenchs.ModRecipeTypes;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
@@ -12,20 +11,15 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
-import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
-import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.*;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
@@ -37,6 +31,7 @@ import static com.baizeli.eternisstarrysky.Util.i18nUtil.translatableContainerNa
 public class ArcaneWorkbenchBlockEntity extends BaseContainerBlockEntity implements CraftingContainer, RecipeHolder, StackedContentsCompatible {
 
     private static final int CONTAINER_SIZE = 5 * 5;
+    public static final Component ARCANE_WORKBENCH_COMPONENT = translatableContainerName("arcane_workbench");
     private final NonNullList<ItemStack> items;
     final ResultContainer resultSlots = new ResultContainer();
     private Recipe<?> recipeUsed;
@@ -125,7 +120,7 @@ public class ArcaneWorkbenchBlockEntity extends BaseContainerBlockEntity impleme
 
     @Override
     protected Component getDefaultName() {
-        return translatableContainerName("arcane_workbench");
+        return ARCANE_WORKBENCH_COMPONENT;
     }
 
     @Override
