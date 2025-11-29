@@ -35,27 +35,33 @@ public class ModArmorMaterials {
     // 神圣金属套
     public static final ArmorMaterial DIVINE_METAL = new IronsExtendedArmorMaterial() {
 
-        @Override public Ingredient getRepairIngredient() {
+        @Override
+        public Ingredient getRepairIngredient() {
             return Ingredient.of(Items.NETHERITE_INGOT);
         }
 
-        @Override public SoundEvent getEquipSound() {
+        @Override
+        public SoundEvent getEquipSound() {
             return SoundEvents.ARMOR_EQUIP_NETHERITE;
         }
 
-        @Override public String getName() {
+        @Override
+        public String getName() {
             return "divine_metal";
         }
 
-        @Override public int getEnchantmentValue() {
+        @Override
+        public int getEnchantmentValue() {
             return 40;
         }
 
-        @Override public float getToughness() {
+        @Override
+        public float getToughness() {
             return 5.0F;
         }
 
-        @Override public float getKnockbackResistance() {
+        @Override
+        public float getKnockbackResistance() {
             return 0.2F;
         }
 
