@@ -95,8 +95,12 @@
   "item.iron_spells_genesis.chaos_spell_boots": "Chaos Spell Boots",
   
   "iron_spells_genesis.galaxy_scroll.book_name": "§bGalaxy Scroll",
+
   "block.iron_spells_genesis.workbench": "Ultimate Workbench",
+  "block.iron_spells_genesis.arcane_workbench": "Arcane Workbench",
+
   "container.iron_spells_genesis.vanilla_workbench": "Ordered Ultimate Crafting",
+  "container.iron_spells_genesis.arcane_workbench": "Arcane Crafting",
 
   "key.categories.iron_spells_genesis": "Eternis Starry Sky - Key Bindings",
   "key.iron_spells_genesis.bow_type": "Bow - Switch Arrow Type",

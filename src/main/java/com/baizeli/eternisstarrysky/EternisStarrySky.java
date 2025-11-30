@@ -1,5 +1,6 @@
 package com.baizeli.eternisstarrysky;
 
+import com.baizeli.eternisstarrysky.Content.ArcaneWorkbench.ArcaneWorkbenchScreen;
 import com.baizeli.eternisstarrysky.Content.ModBlock;
 import com.baizeli.eternisstarrysky.Content.Workbenchs.*;
 import com.baizeli.eternisstarrysky.Entity.*;
@@ -243,7 +244,7 @@ public class EternisStarrySky
         {
             event.enqueueWork(() -> {
                 MenuScreens.register(ModMenuTypes.VANILLA_WORKBENCH_MENU.get(), VanillaWorkbenchScreen::new);
-                /*MenuScreens.register(ModMenuTypes.ARCANE_WORKBENCH_MENU.get(), ArcaneWorkbenchScreen::new);*/
+                MenuScreens.register(ModMenuTypes.ARCANE_WORKBENCH_MENU.get(), ArcaneWorkbenchScreen::new);
                 EntityRenderers.register(ModEntities.SWORD_MAN_CSDY.get(), SwordManCsdyRenderer::new);
                 EntityRenderers.register(ModEntities.NYAN_CAT.get(), NyanCatRenderer::new);
                 EntityRenderers.register(ModEntities.MAGIC_CIRCLE.get(), MagicCircleRenderer::new);

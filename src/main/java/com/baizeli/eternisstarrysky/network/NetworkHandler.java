@@ -1,5 +1,6 @@
 package com.baizeli.eternisstarrysky.network;
 
+import com.baizeli.eternisstarrysky.Content.ArcaneWorkbench.ArcaneWorkbenchRecipeTransferPacket;
 import com.baizeli.eternisstarrysky.EternisStarrySky;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.network.NetworkRegistry;
@@ -13,9 +14,13 @@ public class NetworkHandler {
             PROTOCOL_VERSION::equals,
             PROTOCOL_VERSION::equals
     );
-    
+
     public static void register() {
         int id = 0;
         INSTANCE.registerMessage(id++, BowTypePacket.class, BowTypePacket::encode, BowTypePacket::decode, BowTypePacket::handle);
+        INSTANCE.registerMessage(id++, ArcaneWorkbenchRecipeTransferPacket.class,
+                ArcaneWorkbenchRecipeTransferPacket::encode,
+                ArcaneWorkbenchRecipeTransferPacket::new,
+                ArcaneWorkbenchRecipeTransferPacket::handle);
     }
 }
