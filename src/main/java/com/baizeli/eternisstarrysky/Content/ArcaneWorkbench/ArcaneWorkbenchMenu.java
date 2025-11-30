@@ -10,9 +10,8 @@ import net.minecraft.world.item.ItemStack;
 
 public class ArcaneWorkbenchMenu extends AbstractContainerMenu {
     private final ArcaneWorkbenchBlockEntity blockEntity;
-
     private final ContainerLevelAccess access;
-    private static final int SLOT_COUNT = 5 * 5; 
+    private static final int SLOT_COUNT = 5 * 5;
 
     public ArcaneWorkbenchMenu(MenuType<?> type, int containerId, Inventory playerInventory, ArcaneWorkbenchBlockEntity blockEntity) {
         super(type, containerId);
@@ -64,13 +63,12 @@ public class ArcaneWorkbenchMenu extends AbstractContainerMenu {
         int CRAFTING_START = 1;
         int CRAFTING_END = SLOT_COUNT;
         int INVENTORY_START = CRAFTING_END + 1;
-        int INVENTORY_END = INVENTORY_START + 27; 
+        int INVENTORY_END = INVENTORY_START + 27;
         int HOTBAR_START = INVENTORY_END;
         int HOTBAR_END = HOTBAR_START + 9;
 
         
         if (index == RESULT_SLOT) {
-            
             if (!this.moveItemStackTo(itemstack1, INVENTORY_START, HOTBAR_END, true)) {
                 return ItemStack.EMPTY;
             }
@@ -78,14 +76,12 @@ public class ArcaneWorkbenchMenu extends AbstractContainerMenu {
         }
         
         else if (index >= CRAFTING_START && index <= CRAFTING_END) {
-            
             if (!this.moveItemStackTo(itemstack1, INVENTORY_START, HOTBAR_END, true)) {
                 return ItemStack.EMPTY;
             }
         }
         
         else if (index >= INVENTORY_START && index <= HOTBAR_END) {
-            
             if (!this.moveItemStackTo(itemstack1, CRAFTING_START, CRAFTING_END + 1, false)) {
                 return ItemStack.EMPTY;
             }
@@ -115,11 +111,11 @@ public class ArcaneWorkbenchMenu extends AbstractContainerMenu {
         return blockEntity;
     }
 
-    
     public void slotsChanged(Container container) {
         super.slotsChanged(container);
-
+        
     }
+
     public class ResultSlot extends Slot {
         private final CraftingContainer craftSlots;
         private final Player player;
@@ -150,12 +146,11 @@ public class ArcaneWorkbenchMenu extends AbstractContainerMenu {
             this.checkTakeAchievements(stack);
         }
 
-
         @Override
         public void onTake(Player player, ItemStack stack) {
             this.checkTakeAchievements(stack);
 
-            // 消耗合成网格中的物品
+            
             NonNullList<ItemStack> remainingItems = player.level().getRecipeManager()
                     .getRemainingItemsFor(ModRecipeTypes.ARCANE_WORKBENCH_RECIPE_TYPE.get(), this.craftSlots, player.level());
 
@@ -186,5 +181,4 @@ public class ArcaneWorkbenchMenu extends AbstractContainerMenu {
             super.onSwapCraft(numItemsCrafted);
         }
     }
-
 }
