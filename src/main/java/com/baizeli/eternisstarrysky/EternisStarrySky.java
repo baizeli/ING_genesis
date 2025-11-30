@@ -251,11 +251,11 @@ public class EternisStarrySky
                 EntityRenderers.register(ModEntities.SWORD_ENTITY.get(), SwordEntityRenderer::new);
 
                 EntityRenderers.register(ModEntities.DEAD_STAR_DECREE_COMET.get(), 
-                    context -> new DeadStarDecreeCometRenderer(context, 1.0f)
+                    context -> new DeadStarDecreeCometRenderer(context, 0.25f)
                 );
                 
                 EntityRenderers.register(ModEntities.DEAD_STAR_DECREE_LARGE_COMET.get(), 
-                    context -> new DeadStarDecreeCometRenderer(context, 24.0f)
+                    context -> new DeadStarDecreeCometRenderer(context, 6.0f)
                 );
             });
             MinecraftForge.registerConfigScreen(new ConfigurationFactory());
