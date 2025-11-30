@@ -28,7 +28,7 @@ public class ArcaneWorkbenchScreen extends AbstractContainerScreen<ArcaneWorkben
         this.leftPos = (this.width - this.imageWidth) / 2;
         this.topPos = (int) ((this.height - this.imageHeight) / 2.5);
         this.titleLabelX = 29;
-        this.inventoryLabelY = this.inventoryLabelY + 38;
+        this.inventoryLabelY = 110;
     }
 
     @Override
