@@ -1,14 +1,18 @@
 package com.baizeli.eternisstarrysky.Content.Workbenchs;
 
-import com.baizeli.eternisstarrysky.Content.ArcaneWorkbench.ArcaneWorkbenchRecipe;
-import com.baizeli.eternisstarrysky.Content.ArcaneWorkbench.ArcaneWorkbenchRecipeCategory;
+import com.baizeli.eternisstarrysky.Content.ArcaneWorkbench.*;
 import com.baizeli.eternisstarrysky.Content.ModBlock;
 import com.baizeli.eternisstarrysky.EternisStarrySky;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
+import mezz.jei.api.constants.RecipeTypes;
+import mezz.jei.api.helpers.IStackHelper;
+import mezz.jei.api.recipe.transfer.IRecipeTransferHandlerHelper;
 import mezz.jei.api.registration.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.inventory.CraftingMenu;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.List;
@@ -45,6 +49,14 @@ public class VanillaWorkbenchJeiPlugin implements IModPlugin {
                 VanillaWorkbenchRecipeCategory.RECIPE_TYPE,
                 0, WorkbenchConfig.GRID_SIZE * WorkbenchConfig.GRID_SIZE, // 输入槽位
                 WorkbenchConfig.GRID_SIZE * WorkbenchConfig.GRID_SIZE + 1, 36); // 背包槽位
+        IStackHelper stackHelper = registration.getJeiHelpers().getStackHelper();
+        IRecipeTransferHandlerHelper handlerHelper = registration.getTransferHelper();
+        registration.addRecipeTransferHandler(
+                new ArcaneWorkbenchRecipeTransferHandler(
+                        stackHelper,
+                        handlerHelper),
+                ArcaneWorkbenchRecipeCategory.ARCANE_WORKBENCH_RECIPE_TYPE
+        );
     }
 
     @Override
