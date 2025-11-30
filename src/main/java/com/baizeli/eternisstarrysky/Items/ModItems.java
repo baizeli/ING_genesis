@@ -99,9 +99,9 @@ public class ModItems {
 
     public static final RegistryObject<Item> WORKBENCH = ITEMS.register("workbench", () -> new BlockItem(ModBlock.workbench.get(), new Item.Properties()));
     
-/*    // 奥术工作台
+    // 奥术工作台
     public static final RegistryObject<Item> ARCANE_WORKBENCH = ITEMS.register("arcane_workbench", 
-        () -> new BlockItem(ModBlock.arcane_workbench.get(), new Item.Properties()));*/
+        () -> new BlockItem(ModBlock.ARCANE_WORKBENCH.get(), new Item.Properties()));
 
 /*    // 无尽永恒盔甲套装
     public static final RegistryObject<Item> INFINITY_ETERNAL_HELMET = ITEMS.register("infinity_eternal_helmet",
