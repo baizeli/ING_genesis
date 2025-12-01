@@ -37,6 +37,9 @@ public class CelestialSourceSpellArmor extends ExtendedArmorItem {
 
         // 星源法术环这里使用渲染层
         renderer.addRenderLayer(new CelestialSourceSpellRingLayer(renderer));
+        
+        // 腿部这里使用渲染层
+        /*renderer.addRenderLayer(new CelestialSourceSpellLeggingsLayer(renderer));*/
 
         return renderer;
     }
@@ -114,6 +117,30 @@ public class CelestialSourceSpellArmor extends ExtendedArmorItem {
         }
     }
 
+    // 星源法术套相关...
+    public static class CelestialSourceSpellArmorModel extends GeoModel<CelestialSourceSpellArmor> {
+        @Override
+        public ResourceLocation getModelResource(CelestialSourceSpellArmor object) {
+            return ResourceLocation.fromNamespaceAndPath(
+                    EternisStarrySky.MOD_ID, "geo/celestial_source_spell_armor.geo.json"
+            );
+        }
+
+        @Override
+        public ResourceLocation getTextureResource(CelestialSourceSpellArmor object) {
+            return ResourceLocation.fromNamespaceAndPath(
+                    EternisStarrySky.MOD_ID, "textures/models/armor/celestial_source_spell_armor.png"
+            );
+        }
+
+        @Override
+        public ResourceLocation getAnimationResource(CelestialSourceSpellArmor animatable) {
+            return ResourceLocation.fromNamespaceAndPath(
+                    EternisStarrySky.MOD_ID, "animations/celestial_source_spell_ring.animation.json"
+            );
+        }
+    }
+
     // 星源法术环相关...
     public static class CelestialSourceSpellRingModel extends GeoModel<CelestialSourceSpellArmor> {
         @Override
@@ -137,20 +164,62 @@ public class CelestialSourceSpellArmor extends ExtendedArmorItem {
             );
         }
     }
+/*
+    // 星源法术腿部相关...
+    public static class CelestialSourceSpellLeggingsLayer extends GeoRenderLayer<CelestialSourceSpellArmor> {
+        private final CelestialSourceSpellLeggingsModel leggingsModel;
+        
+        public CelestialSourceSpellLeggingsLayer(GeoArmorRenderer<CelestialSourceSpellArmor> renderer) {
+            super(renderer);
+            this.leggingsModel = new CelestialSourceSpellLeggingsModel();
+        }
+        
+        @Override
+        public void render(
+            PoseStack poseStack, CelestialSourceSpellArmor animatable, BakedGeoModel bakedModel, RenderType renderType, 
+            MultiBufferSource bufferSource, VertexConsumer buffer, float partialTick, int packedLight, int packedOverlay
+        ) {
+            Entity entity = ((GeoArmorRenderer<?>) this.renderer).getCurrentEntity();
+            EquipmentSlot currentSlot = ((GeoArmorRenderer<?>) this.renderer).getCurrentSlot();
 
-    // 星源法术套相关...
-    public static class CelestialSourceSpellArmorModel extends GeoModel<CelestialSourceSpellArmor> {
+            if (entity instanceof LivingEntity livingEntity && 
+                ArmorSetUtil.hasFullCelestialSourceSet(livingEntity) && currentSlot == EquipmentSlot.LEGS
+            ) {
+                AnimationState<CelestialSourceSpellArmor> animationState = new AnimationState<>(
+                    animatable, 0, 0, partialTick, false
+                );
+                long instanceId = this.renderer.getInstanceId(animatable);
+
+                this.leggingsModel.addAdditionalStateData(animatable, instanceId, animationState::setData);
+                this.leggingsModel.handleAnimations(animatable, instanceId, animationState);
+
+                ResourceLocation texture = this.leggingsModel.getTextureResource(animatable);
+                RenderType leggingsRenderType = RenderType.entityCutoutNoCull(texture);
+                VertexConsumer leggingsBuffer = bufferSource.getBuffer(leggingsRenderType);
+
+                BakedGeoModel leggingsBakedModel = this.leggingsModel.getBakedModel(this.leggingsModel.getModelResource(animatable));
+
+                this.renderer.actuallyRender(
+                    poseStack, animatable, leggingsBakedModel, leggingsRenderType, bufferSource, leggingsBuffer, 
+                    true, partialTick, packedLight, packedOverlay, 1.0F, 1.0F, 1.0F, 1.0F
+                );
+            }
+        }
+    }
+
+    // 星源法术腿部护甲模型相关...
+    public static class CelestialSourceSpellLeggingsModel extends GeoModel<CelestialSourceSpellArmor> {
         @Override
         public ResourceLocation getModelResource(CelestialSourceSpellArmor object) {
             return ResourceLocation.fromNamespaceAndPath(
-                EternisStarrySky.MOD_ID, "geo/celestial_source_spell_armor.geo.json"
+                EternisStarrySky.MOD_ID, "geo/celestial_source_spell_armor_leggings.geo.json"
             );
         }
 
         @Override
         public ResourceLocation getTextureResource(CelestialSourceSpellArmor object) {
             return ResourceLocation.fromNamespaceAndPath(
-                EternisStarrySky.MOD_ID, "textures/models/armor/celestial_source_spell.png"
+                EternisStarrySky.MOD_ID, "textures/models/armor/celestial_source_spell_leggings.png"
             );
         }
 
@@ -160,5 +229,5 @@ public class CelestialSourceSpellArmor extends ExtendedArmorItem {
                 EternisStarrySky.MOD_ID, "animations/celestial_source_spell_ring.animation.json"
             );
         }
-    }
+    }*/
 }

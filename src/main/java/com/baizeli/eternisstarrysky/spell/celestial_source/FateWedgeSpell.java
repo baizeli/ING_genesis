@@ -63,10 +63,22 @@ public class FateWedgeSpell extends AbstractSpell {
         return List.of(
             Component.translatable(
                 "ui.irons_spellbooks.effect_length",
-                Utils.timeFromTicks(1200, 1)
+                Utils.timeFromTicks(getDuration(spellLevel, caster), 1)
             ),
             Component.translatable("ui.iron_spells_genesis.max_damage_bonus", 50)
         );
+    }
+
+    // 持续时间
+    private int getDuration(int spellLevel, LivingEntity caster) {
+        int baseDuration = 1200;
+        if (caster == null) {
+            return baseDuration;
+        }
+        
+        float spellPower = getSpellPower(spellLevel, caster);
+        int additionalDuration = (int) ((spellPower - 1.0f) * 40);
+        return baseDuration + additionalDuration;
     }
 
     @Override
@@ -82,11 +94,12 @@ public class FateWedgeSpell extends AbstractSpell {
 
                 if (target != null) {
                     FateWedgeUtil.setInitialHealth(player, target);
+                    int duration = getDuration(spellLevel, entity);
 
                     // 刻命之楔[施法者本身]
                     player.addEffect(new MobEffectInstance(
                         ModEffect.FATE_WEDGE.get(),
-                        1200, 
+                        duration, 
                         0, 
                         false, 
                         false, 
@@ -96,7 +109,7 @@ public class FateWedgeSpell extends AbstractSpell {
                     // 发光[目标]
                     target.addEffect(new MobEffectInstance(
                         MobEffects.GLOWING, 
-                        1200, 
+                        duration, 
                         0, 
                         false, 
                         false, 

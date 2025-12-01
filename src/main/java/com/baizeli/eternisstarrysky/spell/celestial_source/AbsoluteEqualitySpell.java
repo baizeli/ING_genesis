@@ -26,7 +26,7 @@ public class AbsoluteEqualitySpell extends AbstractSpell {
 
     public AbsoluteEqualitySpell() {
         this.manaCostPerLevel = 0;
-        this.baseSpellPower = 0;
+        this.baseSpellPower = 1;
         this.spellPowerPerLevel = 0;
         this.castTime = 200;
         this.baseManaCost = 1500;
