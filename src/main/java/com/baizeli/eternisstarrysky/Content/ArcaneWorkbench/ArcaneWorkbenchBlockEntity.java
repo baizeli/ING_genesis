@@ -27,10 +27,14 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 
 import static com.baizeli.eternisstarrysky.Util.i18nUtil.translatableContainerName;
+import static io.redspace.ironsspellbooks.registries.ItemRegistry.ARCANE_ESSENCE;
 
 public class ArcaneWorkbenchBlockEntity extends BaseContainerBlockEntity implements CraftingContainer, RecipeHolder, StackedContentsCompatible {
 
     private static final int CONTAINER_SIZE = 5 * 5;
+    private static final int ESSENCE_SLOT = CONTAINER_SIZE; 
+    public static final int TOTAL_SLOTS = CONTAINER_SIZE + 1; 
+
     public static final Component ARCANE_WORKBENCH_COMPONENT = translatableContainerName("arcane_workbench");
     private final NonNullList<ItemStack> items;
     final ResultContainer resultSlots = new ResultContainer();
@@ -38,12 +42,12 @@ public class ArcaneWorkbenchBlockEntity extends BaseContainerBlockEntity impleme
 
     public ArcaneWorkbenchBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState) {
         super(type, pos, blockState);
-        this.items = NonNullList.withSize(CONTAINER_SIZE, ItemStack.EMPTY);
+        this.items = NonNullList.withSize(TOTAL_SLOTS, ItemStack.EMPTY);
     }
 
     public ArcaneWorkbenchBlockEntity(BlockPos pos, BlockState blockState) {
         super(ModBlockEntities.ARCANE_WORKBENCH.get(), pos, blockState);
-        this.items = NonNullList.withSize(CONTAINER_SIZE, ItemStack.EMPTY);
+        this.items = NonNullList.withSize(TOTAL_SLOTS, ItemStack.EMPTY);
     }
 
     @Override
@@ -60,8 +64,23 @@ public class ArcaneWorkbenchBlockEntity extends BaseContainerBlockEntity impleme
         return items;
     }
 
+    
+    public ItemStack getEssenceItem() {
+        return items.get(ESSENCE_SLOT);
+    }
+
+    
+    public void setEssenceItem(ItemStack stack) {
+        items.set(ESSENCE_SLOT, stack);
+        if (stack.getCount() > getMaxStackSize()) {
+            stack.setCount(getMaxStackSize());
+        }
+        setChanged();
+        onInventoryChanged();
+    }
+
     public int getContainerSize() {
-        return CONTAINER_SIZE;
+        return TOTAL_SLOTS;
     }
 
     @Override
@@ -75,7 +94,7 @@ public class ArcaneWorkbenchBlockEntity extends BaseContainerBlockEntity impleme
     }
 
     public ItemStack getItem(int slot) {
-        if(slot >= CONTAINER_SIZE) return items.get(CONTAINER_SIZE - 1);
+        if(slot >= TOTAL_SLOTS) return items.get(TOTAL_SLOTS - 1);
         return items.get(slot);
     }
 
@@ -174,29 +193,57 @@ public class ArcaneWorkbenchBlockEntity extends BaseContainerBlockEntity impleme
 
     @Override
     public void fillStackedContents(StackedContents stackedContents) {
-        for(ItemStack stack : items) {
-            stackedContents.accountStack(stack);
+        
+        for(int i = 0; i < CONTAINER_SIZE; i++) {
+            stackedContents.accountStack(items.get(i));
         }
     }
 
     private void onInventoryChanged() {
         if (level != null && !level.isClientSide) {
-            
             level.sendBlockUpdated(worldPosition, getBlockState(), getBlockState(), Block.UPDATE_ALL);
-
-            
             checkCraftingRecipe();
         }
     }
 
     
+    public boolean hasEnoughEssence(int consumedSlots) {
+        ItemStack essenceStack = getEssenceItem();
+        if (essenceStack.isEmpty() || essenceStack.getItem() != ARCANE_ESSENCE.get()) {
+            return false;
+        }
+        int requiredEssence = consumedSlots * 2;
+        return essenceStack.getCount() >= requiredEssence;
+    }
+
+    
+    public void consumeEssence(int consumedSlots) {
+        ItemStack essenceStack = getEssenceItem();
+        if (!essenceStack.isEmpty() && essenceStack.getItem() == ARCANE_ESSENCE.get()) {
+            int requiredEssence = consumedSlots * 2;
+            essenceStack.shrink(requiredEssence);
+            if (essenceStack.isEmpty()) {
+                setEssenceItem(ItemStack.EMPTY);
+            }
+            setChanged();
+        }
+    }
+
+    
+    private int getConsumedSlotsCount() {
+        int count = 0;
+        for (int i = 0; i < CONTAINER_SIZE; i++) {
+            if (!items.get(i).isEmpty()) {
+                count++;
+            }
+        }
+        return count;
+    }
+
     private void checkCraftingRecipe() {
         if (level == null || level.isClientSide) return;
 
-        
         RecipeManager recipeManager = level.getRecipeManager();
-
-        
         Optional<ArcaneWorkbenchRecipe> optional = recipeManager.getRecipeFor(
                 ModRecipeTypes.ARCANE_WORKBENCH_RECIPE_TYPE.get(),
                 this,
@@ -205,11 +252,18 @@ public class ArcaneWorkbenchBlockEntity extends BaseContainerBlockEntity impleme
 
         if (optional.isPresent()) {
             ArcaneWorkbenchRecipe recipe = optional.get();
-            ItemStack result = recipe.assemble(this, level.registryAccess());
-            resultSlots.setItem(0, result);
-            setRecipeUsed(recipe);
-        } else {
+            int consumedSlots = getConsumedSlotsCount();
+
             
+            if (hasEnoughEssence(consumedSlots)) {
+                ItemStack result = recipe.assemble(this, level.registryAccess());
+                resultSlots.setItem(0, result);
+                setRecipeUsed(recipe);
+            } else {
+                resultSlots.setItem(0, ItemStack.EMPTY);
+                setRecipeUsed(null);
+            }
+        } else {
             resultSlots.setItem(0, ItemStack.EMPTY);
             setRecipeUsed(null);
         }

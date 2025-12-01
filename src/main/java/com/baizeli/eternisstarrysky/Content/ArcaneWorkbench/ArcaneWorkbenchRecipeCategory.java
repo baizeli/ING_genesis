@@ -18,10 +18,11 @@ import org.jetbrains.annotations.Nullable;
 
 import static com.baizeli.eternisstarrysky.Content.ArcaneWorkbench.ArcaneWorkbenchBlockEntity.ARCANE_WORKBENCH_COMPONENT;
 import static com.baizeli.eternisstarrysky.EternisStarrySky.MODID;
+import static io.redspace.ironsspellbooks.registries.ItemRegistry.ARCANE_ESSENCE;
 
 public class ArcaneWorkbenchRecipeCategory implements IRecipeCategory<ArcaneWorkbenchRecipe> {
     public static final ResourceLocation UID = new ResourceLocation(MODID, "arcane_workbench");
-    private static final ResourceLocation CRAFTING_TABLE_LOCATION = new ResourceLocation(MODID, "textures/gui/container/arcane_workbench.png");
+    private static final ResourceLocation CRAFTING_TABLE_LOCATION = new ResourceLocation(MODID, "textures/gui/jei/arcane_workbench_jei.png");
     public static final RecipeType<ArcaneWorkbenchRecipe> ARCANE_WORKBENCH_RECIPE_TYPE = new RecipeType<>(UID, ArcaneWorkbenchRecipe.class);
 
     private final IDrawable background;
@@ -61,17 +62,31 @@ public class ArcaneWorkbenchRecipeCategory implements IRecipeCategory<ArcaneWork
         ItemStack result = recipe.getResultItem(null);
 
         
-        create5x5RecipeLayout(builder, ingredients, recipeWidth, recipeHeight, result);
+        int arcaneEssenceCost = calculateArcaneEssenceCost(ingredients);
+
+        create5x5RecipeLayout(builder, ingredients, recipeWidth, recipeHeight, result, arcaneEssenceCost);
     }
 
     
+    private int calculateArcaneEssenceCost(NonNullList<Ingredient> ingredients) {
+        int itemCount = 0;
+        for (Ingredient ingredient : ingredients) {
+            if (!ingredient.isEmpty()) {
+                itemCount++;
+            }
+        }
+        return itemCount * 2;
+    }
+
     private void create5x5RecipeLayout(IRecipeLayoutBuilder builder,
                                        NonNullList<Ingredient> ingredients,
                                        int recipeWidth, int recipeHeight,
-                                       ItemStack result) {
-        
+                                       ItemStack result, int arcaneEssenceCost) {
+
         int offsetX = (5 - recipeWidth) / 2;
         int offsetY = (5 - recipeHeight) / 2;
+        int x_shifted = 3;
+        int y_shifted = -4;
 
         
         for (int recipeY = 0; recipeY < recipeHeight; recipeY++) {
@@ -82,9 +97,8 @@ public class ArcaneWorkbenchRecipeCategory implements IRecipeCategory<ArcaneWork
                     Ingredient ingredient = ingredients.get(ingredientIndex);
 
                     if (!ingredient.isEmpty()) {
-                        
-                        int slotX = 8 + (offsetX + recipeX) * 18;
-                        int slotY = 18 + (offsetY + recipeY) * 18;
+                        int slotX = 8 + (offsetX + recipeX) * 18 + x_shifted;
+                        int slotY = 18 + (offsetY + recipeY) * 18 + y_shifted;
 
                         builder.addSlot(RecipeIngredientRole.INPUT, slotX, slotY)
                                 .addIngredients(ingredient);
@@ -94,14 +108,26 @@ public class ArcaneWorkbenchRecipeCategory implements IRecipeCategory<ArcaneWork
         }
 
         
-        int outputSlotX = 139;
-        int outputSlotY = 54;
+        int outputSlotX = 139 + x_shifted;
+        int outputSlotY = 54 + y_shifted;
 
         builder.addSlot(RecipeIngredientRole.OUTPUT, outputSlotX, outputSlotY)
                 .addItemStack(result)
                 .addTooltipCallback((recipeSlotView, tooltip) -> {
-                    
                     tooltip.add(Component.translatable("jei.tooltip.recipe.arcane_workbench"));
+                });
+
+        
+        int arcaneEssenceSlotX = outputSlotX; 
+        int arcaneEssenceSlotY = outputSlotY + 24; 
+
+        
+        ItemStack arcaneEssenceStack = new ItemStack(ARCANE_ESSENCE.get(), arcaneEssenceCost);
+
+        builder.addSlot(RecipeIngredientRole.INPUT, arcaneEssenceSlotX, arcaneEssenceSlotY)
+                .addItemStack(arcaneEssenceStack)
+                .addTooltipCallback((recipeSlotView, tooltip) -> {
+                    tooltip.add(Component.translatable("jei.tooltip.arcane_essence_consumption", arcaneEssenceCost));
                 });
     }
 }
