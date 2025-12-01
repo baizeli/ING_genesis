@@ -10,7 +10,6 @@ import io.redspace.ironsspellbooks.capabilities.magic.MagicManager;
 import io.redspace.ironsspellbooks.damage.DamageSources;
 import io.redspace.ironsspellbooks.particle.FogParticleOptions;
 import io.redspace.ironsspellbooks.registries.SoundRegistry;
-import io.redspace.ironsspellbooks.util.ParticleHelper;
 import com.baizeli.eternisstarrysky.Entity.ModEntities;
 import com.baizeli.eternisstarrysky.Entity.spells.celestial_source.DeadStarDecreeComet;
 import net.minecraft.core.particles.ParticleOptions;
@@ -131,7 +130,7 @@ public class DeadStarDecreeSpell extends AbstractSpell {
 
             shootLargeComet(level, spellLevel, entity, largeCometSpawn, trajectory);
 
-            ParticleOptions largeCometFog = new FogParticleOptions(new Vector3f(.75f, .55f, 1f), 4.0f);
+            ParticleOptions largeCometFog = new FogParticleOptions(new Vector3f(1f, 1f, 0f), 4.0f);
             MagicManager.spawnParticles(level, largeCometFog, largeCometSpawn.x, largeCometSpawn.y, largeCometSpawn.z, 1, 1, 1, 1, 1, false);
             MagicManager.spawnParticles(level, largeCometFog, largeCometSpawn.x, largeCometSpawn.y, largeCometSpawn.z, 1, 1, 1, 1, 1, true);
         }
@@ -149,8 +148,9 @@ public class DeadStarDecreeSpell extends AbstractSpell {
                 
                 shootComet(level, spellLevel, entity, spawn, trajectory, radius);
                 
-                MagicManager.spawnParticles(level, ParticleHelper.COMET_FOG, spawn.x, spawn.y, spawn.z, 1, 1, 1, 1, 1, false);
-                MagicManager.spawnParticles(level, ParticleHelper.COMET_FOG, spawn.x, spawn.y, spawn.z, 1, 1, 1, 1, 1, true);
+                ParticleOptions cometFog = new FogParticleOptions(new Vector3f(1f, 1f, 0f), 0.75f);
+                MagicManager.spawnParticles(level, cometFog, spawn.x, spawn.y, spawn.z, 1, 1, 1, 1, 1, false);
+                MagicManager.spawnParticles(level, cometFog, spawn.x, spawn.y, spawn.z, 1, 1, 1, 1, 1, true);
             }
     }
 

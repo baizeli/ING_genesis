@@ -52,7 +52,7 @@ public class CelestialSourceSpellArmor extends ExtendedArmorItem {
     
     private PlayState predicate(AnimationState animationState) {
         animationState.getController().setAnimation(
-            RawAnimation.begin().thenLoop("celestial_source_spell_ring")
+            RawAnimation.begin().thenLoop("celestial_source_spell_ring.animation")
         );
         return PlayState.CONTINUE;
     }
