@@ -108,7 +108,7 @@ public class ArcaneWorkbenchRecipeTransferPacket {
 
     private static void clearCraftingGrid(ArcaneWorkbenchMenu menu) {
         
-        for (int i = 1; i <= 25; i++) {
+        for (int i = 2; i <= 26; i++) {
             net.minecraft.world.inventory.Slot slot = menu.slots.get(i);
             if (slot.hasItem()) {
                 ItemStack stack = slot.getItem().copy();
@@ -161,7 +161,8 @@ public class ArcaneWorkbenchRecipeTransferPacket {
                 if (ingredientIndex < ingredients.size()) {
                     var ingredient = ingredients.get(ingredientIndex);
                     if (!ingredient.isEmpty()) {
-                        int slotIndex = (offsetY + y) * 5 + (offsetX + x) + 1; 
+                        
+                        int slotIndex = (offsetY + y) * 5 + (offsetX + x) + 2; 
 
                         
                         for (int invSlot = 0; invSlot < player.getInventory().getContainerSize(); invSlot++) {
@@ -171,7 +172,6 @@ public class ArcaneWorkbenchRecipeTransferPacket {
                                 ItemStack toPlace = stack.copy();
                                 toPlace.setCount(1);
 
-                                
                                 net.minecraft.world.inventory.Slot craftingSlot = menu.slots.get(slotIndex);
                                 craftingSlot.set(toPlace);
 
