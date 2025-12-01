@@ -59,14 +59,22 @@ public class PerfectEvasionSpell extends AbstractSpell {
         return List.of(
             Component.translatable(
                 "ui.irons_spellbooks.effect_length", 
-                Utils.timeFromTicks(getDurationInSeconds(spellLevel), 1)
+                Utils.timeFromTicks(getDuration(spellLevel, caster), 1)
             ),
             Component.translatable("ui.iron_spells_genesis.perfect_evasion.chance", 75)
         );
     }
 
-    private int getDurationInSeconds(int spellLevel) {
-        return (180 + (spellLevel - 1) * 60) * 20;
+    // 持续时间
+    private int getDuration(int spellLevel, LivingEntity caster) {
+        int baseDuration = (180 + (spellLevel - 1) * 60) * 20;
+        if (caster == null) {
+            return baseDuration;
+        }
+        
+        float spellPower = getSpellPower(spellLevel, caster);
+        int additionalDuration = (int) ((spellPower - 1.0f) * 40);
+        return baseDuration + additionalDuration;
     }
 
     @Override
@@ -79,7 +87,7 @@ public class PerfectEvasionSpell extends AbstractSpell {
         if (!level.isClientSide && entity instanceof Player player) {
             player.addEffect(new MobEffectInstance(
                 ModEffect.PERFECT_EVASION.get(), 
-                getDurationInSeconds(spellLevel), 
+                getDuration(spellLevel, entity), 
                 0, 
                 false, 
                 false, 

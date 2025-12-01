@@ -72,12 +72,28 @@ public class DeadStarDecreeSpell extends AbstractSpell {
         );
     }
 
+    // 陨石的伤害
     private float getDamage(int spellLevel, LivingEntity caster) {
-        return 10 * spellLevel;
+        float baseDamage = 10 * spellLevel;
+        if (caster == null) {
+            return baseDamage;
+        }
+        
+        float spellPower = getSpellPower(spellLevel, caster);
+        float additionalDamage = spellPower - 1.0f;
+        return baseDamage + additionalDamage;
     }
     
+    // 大陨石的伤害
     private float getLargeCometDamage(int spellLevel, LivingEntity caster) {
-        return 100 + (spellLevel - 1) * 10;
+        float baseDamage = 100 + (spellLevel - 1) * 10;
+        if (caster == null) {
+            return baseDamage;
+        }
+        
+        float spellPower = getSpellPower(spellLevel, caster);
+        float additionalDamage = spellPower - 1.0f;
+        return baseDamage + additionalDamage;
     }
 
     private float getRadius(int spellLevel, LivingEntity caster) {
