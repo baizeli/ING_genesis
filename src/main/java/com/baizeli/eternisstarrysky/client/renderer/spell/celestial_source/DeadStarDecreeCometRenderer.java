@@ -1,37 +1,52 @@
 package com.baizeli.eternisstarrysky.client.renderer.spell.celestial_source;
 
-import com.baizeli.eternisstarrysky.Entity.spells.celestial_source.DeadStarDecreeComet;
 import com.baizeli.eternisstarrysky.EternisStarrySky;
-import io.redspace.ironsspellbooks.entity.spells.fireball.FireballRenderer;
+import com.baizeli.eternisstarrysky.client.model.spell.celestial_source.DeadStarDecreeCometModel;
+import com.mojang.blaze3d.vertex.*;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.projectile.Projectile;
 
-public class DeadStarDecreeCometRenderer extends FireballRenderer {
+public class DeadStarDecreeCometRenderer extends EntityRenderer<Projectile> {
     private final static ResourceLocation BASE_TEXTURE = ResourceLocation.fromNamespaceAndPath(
-        EternisStarrySky.MOD_ID, "textures/entity/comet/dead_star_decree_comet.png"
+        EternisStarrySky.MOD_ID, "textures/entity/dead_star_decree_comet.png"
     );
-    private final static ResourceLocation FIRE_TEXTURES[] = {
-        ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "textures/entity/comet/dead_star_decree_fire_1.png"),
-        ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "textures/entity/comet/dead_star_decree_fire_2.png"),
-        ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "textures/entity/comet/dead_star_decree_fire_3.png"),
-        ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "textures/entity/comet/dead_star_decree_fire_4.png")
-    };
+    
+    private final DeadStarDecreeCometModel<Projectile> model;
+    private final float scale;
 
     public DeadStarDecreeCometRenderer(EntityRendererProvider.Context context, float scale) {
-        super(context, scale);
+        super(context);
+        this.model = new DeadStarDecreeCometModel<>(context.bakeLayer(DeadStarDecreeCometModel.LAYER_LOCATION));
+        this.scale = scale;
+    }
+
+    @Override
+    public void render(Projectile entity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
+        poseStack.pushPose();
+
+        if (scale != 1.0f) {
+            poseStack.scale(scale, scale, scale);
+        }
+
+        /*poseStack.mulPose(com.mojang.math.Axis.XP.rotationDegrees(180.0F));*/
+        
+        // 渲染Geo陨石模型...
+        VertexConsumer vertexConsumer = buffer.getBuffer(RenderType.entityCutoutNoCull(getTextureLocation(entity)));
+        this.model.renderToBuffer(
+            poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F
+        );
+        
+        poseStack.popPose();
+        super.render(entity, entityYaw, partialTicks, poseStack, buffer, packedLight);
     }
 
     @Override
     public ResourceLocation getTextureLocation(Projectile entity) {
         return BASE_TEXTURE;
-    }
-
-    public ResourceLocation getFireTextureLocation(Projectile entity) {
-        if (entity instanceof DeadStarDecreeComet comet) {
-            int frame = (comet.tickCount / 2) % FIRE_TEXTURES.length;
-            return FIRE_TEXTURES[frame];
-        }
-        return FIRE_TEXTURES[0];
     }
 }

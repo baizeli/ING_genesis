@@ -31,7 +31,7 @@ public class DeadStarDecreeComet extends AbstractMagicProjectile {
 
     @Override
     public void trailParticles() {
-        var vec = getDeltaMovement();
+        /*var vec = getDeltaMovement();
         var length = vec.length();
         int count = (int) Math.min(20, Math.round(length) * 4) + 1;
         float f = (float) length / count;
@@ -47,7 +47,7 @@ public class DeadStarDecreeComet extends AbstractMagicProjectile {
                 this.getZ() + random.z + p.z, 
                 random.x, random.y, random.z
             );
-        }
+        }*/
     }
 
     @Override
