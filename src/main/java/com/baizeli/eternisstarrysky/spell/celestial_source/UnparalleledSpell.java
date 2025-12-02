@@ -20,7 +20,7 @@ import java.util.List;
 public class UnparalleledSpell extends AbstractSpell {
     private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "unparalleled");
     private final DefaultConfig defaultConfig = new DefaultConfig()
-        .setMinRarity(SpellRarity.LEGENDARY)
+        .setMinRarity(SpellRarity.COMMON)
         .setSchoolResource(SpellSchool.CELESTIAL_SOURCE_RESOURCE)
         .setMaxLevel(3)
         .setCooldownSeconds(600.0F)
@@ -28,7 +28,7 @@ public class UnparalleledSpell extends AbstractSpell {
 
     public UnparalleledSpell() {
         this.manaCostPerLevel = 100;
-        this.baseSpellPower = 0;
+        this.baseSpellPower = 1;
         this.spellPowerPerLevel = 0;
         this.castTime = 200;
         this.baseManaCost = 900;
@@ -59,13 +59,21 @@ public class UnparalleledSpell extends AbstractSpell {
         return List.of(
             Component.translatable(
                 "ui.irons_spellbooks.effect_length", 
-                Utils.timeFromTicks(getDurationInSeconds(spellLevel), 1)
+                Utils.timeFromTicks(getDuration(spellLevel, caster), 1)
             )
         );
     }
 
-    private int getDurationInSeconds(int spellLevel) {
-        return (60 + (spellLevel - 1) * 30) * 20;
+    // 持续时间
+    private int getDuration(int spellLevel, LivingEntity caster) {
+        int baseDuration = (60 + (spellLevel - 1) * 30) * 20;
+        if (caster == null) {
+            return baseDuration;
+        }
+        
+        float spellPower = getSpellPower(spellLevel, caster);
+        int additionalDuration = (int) ((spellPower - 1.0f) * 40);
+        return baseDuration + additionalDuration;
     }
 
     @Override
@@ -78,7 +86,7 @@ public class UnparalleledSpell extends AbstractSpell {
         if (!level.isClientSide && entity instanceof Player player) {
             player.addEffect(new MobEffectInstance(
                 ModEffect.UNPARALLELED.get(), 
-                getDurationInSeconds(spellLevel), 
+                getDuration(spellLevel, entity), 
                 0, 
                 false, 
                 false, 

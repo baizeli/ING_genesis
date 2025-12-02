@@ -28,7 +28,7 @@ public class GlazedFlowerRainSpell extends AbstractSpell {
 
     public GlazedFlowerRainSpell() {
         this.manaCostPerLevel = 100;
-        this.baseSpellPower = 0;
+        this.baseSpellPower = 1;
         this.spellPowerPerLevel = 0;
         this.castTime = 200;
         this.baseManaCost = 1000;
@@ -59,14 +59,22 @@ public class GlazedFlowerRainSpell extends AbstractSpell {
         return List.of(
             Component.translatable(
                 "ui.irons_spellbooks.effect_length", 
-                Utils.timeFromTicks(getDurationTicks(spellLevel), 1)
+                Utils.timeFromTicks(getDurationTicks(spellLevel, caster), 1)
             ),
             Component.translatable("ui.irons_spellbooks.radius", 15)
         );
     }
 
-    private int getDurationTicks(int spellLevel) {
-        return (180 + (spellLevel - 1) * 60) * 20;
+    // 持续时间
+    private int getDurationTicks(int spellLevel, LivingEntity caster) {
+        int baseDuration = (180 + (spellLevel - 1) * 60) * 20;
+        if (caster == null) {
+            return baseDuration;
+        }
+        
+        float spellPower = getSpellPower(spellLevel, caster);
+        int additionalDuration = (int) ((spellPower - 1.0f) * 40);
+        return baseDuration + additionalDuration;
     }
 
     @Override
@@ -79,7 +87,7 @@ public class GlazedFlowerRainSpell extends AbstractSpell {
         if (entity instanceof Player player) {
             player.addEffect(new MobEffectInstance(
                 ModEffect.GLAZED_FLOWER_RAIN.get(),
-                getDurationTicks(spellLevel),
+                getDurationTicks(spellLevel, entity),
                 spellLevel - 1,
                 false,
                 true,

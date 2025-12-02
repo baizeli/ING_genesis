@@ -23,7 +23,7 @@ public class LifeAndDeathRealmSpell extends AbstractSpell {
         .setMinRarity(SpellRarity.COMMON)
         .setSchoolResource(SpellSchool.CELESTIAL_SOURCE_RESOURCE)
         .setMaxLevel(3)
-        .setCooldownSeconds(600.0F)
+        .setCooldownSeconds(240.0F)
         .build();
 
     public LifeAndDeathRealmSpell() {
@@ -56,23 +56,30 @@ public class LifeAndDeathRealmSpell extends AbstractSpell {
 
     @Override
     public List<MutableComponent> getUniqueInfo(int spellLevel, LivingEntity caster) {
-        int duration = getBuffDuration(spellLevel);
         return List.of(
             Component.translatable(
                 "ui.irons_spellbooks.effect_length", 
-                Utils.timeFromTicks(duration, 1)
+                Utils.timeFromTicks(getBuffDuration(spellLevel, caster), 1)
             )
         );
     }
 
-    private int getBuffDuration(int spellLevel) {
-        return 100 + (spellLevel - 1) * 100;
+    // 持续时间
+    private int getBuffDuration(int spellLevel, LivingEntity caster) {
+        int baseDuration = 100 + (spellLevel - 1) * 100;
+        if (caster == null) {
+            return baseDuration;
+        }
+        
+        float spellPower = getSpellPower(spellLevel, caster);
+        int additionalDuration = (int) ((spellPower - 1.0f) * 4);
+        return baseDuration + additionalDuration;
     }
 
     @Override
     public void onCast(Level level, int spellLevel, LivingEntity entity, CastSource castSource, MagicData playerMagicData) {
         if (!level.isClientSide && entity instanceof ServerPlayer player) {
-            int duration = getBuffDuration(spellLevel);
+            int duration = getBuffDuration(spellLevel, entity);
             
             player.addEffect(new MobEffectInstance(
                 ModEffect.LIFE_AND_DEATH_REALM.get(),

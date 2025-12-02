@@ -13,7 +13,7 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.animal.Pig;
 import net.minecraft.world.level.Level;
 
-import java.util.List;
+import java.util.*;
 
 @AutoSpellConfig
 public class SummonPigSwarmSpell extends AbstractSpell {
@@ -29,6 +29,8 @@ public class SummonPigSwarmSpell extends AbstractSpell {
         this.manaCostPerLevel = 100;
         this.baseManaCost = 400;
         this.castTime = 100;
+        this.baseSpellPower = 4;
+        this.spellPowerPerLevel = 4;
     }
 
     @Override
@@ -54,12 +56,21 @@ public class SummonPigSwarmSpell extends AbstractSpell {
     @Override
     public List<MutableComponent> getUniqueInfo(int spellLevel, LivingEntity caster) {
         return List.of(
-            Component.translatable("ui.irons_spellbooks.summon_count", getSummonCount(spellLevel))
+            Component.translatable("ui.irons_spellbooks.summon_count", getSummonCount(spellLevel, caster))
         );
     }
 
-    private int getSummonCount(int spellLevel) {
-        return 4 * spellLevel;
+    // 召唤laowang237的数量
+    private int getSummonCount(int spellLevel, LivingEntity caster) {
+        int levelBonus = (spellLevel - 1) * this.spellPowerPerLevel;
+
+        int powerBonus = 0;
+        if (caster != null) {
+            float totalSpellPower = getSpellPower(spellLevel, caster);
+            powerBonus = (int) (totalSpellPower / 10);
+        }
+        
+        return this.baseSpellPower + levelBonus + powerBonus;
     }
 
     @Override
@@ -69,8 +80,10 @@ public class SummonPigSwarmSpell extends AbstractSpell {
 
     @Override
     public void onCast(Level level, int spellLevel, LivingEntity entity, CastSource castSource, MagicData playerMagicData) {
+        int summonCount = getSummonCount(spellLevel, entity);
+
         if (!level.isClientSide && level instanceof ServerLevel serverLevel) {
-            for (int i = 0; i < getSummonCount(spellLevel); i++) {
+            for (int i = 0; i < summonCount; i++) {
                 Pig pig = EntityType.PIG.create(serverLevel);
 
                 pig.setPos(

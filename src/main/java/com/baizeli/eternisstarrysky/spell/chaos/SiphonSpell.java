@@ -58,7 +58,7 @@ public class SiphonSpell extends AbstractSpell {
         return List.of(
             Component.translatable(
                 "ui.iron_spells_genesis.absorption_healing", 
-                Utils.stringTruncation(getHealPercent(spellLevel), 1)
+                Utils.stringTruncation(getHealPercent(spellLevel, caster), 1)
             ),
             Component.translatable(
                 "ui.irons_spellbooks.duration",
@@ -67,8 +67,8 @@ public class SiphonSpell extends AbstractSpell {
         );
     }
 
-    private float getHealPercent(int spellLevel) {
-        return getSpellPower(spellLevel, null);
+    private float getHealPercent(int spellLevel, LivingEntity caster) {
+        return getSpellPower(spellLevel, caster);
     }
 
     private int getDuration(int spellLevel) {
