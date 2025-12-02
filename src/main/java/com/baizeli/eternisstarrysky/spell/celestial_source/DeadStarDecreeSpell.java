@@ -63,7 +63,7 @@ public class DeadStarDecreeSpell extends AbstractSpell {
         return List.of(
             Component.translatable(
                 "ui.irons_spellbooks.damage", 
-                Utils.stringTruncation(getDamage(spellLevel, caster), 2)
+                Utils.stringTruncation(getLargeCometDamage(spellLevel, caster), 2)
             ),
             Component.translatable(
                 "ui.irons_spellbooks.radius", 

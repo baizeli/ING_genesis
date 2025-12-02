@@ -84,6 +84,44 @@
 					}
 				}
 			}
+		},
+		"celestial_source_spell_cape_standby": {
+			"loop": true,
+			"animation_length": 2,
+			"bones": {
+				"cape": {
+					"rotation": {
+						"0.0": [0, 0, 0],
+						"1.25": [10, 0, 0],
+						"2.0": [0, 0, 0]
+					},
+					"position": [0, 0, 0],
+					"scale": 1
+				}
+			}
+		},
+		"celestial_source_spell_cape_running": {
+			"animation_length": 3,
+			"bones": {
+				"cape": {
+					"rotation": {
+						"0.0": [0, 0, 0],
+						"1.0": [30, 0, 0],
+						"1.5": [20, 0, 0],
+						"2.0": [30, 0, 0],
+						"3.0": [0, 0, 0]
+					},
+					"position": [0, 0, 0],
+					"scale": 1
+				},
+				"cape2": {
+					"rotation": {
+						"0.0": [0, 0, 0],
+						"1.0": [-10, 0, 0],
+						"3.0": [0, 0, 0]
+					}
+				}
+			}
 		}
 	}
 }
