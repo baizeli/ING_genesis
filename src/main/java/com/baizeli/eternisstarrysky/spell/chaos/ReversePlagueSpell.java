@@ -38,7 +38,7 @@ public class ReversePlagueSpell extends AbstractSpell {
 
     public ReversePlagueSpell() {
         this.defaultConfig = new DefaultConfig()
-                .setMinRarity(SpellRarity.COMMON)
+                .setMinRarity(SpellRarity.LEGENDARY)
                 .setSchoolResource(SpellSchool.CHAOS_RESOURCE)
                 .setMaxLevel(1)
                 .setCooldownSeconds(0)
