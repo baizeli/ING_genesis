@@ -4,6 +4,7 @@
 	"compatibilityLevel": "JAVA_17",
 	"refmap": "iron_spells_genesis.refmap.json",
 	"mixins": [
+		"ironsspellbooks.gui.arcane_anvil.ArcaneAnvilMenuMixin",
 		"EntityMixin",
 		"FoodDataMixin",
 		"InfinitySwordDamageMixin",
