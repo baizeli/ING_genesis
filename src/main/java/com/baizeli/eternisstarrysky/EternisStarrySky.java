@@ -144,6 +144,9 @@ public class EternisStarrySky
                 
                 // 老王237
                 output.accept(ModItems.LAO_WANG_237.get());
+
+                // 无限忏悔石
+                output.accept(ModItems.INFINITE_SHRIVING_STONE.get());
             }).build());
 
     public EternisStarrySky(FMLJavaModLoadingContext context)
