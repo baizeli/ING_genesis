@@ -191,4 +191,10 @@ public class ModItems {
 
     // 老王237
     public static final RegistryObject<Item> LAO_WANG_237 = ITEMS.register("lao_wang_237", LaoWang237Curios::new);
+
+    
+    // 无限忏悔石
+    public static final RegistryObject<Item> INFINITE_SHRIVING_STONE = ITEMS.register(
+        "infinite_shriving_stone", InfiniteShrivingStoneItem::new
+    );
 }
