@@ -25,6 +25,8 @@ public class CelestialSourceSpellArmor extends ExtendedArmorItem {
         super(material, type, properties);
     }
 
+    Minecraft mc = Minecraft.getInstance();
+
     @Override
     @OnlyIn(Dist.CLIENT)
     public GeoArmorRenderer<?> supplyRenderer() {
@@ -76,7 +78,7 @@ public class CelestialSourceSpellArmor extends ExtendedArmorItem {
     }
     
     private PlayState celestial_source_spell_cape_running(AnimationState<CelestialSourceSpellArmor> animationState) {
-        if (Minecraft.getInstance().player.isSprinting()) {
+        if (mc.player.isSprinting()) {
             animationState.getController().setAnimation(
                 RawAnimation.begin().thenLoop("celestial_source_spell_cape_running")
             );
@@ -88,14 +90,22 @@ public class CelestialSourceSpellArmor extends ExtendedArmorItem {
     }
 
     private PlayState celestial_source_spell_cape_shift(AnimationState<CelestialSourceSpellArmor> animationState) {
-        if (Minecraft.getInstance().player.isShiftKeyDown()) {
+        if (mc.player.isShiftKeyDown()) {
+            /*animationState.getController().forceAnimationReset();*/
             animationState.getController().setAnimation(
-                RawAnimation.begin().thenLoop("celestial_source_spell_cape_shift")
+                RawAnimation.begin().thenLoop("celestial_source_spell_cape_shift_3")
             );
+            /*animationState.getController().setAnimation(
+                RawAnimation.begin().thenPlay("celestial_source_spell_cape_shift_1")
+            );*/
             
             return PlayState.CONTINUE;
         }
-    
+
+        /*if (animationState.getController().hasAnimationFinished()) {
+            return PlayState.STOP;
+        }*/
+        
         return PlayState.STOP;
     }
 
