@@ -145,7 +145,7 @@ public class CelestialSourceSpellArmor extends ExtendedArmorItem {
 
                 this.renderer.actuallyRender(
                     poseStack, animatable, ringBakedModel, ringRenderType, bufferSource, ringBuffer, 
-                    true, partialTick, packedLight, packedOverlay, 1.0F, 1.0F, 1.0F, 1.0F
+                    true, partialTick, 0xF000F0, packedOverlay, 1.0F, 1.0F, 1.0F, 1.0F
                 );
             }
         }
@@ -202,6 +202,19 @@ public class CelestialSourceSpellArmor extends ExtendedArmorItem {
         public void prepForRender(Entity entity, ItemStack stack, EquipmentSlot slot, HumanoidModel<?> baseModel) {
             super.prepForRender(entity, stack, slot, baseModel);
         }
+
+        /*@Override
+        public void actuallyRender(
+            PoseStack poseStack, CelestialSourceSpellArmor animatable, 
+            BakedGeoModel model, RenderType renderType, MultiBufferSource bufferSource, 
+            VertexConsumer buffer, boolean isReRender, float partialTick,
+            int packedLight, int packedOverlay, float red, float green, float blue, float alpha
+        ) {
+            super.actuallyRender(
+                poseStack, animatable, model, renderType, bufferSource, buffer, isReRender, 
+                partialTick, 0xF000F0, packedOverlay, red, green, blue, alpha
+            );
+        }*/
     }
 
     // 星源法术套相关...
