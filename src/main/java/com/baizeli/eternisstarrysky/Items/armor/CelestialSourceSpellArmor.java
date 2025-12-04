@@ -52,6 +52,9 @@ public class CelestialSourceSpellArmor extends ExtendedArmorItem {
             ),
             new AnimationController<>(
                 this, "celestial_source_spell_cape_running", 0, this::celestial_source_spell_cape_running
+            ),
+            new AnimationController<>(
+                this, "celestial_source_spell_cape_shift", 0, this::celestial_source_spell_cape_shift
             )
         );
     }
@@ -81,6 +84,18 @@ public class CelestialSourceSpellArmor extends ExtendedArmorItem {
             return PlayState.CONTINUE;
         }
         
+        return PlayState.STOP;
+    }
+
+    private PlayState celestial_source_spell_cape_shift(AnimationState<CelestialSourceSpellArmor> animationState) {
+        if (Minecraft.getInstance().player.isShiftKeyDown()) {
+            animationState.getController().setAnimation(
+                RawAnimation.begin().thenLoop("celestial_source_spell_cape_shift")
+            );
+            
+            return PlayState.CONTINUE;
+        }
+    
         return PlayState.STOP;
     }
 
