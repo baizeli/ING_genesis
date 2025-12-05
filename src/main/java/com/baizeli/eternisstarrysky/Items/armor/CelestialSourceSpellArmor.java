@@ -143,9 +143,15 @@ public class CelestialSourceSpellArmor extends ExtendedArmorItem {
 
                 BakedGeoModel ringBakedModel = this.ringModel.getBakedModel(this.ringModel.getModelResource(animatable));
 
+                // 一个简单的颜色计算
+                long time = System.currentTimeMillis() / 100;
+                float red = (float) (Math.sin(time * 0.05) + 1) / 2;
+                float green = (float) (Math.sin(time * 0.05 + 2) + 1) / 2;
+                float blue = (float) (Math.sin(time * 0.05 + 4) + 1) / 2;
+                
                 this.renderer.actuallyRender(
                     poseStack, animatable, ringBakedModel, ringRenderType, bufferSource, ringBuffer, 
-                    true, partialTick, 0xF000F0, packedOverlay, 1.0F, 1.0F, 1.0F, 1.0F
+                    true, partialTick, 0xF000F0, packedOverlay, /*red, green, blue*/1.0F, 1.0F, 1.0F, 1.0F
                 );
             }
         }
