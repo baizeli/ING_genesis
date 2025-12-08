@@ -1,5 +1,7 @@
 package com.baizeli.eternisstarrysky.Entity;
 
+import com.baizeli.eternisstarrysky.spell.Spells;
+import io.redspace.ironsspellbooks.damage.SpellDamageSource;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvents;
@@ -11,13 +13,12 @@ import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 public class CustomArrowEntity extends AbstractArrow {
 
@@ -42,6 +43,11 @@ public class CustomArrowEntity extends AbstractArrow {
     private float arrowDamage = 0;
     private long startTime = -1;
 
+    // 最后的轻语字段
+    private boolean finalWhisperArrow;
+    private double finalWhisperArrowDamage;
+    private boolean wasShow;
+
     private Map<LivingEntity, Long> attackedTargets = new HashMap<>();
     public CustomArrowEntity(EntityType<? extends CustomArrowEntity> entityType, Level level) {super(entityType, level);}
     public CustomArrowEntity(Level level, LivingEntity shooter) {super(ModEntities.CUSTOM_ARROW.get(), shooter, level);}
@@ -62,6 +68,23 @@ public class CustomArrowEntity extends AbstractArrow {
     // 是否是万箭法术的箭矢
     public void setMyriadArrow(boolean myriadArrow) {
         this.myriadArrow = myriadArrow;
+    }
+
+    // 是否是最后的轻语法术的箭矢
+    public void setFinalWhisperArrow(boolean finalWhisperArrow) {
+        this.finalWhisperArrow = finalWhisperArrow;
+    }
+
+    public boolean getFinalWhisperArrow() {
+        return this.finalWhisperArrow;
+    }
+
+    public void setFinalWhisperArrowDamage(double finalWhisperArrowDamage) {
+        this.finalWhisperArrowDamage = finalWhisperArrowDamage;
+    }
+
+    public double getFinalWhisperArrowDamage() {
+        return this.finalWhisperArrowDamage;
     }
 
     @Override
@@ -111,6 +134,11 @@ public class CustomArrowEntity extends AbstractArrow {
             livingEntity.hurtTime = 0;
         }
 
+        if (this.finalWhisperArrow) {
+            setPos(hitEntity.position());
+            handleFinalWhisperArrows();
+        }
+
         if (spawn) {
             createArrowRain();
         } else {
@@ -131,6 +159,11 @@ public class CustomArrowEntity extends AbstractArrow {
         }
 
         super.onHitBlock(result);
+
+        if (this.finalWhisperArrow) {
+            handleFinalWhisperArrows();
+        }
+
         if (spawn) createArrowRain();
         else hitTime = level().getGameTime();
     }
@@ -355,6 +388,38 @@ public class CustomArrowEntity extends AbstractArrow {
 
         } else {
             this.setNoGravity(false);
+        }
+    }
+
+    // 最后的轻语逻辑
+    private void handleFinalWhisperArrows() {
+        // 不知名原因导致打到玩家的时候这个逻辑会执行两次
+        if (!wasShow) {
+            for (int i = 0; i < 3; ++i) {
+                this.level().addFreshEntity(new LightningBolt(ModEntities.LIGHTNING_BOLT.get(), this.level(), this.getX(), this.getY(), this.getZ()));
+            }
+            this.level().addFreshEntity(new BoxEntity(ModEntities.BOX_ENTIYT.get(), this.level(), this.getX(), this.getY(), this.getZ()));
+
+            new Thread(() -> {
+                for (int i = 0; i < 5; ++i) {
+                    AABB area = new AABB(this.getX() - 2.5, this.getY() - 2.5, this.getZ() - 2.5, this.getX() + 2.5, this.getY() + 2.5, this.getZ() + 2.5);
+                    List<LivingEntity> targets = this.level().getEntitiesOfClass(LivingEntity.class, area, e -> e != this.getOwner() && e.isAlive());
+
+                    double damage = getFinalWhisperArrowDamage();
+                    for (LivingEntity target : targets) {
+                        target.invulnerableTime = 0;
+                        target.hurtTime = 0;
+                        target.hurt(SpellDamageSource.source(target, Objects.requireNonNull(this.getOwner()), Spells.FINAL_WHISPER_SPELL.get()), (float) damage);
+                        target.setHealth((float) (target.getHealth() - damage));
+                    }
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }).start();
+            wasShow = true;
         }
     }
 }

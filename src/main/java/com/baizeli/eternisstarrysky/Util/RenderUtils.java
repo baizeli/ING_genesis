@@ -14,6 +14,7 @@ import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.block.model.FaceBakery;
 import net.minecraft.client.renderer.block.model.ItemModelGenerator;
+import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.ItemEntityRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -21,6 +22,8 @@ import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.Material;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraft.world.item.Item;
@@ -29,10 +32,16 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
+import org.joml.Vector3f;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.mojang.math.Axis.*;
 
 public class RenderUtils {
+    private static final ResourceLocation TEX = new ResourceLocation(EternisStarrySky.MODID, "textures/misc/white.png");
+    private static final Map<Integer, Vector3f> SPHERE_SPEEDS = new HashMap<>();
     public static final ResourceLocation cosmic = new ResourceLocation(EternisStarrySky.MODID, "textures/shader/cosmictexture.png");
     private static final ItemModelGenerator ITEM_MODEL_GENERATOR = new ItemModelGenerator();
     private static final FaceBakery FACE_BAKERY = new FaceBakery();
@@ -469,6 +478,94 @@ public class RenderUtils {
             }
         } finally {
             pose.popPose();
+        }
+    }
+
+    public static <T extends LivingEntity> void fixRot(PoseStack poseStack, LivingEntity entity, float partialTick) {
+        poseStack.mulPose(Axis.YP.rotationDegrees(-Mth.lerp(partialTick, entity.yBodyRotO, entity.yBodyRot)));
+    }
+
+    public static float[] getRainbowColor(float rangeSeconds) {
+        float time = (float)(System.currentTimeMillis() % (long)(rangeSeconds * 1000.0F)) / (rangeSeconds * 1000.0F);
+        float hue = time * 360.0F;
+        return hsvToRgb(hue, 1.0F, 1.0F);
+    }
+
+    private static float[] hsvToRgb(float h, float s, float v) {
+        float c = v * s;
+        float x = c * (1.0F - Math.abs(h / 60.0F % 2.0F - 1.0F));
+        float m = v - c;
+        float r;
+        float g;
+        float b;
+        if (h < 60.0F) {
+            r = c;
+            g = x;
+            b = 0.0F;
+        } else if (h < 120.0F) {
+            r = x;
+            g = c;
+            b = 0.0F;
+        } else if (h < 180.0F) {
+            r = 0.0F;
+            g = c;
+            b = x;
+        } else if (h < 240.0F) {
+            r = 0.0F;
+            g = x;
+            b = c;
+        } else if (h < 300.0F) {
+            r = x;
+            g = 0.0F;
+            b = c;
+        } else {
+            r = c;
+            g = 0.0F;
+            b = x;
+        }
+
+        return new float[]{r + m, g + m, b + m};
+    }
+
+    public static void render(PoseStack poseStack, MultiBufferSource buffer, int packedLight, LivingEntity entity, float partialTick) {
+        float height = 10;
+        float angle = (System.currentTimeMillis() % 360000L) / 1000F * 90F;
+        poseStack.pushPose();
+        fixRot(poseStack, entity, partialTick);
+        poseStack.translate(0, -5.0F, 0);
+        float halfH = height / 2.0F;
+        float r = 1.0F, g = 1.0F, b = 1.0F, a = 0.3F;
+        var color = getRainbowColor(3);
+        r = color[0];
+        g = color[1];
+        b = color[2];
+        VertexConsumer vc = buffer.getBuffer(RenderType.entityTranslucentEmissive(TEX, true));
+        for (int i = 0; i < 4; i++) {
+            poseStack.pushPose();
+            poseStack.mulPose(Axis.XP.rotationDegrees(angle));
+            poseStack.mulPose(Axis.YP.rotationDegrees(angle));
+            poseStack.mulPose(Axis.ZP.rotationDegrees(angle));
+            drawCylinderSide(poseStack, vc, 10 + (i * 0.3F), halfH + (i * 0.04F), 16, r, g, b, a, packedLight);
+            poseStack.popPose();
+        }
+        poseStack.popPose();
+    }
+
+    private static void drawCylinderSide(PoseStack poseStack, VertexConsumer vc, float range, float halfH, int seg, float r, float g, float b, float a, int packedLight) {
+        PoseStack.Pose m = poseStack.last();
+        for (int i = 0; i < seg; i++) {
+            float a0 = (float) (2 * Math.PI * (i / (float) seg));
+            float a1 = (float) (2 * Math.PI * ((i + 1F) / seg));
+            float x0 = Mth.cos(a0) * range;
+            float z0 = Mth.sin(a0) * range;
+            float x1 = Mth.cos(a1) * range;
+            float z1 = Mth.sin(a1) * range;
+            float U = halfH;
+            float D = -halfH;
+            vc.vertex(m.pose(), x0, U, z0).color(r, g, b, a).uv(0, 0).overlayCoords(0, 10).uv2(packedLight).normal(m.normal(), x0, 0, z0).endVertex();
+            vc.vertex(m.pose(), x0, D, z0).color(r, g, b, a).uv(0, 1).overlayCoords(0, 10).uv2(packedLight).normal(m.normal(), x0, 0, z0).endVertex();
+            vc.vertex(m.pose(), x1, D, z1).color(r, g, b, a).uv(1, 1).overlayCoords(0, 10).uv2(packedLight).normal(m.normal(), x1, 0, z1).endVertex();
+            vc.vertex(m.pose(), x1, U, z1).color(r, g, b, a).uv(1, 0).overlayCoords(0, 10).uv2(packedLight).normal(m.normal(), x1, 0, z1).endVertex();
         }
     }
 }

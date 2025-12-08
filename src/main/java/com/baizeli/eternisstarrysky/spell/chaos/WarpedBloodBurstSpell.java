@@ -52,11 +52,11 @@ public class WarpedBloodBurstSpell extends AbstractSpell {
     }
 
     public List<MutableComponent> getUniqueInfo(int spellLevel, LivingEntity caster) {
-        return List.of(Component.translatable("ui.irons_spellbooks.damage", Utils.stringTruncation(getSpellPower(spellLevel, caster), 1)),
+        return List.of(Component.translatable("ui.irons_spellbooks.cooldown", Utils.timeFromTicks(getCooldownInTicks(spellLevel, CastSource.COMMAND, caster), 1)),
+                Component.translatable("ui.irons_spellbooks.damage", Utils.stringTruncation(getSpellPower(spellLevel, caster), 1)),
                 Component.translatable("ui.iron_spells_genesis.percent_force_damage", Utils.stringTruncation(getForceDamage(spellLevel, caster), 1)),
-                Component.translatable("ui.irons_spellbooks.radius", Utils.stringTruncation(3 * spellLevel, 1)),
-                Component.translatable("ui.irons_spellbooks.cooldown", Utils.timeFromTicks(getCooldownInTicks(spellLevel, CastSource.NONE, caster), 1)
-                ));
+                Component.translatable("ui.irons_spellbooks.radius", Utils.stringTruncation(3 * spellLevel, 1))
+        );
     }
 
 
@@ -86,13 +86,23 @@ public class WarpedBloodBurstSpell extends AbstractSpell {
     }
 
     private double getForceDamage(int spellLevel, LivingEntity caster) {
-        return spellLevel * caster.getAttributeValue(AttributeRegistry.SPELL_POWER.get()) * this.getSchoolType().getPowerFor(caster) * 0.5;
+        double entitySpellPowerModifier = 1.0F;
+        double entitySchoolPowerModifier = 1.0F;
+        float configPowerModifier = (float)ServerConfigs.getSpellConfig(this).powerMultiplier();
+        if (caster != null) {
+            entitySpellPowerModifier = caster.getAttributeValue(AttributeRegistry.SPELL_POWER.get());
+            entitySchoolPowerModifier = this.getSchoolType().getPowerFor(caster);
+        }
+        return spellLevel * entitySpellPowerModifier * entitySchoolPowerModifier * configPowerModifier * 0.5;
     }
 
     private int getCooldownInTicks(int spellLevel, CastSource castSource, LivingEntity caster) {
         int coolDown;
+        double playerCooldownModifier = 1.0D;
 
-        double playerCooldownModifier = caster.getAttributeValue(AttributeRegistry.COOLDOWN_REDUCTION.get());
+        if (caster != null) {
+            playerCooldownModifier = caster.getAttributeValue(AttributeRegistry.COOLDOWN_REDUCTION.get());
+        }
         float itemCoolDownModifer = 1.0F;
         if (castSource == CastSource.SWORD) {
             itemCoolDownModifer = ServerConfigs.SWORDS_CD_MULTIPLIER.get().floatValue();
