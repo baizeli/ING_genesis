@@ -3,15 +3,14 @@ package com.baizeli.eternisstarrysky.Items;
 import com.baizeli.eternisstarrysky.Content.ModBlock;
 import com.baizeli.eternisstarrysky.EternisStarrySky;
 import com.baizeli.eternisstarrysky.Items.Staff.*;
+import com.baizeli.eternisstarrysky.Items.armor.*;
 import com.baizeli.eternisstarrysky.spell.UpgradeOrbTypes;
 import io.redspace.ironsspellbooks.item.UpgradeOrbItem;
 import io.redspace.ironsspellbooks.item.armor.IronsExtendedArmorMaterial;
 import com.baizeli.eternisstarrysky.Items.curios.*;
 import io.redspace.ironsspellbooks.util.ItemPropertiesHelper;
 import net.minecraft.world.item.*;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.minecraftforge.registries.*;
 
 public class ModItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, EternisStarrySky.MOD_ID);
@@ -99,8 +98,12 @@ public class ModItems {
     );
 
     public static final RegistryObject<Item> WORKBENCH = ITEMS.register("workbench", () -> new BlockItem(ModBlock.workbench.get(), new Item.Properties()));
+    
+    // 奥术工作台
+    public static final RegistryObject<Item> ARCANE_WORKBENCH = ITEMS.register("arcane_workbench", 
+        () -> new BlockItem(ModBlock.ARCANE_WORKBENCH.get(), new Item.Properties()));
 
-    // 无尽永恒盔甲套装
+/*    // 无尽永恒盔甲套装
     public static final RegistryObject<Item> INFINITY_ETERNAL_HELMET = ITEMS.register("infinity_eternal_helmet",
             () -> new InfinityEternalArmorItem(ModArmorMaterials.INFINITY_ETERNAL, ArmorItem.Type.HELMET,
                     new Item.Properties().rarity(Rarity.RARE)));
@@ -115,23 +118,57 @@ public class ModItems {
 
     public static final RegistryObject<Item> INFINITY_ETERNAL_BOOTS = ITEMS.register("infinity_eternal_boots",
             () -> new InfinityEternalArmorItem(ModArmorMaterials.INFINITY_ETERNAL, ArmorItem.Type.BOOTS,
-                    new Item.Properties().rarity(Rarity.RARE)));
+                    new Item.Properties().rarity(Rarity.RARE)));*/
 
-    // 神圣金属盔甲套装
+    // 神圣金属套
     public static final RegistryObject<Item> DIVINE_METAL_HELMET = ITEMS.register("divine_metal_helmet",
-            () -> new DivineMetalArmorItem((IronsExtendedArmorMaterial) ModArmorMaterials.DIVINE_METAL, ArmorItem.Type.HELMET,
+            () -> new DivineMetalArmor((IronsExtendedArmorMaterial) ModArmorMaterials.DIVINE_METAL, ArmorItem.Type.HELMET,
                     new Item.Properties().rarity(Rarity.EPIC)));
 
     public static final RegistryObject<Item> DIVINE_METAL_CHESTPLATE = ITEMS.register("divine_metal_chestplate",
-            () -> new DivineMetalArmorItem((IronsExtendedArmorMaterial) ModArmorMaterials.DIVINE_METAL, ArmorItem.Type.CHESTPLATE,
+            () -> new DivineMetalArmor((IronsExtendedArmorMaterial) ModArmorMaterials.DIVINE_METAL, ArmorItem.Type.CHESTPLATE,
                     new Item.Properties().rarity(Rarity.EPIC)));
 
     public static final RegistryObject<Item> DIVINE_METAL_LEGGINGS = ITEMS.register("divine_metal_leggings",
-            () -> new DivineMetalArmorItem((IronsExtendedArmorMaterial) ModArmorMaterials.DIVINE_METAL, ArmorItem.Type.LEGGINGS,
+            () -> new DivineMetalArmor((IronsExtendedArmorMaterial) ModArmorMaterials.DIVINE_METAL, ArmorItem.Type.LEGGINGS,
                     new Item.Properties().rarity(Rarity.EPIC)));
 
     public static final RegistryObject<Item> DIVINE_METAL_BOOTS = ITEMS.register("divine_metal_boots",
-            () -> new DivineMetalArmorItem((IronsExtendedArmorMaterial) ModArmorMaterials.DIVINE_METAL, ArmorItem.Type.BOOTS,
+            () -> new DivineMetalArmor((IronsExtendedArmorMaterial) ModArmorMaterials.DIVINE_METAL, ArmorItem.Type.BOOTS,
+                    new Item.Properties().rarity(Rarity.EPIC)));
+
+    // 星源法术套
+    public static final RegistryObject<Item> CELESTIAL_SOURCE_SPELL_HELMET = ITEMS.register("celestial_source_spell_helmet",
+            () -> new CelestialSourceSpellArmor((IronsExtendedArmorMaterial) ModArmorMaterials.CELESTIAL_SOURCE_SPELL, ArmorItem.Type.HELMET,
+                    new Item.Properties().rarity(Rarity.EPIC)));
+
+    public static final RegistryObject<Item> CELESTIAL_SOURCE_SPELL_CHESTPLATE = ITEMS.register("celestial_source_spell_chestplate",
+            () -> new CelestialSourceSpellArmor((IronsExtendedArmorMaterial) ModArmorMaterials.CELESTIAL_SOURCE_SPELL, ArmorItem.Type.CHESTPLATE,
+                    new Item.Properties().rarity(Rarity.EPIC)));
+
+    public static final RegistryObject<Item> CELESTIAL_SOURCE_SPELL_LEGGINGS = ITEMS.register("celestial_source_spell_leggings",
+            () -> new CelestialSourceSpellArmor((IronsExtendedArmorMaterial) ModArmorMaterials.CELESTIAL_SOURCE_SPELL, ArmorItem.Type.LEGGINGS,
+                    new Item.Properties().rarity(Rarity.EPIC)));
+
+    public static final RegistryObject<Item> CELESTIAL_SOURCE_SPELL_BOOTS = ITEMS.register("celestial_source_spell_boots",
+            () -> new CelestialSourceSpellArmor((IronsExtendedArmorMaterial) ModArmorMaterials.CELESTIAL_SOURCE_SPELL, ArmorItem.Type.BOOTS,
+                    new Item.Properties().rarity(Rarity.EPIC)));
+    
+    // 混沌法术套
+    public static final RegistryObject<Item> CHAOS_SPELL_HELMET = ITEMS.register("chaos_spell_helmet",
+            () -> new ChaosSpellArmor((IronsExtendedArmorMaterial) ModArmorMaterials.CHAOS_SPELL, ArmorItem.Type.HELMET,
+                    new Item.Properties().rarity(Rarity.EPIC)));
+
+    public static final RegistryObject<Item> CHAOS_SPELL_CHESTPLATE = ITEMS.register("chaos_spell_chestplate",
+            () -> new ChaosSpellArmor((IronsExtendedArmorMaterial) ModArmorMaterials.CHAOS_SPELL, ArmorItem.Type.CHESTPLATE,
+                    new Item.Properties().rarity(Rarity.EPIC)));
+
+    public static final RegistryObject<Item> CHAOS_SPELL_LEGGINGS = ITEMS.register("chaos_spell_leggings",
+            () -> new ChaosSpellArmor((IronsExtendedArmorMaterial) ModArmorMaterials.CHAOS_SPELL, ArmorItem.Type.LEGGINGS,
+                    new Item.Properties().rarity(Rarity.EPIC)));
+
+    public static final RegistryObject<Item> CHAOS_SPELL_BOOTS = ITEMS.register("chaos_spell_boots",
+            () -> new ChaosSpellArmor((IronsExtendedArmorMaterial) ModArmorMaterials.CHAOS_SPELL, ArmorItem.Type.BOOTS,
                     new Item.Properties().rarity(Rarity.EPIC)));
 
     public static final RegistryObject<Item> CHAOS_SPELL_BOOK = ITEMS.register("chaos_spell_book", ChaosSpellBook::new);
@@ -154,4 +191,10 @@ public class ModItems {
 
     // 老王237
     public static final RegistryObject<Item> LAO_WANG_237 = ITEMS.register("lao_wang_237", LaoWang237Curios::new);
+
+    
+    // 无限忏悔石
+    public static final RegistryObject<Item> INFINITE_SHRIVING_STONE = ITEMS.register(
+        "infinite_shriving_stone", InfiniteShrivingStoneItem::new
+    );
 }

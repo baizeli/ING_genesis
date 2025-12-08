@@ -1,5 +1,6 @@
 package com.baizeli.eternisstarrysky;
 
+import com.baizeli.eternisstarrysky.Content.ArcaneWorkbench.ArcaneWorkbenchScreen;
 import com.baizeli.eternisstarrysky.Content.ModBlock;
 import com.baizeli.eternisstarrysky.Content.Workbenchs.*;
 import com.baizeli.eternisstarrysky.Entity.*;
@@ -77,7 +78,7 @@ public class EternisStarrySky
     public static final RegistryObject<CreativeModeTab> EXAMPLE_TAB = CREATIVE_MODE_TABS.register("iron_spells_genesis_tab", () -> CreativeModeTab.builder()
             .withTabsBefore(CreativeModeTabs.COMBAT)
             .title(Component.translatable("itemGroup." + MOD_ID + ".iron_spells_genesis_tab"))
-            .icon(() -> ModItems.PURPLEITE_GALAXY_INGOT.get().getDefaultInstance())
+            .icon(() -> ModItems.GALAXY_SCROLL.get().getDefaultInstance())
             .displayItems((parameters, output) -> {
                 output.accept(ModItems.ETERNIS_APPLE.get());
                 output.accept(ModItems.PURPLEITE_GALAXY_INGOT.get());
@@ -89,10 +90,10 @@ public class EternisStarrySky
                 output.accept(ModItems.INFINITY_SWORD.get());
                 output.accept(ModItems.AVARITIA_SWORD.get());
                 
-                output.accept(ModItems.INFINITY_ETERNAL_HELMET.get());
+                /*output.accept(ModItems.INFINITY_ETERNAL_HELMET.get());
                 output.accept(ModItems.INFINITY_ETERNAL_CHESTPLATE.get());
                 output.accept(ModItems.INFINITY_ETERNAL_LEGGINGS.get());
-                output.accept(ModItems.INFINITY_ETERNAL_BOOTS.get());
+                output.accept(ModItems.INFINITY_ETERNAL_BOOTS.get());*/
 
                 // 神圣金属套
                 output.accept(ModItems.DIVINE_METAL_HELMET.get());
@@ -100,7 +101,22 @@ public class EternisStarrySky
                 output.accept(ModItems.DIVINE_METAL_LEGGINGS.get());
                 output.accept(ModItems.DIVINE_METAL_BOOTS.get());
 
+                // 星源法术套
+                output.accept(ModItems.CELESTIAL_SOURCE_SPELL_HELMET.get());
+                output.accept(ModItems.CELESTIAL_SOURCE_SPELL_CHESTPLATE.get());
+                output.accept(ModItems.CELESTIAL_SOURCE_SPELL_LEGGINGS.get());
+                output.accept(ModItems.CELESTIAL_SOURCE_SPELL_BOOTS.get());
+                
+                // 混沌法术套
+                output.accept(ModItems.CHAOS_SPELL_HELMET.get());
+                output.accept(ModItems.CHAOS_SPELL_CHESTPLATE.get());
+                output.accept(ModItems.CHAOS_SPELL_LEGGINGS.get());
+                output.accept(ModItems.CHAOS_SPELL_BOOTS.get());
+
                 output.accept(ModItems.WORKBENCH.get());
+
+                // 奥术工作台
+                /*output.accept(ModItems.ARCANE_WORKBENCH.get());*/
                 
                 output.accept(ModItems.CHAOS_SPELL_BOOK.get());
                 output.accept(ModItems.CELESTIAL_SOURCE_SPELL_BOOK.get());
@@ -128,6 +144,9 @@ public class EternisStarrySky
                 
                 // 老王237
                 output.accept(ModItems.LAO_WANG_237.get());
+
+                // 无限忏悔石
+                output.accept(ModItems.INFINITE_SHRIVING_STONE.get());
             }).build());
 
     public EternisStarrySky(FMLJavaModLoadingContext context)
@@ -229,6 +248,7 @@ public class EternisStarrySky
         {
             event.enqueueWork(() -> {
                 MenuScreens.register(ModMenuTypes.VANILLA_WORKBENCH_MENU.get(), VanillaWorkbenchScreen::new);
+                MenuScreens.register(ModMenuTypes.ARCANE_WORKBENCH_MENU.get(), ArcaneWorkbenchScreen::new);
                 EntityRenderers.register(ModEntities.SWORD_MAN_CSDY.get(), SwordManCsdyRenderer::new);
                 EntityRenderers.register(ModEntities.NYAN_CAT.get(), NyanCatRenderer::new);
                 EntityRenderers.register(ModEntities.MAGIC_CIRCLE.get(), MagicCircleRenderer::new);
@@ -237,11 +257,11 @@ public class EternisStarrySky
                 EntityRenderers.register(ModEntities.SWORD_ENTITY.get(), SwordEntityRenderer::new);
 
                 EntityRenderers.register(ModEntities.DEAD_STAR_DECREE_COMET.get(), 
-                    context -> new DeadStarDecreeCometRenderer(context, 1.0f)
+                    context -> new DeadStarDecreeCometRenderer(context, 0.25f)
                 );
                 
                 EntityRenderers.register(ModEntities.DEAD_STAR_DECREE_LARGE_COMET.get(), 
-                    context -> new DeadStarDecreeCometRenderer(context, 24.0f)
+                    context -> new DeadStarDecreeCometRenderer(context, 6.0f)
                 );
             });
             MinecraftForge.registerConfigScreen(new ConfigurationFactory());

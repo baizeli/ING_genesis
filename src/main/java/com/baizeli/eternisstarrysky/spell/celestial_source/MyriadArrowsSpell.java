@@ -31,7 +31,7 @@ public class MyriadArrowsSpell extends AbstractSpell {
 
     public MyriadArrowsSpell() {
         this.manaCostPerLevel = 100;
-        this.baseSpellPower = 0;
+        this.baseSpellPower = 1;
         this.spellPowerPerLevel = 0;
         this.castTime = 100;
         this.baseManaCost = 900;
@@ -77,17 +77,36 @@ public class MyriadArrowsSpell extends AbstractSpell {
 
     // 箭矢发射的数量
     private int getArrowCount(int spellLevel, LivingEntity caster) {
-        return 300 + (spellLevel - 1) * 50;
+        int baseCount = 300 + (spellLevel - 1) * 50;
+        if (caster == null) {
+            return baseCount;
+        }
+        
+        float spellPower = getSpellPower(spellLevel, caster);
+        int additionalCount = (int) (spellPower - 1.0f);
+        return baseCount + additionalCount;
     }
 
     // 每支箭矢造成的伤害
     private float getDamage(int spellLevel, LivingEntity caster) {
-        return 16.0f;
+        if (caster == null) {
+            return 16.0f;
+        }
+        
+        float spellPower = getSpellPower(spellLevel, caster);
+        return 16.0f + (spellPower - 1.0f) * 0.1f;
     }
 
     // 持续发射持续的时间
     private int getDuration(int spellLevel, LivingEntity caster) {
-        return 5 * 20;
+        int baseDuration = 5 * 20;
+        if (caster == null) {
+            return baseDuration;
+        }
+        
+        float spellPower = getSpellPower(spellLevel, caster);
+        int reduction = (int) ((spellPower - 1.0f) * 100);
+        return Math.max(20, baseDuration - reduction);
     }
 
     @Override
@@ -95,10 +114,10 @@ public class MyriadArrowsSpell extends AbstractSpell {
         return Optional.of(SoundRegistry.ARROW_VOLLEY_PREPARE.get());
     }
 
-/*     @Override
+    /*@Override
     public Optional<SoundEvent> getCastFinishSound() {
         return Optional.of(SoundEvents.EVOKER_CAST_SPELL);
-    } */
+    }*/
 
     @Override
     public AnimationHolder getCastStartAnimation() {
@@ -140,6 +159,7 @@ public class MyriadArrowsSpell extends AbstractSpell {
                 serverLevel.addFreshEntity(arrowsEntity);
             }
         }
+        
         super.onCast(level, spellLevel, entity, castSource, playerMagicData);
     }
 }

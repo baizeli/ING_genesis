@@ -16,12 +16,12 @@ public class BloodRitualSpell extends AbstractSpell {
         .setMinRarity(SpellRarity.LEGENDARY)
         .setSchoolResource(SpellSchool.CHAOS_RESOURCE)
         .setMaxLevel(1)
-        .setCooldownSeconds(0)
+        .setCooldownSeconds(120.0F)
         .build();
 
     public BloodRitualSpell() {
         this.manaCostPerLevel = 0;
-        this.baseSpellPower = 0;
+        this.baseSpellPower = 1;
         this.spellPowerPerLevel = 0;
         this.castTime = 0;
         this.baseManaCost = 0;
@@ -50,22 +50,19 @@ public class BloodRitualSpell extends AbstractSpell {
     @Override
     public void onCast(Level level, int spellLevel, LivingEntity entity, CastSource castSource, MagicData playerMagicData) {
         if (!level.isClientSide) {
-            // 记录当前血量
             float currentHealth = entity.getHealth();
-            
-            // 将血量设置为1
+
             entity.setHealth(1.0f);
-            
-            // 计算扣除的血量
+
             float healthDiff = currentHealth - 1.0f;
-            
-            // 获得法力值 = 扣除的血量 * 10
-            float manaToAdd = healthDiff * 10.0f;
-            
-            // 增加法力值
+
+            // 1混沌/通用法术强度=(+)1点法力值+0.5倍转化
+            float spellPower = getSpellPower(spellLevel, entity);
+            float conversionRate = 10.0f + (spellPower - 1.0f) * 0.5f;
+            float manaToAdd = healthDiff * conversionRate;
+
             playerMagicData.addMana(manaToAdd);
-            
-            // 清除所有buff
+
             entity.removeAllEffects();
         }
 

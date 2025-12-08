@@ -37,6 +37,7 @@
   "spell.iron_spells_genesis.unparalleled": "Unparalleled",
   "spell.iron_spells_genesis.glazed_flower_rain": "Glazed Flower Rain",
   "spell.iron_spells_genesis.summon_pig_swarm": "Summon Pig Swarm",
+  "spell.iron_spells_genesis.never_miss": "Never Miss",
   "spell.iron_spells_genesis.final_whisper": "Final Whisper",
   "spell.iron_spells_genesis.final_whisper.guide": "Fire an arrow that creates a 5x5 area on impact, dealing damage per second to mobs for 5 seconds.",
   "spell.iron_spells_genesis.final_whisper.low_health": "Your health is too weak to unleash the Final Whisper!",
@@ -52,6 +53,7 @@
   "effect.iron_spells_genesis.glazed_flower_rain": "Glazed Flower Rain",
   "effect.iron_spells_genesis.blood_frenzy": "Blood Frenzy",
   "effect.iron_spells_genesis.confusion": "Confusion",
+  "effect.iron_spells_genesis.never_miss": "Never Miss",
 
   "item.iron_spells_genesis.chaos_staff": "Chaos Staff",
   "item.iron_spells_genesis.celestial_source_staff": "Celestial Source Staff",
@@ -61,14 +63,6 @@
   "item.iron_spells_genesis.broyouhuashuo": "Oops, How Did I Write Ingot As Bag",
   "item.iron_spells_genesis.purpleite_galaxy_ingot": "§5Purpleite Galaxy Ingot",
   "item.iron_spells_genesis.purpleite_galaxy_ingot1": "What In Your Palm, Eternal Power",
-  "item.iron_spells_genesis.infinity_eternal_helmet": "Purpleite Galaxy Helmet",
-  "item.iron_spells_genesis.infinity_eternal_chestplate": "Purpleite Galaxy Chestplate",
-  "item.iron_spells_genesis.infinity_eternal_leggings": "Purpleite Galaxy Leggings",
-  "item.iron_spells_genesis.infinity_eternal_boots": "Purpleite Galaxy Boots",
-  "item.iron_spells_genesis.divine_metal_helmet": "Divine Metal Helmet",
-  "item.iron_spells_genesis.divine_metal_chestplate": "Divine Metal Chestplate",
-  "item.iron_spells_genesis.divine_metal_leggings": "Divine Metal Leggings",
-  "item.iron_spells_genesis.divine_metal_boots": "Divine Metal Boots",
   "item.iron_spells_genesis.divine_metal_ingot": "Divine Metal Ingot",
   "item.iron_spells_genesis.whisper_of_the_past": "Whisper of the Past",
   "item.iron_spells_genesis.create_star": "Heart of Creation",
@@ -84,10 +78,35 @@
   "item.iron_spells_genesis.celestial_source_pearl": "Celestial Source Pearl",
   "item.iron_spells_genesis.celestial_source_ingot": "Celestial Source Ingot",
   "item.iron_spells_genesis.lao_wang_237": "Lao Wang 237",
-  
+  "item.iron_spells_genesis.infinite_shriving_stone": "Infinite Shriving Stone",
+
+  "item.iron_spells_genesis.infinity_eternal_helmet": "Purpleite Galaxy Helmet",
+  "item.iron_spells_genesis.infinity_eternal_chestplate": "Purpleite Galaxy Chestplate",
+  "item.iron_spells_genesis.infinity_eternal_leggings": "Purpleite Galaxy Leggings",
+  "item.iron_spells_genesis.infinity_eternal_boots": "Purpleite Galaxy Boots",
+
+  "item.iron_spells_genesis.divine_metal_helmet": "Divine Metal Helmet",
+  "item.iron_spells_genesis.divine_metal_chestplate": "Divine Metal Chestplate",
+  "item.iron_spells_genesis.divine_metal_leggings": "Divine Metal Leggings",
+  "item.iron_spells_genesis.divine_metal_boots": "Divine Metal Boots",
+
+  "item.iron_spells_genesis.celestial_source_spell_helmet": "Celestial Source Spell Helmet",
+  "item.iron_spells_genesis.celestial_source_spell_chestplate": "Celestial Source Spell Chestplate",
+  "item.iron_spells_genesis.celestial_source_spell_leggings": "Celestial Source Spell Leggings",
+  "item.iron_spells_genesis.celestial_source_spell_boots": "Celestial Source Spell Boots",
+
+  "item.iron_spells_genesis.chaos_spell_helmet": "Chaos Spell Helmet",
+  "item.iron_spells_genesis.chaos_spell_chestplate": "Chaos Spell Chestplate",
+  "item.iron_spells_genesis.chaos_spell_leggings": "Chaos Spell Leggings",
+  "item.iron_spells_genesis.chaos_spell_boots": "Chaos Spell Boots",
+
   "iron_spells_genesis.galaxy_scroll.book_name": "§bGalaxy Scroll",
+
   "block.iron_spells_genesis.workbench": "Ultimate Workbench",
+  "block.iron_spells_genesis.arcane_workbench": "Arcane Workbench",
+
   "container.iron_spells_genesis.vanilla_workbench": "Ordered Ultimate Crafting",
+  "container.iron_spells_genesis.arcane_workbench": "Arcane Crafting",
 
   "key.categories.iron_spells_genesis": "Eternis Starry Sky - Key Bindings",
   "key.iron_spells_genesis.bow_type": "Bow - Switch Arrow Type",

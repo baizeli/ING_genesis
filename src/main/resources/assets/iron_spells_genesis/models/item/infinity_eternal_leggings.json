@@ -1,7 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "iron_spells_genesis:item/infinity_eternal_leggings"
+    "layer0": "iron_spells_genesis:item/armor/infinity_eternal_leggings"
   },
   "loader": "iron_spells_genesis:cosmic",
   "cosmic": {

@@ -30,6 +30,8 @@ public class BloodFrenzySpell extends AbstractSpell {
         this.manaCostPerLevel = 100;
         this.baseManaCost = 500;
         this.castTime = 100;
+        this.baseSpellPower = 1;
+        this.spellPowerPerLevel = 1;
     }
 
     @Override
@@ -57,21 +59,27 @@ public class BloodFrenzySpell extends AbstractSpell {
         return List.of(
             Component.translatable(
                 "ui.iron_spells_genesis.damage_multiplier", 
-                200
-            ),
-            Component.translatable(
-                "ui.irons_spellbooks.damage_reduction", 
-                50
+                Utils.stringTruncation(getDamageMultiplier(spellLevel, caster), 1)
             ),
             Component.translatable(
                 "ui.irons_spellbooks.duration",
-                Utils.timeFromTicks(getDuration(spellLevel), 1)
+                Utils.timeFromTicks(getDuration(spellLevel, caster), 1)
             )
         );
     }
 
-    private int getDuration(int spellLevel) {
-        return 600 * spellLevel;
+    // 伤害倍数
+    private float getDamageMultiplier(int spellLevel, LivingEntity caster) {
+        float spellPower = getSpellPower(spellLevel, caster);
+        return 200.0f + (spellPower - 1.0f) * 1.0f;
+    }
+
+    // 持续时间
+    private int getDuration(int spellLevel, LivingEntity caster) {
+        int baseDuration = 600 * spellLevel;
+        float spellPower = getSpellPower(spellLevel, caster);
+        int additionalDuration = (int) ((spellPower - 1.0f) * 10.0f);
+        return baseDuration + additionalDuration;
     }
 
     @Override
@@ -84,7 +92,7 @@ public class BloodFrenzySpell extends AbstractSpell {
         if (!level.isClientSide && entity instanceof ServerPlayer player) {
             player.addEffect(new MobEffectInstance(
                 ModEffect.BLOOD_FRENZY.get(),
-                getDuration(spellLevel),
+                getDuration(spellLevel, entity),
                 spellLevel - 1,
                 false,
                 false,

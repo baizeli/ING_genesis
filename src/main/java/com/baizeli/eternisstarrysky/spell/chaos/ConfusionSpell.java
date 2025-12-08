@@ -25,13 +25,15 @@ public class ConfusionSpell extends AbstractSpell {
         .setMinRarity(SpellRarity.LEGENDARY)
         .setSchoolResource(SpellSchool.CHAOS_RESOURCE)
         .setMaxLevel(1)
-        .setCooldownSeconds(60.0F)
+        .setCooldownSeconds(420.0F)
         .build();
 
     public ConfusionSpell() {
         this.manaCostPerLevel = 0;
         this.baseManaCost = 1000;
         this.castTime = 140;
+        this.baseSpellPower = 1;
+        this.spellPowerPerLevel = 1;
     }
 
     @Override
