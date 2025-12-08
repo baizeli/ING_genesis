@@ -85,7 +85,26 @@
 				}
 			}
 		},
-		"celestial_source_spell_cape_standby": {
+		"celestial_source_spell_ring.animation_4": {
+			"loop": true,
+			"animation_length": 2,
+			"bones": {
+				"hole": {
+					"rotation": {
+						"0.0": [0, 0, 0],
+						"2.0": [-360, 0, 0]
+					},
+					"scale": {
+						"1.0": {
+							"pre": [1, 20, 20],
+							"post": [1, 20, 20],
+							"lerp_mode": "catmullrom"
+						}
+					}
+				}
+			}
+		},
+		"celestial_source_spell_cape_standby.animation": {
 			"loop": true,
 			"animation_length": 2,
 			"bones": {
@@ -120,7 +139,7 @@
 				}
 			}
 		},
-		"celestial_source_spell_cape_running": {
+		"celestial_source_spell_cape_running.animation": {
 			"animation_length": 2,
 			"bones": {
 				"cape": {
@@ -211,7 +230,7 @@
 				}
 			}
 		},
-		"celestial_source_spell_cape_shift_0": {
+		"celestial_source_spell_cape_shift.animation_0": {
 			"animation_length": 2,
 			"bones": {
 				"cape": {
@@ -376,7 +395,7 @@
 				}
 			}
 		},
-		"celestial_source_spell_cape_shift_1": {
+		"celestial_source_spell_cape_shift.animation_1": {
 			"animation_length": 0.75,
 			"bones": {
 				"cape": {
@@ -481,7 +500,7 @@
 				}
 			}
 		},
-		"celestial_source_spell_cape_shift_2": {
+		"celestial_source_spell_cape_shift.animation_2": {
 			"animation_length": 1.25,
 			"bones": {
 				"cape2": {
@@ -585,7 +604,7 @@
 				}
 			}
 		},
-		"celestial_source_spell_cape_shift_3": {
+		"celestial_source_spell_cape_shift.animation_3": {
 			"animation_length": 1,
 			"bones": {
 				"cape2": {

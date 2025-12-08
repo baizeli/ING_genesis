@@ -71,7 +71,7 @@ public class CelestialSourceSpellArmor extends ExtendedArmorItem {
     
     private PlayState celestial_source_spell_cape_standby(AnimationState<CelestialSourceSpellArmor> animationState) {
         animationState.getController().setAnimation(
-            RawAnimation.begin().thenLoop("celestial_source_spell_cape_standby")
+            RawAnimation.begin().thenLoop("celestial_source_spell_cape_standby.animation")
         );
 
         return PlayState.CONTINUE;
@@ -80,7 +80,7 @@ public class CelestialSourceSpellArmor extends ExtendedArmorItem {
     private PlayState celestial_source_spell_cape_running(AnimationState<CelestialSourceSpellArmor> animationState) {
         if (mc.player.isSprinting()) {
             animationState.getController().setAnimation(
-                RawAnimation.begin().thenLoop("celestial_source_spell_cape_running")
+                RawAnimation.begin().thenLoop("celestial_source_spell_cape_running.animation")
             );
             
             return PlayState.CONTINUE;
@@ -93,10 +93,10 @@ public class CelestialSourceSpellArmor extends ExtendedArmorItem {
         if (mc.player.isShiftKeyDown()) {
             /*animationState.getController().forceAnimationReset();*/
             animationState.getController().setAnimation(
-                RawAnimation.begin().thenLoop("celestial_source_spell_cape_shift_3")
+                RawAnimation.begin().thenLoop("celestial_source_spell_cape_shift.animation_3")
             );
             /*animationState.getController().setAnimation(
-                RawAnimation.begin().thenPlay("celestial_source_spell_cape_shift_1")
+                RawAnimation.begin().thenPlay("celestial_source_spell_cape_shift.animation_1")
             );*/
             
             return PlayState.CONTINUE;
@@ -136,22 +136,20 @@ public class CelestialSourceSpellArmor extends ExtendedArmorItem {
 
                 this.ringModel.addAdditionalStateData(animatable, instanceId, animationState::setData);
                 this.ringModel.handleAnimations(animatable, instanceId, animationState);
-
-                ResourceLocation texture = this.ringModel.getTextureResource(animatable);
-                RenderType ringRenderType = RenderType.entityCutoutNoCull(texture);
+;
+                RenderType ringRenderType = RenderType.entityTranslucentEmissive(this.ringModel.getTextureResource(animatable));
                 VertexConsumer ringBuffer = bufferSource.getBuffer(ringRenderType);
 
                 BakedGeoModel ringBakedModel = this.ringModel.getBakedModel(this.ringModel.getModelResource(animatable));
 
-                // 一个简单的颜色计算
-                long time = System.currentTimeMillis() / 100;
+                /*long time = System.currentTimeMillis() / 100;
                 float red = (float) (Math.sin(time * 0.05) + 1) / 2;
                 float green = (float) (Math.sin(time * 0.05 + 2) + 1) / 2;
-                float blue = (float) (Math.sin(time * 0.05 + 4) + 1) / 2;
+                float blue = (float) (Math.sin(time * 0.05 + 4) + 1) / 2;*/
                 
                 this.renderer.actuallyRender(
                     poseStack, animatable, ringBakedModel, ringRenderType, bufferSource, ringBuffer, 
-                    true, partialTick, 0xF000F0, packedOverlay, /*red, green, blue*/1.0F, 1.0F, 1.0F, 1.0F
+                    true, partialTick, LightTexture.FULL_BRIGHT, packedOverlay, /*red, green, blue*/1.0F, 1.0F, 1.0F, 1.0F
                 );
             }
         }
@@ -185,8 +183,7 @@ public class CelestialSourceSpellArmor extends ExtendedArmorItem {
                 this.capeModel.addAdditionalStateData(animatable, instanceId, animationState::setData);
                 this.capeModel.handleAnimations(animatable, instanceId, animationState);
 
-                ResourceLocation texture = this.capeModel.getTextureResource(animatable);
-                RenderType capeRenderType = RenderType.entityCutoutNoCull(texture);
+                RenderType capeRenderType = RenderType.entityCutoutNoCull(this.capeModel.getTextureResource(animatable));
                 VertexConsumer capeBuffer = bufferSource.getBuffer(capeRenderType);
 
                 BakedGeoModel capeBakedModel = this.capeModel.getBakedModel(this.capeModel.getModelResource(animatable));
