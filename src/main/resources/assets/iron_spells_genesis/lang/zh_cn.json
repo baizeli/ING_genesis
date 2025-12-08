@@ -36,6 +36,9 @@
   "spell.iron_spells_genesis.unparalleled": "无双",
   "spell.iron_spells_genesis.glazed_flower_rain": "琉璃花雨",
   "spell.iron_spells_genesis.summon_pig_swarm": "老王现身",
+  "spell.iron_spells_genesis.final_whisper": "最后的轻语",
+  "spell.iron_spells_genesis.final_whisper.guide": "发射一支箭矢，在落地的地方对5x5范围的生物每秒造成伤害，持续5秒",
+  "spell.iron_spells_genesis.final_whisper.low_health": "血量不足以释放最后的轻语！",
 
   "effect.iron_spells_genesis.i_fly": "我要飞",
   "effect.iron_spells_genesis.fate_wedge": "刻命之楔",
@@ -90,8 +93,11 @@
 
   "death.attack.iron_spells_genesis.warped_blood_burst" : "%1$s的全身血液因为%2$s爆炸了。",
   "death.attack.iron_spells_genesis.warped_blood_burst.item" : "%1$s的全身血液因为%2$s的%3$s爆炸了。",
+  "death.attack.iron_spells_genesis.final_whisper" : "%1$s因为%2$s消散了。",
+  "death.attack.iron_spells_genesis.final_whisper.item" : "%1$s的因为%2$s的%3$s消散了。",
 
   "ui.iron_spells_genesis.percent_force_damage": "百分比强制伤害：%d%%",
+  "ui.iron_spells_genesis.force_damage": "强制伤害：%d",
   "ui.iron_spells_genesis.max_damage_bonus": "最大伤害加成：%d%%",
   "ui.iron_spells_genesis.health_cost_percent": "消耗生命值百分比：%d%%",
   "ui.iron_spells_genesis.health_conversion_efficiency": "生命值转伤害吸收效率：%d%%",
@@ -123,5 +129,6 @@
   
   "entity.iron_spells_genesis.dead_star_decree_comet": "死星天裁-陨石",
   "entity.iron_spells_genesis.dead_star_decree_large_comet": "死星天裁-大陨石",
+  "entity.iron_spells_genesis.lighting_bolt": "彩色闪电",
   "entity.iron_spells_genesis.sword_man_csdy": "「剑人」CSDY"
 }

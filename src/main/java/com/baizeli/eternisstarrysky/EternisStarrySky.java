@@ -212,6 +212,7 @@ public class EternisStarrySky
 
     public void onAttributeCreate(EntityAttributeCreationEvent event) {
         event.put(ModEntities.MAGIC_CIRCLE.get(), MagicCircle.createAttributes().build());
+        event.put(ModEntities.BOX_ENTIYT.get(), BoxEntity.createAttributes().build());
         event.put(ModEntities.SWORD_ENTITY.get(), SwordEntity.createAttributes().build());
     }
 
@@ -231,6 +232,8 @@ public class EternisStarrySky
                 EntityRenderers.register(ModEntities.SWORD_MAN_CSDY.get(), SwordManCsdyRenderer::new);
                 EntityRenderers.register(ModEntities.NYAN_CAT.get(), NyanCatRenderer::new);
                 EntityRenderers.register(ModEntities.MAGIC_CIRCLE.get(), MagicCircleRenderer::new);
+                EntityRenderers.register(ModEntities.BOX_ENTIYT.get(), BoxEntityRenderer::new);
+                EntityRenderers.register(ModEntities.LIGHTNING_BOLT.get(), LightningBoltRenderer::new);
                 EntityRenderers.register(ModEntities.SWORD_ENTITY.get(), SwordEntityRenderer::new);
 
                 EntityRenderers.register(ModEntities.DEAD_STAR_DECREE_COMET.get(), 

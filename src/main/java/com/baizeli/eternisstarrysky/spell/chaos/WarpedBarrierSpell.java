@@ -41,10 +41,10 @@ public class WarpedBarrierSpell extends AbstractSpell {
     }
 
     public List<MutableComponent> getUniqueInfo(int spellLevel, LivingEntity caster) {
-        return List.of(Component.translatable("ui.iron_spells_genesis.health_cost_percent", 90, 1),
-                Component.translatable("ui.iron_spells_genesis.health_conversion_efficiency", Utils.stringTruncation(getSpellPower(spellLevel, caster), 1)),
-                Component.translatable("ui.irons_spellbooks.cooldown", Utils.timeFromTicks(getCooldownInTicks(spellLevel, CastSource.NONE, caster), 1)
-                ));
+        return List.of(Component.translatable("ui.irons_spellbooks.cooldown", Utils.timeFromTicks(getCooldownInTicks(spellLevel, CastSource.COMMAND, caster), 1)),
+                Component.translatable("ui.iron_spells_genesis.health_cost_percent", 90, 1),
+                Component.translatable("ui.iron_spells_genesis.health_conversion_efficiency", Utils.stringTruncation(getSpellPower(spellLevel, caster), 1))
+        );
     }
 
 
@@ -79,8 +79,11 @@ public class WarpedBarrierSpell extends AbstractSpell {
 
     private int getCooldownInTicks(int spellLevel, CastSource castSource, LivingEntity caster) {
         int coolDown;
+        double playerCooldownModifier = 1.0D;
 
-        double playerCooldownModifier = caster.getAttributeValue(AttributeRegistry.COOLDOWN_REDUCTION.get());
+        if (caster != null) {
+            playerCooldownModifier = caster.getAttributeValue(AttributeRegistry.COOLDOWN_REDUCTION.get());
+        }
         float itemCoolDownModifer = 1.0F;
         if (castSource == CastSource.SWORD) {
             itemCoolDownModifer = ServerConfigs.SWORDS_CD_MULTIPLIER.get().floatValue();

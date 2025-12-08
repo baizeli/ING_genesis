@@ -37,6 +37,9 @@
   "spell.iron_spells_genesis.unparalleled": "Unparalleled",
   "spell.iron_spells_genesis.glazed_flower_rain": "Glazed Flower Rain",
   "spell.iron_spells_genesis.summon_pig_swarm": "Summon Pig Swarm",
+  "spell.iron_spells_genesis.final_whisper": "Final Whisper",
+  "spell.iron_spells_genesis.final_whisper.guide": "Fire an arrow that creates a 5x5 area on impact, dealing damage per second to mobs for 5 seconds.",
+  "spell.iron_spells_genesis.final_whisper.low_health": "Your health is too weak to unleash the Final Whisper!",
 
   "effect.iron_spells_genesis.i_fly": "I Fly",
   "effect.iron_spells_genesis.fate_wedge": "Fate Wedge",
@@ -89,10 +92,13 @@
   "key.categories.iron_spells_genesis": "Eternis Starry Sky - Key Bindings",
   "key.iron_spells_genesis.bow_type": "Bow - Switch Arrow Type",
 
-  "death.attack.iron_spells_genesis.warped_blood_burst" : "The entire bloodstream of %1$s exploded due to %2$s.",
-  "death.attack.iron_spells_genesis.warped_blood_burst.item" : "The entire bloodstream of %1$s exploded due to %2$s's %3$s..",
+  "death.attack.iron_spells_genesis.warped_blood_burst" : "The entire bloodstream of %1$s exploded due to %2$s",
+  "death.attack.iron_spells_genesis.warped_blood_burst.item" : "The entire bloodstream of %1$s exploded due to %2$s's %3$s",
+  "death.attack.iron_spells_genesis.final_whisper" : "%1$s dissipated because of %2$s",
+  "death.attack.iron_spells_genesis.final_whisper.item" : "%1$s dissipated because of %2$s's %3$s",
 
   "ui.iron_spells_genesis.percent_force_damage": "Percent Force Damage：%d%%",
+  "ui.iron_spells_genesis.force_damage": "Force Damage：%d",
   "ui.iron_spells_genesis.max_damage_bonus": "Max Damage Bonus: %d%%",
   "ui.iron_spells_genesis.health_cost_percent": "Health Cost Percent：%d%%",
   "ui.iron_spells_genesis.health_conversion_efficiency": "Health conversion efficiency：%d%%",
@@ -125,5 +131,6 @@
   
   "entity.iron_spells_genesis.dead_star_decree_comet": "Dead Star Decree - Comet",
   "entity.iron_spells_genesis.dead_star_decree_large_comet": "Dead Star Decree - Large Comet",
+  "entity.iron_spells_genesis.lighting_bolt": "Rainbow Lighting",
   "entity.iron_spells_genesis.sword_man_csdy": "Sword Man CSDY"
 }
