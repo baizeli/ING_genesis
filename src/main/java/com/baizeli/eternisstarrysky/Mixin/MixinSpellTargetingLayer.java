@@ -24,8 +24,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class MixinSpellTargetingLayer {
     @Inject(method = "renderTargetLayer", at = @At("HEAD"), remap = false, cancellable = true)
     private static void injectRenderWireCube(PoseStack poseStack, MultiBufferSource bufferSource, LivingEntity entity, CallbackInfo ci) {
-        if (SpellRegistry.getSpell(ClientMagicData.getTargetingData().spellId).getSchoolType() == SpellSchool.CHAOS.get() ||
-                SpellRegistry.getSpell(ClientMagicData.getTargetingData().spellId).getSchoolType() == SpellSchool.CELESTIAL_SOURCE.get()) {
+        if (SpellRegistry.getSpell(ClientMagicData.getTargetingData().spellId).getSchoolType() == SpellSchool.CHAOS.get()
+                //|| SpellRegistry.getSpell(ClientMagicData.getTargetingData().spellId).getSchoolType() == SpellSchool.CELESTIAL_SOURCE.get()
+        ) {
             Vector3f color = null;
             if (ClientMagicData.getRecasts().hasRecastsActive()) {
                 for (RecastInstance recastInstance : ClientMagicData.getRecasts().getActiveRecasts()) {
@@ -57,9 +58,10 @@ public class MixinSpellTargetingLayer {
                 RenderUtils.renderWireCube(poseStack, bufferSource, 1.0F, angle, Axis.YP, r, g, b, 0, magicYOffset, 0);
                 RenderUtils.renderWireCube(poseStack, bufferSource, 1.0F, angle, Axis.XP, r, g, b, 0, magicYOffset, 0);
                 RenderUtils.renderWireCube(poseStack, bufferSource, 1.0F, angle, Axis.ZP, r, g, b, 0, magicYOffset, 0);
-            } else {
-                RenderUtils.render(poseStack, bufferSource, LightTexture.FULL_BRIGHT, entity, Minecraft.getInstance().realPartialTick);
             }
+//            else {
+//                RenderUtils.render(poseStack, bufferSource, LightTexture.FULL_BRIGHT, entity, Minecraft.getInstance().realPartialTick);
+//            }
 
             ci.cancel();
         }
