@@ -59,7 +59,7 @@ public class BloodControlSpell extends AbstractSpell {
         return List.of(
             Component.translatable(
                 "ui.iron_spells_genesis.damage_multiplier", 
-                Utils.stringTruncation(getDamageMultiplier(spellLevel), 1)
+                Utils.stringTruncation(getDamageMultiplier(spellLevel, caster), 1)
             ),
             Component.translatable(
                 "ui.iron_spells_genesis.health_cost",
@@ -68,8 +68,8 @@ public class BloodControlSpell extends AbstractSpell {
         );
     }
 
-    private float getDamageMultiplier(int spellLevel) {
-        return getSpellPower(spellLevel, null);
+    private float getDamageMultiplier(int spellLevel, LivingEntity caster) {
+        return 1.0f + (getSpellPower(spellLevel, caster) - 1.0f) * 0.2f;
     }
 
     private float getHealthCostPercentage(int spellLevel) {
@@ -94,7 +94,7 @@ public class BloodControlSpell extends AbstractSpell {
                 entity.hurt(entity.damageSources().genericKill(), healthToConsume);
                 
                 // 计算伤害[消耗的血量和法术强度]
-                float damageMultiplier = getDamageMultiplier(spellLevel);
+                float damageMultiplier = getDamageMultiplier(spellLevel, entity);
                 float damage = healthToConsume * damageMultiplier;
                 
                 // 对目标造成伤害

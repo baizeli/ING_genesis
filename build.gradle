@@ -121,6 +121,7 @@ repositories {
         name = "Flemmli97"
         url "https://maven.blazing-coop.net/releases"
     }
+
 }
 
 configurations {
@@ -169,6 +170,9 @@ dependencies {
     // Embeddium
     modImplementation "curse.maven:embeddium-908741:5681725"
 
+    // Oculus
+    modImplementation "curse.maven:oculus-581495:6020952"
+
     // Better Brightness Slider
     modImplementation "curse.maven:better-brightness-slider-685037:4656287"
 
@@ -188,6 +192,12 @@ dependencies {
 
     // 怪物大乱斗
     modImplementation "io.github.flemmli97:mobbattle:${minecraft_version}-2.5.3-${mod_loader}"
+
+    //游戏内账号切换
+    modRuntimeOnly "curse.maven:in-game-account-switcher-232676:5457030"
+
+    //自定义局域网联机
+    modRuntimeOnly "curse.maven:lan-server-properties-387365:4776657"
 }
 
 
