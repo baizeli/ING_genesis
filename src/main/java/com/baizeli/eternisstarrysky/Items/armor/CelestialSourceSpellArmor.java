@@ -136,7 +136,7 @@ public class CelestialSourceSpellArmor extends ExtendedArmorItem {
 
                 this.ringModel.addAdditionalStateData(animatable, instanceId, animationState::setData);
                 this.ringModel.handleAnimations(animatable, instanceId, animationState);
-;
+
                 RenderType ringRenderType = RenderType.entityTranslucentEmissive(this.ringModel.getTextureResource(animatable));
                 VertexConsumer ringBuffer = bufferSource.getBuffer(ringRenderType);
 
@@ -208,14 +208,14 @@ public class CelestialSourceSpellArmor extends ExtendedArmorItem {
 
         /*@Override
         public void actuallyRender(
-            PoseStack poseStack, CelestialSourceSpellArmor animatable, 
-            BakedGeoModel model, RenderType renderType, MultiBufferSource bufferSource, 
+            PoseStack poseStack, CelestialSourceSpellArmor animatable,
+            BakedGeoModel model, RenderType renderType, MultiBufferSource bufferSource,
             VertexConsumer buffer, boolean isReRender, float partialTick,
             int packedLight, int packedOverlay, float red, float green, float blue, float alpha
         ) {
             super.actuallyRender(
-                poseStack, animatable, model, renderType, bufferSource, buffer, isReRender, 
-                partialTick, 0xF000F0, packedOverlay, red, green, blue, alpha
+                poseStack, animatable, model, renderType, bufferSource, buffer, isReRender,
+                partialTick, LightTexture.FULL_BRIGHT, packedOverlay, red, green, blue, alpha
             );
         }*/
     }
