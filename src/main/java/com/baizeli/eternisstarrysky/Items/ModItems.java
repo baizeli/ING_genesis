@@ -171,6 +171,23 @@ public class ModItems {
             () -> new ChaosSpellArmor((IronsExtendedArmorMaterial) ModArmorMaterials.CHAOS_SPELL, ArmorItem.Type.BOOTS,
                     new Item.Properties().rarity(Rarity.EPIC)));
 
+    // 紫极战斗套
+    public static final RegistryObject<Item> VIOLET_ZENITH_HELMET = ITEMS.register("violet_zenith_helmet",
+            () -> new VioletZenithArmor((IronsExtendedArmorMaterial) ModArmorMaterials.VIOLET_ZENITH, ArmorItem.Type.HELMET,
+                    new Item.Properties().rarity(Rarity.EPIC)));
+                    
+    public static final RegistryObject<Item> VIOLET_ZENITH_CHESTPLATE = ITEMS.register("violet_zenith_chestplate",
+            () -> new VioletZenithArmor((IronsExtendedArmorMaterial) ModArmorMaterials.VIOLET_ZENITH, ArmorItem.Type.CHESTPLATE,
+                    new Item.Properties().rarity(Rarity.EPIC)));
+                    
+    public static final RegistryObject<Item> VIOLET_ZENITH_LEGGINGS = ITEMS.register("violet_zenith_leggings",
+            () -> new VioletZenithArmor((IronsExtendedArmorMaterial) ModArmorMaterials.VIOLET_ZENITH, ArmorItem.Type.LEGGINGS,
+                    new Item.Properties().rarity(Rarity.EPIC)));
+                    
+    public static final RegistryObject<Item> VIOLET_ZENITH_BOOTS = ITEMS.register("violet_zenith_boots",
+            () -> new VioletZenithArmor((IronsExtendedArmorMaterial) ModArmorMaterials.VIOLET_ZENITH, ArmorItem.Type.BOOTS,
+                    new Item.Properties().rarity(Rarity.EPIC)));
+
     public static final RegistryObject<Item> CHAOS_SPELL_BOOK = ITEMS.register("chaos_spell_book", ChaosSpellBook::new);
 
     public static final RegistryObject<Item> CELESTIAL_SOURCE_SPELL_BOOK = ITEMS.register("celestial_source_spell_book", CelestialSourceSpellBook::new);

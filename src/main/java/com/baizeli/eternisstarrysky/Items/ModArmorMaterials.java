@@ -37,7 +37,7 @@ public class ModArmorMaterials {
 
         @Override
         public Ingredient getRepairIngredient() {
-            return Ingredient.of(Items.NETHERITE_INGOT);
+            return Ingredient.of(ModItems.DIVINE_METAL_INGOT.get());
         }
 
         @Override
@@ -291,6 +291,59 @@ public class ModArmorMaterials {
                     "Chaos Mana Regen", 0.15, AttributeModifier.Operation.MULTIPLY_BASE
                 )
             );
+        }
+    };
+    
+    // 紫极战斗套
+    public static final IronsExtendedArmorMaterial VIOLET_ZENITH = new IronsExtendedArmorMaterial() {
+        @Override
+        public Ingredient getRepairIngredient() {
+            return Ingredient.of(ModItems.PURPLEITE_GALAXY_INGOT.get());
+        }
+
+        @Override 
+        public int getDurabilityForType(ArmorItem.Type type) {
+            return Integer.MAX_VALUE;
+        }
+
+        @Override 
+        public SoundEvent getEquipSound() {
+            return SoundEvents.ARMOR_EQUIP_NETHERITE;
+        }
+
+        @Override 
+        public String getName() {
+            return "violet_zenith";
+        }
+
+        @Override 
+        public float getKnockbackResistance() {
+            return 1.0F;
+        }
+
+        @Override 
+        public int getEnchantmentValue() {
+            return 35;
+        }
+        
+        @Override 
+        public float getToughness() {
+            return 8.0F;
+        }
+
+        @Override
+        public int getDefenseForType(ArmorItem.Type type) {
+            return switch (type) {
+                case HELMET -> 8;
+                case CHESTPLATE -> 13;
+                case LEGGINGS -> 10;
+                case BOOTS -> 7;
+            };
+        }
+        
+        @Override
+        public Map<Attribute, AttributeModifier> getAdditionalAttributes() {
+            return Map.of();
         }
     };
 }

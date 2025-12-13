@@ -58,7 +58,6 @@
   "item.iron_spells_genesis.infinity_sword": "Heavenly Fire Judgment [Fake]",
   "item.iron_spells_genesis.eternis_apple": "Eternis Apple",
   "item.iron_spells_genesis.broyouhuashuo": "Oops, How Did I Write Ingot As Bag",
-  "item.iron_spells_genesis.purpleite_galaxy_ingot": "§5Purpleite Galaxy Ingot",
   "item.iron_spells_genesis.purpleite_galaxy_ingot1": "What In Your Palm, Eternal Power",
   "item.iron_spells_genesis.divine_metal_ingot": "Divine Metal Ingot",
   "item.iron_spells_genesis.whisper_of_the_past": "Whisper of the Past",
@@ -77,11 +76,6 @@
   "item.iron_spells_genesis.lao_wang_237": "Lao Wang 237",
   "item.iron_spells_genesis.infinite_shriving_stone": "Infinite Shriving Stone",
   
-  "item.iron_spells_genesis.infinity_eternal_helmet": "Purpleite Galaxy Helmet",
-  "item.iron_spells_genesis.infinity_eternal_chestplate": "Purpleite Galaxy Chestplate",
-  "item.iron_spells_genesis.infinity_eternal_leggings": "Purpleite Galaxy Leggings",
-  "item.iron_spells_genesis.infinity_eternal_boots": "Purpleite Galaxy Boots",
-  
   "item.iron_spells_genesis.divine_metal_helmet": "Divine Metal Helmet",
   "item.iron_spells_genesis.divine_metal_chestplate": "Divine Metal Chestplate",
   "item.iron_spells_genesis.divine_metal_leggings": "Divine Metal Leggings",
@@ -96,6 +90,12 @@
   "item.iron_spells_genesis.chaos_spell_chestplate": "Chaos Spell Chestplate",
   "item.iron_spells_genesis.chaos_spell_leggings": "Chaos Spell Leggings",
   "item.iron_spells_genesis.chaos_spell_boots": "Chaos Spell Boots",
+
+  "item.iron_spells_genesis.violet_zenith_helmet": "Purple Extreme Battle Helmet",
+  "item.iron_spells_genesis.violet_zenith_chestplate": "Purple Extreme Battle Chestplate",
+  "item.iron_spells_genesis.violet_zenith_leggings": "Purple Extreme Battle Leggings",
+  "item.iron_spells_genesis.violet_zenith_boots": "Purple Extreme Battle Boots",
+  "item.iron_spells_genesis.purpleite_galaxy_ingot": "§5Purple Extreme Ingot",
   
   "iron_spells_genesis.galaxy_scroll.book_name": "§bGalaxy Scroll",
 
