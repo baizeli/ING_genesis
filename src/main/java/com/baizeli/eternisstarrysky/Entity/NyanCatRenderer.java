@@ -40,7 +40,7 @@ public class NyanCatRenderer extends EntityRenderer<NyanCat> {
                        PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
 
         
-        renderTrail(entity, partialTick, poseStack, buffer, packedLight);
+//        renderTrail(entity, partialTick, poseStack, buffer, packedLight);
 
         
         poseStack.pushPose();
@@ -72,8 +72,8 @@ public class NyanCatRenderer extends EntityRenderer<NyanCat> {
 
     );
     
-    private void renderTrail(NyanCat entity, float partialTick, PoseStack poseStack,
-                             MultiBufferSource buffer, int packedLight) {
+    public void renderTrail(NyanCat entity, float partialTick, PoseStack poseStack,
+                            MultiBufferSource.BufferSource buffer, int packedLight) {
         
         if (entity.trailPointer < 0) {
             return;
@@ -169,7 +169,7 @@ public class NyanCatRenderer extends EntityRenderer<NyanCat> {
             samples++;
             drawFrom = sample;
         }
-
+        buffer.endBatch();
         poseStack.popPose();
     }
 
