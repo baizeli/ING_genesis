@@ -16,7 +16,7 @@ import com.baizeli.eternisstarrysky.fonts.FuckFont1;
 import com.baizeli.eternisstarrysky.network.NetworkHandler;
 import com.baizeli.eternisstarrysky.network.WireBoxSyncPacket;
 import com.baizeli.eternisstarrysky.sound.SoundsRegister;
-import com.baizeli.eternisstarrysky.spell.Attributes;
+import com.baizeli.eternisstarrysky.spell.SpellAttributes;
 import com.baizeli.eternisstarrysky.spell.SpellSchool;
 import com.baizeli.eternisstarrysky.spell.Spells;
 import com.mojang.logging.LogUtils;
@@ -168,7 +168,7 @@ public class EternisStarrySky
 
         SpellSchool.register(modEventBus);
         Spells.register(modEventBus);
-        Attributes.register(modEventBus);
+        SpellAttributes.register(modEventBus);
         ModBlockEntities.register(modEventBus);
         ModMenuTypes.register(modEventBus);
         ModRecipeTypes.register(modEventBus);

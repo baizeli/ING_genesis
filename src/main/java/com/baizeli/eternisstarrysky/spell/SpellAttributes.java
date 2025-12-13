@@ -7,7 +7,7 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.*;
 
-public class Attributes {
+public class SpellAttributes {
     private static final DeferredRegister<Attribute> ATTRIBUTES;
     public static final RegistryObject<Attribute> CHAOS_MAGIC_RESIST;
     public static final RegistryObject<Attribute> CHAOS_SPELL_POWER;
@@ -19,16 +19,16 @@ public class Attributes {
     static {
         ATTRIBUTES = DeferredRegister.create(Registries.ATTRIBUTE, EternisStarrySky.MOD_ID);
         // 混沌法术强度/抗性
-        CHAOS_MAGIC_RESIST = Attributes.newResistanceAttribute("chaos");
-        CHAOS_SPELL_POWER = Attributes.newPowerAttribute("chaos");
+        CHAOS_MAGIC_RESIST = SpellAttributes.newResistanceAttribute("chaos");
+        CHAOS_SPELL_POWER = SpellAttributes.newPowerAttribute("chaos");
 
         // 星源法术强度/抗性
-        CELESTIAL_SOURCE_SPELL_POWER = Attributes.newPowerAttribute("celestial_source");
-        CELESTIAL_SOURCE_MAGIC_RESIST = Attributes.newResistanceAttribute("celestial_source");
+        CELESTIAL_SOURCE_SPELL_POWER = SpellAttributes.newPowerAttribute("celestial_source");
+        CELESTIAL_SOURCE_MAGIC_RESIST = SpellAttributes.newResistanceAttribute("celestial_source");
         
         // 美食法术强度/抗性
-        CULINARY_SPELL_POWER = Attributes.newPowerAttribute("culinary");
-        CULINARY_MAGIC_RESIST = Attributes.newResistanceAttribute("culinary");
+        CULINARY_SPELL_POWER = SpellAttributes.newPowerAttribute("culinary");
+        CULINARY_MAGIC_RESIST = SpellAttributes.newResistanceAttribute("culinary");
     }
 
     public static void register(IEventBus eventBus) {
