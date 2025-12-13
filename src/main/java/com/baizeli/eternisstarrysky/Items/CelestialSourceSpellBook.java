@@ -1,7 +1,7 @@
 package com.baizeli.eternisstarrysky.Items;
 
 import com.baizeli.eternisstarrysky.fonts.FuckFont1;
-import com.baizeli.eternisstarrysky.spell.Attributes;
+import com.baizeli.eternisstarrysky.spell.SpellAttributes;
 import io.redspace.ironsspellbooks.api.item.curios.AffinityData;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import io.redspace.ironsspellbooks.api.registry.SpellDataRegistryHolder;
@@ -25,7 +25,7 @@ import java.util.function.Consumer;
 public class CelestialSourceSpellBook  extends UniqueSpellBook implements UniqueItem {
     public CelestialSourceSpellBook() {
         super(SpellDataRegistryHolder.of(new SpellDataRegistryHolder(SpellRegistry.CHARGE_SPELL, 10)), 13);
-        this.withSpellbookAttributes(new AttributeContainer(AttributeRegistry.SPELL_POWER, 0.6, AttributeModifier.Operation.MULTIPLY_BASE), new AttributeContainer(AttributeRegistry.MAX_MANA, 2000, AttributeModifier.Operation.ADDITION), new AttributeContainer(AttributeRegistry.COOLDOWN_REDUCTION, 0.6, AttributeModifier.Operation.MULTIPLY_BASE), new AttributeContainer(Attributes.CELESTIAL_SOURCE_SPELL_POWER, 0.5, AttributeModifier.Operation.MULTIPLY_BASE));
+        this.withSpellbookAttributes(new AttributeContainer(AttributeRegistry.SPELL_POWER, 0.6, AttributeModifier.Operation.MULTIPLY_BASE), new AttributeContainer(AttributeRegistry.MAX_MANA, 2000, AttributeModifier.Operation.ADDITION), new AttributeContainer(AttributeRegistry.COOLDOWN_REDUCTION, 0.6, AttributeModifier.Operation.MULTIPLY_BASE), new AttributeContainer(SpellAttributes.CELESTIAL_SOURCE_SPELL_POWER, 0.5, AttributeModifier.Operation.MULTIPLY_BASE));
     }
 
     public void initializeClient(Consumer<IClientItemExtensions> consumer) {

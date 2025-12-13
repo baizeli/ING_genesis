@@ -1,6 +1,6 @@
 package com.baizeli.eternisstarrysky.Items;
 
-import com.baizeli.eternisstarrysky.spell.Attributes;
+import com.baizeli.eternisstarrysky.spell.SpellAttributes;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import io.redspace.ironsspellbooks.item.armor.IronsExtendedArmorMaterial;
 import net.minecraft.sounds.*;
@@ -88,7 +88,7 @@ public class ModArmorMaterials {
         @Override
         public Map<Attribute, AttributeModifier> getAdditionalAttributes() {
             return Map.of(
-                // 法力值
+                // 最大法力值
                 AttributeRegistry.MAX_MANA.get(), new AttributeModifier(
                     "Divine Mana", 150, AttributeModifier.Operation.ADDITION
                 ),
@@ -168,7 +168,7 @@ public class ModArmorMaterials {
                 ),
 
                 // 星源法术强度
-                Attributes.CELESTIAL_SOURCE_SPELL_POWER.get(), new AttributeModifier(
+                SpellAttributes.CELESTIAL_SOURCE_SPELL_POWER.get(), new AttributeModifier(
                     "Celestial Source School Power", 0.30, AttributeModifier.Operation.MULTIPLY_BASE
                 ),
 
@@ -177,7 +177,7 @@ public class ModArmorMaterials {
                     "Celestial Source Movement Speed", 1.0, AttributeModifier.Operation.MULTIPLY_BASE
                 ),*/
 
-                // 法力值
+                // 最大法力值
                 AttributeRegistry.MAX_MANA.get(), new AttributeModifier(
                     "Celestial Source Max Mana", 3500, AttributeModifier.Operation.ADDITION
                 ),
@@ -257,17 +257,17 @@ public class ModArmorMaterials {
                 ),
 
                 // 混沌法术强度
-                Attributes.CHAOS_SPELL_POWER.get(), new AttributeModifier(
+                SpellAttributes.CHAOS_SPELL_POWER.get(), new AttributeModifier(
                     "Chaos School Power", 0.25, AttributeModifier.Operation.MULTIPLY_BASE
                 ),
 
-                // 法力值
+                // 最大法力值
                 AttributeRegistry.MAX_MANA.get(), new AttributeModifier(
                     "Chaos Max Mana", 2000, AttributeModifier.Operation.ADDITION
                 ),
 
                 // 生命上限
-                net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH, new AttributeModifier(
+                Attributes.MAX_HEALTH, new AttributeModifier(
                     "Chaos Max Health", 0.50, AttributeModifier.Operation.MULTIPLY_BASE
                 ),
 
@@ -343,7 +343,22 @@ public class ModArmorMaterials {
         
         @Override
         public Map<Attribute, AttributeModifier> getAdditionalAttributes() {
-            return Map.of();
+            return Map.of(
+                // 最大生命值
+                Attributes.MAX_HEALTH, new AttributeModifier(
+                    "Violet Zenith Max Health", 0.10, AttributeModifier.Operation.MULTIPLY_BASE
+                ),
+
+                // 最大法力值
+                AttributeRegistry.MAX_MANA.get(), new AttributeModifier(
+                    "Violet Zenith Max Mana", 100, AttributeModifier.Operation.ADDITION
+                ),
+                
+                // 法术强度
+                AttributeRegistry.SPELL_POWER.get(), new AttributeModifier(
+                    "Violet Zenith Spell Power", 0.07, AttributeModifier.Operation.MULTIPLY_BASE
+                )
+            );
         }
     };
 }

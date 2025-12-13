@@ -21,7 +21,8 @@
     "GameRendererAccessor",
     "GameRendererMixin",
     "ItemInHandRendererMixin",
-    "ItemRendererMixin"
+    "ItemRendererMixin",
+    "client.GameRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
