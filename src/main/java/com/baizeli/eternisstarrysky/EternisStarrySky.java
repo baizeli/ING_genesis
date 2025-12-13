@@ -113,6 +113,12 @@ public class EternisStarrySky
                 output.accept(ModItems.CHAOS_SPELL_LEGGINGS.get());
                 output.accept(ModItems.CHAOS_SPELL_BOOTS.get());
 
+                // 紫极战斗套
+                output.accept(ModItems.VIOLET_ZENITH_HELMET.get());
+                output.accept(ModItems.VIOLET_ZENITH_CHESTPLATE.get());
+                output.accept(ModItems.VIOLET_ZENITH_LEGGINGS.get());
+                output.accept(ModItems.VIOLET_ZENITH_BOOTS.get());
+
                 output.accept(ModItems.WORKBENCH.get());
 
                 // 奥术工作台
