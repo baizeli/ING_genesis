@@ -36,13 +36,15 @@ public abstract class GameRendererMixin {
         }
     }
 
-    @Inject(method = "render", at = @At(value = "INVOKE",
+    @Inject(
+        method = "render", 
+        at = @At(
+            value = "INVOKE",
             target = "Lnet/minecraft/client/renderer/GameRenderer;renderLevel(FJLcom/mojang/blaze3d/vertex/PoseStack;)V",
-            shift = At.Shift.AFTER))
+            shift = At.Shift.AFTER
+        )
+    )
     private void afterIrisRender(float partialTicks, long finishTimeNano, boolean renderLevel, CallbackInfo ci) {
         renderTrail(partialTicks,finishTimeNano,renderLevel);
     }
-
-
-
 }

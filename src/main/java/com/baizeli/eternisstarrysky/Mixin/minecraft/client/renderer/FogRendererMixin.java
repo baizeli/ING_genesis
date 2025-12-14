@@ -2,8 +2,8 @@ package com.baizeli.eternisstarrysky.Mixin.minecraft.client.renderer;
 
 import com.baizeli.eternisstarrysky.effect.spell.ModEffect;
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.minecraft.client.*;
 import net.minecraft.client.renderer.FogRenderer;
-import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -65,10 +65,7 @@ public class FogRendererMixin {
             MobEffectInstance bloodFrenzy = livingEntity.getEffect(ModEffect.BLOOD_FRENZY.get());
             if (bloodFrenzy != null) {
                 RenderSystem.clearColor(1.0f, 0.2f, 0.2f, 0.0f);
-                /*return;*/
             }
         }
-
-        /*RenderSystem.clearColor(red, green, blue, alpha);*/
     }
 }
