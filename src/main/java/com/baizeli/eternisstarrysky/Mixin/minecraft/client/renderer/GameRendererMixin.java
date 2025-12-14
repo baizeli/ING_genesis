@@ -1,7 +1,6 @@
 package com.baizeli.eternisstarrysky.Mixin.minecraft.client.renderer;
 
 import com.baizeli.eternisstarrysky.Items.armor.VioletZenithArmor;
-import com.baizeli.eternisstarrysky.effect.spell.ModEffect;
 import net.minecraft.client.renderer.*;
 import net.minecraft.world.effect.*;
 import net.minecraft.world.entity.*;
@@ -29,10 +28,9 @@ public abstract class GameRendererMixin {
                 }
             }
 
-            MobEffectInstance bloodFrenzy = player.getEffect(ModEffect.BLOOD_FRENZY.get());
-            if (bloodFrenzy != null) {
-                cir.setReturnValue(5f);
-            }
+            /*if (ChaosEffectUtil.isAffectedByChaosEffects(player)) {
+                cir.setReturnValue(2009f);
+            }*/
         }
     }
 
