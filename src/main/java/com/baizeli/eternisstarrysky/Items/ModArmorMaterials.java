@@ -351,7 +351,7 @@ public class ModArmorMaterials {
 
                 // 最大法力值
                 AttributeRegistry.MAX_MANA.get(), new AttributeModifier(
-                    "Violet Zenith Max Mana", 100, AttributeModifier.Operation.ADDITION
+                    "Violet Zenith Max Mana", 130, AttributeModifier.Operation.ADDITION
                 ),
                 
                 // 法术强度
