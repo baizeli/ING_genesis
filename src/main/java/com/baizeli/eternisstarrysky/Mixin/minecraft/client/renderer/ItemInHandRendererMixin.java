@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky.Mixin;
+package com.baizeli.eternisstarrysky.Mixin.minecraft.client.renderer;
 
 import com.baizeli.eternisstarrysky.Items.WeaponRenderConfig;
 import com.baizeli.eternisstarrysky.mixinutil.Helper;

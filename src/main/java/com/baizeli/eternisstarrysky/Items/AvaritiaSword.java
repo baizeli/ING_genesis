@@ -1,6 +1,6 @@
 package com.baizeli.eternisstarrysky.Items;
 
-import com.baizeli.eternisstarrysky.Mixin.LivingEntityAccessor;
+import com.baizeli.eternisstarrysky.Mixin.minecraft.world.entity.LivingEntityAccessor;
 import com.baizeli.eternisstarrysky.Util.AvaritiaKill;
 import com.baizeli.eternisstarrysky.Util.AvaritiaLivingEntity;
 import com.baizeli.eternisstarrysky.Util.AvaritiaVulnerable;

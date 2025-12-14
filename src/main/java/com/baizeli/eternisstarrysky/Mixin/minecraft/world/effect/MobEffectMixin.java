@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky.Mixin;
+package com.baizeli.eternisstarrysky.Mixin.minecraft.world.effect;
 
 import com.baizeli.eternisstarrysky.spell.chaos.ReversePlagueSpell;
 import net.minecraft.server.level.ServerLevel;

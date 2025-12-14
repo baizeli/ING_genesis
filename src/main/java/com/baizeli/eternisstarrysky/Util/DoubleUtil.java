@@ -1,6 +1,6 @@
 package com.baizeli.eternisstarrysky.Util;
 
-import com.baizeli.eternisstarrysky.Mixin.LivingEntityAccessor;
+import com.baizeli.eternisstarrysky.Mixin.minecraft.world.entity.LivingEntityAccessor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.ExperienceOrb;

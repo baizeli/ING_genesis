@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky.Mixin;
+package com.baizeli.eternisstarrysky.Mixin.minecraft.world.entity;
 
 import com.baizeli.eternisstarrysky.mixinutil.EntityMarker;
 import net.minecraft.world.entity.Entity;
