@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky.Mixin;
+package com.baizeli.eternisstarrysky.Mixin.minecraft.client.renderer;
 
 import net.minecraft.client.Camera;
 import net.minecraft.client.renderer.GameRenderer;
