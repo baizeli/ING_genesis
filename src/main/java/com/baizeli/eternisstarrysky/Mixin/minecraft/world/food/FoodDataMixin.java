@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky.Mixin;
+package com.baizeli.eternisstarrysky.Mixin.minecraft.world.food;
 
 import com.baizeli.eternisstarrysky.effect.spell.ModEffect;
 import net.minecraft.world.entity.player.Player;

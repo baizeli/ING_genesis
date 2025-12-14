@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky.Mixin;
+package com.baizeli.eternisstarrysky.Mixin.minecraft.network.syncher;
 
 import com.baizeli.eternisstarrysky.mixinutil.EntityMarker;
 import net.minecraft.network.syncher.EntityDataAccessor;

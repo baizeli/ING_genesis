@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky.Mixin;
+package com.baizeli.eternisstarrysky.Mixin.jei.library.gui.recipes;
 
 import com.baizeli.eternisstarrysky.Content.Workbenchs.VanillaWorkbenchRecipeCategory;
 import com.baizeli.eternisstarrysky.Content.Workbenchs.VoidTexture;

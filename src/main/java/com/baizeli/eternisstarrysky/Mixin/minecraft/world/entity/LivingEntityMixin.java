@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky.Mixin;
+package com.baizeli.eternisstarrysky.Mixin.minecraft.world.entity;
 
 import com.baizeli.eternisstarrysky.effect.spell.ModEffect;
 import com.baizeli.eternisstarrysky.sound.SoundsRegister;

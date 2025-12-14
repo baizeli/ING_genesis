@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky.Mixin;
+package com.baizeli.eternisstarrysky.Mixin.minecraft.world.player;
 
 import com.baizeli.eternisstarrysky.Util.AvaritiaVulnerable;
 import net.minecraft.tags.DamageTypeTags;
