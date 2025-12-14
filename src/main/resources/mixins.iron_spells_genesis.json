@@ -18,11 +18,11 @@
     "ironsspellbooks.gui.arcane_anvil.ArcaneAnvilMenuMixin"
   ],
   "client": [
-    "GameRendererAccessor",
-    "GameRendererMixin",
     "ItemInHandRendererMixin",
     "ItemRendererMixin",
-    "client.GameRendererMixin"
+    "minecraft.client.renderer.GameRendererAccessor",
+    "minecraft.client.renderer.GameRendererMixin",
+    "minecraft.client.renderer.FogRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
