@@ -153,6 +153,9 @@ public class EternisStarrySky
 
                 // 无限忏悔石
                 output.accept(ModItems.INFINITE_SHRIVING_STONE.get());
+
+                // 飞燕穿柳
+                output.accept(ModItems.FLYING_SWALLOW_THROUGH_Willow.get());
             }).build());
 
     public EternisStarrySky(FMLJavaModLoadingContext context)

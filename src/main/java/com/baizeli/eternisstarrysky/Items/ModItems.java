@@ -214,4 +214,8 @@ public class ModItems {
     public static final RegistryObject<Item> INFINITE_SHRIVING_STONE = ITEMS.register(
         "infinite_shriving_stone", InfiniteShrivingStoneItem::new
     );
+
+    // 飞燕穿柳
+    public static final RegistryObject<Item> FLYING_SWALLOW_THROUGH_Willow = ITEMS.register("flying_swallow_through_willow",
+            () -> new FlyingSwallowThroughWillow());
 }
