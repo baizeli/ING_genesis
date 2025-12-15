@@ -1,14 +1,21 @@
 package com.baizeli.eternisstarrysky.Util.spell;
 
-import com.baizeli.eternisstarrysky.effect.spell.ModEffect;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.effect.*;
+import net.minecraft.core.registries.*;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 
 public class SpellEffectUtil {
-    public static boolean isAffectedByChaosEffects(LivingEntity entity) {
-        return 
-            entity.getEffect(ModEffect.BLOOD_FRENZY.get()) != null || 
-            entity.getEffect(ModEffect.BLOOD_WAR.get()) != null || 
-            entity.getEffect(ModEffect.CONFUSION.get()) != null || 
-            entity.getEffect(ModEffect.SIPHON.get()) != null;
+    public static final TagKey<MobEffect> CHAOS_EFFECT = TagKey.create(
+        Registries.MOB_EFFECT, new ResourceLocation("iron_spells_genesis", "spell_effect/chaos")
+    );
+    
+    public static boolean isAffectedByChaosEffect(LivingEntity entity) {
+        return entity.getActiveEffects().stream()
+            .anyMatch(
+                effectInstance ->
+                BuiltInRegistries.MOB_EFFECT.wrapAsHolder(effectInstance.getEffect()).is(CHAOS_EFFECT)
+            );
     }
 }

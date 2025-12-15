@@ -1,21 +1,26 @@
 package com.baizeli.eternisstarrysky.Mixin.minecraft.world.entity;
 
+import com.baizeli.eternisstarrysky.Items.AvaritiaSword;
 import com.baizeli.eternisstarrysky.effect.spell.ModEffect;
 import com.baizeli.eternisstarrysky.sound.SoundsRegister;
 import com.baizeli.eternisstarrysky.client.renderer.EvasionAnimationRenderer;
+import com.baizeli.eternisstarrysky.spell.chaos.ReversePlagueSpell;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.*;
 import net.minecraft.world.entity.*;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.*;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.loading.FMLEnvironment;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.*;
+import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.*;
 
-import java.util.Random;
+import java.util.*;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin {
@@ -72,6 +77,83 @@ public abstract class LivingEntityMixin {
 			}
 		}
 	}
+
+    @ModifyVariable(method = "hurt", at = @At("HEAD"), ordinal = 0, argsOnly = true)
+    private float modifyDamageAmount(float amount, DamageSource damageSource) {
+        LivingEntity entity = (LivingEntity) (Object) this;
+
+        if (entity instanceof Player player)
+        {
+            if (isBlockingWithInfinitySword(player))
+            {
+                return 0.0f;
+            }
+        }
+
+        return amount;
+    }
+
+    private boolean isBlockingWithInfinitySword(Player player) {
+        if (!player.isUsingItem()) {
+            return false;
+        }
+
+        ItemStack usingItem = player.getUseItem();
+        return (usingItem.getItem() instanceof AvaritiaSword &&
+                usingItem.getUseAnimation() == UseAnim.BLOCK);
+    }
+
+    @Inject(method = "hurt", at = @At(value = "INVOKE",
+            target = "net/minecraft/world/entity/LivingEntity.actuallyHurt(Lnet/minecraft/world/damagesource/DamageSource;F)V"),
+            cancellable = true)
+    private void onActuallyHurt(DamageSource damageSource, float amount, CallbackInfoReturnable<Boolean> cir) {
+        LivingEntity entity = (LivingEntity) (Object) this;
+
+        if (entity instanceof Player player)
+        {
+            if (isBlockingWithInfinitySword(player))
+            {
+                addBlockEffect(player, damageSource);
+            }
+        }
+    }
+
+    private void addBlockEffect(Player player, DamageSource damageSource) {
+        Level level = player.level();
+        if (!level.isClientSide)
+        {
+            level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.ANVIL_LAND, SoundSource.PLAYERS, 0.6F, 2.0F);
+        }
+    }
+
+    @Inject(method = "addEffect(Lnet/minecraft/world/effect/MobEffectInstance;Lnet/minecraft/world/entity/Entity;)Z", at = @At("HEAD"), cancellable = true)
+    private void addEffect(MobEffectInstance effectInstance, Entity entity, CallbackInfoReturnable<Boolean> cir) {
+        LivingEntity living = (LivingEntity) (Object) this;
+        ServerLevel serverLevel = (ServerLevel) living.level();
+        Map<LivingEntity, LivingEntity> entityMap = new HashMap<>();
+        ReversePlagueSpell.entityMap.forEach(((uuid, uuid1) -> {
+            LivingEntity livingEntity = (LivingEntity) serverLevel.getEntity(uuid);
+            LivingEntity livingEntity1 = (LivingEntity) serverLevel.getEntity(uuid1);
+            if (livingEntity != null && livingEntity1 != null) {
+                entityMap.put(livingEntity, livingEntity1);
+            }
+        }));
+
+        if (entityMap.containsKey(living)) {
+            if (entityMap.get(living) != null && entityMap.get(living).getPersistentData().getLong("remaining time") >= serverLevel.getGameTime()) {
+                if (effectInstance.effect.getCategory() == MobEffectCategory.HARMFUL) {
+                    entityMap.get(living).addEffect(effectInstance);
+                }
+                cir.cancel();
+            } else {
+                ReversePlagueSpell.entityMap.remove(living.getUUID());
+            }
+        }
+
+        if (entityMap.containsValue(living) && living.getPersistentData().getLong("remaining time") >= serverLevel.getGameTime() && effectInstance.effect.getCategory() == MobEffectCategory.BENEFICIAL) {
+            cir.cancel();
+        }
+    }
 	
 /* 	@Overwrite
 	public float getHealth(){

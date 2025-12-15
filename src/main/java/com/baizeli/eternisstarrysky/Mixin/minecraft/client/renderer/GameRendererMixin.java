@@ -27,10 +27,6 @@ public abstract class GameRendererMixin {
                     cir.setReturnValue(5f);
                 }
             }
-
-            /*if (ChaosEffectUtil.isAffectedByChaosEffects(player)) {
-                cir.setReturnValue(2009f);
-            }*/
         }
     }
 
