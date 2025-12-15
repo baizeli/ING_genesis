@@ -23,15 +23,11 @@ public class FogRendererMixin {
             shift = At.Shift.BEFORE
         )
     )
-    private static void onSetupColor(
-        Camera activeRenderInfo, float partialTicks,
-        ClientLevel level, int renderDistanceChunks,
-        float bossColorModifier, CallbackInfo ci
-    ) {
+    private static void onSetupColor(Camera activeRenderInfo, float partialTicks, ClientLevel level, int renderDistanceChunks, float bossColorModifier, CallbackInfo ci) {
         Entity entity = activeRenderInfo.getEntity();
 
         if (entity instanceof LivingEntity livingEntity) {
-            if (SpellEffectUtil.isAffectedByChaosEffects(livingEntity)) {
+            if (SpellEffectUtil.isAffectedByChaosEffect(livingEntity)) {
                 try {
                     Field fogRedField = FogRenderer.class.getDeclaredField("fogRed");
                     Field fogGreenField = FogRenderer.class.getDeclaredField("fogGreen");
@@ -60,7 +56,7 @@ public class FogRendererMixin {
         Entity entity = activeRenderInfo.getEntity();
 
         if (entity instanceof LivingEntity livingEntity) {
-            if (SpellEffectUtil.isAffectedByChaosEffects(livingEntity)) {
+            if (SpellEffectUtil.isAffectedByChaosEffect(livingEntity)) {
                 RenderSystem.clearColor(1.0f, 0.2f, 0.2f, 0.0f);
                 return;
             }

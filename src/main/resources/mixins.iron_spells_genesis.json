@@ -6,15 +6,11 @@
   "mixins": [
     "minecraft.world.entity.EntityMixin",
     "minecraft.world.food.FoodDataMixin",
-    "InfinitySwordDamageMixin",
     "minecraft.world.entity.LivingEntityAccessor",
-    "LivingEntityEffectMixin",
     "minecraft.world.entity.LivingEntityMixin",
     "minecraft.world.effect.MobEffectMixin",
     "minecraft.world.player.PlayerMixin",
     "jei.library.gui.recipes.RecipeLayoutMixin",
-    "minecraft.network.syncher.SynchedDataMixin",
-    "TooltipColorMixin",
     "ironsspellbooks.gui.arcane_anvil.ArcaneAnvilMenuMixin"
   ],
   "client": [
