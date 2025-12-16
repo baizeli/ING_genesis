@@ -25,16 +25,16 @@ Irons Spells n Spellbooks New genesis License。
 Issue Date: 17.12.2025
 
 Issuer: baizeli
-## 许可与使用
+## License & Use
 The points below outline what you can, cannot and must do when dealing with the contents of this repository.
-### 您可以
+### You CAN
 * Use this mod in a modpack.
 * You may write your own code and use this mod as a dependency, provided that any project using this mod's code is released as open source.
 * Submit Pull Requests to this repository.
 * You may use the source code of this mod except for the shader portions. For any shader code, you must clearly credit the original author.
 * Any use of this mod's code requires your project to be open-sourced.
 
-### 您不能
+### You CANNOT
 * Redistribute any assets of this mod, even for personal use.
 * Use any art, models, or animations from this mod, as we reserve all rights to them.
 * Privately port this mod to newer versions.
