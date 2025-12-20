@@ -15,7 +15,6 @@ import java.util.*;
 public class BloodWarEvent {
     private static final Map<Player, Map<UUID, AttributeModifier>> playerModifiers = new HashMap<>();
 
-    // 一些加成调节
     public static final double SPELL_POWER_BONUS_PER_THRESHOLD = 0.03; // 法术强度
     public static final double DAMAGE_BONUS_PER_THRESHOLD = 0.05; // 伤害
     public static final double SPEED_BONUS_PER_THRESHOLD = 0.05; // 移速
@@ -37,7 +36,6 @@ public class BloodWarEvent {
                 if (oldThreshold > newThreshold) {
                     int thresholdsCrossed = oldThreshold - newThreshold;
 
-                    // 一些加成调节
                     double spellPowerBonus = thresholdsCrossed * SPELL_POWER_BONUS_PER_THRESHOLD; // 法术强度
                     double damageBonus = thresholdsCrossed * DAMAGE_BONUS_PER_THRESHOLD; // 伤害
                     double speedBonus = thresholdsCrossed * SPEED_BONUS_PER_THRESHOLD; // 移速

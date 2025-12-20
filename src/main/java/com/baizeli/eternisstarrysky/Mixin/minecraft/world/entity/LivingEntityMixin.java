@@ -5,7 +5,8 @@ import com.baizeli.eternisstarrysky.effect.spell.ModEffect;
 import com.baizeli.eternisstarrysky.sound.SoundsRegister;
 import com.baizeli.eternisstarrysky.client.renderer.EvasionAnimationRenderer;
 import com.baizeli.eternisstarrysky.spell.chaos.ReversePlagueSpell;
-import net.minecraft.server.level.ServerLevel;
+import com.baizeli.eternisstarrysky.event.spell.celestial_source.LifeAndDeathRealmEvent;
+import net.minecraft.server.level.*;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.*;
@@ -59,6 +60,10 @@ public abstract class LivingEntityMixin {
 	@Inject(method = "hurt", at = @At("HEAD"), cancellable = true)
 	private void onHurt(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
 		LivingEntity entity = (LivingEntity) (Object) this;
+        
+		if (entity instanceof ServerPlayer serverPlayer && LifeAndDeathRealmEvent.isPlayerInSacrificeImmunity(serverPlayer)) {
+			cir.cancel();
+		}
 
 		if (entity.hasEffect(ModEffect.PERFECT_EVASION.get())) {
 			Random random = new Random();
