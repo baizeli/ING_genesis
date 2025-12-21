@@ -174,7 +174,7 @@ dependencies {
     modImplementation "curse.maven:embeddium-908741:5681725"
 
     // Oculus
-    modCompileOnly "curse.maven:oculus-581495:6020952"
+    modImplementation "curse.maven:oculus-581495:6020952"
 
     // Better Brightness Slider
     modImplementation "curse.maven:better-brightness-slider-685037:4656287"
