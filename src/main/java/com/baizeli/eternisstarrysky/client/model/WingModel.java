@@ -56,9 +56,28 @@ public class WingModel<T extends Entity> extends HierarchicalModel<T> {
                     new Keyframe(3.0F, KeyframeAnimations.degreeVec(0.0F, -50.0F, 0.0F), AnimationChannel.Interpolations.LINEAR)
             ))
             .build();
-
+    public static final AnimationDefinition idle2 = AnimationDefinition.Builder.withLength(3.0F).looping()
+            .addAnimation("left_spell_wing", new AnimationChannel(AnimationChannel.Targets.ROTATION,
+                    new Keyframe(0.0F, KeyframeAnimations.degreeVec(-71.5757F, 9.1708F, 12.2423F), AnimationChannel.Interpolations.LINEAR),
+                    new Keyframe(1.5F, KeyframeAnimations.degreeVec(-60.0F, 15.0F, 0.0F), AnimationChannel.Interpolations.LINEAR),
+                    new Keyframe(3.0F, KeyframeAnimations.degreeVec(-71.5757F, 9.1708F, 12.2423F), AnimationChannel.Interpolations.LINEAR)
+            ))
+            .addAnimation("left_spell_wing", new AnimationChannel(AnimationChannel.Targets.POSITION,
+                    new Keyframe(0.0F, KeyframeAnimations.posVec(-10.0F, 20.0F, 5.0F), AnimationChannel.Interpolations.LINEAR),
+                    new Keyframe(3.0F, KeyframeAnimations.posVec(-10.0F, 20.0F, 5.0F), AnimationChannel.Interpolations.LINEAR)
+            ))
+            .addAnimation("right_spell_wing", new AnimationChannel(AnimationChannel.Targets.ROTATION,
+                    new Keyframe(0.0F, KeyframeAnimations.degreeVec(-71.5757F, -9.1708F, -12.2423F), AnimationChannel.Interpolations.LINEAR),
+                    new Keyframe(1.5F, KeyframeAnimations.degreeVec(-60.0F, -15.0F, 0.0F), AnimationChannel.Interpolations.LINEAR),
+                    new Keyframe(3.0F, KeyframeAnimations.degreeVec(-71.5757F, -9.1708F, -12.2423F), AnimationChannel.Interpolations.LINEAR)
+            ))
+            .addAnimation("right_spell_wing", new AnimationChannel(AnimationChannel.Targets.POSITION,
+                    new Keyframe(0.0F, KeyframeAnimations.posVec(10.0F, 20.0F, 5.0F), AnimationChannel.Interpolations.LINEAR),
+                    new Keyframe(3.0F, KeyframeAnimations.posVec(10.0F, 20.0F, 5.0F), AnimationChannel.Interpolations.LINEAR)
+            ))
+            .build();
     
-    private static final float TRANSITION_DURATION = 10F;
+    private static final float TRANSITION_DURATION = 5F;
     
     
     private AnimationState activeAnimationState = null;
@@ -77,10 +96,9 @@ public class WingModel<T extends Entity> extends HierarchicalModel<T> {
 
         
         PartDefinition left_spell_wing = rootDefinition.addOrReplaceChild("left_spell_wing",
-                CubeListBuilder.create().texOffs(0, -77).addBox(0.0F, -43.0F, 0.0F, 0.0F, 43.0F, 77.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 24.0F, 0.0F, 0.0F, -1.309F, 0.0F));
-
+                CubeListBuilder.create().texOffs(0, -77).addBox(0.0F, -20.0F, 0.0F, 0.0F, 43.0F, 77.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 1.0F, 0.0F, 0.0F, -1.309F, 0.0F));
         PartDefinition right_spell_wing = rootDefinition.addOrReplaceChild("right_spell_wing",
-                CubeListBuilder.create().texOffs(0, -29).addBox(0.0F, -43.0F, 0.0F, 0.0F, 43.0F, 77.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 24.0F, 0.0F, 0.0F, 1.309F, 0.0F));
+                CubeListBuilder.create().texOffs(0, -29).addBox(0.0F, -20.0F, 0.0F, 0.0F, 43.0F, 77.0F, new CubeDeformation(0.0F)), PartPose.offsetAndRotation(0.0F, 1.0F, 0.0F, 0.0F, 1.309F, 0.0F));
 
         LayerDefinition layerDefinition = LayerDefinition.create(mesh, 154, 128);
         this.root = layerDefinition.bakeRoot();
@@ -120,7 +138,7 @@ public class WingModel<T extends Entity> extends HierarchicalModel<T> {
             targetDefinition = run;
         } else {
             targetState = idleAnimationState;
-            targetDefinition = idle;
+            targetDefinition = idle2;
         }
 
         
@@ -154,13 +172,13 @@ public class WingModel<T extends Entity> extends HierarchicalModel<T> {
     
     private AnimationDefinition getCurrentAnimationDefinition() {
         if (activeAnimationState == idleAnimationState) {
-            return idle;
+            return idle2;
         } else if (activeAnimationState == flyAnimationState) {
             return fly;
         } else if (activeAnimationState == runAnimationState) {
             return run;
         }
-        return idle;
+        return idle2;
     }
     
     
