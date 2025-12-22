@@ -7,6 +7,8 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexSorting;
 import com.mojang.math.Axis;
+import net.irisshaders.iris.Iris;
+import net.irisshaders.iris.config.IrisConfig;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -16,10 +18,24 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.entity.LevelEntityGetter;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.fml.ModList;
 import org.joml.Matrix4f;
+import org.lwjgl.opengl.GL11;
 
 public class TrailRender {
+    public static boolean IRIS_Setup = ModList.get().getModContainerById("oculus").isPresent();
+
+
     public static void renderTrail(float partialTicks, long finishTimeNano, boolean renderLevel) {
+        if (IRIS_Setup){
+            IrisConfig irisConfig = Iris.getIrisConfig();
+            if (!irisConfig.areShadersEnabled()){
+                return;
+            }
+        }else {
+            return;
+        }
+
         Minecraft minecraft = Minecraft.getInstance();
         if (minecraft.level == null || minecraft.player == null) {
             return;
@@ -55,6 +71,9 @@ public class TrailRender {
             LevelEntityGetter<Entity> entities = minecraft.level.getEntities();
             Iterable<Entity> all = entities.getAll();
             EntityRenderDispatcher entityRenderDispatcher = minecraft.getEntityRenderDispatcher();
+
+            RenderSystem.enableDepthTest();
+            RenderSystem.depthFunc(GL11.GL_LEQUAL);
             
             for (Entity entity :all) {
                 if (entity == null) continue;
