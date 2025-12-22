@@ -1,5 +1,7 @@
 package com.baizeli.eternisstarrysky.Items;
 
+import com.baizeli.eternisstarrysky.EternisStarrySky;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.particles.*;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.*;
@@ -8,17 +10,24 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.ForgeTier;
-import net.minecraftforge.registries.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
+import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import net.minecraftforge.common.ForgeTier;
+import net.minecraftforge.registries.*;
+import software.bernie.geckolib.animatable.GeoItem;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.model.GeoModel;
+import software.bernie.geckolib.renderer.GeoItemRenderer;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
-import java.util.*;
+import java.util.function.Consumer;
 
 import static java.lang.Math.sqrt;
 import static net.minecraft.util.Mth.square;
 
-public class FlyingSwallowThroughWillow extends SwordItem {
+public class FlyingSwallowThroughWillow extends SwordItem implements GeoItem {
     public FlyingSwallowThroughWillow() {
         super(
             new ForgeTier(
@@ -67,4 +76,42 @@ public class FlyingSwallowThroughWillow extends SwordItem {
             level.sendParticles(type, from.x + deltax * i / amount, from.y + deltay * i / amount, from.z + deltaz * i / amount, 0, 0, 0, 0, 0);
         }
     }
+
+    @Override
+    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
+        consumer.accept(new IClientItemExtensions() {
+            private GeoItemRenderer<FlyingSwallowThroughWillow> renderer;
+
+            @Override
+            public BlockEntityWithoutLevelRenderer getCustomRenderer() {
+                if (this.renderer == null)
+                    this.renderer = new GeoItemRenderer<>(new GeoModel<FlyingSwallowThroughWillow>() {
+                        @Override
+                        public ResourceLocation getModelResource(FlyingSwallowThroughWillow object) {
+                            return new ResourceLocation(EternisStarrySky.MOD_ID, "geo/item/flying_swallow_through_willow.geo.json");
+                        }
+
+                        @Override
+                        public ResourceLocation getTextureResource(FlyingSwallowThroughWillow object) {
+                            return new ResourceLocation(EternisStarrySky.MOD_ID, "textures/item/flying_swallow_through_willow_models.png");
+                        }
+
+                        @Override
+                        public ResourceLocation getAnimationResource(FlyingSwallowThroughWillow animatable) {
+                            return new ResourceLocation(EternisStarrySky.MOD_ID, "animations/item/flying_swallow_through_willow.animation.json");
+                        }
+                    });
+                
+                return this.renderer;
+            }
+        });
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return GeckoLibUtil.createInstanceCache(this);
+    }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {}
 }
