@@ -3,8 +3,10 @@ package com.baizeli.eternisstarrysky.Items.armor;
 import com.baizeli.eternisstarrysky.EternisStarrySky;
 import io.redspace.ironsspellbooks.entity.armor.*;
 import io.redspace.ironsspellbooks.item.armor.*;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Rarity;
 import net.minecraftforge.api.distmarker.*;
+import software.bernie.geckolib.model.GeoModel;
 import software.bernie.geckolib.renderer.GeoArmorRenderer;
 
 public class DivineMetalArmor extends ExtendedArmorItem {
@@ -15,6 +17,35 @@ public class DivineMetalArmor extends ExtendedArmorItem {
     @Override
     @OnlyIn(Dist.CLIENT)
     public GeoArmorRenderer<?> supplyRenderer() {
-        return new GenericCustomArmorRenderer<>(new GenericArmorModel<>(EternisStarrySky.MOD_ID, "divine_metal"));
+        return new DivineMetalArmorRenderer(
+            new GeoModel<DivineMetalArmor>() {
+                @Override
+                public ResourceLocation getModelResource(DivineMetalArmor object) {
+                    return ResourceLocation.fromNamespaceAndPath(
+                        EternisStarrySky.MOD_ID, "geo/armor/divine_metal_armor.geo.json"
+                    );
+                }
+
+                @Override
+                public ResourceLocation getTextureResource(DivineMetalArmor object) {
+                    return ResourceLocation.fromNamespaceAndPath(
+                        EternisStarrySky.MOD_ID, "textures/models/armor/divine_metal.png"
+                    );
+                }
+
+                @Override
+                public ResourceLocation getAnimationResource(DivineMetalArmor animatable) {
+                    return ResourceLocation.fromNamespaceAndPath(
+                        EternisStarrySky.MOD_ID, "animations/armor/divine_metal_armor.animation.json"
+                    );
+                }
+            }
+        );
+    }
+
+    public static class DivineMetalArmorRenderer extends GenericCustomArmorRenderer<DivineMetalArmor> {
+        public DivineMetalArmorRenderer(GeoModel<DivineMetalArmor> model) {
+            super(model);
+        }
     }
 }
