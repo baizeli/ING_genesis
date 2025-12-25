@@ -75,6 +75,9 @@ public class WingModel<T extends Entity> extends HierarchicalModel<T> {
                     new Keyframe(0.0F, KeyframeAnimations.posVec(10.0F, 20.0F, 5.0F), AnimationChannel.Interpolations.LINEAR),
                     new Keyframe(3.0F, KeyframeAnimations.posVec(10.0F, 20.0F, 5.0F), AnimationChannel.Interpolations.LINEAR)
             ))
+            .addAnimation("root", new AnimationChannel(AnimationChannel.Targets.POSITION,
+                    new Keyframe(0.0F,  KeyframeAnimations.posVec(0.0F, -10F, 0.0F), AnimationChannel.Interpolations.LINEAR)
+            ))
             .build();
     
     private static final float TRANSITION_DURATION = 5F;
