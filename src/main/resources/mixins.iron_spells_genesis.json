@@ -18,7 +18,9 @@
     "minecraft.client.renderer.entity.ItemRendererMixin",
     "minecraft.client.renderer.GameRendererAccessor",
     "minecraft.client.renderer.GameRendererMixin",
-    "minecraft.client.renderer.FogRendererMixin"
+    "minecraft.client.renderer.FogRendererMixin",
+    "InscriptionTableScreenMixin",
+    "MixinSpellTargetingLayer"
   ],
   "injectors": {
     "defaultRequire": 1
