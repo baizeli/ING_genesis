@@ -6,6 +6,9 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.math.Axis;
+import net.irisshaders.iris.Iris;
+import net.irisshaders.iris.config.IrisConfig;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.CatModel;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -20,7 +23,9 @@ import net.minecraft.world.entity.animal.Cat;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
+import org.joml.Vector3f;
 
+import static com.baizeli.eternisstarrysky.client.TrailRender.IRIS_Setup;
 
 
 public class NyanCatRenderer extends EntityRenderer<NyanCat> {
@@ -39,14 +44,43 @@ public class NyanCatRenderer extends EntityRenderer<NyanCat> {
     public void render(NyanCat entity, float entityYaw, float partialTick,
                        PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
 
-        
-        renderTrail(entity, partialTick, poseStack, buffer, packedLight);
+        if (IRIS_Setup){
 
-        
+            IrisConfig irisConfig = Iris.getIrisConfig();
+
+            if (!irisConfig.areShadersEnabled()){
+                renderTrail(entity, partialTick, poseStack, Minecraft.getInstance().renderBuffers.bufferSource() , packedLight);
+            }
+        }else {
+            renderTrail(entity, partialTick, poseStack, Minecraft.getInstance().renderBuffers.bufferSource() , packedLight);
+        }
+
+
+
         poseStack.pushPose();
-        poseStack.mulPose(Axis.YP.rotationDegrees(entity.getYRot()));
-        poseStack.mulPose(Axis.ZP.rotationDegrees(entity.getXRot()));
-        poseStack.mulPose(Axis.YP.rotationDegrees(-90));
+        Vector3f direction = new Vector3f(
+                (float) (entity.getX() - entity.xOld),
+                (float) (entity.getY() - entity.yOld),
+                (float) (entity.getZ() - entity.zOld)
+        );
+        Vector3f normalizedDir = new Vector3f(direction).normalize();
+
+        Vector3f right = new Vector3f(0, 1, 0).cross(normalizedDir).normalize();
+
+        Vector3f up = new Vector3f(normalizedDir).cross(right).normalize();
+
+        Matrix4f rotationMatrix = new Matrix4f();
+        rotationMatrix.set(
+                right.x, right.y, right.z, 0,
+                up.x, up.y, up.z, 0,
+                normalizedDir.x, normalizedDir.y, normalizedDir.z, 0,
+                0, 0, 0, 1
+        );
+
+        poseStack.mulPoseMatrix(rotationMatrix);
+
+        poseStack.mulPose(Axis.YP.rotationDegrees(180));
+        poseStack.mulPose(Axis.ZP.rotationDegrees(180));
         poseStack.translate(0, -1.25F, 0);
 
         this.model.renderToBuffer(poseStack,
@@ -68,12 +102,14 @@ public class NyanCatRenderer extends EntityRenderer<NyanCat> {
                     .setShaderState(new RenderStateShard.ShaderStateShard(() -> ModShaders.getRainbowShader()))
                     .setCullState(RenderStateShard.NO_CULL)
                     .setTransparencyState(RenderStateShard.TRANSLUCENT_TRANSPARENCY)
+                    .setDepthTestState(RenderStateShard.LEQUAL_DEPTH_TEST) // 添加深度测试
+                    .setWriteMaskState(RenderStateShard.COLOR_WRITE) // 可选：禁用深度写入
                     .createCompositeState(false)
 
     );
     
-    private void renderTrail(NyanCat entity, float partialTick, PoseStack poseStack,
-                             MultiBufferSource buffer, int packedLight) {
+    public void renderTrail(NyanCat entity, float partialTick, PoseStack poseStack,
+                            MultiBufferSource.BufferSource buffer, int packedLight) {
         
         if (entity.trailPointer < 0) {
             return;
@@ -169,7 +205,7 @@ public class NyanCatRenderer extends EntityRenderer<NyanCat> {
             samples++;
             drawFrom = sample;
         }
-
+        buffer.endBatch();
         poseStack.popPose();
     }
 

@@ -3,7 +3,7 @@ package com.baizeli.eternisstarrysky.Items.Staff;
 import com.baizeli.eternisstarrysky.TooltipParticleHandler.ITooltipParticleItem;
 import com.baizeli.eternisstarrysky.TooltipParticleHandler.PTID;
 import com.baizeli.eternisstarrysky.TooltipParticleHandler.TooltipParticleSystem;
-import com.baizeli.eternisstarrysky.spell.Attributes;
+import com.baizeli.eternisstarrysky.spell.SpellAttributes;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import io.redspace.ironsspellbooks.item.weapons.*;
 import net.minecraft.client.Minecraft;
@@ -19,7 +19,7 @@ public class CelestialSourceStaff extends StaffItem implements ITooltipParticleI
                     AttributeModifier.Operation.MULTIPLY_BASE
                 ),
                 new AttributeContainer(
-                    Attributes.CELESTIAL_SOURCE_SPELL_POWER, 0.25,
+                    SpellAttributes.CELESTIAL_SOURCE_SPELL_POWER, 0.25,
                     AttributeModifier.Operation.MULTIPLY_BASE
                 ),
                 new AttributeContainer(

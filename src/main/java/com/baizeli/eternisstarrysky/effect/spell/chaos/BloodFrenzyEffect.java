@@ -18,7 +18,6 @@ public class BloodFrenzyEffect extends MobEffect {
     
     @Override
     public void applyEffectTick(LivingEntity entity, int amplifier) {
-        // 一个简单的回血.
         if (entity.level().getGameTime() % 20 == 0) {
             entity.heal(1.0f * (amplifier + 1));
         }

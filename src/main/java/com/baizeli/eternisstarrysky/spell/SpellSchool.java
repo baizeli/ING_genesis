@@ -48,8 +48,8 @@ public class SpellSchool {
                 Component.translatable(
                     "school." + EternisStarrySky.MOD_ID + ".chaos"
                 ).withStyle(ChatFormatting.DARK_RED), 
-                Attributes.CHAOS_SPELL_POWER, 
-                Attributes.CHAOS_MAGIC_RESIST, 
+                SpellAttributes.CHAOS_SPELL_POWER,
+                SpellAttributes.CHAOS_MAGIC_RESIST,
                 SoundsRegister.CHAOS_CAST,
                 DamageTypes.CHAOS_MAGIC
             )
@@ -63,8 +63,8 @@ public class SpellSchool {
                 Component.translatable(
                     "school." + EternisStarrySky.MOD_ID + ".celestial_source"
                 ).withStyle(ChatFormatting.DARK_AQUA), 
-                Attributes.CELESTIAL_SOURCE_SPELL_POWER, 
-                Attributes.CELESTIAL_SOURCE_MAGIC_RESIST, 
+                SpellAttributes.CELESTIAL_SOURCE_SPELL_POWER,
+                SpellAttributes.CELESTIAL_SOURCE_MAGIC_RESIST,
                 SoundsRegister.CELESTIAL_SOURCE_CAST, 
                 DamageTypes.CELESTIAL_SOURCE_MAGIC
             )
@@ -78,8 +78,8 @@ public class SpellSchool {
                 Component.translatable(
                     "school." + EternisStarrySky.MOD_ID + ".culinary"
                 ).withStyle(ChatFormatting.GOLD), 
-                Attributes.CULINARY_SPELL_POWER,
-                Attributes.CULINARY_MAGIC_RESIST, 
+                SpellAttributes.CULINARY_SPELL_POWER,
+                SpellAttributes.CULINARY_MAGIC_RESIST,
                 SoundsRegister.CULINARY_CAST, 
                 ISSDamageTypes.FIRE_MAGIC
             )
