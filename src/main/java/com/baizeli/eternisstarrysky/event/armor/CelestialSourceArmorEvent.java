@@ -2,7 +2,6 @@ package com.baizeli.eternisstarrysky.event.armor;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
 import com.baizeli.eternisstarrysky.Util.ArmorSetUtil;
-import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.eventbus.api.*;

@@ -1,4 +1,7 @@
 {
+  "curios.identifier.crown": "Crown",
+  "curios.modifiers.crown": "When worn as crown:",
+
   "itemGroup.iron_spells_genesis.iron_spells_genesis_tab": "Iron's Spells 'n Spellbooks: New genesis",
 
   "attribute.iron_spells_genesis.chaos_magic_resist": "Chaos Magic Resistance",

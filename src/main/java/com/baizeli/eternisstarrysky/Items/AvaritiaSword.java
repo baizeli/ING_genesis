@@ -1,10 +1,11 @@
 package com.baizeli.eternisstarrysky.Items;
 
 import com.baizeli.eternisstarrysky.Mixin.LivingEntityAccessor;
-import com.baizeli.eternisstarrysky.Util.AvaritiaKill;
-import com.baizeli.eternisstarrysky.Util.AvaritiaLivingEntity;
 import com.baizeli.eternisstarrysky.Util.AvaritiaVulnerable;
 import com.baizeli.eternisstarrysky.Util.TextUtils;
+import com.baizeli.eternisstarrysky.cora.utils.EventUtil;
+import com.baizeli.eternisstarrysky.network.DeadListSyncPacket;
+import com.baizeli.eternisstarrysky.network.MarkDeadPacket;
 import com.baizeli.eternisstarrysky.sound.Sounds;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
@@ -25,10 +26,12 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraftforge.network.PacketDistributor;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+
+import static com.baizeli.eternisstarrysky.EternisStarrySky.CHANNEL;
 
 public class AvaritiaSword extends SwordItem
 {
@@ -106,34 +109,43 @@ public class AvaritiaSword extends SwordItem
     @Override
     public boolean onLeftClickEntity(ItemStack stack, Player player, Entity entity)
     {
-        if (!(player instanceof ServerPlayer))
-        {
-            Sounds.play(SoundEvents.AMETHYST_BLOCK_STEP, player, 10.0F, 1.0F);
-            return false;
-        }
-        if (!(entity instanceof LivingEntity living))
-            return false;
+//        if (!(player instanceof ServerPlayer))
+//        {
+//            Sounds.play(SoundEvents.AMETHYST_BLOCK_STEP, player, 10.0F, 1.0F);
+//            return false;
+//        }
+//        // living.die(new DamageSource(entity.damageSources().genericKill().typeHolder(), player));
+//        living.getCombatTracker().recordDamage(source, Float.POSITIVE_INFINITY);
+//        living.setHealth(0);
+//        living.gameEvent(GameEvent.ENTITY_DAMAGE);
 
-        DamageSource source = new DamageSource(player.damageSources().genericKill().typeHolder(), player);
-        // living.die(new DamageSource(entity.damageSources().genericKill().typeHolder(), player));
-        living.getCombatTracker().recordDamage(source, Float.POSITIVE_INFINITY);
-        living.setHealth(0);
-        living.gameEvent(GameEvent.ENTITY_DAMAGE);
-        living.setLastHurtByMob(player);
-        living.lastHurtByPlayerTime = 100;
-        living.lastHurtByPlayer = player;
-        if (!living.checkTotemDeathProtection(source))
-        {
-
-            SoundEvent sound =((LivingEntityAccessor)living).callGetDeathSound();;
-            if (sound != null)
-                living.playSound(sound, ((LivingEntityAccessor)living).callGetSoundVolume(), living.getVoicePitch());
-            AvaritiaLivingEntity.die(living, source);
-            ((AvaritiaKill) living).dead(true);
-            living.brain.clearMemories();
-        }
+        kill(player, entity);
         InfinitySword.sweep(player, entity, stack, Float.POSITIVE_INFINITY);
         return true;
+    }
+
+    public static void kill(Player player, Entity entity) {
+        if (!(player instanceof ServerPlayer)) {
+            Sounds.play(SoundEvents.AMETHYST_BLOCK_STEP, player, 10.0F, 1.0F);
+
+            EventUtil.deadList.add(entity.uuid);
+            CHANNEL.sendToServer(new MarkDeadPacket(entity.uuid));
+        } else {
+            if (entity instanceof LivingEntity living) {
+                living.setLastHurtByMob(player);
+                living.lastHurtByPlayerTime = 100;
+                living.lastHurtByPlayer = player;
+
+                SoundEvent sound =((LivingEntityAccessor)living).callGetDeathSound();;
+                if (sound != null)
+                    living.playSound(sound, ((LivingEntityAccessor)living).callGetSoundVolume(), living.getVoicePitch());
+                living.dropAllDeathLoot(new DamageSource(player.damageSources().genericKill().typeHolder(), player));
+                living.brain.clearMemories();
+            }
+
+            EventUtil.deadList.add(entity.uuid);
+            CHANNEL.send(PacketDistributor.ALL.noArg(), new DeadListSyncPacket(entity.uuid));
+        }
     }
 
     @Override

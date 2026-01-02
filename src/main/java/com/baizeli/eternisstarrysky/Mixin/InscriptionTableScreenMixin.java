@@ -1,15 +1,11 @@
 package com.baizeli.eternisstarrysky.Mixin;
 
 import com.baizeli.eternisstarrysky.mixinutil.SpellSlotInfoAccessor;
-import com.baizeli.eternisstarrysky.spell.SpellSchool;
 import com.baizeli.eternisstarrysky.spell.celestial_source.FinalWhisper;
 import com.baizeli.eternisstarrysky.spell.chaos.WarpedBarrierSpell;
 import com.baizeli.eternisstarrysky.spell.chaos.WarpedBloodBurstSpell;
 import com.mojang.blaze3d.vertex.PoseStack;
-import io.redspace.ironsspellbooks.api.registry.SchoolRegistry;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
-import io.redspace.ironsspellbooks.api.spells.SchoolType;
-import io.redspace.ironsspellbooks.api.spells.SpellSlot;
 import io.redspace.ironsspellbooks.api.util.Utils;
 import io.redspace.ironsspellbooks.gui.inscription_table.InscriptionTableScreen;
 import io.redspace.ironsspellbooks.util.TooltipsUtils;
