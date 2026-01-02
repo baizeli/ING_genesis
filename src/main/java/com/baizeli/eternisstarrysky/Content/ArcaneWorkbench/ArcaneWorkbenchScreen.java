@@ -10,8 +10,6 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import static com.baizeli.eternisstarrysky.Content.ArcaneWorkbench.ArcaneWorkbenchMenu.X_SHIFTED;
-import static com.baizeli.eternisstarrysky.Content.ArcaneWorkbench.ArcaneWorkbenchMenu.Y_SHIFTED;
 import static com.baizeli.eternisstarrysky.EternisStarrySky.MODID;
 
 @OnlyIn(Dist.CLIENT)

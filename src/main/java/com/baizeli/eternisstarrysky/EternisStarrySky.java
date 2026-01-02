@@ -5,14 +5,16 @@ import com.baizeli.eternisstarrysky.Content.ModBlock;
 import com.baizeli.eternisstarrysky.Content.Workbenchs.*;
 import com.baizeli.eternisstarrysky.Entity.*;
 import com.baizeli.eternisstarrysky.Items.ModItems;
-import com.baizeli.eternisstarrysky.client.renderer.spell.celestial_source.DeadStarDecreeCometRenderer;
 import com.baizeli.eternisstarrysky.client.ClientEvent;
 import com.baizeli.eternisstarrysky.client.particles.ModParticles;
+import com.baizeli.eternisstarrysky.client.renderer.spell.celestial_source.DeadStarDecreeCometRenderer;
 import com.baizeli.eternisstarrysky.config.Configuration;
 import com.baizeli.eternisstarrysky.config.ConfigurationFactory;
 import com.baizeli.eternisstarrysky.effect.spell.ModEffect;
 import com.baizeli.eternisstarrysky.event.ModKeyBindings;
 import com.baizeli.eternisstarrysky.fonts.FuckFont1;
+import com.baizeli.eternisstarrysky.network.DeadListSyncPacket;
+import com.baizeli.eternisstarrysky.network.MarkDeadPacket;
 import com.baizeli.eternisstarrysky.network.NetworkHandler;
 import com.baizeli.eternisstarrysky.network.WireBoxSyncPacket;
 import com.baizeli.eternisstarrysky.sound.SoundsRegister;
@@ -275,6 +277,18 @@ public class EternisStarrySky
                     WireBoxSyncPacket::encode,
                     WireBoxSyncPacket::decode,
                     WireBoxSyncPacket::handle
+            );
+
+            CHANNEL.registerMessage(1, DeadListSyncPacket.class,
+                    DeadListSyncPacket::encode,
+                    DeadListSyncPacket::decode,
+                    DeadListSyncPacket::handle
+            );
+
+            CHANNEL.registerMessage(2, MarkDeadPacket.class,
+                    MarkDeadPacket::encode,
+                    MarkDeadPacket::decode,
+                    MarkDeadPacket::handle
             );
         }
     }

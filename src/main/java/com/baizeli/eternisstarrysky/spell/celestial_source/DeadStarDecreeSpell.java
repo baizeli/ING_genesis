@@ -1,5 +1,7 @@
 package com.baizeli.eternisstarrysky.spell.celestial_source;
 
+import com.baizeli.eternisstarrysky.Entity.ModEntities;
+import com.baizeli.eternisstarrysky.Entity.spells.celestial_source.DeadStarDecreeComet;
 import com.baizeli.eternisstarrysky.EternisStarrySky;
 import com.baizeli.eternisstarrysky.spell.SpellSchool;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
@@ -10,8 +12,6 @@ import io.redspace.ironsspellbooks.capabilities.magic.MagicManager;
 import io.redspace.ironsspellbooks.damage.DamageSources;
 import io.redspace.ironsspellbooks.particle.FogParticleOptions;
 import io.redspace.ironsspellbooks.registries.SoundRegistry;
-import com.baizeli.eternisstarrysky.Entity.ModEntities;
-import com.baizeli.eternisstarrysky.Entity.spells.celestial_source.DeadStarDecreeComet;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.network.chat.*;
 import net.minecraft.resources.ResourceLocation;

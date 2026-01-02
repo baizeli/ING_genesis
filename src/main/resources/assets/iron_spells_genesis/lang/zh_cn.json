@@ -1,4 +1,7 @@
 {
+  "curios.identifier.crown": "冠冕",
+  "curios.modifiers.crown": "佩戴冠冕时：",
+
   "itemGroup.iron_spells_genesis.iron_spells_genesis_tab": "铁之魔法书：创世纪",
 
   "attribute.iron_spells_genesis.chaos_magic_resist": "混沌法术抗性",

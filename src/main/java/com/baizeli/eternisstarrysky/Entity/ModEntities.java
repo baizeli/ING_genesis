@@ -1,7 +1,7 @@
 package com.baizeli.eternisstarrysky.Entity;
 
-import com.baizeli.eternisstarrysky.EternisStarrySky;
 import com.baizeli.eternisstarrysky.Entity.spells.celestial_source.DeadStarDecreeComet;
+import com.baizeli.eternisstarrysky.EternisStarrySky;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraftforge.registries.DeferredRegister;

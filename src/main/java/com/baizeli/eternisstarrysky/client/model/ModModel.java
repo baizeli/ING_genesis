@@ -1,7 +1,7 @@
 package com.baizeli.eternisstarrysky.client.model;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
-import com.baizeli.eternisstarrysky.client.model.spell.celestial_source.*;
+import com.baizeli.eternisstarrysky.client.model.spell.celestial_source.DeadStarDecreeCometModel;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;

@@ -1,11 +1,11 @@
 package com.baizeli.eternisstarrysky.Mixin;
 
+import com.baizeli.eternisstarrysky.client.renderer.EvasionAnimationRenderer;
 import com.baizeli.eternisstarrysky.effect.spell.ModEffect;
 import com.baizeli.eternisstarrysky.sound.SoundsRegister;
-import com.baizeli.eternisstarrysky.client.renderer.EvasionAnimationRenderer;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
-import net.minecraft.sounds.SoundSource;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import org.spongepowered.asm.mixin.Mixin;

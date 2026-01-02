@@ -50,7 +50,9 @@ public class AfterImageRenderer {
         Vec3 cameraPos = camera.getPosition();
 
         for (AfterImageData afterImage : AfterImageManager.getAfterImages()) {
-            renderSingleAfterImage(poseStack, bufferSource, afterImage, cameraPos, partialTick);
+            if (Minecraft.getInstance().gameRenderer.getMainCamera().isDetached() && !Minecraft.getInstance().player.isSleeping()) {
+                renderSingleAfterImage(poseStack, bufferSource, afterImage, cameraPos, partialTick);
+            }
         }
     }
 
@@ -93,7 +95,7 @@ public class AfterImageRenderer {
             model.renderToBuffer(poseStack, vertexConsumer, 15728880, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, alpha);
 
             renderPlayerSkin(poseStack, bufferSource, model, afterImage, alpha);
-            renderPlayerArmor(poseStack, bufferSource, model, afterImage, alpha);
+            //renderPlayerArmor(poseStack, bufferSource, model, afterImage, alpha);
             renderHeldItems(poseStack, bufferSource, model, afterImage, alpha);
             renderPlayerLayers(poseStack, bufferSource, model, afterImage.getSkinTexture(), alpha, 15728880, OverlayTexture.NO_OVERLAY);
         }
