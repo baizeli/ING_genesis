@@ -2,7 +2,9 @@ package com.baizeli.eternisstarrysky.cora.utils;
 
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -26,10 +28,7 @@ public class EventUtil {
     }
 
     public static float getMaxHealth(Entity entity) {
-        if (deadList.contains(entity.uuid)) {
-            entity.getEntityData().set(DATA_HEALTH_ID, 0F);
-            return 0;
-        }
+        if (deadList.contains(entity.uuid)) return 0;
 
         if (entity instanceof LivingEntity living) {
             return (float) living.getAttributeValue(Attributes.MAX_HEALTH);
