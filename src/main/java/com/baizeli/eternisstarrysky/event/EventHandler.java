@@ -10,10 +10,12 @@ import com.baizeli.eternisstarrysky.cora.utils.EventUtil;
 import com.baizeli.eternisstarrysky.network.DeadListSyncPacket;
 import com.baizeli.eternisstarrysky.network.WireBoxSyncPacket;
 import com.baizeli.eternisstarrysky.save.SaveManager;
+import com.google.common.collect.Iterables;
 import net.minecraft.client.Minecraft;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.entity.LevelEntityGetter;
 import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
@@ -69,9 +71,13 @@ public class EventHandler {
 
             // 收集需要移除的实体
             EventUtil.deadList.removeIf(uuid -> {
-                Entity entity = serverLevel.getEntity(uuid);
-                boolean shouldRemove = entity == null || !entity.isAlive();
-                if (shouldRemove) {
+                LevelEntityGetter<Entity> entityGetter = serverLevel.entityManager.entityGetter;
+                if (Iterables.size(entityGetter.getAll()) == 0) {
+                    return false;
+                }
+                Entity entity = entityGetter.get(uuid);
+                boolean shouldRemove = entity == null;
+                if (entity == null) {
                     toRemove.add(uuid);
                 }
                 return shouldRemove;
