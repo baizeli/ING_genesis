@@ -1,6 +1,6 @@
 package com.baizeli.eternisstarrysky.Items.Staff;
 
-import com.baizeli.eternisstarrysky.spell.Attributes;
+import com.baizeli.eternisstarrysky.spell.SpellAttributes;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import io.redspace.ironsspellbooks.item.weapons.*;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -11,7 +11,7 @@ public class ChaosStaff extends StaffItem {
         super(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1),
             new StaffTier(6, -3,
                 new AttributeContainer(
-                    Attributes.CHAOS_SPELL_POWER, 0.15,
+                    SpellAttributes.CHAOS_SPELL_POWER, 0.15,
                     AttributeModifier.Operation.MULTIPLY_BASE
                 ),
                 new AttributeContainer(

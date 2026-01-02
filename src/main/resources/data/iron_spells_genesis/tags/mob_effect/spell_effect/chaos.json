@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "iron_spells_genesis:blood_frenzy",
+    "iron_spells_genesis:blood_war",
+    "iron_spells_genesis:confusion",
+    "iron_spells_genesis:siphon"
+  ]
+}

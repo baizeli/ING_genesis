@@ -63,7 +63,6 @@
   "item.iron_spells_genesis.infinity_sword": "天火圣裁 [伪]",
   "item.iron_spells_genesis.eternis_apple": "寰宇大苹果",
   "item.iron_spells_genesis.broyouhuashuo": "哎呀，我怎么把锭写成袋子了",
-  "item.iron_spells_genesis.purpleite_galaxy_ingot": "§5紫极星源锭",
   "item.iron_spells_genesis.purpleite_galaxy_ingot1": "汝掌心中者，永恒之力也",
   "item.iron_spells_genesis.whisper_of_the_past": "往世的飞花",
   "item.iron_spells_genesis.create_star": "创造之心",
@@ -80,12 +79,9 @@
   "item.iron_spells_genesis.celestial_source_ingot": "星源锭",
   "item.iron_spells_genesis.lao_wang_237": "老王237",
   "item.iron_spells_genesis.infinite_shriving_stone": "无限忏悔石",
-
-  "item.iron_spells_genesis.infinity_eternal_helmet": "紫极星源头盔",
-  "item.iron_spells_genesis.infinity_eternal_chestplate": "紫极星源胸甲",
-  "item.iron_spells_genesis.infinity_eternal_leggings": "紫极星源护腿",
-  "item.iron_spells_genesis.infinity_eternal_boots": "紫极星源靴子",
-
+  
+  "item.iron_spells_genesis.flying_swallow_through_willow": "飞燕穿柳",
+  
   "item.iron_spells_genesis.divine_metal_helmet": "神圣金属头盔",
   "item.iron_spells_genesis.divine_metal_chestplate": "神圣金属胸甲",
   "item.iron_spells_genesis.divine_metal_leggings": "神圣金属护腿",
@@ -101,6 +97,12 @@
   "item.iron_spells_genesis.chaos_spell_chestplate": "混沌法术胸甲",
   "item.iron_spells_genesis.chaos_spell_leggings": "混沌法术护腿",
   "item.iron_spells_genesis.chaos_spell_boots": "混沌法术靴子",
+
+  "item.iron_spells_genesis.violet_zenith_helmet": "紫极战斗头盔",
+  "item.iron_spells_genesis.violet_zenith_chestplate": "紫极战斗胸甲",
+  "item.iron_spells_genesis.violet_zenith_leggings": "紫极战斗护腿",
+  "item.iron_spells_genesis.violet_zenith_boots": "紫极战斗靴子",
+  "item.iron_spells_genesis.purpleite_galaxy_ingot": "§5紫极锭",
 
   "iron_spells_genesis.galaxy_scroll.book_name": "§b星河绘卷",
 
@@ -152,5 +154,6 @@
   "entity.iron_spells_genesis.dead_star_decree_comet": "死星天裁-陨石",
   "entity.iron_spells_genesis.dead_star_decree_large_comet": "死星天裁-大陨石",
   "entity.iron_spells_genesis.lighting_bolt": "彩色闪电",
-  "entity.iron_spells_genesis.sword_man_csdy": "「剑人」CSDY"
+  "entity.iron_spells_genesis.sword_man_csdy": "「剑人」CSDY",
+  "item.iron_spells_genesis.infinity_eternal_helmet": "Purpleite Galaxy Helmet"
 }

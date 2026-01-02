@@ -3,15 +3,28 @@ package com.baizeli.eternisstarrysky.event.spell.celestial_source;
 import com.baizeli.eternisstarrysky.EternisStarrySky;
 import com.baizeli.eternisstarrysky.effect.spell.ModEffect;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.*;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.common.Tags;
 
 @Mod.EventBusSubscriber(modid = EternisStarrySky.MODID)
 public class LifeAndDeathRealmEvent {
-
     private static boolean playerHasBeenSacrificed = false;
+    private static long sacrificeImmunityEndTime = 0;
+
+    @SubscribeEvent
+    public static void onEffectAdded(MobEffectEvent.Added event) {
+        if (event.getEffectInstance() != null && 
+            event.getEffectInstance().getEffect() == ModEffect.LIFE_AND_DEATH_REALM.get() &&
+            event.getEntity() instanceof ServerPlayer
+        ) {
+            playerHasBeenSacrificed = false;
+            sacrificeImmunityEndTime = 0;
+        }
+    }
 
     @SubscribeEvent
     public static void onEffectExpired(MobEffectEvent.Expired event) {
@@ -31,6 +44,7 @@ public class LifeAndDeathRealmEvent {
             
             // 重置一下标记
             playerHasBeenSacrificed = false;
+            sacrificeImmunityEndTime = 0;
         }
     }
     
@@ -48,18 +62,31 @@ public class LifeAndDeathRealmEvent {
                         // 取消伤害
                         event.setCanceled(true);
 
-                        // 你打的我你自己承担/虚空伤害最大值/设置生命值0
-                        attacker.hurt(player.level().damageSources().fellOutOfWorld(), Float.MAX_VALUE);
-                        attacker.setHealth(0.0F);
-                        
-                        // 替死完将生命值回满
+                        if (!attacker.getType().is(Tags.EntityTypes.BOSSES)) {
+                            // 虚空伤害最大值/设置生命值0
+                            attacker.hurt(player.level().damageSources().fellOutOfWorld(), Float.MAX_VALUE);
+                            attacker.setHealth(0.0F);
+                        }
+
+                        // 替死完将生命值回满/向后一个力/音效
                         player.setHealth(player.getMaxHealth());
+                        player.knockback(5.0F, attacker.getX() - player.getX(), attacker.getZ() - player.getZ());
+                        player.level().playSound(
+                            null, player.getX(), player.getY(), player.getZ(), 
+                            SoundEvents.TOTEM_USE, player.getSoundSource(), 1.0F, 1.0F
+                        );
                         
-                        // 标记施法者已被替死
+                        // 标记施法者已被替死/移除效果
                         playerHasBeenSacrificed = true;
+                        player.removeEffect(ModEffect.LIFE_AND_DEATH_REALM.get());
+                        sacrificeImmunityEndTime = player.level().getGameTime() + (5 * 20);
                     }
                 }
             }
         }
+    }
+
+    public static boolean isPlayerInSacrificeImmunity(ServerPlayer player) {
+        return playerHasBeenSacrificed && player.level().getGameTime() < sacrificeImmunityEndTime;
     }
 }

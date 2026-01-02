@@ -21,7 +21,7 @@ public class BloodFrenzyEvent {
 
         if (entity.hasEffect(ModEffect.BLOOD_FRENZY.get())) {
             if (entity instanceof Player player) {
-                // 获取施法者攻击范围.
+                // 获取施法者攻击范围
                 double reach = player.getEntityReach();
                 AABB searchBox = player.getBoundingBox().inflate(reach);
                 List<LivingEntity> nearbyEntities = player.level().getEntitiesOfClass(
@@ -30,7 +30,7 @@ public class BloodFrenzyEvent {
                     e -> e != player && e.isAlive() && player.canReach(e, 0)
                 );
 
-                // 如果附近有实体/找到最近的实体.
+                // 如果附近有实体/找到最近的实体
                 if (!nearbyEntities.isEmpty()) {
                     LivingEntity nearestEntity = null;
                     double nearestDistance = Double.MAX_VALUE;
@@ -43,7 +43,7 @@ public class BloodFrenzyEvent {
                         }
                     }
 
-                    // 将施法者推向最近的实体.
+                    // 将施法者推向最近的实体
                     if (nearestEntity != null) {
                         double dx = nearestEntity.getX() - player.getX();
                         double dz = nearestEntity.getZ() - player.getZ();
@@ -55,7 +55,7 @@ public class BloodFrenzyEvent {
                         }
                     }
 
-                    // 自动攻击...
+                    // 自动攻击
                     if (player.level().isClientSide) {
                         Minecraft mc = Minecraft.getInstance();
 
@@ -76,14 +76,14 @@ public class BloodFrenzyEvent {
     
     @SubscribeEvent
     public static void onLivingHurt(LivingHurtEvent event) {
-        // 攻击的伤害增加.
+        // 攻击的伤害增加
         if (event.getSource().getEntity() instanceof LivingEntity attacker) {
             if (attacker.hasEffect(ModEffect.BLOOD_FRENZY.get())) {
                 event.setAmount(event.getAmount() * 2.0f);
             }
         }
 
-        // 受伤的减免.
+        // 受伤的减免
         if (event.getEntity() instanceof LivingEntity) {
             LivingEntity victim = (LivingEntity) event.getEntity();
             if (victim.hasEffect(ModEffect.BLOOD_FRENZY.get())) {

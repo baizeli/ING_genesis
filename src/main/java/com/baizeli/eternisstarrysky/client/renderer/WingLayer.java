@@ -44,7 +44,8 @@ public class WingLayer extends RenderLayer<Player, PlayerModel<Player>> {
             
             wingModel.setupAnim(player, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
 
-
+            float scale = 0.7F;
+            poseStack.scale(scale, scale, scale);
 
             VertexConsumer vertexConsumer = bufferSource.getBuffer(RenderType.entityTranslucentEmissive(WING_TEXTURE));
 
@@ -71,7 +72,7 @@ public class WingLayer extends RenderLayer<Player, PlayerModel<Player>> {
         }
 
         
-        float scale = 0.8F; 
+        float scale = 1F;
         poseStack.scale(scale, scale, scale);
 
         

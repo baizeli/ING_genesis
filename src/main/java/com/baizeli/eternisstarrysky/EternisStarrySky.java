@@ -18,7 +18,7 @@ import com.baizeli.eternisstarrysky.network.MarkDeadPacket;
 import com.baizeli.eternisstarrysky.network.NetworkHandler;
 import com.baizeli.eternisstarrysky.network.WireBoxSyncPacket;
 import com.baizeli.eternisstarrysky.sound.SoundsRegister;
-import com.baizeli.eternisstarrysky.spell.Attributes;
+import com.baizeli.eternisstarrysky.spell.SpellAttributes;
 import com.baizeli.eternisstarrysky.spell.SpellSchool;
 import com.baizeli.eternisstarrysky.spell.Spells;
 import com.mojang.logging.LogUtils;
@@ -115,6 +115,12 @@ public class EternisStarrySky
                 output.accept(ModItems.CHAOS_SPELL_LEGGINGS.get());
                 output.accept(ModItems.CHAOS_SPELL_BOOTS.get());
 
+                // 紫极战斗套
+                output.accept(ModItems.VIOLET_ZENITH_HELMET.get());
+                output.accept(ModItems.VIOLET_ZENITH_CHESTPLATE.get());
+                output.accept(ModItems.VIOLET_ZENITH_LEGGINGS.get());
+                output.accept(ModItems.VIOLET_ZENITH_BOOTS.get());
+
                 output.accept(ModItems.WORKBENCH.get());
 
                 // 奥术工作台
@@ -149,6 +155,9 @@ public class EternisStarrySky
 
                 // 无限忏悔石
                 output.accept(ModItems.INFINITE_SHRIVING_STONE.get());
+
+                // 飞燕穿柳
+                output.accept(ModItems.FLYING_SWALLOW_THROUGH_Willow.get());
             }).build());
 
     public EternisStarrySky(FMLJavaModLoadingContext context)
@@ -164,7 +173,7 @@ public class EternisStarrySky
 
         SpellSchool.register(modEventBus);
         Spells.register(modEventBus);
-        Attributes.register(modEventBus);
+        SpellAttributes.register(modEventBus);
         ModBlockEntities.register(modEventBus);
         ModMenuTypes.register(modEventBus);
         ModRecipeTypes.register(modEventBus);
