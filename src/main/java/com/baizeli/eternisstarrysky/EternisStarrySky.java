@@ -158,6 +158,28 @@ public class EternisStarrySky
 
                 // 飞燕穿柳
                 output.accept(ModItems.FLYING_SWALLOW_THROUGH_Willow.get());
+
+                // 水晶
+                output.accept(ModItems.ARCANE_CRYSTAL.get());
+                output.accept(ModItems.BLOOD_CRYSTAL.get());
+                output.accept(ModItems.ELDRITCH_CRYSTAL.get());
+                output.accept(ModItems.ENDER_CRYSTAL.get());
+                output.accept(ModItems.EVOCATION_CRYSTAL.get());
+                output.accept(ModItems.FIRE_CRYSTAL.get());
+                output.accept(ModItems.HOLY_CRYSTAL.get());
+                output.accept(ModItems.ICE_CRYSTAL.get());
+                output.accept(ModItems.LIGHTNING_CRYSTAL.get());
+                output.accept(ModItems.NATURE_CRYSTAL.get());
+                output.accept(ModItems.CHAOS_CRYSTAL.get());
+                output.accept(ModItems.CELESTIAL_SOURCE_CRYSTAL.get());
+
+                // 手稿
+                output.accept(ModItems.CHAOS_MANUSCRIPT.get());
+                output.accept(ModItems.CELESTIAL_SOURCE_MANUSCRIPT.get());
+
+                // 手稿碎片
+                output.accept(ModItems.CHAOS_MANUSCRIPT_FRAGMENT.get());
+                output.accept(ModItems.CELESTIAL_SOURCE_MANUSCRIPT_FRAGMENT.get());
             }).build());
 
     public EternisStarrySky(FMLJavaModLoadingContext context)

@@ -105,6 +105,25 @@
   "item.iron_spells_genesis.violet_zenith_boots": "Purple Extreme Battle Boots",
   "item.iron_spells_genesis.purpleite_galaxy_ingot": "§5Purple Extreme Ingot",
 
+  "item.iron_spells_genesis.arcane_crystal": "Arcane Crystal",
+  "item.iron_spells_genesis.blood_crystal": "Blood Crystal",
+  "item.iron_spells_genesis.eldritch_crystal": "Eldritch Crystal",
+  "item.iron_spells_genesis.ender_crystal": "Ender Crystal",
+  "item.iron_spells_genesis.evocation_crystal": "Evocation Crystal",
+  "item.iron_spells_genesis.fire_crystal": "Fire Crystal",
+  "item.iron_spells_genesis.holy_crystal": "Holy Crystal",
+  "item.iron_spells_genesis.ice_crystal": "Ice Crystal",
+  "item.iron_spells_genesis.lightning_crystal": "Lightning Crystal",
+  "item.iron_spells_genesis.nature_crystal": "Nature Crystal",
+  "item.iron_spells_genesis.chaos_crystal": "Chaos Crystal",
+  "item.iron_spells_genesis.celestial_source_crystal": "Celestial Source Crystal",
+
+  "item.iron_spells_genesis.chaos_manuscript": "Chaos Manuscript",
+  "item.iron_spells_genesis.celestial_source_manuscript": "Celestial Source Manuscript",
+
+  "item.iron_spells_genesis.chaos_manuscript_fragment": "Chaos Manuscript Fragment",
+  "item.iron_spells_genesis.celestial_source_manuscript_fragment": "Celestial Source Manuscript Fragment",
+
   "iron_spells_genesis.galaxy_scroll.book_name": "§bGalaxy Scroll",
 
   "block.iron_spells_genesis.workbench": "Ultimate Workbench",
