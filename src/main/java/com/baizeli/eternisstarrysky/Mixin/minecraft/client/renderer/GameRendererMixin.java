@@ -24,7 +24,7 @@ public abstract class GameRendererMixin {
                 MobEffectInstance effect = player.getEffect(MobEffects.NIGHT_VISION);
 
                 if (effect != null) {
-                    cir.setReturnValue(5f);
+                    cir.setReturnValue(1f);
                 }
             }
         }
