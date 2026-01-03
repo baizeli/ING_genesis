@@ -1,7 +1,7 @@
 package com.baizeli.eternisstarrysky.Entity;
 
-import com.baizeli.eternisstarrysky.EternisStarrySky;
 import com.baizeli.eternisstarrysky.Entity.spells.celestial_source.DeadStarDecreeComet;
+import com.baizeli.eternisstarrysky.EternisStarrySky;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraftforge.registries.DeferredRegister;
@@ -59,4 +59,18 @@ public class ModEntities {
                     .sized(12.0F, 12.0F)
                     .clientTrackingRange(64)
                     .build("dead_star_decree-large_comet"));
+
+    public static final RegistryObject<EntityType<BoxEntity>> BOX_ENTIYT = ENTITY_TYPES.register("box_entity",
+            () -> EntityType.Builder.<BoxEntity>of(BoxEntity::new, MobCategory.MISC)
+                    .sized(0.5F, 0.5F)
+                    .clientTrackingRange(30)
+                    .updateInterval(1)
+                    .build("box_entity"));
+
+    public static final RegistryObject<EntityType<LightningBolt>> LIGHTNING_BOLT = ENTITY_TYPES.register("lighting_bolt",
+            () -> EntityType.Builder.<LightningBolt>of(LightningBolt::new, MobCategory.MISC)
+                    .sized(0.5F, 0.5F)
+                    .clientTrackingRange(30)
+                    .updateInterval(1)
+                    .build("lighting_bolt"));
 }

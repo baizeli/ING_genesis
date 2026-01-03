@@ -1,4 +1,7 @@
 {
+  "curios.identifier.crown": "冠冕",
+  "curios.modifiers.crown": "佩戴冠冕时：",
+
   "itemGroup.iron_spells_genesis.iron_spells_genesis_tab": "铁之魔法书：创世纪",
 
   "attribute.iron_spells_genesis.chaos_magic_resist": "混沌法术抗性",
@@ -37,6 +40,9 @@
   "spell.iron_spells_genesis.glazed_flower_rain": "琉璃花雨",
   "spell.iron_spells_genesis.summon_pig_swarm": "老王现身",
   "spell.iron_spells_genesis.never_miss": "永不落空",
+  "spell.iron_spells_genesis.final_whisper": "最后的轻语",
+  "spell.iron_spells_genesis.final_whisper.guide": "发射一支箭矢，在落地的地方对5x5范围的生物每秒造成伤害，持续5秒",
+  "spell.iron_spells_genesis.final_whisper.low_health": "血量不足以释放最后的轻语！",
 
   "effect.iron_spells_genesis.i_fly": "我要飞",
   "effect.iron_spells_genesis.fate_wedge": "刻命之楔",
@@ -86,7 +92,7 @@
   "item.iron_spells_genesis.celestial_source_spell_chestplate": "星源法术胸甲",
   "item.iron_spells_genesis.celestial_source_spell_leggings": "星源法术护腿",
   "item.iron_spells_genesis.celestial_source_spell_boots": "星源法术靴子",
-  
+
   "item.iron_spells_genesis.chaos_spell_helmet": "混沌法术头盔",
   "item.iron_spells_genesis.chaos_spell_chestplate": "混沌法术胸甲",
   "item.iron_spells_genesis.chaos_spell_leggings": "混沌法术护腿",
@@ -97,7 +103,7 @@
   "item.iron_spells_genesis.violet_zenith_leggings": "紫极战斗护腿",
   "item.iron_spells_genesis.violet_zenith_boots": "紫极战斗靴子",
   "item.iron_spells_genesis.purpleite_galaxy_ingot": "§5紫极锭",
-  
+
   "iron_spells_genesis.galaxy_scroll.book_name": "§b星河绘卷",
 
   "block.iron_spells_genesis.workbench": "终极工作台",
@@ -111,8 +117,11 @@
 
   "death.attack.iron_spells_genesis.warped_blood_burst" : "%1$s的全身血液因为%2$s爆炸了。",
   "death.attack.iron_spells_genesis.warped_blood_burst.item" : "%1$s的全身血液因为%2$s的%3$s爆炸了。",
+  "death.attack.iron_spells_genesis.final_whisper" : "%1$s因为%2$s消散了。",
+  "death.attack.iron_spells_genesis.final_whisper.item" : "%1$s的因为%2$s的%3$s消散了。",
 
   "ui.iron_spells_genesis.percent_force_damage": "百分比强制伤害：%d%%",
+  "ui.iron_spells_genesis.force_damage": "强制伤害：%d",
   "ui.iron_spells_genesis.max_damage_bonus": "最大伤害加成：%d%%",
   "ui.iron_spells_genesis.health_cost_percent": "消耗生命值百分比：%d%%",
   "ui.iron_spells_genesis.health_conversion_efficiency": "生命值转伤害吸收效率：%d%%",
@@ -144,6 +153,7 @@
   
   "entity.iron_spells_genesis.dead_star_decree_comet": "死星天裁-陨石",
   "entity.iron_spells_genesis.dead_star_decree_large_comet": "死星天裁-大陨石",
+  "entity.iron_spells_genesis.lighting_bolt": "彩色闪电",
   "entity.iron_spells_genesis.sword_man_csdy": "「剑人」CSDY",
   "item.iron_spells_genesis.infinity_eternal_helmet": "Purpleite Galaxy Helmet"
 }

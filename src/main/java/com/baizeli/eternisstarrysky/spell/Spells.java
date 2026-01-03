@@ -22,6 +22,7 @@ public class Spells {
     public static final RegistryObject<AbstractSpell> BLOOD_CONTROL_SPELL;
     public static final RegistryObject<AbstractSpell> BLOOD_FRENZY_SPELL;
     public static final RegistryObject<AbstractSpell> CONFUSION_SPELL;
+    public static final RegistryObject<AbstractSpell> FINAL_WHISPER_SPELL;
 
     // 星源法术卷轴
     public static final RegistryObject<AbstractSpell> I_FLY_SPELL;
@@ -52,6 +53,7 @@ public class Spells {
         BLOOD_CONTROL_SPELL = registerSpell(new BloodControlSpell());
         BLOOD_FRENZY_SPELL = registerSpell(new BloodFrenzySpell());
         CONFUSION_SPELL = registerSpell(new ConfusionSpell());
+        FINAL_WHISPER_SPELL = registerSpell(new FinalWhisper());
 
         // 星源法术卷轴
         I_FLY_SPELL = registerSpell(new IFlySpell());

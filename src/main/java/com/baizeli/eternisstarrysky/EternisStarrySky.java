@@ -5,14 +5,16 @@ import com.baizeli.eternisstarrysky.Content.ModBlock;
 import com.baizeli.eternisstarrysky.Content.Workbenchs.*;
 import com.baizeli.eternisstarrysky.Entity.*;
 import com.baizeli.eternisstarrysky.Items.ModItems;
-import com.baizeli.eternisstarrysky.client.renderer.spell.celestial_source.DeadStarDecreeCometRenderer;
 import com.baizeli.eternisstarrysky.client.ClientEvent;
 import com.baizeli.eternisstarrysky.client.particles.ModParticles;
+import com.baizeli.eternisstarrysky.client.renderer.spell.celestial_source.DeadStarDecreeCometRenderer;
 import com.baizeli.eternisstarrysky.config.Configuration;
 import com.baizeli.eternisstarrysky.config.ConfigurationFactory;
 import com.baizeli.eternisstarrysky.effect.spell.ModEffect;
 import com.baizeli.eternisstarrysky.event.ModKeyBindings;
 import com.baizeli.eternisstarrysky.fonts.FuckFont1;
+import com.baizeli.eternisstarrysky.network.DeadListSyncPacket;
+import com.baizeli.eternisstarrysky.network.MarkDeadPacket;
 import com.baizeli.eternisstarrysky.network.NetworkHandler;
 import com.baizeli.eternisstarrysky.network.WireBoxSyncPacket;
 import com.baizeli.eternisstarrysky.sound.SoundsRegister;
@@ -240,6 +242,7 @@ public class EternisStarrySky
 
     public void onAttributeCreate(EntityAttributeCreationEvent event) {
         event.put(ModEntities.MAGIC_CIRCLE.get(), MagicCircle.createAttributes().build());
+        event.put(ModEntities.BOX_ENTIYT.get(), BoxEntity.createAttributes().build());
         event.put(ModEntities.SWORD_ENTITY.get(), SwordEntity.createAttributes().build());
     }
 
@@ -260,6 +263,8 @@ public class EternisStarrySky
                 EntityRenderers.register(ModEntities.SWORD_MAN_CSDY.get(), SwordManCsdyRenderer::new);
                 EntityRenderers.register(ModEntities.NYAN_CAT.get(), NyanCatRenderer::new);
                 EntityRenderers.register(ModEntities.MAGIC_CIRCLE.get(), MagicCircleRenderer::new);
+                EntityRenderers.register(ModEntities.BOX_ENTIYT.get(), BoxEntityRenderer::new);
+                EntityRenderers.register(ModEntities.LIGHTNING_BOLT.get(), LightningBoltRenderer::new);
                 EntityRenderers.register(ModEntities.SWORD_ENTITY.get(), SwordEntityRenderer::new);
 
                 EntityRenderers.register(ModEntities.DEAD_STAR_DECREE_COMET.get(), 
@@ -281,6 +286,18 @@ public class EternisStarrySky
                     WireBoxSyncPacket::encode,
                     WireBoxSyncPacket::decode,
                     WireBoxSyncPacket::handle
+            );
+
+            CHANNEL.registerMessage(1, DeadListSyncPacket.class,
+                    DeadListSyncPacket::encode,
+                    DeadListSyncPacket::decode,
+                    DeadListSyncPacket::handle
+            );
+
+            CHANNEL.registerMessage(2, MarkDeadPacket.class,
+                    MarkDeadPacket::encode,
+                    MarkDeadPacket::decode,
+                    MarkDeadPacket::handle
             );
         }
     }
