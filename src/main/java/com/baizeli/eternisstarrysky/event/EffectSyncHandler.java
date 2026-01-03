@@ -30,7 +30,10 @@ public class EffectSyncHandler {
     }
 
     private static void handleEffectUpdate(MobEffectEvent event) {
-        MobEffect activeEffect = event.getEffectInstance().getEffect();
+        MobEffect activeEffect = null;
+        if (event.getEffectInstance() != null) {
+            activeEffect = event.getEffectInstance().getEffect();
+        }
         LivingEntity targetEntity = event.getEntity();
 
         if (activeEffect instanceof IFlyEffect && targetEntity.isAlive()) {
@@ -41,7 +44,10 @@ public class EffectSyncHandler {
     }
 
     private static void handleEffectRemoval(MobEffectEvent event) {
-        MobEffect activeEffect = event.getEffectInstance().getEffect();
+        MobEffect activeEffect = null;
+        if (event.getEffectInstance() != null) {
+            activeEffect = event.getEffectInstance().getEffect();
+        }
         LivingEntity targetEntity = event.getEntity();
 
         if (activeEffect instanceof IFlyEffect) {

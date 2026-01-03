@@ -82,7 +82,7 @@ public class LNGPlusLaunchPluginService implements ILaunchPluginService {
         try (InputStream is = loader.getResourceAsStream(className + ".class")) {
             if (is == null) return null;
             ClassNode node = new ClassNode();
-            new ClassReader(is).accept(node, ClassReader.EXPAND_FRAMES);
+            new ClassReader(is).accept(node, ClassReader.SKIP_CODE | ClassReader.SKIP_DEBUG);
             return node;
         } catch (IOException e) {
             e.printStackTrace();
