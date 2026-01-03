@@ -72,7 +72,7 @@ public class WingLayer extends RenderLayer<Player, PlayerModel<Player>> {
         }
 
         
-        float scale = 0.7F;
+        float scale = 1F;
         poseStack.scale(scale, scale, scale);
 
         

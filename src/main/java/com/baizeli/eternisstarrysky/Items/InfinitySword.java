@@ -133,7 +133,11 @@ public class InfinitySword extends SwordItem
 				double ratioX = Mth.sin(player.getYRot() * ((float) Math.PI / 180F));
 				double ratioZ = -Mth.cos(player.getYRot() * ((float) Math.PI / 180));
 				living.knockback(0.4, ratioX, ratioZ);
-				living.hurt(player.damageSources().fellOutOfWorld(), (float) sweepDamage);
+				if (item.is(ModItems.AVARITIA_SWORD.get())) {
+					AvaritiaSword.kill(player, living);
+				} else {
+					living.hurt(player.damageSources().fellOutOfWorld(), (float) sweepDamage);
+				}
 			}
 		}
 

@@ -2,12 +2,15 @@ package com.baizeli.eternisstarrysky.save;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
 import com.baizeli.eternisstarrysky.client.WireBoxRenderer;
+import com.baizeli.eternisstarrysky.cora.utils.EventUtil;
+import com.baizeli.eternisstarrysky.network.DeadListSyncPacket;
 import com.baizeli.eternisstarrysky.network.WireBoxSyncPacket;
 import com.baizeli.eternisstarrysky.spell.chaos.ReversePlagueSpell;
 import com.google.gson.*;
 import net.minecraft.core.Direction;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.storage.LevelResource;
+import net.minecraftforge.network.PacketDistributor;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -60,6 +63,12 @@ public class SaveManager {
         }
         root.add("entity", entityMap);
 
+        JsonArray deadList = new JsonArray();
+        for (UUID entityUuid : EventUtil.deadList) {
+            deadList.add(entityUuid.toString());
+        }
+        root.add("deadList", deadList);
+
         try (Writer writer = Files.newBufferedWriter(SAVE_PATH)) {
             GSON.toJson(root, writer);
         } catch (IOException e) {
@@ -101,7 +110,19 @@ public class SaveManager {
                 ReversePlagueSpell.entityMap.put(uuid, uuid1);
             }
 
-            CHANNEL.send(net.minecraftforge.network.PacketDistributor.ALL.noArg(),
+            JsonArray deadList = root.getAsJsonArray("deadList");
+            if (deadList != null) {
+                for (JsonElement entityUuid : deadList) {
+                    EventUtil.deadList.add(UUID.fromString(entityUuid.getAsString()));
+                }
+            }
+
+            CHANNEL.send(
+                    PacketDistributor.ALL.noArg(),
+                    new DeadListSyncPacket(EventUtil.deadList)
+            );
+
+            CHANNEL.send(PacketDistributor.ALL.noArg(),
                     new WireBoxSyncPacket(WireBoxRenderer.entitiesForRenderWireBoxRenderer,
                             WireBoxRenderer.entityRotationMap,
                             WireBoxRenderer.entityAxisMap));

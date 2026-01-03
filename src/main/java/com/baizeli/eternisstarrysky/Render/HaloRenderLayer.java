@@ -2,7 +2,6 @@ package com.baizeli.eternisstarrysky.Render;
 
 import com.baizeli.eternisstarrysky.CosmicRender.AvaritiaShaders;
 import com.baizeli.eternisstarrysky.EternisStarrySky;
-import com.baizeli.eternisstarrysky.Items.ModItems;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;

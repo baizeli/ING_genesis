@@ -3,7 +3,6 @@ package com.baizeli.eternisstarrysky.client;
 import com.baizeli.eternisstarrysky.EternisStarrySky;
 import com.baizeli.eternisstarrysky.client.renderer.AfterImageManager;
 import com.baizeli.eternisstarrysky.client.renderer.AfterImageRenderer;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
@@ -33,14 +32,14 @@ public class ClientEvent {
                 Camera camera = event.getCamera();
                 float partialTick = event.getPartialTick();
                 MultiBufferSource.BufferSource bufferSource = mc.renderBuffers().bufferSource();
-                RenderSystem.enableBlend();
-                RenderSystem.defaultBlendFunc();
-                RenderSystem.enableDepthTest();
-                RenderSystem.depthMask(false);
+//                RenderSystem.enableBlend();
+//                RenderSystem.defaultBlendFunc();
+//                RenderSystem.enableDepthTest();
+//                RenderSystem.depthMask(false);
                 AfterImageRenderer.renderAfterImages(poseStack, bufferSource, camera, partialTick);
                 bufferSource.endBatch();
-                RenderSystem.depthMask(true);
-                RenderSystem.disableBlend();
+//                RenderSystem.depthMask(true);
+//                RenderSystem.disableBlend();
             }
         }
     }
