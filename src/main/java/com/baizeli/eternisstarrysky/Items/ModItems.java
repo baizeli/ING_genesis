@@ -321,7 +321,9 @@ public class ModItems {
                     .rarity(Rarity.EPIC)) {
                 @Override
                 public void appendHoverText(@NotNull ItemStack itemstack, @Nullable Level world, @NotNull List<Component> list, @NotNull TooltipFlag flag) {
-                    list.add(Component.literal("（蕴含着混沌法术的学习方法）"));
+                    list.add(Component.translatable(
+                            "item." + EternisStarrySky.MOD_ID + ".chaos_manuscript_fragment.hover"
+                    ));
                 }
             });
 
@@ -332,7 +334,9 @@ public class ModItems {
                     .rarity(Rarity.EPIC)) {
                 @Override
                 public void appendHoverText(@NotNull ItemStack itemstack, @Nullable Level world, @NotNull List<Component> list, @NotNull TooltipFlag flag) {
-                    list.add(Component.literal("（蕴含着星源法术的学习方法）"));
+                    list.add(Component.translatable(
+                            "item." + EternisStarrySky.MOD_ID + ".celestial_source_manuscript_fragment.hover"
+                    ));
                 }
 
                 @Override
