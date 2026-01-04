@@ -13,8 +13,14 @@ import io.redspace.ironsspellbooks.item.UpgradeOrbItem;
 import io.redspace.ironsspellbooks.item.armor.IronsExtendedArmorMaterial;
 import io.redspace.ironsspellbooks.util.ItemPropertiesHelper;
 import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.*;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
 
 public class ModItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, EternisStarrySky.MOD_ID);
@@ -41,13 +47,13 @@ public class ModItems {
 
     // 星源珍珠-[星源]法术材料
     public static final RegistryObject<Item> CELESTIAL_SOURCE_PEARL = ITEMS.register("celestial_source_pearl",
-            CelestialSourcePearlItem::new
-    );
+            () -> new CelestialSourceBaseItem(new Item.Properties()
+                    .rarity(Rarity.EPIC)));
 
     // 星源锭-[星源]法术材料
     public static final RegistryObject<Item> CELESTIAL_SOURCE_INGOT = ITEMS.register("celestial_source_ingot",
-            CelestialSourceIngotItem::new
-    );
+            () -> new CelestialSourceBaseItem(new Item.Properties()
+                    .rarity(Rarity.EPIC)));
 
     public static final RegistryObject<Item> ETERNIS_APPLE = ITEMS.register("eternis_apple",
             () -> new EternisAppleItem(new Item.Properties()
@@ -98,9 +104,9 @@ public class ModItems {
     );
 
     public static final RegistryObject<Item> WORKBENCH = ITEMS.register("workbench", () -> new BlockItem(ModBlock.workbench.get(), new Item.Properties()));
-    
+
     // 奥术工作台
-    public static final RegistryObject<Item> ARCANE_WORKBENCH = ITEMS.register("arcane_workbench", 
+    public static final RegistryObject<Item> ARCANE_WORKBENCH = ITEMS.register("arcane_workbench",
         () -> new BlockItem(ModBlock.ARCANE_WORKBENCH.get(), new Item.Properties()));
 
 /*    // 无尽永恒盔甲套装
@@ -153,7 +159,7 @@ public class ModItems {
     public static final RegistryObject<Item> CELESTIAL_SOURCE_SPELL_BOOTS = ITEMS.register("celestial_source_spell_boots",
             () -> new CelestialSourceSpellArmor((IronsExtendedArmorMaterial) ModArmorMaterials.CELESTIAL_SOURCE_SPELL, ArmorItem.Type.BOOTS,
                     new Item.Properties().rarity(Rarity.EPIC)));
-    
+
     // 混沌法术套
     public static final RegistryObject<Item> CHAOS_SPELL_HELMET = ITEMS.register("chaos_spell_helmet",
             () -> new ChaosSpellArmor((IronsExtendedArmorMaterial) ModArmorMaterials.CHAOS_SPELL, ArmorItem.Type.HELMET,
@@ -209,7 +215,7 @@ public class ModItems {
     // 老王237
     public static final RegistryObject<Item> LAO_WANG_237 = ITEMS.register("lao_wang_237", LaoWang237Curios::new);
 
-    
+
     // 无限忏悔石
     public static final RegistryObject<Item> INFINITE_SHRIVING_STONE = ITEMS.register(
         "infinite_shriving_stone", InfiniteShrivingStoneItem::new
@@ -217,78 +223,131 @@ public class ModItems {
 
     // 飞燕穿柳
     public static final RegistryObject<Item> FLYING_SWALLOW_THROUGH_Willow = ITEMS.register("flying_swallow_through_willow",
-            () -> new FlyingSwallowThroughWillow());
+            FlyingSwallowThroughWillow::new);
 
-    public static class CelestialSourcePearlItem extends Item implements ITooltipParticleItem {
-        public CelestialSourcePearlItem() {
-            super(new Item.Properties().rarity(Rarity.EPIC));
-        }
+    // 奥术水晶
+    public static final RegistryObject<Item> ARCANE_CRYSTAL = ITEMS.register("arcane_crystal",
+            () -> new Item(new Item.Properties()
+                    .stacksTo(16)
+                    .rarity(Rarity.EPIC)
+            ));
 
-        @Override
-        public TooltipParticleSystem.ParticleConfig getParticleConfig() {
-            Minecraft mc = Minecraft.getInstance();
-            double mouseX = mc.mouseHandler.xpos();
-            double mouseY = mc.mouseHandler.ypos();
+    // 猩红水晶
+    public static final RegistryObject<Item> BLOOD_CRYSTAL = ITEMS.register("blood_crystal",
+            () -> new Item(new Item.Properties()
+                    .stacksTo(16)
+                    .rarity(Rarity.EPIC)
+            ));
 
-            // 转换为整数坐标
-            int mousePosX = (int) mouseX;
-            int mousePosY = (int) mouseY;
-            return new TooltipParticleSystem.ParticleConfig()
-                    // 纹理使用
-                    .setTextures(
-                            PTID.Star_0,
-                            PTID.Star_1,
-                            PTID.Star_2,
-                            PTID.Star_3,
-                            PTID.Star_4,
-                            PTID.Star_5,
-                            PTID.Star_6,
-                            PTID.Star_7,
-                            PTID.Star_8,
-                            PTID.Star_9
-                    )
-                    .setParticleCount(1, 3) // 生成数量多少到多少
-                    .setMaxTotalParticles(400) // 最大粒子数量
-                    // 大小
-                    .setSize(4.0f, 12.0f) // 基础大小
-                    .setRandomSize(false) // 随机大小变化
-                    // 生命周期
-                    .setLife(3.0f, 4.0f) // 存活时间3-4秒
-                    // 速度
-                    .setSpeed(70.0f, 100.0f) // 基础速度
-                    // 颜色
-                    .setColors(0xFFffb800, 0xFFcd7231, 0xFFffeb00, 0xFFe0ae2d) // 基础颜色（彩虹模式下会被覆盖）
-                    .setRainbowColors(true, 2.0f) // 开启彩虹渐变
-                    .setColorTransitionSpeed(1.5f) // 颜色过渡速度
-                    // 物理
-                    .setGravity(false, 40.0f) // 关闭重力（RAIN模式自带下落效果）
-                    .setWind(true, 0.0f, 110.0f) // 强风效果
-                    .setAirResistance(0.1f) // 轻微空气阻力
-                    .setBounciness(10.0f) // 弹性系数
-                    // 旋转
-                    .setRotation(true, 0.0f, 0.01f) // 旋转速度
-                    .setInitialRotation(0.0f, 360.0f) // 随机初始旋转角度
-                    // 运动类型
-                    .setMotionType(TooltipParticleSystem.MotionType.RAIN) // 从屏幕上方下落
-                    .setMotionProperties(20.0f, 1.5f) // 运动幅度和频率（对RAIN模式影响较小）
-                    .setCenter((float) mousePosX / 3, (float) mousePosY / 3) // 运动中心点（对RAIN模式影响较小）
-                    .setRadius(200.0f) // 运动半径（对RAIN模式影响较小）
-                    // 淡入淡出
-                    .setFadeIn(true, 0.05f) // 淡入，持续0.05秒
-                    .setFadeOut(true, 0.25f) // 淡出，持续0.25秒
-                    // 层次感
-                    .setDepthLayers(true, 12, 0.08f) // 12层深度，每层变暗8%
-                    // 贝塞尔曲线
-                    .setSizeCurve(TooltipParticleSystem.BezierCurveType.STAR_EXPAND) // 星星膨胀曲线
-                    .setAlphaCurve(TooltipParticleSystem.BezierCurveType.NONE) // 透明度曲线
-                    .setSpeedCurve(TooltipParticleSystem.BezierCurveType.NONE) // 速度曲线
-                    .setRotationCurve(TooltipParticleSystem.BezierCurveType.NONE); // 旋转曲线
-        }
-    }
+    // 邪术水晶
+    public static final RegistryObject<Item> ELDRITCH_CRYSTAL = ITEMS.register("eldritch_crystal",
+            () -> new Item(new Item.Properties()
+                    .stacksTo(16)
+                    .rarity(Rarity.EPIC)
+            ));
 
-    public static class CelestialSourceIngotItem extends Item implements ITooltipParticleItem {
-        public CelestialSourceIngotItem() {
-            super(new Item.Properties().rarity(Rarity.EPIC));
+    // 末影水晶
+    public static final RegistryObject<Item> ENDER_CRYSTAL = ITEMS.register("ender_crystal",
+            () -> new Item(new Item.Properties()
+                    .stacksTo(16)
+                    .rarity(Rarity.EPIC)
+            ));
+
+    // 唤魔水晶
+    public static final RegistryObject<Item> EVOCATION_CRYSTAL = ITEMS.register("evocation_crystal",
+            () -> new Item(new Item.Properties()
+                    .stacksTo(16)
+                    .rarity(Rarity.EPIC)
+            ));
+
+    // 炽焰水晶
+    public static final RegistryObject<Item> FIRE_CRYSTAL = ITEMS.register("fire_crystal",
+            () -> new Item(new Item.Properties()
+                    .stacksTo(16)
+                    .rarity(Rarity.EPIC)
+            ));
+
+    // 神圣水晶
+    public static final RegistryObject<Item> HOLY_CRYSTAL = ITEMS.register("holy_crystal",
+            () -> new Item(new Item.Properties()
+                    .stacksTo(16)
+                    .rarity(Rarity.EPIC)
+            ));
+
+    // 冰霜水晶
+    public static final RegistryObject<Item> ICE_CRYSTAL = ITEMS.register("ice_crystal",
+            () -> new Item(new Item.Properties()
+                    .stacksTo(16)
+                    .rarity(Rarity.EPIC)
+            ));
+
+    // 雷霆水晶
+    public static final RegistryObject<Item> LIGHTNING_CRYSTAL = ITEMS.register("lightning_crystal",
+            () -> new Item(new Item.Properties()
+                    .stacksTo(16)
+                    .rarity(Rarity.EPIC)
+            ));
+
+    // 自然水晶
+    public static final RegistryObject<Item> NATURE_CRYSTAL = ITEMS.register("nature_crystal",
+            () -> new Item(new Item.Properties()
+                    .stacksTo(16)
+                    .rarity(Rarity.EPIC)
+            ));
+
+    // 混沌水晶
+    public static final RegistryObject<Item> CHAOS_CRYSTAL = ITEMS.register("chaos_crystal",
+            () -> new Item(new Item.Properties()
+                    .stacksTo(16)
+                    .rarity(Rarity.EPIC)
+            ));
+
+    // 星源水晶
+    public static final RegistryObject<Item> CELESTIAL_SOURCE_CRYSTAL = ITEMS.register("celestial_source_crystal",
+            () -> new CelestialSourceBaseItem(new Item.Properties()
+                    .stacksTo(16)
+                    .rarity(Rarity.EPIC)
+            ));
+
+    public static final RegistryObject<Item> CHAOS_MANUSCRIPT = ITEMS.register("chaos_manuscript",
+            ChaosManuscriptItem::new);
+
+    public static final RegistryObject<Item> CELESTIAL_SOURCE_MANUSCRIPT = ITEMS.register("celestial_source_manuscript",
+            CelestialSourceManuscriptItem::new);
+
+    // 混沌手稿碎片
+    public static final RegistryObject<Item> CHAOS_MANUSCRIPT_FRAGMENT = ITEMS.register("chaos_manuscript_fragment",
+            () -> new Item(new Item.Properties()
+                    .rarity(Rarity.EPIC)) {
+                @Override
+                public void appendHoverText(@NotNull ItemStack itemstack, @Nullable Level world, @NotNull List<Component> list, @NotNull TooltipFlag flag) {
+                    list.add(Component.translatable(
+                            "item." + EternisStarrySky.MOD_ID + ".chaos_manuscript_fragment.hover"
+                    ));
+                }
+            });
+
+    // 星源手稿碎片
+    public static final RegistryObject<Item> CELESTIAL_SOURCE_MANUSCRIPT_FRAGMENT = ITEMS.register("celestial_source_manuscript_fragment",
+            () -> new CelestialSourceBaseItem(new Item.Properties()
+                    .fireResistant()
+                    .rarity(Rarity.EPIC)) {
+                @Override
+                public void appendHoverText(@NotNull ItemStack itemstack, @Nullable Level world, @NotNull List<Component> list, @NotNull TooltipFlag flag) {
+                    list.add(Component.translatable(
+                            "item." + EternisStarrySky.MOD_ID + ".celestial_source_manuscript_fragment.hover"
+                    ));
+                }
+
+                @Override
+                public boolean isFoil(@NotNull ItemStack stack) {
+                    return true;
+                }
+            });
+
+    public static class CelestialSourceBaseItem extends Item implements ITooltipParticleItem {
+        public CelestialSourceBaseItem(Item.Properties properties) {
+            super(properties);
         }
 
         @Override

@@ -77,7 +77,7 @@ public class EventHandler {
                 }
                 Entity entity = entityGetter.get(uuid);
                 boolean shouldRemove = entity == null;
-                if (entity == null) {
+                if (shouldRemove) {
                     toRemove.add(uuid);
                 }
                 return shouldRemove;
@@ -92,28 +92,29 @@ public class EventHandler {
 
     @SubscribeEvent
     public static void onTooltipColor(RenderTooltipEvent.Color event) {
-        Item item = event.getItemStack().getItem();
+        try {
+            Item item = event.getItemStack().getItem();
 
-        if (item instanceof CelestialSourceSpellArmor ||
-                item instanceof CelestialSourceStaff ||
-                item instanceof CelestialSourceSpellBook ||
-                item instanceof ModItems.CelestialSourceIngotItem ||
-                item instanceof ModItems.CelestialSourcePearlItem) {
-            // 每 150 ticks
-            long gameTime = Minecraft.instance.level.levelData.getGameTime();
-            float hue = (gameTime % 150) / 150.0f; // 色相：0.0 → 1.0
+            if (item instanceof CelestialSourceSpellArmor ||
+                    item instanceof CelestialSourceStaff ||
+                    item instanceof CelestialSourceSpellBook ||
+                    item instanceof ModItems.CelestialSourceBaseItem) {
+                // 每 150 ticks
+                long gameTime = Minecraft.instance.level.levelData.getGameTime();
+                float hue = (gameTime % 150) / 150.0f; // 色相：0.0 → 1.0
 
-            // 边框起始颜色
-            int rgbStart = hsbToRGB(hue, 0.8f, 1.0f);
-            event.setBorderStart(0xFF000000 | rgbStart);
+                // 边框起始颜色
+                int rgbStart = hsbToRGB(hue, 0.8f, 1.0f);
+                event.setBorderStart(0xFF000000 | rgbStart);
 
-            // 边框结束颜色
-            int rgbEnd = hsbToRGB((hue + 0.3f) % 1.0f, 0.8f, 1.0f);
-            event.setBorderEnd(0xFF000000 | rgbEnd);
+                // 边框结束颜色
+                int rgbEnd = hsbToRGB((hue + 0.3f) % 1.0f, 0.8f, 1.0f);
+                event.setBorderEnd(0xFF000000 | rgbEnd);
 
-            event.setBackgroundStart(0xF0000000); // 半透明黑背景
-            event.setBackgroundEnd(0xF0000000);
-        }
+                event.setBackgroundStart(0xF0000000); // 半透明黑背景
+                event.setBackgroundEnd(0xF0000000);
+            }
+        } catch (NullPointerException ignored) {}
     }
 
     /**
