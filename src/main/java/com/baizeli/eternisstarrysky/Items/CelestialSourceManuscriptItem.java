@@ -1,5 +1,6 @@
 package com.baizeli.eternisstarrysky.Items;
 
+import com.baizeli.eternisstarrysky.EternisStarrySky;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -20,7 +21,9 @@ public class CelestialSourceManuscriptItem extends ModItems.CelestialSourceBaseI
 
     @Override
     public void appendHoverText(@NotNull ItemStack itemstack, @Nullable Level world, @NotNull List<Component> list, @NotNull TooltipFlag flag) {
-        list.add(Component.literal("（右键学习星源法术）"));
+        list.add(Component.translatable(
+                "item." + EternisStarrySky.MOD_ID + ".celestial_source_manuscript.hover"
+        ));
     }
 
     @Override
