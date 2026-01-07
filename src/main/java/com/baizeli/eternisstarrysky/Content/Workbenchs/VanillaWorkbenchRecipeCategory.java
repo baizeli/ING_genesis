@@ -1,6 +1,6 @@
 package com.baizeli.eternisstarrysky.Content.Workbenchs;
 
-import com.baizeli.eternisstarrysky.Content.ModBlock;
+import com.baizeli.eternisstarrysky.Content.ModBlocks;
 import com.baizeli.eternisstarrysky.EternisStarrySky;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
@@ -31,7 +31,7 @@ public class VanillaWorkbenchRecipeCategory implements IRecipeCategory<VanillaWo
             )
             .setTextureSize(EternisWorkbench.ASSETS_WORKBENCH_WIDTH, EternisWorkbench.ASSETS_WORKBENCH_HEIGHT)
             .build();
-        this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ModBlock.workbench.get()));
+        this.icon = helper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ModBlocks.workbench.get()));
     }
 
     @Override

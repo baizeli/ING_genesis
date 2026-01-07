@@ -1,7 +1,6 @@
 //很美味的蛋糕🍰，太美味了🥰🥰🥰，太好吃了😋😋😋，太棒了👍🏻👍🏻👍🏻，我非常喜欢吃😋😋😋
 package com.baizeli.eternisstarrysky.Items;
 
-import com.baizeli.eternisstarrysky.Entity.SwordManCsdy;
 import com.baizeli.eternisstarrysky.Util.RainbowEffectHelper;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -44,7 +43,7 @@ public class GoodCake extends Item {
         
         // 过滤出非玩家实体
         for (LivingEntity entity : allEntities) {
-            if (!(entity instanceof Player) && (entity instanceof SwordManCsdy)) {
+            if (!(entity instanceof Player)) {
                 entitiesToKill.add(entity);
             }
         }

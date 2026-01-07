@@ -15,7 +15,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class ChaosManuscriptItem extends Item {
+public class ChaosManuscriptItem extends ModItems.ChaosBaseItem {
     public ChaosManuscriptItem() {
         super(new Properties().rarity(Rarity.EPIC));
     }

@@ -1,7 +1,7 @@
 package com.baizeli.eternisstarrysky.Content.Workbenchs;
 
 import com.baizeli.eternisstarrysky.Content.ArcaneWorkbench.*;
-import com.baizeli.eternisstarrysky.Content.ModBlock;
+import com.baizeli.eternisstarrysky.Content.ModBlocks;
 import com.baizeli.eternisstarrysky.EternisStarrySky;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
@@ -58,7 +58,7 @@ public class VanillaWorkbenchJeiPlugin implements IModPlugin {
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
-        registration.addRecipeCatalyst(new ItemStack(ModBlock.workbench.get()),
+        registration.addRecipeCatalyst(new ItemStack(ModBlocks.workbench.get()),
                 VanillaWorkbenchRecipeCategory.RECIPE_TYPE);
     }
 

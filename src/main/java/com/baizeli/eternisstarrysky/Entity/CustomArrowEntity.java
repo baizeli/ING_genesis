@@ -1,5 +1,6 @@
 package com.baizeli.eternisstarrysky.Entity;
 
+import com.baizeli.eternisstarrysky.Entity.spells.celestial_source.BoxEntity;
 import com.baizeli.eternisstarrysky.spell.Spells;
 import io.redspace.ironsspellbooks.damage.SpellDamageSource;
 import net.minecraft.core.BlockPos;

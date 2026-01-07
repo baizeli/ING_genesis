@@ -1,8 +1,8 @@
 package com.baizeli.eternisstarrysky.spell.celestial_source;
 
-import com.baizeli.eternisstarrysky.Entity.MagicCircle;
+import com.baizeli.eternisstarrysky.Entity.spells.celestial_source.notuse.MagicCircle;
 import com.baizeli.eternisstarrysky.Entity.ModEntities;
-import com.baizeli.eternisstarrysky.Entity.SwordEntity;
+import com.baizeli.eternisstarrysky.Entity.spells.celestial_source.notuse.SwordEntity;
 import com.baizeli.eternisstarrysky.EternisStarrySky;
 import com.baizeli.eternisstarrysky.client.particles.ModParticles;
 import com.baizeli.eternisstarrysky.spell.SpellSchool;

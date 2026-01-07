@@ -1,5 +1,6 @@
 package com.baizeli.eternisstarrysky.config.menu;
 
+import com.baizeli.eternisstarrysky.EternisStarrySky;
 import com.baizeli.eternisstarrysky.config.Configuration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -19,19 +20,19 @@ public class ConfigMenu extends Screen
 
 	public ConfigMenu(Screen parent)
 	{
-		super(Component.translatable("eternisstarrysky.config.title"));
+		super(Component.translatable(EternisStarrySky.MOD_ID + ".config.title"));
 		this.parent = parent;
 		Minecraft mc = parent.getMinecraft();
 		Configuration.setup();
 
-		this.ETERNIS_APPLE_EFFECTS = new EffectArrayValue(this, "eternisstarrysky.config.eternis_apple.effects", mc.font);
+		this.ETERNIS_APPLE_EFFECTS = new EffectArrayValue(this, EternisStarrySky.MOD_ID + ".config.eternis_apple.effects", mc.font);
 		this.ETERNIS_APPLE_EFFECTS.value(Configuration.ETERNIS_APPLE_EFFECTS.get());
 		this.ETERNIS_APPLE_EFFECTS.defaultValue = Configuration.DEFAULT_ETERNIS_APPLE_EFFECTS;
-		this.ETERNIS_APPLE_EFFECTS.tooltip = Component.translatable("eternisstarrysky.config.eternis_apple.effects.tooltip");
+		this.ETERNIS_APPLE_EFFECTS.tooltip = Component.translatable(EternisStarrySky.MOD_ID + ".config.eternis_apple.effects.tooltip");
 
-		this.GROUP_WHISPER_OF_THE_PAST = new GroupValue(this, "eternisstarrysky.config.whisper_of_the_past", mc.font);
+		this.GROUP_WHISPER_OF_THE_PAST = new GroupValue(this, EternisStarrySky.MOD_ID + ".config.whisper_of_the_past", mc.font);
 
-		this.WHISPER_OF_THE_PAST_DAMAGE = new DoubleValue(this, "eternisstarrysky.config.whisper_of_the_past.damage", mc.font);
+		this.WHISPER_OF_THE_PAST_DAMAGE = new DoubleValue(this, EternisStarrySky.MOD_ID + ".config.whisper_of_the_past.damage", mc.font);
 		this.WHISPER_OF_THE_PAST_DAMAGE.min = 0.0;
 		this.WHISPER_OF_THE_PAST_DAMAGE.max = Double.MAX_VALUE;
 		this.WHISPER_OF_THE_PAST_DAMAGE.value(Configuration.WHISPER_OF_THE_PAST_DAMAGE.get());
@@ -58,10 +59,10 @@ public class ConfigMenu extends Screen
 
 		int y = this.height - 20 - PADDING;
 		int doneButtonWidth = Math.min(200, (this.width - (PADDING * 3)) / 2);
-		Button saveButton = new Button.Builder(Component.translatable("eternisstarrysky.config.save"), b -> this.save())
+		Button saveButton = new Button.Builder(Component.translatable(EternisStarrySky.MOD_ID + ".config.save"), b -> this.save())
 			.bounds((width - (doneButtonWidth * 2) - PADDING) / 2, y, doneButtonWidth, 20)
 			.build();
-		Button doneButton = new Button.Builder(Component.translatable("eternisstarrysky.config.done"), (button1) -> this.close())
+		Button doneButton = new Button.Builder(Component.translatable(EternisStarrySky.MOD_ID + ".config.done"), (button1) -> this.close())
 			.bounds((width - PADDING) / 2 + PADDING, y, doneButtonWidth, 20)
 			.build();
 		this.addRenderableWidget(saveButton);

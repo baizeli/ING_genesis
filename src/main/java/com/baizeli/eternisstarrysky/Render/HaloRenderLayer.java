@@ -2,6 +2,8 @@ package com.baizeli.eternisstarrysky.Render;
 
 import com.baizeli.eternisstarrysky.CosmicRender.AvaritiaShaders;
 import com.baizeli.eternisstarrysky.EternisStarrySky;
+import com.baizeli.eternisstarrysky.Items.ModItems;
+import com.baizeli.eternisstarrysky.Items.curios.GenesisCurseItem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
@@ -14,9 +16,7 @@ import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.inventory.InventoryMenu;
-import net.minecraft.world.item.ItemStack;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
@@ -29,8 +29,7 @@ public class HaloRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerMod
     @Override
     public void render(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, AbstractClientPlayer player, float limbSwing, float limbSwingAmount, float partialTick, float ageInTicks, float netHeadYaw, float headPitch)
     {
-        ItemStack armor = player.getItemBySlot(EquipmentSlot.HEAD);
-        if (/*armor.getItem()*/ 1==0 /*ModItems.INFINITY_ETERNAL_HELMET.get()*/)
+        if (((GenesisCurseItem)ModItems.GENESIS_CURSE.get()).isEquippedBy(player))
         {
             poseStack.pushPose();
 
@@ -125,9 +124,6 @@ public class HaloRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerMod
         AvaritiaShaders.cosmicPitch.set(pitch);
         AvaritiaShaders.cosmicExternalScale.set(0.6F);
         AvaritiaShaders.cosmicOpacity.set(1.0F);
-        int ctime = 0;
-        if (Minecraft.getInstance().level != null) ctime = Math.toIntExact(((Minecraft.getInstance().level.getDayTime() % 24000) + 6000) % 24000);
-        AvaritiaShaders.currentTime.set(ctime);
 
         // 准备纹理UV
         for (int i = 0; i < 10; ++i)

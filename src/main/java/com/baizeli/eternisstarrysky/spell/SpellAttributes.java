@@ -17,7 +17,7 @@ public class SpellAttributes {
     public static final RegistryObject<Attribute> CULINARY_SPELL_POWER;
 
     static {
-        ATTRIBUTES = DeferredRegister.create(Registries.ATTRIBUTE, EternisStarrySky.MOD_ID);
+        ATTRIBUTES = DeferredRegister.create(ForgeRegistries.ATTRIBUTES, EternisStarrySky.MOD_ID);
         // 混沌法术强度/抗性
         CHAOS_MAGIC_RESIST = SpellAttributes.newResistanceAttribute("chaos");
         CHAOS_SPELL_POWER = SpellAttributes.newPowerAttribute("chaos");
@@ -36,7 +36,7 @@ public class SpellAttributes {
     }
 
     private static RegistryObject<Attribute> newResistanceAttribute(String id) {
-        return ATTRIBUTES.register(id + "_magic_resist", () -> (new MagicPercentAttribute("attribute." + EternisStarrySky.MOD_ID + "." + id + "_magic_resist", (double)1.0F, Double.MIN_VALUE, Double.MAX_VALUE)).setSyncable(true));
+        return ATTRIBUTES.register(id + "_magic_resist", () -> (new MagicPercentAttribute("attribute." + EternisStarrySky.MOD_ID + "." + id + "_magic_resist", 1.0F, Double.MIN_VALUE, Double.MAX_VALUE)).setSyncable(true));
     }
 
     private static RegistryObject<Attribute> newPowerAttribute(String id) {

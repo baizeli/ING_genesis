@@ -3,6 +3,7 @@ package com.baizeli.eternisstarrysky.CosmicRender;
 import com.baizeli.eternisstarrysky.EternisStarrySky;
 import com.baizeli.eternisstarrysky.Items.ModItems;
 import com.google.common.collect.ImmutableMap;
+import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
@@ -96,19 +97,24 @@ public final class CosmicBakeModel implements BakedModel {
             bs.endBatch();
         }
 
+        RenderTarget mainTarget = Minecraft.instance.mainRenderTarget;
         Minecraft mc = Minecraft.getInstance();
         float yaw = 0.0F;
         float pitch = 0.0F;
+        float screenWidth = (float)mainTarget.width;
+        float screenHeight = (float)mainTarget.height;
         float scale = starScale;
 
         // 根据渲染环境调整参数
         if (AvaritiaShaders.inventoryRender || transformType == ItemDisplayContext.GUI)
         {
             scale = 100.0F;
+            AvaritiaShaders.cosmicIs2D.set(1);
         } else {
             assert mc.player != null;
             yaw = (float) (mc.player.getYRot() * 2.0F * Math.PI / 360.0);
             pitch = -(float) (mc.player.getXRot() * 2.0F * Math.PI / 360.0);
+            AvaritiaShaders.cosmicIs2D.set(0);
         }
 
         // 设置着色器参数
@@ -118,10 +124,8 @@ public final class CosmicBakeModel implements BakedModel {
         AvaritiaShaders.cosmicExternalScale.set(scale);
         AvaritiaShaders.cosmicOpacity.set(1.0F);
         AvaritiaShaders.useType.set(useType);
-        int ctime = 0;
-        if (Minecraft.getInstance().level != null)
-            ctime = Math.toIntExact(((Minecraft.getInstance().level.getDayTime() % 24000) + 6000) % 24000);
-        AvaritiaShaders.currentTime.set(ctime);
+        AvaritiaShaders.cosmicColor.set(vec4);
+        AvaritiaShaders.cosmicScreenSize.set(screenWidth, screenHeight);
 
         // 准备纹理UV
         for (int i = 0; i < 10; ++i)
@@ -238,14 +242,13 @@ public final class CosmicBakeModel implements BakedModel {
 
     static
     {
-            COSMIC_EFFECTS.put(ModItems.INFINITY_SWORD.get(), new EffectConfig(0, 0.6F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
+            COSMIC_EFFECTS.put(ModItems.INFINITY_SWORD.get(), new EffectConfig(10, 0.6F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
             /*COSMIC_EFFECTS.put(ModItems.INFINITY_ETERNAL_HELMET.get(), new EffectConfig(0, 0.5F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
             COSMIC_EFFECTS.put(ModItems.INFINITY_ETERNAL_CHESTPLATE.get(), new EffectConfig(0, 0.5F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
             COSMIC_EFFECTS.put(ModItems.INFINITY_ETERNAL_LEGGINGS.get(), new EffectConfig(0, 0.5F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
             COSMIC_EFFECTS.put(ModItems.INFINITY_ETERNAL_BOOTS.get(), new EffectConfig(0, 0.5F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));*/
-
             COSMIC_EFFECTS.put(ModItems.PURPLEITE_GALAXY_INGOT.get(), new EffectConfig(0, 0.6F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
             COSMIC_EFFECTS.put(ModItems.ETERNIS_APPLE.get(), new EffectConfig(0, 0.5F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
-            COSMIC_EFFECTS.put(ModItems.AVARITIA_SWORD.get(), new EffectConfig(3, 0.6F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
+            COSMIC_EFFECTS.put(ModItems.AVARITIA_SWORD.get(), new EffectConfig(15, 0.6F, new Vector4f(0.1F, 0.1F, 0.1F, 1.0F)));
     }
 }
