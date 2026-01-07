@@ -27,7 +27,7 @@ public class CelestialSourceSpellArmor extends ExtendedArmorItem implements IToo
     public CelestialSourceSpellArmor(IronsExtendedArmorMaterial material, Type type, Properties properties) {
         super(material, type, properties);
     }
-
+    
     Minecraft mc = Minecraft.getInstance();
 
     @Override
