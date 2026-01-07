@@ -1,9 +1,11 @@
 package com.baizeli.eternisstarrysky;
 
 import com.baizeli.eternisstarrysky.Content.ArcaneWorkbench.ArcaneWorkbenchScreen;
-import com.baizeli.eternisstarrysky.Content.ModBlock;
+import com.baizeli.eternisstarrysky.Content.ModBlocks;
 import com.baizeli.eternisstarrysky.Content.Workbenchs.*;
 import com.baizeli.eternisstarrysky.Entity.*;
+import com.baizeli.eternisstarrysky.Entity.spells.celestial_source.*;
+import com.baizeli.eternisstarrysky.Entity.spells.celestial_source.notuse.*;
 import com.baizeli.eternisstarrysky.Items.ModItems;
 import com.baizeli.eternisstarrysky.client.ClientEvent;
 import com.baizeli.eternisstarrysky.client.particles.ModParticles;
@@ -11,7 +13,6 @@ import com.baizeli.eternisstarrysky.client.renderer.spell.celestial_source.DeadS
 import com.baizeli.eternisstarrysky.config.Configuration;
 import com.baizeli.eternisstarrysky.config.ConfigurationFactory;
 import com.baizeli.eternisstarrysky.effect.spell.ModEffect;
-import com.baizeli.eternisstarrysky.event.ModKeyBindings;
 import com.baizeli.eternisstarrysky.fonts.FuckFont1;
 import com.baizeli.eternisstarrysky.network.DeadListSyncPacket;
 import com.baizeli.eternisstarrysky.network.MarkDeadPacket;
@@ -30,7 +31,6 @@ import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
@@ -45,7 +45,6 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
 import net.minecraftforge.registries.DeferredRegister;
@@ -153,6 +152,9 @@ public class EternisStarrySky
                 // 老王237
                 output.accept(ModItems.LAO_WANG_237.get());
 
+                // 创世之诅咒
+                output.accept(ModItems.GENESIS_CURSE.get());
+
                 // 无限忏悔石
                 output.accept(ModItems.INFINITE_SHRIVING_STONE.get());
 
@@ -180,6 +182,12 @@ public class EternisStarrySky
                 // 手稿碎片
                 output.accept(ModItems.CHAOS_MANUSCRIPT_FRAGMENT.get());
                 output.accept(ModItems.CELESTIAL_SOURCE_MANUSCRIPT_FRAGMENT.get());
+
+                // 奥术水晶矿
+                output.accept(ModItems.ARCANE_CRYSTAL_ORE_ITEM.get());
+                output.accept(ModItems.ARCANE_CRYSTAL_ORE_DEEPSLATE_ITEM.get());
+                output.accept(ModItems.NETHER_ARCANE_CRYSTAL_ORE_ITEM.get());
+                output.accept(ModItems.END_ARCANE_CRYSTAL_ORE_ITEM.get());
             }).build());
 
     public EternisStarrySky(FMLJavaModLoadingContext context)
@@ -190,7 +198,7 @@ public class EternisStarrySky
         CREATIVE_MODE_TABS.register(modEventBus);
         ModItems.ITEMS.register(modEventBus);
         ModEntities.ENTITY_TYPES.register(modEventBus);
-        ModBlock.BLOCKS.register(modEventBus);
+        ModBlocks.BLOCKS.register(modEventBus);
         SoundsRegister.SOUND_EVENTS.register(modEventBus);
 
         SpellSchool.register(modEventBus);
@@ -201,13 +209,7 @@ public class EternisStarrySky
         ModRecipeTypes.register(modEventBus);
         ModRecipeSerializers.register(modEventBus);
         ModEffect.register(modEventBus);
-
         ModParticles.register(modEventBus);
-
-        if (FMLEnvironment.dist == Dist.CLIENT)
-        {
-            modEventBus.addListener(ModKeyBindings::onRegisterKeyMappings);
-        }
 
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::addAttribute); // 添加实体属性创建事件监听器
@@ -231,14 +233,6 @@ public class EternisStarrySky
 
     // 添加实体属性创建事件处理程序
     private void addAttribute(EntityAttributeCreationEvent event) {
-        event.put(ModEntities.SWORD_MAN_CSDY.get(), 
-                  Mob.createMobAttributes()
-                     .add(net.minecraft.world.entity.ai.attributes.Attributes.MOVEMENT_SPEED, 4.4)
-                     .add(net.minecraft.world.entity.ai.attributes.Attributes.MAX_HEALTH, 10000.0)
-                     .add(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE, 1600.0)
-                     .add(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_SPEED, 20.0)
-                     .add(net.minecraft.world.entity.ai.attributes.Attributes.FOLLOW_RANGE, 128)
-                     .build());
     }
 
     private void addToVanillaTabs(BuildCreativeModeTabContentsEvent e) {
@@ -282,7 +276,6 @@ public class EternisStarrySky
             event.enqueueWork(() -> {
                 MenuScreens.register(ModMenuTypes.VANILLA_WORKBENCH_MENU.get(), VanillaWorkbenchScreen::new);
                 MenuScreens.register(ModMenuTypes.ARCANE_WORKBENCH_MENU.get(), ArcaneWorkbenchScreen::new);
-                EntityRenderers.register(ModEntities.SWORD_MAN_CSDY.get(), SwordManCsdyRenderer::new);
                 EntityRenderers.register(ModEntities.NYAN_CAT.get(), NyanCatRenderer::new);
                 EntityRenderers.register(ModEntities.MAGIC_CIRCLE.get(), MagicCircleRenderer::new);
                 EntityRenderers.register(ModEntities.BOX_ENTIYT.get(), BoxEntityRenderer::new);

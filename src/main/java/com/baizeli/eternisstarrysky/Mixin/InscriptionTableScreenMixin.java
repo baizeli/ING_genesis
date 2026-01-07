@@ -46,7 +46,7 @@ public abstract class InscriptionTableScreenMixin {
 
     @Inject(method = "renderLorePage(Lnet/minecraft/client/gui/GuiGraphics;FII)V", at = @At("HEAD"), remap = false, cancellable = true)
     private void renderLorePage(GuiGraphics guiHelper, float partialTick, int mouseX, int mouseY, CallbackInfo ci) {
-        AbstractContainerScreen screen = (AbstractContainerScreen) (Object) this;
+        AbstractContainerScreen<?> screen = (AbstractContainerScreen<?>) (Object) this;
         int x = screen.getGuiLeft() + 176;
         int y = screen.getGuiTop();
         int margin = 2;
@@ -97,7 +97,7 @@ public abstract class InscriptionTableScreenMixin {
             int var10004 = x + margin;
             int var10008 = spell.getManaCost(spellLevel);
             descLine += this.drawStatText(var10002, guiHelper, var10004, descLine, "ui.irons_spellbooks.mana_cost", textColor, Component.translatable("" + var10008), colorMana, textScale);
-            descLine += this.drawText(screen.font, guiHelper, TooltipsUtils.getCastTimeComponent(spell.getCastType(), Utils.timeFromTicks((float) spell.getEffectiveCastTime(spellLevel, (LivingEntity) null), 1)), x + margin, descLine, textColor.getColor().getValue(), textScale);
+            descLine += this.drawText(screen.font, guiHelper, TooltipsUtils.getCastTimeComponent(spell.getCastType(), Utils.timeFromTicks((float) spell.getEffectiveCastTime(spellLevel, null), 1)), x + margin, descLine, textColor.getColor().getValue(), textScale);
 
             if (spell instanceof WarpedBloodBurstSpell || spell instanceof WarpedBarrierSpell || spell instanceof FinalWhisper) {
                 for (MutableComponent component : spell.getUniqueInfo(spellLevel, null)) {
@@ -109,7 +109,7 @@ public abstract class InscriptionTableScreenMixin {
                 }
             } else {
                 descLine += this.drawStatText(screen.font, guiHelper, x + margin, descLine, "ui.irons_spellbooks.cooldown", textColor, Component.translatable(Utils.timeFromTicks((float) spell.getSpellCooldown(), 1)), colorCooldown, textScale);
-                for (MutableComponent component : spell.getUniqueInfo(spellLevel, (LivingEntity) null)) {
+                for (MutableComponent component : spell.getUniqueInfo(spellLevel, null)) {
                     descLine += this.drawText(screen.font, guiHelper, component, x + margin, descLine, textColor.getColor().getValue(), 1.0F);
                 }
             }

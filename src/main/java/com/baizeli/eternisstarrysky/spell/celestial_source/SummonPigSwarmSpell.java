@@ -86,15 +86,16 @@ public class SummonPigSwarmSpell extends AbstractSpell {
             for (int i = 0; i < summonCount; i++) {
                 Pig pig = EntityType.PIG.create(serverLevel);
 
-                pig.setPos(
-                    entity.getX() + Utils.random.nextGaussian() * 2.0D, 
-                    entity.getY(),
-                    entity.getZ() + Utils.random.nextGaussian() * 2.0D
-                );
+                if (pig != null) {
+                    pig.setPos(
+                        entity.getX() + Utils.random.nextGaussian() * 2.0D,
+                        entity.getY(),
+                        entity.getZ() + Utils.random.nextGaussian() * 2.0D
+                    );
 
-                pig.setCustomName(Component.translatable("iron_spells_genesis.summoned_pig_name"));
-
-                serverLevel.addFreshEntity(pig);
+                    pig.setCustomName(Component.translatable("iron_spells_genesis.summoned_pig_name"));
+                    serverLevel.addFreshEntity(pig);
+                }
             }
         }
         

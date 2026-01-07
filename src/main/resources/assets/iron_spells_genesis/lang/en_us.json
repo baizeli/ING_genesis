@@ -16,17 +16,12 @@
   "spell.iron_spells_genesis.warped_barrier": "Warped Barrier",
   "spell.iron_spells_genesis.reverse_plague": "Reverse Plague",
   "spell.iron_spells_genesis.amenofuwari": "Amenofuwari",
-  "spell.iron_spells_genesis.warped_blood_burst.guide": "Consume 50% of your own HP to deal damage to all enemies in an area and inflict a healing-negation effect.",
-  "spell.iron_spells_genesis.warped_barrier.guide": "Convert 90% of health into Absorption.",
-  "spell.iron_spells_genesis.reverse_plague.guide": "Exchange the target's positive effects with your own negative effects, temporarily preventing the target from gaining positive effects, halting your own effect acquisition, and transferring the negative effects.",
-  "spell.iron_spells_genesis.warped_blood_burst.low_health": "Your health is too weak to unleash the Warped Blood Burst!",
   "spell.iron_spells_genesis.siphon": "Siphon",
   "spell.iron_spells_genesis.blood_ritual": "Blood Ritual",
   "spell.iron_spells_genesis.blood_control": "Blood Control",
-  "spell.iron_spells_genesis.confusion": "Confusion",
-
   "spell.iron_spells_genesis.dead_star_decree": "Dead Star Decree",
   "spell.iron_spells_genesis.blood_frenzy": "Blood Frenzy",
+  "spell.iron_spells_genesis.confusion": "Confusion",
 
   "spell.iron_spells_genesis.i_fly": "I Fly",
   "spell.iron_spells_genesis.fate_wedge": "Fate Wedge",
@@ -42,8 +37,14 @@
   "spell.iron_spells_genesis.summon_pig_swarm": "Summon Pig Swarm",
   "spell.iron_spells_genesis.never_miss": "Never Miss",
   "spell.iron_spells_genesis.final_whisper": "Final Whisper",
+
+  "spell.iron_spells_genesis.warped_blood_burst.guide": "Consume 50% of your own HP to deal damage to all enemies in an area and inflict a healing-negation effect.",
+  "spell.iron_spells_genesis.warped_barrier.guide": "Convert 90% of health into Absorption.",
+  "spell.iron_spells_genesis.reverse_plague.guide": "Exchange the target's positive effects with your own negative effects, temporarily preventing the target from gaining positive effects, halting your own effect acquisition, and transferring the negative effects.",
   "spell.iron_spells_genesis.final_whisper.guide": "Fire an arrow that creates a 5x5 area on impact, dealing damage per second to mobs for 5 seconds.",
+
   "spell.iron_spells_genesis.final_whisper.low_health": "Your health is too weak to unleash the Final Whisper!",
+  "spell.iron_spells_genesis.warped_blood_burst.low_health": "Your health is too weak to unleash the Warped Blood Burst!",
 
   "effect.iron_spells_genesis.i_fly": "I Fly",
   "effect.iron_spells_genesis.fate_wedge": "Fate Wedge",
@@ -67,6 +68,7 @@
   "item.iron_spells_genesis.purpleite_galaxy_ingot1": "What In Your Palm, Eternal Power",
   "item.iron_spells_genesis.divine_metal_ingot": "Divine Metal Ingot",
   "item.iron_spells_genesis.whisper_of_the_past": "Whisper of the Past",
+  "item.iron_spells_genesis.avaritia_infinity_sword": "§4Twilight Zenith",
   "item.iron_spells_genesis.create_star": "Heart of Creation",
   "item.iron_spells_genesis.galaxy_scroll": "Galaxy Scroll",
   "item.iron_spells_genesis.chaos_rune": "#1Chaos Rune",
@@ -80,6 +82,7 @@
   "item.iron_spells_genesis.celestial_source_pearl": "#2Celestial Source Pearl",
   "item.iron_spells_genesis.celestial_source_ingot": "#2Celestial Source Ingot",
   "item.iron_spells_genesis.lao_wang_237": "Lao Wang 237",
+  "item.iron_spells_genesis.genesis_curse": "Genesis Curse",
   "item.iron_spells_genesis.infinite_shriving_stone": "Infinite Shriving Stone",
 
   "item.iron_spells_genesis.flying_swallow_through_willow": "Flying Swallow Through Willow",
@@ -132,6 +135,10 @@
 
   "block.iron_spells_genesis.workbench": "Ultimate Workbench",
   "block.iron_spells_genesis.arcane_workbench": "Arcane Workbench",
+  "block.iron_spells_genesis.arcane_crystal_ore": "Arcane Crystal Ore",
+  "block.iron_spells_genesis.deepslate_arcane_crystal_ore": "Deepslate Arcane Crystal Ore",
+  "block.iron_spells_genesis.nether_arcane_crystal_ore": "Nether Arcane Crystal Ore",
+  "block.iron_spells_genesis.end_arcane_crystal_ore": "End Arcane Crystal Ore",
 
   "container.iron_spells_genesis.vanilla_workbench": "Ordered Ultimate Crafting",
   "container.iron_spells_genesis.arcane_workbench": "Arcane Crafting",
@@ -139,6 +146,8 @@
   "key.categories.iron_spells_genesis": "Eternis Starry Sky - Key Bindings",
   "key.iron_spells_genesis.bow_type": "Bow - Switch Arrow Type",
 
+  "death.attack.chaos_magic": "%1$s was torn by %2$s's chaos magic",
+  "death.attack.celestial_source_magic": "%1$s was obliterated by %2$s's celestial source magic",
   "death.attack.iron_spells_genesis.warped_blood_burst" : "The entire bloodstream of %1$s exploded due to %2$s",
   "death.attack.iron_spells_genesis.warped_blood_burst.item" : "The entire bloodstream of %1$s exploded due to %2$s's %3$s",
   "death.attack.iron_spells_genesis.final_whisper" : "%1$s dissipated because of %2$s",
@@ -165,7 +174,7 @@
   "item.attSpeed": " §2Attack Speed",
   "AIR": "",
 
-  "iron_spells_genesis.config.title": "EternisStarrySky",
+  "iron_spells_genesis.config.title": "Iron's Spells 'n Spellbooks: New genesis",
   "iron_spells_genesis.config.save": "SAVE",
   "iron_spells_genesis.config.done": "DONE",
   "iron_spells_genesis.config.reset": "Reset to default value",
@@ -178,6 +187,5 @@
   
   "entity.iron_spells_genesis.dead_star_decree_comet": "Dead Star Decree - Comet",
   "entity.iron_spells_genesis.dead_star_decree_large_comet": "Dead Star Decree - Large Comet",
-  "entity.iron_spells_genesis.lighting_bolt": "Rainbow Lighting",
-  "entity.iron_spells_genesis.sword_man_csdy": "Sword Man CSDY"
+  "entity.iron_spells_genesis.lighting_bolt": "Rainbow Lighting"
 }

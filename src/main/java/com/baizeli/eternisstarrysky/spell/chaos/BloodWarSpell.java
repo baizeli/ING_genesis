@@ -78,7 +78,7 @@ public class BloodWarSpell extends AbstractSpell {
     }
 
     private int getBuffDuration(int spellLevel) {
-        return (int) ((60 * spellLevel) * 20);
+        return (60 * spellLevel) * 20;
     }
 
     @Override
