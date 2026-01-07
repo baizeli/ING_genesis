@@ -1,7 +1,6 @@
 package com.baizeli.eternisstarrysky.Items;
 
 import com.baizeli.eternisstarrysky.Mixin.minecraft.world.entity.LivingEntityAccessor;
-import com.baizeli.eternisstarrysky.Util.AvaritiaVulnerable;
 import com.baizeli.eternisstarrysky.Util.TextUtils;
 import com.baizeli.eternisstarrysky.cora.utils.EventUtil;
 import com.baizeli.eternisstarrysky.network.DeadListSyncPacket;
@@ -85,14 +84,10 @@ public class AvaritiaSword extends SwordItem
 
     @Override
     public void onUseTick(Level p_41428_, LivingEntity p_41429_, ItemStack p_41430_, int p_41431_) {
-        if (p_41429_ instanceof AvaritiaVulnerable avaritia)
-            avaritia.vulnerable(false);
     }
 
     @Override
     public void releaseUsing(ItemStack p_41412_, Level p_41413_, LivingEntity p_41414_, int p_41415_) {
-        if (p_41414_ instanceof AvaritiaVulnerable avaritia)
-            avaritia.vulnerable(true);
         super.releaseUsing(p_41412_, p_41413_, p_41414_, p_41415_);
     }
 
@@ -150,7 +145,7 @@ public class AvaritiaSword extends SwordItem
 
     @Override
     public Component getName(ItemStack p_41458_) {
-        return Component.literal("§4寰宇支配之剑");
+        return Component.translatable("item.iron_spells_genesis.avaritia_infinity_sword");
     }
 
     @Override

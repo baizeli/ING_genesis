@@ -2,6 +2,7 @@ package com.baizeli.eternisstarrysky.Util;
 
 import com.baizeli.eternisstarrysky.CosmicRender.AvaritiaShaders;
 import com.baizeli.eternisstarrysky.EternisStarrySky;
+import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -12,13 +13,10 @@ import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.block.model.FaceBakery;
-import net.minecraft.client.renderer.block.model.ItemModelGenerator;
 import net.minecraft.client.renderer.entity.ItemEntityRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BakedModel;
-import net.minecraft.client.resources.model.Material;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
@@ -30,19 +28,13 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
-import org.joml.Vector3f;
-
-import java.util.HashMap;
-import java.util.Map;
+import org.joml.Vector4f;
 
 import static com.mojang.math.Axis.*;
 
 public class RenderUtils {
     private static final ResourceLocation TEX = new ResourceLocation(EternisStarrySky.MODID, "textures/misc/white.png");
-    private static final Map<Integer, Vector3f> SPHERE_SPEEDS = new HashMap<>();
-    public static final ResourceLocation cosmic = new ResourceLocation(EternisStarrySky.MODID, "textures/shader/cosmictexture.png");
-    private static final ItemModelGenerator ITEM_MODEL_GENERATOR = new ItemModelGenerator();
-    private static final FaceBakery FACE_BAKERY = new FaceBakery();
+    private static final ResourceLocation BACKGROUND = ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "item/mask/background");
 
     public static RenderType createTexturedQuadType(ResourceLocation texture) {
         return RenderType.create("textured_quad_no_cull",
@@ -61,7 +53,7 @@ public class RenderUtils {
     public static RenderType maskType(ResourceLocation tex) {
         return RenderType.create("", DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP, VertexFormat.Mode.QUADS, 256, RenderType.CompositeState.builder()
                 .setShaderState(new RenderStateShard.ShaderStateShard(() -> AvaritiaShaders.cosmicShader))
-                .setTextureState(new RenderStateShard.TextureStateShard(tex, false, false))
+                .setTextureState(AvaritiaShaders.RenderStateShardAccess.COSMIC_TEXTURE_ISOLATED)
                 .setTransparencyState(RenderType.TRANSLUCENT_TRANSPARENCY)
                 .setLightmapState(RenderType.LIGHTMAP)
                 .setWriteMaskState(RenderStateShard.COLOR_WRITE)
@@ -282,50 +274,72 @@ public class RenderUtils {
         poseStack.popPose();
     }
 
-    public static void renderSkyRenderTexturedQuad(PoseStack poseStack, MultiBufferSource buffer, ResourceLocation texture, float width, float height, float angleDeg, Axis axis, double x, double y, double z, int light, int useType) {
-        AvaritiaShaders.cosmicOpacity.set(2f);
-        if (AvaritiaShaders.inventoryRender) {
-            AvaritiaShaders.cosmicExternalScale.set(25f);
-        } else {
-            AvaritiaShaders.cosmicExternalScale.set(1f);
+    public static void renderCosmicBackground(PoseStack poseStack, MultiBufferSource buffer, ResourceLocation texture, float width, float height, double x, double y, int light, int useType) {
+        if (texture == null) {
+            texture = BACKGROUND;
         }
+        RenderTarget mainTarget = Minecraft.instance.mainRenderTarget;
 
-        final Minecraft mc = Minecraft.getInstance();
-        float yaw = 0.0f;
-        float pitch = 0.0f;
-        float scale = 1f;
-
+        float yaw = 0.0F;
+        float pitch = 0.0F;
+        float screenWidth = (float)mainTarget.width;
+        float screenHeight = (float)mainTarget.height;
         float time = (System.currentTimeMillis() - AvaritiaShaders.renderTime) / 1000.0F;
-
-        float uOffset = time * 0.05F % 1.0F;
-        float vOffset = time * 0.03F % 1.0F;
-
         float opacity = (float) (0.7F + 0.3F * MathUtils.sin(time * 2.5F));
 
         AvaritiaShaders.useType.set(useType);
         AvaritiaShaders.cosmicTime.set(time);
         AvaritiaShaders.cosmicYaw.set(yaw);
         AvaritiaShaders.cosmicPitch.set(pitch);
-        AvaritiaShaders.cosmicExternalScale.set(scale);
+        AvaritiaShaders.cosmicExternalScale.set(50F);
         AvaritiaShaders.cosmicOpacity.set(opacity);
+        AvaritiaShaders.cosmicColor.set(new Vector4f(0.1F, 0.1F, 0.1F, 1.33F));
+        AvaritiaShaders.cosmicScreenSize.set(screenWidth, screenHeight);
+        AvaritiaShaders.cosmicIs2D.set(1);
 
-        float[] uvs = new float[40];
-
-        for (int i = 0; i < 10; ++i) {
-            TextureAtlasSprite sprite = mc.getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(new ResourceLocation(EternisStarrySky.MODID, "misc/cosmic_" + i));
-            uvs[i * 4] = sprite.getU0() + uOffset;
-            uvs[i * 4 + 1] = sprite.getV0() + vOffset;
-            uvs[i * 4 + 2] = sprite.getU1() + uOffset;
-            uvs[i * 4 + 3] = sprite.getV1() + vOffset;
+        for (int i = 0; i < 10; ++i)
+        {
+            TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "item/misc/cosmic_" + i));
+            AvaritiaShaders.COSMIC_UVS[i * 4] = sprite.getU0();
+            AvaritiaShaders.COSMIC_UVS[i * 4 + 1] = sprite.getV0();
+            AvaritiaShaders.COSMIC_UVS[i * 4 + 2] = sprite.getU1();
+            AvaritiaShaders.COSMIC_UVS[i * 4 + 3] = sprite.getV1();
         }
 
-        if (AvaritiaShaders.cosmicUVs != null) {
-            AvaritiaShaders.cosmicUVs.set(uvs);
+        AvaritiaShaders.cosmicUVs.set(AvaritiaShaders.COSMIC_UVS);
+        TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(texture);
+
+        float u0 = sprite.getU0();  // 左边界
+        float u1 = sprite.getU1();  // 右边界
+        float v0 = sprite.getV0();  // 上边界
+        float v1 = sprite.getV1();  // 下边界
+
+        VertexConsumer consumer = buffer.getBuffer(maskType(InventoryMenu.BLOCK_ATLAS));
+
+        renderTextured(poseStack, consumer, width, height, x, y, light, u0, u1, v0, v1);
+
+        if (buffer instanceof MultiBufferSource.BufferSource bufferSource) {
+            bufferSource.endLastBatch();
         }
+    }
 
-        VertexConsumer consumer = new Material(InventoryMenu.BLOCK_ATLAS, texture).buffer(buffer, RenderUtils::maskType);
+    private static void renderTextured(PoseStack poseStack, VertexConsumer consumer, float width, float height,
+                                       double x, double y, int light,
+                                       float u0, float u1, float v0, float v1) {
+        poseStack.pushPose();
+        poseStack.translate(x, y, 100);
 
-        renderTextured(poseStack, consumer, width, height, angleDeg, axis, x, y, z, light);
+        float w = width / 2f;
+        float h = height / 2f;
+
+        Matrix4f matrix = poseStack.last().pose();
+
+        consumer.vertex(matrix, -w, -h, 0).color(255, 255, 255, 255).uv(u0, v1).uv2(light).normal(0, 0, 1).endVertex();
+        consumer.vertex(matrix,  w, -h, 0).color(255, 255, 255, 255).uv(u1, v1).uv2(light).normal(0, 0, 1).endVertex();
+        consumer.vertex(matrix,  w,  h, 0).color(255, 255, 255, 255).uv(u1, v0).uv2(light).normal(0, 0, 1).endVertex();
+        consumer.vertex(matrix, -w,  h, 0).color(255, 255, 255, 255).uv(u0, v0).uv2(light).normal(0, 0, 1).endVertex();
+
+        poseStack.popPose();
     }
 
     public static void renderNormalTexturedQuad(PoseStack poseStack, MultiBufferSource buffer, ResourceLocation texture, float width, float height, float angleDeg, Axis axis, double x, double y, double z, int light) {

@@ -22,11 +22,11 @@ import static com.baizeli.eternisstarrysky.EternisStarrySky.MODID;
 
 public class WingLayer extends RenderLayer<Player, PlayerModel<Player>> {
     private static final ResourceLocation WING_TEXTURE = new ResourceLocation(MODID, "textures/models/armor/spell_wing.png");
-    private final WingModel wingModel;
+    private final WingModel<Player> wingModel;
 
     public WingLayer(LivingEntityRenderer<Player, PlayerModel<Player>> renderer) {
         super(renderer);
-        this.wingModel = new WingModel();
+        this.wingModel = new WingModel<>();
     }
 
     @Override
@@ -58,11 +58,7 @@ public class WingLayer extends RenderLayer<Player, PlayerModel<Player>> {
     }
 
     private boolean shouldRenderWings(Player player) {
-        if (player.hasEffect(ModEffect.I_FLY.get())){
-            return true;
-        }else {
-            return false;
-        }
+        return player.hasEffect(ModEffect.I_FLY.get());
     }
 
     private void adjustPoseForPlayerModel(PoseStack poseStack, Player player) {
@@ -80,21 +76,19 @@ public class WingLayer extends RenderLayer<Player, PlayerModel<Player>> {
     }
 
     @Mod.EventBusSubscriber(modid = EternisStarrySky.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-    public class WingLayerRegistry {
+    public static class WingLayerRegistry {
 
         @SubscribeEvent
         public static void onAddLayers(EntityRenderersEvent.AddLayers event) {
             
-            LivingEntityRenderer<Player, PlayerModel<Player>> defaultRenderer =
-                    (LivingEntityRenderer<Player, PlayerModel<Player>>) event.getSkin("default");
+            LivingEntityRenderer<Player, PlayerModel<Player>> defaultRenderer = event.getSkin("default");
 
             if (defaultRenderer != null) {
                 defaultRenderer.addLayer(new WingLayer(defaultRenderer));
             }
 
             
-            LivingEntityRenderer<Player, PlayerModel<Player>> slimRenderer =
-                    (LivingEntityRenderer<Player, PlayerModel<Player>>) event.getSkin("slim");
+            LivingEntityRenderer<Player, PlayerModel<Player>> slimRenderer = event.getSkin("slim");
 
             if (slimRenderer != null) {
                 slimRenderer.addLayer(new WingLayer(slimRenderer));

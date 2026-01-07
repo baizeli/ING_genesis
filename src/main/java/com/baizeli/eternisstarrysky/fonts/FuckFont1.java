@@ -17,6 +17,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.FormattedCharSink;
 import net.minecraft.util.Mth;
+import net.minecraft.util.StringDecomposer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import org.jetbrains.annotations.NotNull;
@@ -29,8 +30,8 @@ import java.util.function.Function;
 public class FuckFont1 extends Font {
     public static Font font = new FuckFont1(Minecraft.getInstance().font.fonts, false);
 
-    public FuckFont1(Function<ResourceLocation, FontSet> p_243253_, boolean p_243245_) {
-        super(p_243253_, p_243245_);
+    public FuckFont1(Function<ResourceLocation, FontSet> fonts, boolean filterFishyGlyphs) {
+        super(fonts, filterFishyGlyphs);
     }
 
     public static FuckFont1 getFont() {
@@ -50,16 +51,13 @@ public class FuckFont1 extends Font {
     }
 
     public int renderFont(FormattedCharSequence seq, float x, float y, int baseRgb, boolean dropShadow, Matrix4f matrix, MultiBufferSource buffers, DisplayMode mode, int light, int overlay, boolean ignoredIsText) {
-        final int NORMAL = 0, AFTER_HASH = 1, CHAOS = 2, CELESTIAL = 3;
+        final int NORMAL = 0, AFTER_HASH = 1, AFTER_HASH_EXIT = 2, CHAOS = 3, CELESTIAL = 4;
 
         final int[] state = {NORMAL};
         final Style[] hashStyle = {null};
         final float[] currentX = {x};
         final long time = net.minecraft.Util.getMillis();
         final int[] charIndex = {0};
-
-        final int[] prevState = {NORMAL};
-        final int[] hashCharIndex = {-1};
 
         seq.accept((index, style, codePoint) -> {
             char ch = (char) codePoint;
@@ -69,7 +67,7 @@ public class FuckFont1 extends Font {
             float dx = 0, dy = 0;
             boolean isSpecial = false;
 
-            if (state[0] == AFTER_HASH) {
+            if (state[0] == AFTER_HASH || state[0] == AFTER_HASH_EXIT) {
                 if (ch == '1') {
                     state[0] = CHAOS;
                     shouldRender = false;
@@ -77,34 +75,36 @@ public class FuckFont1 extends Font {
                     state[0] = CELESTIAL;
                     shouldRender = false;
                 } else if (ch == '#') {
-                    // 转义的##，渲染单个#
-                    state[0] = NORMAL;
-                } else {
-                    // 命令不匹配时的处理
-                    if (prevState[0] == NORMAL) {
-                        // 来自普通状态的#，渲染它
+                    if (state[0] == AFTER_HASH) {
                         renderChar('#', hashStyle[0], currentX[0], y, baseRgb, dropShadow, matrix, buffers, mode, light, overlay, charIndex[0], false);
                         currentX[0] += width("#");
                         charIndex[0]++;
-                    } else {
-                        // 来自特殊状态的结束标记，不渲染#
-                        state[0] = NORMAL;
+                        shouldRender = false;
+                    }
+                    else {
+                        state[0] = AFTER_HASH;
+                        hashStyle[0] = style;
+                        shouldRender = false;
+                    }
+                } else {
+                    if (state[0] == AFTER_HASH) {
+                        renderChar('#', hashStyle[0], currentX[0], y, baseRgb, dropShadow, matrix, buffers, mode, light, overlay, charIndex[0], false);
+                        currentX[0] += width("#");
+                        charIndex[0]++;
                     }
 
-                    // 渲染当前字符（普通模式）
                     color = (style.getColor() != null) ? style.getColor().getValue() | 0xFF000000 : baseRgb;
                     renderChar(ch, style, currentX[0], y, color, dropShadow, matrix, buffers, mode, light, overlay, charIndex[0], false);
                     currentX[0] += width(String.valueOf(ch));
                     charIndex[0]++;
 
-                    shouldRender = false; // 已经处理完毕
+                    state[0] = NORMAL;
+                    shouldRender = false;
                 }
             } else if (state[0] == CHAOS) {
                 if (ch == '#') {
-                    prevState[0] = CHAOS;
-                    state[0] = AFTER_HASH;
+                    state[0] = AFTER_HASH_EXIT;
                     hashStyle[0] = style;
-                    hashCharIndex[0] = charIndex[0];
                     shouldRender = false;
                 } else {
                     isSpecial = true;
@@ -115,10 +115,8 @@ public class FuckFont1 extends Font {
                 }
             } else if (state[0] == CELESTIAL) {
                 if (ch == '#') {
-                    prevState[0] = CELESTIAL;
-                    state[0] = AFTER_HASH;
+                    state[0] = AFTER_HASH_EXIT;
                     hashStyle[0] = style;
-                    hashCharIndex[0] = charIndex[0];
                     shouldRender = false;
                 } else {
                     isSpecial = true;
@@ -127,10 +125,8 @@ public class FuckFont1 extends Font {
                     outStyle = style.withColor((TextColor) null).withUnderlined(false);
                 }
             } else if (ch == '#') {
-                prevState[0] = NORMAL;
                 state[0] = AFTER_HASH;
                 hashStyle[0] = style;
-                hashCharIndex[0] = charIndex[0];
                 shouldRender = false;
             } else {
                 color = (style.getColor() != null) ? style.getColor().getValue() | 0xFF000000 : baseRgb;
@@ -144,8 +140,7 @@ public class FuckFont1 extends Font {
             return true;
         });
 
-        // 处理末尾的#（仅当是普通状态未匹配的#时才渲染）
-        if (state[0] == AFTER_HASH && prevState[0] == NORMAL) {
+        if (state[0] == AFTER_HASH) {
             renderChar('#', hashStyle[0], currentX[0], y, baseRgb, dropShadow, matrix, buffers, mode, light, overlay, charIndex[0], false);
             currentX[0] += width("#");
         }
@@ -173,11 +168,11 @@ public class FuckFont1 extends Font {
         this.renderText(text, x, y, color, false, matrix4f, buffer, displayMode, backgroundColor, packedLightCoords, index);
     }
 
-//    public float renderText(String text, float x, float y, int color, boolean dropShadow, Matrix4f matrix, MultiBufferSource buffer, DisplayMode displayMode, int backgroundColor, int packedLightCoords, int index) {
-//        MyStringRenderOutput font$stringrenderoutput = new MyStringRenderOutput(buffer, x, y, color, dropShadow, matrix, displayMode, packedLightCoords, index);
-//        StringDecomposer.iterateFormatted(text, Style.EMPTY, font$stringrenderoutput);
-//        return font$stringrenderoutput.finish(backgroundColor, x);
-//    }
+    public float renderText(String text, float x, float y, int color, boolean dropShadow, Matrix4f matrix, MultiBufferSource buffer, DisplayMode displayMode, int backgroundColor, int packedLightCoords, int index) {
+        MyStringRenderOutput font$stringrenderoutput = new MyStringRenderOutput(buffer, x, y, color, dropShadow, matrix, displayMode, packedLightCoords, index);
+        StringDecomposer.iterateFormatted(text, Style.EMPTY, font$stringrenderoutput);
+        return font$stringrenderoutput.finish(backgroundColor, x);
+    }
 
     public void renderText(FormattedCharSequence text, float x, float y, int color, boolean dropShadow, Matrix4f matrix, MultiBufferSource buffer, DisplayMode displayMode, int backgroundColor, int packedLightCoords, int index) {
         MyStringRenderOutput font$stringrenderoutput = new MyStringRenderOutput(buffer, x, y, color, dropShadow, matrix, displayMode, packedLightCoords, index);
@@ -197,7 +192,8 @@ public class FuckFont1 extends Font {
         public int color;
         @Nullable public List<BakedGlyph.Effect> effects;
 
-        private final int index;                         // 第几个字（用于相位偏移）
+        private final int index; // 第几个字（用于相位偏移）
+        private static final int SEGMENTS = 256; // 每个字符的分段数
 
         public MyStringRenderOutput(MultiBufferSource bufferSource, float x, float y,
                                     int color, boolean dropShadow, Matrix4f pose,
@@ -240,34 +236,72 @@ public class FuckFont1 extends Font {
             float shadowOff = dropShadow ? glyphInfo.getShadowOffset() : 0F;
             float advance = glyphInfo.getAdvance(bold);
 
-            int cLeft = calcColor(0.0f, this.color);
-            int cRight = calcColor(1.0f, this.color);
+            // 生成多段颜色
+            int[] segmentColors = new int[SEGMENTS + 1];
+            for (int i = 0; i <= SEGMENTS; i++) {
+                float phase = (float) i / SEGMENTS;
+                segmentColors[i] = calcColor(phase, this.color);
+            }
 
-            float[] colorLeft = unpack(cLeft);
-            float[] colorRight = unpack(cRight);
-
-            float x0 = this.x + shadowOff;
-            float y0 = this.y + shadowOff;
-
-            float lineY = dropShadow ? 1F : 0F;
-
+            // 多段渲染
             VertexConsumer vc = bufferSource.getBuffer(baked.renderType(mode));
             if (!(baked instanceof EmptyGlyph)) {
-                render(baked, style.isItalic(), this.x + shadowOff, this.y + shadowOff, this.pose, vc, colorLeft, colorRight, this.packedLightCoords);
+                renderMultiSegment(baked, style.isItalic(), this.x + shadowOff, this.y + shadowOff,
+                        this.pose, vc, segmentColors, this.packedLightCoords);
             }
+
+            // 下划线和删除线效果
+            float x0 = this.x + shadowOff;
+            float y0 = this.y + shadowOff;
+            float lineY = dropShadow ? 1F : 0F;
 
             if (style.isStrikethrough()) {
                 addEffect(new BakedGlyph.Effect(x0 + lineY - 1F, y0 + 4.5F, x0 + lineY + advance, y0 + 4.5F - 1F,
-                        0.01F, colorLeft[0], colorLeft[1], colorLeft[2], colorLeft[3]));
+                        0.01F, 0F, 0F, 0F, 1F)); // 颜色在finish时统一处理
             }
 
             if (style.isUnderlined()) {
                 addEffect(new BakedGlyph.Effect(x0 + lineY - 1F, y0 + 9F, x0 + lineY + advance, y0 + 9F - 1F,
-                            0.01F, colorLeft[0], colorLeft[1], colorLeft[2], colorLeft[3]));
+                        0.01F, 0F, 0F, 0F, 1F));
             }
 
             this.x += advance;
             return true;
+        }
+
+        // 多段渲染方法
+        private void renderMultiSegment(BakedGlyph glyph, boolean italic, float x, float y,
+                                        Matrix4f matrix, VertexConsumer buffer, int[] colors,
+                                        int packedLight) {
+            float left = x + glyph.left;
+            float right = x + glyph.right;
+            float top = y + glyph.up - 3.0F;
+            float bottom = y + glyph.down - 3.0F;
+
+            // 斜体偏移
+            float italicTop = italic ? 1.0F - 0.25F * glyph.up : 0.0F;
+            float italicBottom = italic ? 1.0F - 0.25F * glyph.down : 0.0F;
+
+            // 每段的宽度和UV跨度
+            float segmentWidth = (right - left) / SEGMENTS;
+            float segmentU = (glyph.u1 - glyph.u0) / SEGMENTS;
+
+            // 为每段生成四边形
+            for (int i = 0; i < SEGMENTS; i++) {
+                float x0 = left + i * segmentWidth;
+                float x1 = left + (i + 1) * segmentWidth;
+                float u0 = glyph.u0 + i * segmentU;
+                float u1 = glyph.u0 + (i + 1) * segmentU;
+
+                float[] colLeft = unpack(colors[i]);
+                float[] colRight = unpack(colors[i + 1]);
+
+                // 四个顶点
+                buffer.vertex(matrix, x0 + italicTop, top, 0.0F).color(colLeft[0], colLeft[1], colLeft[2], colLeft[3]).uv(u0, glyph.v0).uv2(packedLight).endVertex();
+                buffer.vertex(matrix, x0 + italicBottom, bottom, 0.0F).color(colLeft[0], colLeft[1], colLeft[2], colLeft[3]).uv(u0, glyph.v1).uv2(packedLight).endVertex();
+                buffer.vertex(matrix, x1 + italicBottom, bottom, 0.0F).color(colRight[0], colRight[1], colRight[2], colRight[3]).uv(u1, glyph.v1).uv2(packedLight).endVertex();
+                buffer.vertex(matrix, x1 + italicTop, top, 0.0F).color(colRight[0], colRight[1], colRight[2], colRight[3]).uv(u1, glyph.v0).uv2(packedLight).endVertex();
+            }
         }
 
         private float[] unpack(int c) {
@@ -279,13 +313,13 @@ public class FuckFont1 extends Font {
             };
         }
 
-        public void finish(int backgroundColor, float x) {
+        public float finish(int backgroundColor, float x) {
             if (backgroundColor != 0) {
-                float f = (float)(backgroundColor >> 24 & 255) / 255.0F;
-                float f1 = (float)(backgroundColor >> 16 & 255) / 255.0F;
-                float f2 = (float)(backgroundColor >> 8 & 255) / 255.0F;
-                float f3 = (float)(backgroundColor & 255) / 255.0F;
-                this.addEffect(new BakedGlyph.Effect(x - 1.0F, this.y + 9.0F, this.x + 1.0F, this.y - 1.0F, 0.01F, f1, f2, f3, f));
+                float alpha = (float)(backgroundColor >> 24 & 255) / 255.0F;
+                float r = (float)(backgroundColor >> 16 & 255) / 255.0F;
+                float g = (float)(backgroundColor >> 8 & 255) / 255.0F;
+                float b = (float)(backgroundColor & 255) / 255.0F;
+                this.addEffect(new BakedGlyph.Effect(x - 1.0F, this.y + 9.0F, this.x + 1.0F, this.y - 1.0F, 0.01F, r, g, b, alpha));
             }
 
             if (this.effects != null) {
@@ -297,22 +331,7 @@ public class FuckFont1 extends Font {
                 }
             }
 
-        }
-
-        public void render(BakedGlyph glyph, boolean italic, float x, float y,
-                           Matrix4f matrix, VertexConsumer buffer, float[] colLeft, float[] colRight, int packedLight) {
-            float f = x + glyph.left;
-            float f1 = x + glyph.right;
-            float f2 = glyph.up - 3.0F;
-            float f3 = glyph.down - 3.0F;
-            float f4 = y + f2;
-            float f5 = y + f3;
-            float f6 = italic ? 1.0F - 0.25F * f2 : 0.0F;
-            float f7 = italic ? 1.0F - 0.25F * f3 : 0.0F;
-            buffer.vertex(matrix, f + f6, f4, 0.0F).color(colLeft[0],  colLeft[1],  colLeft[2],  colLeft[3]).uv(glyph.u0, glyph.v0).uv2(packedLight).endVertex();
-            buffer.vertex(matrix, f + f7, f5, 0.0F).color(colLeft[0],  colLeft[1],  colLeft[2],  colLeft[3]).uv(glyph.u0, glyph.v1).uv2(packedLight).endVertex();
-            buffer.vertex(matrix, f1 + f7, f5, 0.0F).color(colRight[0], colRight[1], colRight[2], colRight[3]).uv(glyph.u1, glyph.v1).uv2(packedLight).endVertex();
-            buffer.vertex(matrix, f1 + f6, f4, 0.0F).color(colRight[0], colRight[1], colRight[2], colRight[3]).uv(glyph.u1, glyph.v0).uv2(packedLight).endVertex();
+            return x;
         }
 
         public void addEffect(BakedGlyph.Effect effect) {

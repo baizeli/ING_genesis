@@ -1,9 +1,10 @@
 package com.baizeli.eternisstarrysky.Items;
 
-import com.baizeli.eternisstarrysky.Content.ModBlock;
+import com.baizeli.eternisstarrysky.Content.ModBlocks;
 import com.baizeli.eternisstarrysky.EternisStarrySky;
 import com.baizeli.eternisstarrysky.Items.Staff.*;
 import com.baizeli.eternisstarrysky.Items.armor.*;
+import com.baizeli.eternisstarrysky.Items.curios.GenesisCurseItem;
 import com.baizeli.eternisstarrysky.Items.curios.LaoWang237Curios;
 import com.baizeli.eternisstarrysky.TooltipParticleHandler.ITooltipParticleItem;
 import com.baizeli.eternisstarrysky.TooltipParticleHandler.PTID;
@@ -35,13 +36,13 @@ public class ModItems {
 
     // 扭曲混沌锭
     public static final RegistryObject<Item> TWISTED_CHAOS_INGOT = ITEMS.register("twisted_chaos_ingot",
-            () -> new Item(new Item.Properties()
+            () -> new ChaosBaseItem(new Item.Properties()
                     .rarity(Rarity.EPIC)
             ));
 
     // 扭曲之混沌-[混沌]法术材料
     public static final RegistryObject<Item> TWISTED_CHAOS = ITEMS.register("twisted_chaos",
-            () -> new Item(new Item.Properties()
+            () -> new ChaosBaseItem(new Item.Properties()
                     .rarity(Rarity.EPIC)
             ));
 
@@ -103,11 +104,11 @@ public class ModItems {
             )
     );
 
-    public static final RegistryObject<Item> WORKBENCH = ITEMS.register("workbench", () -> new BlockItem(ModBlock.workbench.get(), new Item.Properties()));
+    public static final RegistryObject<Item> WORKBENCH = ITEMS.register("workbench", () -> new BlockItem(ModBlocks.workbench.get(), new Item.Properties()));
 
     // 奥术工作台
     public static final RegistryObject<Item> ARCANE_WORKBENCH = ITEMS.register("arcane_workbench",
-        () -> new BlockItem(ModBlock.ARCANE_WORKBENCH.get(), new Item.Properties()));
+        () -> new BlockItem(ModBlocks.ARCANE_WORKBENCH.get(), new Item.Properties()));
 
 /*    // 无尽永恒盔甲套装
     public static final RegistryObject<Item> INFINITY_ETERNAL_HELMET = ITEMS.register("infinity_eternal_helmet",
@@ -215,6 +216,9 @@ public class ModItems {
     // 老王237
     public static final RegistryObject<Item> LAO_WANG_237 = ITEMS.register("lao_wang_237", LaoWang237Curios::new);
 
+    // 创世之诅咒
+    public static final RegistryObject<Item> GENESIS_CURSE = ITEMS.register("genesis_curse", GenesisCurseItem::new);
+
 
     // 无限忏悔石
     public static final RegistryObject<Item> INFINITE_SHRIVING_STONE = ITEMS.register(
@@ -317,7 +321,7 @@ public class ModItems {
 
     // 混沌手稿碎片
     public static final RegistryObject<Item> CHAOS_MANUSCRIPT_FRAGMENT = ITEMS.register("chaos_manuscript_fragment",
-            () -> new Item(new Item.Properties()
+            () -> new ChaosBaseItem(new Item.Properties()
                     .rarity(Rarity.EPIC)) {
                 @Override
                 public void appendHoverText(@NotNull ItemStack itemstack, @Nullable Level world, @NotNull List<Component> list, @NotNull TooltipFlag flag) {
@@ -345,8 +349,27 @@ public class ModItems {
                 }
             });
 
+    // 奥术水晶矿
+    public static final RegistryObject<BlockItem> ARCANE_CRYSTAL_ORE_ITEM =
+            ModItems.ITEMS.register("arcane_crystal_ore", () -> new BlockItem(ModBlocks.ARCANE_CRYSTAL_ORE.get(), new Item.Properties()));
+
+    public static final RegistryObject<BlockItem> ARCANE_CRYSTAL_ORE_DEEPSLATE_ITEM =
+            ModItems.ITEMS.register("deepslate_arcane_crystal_ore", () -> new BlockItem(ModBlocks.ARCANE_CRYSTAL_ORE_DEEPSLATE.get(), new Item.Properties()));
+
+    public static final RegistryObject<BlockItem> NETHER_ARCANE_CRYSTAL_ORE_ITEM =
+            ModItems.ITEMS.register("nether_arcane_crystal_ore", () -> new BlockItem(ModBlocks.NETHER_ARCANE_CRYSTAL_ORE.get(), new Item.Properties()));
+
+    public static final RegistryObject<BlockItem> END_ARCANE_CRYSTAL_ORE_ITEM =
+            ModItems.ITEMS.register("end_arcane_crystal_ore", () -> new BlockItem(ModBlocks.END_ARCANE_CRYSTAL_ORE.get(), new Item.Properties()));
+
+    public static class ChaosBaseItem extends Item {
+        public ChaosBaseItem(Properties properties) {
+            super(properties);
+        }
+    }
+
     public static class CelestialSourceBaseItem extends Item implements ITooltipParticleItem {
-        public CelestialSourceBaseItem(Item.Properties properties) {
+        public CelestialSourceBaseItem(Properties properties) {
             super(properties);
         }
 

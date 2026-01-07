@@ -2,7 +2,11 @@ package com.baizeli.eternisstarrysky.Items;
 
 import com.baizeli.eternisstarrysky.config.ConfigEffect;
 import com.baizeli.eternisstarrysky.config.Configuration;
+import io.redspace.ironsspellbooks.api.magic.MagicData;
+import io.redspace.ironsspellbooks.network.SyncManaPacket;
+import io.redspace.ironsspellbooks.setup.PacketDistributor;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.effect.MobEffect;
@@ -25,7 +29,7 @@ public class EternisAppleItem extends Item
 
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity livingEntity) {
-        if (livingEntity instanceof Player player)
+        if (livingEntity instanceof ServerPlayer player)
         {
             player.getCooldowns().addCooldown(this, COOLDOWN_TICKS);
             FoodData foodData = player.getFoodData();
@@ -44,6 +48,10 @@ public class EternisAppleItem extends Item
                 if (eff != null)
                     player.addEffect(new MobEffectInstance(eff, effect.duration, effect.amplifier));
             }
+
+            MagicData magicData = MagicData.getPlayerMagicData(player);
+            magicData.addMana(700F);
+            PacketDistributor.sendToPlayer(player, new SyncManaPacket(magicData));
         }
         return stack;
     }

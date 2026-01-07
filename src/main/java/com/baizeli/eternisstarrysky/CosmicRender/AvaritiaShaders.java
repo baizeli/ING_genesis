@@ -1,12 +1,15 @@
 package com.baizeli.eternisstarrysky.CosmicRender;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.inventory.InventoryMenu;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RegisterShadersEvent;
@@ -24,6 +27,19 @@ public final class AvaritiaShaders {
         public static final LightmapStateShard LIGHT_MAP = RenderStateShard.LIGHTMAP;
         private static final TransparencyStateShard TRANSLUCENT_TRANSPARENCY = RenderStateShard.TRANSLUCENT_TRANSPARENCY;
         private static final TextureStateShard BLOCK_SHEET_MIPPED = RenderStateShard.BLOCK_SHEET_MIPPED;
+        public static final TextureStateShard COSMIC_TEXTURE_ISOLATED = new RenderStateShard.TextureStateShard(InventoryMenu.BLOCK_ATLAS, false, false) {
+            public void setupRenderState() {
+                super.setupRenderState();
+                RenderSystem.activeTexture(33984);
+                Minecraft mc = Minecraft.instance;
+                TextureAtlas textureAtlas = mc.getModelManager().getAtlas(InventoryMenu.BLOCK_ATLAS);
+                RenderSystem.bindTexture(textureAtlas.getId());
+            }
+
+            public void clearRenderState() {
+                super.clearRenderState();
+            }
+        };
 
         private RenderStateShardAccess(String pName, Runnable pSetupState, Runnable pClearState) {
             super(pName, pSetupState, pClearState);
@@ -43,8 +59,10 @@ public final class AvaritiaShaders {
     public static CCUniform cosmicExternalScale;
     public static CCUniform cosmicOpacity;
     public static CCUniform cosmicUVs;
-    public static CCUniform currentTime;
-    public static final RenderType COSMIC_RENDER_TYPE = RenderType.create(EternisStarrySky.MOD_ID + ":cosmic", DefaultVertexFormat.BLOCK, VertexFormat.Mode.QUADS, 2097152, true, false, RenderType.CompositeState.builder().setShaderState(new RenderStateShard.ShaderStateShard(() -> cosmicShader)).setDepthTestState(RenderStateShardAccess.EQUAL_DEPTH_TEST).setLightmapState(RenderStateShardAccess.LIGHT_MAP).setTransparencyState(RenderStateShardAccess.TRANSLUCENT_TRANSPARENCY).setTextureState(RenderStateShardAccess.BLOCK_SHEET_MIPPED).createCompositeState(true));
+    public static CCUniform cosmicColor;
+    public static CCUniform cosmicScreenSize;
+    public static CCUniform cosmicIs2D;
+    public static final RenderType COSMIC_RENDER_TYPE = RenderType.create(EternisStarrySky.MOD_ID + ":cosmic", DefaultVertexFormat.BLOCK, VertexFormat.Mode.QUADS, 2097152, true, false, RenderType.CompositeState.builder().setShaderState(new RenderStateShard.ShaderStateShard(() -> cosmicShader)).setDepthTestState(RenderStateShardAccess.EQUAL_DEPTH_TEST).setLightmapState(RenderStateShardAccess.LIGHT_MAP).setTransparencyState(RenderStateShardAccess.TRANSLUCENT_TRANSPARENCY).setTextureState(RenderStateShardAccess.COSMIC_TEXTURE_ISOLATED).createCompositeState(true));
     //public static final RenderType COSMIC_RENDER_TYPE_2 = RenderType.create(EternisStarrySky.MOD_ID + ":cosmic_1", DefaultVertexFormat.BLOCK, VertexFormat.Mode.QUADS, 2097152, true, false, RenderType.CompositeState.builder().setShaderState(new RenderStateShard.ShaderStateShard(() -> cosmicShader)).setDepthTestState(RenderStateShardAccess.EQUAL_DEPTH_TEST).setLightmapState(RenderStateShardAccess.LIGHT_MAP).setTransparencyState(RenderStateShardAccess.TRANSLUCENT_TRANSPARENCY).setTextureState(RenderStateShardAccess.BLOCK_SHEET_MIPPED).createCompositeState(true));
 
     public static void onRegisterShaders(RegisterShadersEvent event) {
@@ -56,8 +74,10 @@ public final class AvaritiaShaders {
             cosmicExternalScale = Objects.requireNonNull(cosmicShader.getUniform("externalScale"));
             cosmicOpacity = Objects.requireNonNull(cosmicShader.getUniform("opacity"));
             cosmicUVs = Objects.requireNonNull(cosmicShader.getUniform("cosmicuvs"));
-            useType = Objects.requireNonNull(cosmicShader.getUniform("useType"));
-            currentTime = Objects.requireNonNull(cosmicShader.getUniform("currentTime"));
+            useType = Objects.requireNonNull(cosmicShader.getUniform("useCosmicType"));
+            cosmicColor = Objects.requireNonNull(cosmicShader.getUniform("cosmicColor0"));
+            cosmicScreenSize = Objects.requireNonNull(cosmicShader.getUniform("screenSize"));
+            cosmicIs2D = Objects.requireNonNull(cosmicShader.getUniform("is2D"));
             cosmicTime.set((float) renderTime + renderFrame);
             cosmicShader.onApply(() -> cosmicTime.set((float) renderTime + renderFrame));
         });

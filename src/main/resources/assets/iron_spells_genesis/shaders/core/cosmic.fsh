@@ -1,12 +1,12 @@
-#version 150
+#version 400
 
 #define M_PI 3.1415926535897932384626433832795
 
-// #moj_import <fog.glsl>
-
 const int cosmiccount = 10;
-const int cosmicoutof = 101;
-const float lightmix = 0.15f;
+const int cosmicoutof = 81;
+const float lightmix = 1.5f;
+
+#moj_import <fog.glsl>
 
 uniform sampler2D Sampler0;
 
@@ -22,601 +22,906 @@ uniform float pitch;
 uniform float externalScale;
 
 uniform float opacity;
-uniform int useType; // 0=紫色, 1=紫金配色, 2=极光配色, 3=蓝色
 
 uniform mat2 cosmicuvs[cosmiccount];
-uniform int currentTime;
+
+uniform int useCosmicType;
+uniform vec4 cosmicColor0;
+
+uniform vec2 screenSize;
+
+uniform int is2D;
 
 in float vertexDistance;
-in vec4 vertexColor;
 in vec2 texCoord0;
-in vec4 normal;
 in vec3 fPos;
 
 out vec4 fragColor;
 
-
-vec4 linear_fog(vec4 inColor, float vertexDistance, float fogStart, float fogEnd, vec4 fogColor) {
-	if (vertexDistance <= fogStart) {
-		return inColor;
-	}
-
-	float fogValue = vertexDistance < fogEnd ? smoothstep(fogStart, fogEnd, vertexDistance) : 1.0;
-	return vec4(mix(inColor.rgb, fogColor.rgb, fogValue * fogColor.a), inColor.a);
-}
-vec3 getNebulaColor(float seed, float time) {
-	float colorPhase = mod(seed + time * 0.0005, 1.0);
-
-	vec3 color1 = vec3(0.80, 0.20, 0.90);
-	vec3 color2 = vec3(0.10, 0.60, 1.00);
-	vec3 color3 = vec3(1.00, 0.40, 0.10);
-
-	if (colorPhase < 0.33) {
-		return mix(color1, color2, colorPhase / 0.33);
-	} else if (colorPhase < 0.66) {
-		return mix(color2, color3, (colorPhase - 0.33) / 0.33);
-	} else {
-		return mix(color3, color1, (colorPhase - 0.66) / 0.34);
-	}
-}
-mat4 rotationMatrix(vec3 axis, float angle) {
-	axis = normalize(axis);
-	float s = sin(angle);
-	float c = cos(angle);
-	float oc = 1.0 - c;
-
-	return mat4(
-		oc * axis.x * axis.x + c,           oc * axis.x * axis.y - axis.z * s,  oc * axis.z * axis.x + axis.y * s,  0.0,
-		oc * axis.x * axis.y + axis.z * s,  oc * axis.y * axis.y + c,           oc * axis.y * axis.z - axis.x * s,  0.0,
-		oc * axis.z * axis.x - axis.y * s,  oc * axis.y * axis.z + axis.x * s,  oc * axis.z * axis.z + c,           0.0,
-		0.0,                                0.0,                                0.0,                                1.0
-	);
-}
-
-vec3 starGradient(float intensity, float pulse, int useType)
+vec3 applyCamera(vec2 uv, float yaw, float pitch)
 {
-	vec3 color;
+    vec3 rayDir = normalize(vec3(uv, 1.0));
 
-	if (useType == 0) // 紫色方案保持不变
-	{
-		const vec3 basePurple = vec3(0.4, 0.1, 0.6);
-		const vec3 lightLavender = vec3(0.8, 0.7, 1.0);
-		const vec3 whitePurple = vec3(0.95, 0.92, 1.0);
+    float sinPitch = sin(pitch);
+    float cosPitch = cos(pitch);
+    rayDir = vec3(
+    rayDir.x,
+    rayDir.y * cosPitch - rayDir.z * sinPitch,
+    rayDir.y * sinPitch + rayDir.z * cosPitch
+    );
 
-		if (intensity < 0.5)
-		{
-			color = mix(basePurple, lightLavender, intensity * 2.0);
-		}
-		else
-		{
-			color = mix(lightLavender, whitePurple, (intensity - 0.5) * 2.0);
-		}
+    float sinYaw = sin(-yaw);
+    float cosYaw = cos(-yaw);
+    rayDir = vec3(
+    rayDir.z * sinYaw + rayDir.x * cosYaw,
+    rayDir.y,
+    rayDir.z * cosYaw - rayDir.x * sinYaw
+    );
 
-		// 脉动效果
-		float pulseFactor = 0.6 + 0.4 * sin(pulse * M_PI * 4.0);
-		color *= pulseFactor;
-	}
-	else if (useType == 1) // 紫金配色方案
-	{
-		const vec3 deepPurple = vec3(0.3, 0.1, 0.5);    // 深紫色
-		const vec3 royalPurple = vec3(0.6, 0.2, 0.8);   // 皇家紫
-		const vec3 brightGold = vec3(1.0, 0.8, 0.3);    // 明亮金色
-		const vec3 pureGold = vec3(1.0, 0.9, 0.4);      // 纯金色
-
-		// 创建从深紫到金色的渐变
-		if (intensity < 0.25)
-		{
-			color = mix(deepPurple, royalPurple, intensity * 4.0);
-		}
-		else if (intensity < 0.6)
-		{
-			color = mix(royalPurple, brightGold, (intensity - 0.25) * 2.86);
-		}
-		else
-		{
-			color = mix(brightGold, pureGold, (intensity - 0.6) * 2.5);
-		}
-
-		// 脉动效果
-		float pulseFactor = 0.6 + 0.4 * sin(pulse * M_PI * 4.0);
-		color *= pulseFactor;
-	}
-	else if(useType == 3) //蓝色
-	{
-		const vec3 auroraBlue = vec3(0.3, 0.4, 1.0);
-		const vec3 lightLavender = vec3(0.2, 0.7, 0.4);
-		const vec3 whitePurple = vec3(0.45, 0.92, 1.0);
-
-		if (intensity < 0.5)
-		{
-			color = mix(auroraBlue, lightLavender, auroraBlue);
-		}
-		else
-		{
-			color = mix(lightLavender, whitePurple, (intensity - 0.5) * 2.0);
-		}
-
-		// 脉动效果
-		float pulseFactor = 0.6 + 0.4 * sin(pulse * M_PI * 4.0);
-		color *= pulseFactor;
-	}
-	else if (useType == 2) // 极光配色方案
-	{
-		// 极光颜色定义
-		const vec3 auroraGreen = vec3(0.2, 1.0, 0.4);     // 亮绿色
-		const vec3 auroraCyan = vec3(0.1, 0.8, 1.0);      // 青色
-		const vec3 auroraBlue = vec3(0.3, 0.4, 1.0);      // 蓝色
-		const vec3 auroraPurple = vec3(0.8, 0.3, 1.0);    // 紫色
-		const vec3 auroraWhite = vec3(0.9, 1.0, 0.95);    // 白色
-
-		// 基于时间的动态颜色混合
-		float timeOffset = time * 0.02 + pulse * 0.5;
-		float colorPhase = mod(timeOffset, 4.0);
-
-		// 在不同极光颜色间循环
-		if (colorPhase < 1.0)
-		{
-			color = mix(auroraGreen, auroraCyan, colorPhase);
-		}
-		else if (colorPhase < 2.0)
-		{
-			color = mix(auroraCyan, auroraBlue, colorPhase - 1.0);
-		}
-		else if (colorPhase < 3.0)
-		{
-			color = mix(auroraBlue, auroraPurple, colorPhase - 2.0);
-		}
-		else
-		{
-			color = mix(auroraPurple, auroraGreen, colorPhase - 3.0);
-		}
-
-		// 根据强度添加白色光芒
-		if (intensity > 0.7)
-		{
-			float whiteAmount = (intensity - 0.7) * 3.33;
-			color = mix(color, auroraWhite, whiteAmount);
-		}
-
-		// 动态亮度变化（不是呼吸灯，而是流动效果）
-		float flowFactor = 0.7 + 0.3 * sin(timeOffset * 2.0);
-		color *= flowFactor;
-	}
-	else if (useType == 4)
-	{
-		color = vec3(1, 1, 1);
-	}
-
-	return color;
+    return normalize(rayDir);
 }
-//useType索引行数: 383-1 391-2 419-3
+
+mat4 rotationMatrix(vec3 axis, float angle)
+{
+    axis = normalize(axis);
+    float s = sin(angle);
+    float c = cos(angle);
+    float oc = 1.0 - c;
+
+    return mat4(oc * axis.x * axis.x + c, oc * axis.x * axis.y - axis.z * s, oc * axis.z * axis.x + axis.y * s, 0.0,
+    oc * axis.x * axis.y + axis.z * s, oc * axis.y * axis.y + c, oc * axis.y * axis.z - axis.x * s, 0.0,
+    oc * axis.z * axis.x - axis.y * s, oc * axis.y * axis.z + axis.x * s, oc * axis.z * axis.z + c, 0.0,
+    0.0, 0.0, 0.0, 1.0);
+}
+
+float rand(vec2 co) {
+    return fract(sin(dot(co, vec2(12.9898, 78.233))) * 43758.5453);
+}
+
+vec2 hash(float n) {
+    float x = fract(sin(n * 12.9898) * 43758.5453);
+    float y = fract(sin(n * 78.233) * 43758.5453);
+    return vec2(x, y);
+}
+
+vec3 hash3(vec3 p) {
+    p = fract(p * 0.3183099 + vec3(0.1, 0.2, 0.3));
+    p *= 17.0;
+    return fract(p * (p.x + p.y + p.z)) * 2.0 - 1.0;
+}
+
+float perlinNoise(vec3 p) {
+    vec3 i = floor(p);
+    vec3 f = fract(p);
+    vec3 u = f * f * (3.0 - 2.0 * f);
+
+    float n000 = dot(hash3(i + vec3(0.0, 0.0, 0.0)), f - vec3(0.0, 0.0, 0.0));
+    float n100 = dot(hash3(i + vec3(1.0, 0.0, 0.0)), f - vec3(1.0, 0.0, 0.0));
+    float n010 = dot(hash3(i + vec3(0.0, 1.0, 0.0)), f - vec3(0.0, 1.0, 0.0));
+    float n110 = dot(hash3(i + vec3(1.0, 1.0, 0.0)), f - vec3(1.0, 1.0, 0.0));
+    float n001 = dot(hash3(i + vec3(0.0, 0.0, 1.0)), f - vec3(0.0, 0.0, 1.0));
+    float n101 = dot(hash3(i + vec3(1.0, 0.0, 1.0)), f - vec3(1.0, 0.0, 1.0));
+    float n011 = dot(hash3(i + vec3(0.0, 1.0, 1.0)), f - vec3(0.0, 1.0, 1.0));
+    float n111 = dot(hash3(i + vec3(1.0, 1.0, 1.0)), f - vec3(1.0, 1.0, 1.0));
+
+    return mix(
+        mix(mix(n000, n100, u.x), mix(n010, n110, u.x), u.y),
+        mix(mix(n001, n101, u.x), mix(n011, n111, u.x), u.y),
+        u.z
+    );
+}
+
+float perlinNoiseOctaves(vec3 p, int octaves, float persistence, float contrast) {
+    float total = 0.0;
+    float amplitude = 1.0;
+    float frequency = 1.0;
+    float maxValue = 0.0;
+
+    for (int i = 0; i < 8; i++) {
+        if (i >= octaves) break;
+        total += perlinNoise(p * frequency) * amplitude;
+        maxValue += amplitude;
+        amplitude *= persistence;
+        frequency *= 2.0;
+    }
+
+    float n = total / maxValue * 0.5 + 0.5;
+    n = (n - 0.5) * contrast + 0.5;
+    return clamp(n, 0.0, 1.0);
+}
+
+vec4 cloudRaymarch(vec2 fragCoord, vec2 resolution, float t, float yaw, float pitch)
+{
+    vec4 O = vec4(0.0);
+    vec2 I = fragCoord / resolution;
+
+    I = (I - 0.5) * 2.0;
+    I.x *= resolution.x / resolution.y;
+
+    vec3 rayDir = applyCamera(I, yaw * -1, pitch * -1);
+
+    float z = 0.0;
+    float d = 0.0;
+    float s = 0.0;
+
+    for(int iter = 0; iter < 100; iter++)
+    {
+        vec3 p = z * rayDir;
+
+        d = 5.0;
+        for(int turbIter = 0; turbIter < 20; turbIter++)
+        {
+            if(d >= 200.0) break;
+
+            p += 0.6 * sin(vec3(p.y, p.z, p.x) * d - 0.2 * t) / d;
+            d += d;
+        }
+
+        s = 0.3 - abs(p.y);
+        d = 0.005 + max(s, -s * 0.2) / 4.0;
+        z += d;
+
+        vec4 colorShift = cos(vec4(s / 0.07 + p.x + 0.5 * t - vec4(3.0, 4.0, 5.0, 0.0))) + 1.5;
+        O += colorShift * exp(s / 0.1) / d;
+    }
+
+    O = tanh(O * O / 4e8);
+
+    return O;
+}
+
+vec3 blend3BW(vec3 dark, vec3 mid, vec3 midAlt, vec3 bright, float n, vec2 uv, float time) {
+    vec3 blobPos = vec3(uv * 0.4, time * 0.02);
+    float blobNoise = perlinNoise(blobPos) * 0.5 + 0.5;
+    blobNoise = smoothstep(0.35, 0.65, blobNoise);
+
+    vec3 midMix = mix(mid, midAlt, blobNoise);
+    float t1 = smoothstep(0.2, 0.5, n);
+    float t2 = smoothstep(0.2, 1.0, n);
+
+    vec3 col1 = mix(dark, midMix, t1);
+    vec3 col2 = mix(midMix, bright, t2);
+    vec3 tint = mix(col1, col2, n);
+
+    return mix(vec3(n), tint, 1.0);
+}
+
+vec3 galaxy(vec2 fragCoord, float mult, float speed, vec2 res, float time) {
+    vec2 uv = fragCoord * mult;
+    float tSpeed = speed < 3.0 ? speed * 3.0 : speed;
+    vec3 p = vec3(uv + time / speed, time / tSpeed);
+
+    float n = 1.0 - abs(perlinNoiseOctaves(p * 0.15, 8, 0.6, 4.0));
+    n = pow(n, 2.0);
+
+    return blend3BW(
+        vec3(0.0, 0.0, 0.1),
+        vec3(0.4, 0.0, 0.6),
+        vec3(0.2, 0.0, 0.6),
+        vec3(1.6, 1.0, 1.6),
+        n, uv, time
+    );
+}
+
 void main(void)
 {
-	if(useType==5)
-	{
-		vec4 mask = texture(Sampler0, texCoord0.xy);
-
-		float oneOverExternalScale = 1.0/externalScale;
-
-		int uvtiles = 16;
-
-		float colorTime = time * 0.0008;
-		vec4 col = vec4(
-		0.15 + sin(colorTime) * 0.1,
-		0.07 + sin(colorTime + M_PI * 0.33) * 0.08,
-		0.16 + sin(colorTime + M_PI * 0.66) * 0.12,
-		1.0
-		);
-
-		float pulse = mod(time, 400) / 400.0;
-
-		col.r += sin(pulse * M_PI * 2.0) * 0.25 * 0.60 + 0.35 * 0.60;
-		col.g += sin(pulse * M_PI * 1.5 + M_PI * 0.3) * 0.15 * 0.30 + 0.20 * 0.30;
-		col.b += cos(pulse * M_PI * 2.2 + M_PI * 0.7) * 0.30 * 0.80 + 0.45 * 0.80;
-
-		float depth = length(fPos) / 10.0;
-
-		vec3 deepSpace = getNebulaColor(123.456, time) * 0.3;
-		vec3 nearSpace = getNebulaColor(789.012, time) * 0.8;
-		col.rgb = mix(deepSpace, nearSpace, clamp(1.0 - depth * 0.4, 0.0, 1.0));
-
-		float halo = sin(pulse * M_PI * 3.0) * 0.2 + 0.8;
-		vec3 colorfulHalo = vec3(0.90, 0.70, 1.00) * halo * 0.4;
-		col.rgb += colorfulHalo;
-
-		float stripePattern = sin(fPos.x * 0.1 + time * 0.003) * sin(fPos.y * 0.15 + time * 0.002);
-		vec3 stripeColor = vec3(0.50, 0.80, 0.60) * 0.1 * (stripePattern + 1.0) * 0.5;
-		col.rgb += stripeColor;
-
-		vec4 dir = normalize(vec4(-fPos, 0));
-
-		float sb = sin(pitch);
-		float cb = cos(pitch);
-		dir = normalize(vec4(dir.x, dir.y * cb - dir.z * sb, dir.y * sb + dir.z * cb, 0));
-
-		float sa = sin(-yaw);
-		float ca = cos(-yaw);
-		dir = normalize(vec4(dir.z * sa + dir.x * ca, dir.y, dir.z * ca - dir.x * sa, 0));
-
-		vec4 ray;
-
-		for (int i = 0; i < 16; i++) {
-			int mult = 16 - i;
-
-			int j = i + 7;
-			float rand1 = (j * j * 4321 + j * 8) * 2.0F;
-			int k = j + 1;
-			float rand2 = (k * k * k * 239 + k * 37) * 3.6F;
-			float rand3 = rand1 * 347.4 + rand2 * 63.4;
-
-			vec3 axis = normalize(vec3(sin(rand1), sin(rand2), cos(rand3)));
-
-			ray = dir * rotationMatrix(axis, mod(rand3, 2 * M_PI));
-
-			float rawu = 0.5 + (atan(ray.z, ray.x) / (2 * M_PI));
-			float rawv = 0.5 + (asin(ray.y) / M_PI);
-
-			float scale = mult * 0.5 + 2.75;
-			float u = rawu * scale * externalScale;
-			float v = (rawv + time * 0.0002 * oneOverExternalScale) * scale * 0.6 * externalScale;
-
-			vec2 tex = vec2(u, v);
-
-			int tu = int(mod(floor(u * uvtiles), uvtiles));
-			int tv = int(mod(floor(v * uvtiles), uvtiles));
-
-			int position = ((171 * tu) + (489 * tv) + (303 * (i + 31)) + 17209) ^ 10;
-			int symbol = int(mod(position, cosmicoutof));
-			int rotation = int(mod(pow(tu, float(tv)) + tu + 3 + tv * i, 8));
-			bool flip = false;
-			if (rotation >= 4) {
-				rotation -= 4;
-				flip = true;
-			}
-
-			if (symbol >= 0 && symbol < cosmiccount) {
-
-				vec2 cosmictex = vec2(1.0, 1.0);
-				vec4 tcol = vec4(1.0, 0.0, 0.0, 1.0);
-
-				float ru = clamp(mod(u, 1.0) * uvtiles - tu, 0.0, 1.0);
-				float rv = clamp(mod(v, 1.0) * uvtiles - tv, 0.0, 1.0);
-
-				if (flip) {
-					ru = 1.0 - ru;
-				}
-
-				float oru = ru;
-				float orv = rv;
-
-				if (rotation == 1) {
-					oru = 1.0 - rv;
-					orv = ru;
-				} else if (rotation == 2) {
-					oru = 1.0 - ru;
-					orv = 1.0 - rv;
-				} else if (rotation == 3) {
-					oru = rv;
-					orv = 1.0 - ru;
-				}
-
-				float umin = cosmicuvs[symbol][0][0];
-				float umax = cosmicuvs[symbol][1][0];
-				float vmin = cosmicuvs[symbol][0][1];
-				float vmax = cosmicuvs[symbol][1][1];
-
-				cosmictex.x = umin * (1.0 - oru) + umax * oru;
-				cosmictex.y = vmin * (1.0 - orv) + vmax * orv;
-
-				tcol = texture(Sampler0, cosmictex);
-
-				float a = tcol.r * (0.5 + (1.0 / mult) * 1.0) * (1.0 - smoothstep(0.15, 0.48, abs(rawv - 0.5)));
-
-				float starType = mod(rand1 * rand2, 100.0);
-				vec3 starColor;
-
-				if (starType < 14.3) {
-					starColor = vec3(0.40, 0.70, 1.00);
-				} else if (starType < 28.6) {
-					starColor = vec3(1.00, 0.30, 0.10);
-				} else if (starType < 42.9) {
-					starColor = vec3(1.00, 0.60, 0.20);
-				} else if (starType < 57.2) {
-					starColor = vec3(1.00, 1.00, 0.40);
-				} else if (starType < 71.5) {
-					starColor = vec3(0.20, 1.00, 0.30);
-				} else if (starType < 85.8) {
-					starColor = vec3(0.80, 0.20, 1.00);
-				} else {
-					starColor = vec3(1.00, 0.40, 0.80);
-				}
-
-				starColor *= vec3(
-				1.0 + mod(rand1, 20.0) / 500.0,
-				1.0 + mod(rand2, 20.0) / 500.0,
-				1.0 + mod(rand3, 20.0) / 500.0
-				);
-
-				float twinkle = sin(time * 0.006 + rand1 * 0.1) * sin(time * 0.009 + rand2 * 0.15) * 0.4 + 0.6;
-				starColor *= twinkle;
-
-				float distanceFade = 1.0 - float(i) / 20.0;
-
-				float depthGlow = 1.0 + sin(depth * M_PI + time * 0.003) * 0.3;
-				vec3 glowColor = vec3(0.90, 0.70, 1.00) * 0.2;
-				starColor = starColor * distanceFade * depthGlow + glowColor;
-
-				vec3 distanceGlow = vec3(0.90, 0.70, 1.00) * (1.0 - distanceFade) * 0.3;
-				starColor += distanceGlow;
-
-				col = col + vec4(starColor, 1.0) * a;
-			}
-		}
-
-		float lightPhase = time * 0.0003;
-		vec3 lightTint = vec3(0.9, 0.9, 0.9) * 0.1 + vec3(0.9, 0.9, 0.9);
-		vec3 shade = vertexColor.rgb * (lightmix) + lightTint * (1.0 - lightmix);
-		col.rgb *= shade;
-
-		col.a *= mask.r * opacity;
-
-		float finalTint = time * 0.002;
-		col.rgb *= vec3(
-		1.0 + sin(finalTint) * 0.05,
-		1.0 + sin(finalTint + M_PI * 0.33) * 0.05,
-		1.0 + sin(finalTint + M_PI * 0.66) * 0.05
-		);
-
-		col = clamp(col, 0.0, 1.0);
-
-		fragColor = linear_fog(col * ColorModulator, vertexDistance, FogStart, FogEnd, FogColor);
-
-	}
-	else {
-		vec4 mask = texture(Sampler0, texCoord0.xy);
-		float oneOverExternalScale = 1.0 / externalScale;
-		int uvtiles = 16;
-
-		// === 背景渲染 ===
-		vec4 col = vec4(0.0);
-
-		if (useType == 1)
-		{
-			// 紫金背景 - 深紫到暗金的渐变
-			float gradFactor = clamp(fPos.y * 0.1 + 0.3, 0.0, 1.0);
-			vec3 darkPurple = vec3(0.15, 0.05, 0.25);// 深紫色背景
-			vec3 darkGold = vec3(0.4, 0.25, 0.1);// 暗金色背景
-			col.rgb = mix(darkPurple, darkGold, pow(gradFactor, 1.8));
-		}
-		else if (useType == 2)
-		{
-			// 极光背景 - 动态的极光天空
-			vec3 auroraBase1 = vec3(0.15, 0.25, 0.4);// 深蓝基色
-			vec3 auroraBase2 = vec3(0.1, 0.4, 0.3);// 深绿基色
-			vec3 auroraBase3 = vec3(0.25, 0.15, 0.4);// 深紫基色
-
-			// 基于时间和位置的动态混合
-			float timeFlow = time * 0.008;
-			float positionFactor = (fPos.x * 0.02 + fPos.z * 0.015);
-			float heightFactor = clamp(fPos.y * 0.08 + 0.4, 0.0, 1.0);
-
-			// 创建波动效果
-			float wave1 = sin(timeFlow + positionFactor) * 0.5 + 0.5;
-			float wave2 = cos(timeFlow * 1.3 + positionFactor * 0.7) * 0.5 + 0.5;
-			float wave3 = sin(timeFlow * 0.8 + positionFactor * 1.2) * 0.5 + 0.5;
-
-			// 混合不同的极光基色
-			vec3 mixed1 = mix(auroraBase1, auroraBase2, wave1);
-			vec3 mixed2 = mix(mixed1, auroraBase3, wave2);
-
-			// 添加高度渐变
-			vec3 skyTop = vec3(0.3, 0.5, 0.7);// 更亮的天空顶部
-			col.rgb = mix(mixed2, skyTop, pow(heightFactor, 2.0));
-
-			// 添加微妙的发光效果
-			col.rgb += vec3(0.05, 0.08, 0.1) * wave3;
-		}
-		else if (useType == 3)
-		{
-			//彩色星空渲染
-			float pulse = mod(time,400)/400.0;
-			//col.r added by Xingyun
-			//col.r = f1;//sin(pulse*M_PI) * 0.05 + 0.225;
-			float p1 = 1.5F ;float p2 = 1.0F ;
-			int i = int(mod((pulse * 6.0F),6 ));
-			float ff = pulse * 6.0F - i;
-			float f1 = p1 * (1.0F - p2);
-			float f2 = p1 * (1.0F - ff * p2);
-			float f3 = p1 * (1.0F - (1.0F - ff) * p2);
-			float f4;
-			float f5;
-			float f6;
-
-			if(i==0){
-				f4 = p1;
-				f5 = f3;
-				f6 = f1;
-			} if(i==1){
-			f4 = f2;
-			f5 = p1;
-			f6 = f1;
-		} if(i==2){
-			f4 = f1;
-			f5 = p1;
-			f6 = f3;
-		} if(i==3){
-			f4 = f1;
-			f5 = f2;
-			f6 = p1;
-		} if(i==4){
-			f4 = f3;
-			f5 = f1;
-			f6 = p1;
-		} if(i==5){
-			f4 = p1;
-			f5 = f1;
-			f6 = f2;
-		}
-			col.r = f4;//tan(pulse*M_PI*2) * 0.08 + 0.255;
-			col.g = f5;//sin(pulse*M_PI*2) * 0.075 + 0.225;
-			col.b = f6;//cos(pulse*M_PI*2) * 0.09 + 0.3;
-		}
-		else if (useType == 0)
-		{
-			col.rgb = vec3(0.08, 0.02, 0.12);// 紫色背景保持不变
-		}
-		else if (useType == 4)
-		{
-			/*
-		int distance = abs(12000 - currentTime);
-		float delta = distance / 12000.0F;
-		float r = 0.3;
-		float g = 0.3;
-		float b = 1;
-		r += (0.5 - 0.3) * delta;
-		g -= 0.3 * delta;
-		b -= delta;
-		col.rgb = vec3(r, g, b);
-		*/
-			int dayTime = (currentTime + 18000) % 24000;
-			if (dayTime >= 12000)
-			col.rgb = vec3(0.5, 0, 0);
-			else
-			col.rgb = vec3(0.3, 0.3, 1);
-		}
-
-		col.a = 1.0;
-
-		// 获取光线方向
-		vec4 dir = normalize(vec4(-fPos, 0));
-
-		// 应用旋转
-		float sb = sin(pitch);
-		float cb = cos(pitch);
-		dir = normalize(vec4(dir.x, dir.y * cb - dir.z * sb, dir.y * sb + dir.z * cb, 0));
-
-		float sa = sin(-yaw);
-		float ca = cos(-yaw);
-		dir = normalize(vec4(dir.z * sa + dir.x * ca, dir.y, dir.z * ca - dir.x * sa, 0));
-
-		vec4 ray;
-
-		// 绘制星星层
-		for (int i = 0; i < 32; i++)
-		{
-			int mult = 32 - i;
-
-			// 伪随机参数
-			int j = i + 7;
-			float rand1 = (j * j * 4321 + j * 8) * 2.0;
-			int k = j + 1;
-			float rand2 = (k * k * k * 239 + k * 37) * 3.6;
-			float rand3 = rand1 * 347.4 + rand2 * 63.4;
-
-			// 随机旋转
-			vec3 axis = normalize(vec3(sin(rand1), sin(rand2), cos(rand3)));
-			ray = dir * rotationMatrix(axis, mod(rand3, 2.0 * M_PI));
-
-			// 计算UV
-			float rawu = 0.5 + (atan(ray.z, ray.x) / (2.0 * M_PI));
-			float rawv = 0.5 + (asin(ray.y) / M_PI);
-
-			// UV缩放和时间偏移
-			float scale = mult * 0.5 + 2.75;
-			float u = rawu * scale * externalScale;
-			float v = (rawv + time * 0.0002 * oneOverExternalScale) * scale * 0.6 * externalScale;
-
-			vec2 tex = vec2(u, v);
-
-			// 平铺位置
-			int tu = int(mod(floor(u * uvtiles), uvtiles));
-			int tv = int(mod(floor(v * uvtiles), uvtiles));
-
-			// 伪随机变体
-			int position = ((171 * tu) + (489 * tv) + (303 * (i + 31)) + 17209) ^ 10086;
-			int symbol = int(mod(position, cosmicoutof));
-			int rotation = int(mod(pow(tu, float(tv)) + tu + 3 + tv * i, 8));
-			bool flip = false;
-			if (rotation >= 4)
-			{
-				rotation -= 4;
-				flip = true;
-			}
-
-			// 如果是星星图标
-			if (symbol >= 0 && symbol < cosmiccount)
-			{
-				vec2 cosmictex = vec2(1.0, 1.0);
-				vec4 tcol = vec4(1.0);
-
-				// 获取平铺内的UV
-				float ru = clamp(mod(u, 1.0) * uvtiles - tu, 0.0, 1.0);
-				float rv = clamp(mod(v, 1.0) * uvtiles - tv, 0.0, 1.0);
-
-				if (flip)
-				{
-					ru = 1.0 - ru;
-				}
-
-				float oru = ru;
-				float orv = rv;
-
-				// 旋转UV
-				if (rotation == 1)
-				{
-					oru = 1.0 - rv;
-					orv = ru;
-				}
-				else if (rotation == 2)
-				{
-					oru = 1.0 - ru;
-					orv = 1.0 - rv;
-				}
-				else if (rotation == 3)
-				{
-					oru = rv;
-					orv = 1.0 - ru;
-				}
-
-				// 获取图标UV
-				float umin = cosmicuvs[symbol][0][0];
-				float umax = cosmicuvs[symbol][1][0];
-				float vmin = cosmicuvs[symbol][0][1];
-				float vmax = cosmicuvs[symbol][1][1];
-
-				cosmictex.x = umin * (1.0 - oru) + umax * oru;
-				cosmictex.y = vmin * (1.0 - orv) + vmax * orv;
-
-				tcol = texture(Sampler0, cosmictex);
-
-				// 计算透明度
-				float a = tcol.r * (0.8 + (1.0 / mult) * 1.0) * (1.0 - smoothstep(0.1, 0.4, abs(rawv - 0.5)));
-
-				// 每颗星星独特的脉动节奏
-				float starPulse = mod(time * 0.3 + rand3 * 0.1, 1.0);
-
-				// 根据星星大小调整渐变强度
-				float starSizeFactor = clamp(1.0 / (mult * 0.15), 0.3, 1.0);
-
-				// 应用渐变 (传入useType)
-				vec3 starColor = starGradient(starSizeFactor, starPulse, useType);
-
-				// 添加叠加效果 - 增强发光效果
-				col.rgb = mix(col.rgb, starColor, a * 0.9);
-				col.rgb += starColor * a * 0.8;// 增加发光强度
-			}
-		}
-
-		// 应用光照
-		vec3 shade = vertexColor.rgb * lightmix + vec3(1.0 - lightmix);
-		col.rgb *= shade;
-
-		// 应用遮罩和透明度
-		col.a *= mask.r * opacity;
-		col = clamp(col, 0.0, 1.0);
-
-		// 最终输出（带雾效）
-		fragColor = linear_fog(col, vertexDistance, FogStart, FogEnd, FogColor);
-	}
+    vec4 mask = texture(Sampler0, texCoord0.xy);
+    float oneOverExternalScale = 1.0 / externalScale;
+    int uvtiles = 16;
+
+    vec4 col = vec4(0.1, 0.0, 0.3, 1.0);
+    float pulse = mod(time, 400) / 400.0;
+    col.g = sin(pulse * M_PI * 2) * 0.075 + 0.225;
+    col.b = cos(pulse * M_PI * 2) * 0.05 + 0.3;
+
+    if (useCosmicType == 0) {
+        if (abs(cosmicColor0.w - 1.33) < 0.01) {
+        } else if (abs(cosmicColor0.w - 2.33) < 0.01) {
+            col = vec4(0.95, 0.8, 0.9, 1.0);
+        } else {
+            col.rgb = cosmicColor0.rgb;
+        }
+    }
+    else if (useCosmicType == 2) {
+        col = vec4(0.1, 0.1, 0.1, 1.0);
+    }
+    else if (useCosmicType == 3) {
+        vec3 baseColor = vec3(0.05, 0.02, 0.1);
+        vec3 glowColor = vec3(0.4, 0.1, 0.6);
+
+        float depth = 0.0;
+        float frequency = 0.0;
+
+        if (is2D != 0) {
+            vec2 screenUV = (gl_FragCoord.xy / screenSize) * 2.0 - 1.0;
+            screenUV.x *= screenSize.x / screenSize.y;
+
+            depth = length(screenUV);
+            frequency = 25.0;
+        } else {
+            depth = length(fPos);
+            frequency = 0.5;
+        }
+        col.rgb = mix(baseColor, glowColor, smoothstep(0.0, 0.5, sin(depth * frequency + time * 0.1)));
+    }
+    else if (useCosmicType == 4) {
+        vec3 nebula = vec3(0.08, 0.01, 0.15);
+        float n1, n2;
+
+        if (is2D != 0) {
+            vec2 screenUV = (gl_FragCoord.xy / screenSize) * 2.0 - 1.0;
+            screenUV.x *= screenSize.x / screenSize.y;
+
+            n1 = sin(screenUV.x * 0.3 + screenUV.y * 0.4 + time * 0.05) * 0.5 + 0.5;
+            n2 = cos(screenUV.y * 0.2 + screenUV.x * 0.3 + time * 0.03) * 0.5 + 0.5;
+        } else {
+            n1 = sin(fPos.x * 0.3 + fPos.y * 0.4 + time * 0.05) * 0.5 + 0.5;
+            n2 = cos(fPos.y * 0.2 + fPos.z * 0.3 + time * 0.03) * 0.5 + 0.5;
+        }
+
+        nebula += vec3(0.15 * n1, 0.05 * n2, 0.2 * (n1 + n2));
+        col.rgb = nebula;
+    }
+    else if (useCosmicType == 5) {
+        col = vec4(0.0, 0.0, 0.05, 1.0);
+        float stars = pow(rand(gl_FragCoord.xy), 50.0) * 0.1;
+        col.rgb += vec3(stars);
+    }
+    else if (useCosmicType == 6) {
+        col = vec4(0.0, 0.02, 0.03, 1.0);
+    }
+    else if (useCosmicType == 7) {
+        float t = time * 0.05;
+        vec3 color1 = vec3(0.2, 0.0, 0.3);
+        vec3 color2 = vec3(0.0, 0.0, 0.4);
+        vec3 color3 = vec3(0.3, 0.0, 0.2);
+        float f1 = sin(t) * 0.5 + 0.5;
+        float f2 = sin(t * 1.3 + 1.0) * 0.5 + 0.5;
+        float f3 = sin(t * 0.7 + 2.0) * 0.5 + 0.5;
+        col.rgb = (color1 * f1 + color2 * f2 + color3 * f3) / (f1 + f2 + f3);
+    }
+    else if (useCosmicType == 8) {
+        float t = time * 0.03;
+        vec3 color1 = vec3(0.7, 0.4, 0.9);
+        vec3 color2 = vec3(0.3, 0.7, 0.9);
+        vec3 color3 = vec3(0.9, 0.5, 0.8);
+        float blend1 = sin(t) * 0.5 + 0.5;
+        float blend2 = cos(t * 1.3) * 0.5 + 0.5;
+        col.rgb = mix(mix(color1, color2, blend1), color3, blend2);
+    }
+    else if (useCosmicType == 9) {
+        vec2 uv;
+
+        if (is2D != 0) {
+            vec2 screenUV = (gl_FragCoord.xy / screenSize) * 2.0 - 1.0;
+            screenUV.x *= screenSize.x / screenSize.y;
+            uv = screenUV / (length(screenUV) + 0.1);
+        } else {
+            uv = fPos.xy / (length(fPos) + 0.1);
+        }
+
+        float angle = atan(uv.y, uv.x) + time * 0.05;
+        float hue = angle / (2.0 * M_PI);
+        hue = fract(hue);
+        vec3 rainbow = 0.5 + 0.5 * cos(2.0 * M_PI * (hue + vec3(0, 2.0 / 3.0, 1.0 / 3.0)));
+        col.rgb = rainbow * 0.3;
+    }
+    else if (useCosmicType == 10) {
+        col = vec4(0.02, 0.03, 0.08, 1.0);
+
+        float aurora;
+        if (is2D != 0) {
+            vec2 screenUV = (gl_FragCoord.xy / screenSize) * 2.0 - 1.0;
+            screenUV.x *= screenSize.x / screenSize.y;
+            aurora = sin(screenUV.x * 0.2 + screenUV.y * 0.3 + time * 0.03) * 0.5 + 0.5;
+        } else {
+            aurora = sin(fPos.x * 0.2 + fPos.y * 0.3 + time * 0.03) * 0.5 + 0.5;
+        }
+
+        aurora = smoothstep(0.3, 0.7, aurora);
+        vec3 auroraColor = mix(vec3(0.1, 0.5, 0.3), vec3(0.3, 0.1, 0.6), sin(time * 0.1) * 0.5 + 0.5);
+        col.rgb += auroraColor * aurora * 0.4;
+    }
+    else if (useCosmicType == 11) {
+        col = vec4(0.02, 0.03, 0.1, 1.0);
+
+        vec2 uv;
+        float angle;
+        float radius;
+
+        if (is2D != 0) {
+            vec2 screenUV = (gl_FragCoord.xy / screenSize) * 2.0 - 1.0;
+            screenUV.x *= screenSize.x / screenSize.y;
+            uv = screenUV / (length(screenUV) + 1.5);
+        } else {
+            uv = fPos.xy / (length(fPos) + 0.1);
+        }
+
+        angle = atan(uv.y, uv.x);
+        radius = length(uv) * 2.0;
+
+        float rotation = time * 0.05;
+        angle += rotation + radius * 3.0;
+
+        float spiral = sin(angle * 8.0 + radius * 20.0) * 0.5 + 0.5;
+        spiral = smoothstep(0.4, 0.6, spiral);
+
+        vec3 innerColor = vec3(0.8, 0.5, 1.0);
+        vec3 outerColor = vec3(0.2, 0.4, 1.0);
+        vec3 spiralColor = mix(innerColor, outerColor, radius);
+
+        float glow = exp(-radius * 5.0) * 0.7;
+
+        col.rgb += spiralColor * spiral * 0.6;
+        col.rgb += vec3(0.8, 0.9, 1.0) * glow;
+    }
+    else if (useCosmicType == 12) {
+        col = vec4(0.0, 0.0, 0.02, 1.0);
+
+        vec2 uv;
+        if (is2D != 0) {
+            vec2 screenUV = (gl_FragCoord.xy / screenSize) * 2.0 - 1.0;
+            screenUV.x *= screenSize.x / screenSize.y;
+            uv = screenUV / (length(screenUV) + 0.5);
+        } else {
+            uv = fPos.xy / (length(fPos) + 0.5);
+        }
+
+        float aurora1 = sin(uv.x * 3.0 + uv.y * 2.0 + time * 0.1);
+        aurora1 = smoothstep(0.3, 0.8, aurora1) * 0.4;
+        vec3 color1 = vec3(0.3, 0.8, 0.5);
+
+        float aurora2 = cos(uv.x * 2.5 - uv.y * 1.7 + time * 0.15);
+        aurora2 = smoothstep(0.2, 0.7, aurora2) * 0.3;
+        vec3 color2 = vec3(0.7, 0.3, 0.9);
+
+        float aurora3 = sin(uv.x * 4.0 - uv.y * 3.0 + time * 0.2);
+        aurora3 = smoothstep(0.4, 0.9, aurora3) * 0.25;
+        vec3 color3 = vec3(0.2, 0.5, 0.9);
+
+        col.rgb += color1 * aurora1;
+        col.rgb += color2 * aurora2;
+        col.rgb += color3 * aurora3;
+
+        float stars = pow(rand(gl_FragCoord.xy), 100.0) * 0.2;
+        col.rgb += vec3(1.0, 1.0, 1.0) * stars;
+    }
+    else if (useCosmicType == 13) {
+        float t = time * 0.02;
+        vec3 color1 = vec3(0.12, 0.02, 0.18);
+        vec3 color2 = vec3(0.18, 0.01, 0.12);
+        vec3 color3 = vec3(0.10, 0.00, 0.15);
+
+        float blend1 = sin(t) * 0.5 + 0.5;
+        float blend2 = cos(t * 1.7) * 0.5 + 0.5;
+
+        vec3 bg1 = mix(color1, color2, blend1);
+        vec3 bg2 = mix(bg1, color3, blend2);
+
+        float nebula1, nebula2;
+        if (is2D != 0) {
+            vec2 screenUV = (gl_FragCoord.xy / screenSize) * 2.0 - 1.0;
+            screenUV.x *= screenSize.x / screenSize.y;
+
+            nebula1 = sin(screenUV.x * 0.2 + screenUV.y * 0.3 + t * 2.0) * 0.5 + 0.5;
+            nebula2 = cos(screenUV.y * 0.25 + screenUV.x * 0.15 + t * 1.5) * 0.5 + 0.5;
+        } else {
+            nebula1 = sin(fPos.x * 0.2 + fPos.y * 0.3 + t * 2.0) * 0.5 + 0.5;
+            nebula2 = cos(fPos.y * 0.25 + fPos.z * 0.15 + t * 1.5) * 0.5 + 0.5;
+        }
+
+        vec3 nebulaColor = mix(vec3(0.25, 0.05, 0.35), vec3(0.35, 0.03, 0.25), nebula1);
+        float nebulaIntensity = nebula1 * nebula2 * 0.15;
+
+        col.rgb = bg2 + nebulaColor * nebulaIntensity;
+
+        float starsBg = pow(rand(gl_FragCoord.xy * 0.7), 80.0) * 0.08;
+        col.rgb += vec3(0.7, 0.3, 0.8) * starsBg;
+    }
+    else if (useCosmicType == 14) {
+        col = vec4(0.08, 0.0, 0.0, 1.0);
+
+        vec4 rotatedPos = normalize(vec4(-fPos, 0.0));
+        float sb = sin(pitch);
+        float cb = cos(pitch);
+        rotatedPos = normalize(vec4(rotatedPos.x, rotatedPos.y * cb - rotatedPos.z * sb, rotatedPos.y * sb + rotatedPos.z * cb, 0.0));
+        float sa = sin(-yaw);
+        float ca = cos(-yaw);
+        rotatedPos = normalize(vec4(rotatedPos.z * sa + rotatedPos.x * ca, rotatedPos.y, rotatedPos.z * ca - rotatedPos.x * sa, 0.0));
+
+        vec2 screenCoord = gl_FragCoord.xy;
+
+        // 星系效果：红色调
+        vec3 galaxyEffect = galaxy(screenCoord, 0.03, 0.5, screenSize, time) / 4.0 + galaxy(screenCoord, 0.01, 3.0, screenSize, time);
+
+        float rotationInfluence = sin(time * 0.1 + rotatedPos.x * 2.0) * 0.5 + 0.5;
+        galaxyEffect *= (0.8 + rotationInfluence * 0.4);
+
+        galaxyEffect.gb *= 0.3;
+        galaxyEffect.r *= 1.2;
+        galaxyEffect = pow(galaxyEffect, vec3(1.8));
+
+        col.rgb += galaxyEffect;
+
+        // 红雾效果
+        vec2 uv = fPos.xy / (length(fPos) + 0.5);
+        float nebula = sin(uv.x * 2.0 + uv.y * 3.0 + time * 0.05) * 0.5 + 0.5;
+        nebula = smoothstep(0.3, 0.7, nebula) * 0.18;
+
+        // 红色调
+        vec3 nebulaColor = mix(
+            vec3(0.3, 0.0, 0.0),
+            vec3(1.2, 0.0, 0.0),
+            sin(time * 0.1) * 0.5 + 0.5
+        );
+
+        col.rgb = vec3(col.r * 1.2, col.g * 0.3, col.b * 0.2);
+    }
+    else if (useCosmicType == 15) {
+        // Cloud Raymarch 效果
+        vec4 cloudResult = cloudRaymarch(gl_FragCoord.xy, screenSize, time * 0.5, yaw, pitch);
+        col = cloudResult;
+    }
+
+    if (useCosmicType == 1 && abs(cosmicColor0.w - 1.33) < 0.01) {
+        float hue;
+
+        if (is2D != 0) {
+            vec2 screenUV = (gl_FragCoord.xy / screenSize) * 2.0 - 1.0;
+            screenUV.x *= screenSize.x / screenSize.y;
+
+            hue = (time * 0.05 + screenUV.x * 5.0 * 0.1 + screenUV.y * 5.0 * 0.1) * 0.5;
+        } else {
+            hue = (time * 0.05 + fPos.x * 0.1 + fPos.y * 0.1) * 0.5;
+        }
+
+        hue = fract(hue);
+        vec3 rainbow = 0.5 + 0.5 * cos(2.0 * M_PI * (hue + vec3(0, 2.0 / 3.0, 1.0 / 3.0)));
+        col.rgb = mix(vec3(1.0), rainbow, 0.6);
+    } else if (useCosmicType == 1) {
+        col.rgb = cosmicColor0.rgb;
+    }
+
+    if (useCosmicType != 14) {
+        vec4 dir = normalize(vec4(-fPos, 0.0));
+        float sb = sin(pitch);
+        float cb = cos(pitch);
+        dir = normalize(vec4(dir.x, dir.y * cb - dir.z * sb, dir.y * sb + dir.z * cb, 0.0));
+        float sa = sin(-yaw);
+        float ca = cos(-yaw);
+        dir = normalize(vec4(dir.z * sa + dir.x * ca, dir.y, dir.z * ca - dir.x * sa, 0.0));
+        vec4 ray;
+
+        for (int i = 0; i < 16; i++) {
+            int mult = 16 - i;
+            int j = i + 7;
+            float rand1 = (j * j * 4321.0 + j * 8.0) * 2.0;
+            int k = j + 1;
+            float rand2 = (k * k * k * 239.0 + k * 37.0) * 3.6;
+            float rand3 = rand1 * 347.4 + rand2 * 63.4;
+            vec3 axis = normalize(vec3(sin(rand1), sin(rand2), cos(rand3)));
+            ray = dir * rotationMatrix(axis, mod(rand3, 2.0 * M_PI));
+            float rawu = 0.5 + (atan(ray.z, ray.x) / (2.0 * M_PI));
+            float rawv = 0.5 + (asin(ray.y) / M_PI);
+            float scale = mult * 0.5 + 2.75;
+            float u = rawu * scale * externalScale;
+            float v = (rawv + time * 0.0002 * oneOverExternalScale) * scale * 0.6 * externalScale;
+
+            float pulseFactor = 1.0;
+            if (useCosmicType == 5 && fract(rand1) < 0.1) {
+                float pulsePhase = mod(time * 0.8 + rand2 * 10.0, 6.0);
+                if (pulsePhase < 1.0) {
+                    pulseFactor = 1.0;
+                } else if (pulsePhase < 2.0) {
+                    float intensity = (pulsePhase - 1.0);
+                    pulseFactor = 1.0 + intensity * 5.0;
+                } else if (pulsePhase < 3.0) {
+                    pulseFactor = 6.0;
+                } else {
+                    float intensity = 1.0 - (pulsePhase - 3.0) / 3.0;
+                    pulseFactor = 1.0 + intensity * 5.0;
+                }
+            }
+
+            if (useCosmicType == 11) {
+                continue;
+            }
+
+            if (useCosmicType == 12) {
+                continue;
+            }
+
+
+
+            if (useCosmicType == 8) {
+                continue;
+            }
+
+            float sizeFactor = 1.0;
+            if (useCosmicType == 9) {
+                sizeFactor = 1.5 + rand(vec2(rand1, rand2)) * 1.5;
+                u *= sizeFactor;
+                v *= sizeFactor;
+            }
+
+            u *= pulseFactor;
+            v *= pulseFactor;
+
+            vec2 tex = vec2(u, v);
+            int tu = int(mod(floor(u * uvtiles), uvtiles));
+            int tv = int(mod(floor(v * uvtiles), uvtiles));
+            int position = ((171 * tu) + (489 * tv) + (303 * (i + 31)) + 17209) ^ 10086;
+            int symbol = int(mod(float(position), float(cosmicoutof)));
+            int rotation = int(mod(pow(float(tu), float(tv)) + float(tu) + 3.0 + float(tv * i), 8.0));
+            bool flip = false;
+            if (rotation >= 4) {
+                rotation -= 4;
+                flip = true;
+            }
+
+            if (symbol >= 0 && symbol < cosmiccount) {
+                vec2 cosmictex;
+                vec4 tcol;
+                float ru = clamp(mod(u, 1.0) * uvtiles - tu, 0.0, 1.0);
+                float rv = clamp(mod(v, 1.0) * uvtiles - tv, 0.0, 1.0);
+
+                if (useCosmicType == 7) {
+                    float distort = sin(time * 0.5 + ru * 5.0) * 0.05;
+                    ru += distort;
+                    rv += cos(time * 0.4 + rv * 4.0) * 0.05;
+                }
+
+                if (flip) {
+                    ru = 1.0 - ru;
+                }
+
+                float oru = ru;
+                float orv = rv;
+
+                if (rotation == 1) {
+                    oru = 1.0 - rv;
+                    orv = ru;
+                } else if (rotation == 2) {
+                    oru = 1.0 - ru;
+                    orv = 1.0 - rv;
+                } else if (rotation == 3) {
+                    oru = rv;
+                    orv = 1.0 - ru;
+                }
+
+                float umin = cosmicuvs[symbol][0][0];
+                float umax = cosmicuvs[symbol][1][0];
+                float vmin = cosmicuvs[symbol][0][1];
+                float vmax = cosmicuvs[symbol][1][1];
+                cosmictex.x = umin * (1.0 - oru) + umax * oru;
+                cosmictex.y = vmin * (1.0 - orv) + vmax * orv;
+                tcol = texture(Sampler0, cosmictex);
+                float a = tcol.r * (0.5 + (1.0 / mult) * 1.0) * (1.0 - smoothstep(0.15, 0.48, abs(rawv - 0.5)));
+
+                vec3 starColor = vec3(0.0);
+
+                if (useCosmicType == 0 && abs(cosmicColor0.w - 2.33) < 0.01) {
+                    float choice = mod(rand1, 3.0);
+                    if (choice < 1.0) {
+                        starColor = vec3(1.0, 0.7, 0.8);
+                    } else if (choice < 2.0) {
+                        starColor = vec3(0.9, 0.7, 1.0);
+                    } else {
+                        starColor = vec3(1.0, 0.8, 0.9);
+                    }
+                    starColor = mix(starColor, vec3(1.0), 0.3);
+                }
+                else if (useCosmicType == 1 || useCosmicType == 15) {
+                    float hue = (time * 0.2 + rawu * 3.0 + float(i) * 0.3) * 0.3;
+                    hue = fract(hue);
+                    vec3 rainbow = 0.5 + 0.5 * cos(2.0 * M_PI * (hue + vec3(0, 2.0 / 3.0, 1.0 / 3.0)));
+                    starColor = mix(vec3(1.0), rainbow, 0.6);
+                }
+                else if (useCosmicType == 2) {
+                    if (fract(rand2 * 0.4) < 0.2) {
+                        starColor = vec3(fract(rand1 * 0.7), fract(rand2 * 0.7), fract(rand3 * 0.7));
+                    } else {
+                        float gray = dot(tcol.rgb, vec3(0.299, 0.587, 0.114));
+                        starColor = vec3(gray);
+                    }
+                }
+                else if (useCosmicType == 3) {
+                    float hue = (time * 0.3 + rawu * 5.0 + float(i) * 0.5) * 0.15;
+                    hue = fract(hue);
+                    vec3 crystal = 0.7 + 0.3 * cos(2.0 * M_PI * (hue + vec3(0, 1.0 / 3.0, 2.0 / 3.0)));
+
+                    float blink = sin(time * 3.0 + rand1 * 10.0) * 0.3 + 0.7;
+                    starColor = crystal * blink;
+
+                    float glow = smoothstep(0.8, 1.0, tcol.r) * 0.5;
+                    starColor += vec3(0.8, 0.9, 1.0) * glow;
+                }
+                else if (useCosmicType == 4) {
+                    vec3 baseColor = vec3(0.7, 0.8, 1.0);
+                    vec3 nebulaColor = vec3(0.9, 0.4, 0.9);
+
+                    float colorShift = sin(time * 0.5 + rawu * 10.0) * 0.5 + 0.5;
+                    starColor = mix(baseColor, nebulaColor, colorShift);
+
+                    float trail = smoothstep(0.3, 1.0, tcol.r);
+                    starColor *= trail * 1.5;
+                }
+                else if (useCosmicType == 5) {
+                    if (fract(rand1) < 0.1) {
+                        float pulsePhase = mod(time * 0.8 + rand2 * 10.0, 6.0);
+                        if (pulsePhase < 2.0) {
+                            float intensity = clamp((pulsePhase - 1.0), 0.0, 1.0);
+                            starColor = mix(vec3(0.4, 0.6, 1.0), vec3(1.0), intensity);
+                        } else if (pulsePhase < 3.0) {
+                            starColor = vec3(1.0);
+                        } else {
+                            float intensity = clamp((pulsePhase - 3.0) / 3.0, 0.0, 1.0);
+                            starColor = mix(vec3(1.0), vec3(0.4, 0.6, 1.0), intensity);
+                        }
+                    } else {
+                        starColor = vec3(0.4, 0.6, 1.0);
+                    }
+                }
+                else if (useCosmicType == 6) {
+                    float hue = (time * 0.2 + rawu * 3.0 + float(i) * 0.3) * 0.3;
+                    hue = fract(hue);
+                    vec3 rainbow = 0.5 + 0.5 * cos(2.0 * M_PI * (hue + vec3(0, 2.0 / 3.0, 1.0 / 3.0)));
+                    starColor = mix(vec3(1.0), rainbow, 0.6);
+                }
+                else if (useCosmicType == 7) {
+                    float choice = mod(rand1, 6.0);
+                    if (choice < 1.0) starColor = vec3(1.0, 0.5, 0.8);
+                    else if (choice < 2.0) starColor = vec3(0.5, 1.0, 0.8);
+                    else if (choice < 3.0) starColor = vec3(1.0, 1.0, 0.5);
+                    else if (choice < 4.0) starColor = vec3(0.8, 0.5, 1.0);
+                    else if (choice < 5.0) starColor = vec3(1.0, 0.8, 0.5);
+                    else starColor = vec3(0.5, 0.8, 1.0); // 蓝色
+
+                    // 添加光晕效果
+                    float glow = smoothstep(0.7, 1.0, tcol.r) * 0.7;
+                    starColor += vec3(1.0, 1.0, 1.0) * glow;
+                }
+                else if (useCosmicType == 13) {
+                    vec3 color1 = vec3(0.95, 0.25, 0.85);
+                    vec3 color2 = vec3(0.85, 0.35, 0.95);
+
+                    // 随机选择主色调
+                    float choice = fract(rand1 * 0.3);
+                    if (choice < 0.6) {
+                        starColor = color1;
+                    } else {
+                        starColor = color2;
+                    }
+
+                    starColor = min(starColor * 1.15, 1.0);
+
+                    float hueShift = sin(time * 0.5 + float(i) * 0.2) * 0.1;
+                    if (choice < 0.3) {
+                        starColor.r += hueShift * 0.2;
+                    } else if (choice < 0.6) {
+                        starColor.b += hueShift * 0.2;
+                    } else {
+                        starColor.g += hueShift * 0.1;
+                    }
+
+                    float blink = sin(time * 2.0 + rand1 * 10.0) * 0.1 + 0.9;
+                    starColor *= blink;
+
+                    float glow = smoothstep(0.7, 1.0, tcol.r) * 0.4;
+                    starColor += vec3(1.0, 0.8, 1.0) * glow;
+                }
+                else {
+                    starColor = vec3(
+                    fract(rand1 * 0.3) * 0.3 + 0.4,
+                    fract(rand2 * 0.4) * 0.4 + 0.6,
+                    fract(rand1 * 0.3) * 0.3 + 0.7
+                    );
+                }
+
+                col += vec4(starColor, 1.0) * a;
+            }
+        }
+    }
+
+    if (useCosmicType == 2) {
+        float noise = rand(gl_FragCoord.xy + time);
+        col.rgb += (noise - 0.5) * 0.1;
+    }
+
+    if (useCosmicType == 3) {
+        vec2 refOffset;
+
+        if (is2D != 0) {
+            vec2 screenUV = (gl_FragCoord.xy / screenSize) * 2.0 - 1.0;
+            screenUV.x *= screenSize.x / screenSize.y;
+
+            refOffset = vec2(
+                sin(screenUV.x * 25.0 + time * 0.2) * 0.01,
+                cos(screenUV.y * 25.0 + time * 0.15) * 0.01
+            );
+        } else {
+            refOffset = vec2(
+                sin(fPos.x * 0.5 + time * 0.2) * 0.01,
+                cos(fPos.y * 0.5 + time * 0.15) * 0.01
+            );
+        }
+
+        col.rgb = texture(Sampler0, texCoord0 + refOffset).rgb * 0.1 + col.rgb * 0.9;
+
+        float glow = sin(time * 0.5) * 0.1 + 0.15;
+        col.rgb += vec3(0.7, 0.8, 1.0) * glow * (1.0 - mask.r);
+    }
+
+    if (useCosmicType == 4) {
+        vec2 coord = gl_FragCoord.xy * 0.5;
+        float dust = rand(coord + time * 0.1);
+        dust = smoothstep(0.95, 1.0, dust) * 0.3;
+        col.rgb += vec3(0.8, 0.9, 1.0) * dust;
+
+        float flow;
+        if (is2D != 0) {
+            vec2 screenUV = (gl_FragCoord.xy / screenSize) * 2.0 - 1.0;
+            screenUV.x *= screenSize.x / screenSize.y;
+
+            flow = sin(screenUV.x * 0.1 + screenUV.y * 0.15 + time * 0.05) * 0.1;
+        } else {
+            flow = sin(fPos.x * 0.1 + fPos.y * 0.15 + time * 0.05) * 0.1;
+        }
+        col.rgb += vec3(0.4, 0.1, 0.5) * flow * (1.0 - mask.r);
+    }
+
+    if (useCosmicType == 7) {
+        vec2 uv;
+
+        if (is2D != 0) {
+            vec2 screenUV = (gl_FragCoord.xy / screenSize) * 2.0 - 1.0;
+            screenUV.x *= screenSize.x / screenSize.y;
+            uv = screenUV / (1.0 + length(screenUV) * 2.0) * 2.5;
+        } else {
+            uv = fPos.xy / length(fPos);
+        }
+
+        float band = sin(uv.x * 10.0 + time * 0.5) * 0.5 + 0.5;
+        band = smoothstep(0.4, 0.6, band) * 0.3;
+
+        vec3 bandColor = mix(vec3(1.0, 0.5, 0.8), vec3(0.5, 1.0, 0.8), sin(time * 0.3) * 0.5 + 0.5);
+        col.rgb += bandColor * band;
+
+        float sparkle = pow(rand(gl_FragCoord.xy + time), 100.0) * 2.0;
+        col.rgb += vec3(1.0, 1.0, 0.8) * sparkle;
+    }
+
+    if (useCosmicType == 8) {
+        vec2 uv;
+        float frequencyScale = 1.0;
+
+        if (is2D != 0) {
+            vec2 screenUV = (gl_FragCoord.xy / screenSize) * 2.0 - 1.0;
+            screenUV.x *= screenSize.x / screenSize.y;
+            uv = screenUV / (length(screenUV) + 0.5);
+            frequencyScale = 5.0;
+        } else {
+            uv = fPos.xy / (length(fPos) + 0.5);
+            frequencyScale = 1.0;
+        }
+
+        float bubble1 = sin(uv.x * 4.0 * frequencyScale + time * 0.2) *
+        cos(uv.y * 3.0 * frequencyScale + time * 0.15);
+        bubble1 = smoothstep(0.7, 0.9, bubble1);
+
+        float bubble2 = cos(uv.x * 5.0 * frequencyScale - time * 0.18)
+         * sin(uv.y * 4.0 * frequencyScale + time * 0.12);
+        bubble2 = smoothstep(0.6, 0.8, bubble2);
+
+        float bubble3 = sin(uv.x * 6.0 * frequencyScale + time * 0.25)
+        * cos(uv.y * 5.0 * frequencyScale - time * 0.22);
+        bubble3 = smoothstep(0.8, 0.95, bubble3);
+
+        vec3 bubbleColor1 = vec3(1.0, 0.8, 0.9);  // 粉红
+        vec3 bubbleColor2 = vec3(0.8, 0.9, 1.0);  // 淡蓝
+        vec3 bubbleColor3 = vec3(0.9, 1.0, 0.8);  // 淡绿
+
+        col.rgb += bubbleColor1 * bubble1 * 0.5;
+        col.rgb += bubbleColor2 * bubble2 * 0.4;
+        col.rgb += bubbleColor3 * bubble3 * 0.6;
+
+        float glow = sin(time * 2.0) * 0.1 + 0.2;
+        col.rgb += vec3(1.0, 1.0, 1.0) * glow * (bubble1 + bubble2 + bubble3) * 0.3;
+    }
+
+    if (useCosmicType == 10) {
+        vec2 uv;
+        vec2 screenUV;
+
+        if (is2D != 0) {
+            screenUV = (gl_FragCoord.xy / screenSize) * 2.0 - 1.0;
+            screenUV.x *= screenSize.x / screenSize.y;
+            uv = screenUV / (length(screenUV) + 0.5);
+        } else {
+            uv = fPos.xy / (length(fPos) + 0.5);
+        }
+
+        float aurora = sin(uv.x * 3.0 + uv.y * 5.0 + time * 0.1) * 0.5 + 0.5;
+        aurora = smoothstep(0.3, 0.7, aurora);
+        vec3 auroraColor = mix(vec3(0.2, 0.8, 0.5), vec3(0.6, 0.3, 0.9), sin(time * 0.2) * 0.5 + 0.5);
+        col.rgb += auroraColor * aurora * 0.3;
+
+        float trails;
+        if (is2D != 0) {
+            trails = sin(screenUV.x * 10.0 + time * 0.2) * 0.5 + 0.5;
+        } else {
+            trails = sin(fPos.z * 10.0 + time * 0.2) * 0.5 + 0.5;
+        }
+        col.rgb += vec3(0.8, 0.9, 1.0) * trails * 0.1;
+    }
+
+    if (useCosmicType == 11) {
+        vec2 uv;
+        float angle;
+        float radius;
+
+        if (is2D != 0) {
+            vec2 screenUV = (gl_FragCoord.xy / screenSize) * 2.0 - 1.0;
+            screenUV.x *= screenSize.x / screenSize.y;
+            uv = screenUV / (length(screenUV) + 1.5);
+        } else {
+            uv = fPos.xy / (length(fPos) + 0.1);
+        }
+
+        radius = length(uv) * 2.0;
+        float glow = exp(-radius * 8.0) * 0.8;
+
+        angle = atan(uv.y, uv.x) + time * 0.1;
+        float halo = sin(angle * 12.0) * 0.5 + 0.5;
+        halo = smoothstep(0.4, 0.6, halo) * glow * 0.5;
+
+        vec3 haloColor = mix(vec3(0.9, 0.7, 1.0), vec3(0.4, 0.6, 1.0), radius);
+
+        col.rgb += haloColor * halo;
+    }
+
+    if (useCosmicType == 12) {
+        vec2 uv;
+        if (is2D != 0) {
+            vec2 screenUV = (gl_FragCoord.xy / screenSize) * 2.0 - 1.0;
+            screenUV.x *= screenSize.x / screenSize.y;
+            uv = screenUV / (length(screenUV) + 0.5);
+        } else {
+            uv = fPos.xy / (length(fPos) + 0.5);
+        }
+
+        float glow = sin(uv.x * 0.5 + uv.y * 0.7 + time * 0.1) * 0.5 + 0.5;
+        glow = smoothstep(0.2, 0.8, glow) * 0.1;
+        col.rgb += vec3(0.3, 0.6, 0.8) * glow;
+
+        float band = cos(uv.x * 8.0 + time * 0.15) * 0.5 + 0.5;
+        band = smoothstep(0.4, 0.6, band) * 0.2;
+        col.rgb += vec3(0.7, 0.3, 0.9) * band;
+    }
+
+    if (useCosmicType == 13) {
+        vec2 coord = gl_FragCoord.xy * 0.3;
+        float dust = pow(rand(coord + time * 0.05), 60.0) * 0.15;
+        vec3 dustColor = mix(vec3(0.9, 0.4, 0.8), vec3(0.7, 0.3, 0.9), sin(time * 0.1) * 0.5 + 0.5);
+        col.rgb += dustColor * dust;
+
+        vec2 uv;
+        if (is2D != 0) {
+            vec2 screenUV = (gl_FragCoord.xy / screenSize) * 2.0 - 1.0;
+            screenUV.x *= screenSize.x / screenSize.y;
+            uv = screenUV / (length(screenUV) + 0.5);
+        } else {
+            uv = fPos.xy / (length(fPos) + 0.5);
+        }
+
+        float band = sin(uv.x * 5.0 + time * 0.1) * 0.5 + 0.5;
+        band = smoothstep(0.4, 0.7, band) * 0.15;
+        vec3 bandColor = mix(vec3(0.8, 0.2, 0.6), vec3(0.6, 0.1, 0.7), abs(sin(time * 0.2)));
+        col.rgb += bandColor * band;
+    }
+
+    col.rgb *= lightmix;
+    col.a *= mask.r * opacity;
+    col = clamp(col, 0.0, 1.0);
+    fragColor = linear_fog(col * 1.25, vertexDistance, FogStart, FogEnd, FogColor);
 }
-

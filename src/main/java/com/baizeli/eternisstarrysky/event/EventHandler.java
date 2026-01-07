@@ -1,10 +1,11 @@
 package com.baizeli.eternisstarrysky.event;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
-import com.baizeli.eternisstarrysky.Items.CelestialSourceSpellBook;
-import com.baizeli.eternisstarrysky.Items.ModItems;
+import com.baizeli.eternisstarrysky.Items.*;
 import com.baizeli.eternisstarrysky.Items.Staff.CelestialSourceStaff;
+import com.baizeli.eternisstarrysky.Items.Staff.ChaosStaff;
 import com.baizeli.eternisstarrysky.Items.armor.CelestialSourceSpellArmor;
+import com.baizeli.eternisstarrysky.Items.armor.ChaosSpellArmor;
 import com.baizeli.eternisstarrysky.client.WireBoxRenderer;
 import com.baizeli.eternisstarrysky.cora.utils.EventUtil;
 import com.baizeli.eternisstarrysky.network.DeadListSyncPacket;
@@ -12,6 +13,7 @@ import com.baizeli.eternisstarrysky.network.WireBoxSyncPacket;
 import com.baizeli.eternisstarrysky.save.SaveManager;
 import com.google.common.collect.Iterables;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.Item;
@@ -27,13 +29,12 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.network.PacketDistributor;
 
 import java.util.*;
+import java.util.List;
 
 import static com.baizeli.eternisstarrysky.EternisStarrySky.CHANNEL;
 
 @Mod.EventBusSubscriber(modid = EternisStarrySky.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class EventHandler {
-    public static Map<UUID, Long> affectedEntities = new HashMap<>();
-
     @SubscribeEvent
     public static void onLivingHeal(LivingHealEvent event) {
         if (WireBoxRenderer.entitiesForRenderWireBoxRenderer.containsKey(event.getEntity().getUUID())) {
@@ -99,8 +100,12 @@ public class EventHandler {
                     item instanceof CelestialSourceStaff ||
                     item instanceof CelestialSourceSpellBook ||
                     item instanceof ModItems.CelestialSourceBaseItem) {
+                ClientLevel clientLevel = Minecraft.instance.level;
                 // 每 150 ticks
-                long gameTime = Minecraft.instance.level.levelData.getGameTime();
+                long gameTime = 0;
+                if (clientLevel != null) {
+                    gameTime = clientLevel.levelData.getGameTime();
+                }
                 float hue = (gameTime % 150) / 150.0f; // 色相：0.0 → 1.0
 
                 // 边框起始颜色
@@ -113,6 +118,12 @@ public class EventHandler {
 
                 event.setBackgroundStart(0xF0000000); // 半透明黑背景
                 event.setBackgroundEnd(0xF0000000);
+            } else if (item instanceof ChaosSpellArmor ||
+                    item instanceof ChaosStaff ||
+                    item instanceof ChaosSpellBook ||
+                    item instanceof ModItems.ChaosBaseItem) {
+                event.setBorderStart(0xFFFF0000); // 红色
+                event.setBorderEnd(0xFFFF0000);
             }
         } catch (NullPointerException ignored) {}
     }

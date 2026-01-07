@@ -83,8 +83,6 @@ public class FateWedgeUtil {
             targetToCasterMap.remove(target);
         }
 
-        if (initialHealthMap.containsKey(deadEntity)) {
-            initialHealthMap.remove(deadEntity);
-        }
+        initialHealthMap.remove(deadEntity);
     }
 }
