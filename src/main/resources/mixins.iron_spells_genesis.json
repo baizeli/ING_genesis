@@ -4,23 +4,23 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "iron_spells_genesis.refmap.json",
   "mixins": [
+    "ironsspellbooks.gui.arcane_anvil.ArcaneAnvilMenuMixin",
+    "jei.library.gui.recipes.RecipeLayoutMixin",
+    "minecraft.world.effect.MobEffectMixin",
     "minecraft.world.entity.EntityMixin",
-    "minecraft.world.food.FoodDataMixin",
     "minecraft.world.entity.LivingEntityAccessor",
     "minecraft.world.entity.LivingEntityMixin",
-    "minecraft.world.effect.MobEffectMixin",
-    "minecraft.world.player.PlayerMixin",
-    "jei.library.gui.recipes.RecipeLayoutMixin",
-    "ironsspellbooks.gui.arcane_anvil.ArcaneAnvilMenuMixin"
+    "minecraft.world.food.FoodDataMixin"
   ],
   "client": [
-    "minecraft.client.renderer.ItemInHandRendererMixin",
-    "minecraft.client.renderer.entity.ItemRendererMixin",
+    "InscriptionTableScreenMixin",
+    "MixinSpellTargetingLayer",
+    "minecraft.client.renderer.FogRendererMixin",
     "minecraft.client.renderer.GameRendererAccessor",
     "minecraft.client.renderer.GameRendererMixin",
-    "minecraft.client.renderer.FogRendererMixin",
-    "InscriptionTableScreenMixin",
-    "MixinSpellTargetingLayer"
+    "minecraft.client.renderer.GuiGraphicsMixin",
+    "minecraft.client.renderer.ItemInHandRendererMixin",
+    "minecraft.client.renderer.entity.ItemRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1

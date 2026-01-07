@@ -133,9 +133,7 @@ public class Configuration
 
 		// Eternis Apple
 		List<ConfigEffect> defaultEffects = List.of(
-			new ConfigEffect("minecraft:regeneration", 600, 9),
-			new ConfigEffect("minecraft:resistance", 600, 3),
-			new ConfigEffect("minecraft:absorption", 600, 9)
+			new ConfigEffect("minecraft:resistance", 600, 1)
 		);
 		DEFAULT_ETERNIS_APPLE_EFFECTS = ImmutableList.copyOf(defaultEffects);
 		ETERNIS_APPLE_EFFECTS = new AtomicReference<>(DEFAULT_ETERNIS_APPLE_EFFECTS);

@@ -53,7 +53,6 @@ public class Spells {
         BLOOD_CONTROL_SPELL = registerSpell(new BloodControlSpell());
         BLOOD_FRENZY_SPELL = registerSpell(new BloodFrenzySpell());
         CONFUSION_SPELL = registerSpell(new ConfusionSpell());
-        FINAL_WHISPER_SPELL = registerSpell(new FinalWhisper());
 
         // 星源法术卷轴
         I_FLY_SPELL = registerSpell(new IFlySpell());
@@ -68,6 +67,7 @@ public class Spells {
         GLAZED_FLOWER_RAIN_SPELL = registerSpell(new GlazedFlowerRainSpell());
         DEAD_STAR_DECREE_SPELL = registerSpell(new DeadStarDecreeSpell());
         SUMMON_PIG_SWARM_SPELL = registerSpell(new SummonPigSwarmSpell());
+        FINAL_WHISPER_SPELL = registerSpell(new FinalWhisper());
         NYAN_CAT_JET_SPELL = registerSpell(new NyanCatJetSpell());
     }
 

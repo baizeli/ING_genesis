@@ -21,6 +21,7 @@
         { "name": "ModelViewMat", "type": "matrix4x4", "count": 16, "values": [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ] },
         { "name": "ProjMat", "type": "matrix4x4", "count": 16, "values": [ 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0 ] },
         { "name": "ColorModulator", "type": "vec4", "count": 4, "values": [ 1.0, 1.0, 1.0, 1.0 ] },
+        { "name": "cosmicColor0", "type": "vec4", "count": 4, "values": [ 0.75, 0.75, 1.0, 1.0 ] },
         { "name": "FogStart", "type": "float", "count": 1, "values": [ 0.0 ] },
         { "name": "FogEnd", "type": "float", "count": 1, "values": [ 1.0 ] },
         { "name": "FogColor", "type": "vec4", "count": 4, "values": [ 0.0, 0.0, 0.0, 0.0 ] },
@@ -30,8 +31,9 @@
         { "name": "pitch", "type": "float", "count": 1, "values": [ 0.0 ] },
         { "name": "externalScale", "type": "float", "count": 1, "values": [ 0.0 ] },
         { "name": "opacity", "type": "float", "count": 1, "values": [ 0.0 ] },
+        { "name": "useCosmicType", "type": "int", "count": 1, "values": [ 0 ] },
         { "name": "cosmicuvs", "type": "matrix2x2", "count": 40, "values": [ 0.0 ] },
-        { "name": "useType", "type": "int", "count": 1, "values": [ 0 ] },
-        { "name": "currentTime", "type": "int", "count": 1, "values": [ 0 ] }
+        { "name": "screenSize", "type": "float", "count": 2, "values": [ 1980.0, 1080.0 ] },
+        { "name": "is2D", "type": "int", "count": 1, "values": [ 0 ] }
     ]
 }

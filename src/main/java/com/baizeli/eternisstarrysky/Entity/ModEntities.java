@@ -1,6 +1,7 @@
 package com.baizeli.eternisstarrysky.Entity;
 
-import com.baizeli.eternisstarrysky.Entity.spells.celestial_source.DeadStarDecreeComet;
+import com.baizeli.eternisstarrysky.Entity.spells.celestial_source.*;
+import com.baizeli.eternisstarrysky.Entity.spells.celestial_source.notuse.*;
 import com.baizeli.eternisstarrysky.EternisStarrySky;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -27,13 +28,6 @@ public class ModEntities {
                     .updateInterval(20)
                     .build("nyan_cat"));
 
-    public static final RegistryObject<EntityType<SwordManCsdy>> SWORD_MAN_CSDY = ENTITY_TYPES.register("sword_man_csdy",
-            () -> EntityType.Builder.of(new SwordManFactory(), MobCategory.MONSTER)
-                    .sized(0.6F, 1.8F)
-                    .clientTrackingRange(10)
-                    .updateInterval(1)
-                    .build("sword_man_csdy"));
-
     public static final RegistryObject<EntityType<MagicCircle>> MAGIC_CIRCLE = ENTITY_TYPES.register("magic_circle",
             () -> EntityType.Builder.<MagicCircle>of(MagicCircle::new, MobCategory.MISC)
                     .sized(0.5F, 0.5F)
@@ -49,13 +43,13 @@ public class ModEntities {
                     .build("sword_entity"));
 
     public static final RegistryObject<EntityType<DeadStarDecreeComet>> DEAD_STAR_DECREE_COMET = ENTITY_TYPES.register("dead_star_decree_comet",
-            () -> EntityType.Builder.<DeadStarDecreeComet>of(DeadStarDecreeComet::new, MobCategory.MISC)
+            () -> EntityType.Builder.of(DeadStarDecreeComet::new, MobCategory.MISC)
                     .sized(0.5F, 0.5F)
                     .clientTrackingRange(64)
                     .build("dead_star_decree_comet"));
 
     public static final RegistryObject<EntityType<DeadStarDecreeComet>> DEAD_STAR_DECREE_LARGE_COMET = ENTITY_TYPES.register("dead_star_decree_large_comet",
-            () -> EntityType.Builder.<DeadStarDecreeComet>of(DeadStarDecreeComet::new, MobCategory.MISC)
+            () -> EntityType.Builder.of(DeadStarDecreeComet::new, MobCategory.MISC)
                     .sized(12.0F, 12.0F)
                     .clientTrackingRange(64)
                     .build("dead_star_decree-large_comet"));

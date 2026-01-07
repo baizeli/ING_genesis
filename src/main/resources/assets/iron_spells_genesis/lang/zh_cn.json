@@ -16,10 +16,6 @@
   "spell.iron_spells_genesis.warped_barrier": "扭曲之壁垒",
   "spell.iron_spells_genesis.reverse_plague": "逆转瘟疫",
   "spell.iron_spells_genesis.amenofuwari": "天手力",
-  "spell.iron_spells_genesis.warped_blood_burst.guide": "消耗自身50%的血量，对一定范围内的生物造成伤害并附带禁疗效果",
-  "spell.iron_spells_genesis.warped_barrier.guide": "将90%的生命值转化成伤害吸收",
-  "spell.iron_spells_genesis.reverse_plague.guide": "将目标正面效果与自身负面效果进行交换，短时间禁止目标获得正面效果，阻止自身获得效果并转嫁负面效果",
-  "spell.iron_spells_genesis.warped_blood_burst.low_health": "血量不足以释放扭曲之血爆！",
   "spell.iron_spells_genesis.siphon": "汲取",
   "spell.iron_spells_genesis.blood_ritual": "祭血仪式",
   "spell.iron_spells_genesis.blood_control": "驭血",
@@ -41,7 +37,13 @@
   "spell.iron_spells_genesis.summon_pig_swarm": "老王现身",
   "spell.iron_spells_genesis.never_miss": "永不落空",
   "spell.iron_spells_genesis.final_whisper": "最后的轻语",
+
+  "spell.iron_spells_genesis.warped_blood_burst.guide": "消耗自身50%的血量，对一定范围内的生物造成伤害并附带禁疗效果",
+  "spell.iron_spells_genesis.warped_barrier.guide": "将90%的生命值转化成伤害吸收",
+  "spell.iron_spells_genesis.reverse_plague.guide": "将目标正面效果与自身负面效果进行交换，短时间禁止目标获得正面效果，阻止自身获得效果并转嫁负面效果",
   "spell.iron_spells_genesis.final_whisper.guide": "发射一支箭矢，在落地的地方对5x5范围的生物每秒造成伤害，持续5秒",
+
+  "spell.iron_spells_genesis.warped_blood_burst.low_health": "血量不足以释放扭曲之血爆！",
   "spell.iron_spells_genesis.final_whisper.low_health": "血量不足以释放最后的轻语！",
 
   "effect.iron_spells_genesis.i_fly": "我要飞",
@@ -65,6 +67,7 @@
   "item.iron_spells_genesis.broyouhuashuo": "哎呀，我怎么把锭写成袋子了",
   "item.iron_spells_genesis.purpleite_galaxy_ingot1": "汝掌心中者，永恒之力也",
   "item.iron_spells_genesis.whisper_of_the_past": "往世的飞花",
+  "item.iron_spells_genesis.avaritia_infinity_sword": "§4暮光极致者",
   "item.iron_spells_genesis.create_star": "创造之心",
   "item.iron_spells_genesis.galaxy_scroll": "星河绘卷",
   "item.iron_spells_genesis.chaos_rune": "#1混沌符文",
@@ -78,8 +81,9 @@
   "item.iron_spells_genesis.celestial_source_pearl": "#2星源珍珠",
   "item.iron_spells_genesis.celestial_source_ingot": "#2星源锭",
   "item.iron_spells_genesis.lao_wang_237": "老王237",
+  "item.iron_spells_genesis.genesis_curse": "创世之诅咒",
   "item.iron_spells_genesis.infinite_shriving_stone": "无限忏悔石",
-  
+
   "item.iron_spells_genesis.flying_swallow_through_willow": "飞燕穿柳",
   
   "item.iron_spells_genesis.divine_metal_helmet": "gold431的皇冠",
@@ -131,6 +135,10 @@
 
   "block.iron_spells_genesis.workbench": "终极工作台",
   "block.iron_spells_genesis.arcane_workbench": "奥术工作台",
+  "block.iron_spells_genesis.arcane_crystal_ore": "奥术水晶矿",
+  "block.iron_spells_genesis.deepslate_arcane_crystal_ore": "深层奥术水晶矿",
+  "block.iron_spells_genesis.nether_arcane_crystal_ore": "下界奥术水晶矿",
+  "block.iron_spells_genesis.end_arcane_crystal_ore": "末地奥术水晶矿",
 
   "container.iron_spells_genesis.vanilla_workbench": "有序终极合成",
   "container.iron_spells_genesis.arcane_workbench": "奥术合成",
@@ -138,6 +146,8 @@
   "key.categories.iron_spells_genesis": "永恒星空 - 按键绑定",
   "key.iron_spells_genesis.bow_type": "弓 - 切换箭矢类型",
 
+  "death.attack.chaos_magic": "%1$s被%2$s的混沌法术撕碎了。",
+  "death.attack.celestial_source_magic": "%1$s被%2$s的星源法术彻底湮灭。",
   "death.attack.iron_spells_genesis.warped_blood_burst" : "%1$s的全身血液因为%2$s爆炸了。",
   "death.attack.iron_spells_genesis.warped_blood_burst.item" : "%1$s的全身血液因为%2$s的%3$s爆炸了。",
   "death.attack.iron_spells_genesis.final_whisper" : "%1$s因为%2$s消散了。",
@@ -163,7 +173,7 @@
   "item.attSpeed": " §2攻击速度",
   "AIR": "",
 
-  "iron_spells_genesis.config.title": "EternisStarrySky",
+  "iron_spells_genesis.config.title": "Iron's Spells 'n Spellbooks: New genesis",
   "iron_spells_genesis.config.save": "SAVE",
   "iron_spells_genesis.config.done": "DONE",
   "iron_spells_genesis.config.reset": "Reset to default value",
@@ -173,10 +183,9 @@
   "iron_spells_genesis.config.whisper_of_the_past.damage": "Damage",
 
   "iron_spells_genesis.summoned_pig_name": "laowang237",
-  
+
   "entity.iron_spells_genesis.dead_star_decree_comet": "死星天裁-陨石",
   "entity.iron_spells_genesis.dead_star_decree_large_comet": "死星天裁-大陨石",
   "entity.iron_spells_genesis.lighting_bolt": "彩色闪电",
-  "entity.iron_spells_genesis.sword_man_csdy": "「剑人」CSDY",
   "item.iron_spells_genesis.infinity_eternal_helmet": "Purpleite Galaxy Helmet"
 }
