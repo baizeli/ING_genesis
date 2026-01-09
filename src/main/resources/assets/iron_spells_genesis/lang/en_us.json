@@ -153,6 +153,7 @@
   "death.attack.iron_spells_genesis.final_whisper" : "%1$s dissipated because of %2$s",
   "death.attack.iron_spells_genesis.final_whisper.item" : "%1$s dissipated because of %2$s's %3$s",
 
+  "ui.iron_spells_genesis.research_warning": "Hold to learn (needs a %s)",
   "ui.iron_spells_genesis.percent_force_damage": "Percent Force Damage：%d%%",
   "ui.iron_spells_genesis.force_damage": "Force Damage：%d",
   "ui.iron_spells_genesis.max_damage_bonus": "Max Damage Bonus: %d%%",
