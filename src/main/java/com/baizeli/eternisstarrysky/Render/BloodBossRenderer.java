@@ -14,7 +14,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class BloodBossRenderer extends LivingEntityRenderer<BloodBoss, PlayerModel<BloodBoss>>
 {
-	public static final ResourceLocation TEXTURE = ResourceLocation.parse("minecraft:entity/zombie/zombie.png");
+	public static final ResourceLocation TEXTURE = ResourceLocation.parse("minecraft:textures/entity/player/wide/steve.png");
 
 	public BloodBossRenderer(EntityRendererProvider.Context context)
 	{
