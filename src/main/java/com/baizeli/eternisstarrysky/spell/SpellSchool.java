@@ -51,7 +51,9 @@ public class SpellSchool {
                 SpellAttributes.CHAOS_SPELL_POWER,
                 SpellAttributes.CHAOS_MAGIC_RESIST,
                 SoundsRegister.CHAOS_CAST,
-                DamageTypes.CHAOS_MAGIC
+                DamageTypes.CHAOS_MAGIC,
+                true,
+                false
             )
         );
 
@@ -66,7 +68,9 @@ public class SpellSchool {
                 SpellAttributes.CELESTIAL_SOURCE_SPELL_POWER,
                 SpellAttributes.CELESTIAL_SOURCE_MAGIC_RESIST,
                 SoundsRegister.CELESTIAL_SOURCE_CAST, 
-                DamageTypes.CELESTIAL_SOURCE_MAGIC
+                DamageTypes.CELESTIAL_SOURCE_MAGIC,
+                true,
+                false
             )
         );
 
@@ -81,7 +85,9 @@ public class SpellSchool {
                 SpellAttributes.CULINARY_SPELL_POWER,
                 SpellAttributes.CULINARY_MAGIC_RESIST,
                 SoundsRegister.CULINARY_CAST, 
-                ISSDamageTypes.FIRE_MAGIC
+                ISSDamageTypes.FIRE_MAGIC,
+                true,
+                false
             )
         );
     }
