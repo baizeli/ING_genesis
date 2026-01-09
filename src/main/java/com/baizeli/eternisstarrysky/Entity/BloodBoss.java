@@ -1,10 +1,11 @@
 package com.baizeli.eternisstarrysky.Entity;
 
+import com.baizeli.eternisstarrysky.Util.EntityAttribute;
+import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
@@ -19,10 +20,9 @@ public class BloodBoss extends Monster
 	public BloodBoss(EntityType<? extends Monster> p_33002_, Level p_33003_)
 	{
 		super(p_33002_, p_33003_);
-		AttributeInstance maxHealthAttr = this.getAttributes().getInstance(Attributes.MAX_HEALTH);
-		if (maxHealthAttr == null)
-			throw new NullPointerException("No attribute max_health");
-		maxHealthAttr.setBaseValue(950);
+		// Modify entity attributes
+		EntityAttribute.require(this, Attributes.MAX_HEALTH).setBaseValue(950);
+		EntityAttribute.require(this, AttributeRegistry.MAX_MANA.get()).setBaseValue(14000);
 	}
 
 	@Override
