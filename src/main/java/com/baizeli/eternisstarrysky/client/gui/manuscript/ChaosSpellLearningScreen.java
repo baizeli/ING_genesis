@@ -1,0 +1,54 @@
+package com.baizeli.eternisstarrysky.client.gui.manuscript;
+
+import com.baizeli.eternisstarrysky.EternisStarrySky;
+import com.baizeli.eternisstarrysky.Items.ModItems;
+import com.baizeli.eternisstarrysky.spell.SpellSchool;
+import io.redspace.ironsspellbooks.api.spells.*;
+import io.redspace.ironsspellbooks.api.config.DefaultConfig;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.network.chat.Component;
+import net.minecraft.client.Minecraft;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.api.distmarker.*;
+
+@OnlyIn(Dist.CLIENT)
+public class ChaosSpellLearningScreen extends AbstractSpellLearningScreen {
+    public ChaosSpellLearningScreen(Component pTitle, InteractionHand activeHand) {
+        super(pTitle, activeHand);
+    }
+
+    @Override
+    protected AbstractSpell getSchoolFilter() {
+        return new AbstractSpell() {
+            @Override
+            public SchoolType getSchoolType() {
+                return SpellSchool.CHAOS.get();
+            }
+
+            @Override
+            public ResourceLocation getSpellResource() {
+                return ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "chaos_filter");
+            }
+
+            @Override
+            public DefaultConfig getDefaultConfig() {
+                return new DefaultConfig();
+            }
+
+            @Override
+            public CastType getCastType() {
+                return CastType.INSTANT;
+            }
+        };
+    }
+
+    @Override
+    protected boolean isCorrectManuscript() {
+        return Minecraft.getInstance().player.getItemInHand(activeHand).getItem() == ModItems.CHAOS_MANUSCRIPT.get();
+    }
+
+    @Override
+    protected Component getRequiredItemName() {
+        return Component.translatable("item." + EternisStarrySky.MOD_ID + ".chaos_manuscript");
+    }
+}

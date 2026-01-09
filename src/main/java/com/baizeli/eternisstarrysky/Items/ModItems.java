@@ -6,6 +6,8 @@ import com.baizeli.eternisstarrysky.Items.Staff.*;
 import com.baizeli.eternisstarrysky.Items.armor.*;
 import com.baizeli.eternisstarrysky.Items.curios.GenesisCurseItem;
 import com.baizeli.eternisstarrysky.Items.curios.LaoWang237Curios;
+import com.baizeli.eternisstarrysky.Items.manuscript.CelestialSourceManuscript;
+import com.baizeli.eternisstarrysky.Items.manuscript.ChaosManuscript;
 import com.baizeli.eternisstarrysky.TooltipParticleHandler.ITooltipParticleItem;
 import com.baizeli.eternisstarrysky.TooltipParticleHandler.PTID;
 import com.baizeli.eternisstarrysky.TooltipParticleHandler.TooltipParticleSystem;
@@ -314,10 +316,10 @@ public class ModItems {
             ));
 
     public static final RegistryObject<Item> CHAOS_MANUSCRIPT = ITEMS.register("chaos_manuscript",
-            ChaosManuscriptItem::new);
+            ChaosManuscript::new);
 
     public static final RegistryObject<Item> CELESTIAL_SOURCE_MANUSCRIPT = ITEMS.register("celestial_source_manuscript",
-            CelestialSourceManuscriptItem::new);
+            CelestialSourceManuscript::new);
 
     // 混沌手稿碎片
     public static final RegistryObject<Item> CHAOS_MANUSCRIPT_FRAGMENT = ITEMS.register("chaos_manuscript_fragment",
