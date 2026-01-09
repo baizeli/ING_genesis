@@ -17,7 +17,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
-import static com.baizeli.eternisstarrysky.Util.i18nUtil.translatableContainerName;
+import static com.baizeli.eternisstarrysky.util.i18nUtil.translatableContainerName;
 
 public class ArcaneWorkbenchBlock extends Block implements EntityBlock {
 

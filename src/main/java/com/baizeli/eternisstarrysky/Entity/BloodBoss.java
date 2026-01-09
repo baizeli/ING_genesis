@@ -1,6 +1,6 @@
 package com.baizeli.eternisstarrysky.Entity;
 
-import com.baizeli.eternisstarrysky.Util.EntityAttribute;
+import com.baizeli.eternisstarrysky.util.EntityAttribute;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;

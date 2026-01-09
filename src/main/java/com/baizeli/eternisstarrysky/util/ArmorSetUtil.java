@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky.Util;
+package com.baizeli.eternisstarrysky.util;
 
 import com.baizeli.eternisstarrysky.Items.armor.*;
 import net.minecraft.world.entity.*;

@@ -1,7 +1,7 @@
 package com.baizeli.eternisstarrysky.Mixin.minecraft.client.renderer;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
-import com.baizeli.eternisstarrysky.Util.RenderUtils;
+import com.baizeli.eternisstarrysky.util.RenderUtils;
 import com.baizeli.eternisstarrysky.spell.SpellSchool;
 import io.redspace.ironsspellbooks.api.spells.ISpellContainer;
 import io.redspace.ironsspellbooks.api.spells.SchoolType;

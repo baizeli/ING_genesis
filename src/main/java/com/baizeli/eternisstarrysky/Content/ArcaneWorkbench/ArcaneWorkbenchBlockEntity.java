@@ -26,7 +26,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
-import static com.baizeli.eternisstarrysky.Util.i18nUtil.translatableContainerName;
+import static com.baizeli.eternisstarrysky.util.i18nUtil.translatableContainerName;
 import static io.redspace.ironsspellbooks.registries.ItemRegistry.ARCANE_ESSENCE;
 
 public class ArcaneWorkbenchBlockEntity extends BaseContainerBlockEntity implements CraftingContainer, RecipeHolder, StackedContentsCompatible {
