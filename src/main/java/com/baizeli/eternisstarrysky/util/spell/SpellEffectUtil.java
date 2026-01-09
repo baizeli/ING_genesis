@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky.Util.spell;
+package com.baizeli.eternisstarrysky.util.spell;
 
 import net.minecraft.world.entity.*;
 import net.minecraft.world.effect.*;

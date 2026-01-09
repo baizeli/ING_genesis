@@ -1,6 +1,6 @@
 package com.baizeli.eternisstarrysky.Mixin;
 
-import com.baizeli.eternisstarrysky.Util.RenderUtils;
+import com.baizeli.eternisstarrysky.util.RenderUtils;
 import com.baizeli.eternisstarrysky.spell.SpellSchool;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;

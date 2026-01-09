@@ -1,7 +1,7 @@
 package com.baizeli.eternisstarrysky.Entity.spells.celestial_source;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
-import com.baizeli.eternisstarrysky.Util.RenderUtils;
+import com.baizeli.eternisstarrysky.util.RenderUtils;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;
