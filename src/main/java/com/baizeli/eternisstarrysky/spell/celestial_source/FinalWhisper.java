@@ -3,15 +3,13 @@ package com.baizeli.eternisstarrysky.spell.celestial_source;
 import com.baizeli.eternisstarrysky.Entity.CustomArrowEntity;
 import com.baizeli.eternisstarrysky.EternisStarrySky;
 import com.baizeli.eternisstarrysky.spell.SpellSchool;
+import com.baizeli.eternisstarrysky.spell.SpellUtils;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
-import io.redspace.ironsspellbooks.api.events.SpellCooldownAddedEvent;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import io.redspace.ironsspellbooks.api.spells.*;
 import io.redspace.ironsspellbooks.api.util.Utils;
 import io.redspace.ironsspellbooks.config.ServerConfigs;
-import io.redspace.ironsspellbooks.network.casting.SyncCooldownPacket;
-import io.redspace.ironsspellbooks.setup.PacketDistributor;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -21,7 +19,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.common.MinecraftForge;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -50,7 +47,6 @@ public class FinalWhisper extends AbstractSpell {
                 Component.translatable("ui.iron_spells_genesis.force_damage", Utils.stringTruncation(getForceDamage(spellLevel, caster), 1))
                 );
     }
-
 
     @Override
     public ResourceLocation getSpellResource() {
@@ -105,22 +101,12 @@ public class FinalWhisper extends AbstractSpell {
         return (int) (coolDown * ((double) 2.0F - Utils.softCapFormula(playerCooldownModifier)) * itemCoolDownModifer);
     }
 
-    public void addCooldown(ServerPlayer serverPlayer, AbstractSpell spell, CastSource castSource) {
-        int effectiveCooldown = getCooldownInTicks(castSource, serverPlayer);
-        SpellCooldownAddedEvent.Pre event = new SpellCooldownAddedEvent.Pre(effectiveCooldown, spell, serverPlayer, castSource);
-        boolean pre = MinecraftForge.EVENT_BUS.post(event);
-        if (castSource != CastSource.SCROLL && !pre) {
-            effectiveCooldown = event.getEffectiveCooldown();
-            MagicData.getPlayerMagicData(serverPlayer).getPlayerCooldowns().addCooldown(spell, effectiveCooldown);
-            PacketDistributor.sendToPlayer(serverPlayer, new SyncCooldownPacket(spell.getSpellId(), effectiveCooldown));
-            MinecraftForge.EVENT_BUS.post(new SpellCooldownAddedEvent.Post(effectiveCooldown, spell, serverPlayer, castSource));
-        }
-    }
-
     @Override
     public void castSpell(Level world, int spellLevel, ServerPlayer serverPlayer, CastSource castSource, boolean triggerCooldown) {
         super.castSpell(world, spellLevel, serverPlayer, castSource, triggerCooldown);
-        addCooldown(serverPlayer, this, castSource);
+        if (serverPlayer.getHealth() > serverPlayer.getMaxHealth() * 0.6 || (!MagicData.getPlayerMagicData(serverPlayer).getPlayerRecasts().hasRecastForSpell(this.getSpellId()) && triggerCooldown && (!serverPlayer.isCreative() || ServerConfigs.CREATIVE_COOLDOWN.get()))) {
+            SpellUtils.addCooldown(serverPlayer, this, castSource, getCooldownInTicks(castSource, serverPlayer));
+        }
     }
 
     @Override

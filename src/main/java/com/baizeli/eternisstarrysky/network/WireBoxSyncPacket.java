@@ -1,6 +1,6 @@
 package com.baizeli.eternisstarrysky.network;
 
-import com.baizeli.eternisstarrysky.client.WireBoxRenderer;
+import com.baizeli.eternisstarrysky.client.renderer.spell.chaos.WireBoxRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.Direction;

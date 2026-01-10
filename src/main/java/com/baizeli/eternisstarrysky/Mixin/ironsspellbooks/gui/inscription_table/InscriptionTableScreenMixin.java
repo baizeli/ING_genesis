@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky.Mixin;
+package com.baizeli.eternisstarrysky.Mixin.ironsspellbooks.gui.inscription_table;
 
 import com.baizeli.eternisstarrysky.mixinutil.SpellSlotInfoAccessor;
 import com.baizeli.eternisstarrysky.spell.celestial_source.FinalWhisper;
@@ -19,7 +19,6 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.contents.TranslatableContents;
 import net.minecraft.util.FormattedCharSequence;
-import net.minecraft.world.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -55,7 +54,7 @@ public abstract class InscriptionTableScreenMixin {
         boolean spellSelected = this.selectedSpellIndex >= 0 && this.selectedSpellIndex < this.spellSlots.size() && SpellSlotInfoAccessor.hasSpell(this.spellSlots.get(this.selectedSpellIndex));
         MutableComponent title = this.selectedSpellIndex < 0 ? Component.translatable("ui.irons_spellbooks.no_selection") : (spellSelected ? SpellSlotInfoAccessor.getSpellSlot(this.spellSlots.get(this.selectedSpellIndex)).getSpell().getDisplayName(Minecraft.getInstance().player) : Component.translatable("ui.irons_spellbooks.empty_slot"));
         List<FormattedCharSequence> titleLines = screen.font.split(title.withStyle(ChatFormatting.UNDERLINE).withStyle(textColor), 80);
-        int titleY = screen.getGuiTop() + 10;
+        int titleY = y + 10;
 
         for(FormattedCharSequence line : titleLines) {
             int titleWidth = screen.font.width(line);
@@ -76,7 +75,6 @@ public abstract class InscriptionTableScreenMixin {
         int descLine = titleY + 4;
         if (this.selectedSpellIndex >= 0 && this.selectedSpellIndex < this.spellSlots.size() && SpellSlotInfoAccessor.hasSpell(this.spellSlots.get(this.selectedSpellIndex))) {
             Style colorMana = Style.EMPTY.withColor(17577);
-            Style colorCast = Style.EMPTY.withColor(1135889);
             Style colorCooldown = Style.EMPTY.withColor(1135889);
             AbstractSpell spell = SpellSlotInfoAccessor.getSpellSlot(this.spellSlots.get(this.selectedSpellIndex)).getSpell();
             int spellLevel = SpellSlotInfoAccessor.getSpellSlot(this.spellSlots.get(this.selectedSpellIndex)).getLevel();
@@ -88,7 +86,7 @@ public abstract class InscriptionTableScreenMixin {
             float var10000 = (float) descLine;
             Objects.requireNonNull(screen.font);
             descLine = (int) (var10000 + 9.0F * textScale);
-            MutableComponent levelText = Component.translatable("ui.irons_spellbooks.level", new Object[]{spellLevel}).withStyle(textColor);
+            MutableComponent levelText = Component.translatable("ui.irons_spellbooks.level", spellLevel).withStyle(textColor);
             guiHelper.drawString(screen.font, levelText, x + (80 - screen.font.width(levelText.getString())) / 2, descLine, 16777215, false);
             var10000 = (float) descLine;
             Objects.requireNonNull(screen.font);

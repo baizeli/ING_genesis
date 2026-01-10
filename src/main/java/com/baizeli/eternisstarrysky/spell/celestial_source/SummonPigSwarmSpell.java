@@ -16,7 +16,7 @@ import net.minecraft.world.level.Level;
 import java.util.*;
 
 @AutoSpellConfig
-public class SummonPigSwarmSpell extends AbstractSpell {
+public class SummonPigSwarmSpell extends CelestialSourceBaseSpell {
     private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "summon_pig_swarm");
     private final DefaultConfig defaultConfig = new DefaultConfig()
         .setMinRarity(SpellRarity.COMMON)
@@ -46,11 +46,6 @@ public class SummonPigSwarmSpell extends AbstractSpell {
     @Override
     public CastType getCastType() {
         return CastType.LONG;
-    }
-
-    @Override
-    public SchoolType getSchoolType() {
-        return SpellSchool.CELESTIAL_SOURCE.get();
     }
 
     @Override

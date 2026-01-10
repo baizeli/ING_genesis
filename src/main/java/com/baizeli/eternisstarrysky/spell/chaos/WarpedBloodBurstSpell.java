@@ -1,18 +1,16 @@
 package com.baizeli.eternisstarrysky.spell.chaos;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
-import com.baizeli.eternisstarrysky.client.WireBoxRenderer;
+import com.baizeli.eternisstarrysky.client.renderer.spell.chaos.WireBoxRenderer;
 import com.baizeli.eternisstarrysky.network.WireBoxSyncPacket;
 import com.baizeli.eternisstarrysky.spell.SpellSchool;
+import com.baizeli.eternisstarrysky.spell.SpellUtils;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
-import io.redspace.ironsspellbooks.api.events.SpellCooldownAddedEvent;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import io.redspace.ironsspellbooks.api.spells.*;
 import io.redspace.ironsspellbooks.api.util.Utils;
 import io.redspace.ironsspellbooks.config.ServerConfigs;
-import io.redspace.ironsspellbooks.network.casting.SyncCooldownPacket;
-import io.redspace.ironsspellbooks.setup.PacketDistributor;
 import io.redspace.ironsspellbooks.util.ParticleHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -26,14 +24,13 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
-import net.minecraftforge.common.MinecraftForge;
 
 import java.util.List;
 
 import static com.baizeli.eternisstarrysky.EternisStarrySky.CHANNEL;
 
 @AutoSpellConfig
-public class WarpedBloodBurstSpell extends AbstractSpell {
+public class WarpedBloodBurstSpell extends ChaosBaseSpell {
     private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "warped_blood_burst");
     private final DefaultConfig defaultConfig;
 
@@ -55,10 +52,9 @@ public class WarpedBloodBurstSpell extends AbstractSpell {
         return List.of(Component.translatable("ui.irons_spellbooks.cooldown", Utils.timeFromTicks(getCooldownInTicks(spellLevel, CastSource.COMMAND, caster), 1)),
                 Component.translatable("ui.irons_spellbooks.damage", Utils.stringTruncation(getSpellPower(spellLevel, caster), 1)),
                 Component.translatable("ui.iron_spells_genesis.percent_force_damage", Utils.stringTruncation(getForceDamage(spellLevel, caster), 1)),
-                Component.translatable("ui.irons_spellbooks.radius", Utils.stringTruncation(3 * spellLevel, 1))
+                Component.translatable("ui.irons_spellbooks.radius", Utils.stringTruncation(10, 1))
         );
     }
-
 
     @Override
     public ResourceLocation getSpellResource() {
@@ -73,11 +69,6 @@ public class WarpedBloodBurstSpell extends AbstractSpell {
     @Override
     public CastType getCastType() {
         return CastType.LONG;
-    }
-
-    @Override
-    public SchoolType getSchoolType() {
-        return SpellSchool.CHAOS.get();
     }
 
     @Override
@@ -118,30 +109,18 @@ public class WarpedBloodBurstSpell extends AbstractSpell {
         return (int) (coolDown * ((double) 2.0F - Utils.softCapFormula(playerCooldownModifier)) * itemCoolDownModifer);
     }
 
-    public void addCooldown(ServerPlayer serverPlayer, AbstractSpell spell, CastSource castSource, int spellLevel) {
-        int effectiveCooldown = getCooldownInTicks(spellLevel, castSource, serverPlayer);
-        SpellCooldownAddedEvent.Pre event = new SpellCooldownAddedEvent.Pre(effectiveCooldown, spell, serverPlayer, castSource);
-        boolean pre = MinecraftForge.EVENT_BUS.post(event);
-        if (castSource != CastSource.SCROLL && !pre) {
-            effectiveCooldown = event.getEffectiveCooldown();
-            MagicData.getPlayerMagicData(serverPlayer).getPlayerCooldowns().addCooldown(spell, effectiveCooldown);
-            PacketDistributor.sendToPlayer(serverPlayer, new SyncCooldownPacket(spell.getSpellId(), effectiveCooldown));
-            MinecraftForge.EVENT_BUS.post(new SpellCooldownAddedEvent.Post(effectiveCooldown, spell, serverPlayer, castSource));
-        }
-    }
-
     @Override
     public void castSpell(Level world, int spellLevel, ServerPlayer serverPlayer, CastSource castSource, boolean triggerCooldown) {
         super.castSpell(world, spellLevel, serverPlayer, castSource, triggerCooldown);
-        if (serverPlayer.getHealth() > serverPlayer.getMaxHealth() / 2) {// 防止错误增加冷却
-            addCooldown(serverPlayer, this, castSource, spellLevel);
+        if (serverPlayer.getHealth() > serverPlayer.getMaxHealth() / 2 || (!MagicData.getPlayerMagicData(serverPlayer).getPlayerRecasts().hasRecastForSpell(this.getSpellId()) && triggerCooldown && (!serverPlayer.isCreative() || ServerConfigs.CREATIVE_COOLDOWN.get()))) {
+            SpellUtils.addCooldown(serverPlayer, this, castSource, getCooldownInTicks(spellLevel, castSource, serverPlayer));
         }
     }
 
     @Override
     public void onServerCastComplete(Level serverLevel, int spellLevel, LivingEntity entity, MagicData playerMagicData, boolean cancelled) {
         if (entity.getHealth() > entity.getMaxHealth() / 2 && !cancelled) {
-            int range = 3 * spellLevel;
+            int range = 10;
             AABB box = new AABB(entity.getX() - range, entity.getY() - range, entity.getZ() - range, entity.getX() + range, entity.getY() + range, entity.getZ() + range);
 
             for (Entity e : serverLevel.getEntities(entity, box, e -> e instanceof LivingEntity && e != entity)) {

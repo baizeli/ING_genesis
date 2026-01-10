@@ -18,9 +18,9 @@ import java.util.Objects;
 
 @Mod.EventBusSubscriber(modid = EternisStarrySky.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ModShaders {
+    @Nullable
+    public static ShaderInstance haloShader;
 
-    public static ShaderInstance halo_shader;
-    public static ShaderInstance get_halo_shader() {return halo_shader;}
     @Nullable
     private static ShaderInstance colorfulShader;
 
@@ -32,8 +32,13 @@ public class ModShaders {
     
     @Nullable
     private static ShaderInstance heatWaveShader;
+
     @Nullable
     private static ShaderInstance heatWavePostprocessShader;
+
+    public static ShaderInstance getHaloShader() {
+        return Objects.requireNonNull(haloShader, "Halo shader not registered");
+    }
 
     public static ShaderInstance getColorfulShader() {
         return Objects.requireNonNull(colorfulShader, "Colorful shader not registered");
@@ -52,11 +57,16 @@ public class ModShaders {
     }
 
     @SubscribeEvent
-    public static void registerShaders(RegisterShadersEvent event) throws IOException
-    {
-        event.registerShader(new ShaderInstance(event.getResourceProvider(), new ResourceLocation(EternisStarrySky.MOD_ID, "halo"), DefaultVertexFormat.POSITION_COLOR_NORMAL), shader -> halo_shader = shader);
-
+    public static void registerShaders(RegisterShadersEvent event) throws IOException {
         ResourceProvider resourceProvider = event.getResourceProvider();
+
+        ShaderInstance halo = new ShaderInstance(
+                resourceProvider,
+                new ResourceLocation(EternisStarrySky.MOD_ID, "halo"),
+                DefaultVertexFormat.POSITION_COLOR_NORMAL
+        );
+        event.registerShader(halo, shader -> haloShader = shader);
+
         ModShaderInstance colorful = new ModShaderInstance(
                 resourceProvider,
                 new ResourceLocation(EternisStarrySky.MODID, "colorful_shader").toString(),
@@ -85,25 +95,23 @@ public class ModShaders {
                 DefaultVertexFormat.POSITION_TEX
         );
         event.registerShader(heat_wave, shaderInstance -> heatWaveShader = shaderInstance);
-
     }
 
-    public static Minecraft getMinecraft() {return Minecraft.getInstance();}
+    public static Minecraft getMinecraft() {
+        return Minecraft.getInstance();
+    }
 
-    public static boolean setTime(ShaderInstance shader)
-    {
+    public static boolean setTime(ShaderInstance shader) {
         shader.safeGetUniform("time").set((float) AvaritiaShaders.renderTime);
         return true;
     }
 
-    public static boolean setTime(ShaderInstance shader, float pk)
-    {
+    public static boolean setTime(ShaderInstance shader, float pk) {
         shader.safeGetUniform("time").set(pk);
         return true;
     }
 
-    public static boolean setScreenSize(ShaderInstance shader)
-    {
+    public static boolean setScreenSize(ShaderInstance shader) {
         shader.safeGetUniform("screenSize").set((float) getMinecraft().getWindow().getWidth(), (float) getMinecraft().getWindow().getHeight());
         return true;
     }

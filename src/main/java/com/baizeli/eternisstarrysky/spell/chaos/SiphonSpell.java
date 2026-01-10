@@ -16,7 +16,7 @@ import net.minecraft.world.level.Level;
 import java.util.List;
 
 @AutoSpellConfig
-public class SiphonSpell extends AbstractSpell {
+public class SiphonSpell extends ChaosBaseSpell {
     private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "siphon");
     private final DefaultConfig defaultConfig = new DefaultConfig()
         .setMinRarity(SpellRarity.COMMON)
@@ -46,11 +46,6 @@ public class SiphonSpell extends AbstractSpell {
     @Override
     public CastType getCastType() {
         return CastType.LONG;
-    }
-
-    @Override
-    public SchoolType getSchoolType() {
-        return SpellSchool.CHAOS.get();
     }
 
     @Override

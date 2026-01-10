@@ -31,7 +31,7 @@ import java.util.UUID;
 
 @AutoSpellConfig
 @Mod.EventBusSubscriber(modid = EternisStarrySky.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
-public class ReversePlagueSpell extends AbstractSpell {
+public class ReversePlagueSpell extends ChaosBaseSpell {
     private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "reverse_plague");
     private final DefaultConfig defaultConfig;
     public static Map<UUID, UUID> entityMap = new HashMap<>();
@@ -68,11 +68,6 @@ public class ReversePlagueSpell extends AbstractSpell {
     @Override
     public CastType getCastType() {
         return CastType.INSTANT;
-    }
-
-    @Override
-    public SchoolType getSchoolType() {
-        return SpellSchool.CHAOS.get();
     }
 
     @Override

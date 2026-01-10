@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 @AutoSpellConfig
-public class MyriadArrowsSpell extends AbstractSpell {
+public class MyriadArrowsSpell extends CelestialSourceBaseSpell {
     private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "myriad_arrows");
     private final DefaultConfig defaultConfig = new DefaultConfig()
         .setMinRarity(SpellRarity.COMMON)
@@ -50,11 +50,6 @@ public class MyriadArrowsSpell extends AbstractSpell {
     @Override
     public CastType getCastType() {
         return CastType.LONG;
-    }
-
-    @Override
-    public SchoolType getSchoolType() {
-        return SpellSchool.CELESTIAL_SOURCE.get();
     }
 
     @Override

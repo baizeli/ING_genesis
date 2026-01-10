@@ -7,10 +7,7 @@ import com.baizeli.eternisstarrysky.fonts.FuckFont1;
 import com.baizeli.eternisstarrysky.spell.SpellAttributes;
 import io.redspace.ironsspellbooks.api.item.curios.AffinityData;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
-import io.redspace.ironsspellbooks.api.registry.SpellDataRegistryHolder;
-import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
-import io.redspace.ironsspellbooks.item.UniqueItem;
-import io.redspace.ironsspellbooks.item.UniqueSpellBook;
+import io.redspace.ironsspellbooks.item.SpellBook;
 import io.redspace.ironsspellbooks.item.weapons.AttributeContainer;
 import io.redspace.ironsspellbooks.util.TooltipsUtils;
 import net.minecraft.client.Minecraft;
@@ -26,9 +23,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class CelestialSourceSpellBook extends UniqueSpellBook implements UniqueItem, ITooltipParticleItem {
+public class CelestialSourceSpellBook extends SpellBook implements ITooltipParticleItem {
     public CelestialSourceSpellBook() {
-        super(SpellDataRegistryHolder.of(new SpellDataRegistryHolder(SpellRegistry.CHARGE_SPELL, 10)), 13);
+        super(15);
         this.withSpellbookAttributes(new AttributeContainer(AttributeRegistry.SPELL_POWER, 0.6, AttributeModifier.Operation.MULTIPLY_BASE), new AttributeContainer(AttributeRegistry.MAX_MANA, 2000, AttributeModifier.Operation.ADDITION), new AttributeContainer(AttributeRegistry.COOLDOWN_REDUCTION, 0.6, AttributeModifier.Operation.MULTIPLY_BASE), new AttributeContainer(SpellAttributes.CELESTIAL_SOURCE_SPELL_POWER, 0.5, AttributeModifier.Operation.MULTIPLY_BASE));
     }
 
