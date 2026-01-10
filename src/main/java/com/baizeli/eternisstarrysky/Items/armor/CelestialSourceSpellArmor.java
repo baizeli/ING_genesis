@@ -4,7 +4,7 @@ import com.baizeli.eternisstarrysky.EternisStarrySky;
 import com.baizeli.eternisstarrysky.TooltipParticleHandler.ITooltipParticleItem;
 import com.baizeli.eternisstarrysky.TooltipParticleHandler.PTID;
 import com.baizeli.eternisstarrysky.TooltipParticleHandler.TooltipParticleSystem;
-import com.baizeli.eternisstarrysky.Util.ArmorSetUtil;
+import com.baizeli.eternisstarrysky.util.ArmorSetUtil;
 import io.redspace.ironsspellbooks.entity.armor.*;
 import io.redspace.ironsspellbooks.item.armor.*;
 import net.minecraft.resources.ResourceLocation;
@@ -27,7 +27,7 @@ public class CelestialSourceSpellArmor extends ExtendedArmorItem implements IToo
     public CelestialSourceSpellArmor(IronsExtendedArmorMaterial material, Type type, Properties properties) {
         super(material, type, properties);
     }
-
+    
     Minecraft mc = Minecraft.getInstance();
 
     @Override

@@ -1,6 +1,6 @@
 package com.baizeli.eternisstarrysky.Mixin.minecraft.client.renderer;
 
-import com.baizeli.eternisstarrysky.Util.spell.SpellEffectUtil;
+import com.baizeli.eternisstarrysky.util.spell.SpellEffectUtil;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.*;
 import net.minecraft.client.renderer.FogRenderer;

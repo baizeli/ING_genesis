@@ -67,4 +67,6 @@ public class ModEntities {
                     .clientTrackingRange(30)
                     .updateInterval(1)
                     .build("lighting_bolt"));
+
+    public static final RegistryObject<EntityType<BloodBoss>> BLOOD_BOSS = ENTITY_TYPES.register(BloodBoss.ENTITYID, BloodBoss.supplier());
 }

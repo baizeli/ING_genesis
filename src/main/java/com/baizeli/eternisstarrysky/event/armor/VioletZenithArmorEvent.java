@@ -1,7 +1,7 @@
 package com.baizeli.eternisstarrysky.event.armor;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
-import com.baizeli.eternisstarrysky.Util.ArmorSetUtil;
+import com.baizeli.eternisstarrysky.util.ArmorSetUtil;
 import net.minecraft.world.effect.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.TickEvent;

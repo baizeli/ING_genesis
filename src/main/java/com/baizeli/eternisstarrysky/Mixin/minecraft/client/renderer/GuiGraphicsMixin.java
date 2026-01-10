@@ -1,27 +1,25 @@
 package com.baizeli.eternisstarrysky.Mixin.minecraft.client.renderer;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
-import com.baizeli.eternisstarrysky.Util.RenderUtils;
+import com.baizeli.eternisstarrysky.util.RenderUtils;
 import com.baizeli.eternisstarrysky.spell.SpellSchool;
-import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import io.redspace.ironsspellbooks.api.spells.ISpellContainer;
 import io.redspace.ironsspellbooks.api.spells.SchoolType;
-import io.redspace.ironsspellbooks.api.spells.SpellData;
 import io.redspace.ironsspellbooks.item.Scroll;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipPositioner;
 import net.minecraft.client.gui.screens.inventory.tooltip.TooltipRenderUtil;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 import org.joml.Vector2ic;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -30,12 +28,15 @@ import java.util.List;
 
 @Mixin(GuiGraphics.class)
 public class GuiGraphicsMixin {
+    @Shadow(remap = false)
+    private ItemStack tooltipStack;
+
     @Inject(method = "renderTooltipInternal", at = @At(value = "HEAD"), cancellable = true)
     private void renderTooltipInternal(Font font, List<ClientTooltipComponent> components, int mouseX, int mouseY, ClientTooltipPositioner tooltipPositioner, CallbackInfo ci) {
         GuiGraphics guiGraphics = ((GuiGraphics) (Object) this);
 
         if (!components.isEmpty()) {
-            RenderTooltipEvent.Pre preEvent = ForgeHooksClient.onRenderTooltipPre(guiGraphics.tooltipStack, guiGraphics, mouseX, mouseY, guiGraphics.guiWidth(), guiGraphics.guiHeight(), components, font, tooltipPositioner);
+            RenderTooltipEvent.Pre preEvent = ForgeHooksClient.onRenderTooltipPre(this.tooltipStack, guiGraphics, mouseX, mouseY, guiGraphics.guiWidth(), guiGraphics.guiHeight(), components, font, tooltipPositioner);
             if (preEvent.isCanceled()) {
                 return;
             }
@@ -60,7 +61,7 @@ public class GuiGraphicsMixin {
             int finalJ = j;
             int finalI = i;
             guiGraphics.drawManaged(() -> {
-                RenderTooltipEvent.Color colorEvent = ForgeHooksClient.onRenderTooltipColor(guiGraphics.tooltipStack, guiGraphics, l, i1, preEvent.getFont(), components);
+                RenderTooltipEvent.Color colorEvent = ForgeHooksClient.onRenderTooltipColor(this.tooltipStack, guiGraphics, l, i1, preEvent.getFont(), components);
                 TooltipRenderUtil.renderTooltipBackground(guiGraphics, l, i1, finalI, finalJ, 400, colorEvent.getBackgroundStart(), colorEvent.getBackgroundEnd(), colorEvent.getBorderStart(), colorEvent.getBorderEnd());
             });
             guiGraphics.pose.translate(0.0F, 0.0F, 400.0F);
@@ -80,12 +81,12 @@ public class GuiGraphicsMixin {
                 k1 += clienttooltipcomponent2.getHeight() + (k2 == 0 ? 2 : 0);
             }
 
-            Item item = guiGraphics.tooltipStack.getItem();
+            Item item = this.tooltipStack.getItem();
             boolean isChaosSpell = false;
             boolean isCelestialSourceSpell = false;
 
             if (item instanceof Scroll) {
-                SchoolType schoolType = ISpellContainer.getOrCreate(guiGraphics.tooltipStack).getSpellAtIndex(0).getSpell().getSchoolType();
+                SchoolType schoolType = ISpellContainer.getOrCreate(this.tooltipStack).getSpellAtIndex(0).getSpell().getSchoolType();
                 isChaosSpell = schoolType.equals(SpellSchool.CHAOS.get());
                 isCelestialSourceSpell = schoolType.equals(SpellSchool.CELESTIAL_SOURCE.get());
             }
