@@ -25,6 +25,7 @@ import com.baizeli.eternisstarrysky.spell.Spells;
 import com.mojang.logging.LogUtils;
 import io.redspace.ironsspellbooks.registries.CreativeTabRegistry;
 import io.redspace.ironsspellbooks.registries.ItemRegistry;
+import io.redspace.ironsspellbooks.render.SpellBookCurioRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.EntityRenderers;
@@ -51,6 +52,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
+import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
 
 @Mod(EternisStarrySky.MOD_ID)
 public class EternisStarrySky
@@ -124,8 +126,11 @@ public class EternisStarrySky
 
                 // 奥术工作台
                 /*output.accept(ModItems.ARCANE_WORKBENCH.get());*/
-                
+
+                // 混沌法术书
                 output.accept(ModItems.CHAOS_SPELL_BOOK.get());
+
+                // 星源法术书
                 output.accept(ModItems.CELESTIAL_SOURCE_SPELL_BOOK.get());
 
                 // 混沌法杖
@@ -289,6 +294,9 @@ public class EternisStarrySky
                 EntityRenderers.register(ModEntities.DEAD_STAR_DECREE_LARGE_COMET.get(), 
                     context -> new DeadStarDecreeCometRenderer(context, 6.0f)
                 );
+
+                CuriosRendererRegistry.register(ModItems.CHAOS_SPELL_BOOK.get(), SpellBookCurioRenderer::new);
+                CuriosRendererRegistry.register(ModItems.CELESTIAL_SOURCE_SPELL_BOOK.get(), SpellBookCurioRenderer::new);
             });
             MinecraftForge.registerConfigScreen(new ConfigurationFactory());
             Minecraft.getInstance().font = FuckFont1.font;

@@ -327,7 +327,7 @@ public class RenderUtils {
                                        double x, double y, int light,
                                        float u0, float u1, float v0, float v1) {
         poseStack.pushPose();
-        poseStack.translate(x, y, 100);
+        poseStack.translate(x, y, 0);
 
         float w = width / 2f;
         float h = height / 2f;

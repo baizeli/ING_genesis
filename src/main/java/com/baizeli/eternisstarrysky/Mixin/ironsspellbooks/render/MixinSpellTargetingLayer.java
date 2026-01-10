@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky.Mixin;
+package com.baizeli.eternisstarrysky.Mixin.ironsspellbooks.render;
 
 import com.baizeli.eternisstarrysky.Util.RenderUtils;
 import com.baizeli.eternisstarrysky.spell.SpellSchool;

@@ -17,7 +17,7 @@ import net.minecraft.world.level.Level;
 import java.util.List;
 
 @AutoSpellConfig
-public class BloodControlSpell extends AbstractSpell {
+public class BloodControlSpell extends ChaosBaseSpell {
     private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "blood_control");
     private final DefaultConfig defaultConfig = new DefaultConfig()
         .setMinRarity(SpellRarity.COMMON)
@@ -47,11 +47,6 @@ public class BloodControlSpell extends AbstractSpell {
     @Override
     public CastType getCastType() {
         return CastType.INSTANT;
-    }
-
-    @Override
-    public SchoolType getSchoolType() {
-        return SpellSchool.CHAOS.get();
     }
 
     @Override

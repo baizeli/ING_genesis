@@ -4,10 +4,7 @@ import com.baizeli.eternisstarrysky.fonts.FuckFont1;
 import com.baizeli.eternisstarrysky.spell.SpellAttributes;
 import io.redspace.ironsspellbooks.api.item.curios.AffinityData;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
-import io.redspace.ironsspellbooks.api.registry.SpellDataRegistryHolder;
-import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
-import io.redspace.ironsspellbooks.item.UniqueItem;
-import io.redspace.ironsspellbooks.item.UniqueSpellBook;
+import io.redspace.ironsspellbooks.item.SpellBook;
 import io.redspace.ironsspellbooks.item.weapons.AttributeContainer;
 import io.redspace.ironsspellbooks.util.TooltipsUtils;
 import net.minecraft.client.gui.Font;
@@ -22,9 +19,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.function.Consumer;
 
-public class ChaosSpellBook extends UniqueSpellBook implements UniqueItem {
+public class ChaosSpellBook extends SpellBook {
     public ChaosSpellBook() {
-        super(SpellDataRegistryHolder.of(new SpellDataRegistryHolder(SpellRegistry.ECHOING_STRIKES_SPELL, 10)), 11);
+        super(14);
         this.withSpellbookAttributes(new AttributeContainer(SpellAttributes.CHAOS_SPELL_POWER, 0.2, AttributeModifier.Operation.MULTIPLY_BASE), new AttributeContainer(AttributeRegistry.COOLDOWN_REDUCTION, 0.6, AttributeModifier.Operation.MULTIPLY_BASE), new AttributeContainer(AttributeRegistry.SPELL_POWER, 0.2, AttributeModifier.Operation.MULTIPLY_BASE), new AttributeContainer(AttributeRegistry.MAX_MANA, 600, AttributeModifier.Operation.ADDITION));
     }
 

@@ -1,4 +1,4 @@
-package com.baizeli.eternisstarrysky.client;
+package com.baizeli.eternisstarrysky.client.renderer.spell.chaos;
 
 import com.baizeli.eternisstarrysky.Util.RenderUtils;
 import com.mojang.blaze3d.vertex.PoseStack;

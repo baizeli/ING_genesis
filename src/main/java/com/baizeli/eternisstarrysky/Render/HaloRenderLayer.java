@@ -3,10 +3,12 @@ package com.baizeli.eternisstarrysky.Render;
 import com.baizeli.eternisstarrysky.CosmicRender.AvaritiaShaders;
 import com.baizeli.eternisstarrysky.EternisStarrySky;
 import com.baizeli.eternisstarrysky.Items.ModItems;
-import com.baizeli.eternisstarrysky.Items.curios.GenesisCurseItem;
+import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
+import io.redspace.ironsspellbooks.item.armor.GoldCrownArmorItem;
+import io.redspace.ironsspellbooks.registries.ItemRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -16,21 +18,43 @@ import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.inventory.InventoryMenu;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
+import software.bernie.geckolib.renderer.GeoArmorRenderer;
+import top.theillusivec4.curios.api.CuriosApi;
 
-public class HaloRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>>
-{
+import javax.annotation.Nullable;
+
+public class HaloRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
     public HaloRenderLayer(RenderLayerParent<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> renderer) {
         super(renderer);
     }
 
+    public static boolean isEquippedAndVisible(@Nullable LivingEntity entity, Item item) {
+        return entity != null && CuriosApi.getCuriosInventory(entity)
+                .map(inv -> inv.findFirstCurio(item)
+                        .map(result -> result.slotContext().visible())
+                        .orElse(false))
+                .orElse(false);
+    }
+
     @Override
-    public void render(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, AbstractClientPlayer player, float limbSwing, float limbSwingAmount, float partialTick, float ageInTicks, float netHeadYaw, float headPitch)
-    {
-        if (((GenesisCurseItem)ModItems.GENESIS_CURSE.get()).isEquippedBy(player))
-        {
+    public void render(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, AbstractClientPlayer player, float limbSwing, float limbSwingAmount, float partialTick, float ageInTicks, float netHeadYaw, float headPitch) {
+        if (isEquippedAndVisible(player, ItemRegistry.DEV_CROWN.get())) {
+            ItemStack crownStack = ItemRegistry.DEV_CROWN.get().getDefaultInstance();
+
+            if (!crownStack.isEmpty()) {
+                GoldCrownArmorItem item = (GoldCrownArmorItem) crownStack.getItem();
+                GeoArmorRenderer<?> renderer = item.supplyRenderer();
+                renderer.prepForRender(player, crownStack, EquipmentSlot.HEAD, this.getParentModel());
+                renderer.renderToBuffer(poseStack, null, packedLight, 0, 0, 0, 0, 0);
+            }
+        } else if (isEquippedAndVisible(player, ModItems.GENESIS_CURSE.get())) {
             poseStack.pushPose();
 
             ModelPart head = this.getParentModel().getHead();
@@ -104,30 +128,34 @@ public class HaloRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerMod
         }
     }
 
-    public static void setHaloShader(float pk)
-    {
-        ModShaders.setTime(ModShaders.get_halo_shader(), pk / 10F);
-        ModShaders.setScreenSize(ModShaders.get_halo_shader());
+    public static void setHaloShader(float pk) {
+        ModShaders.setTime(ModShaders.getHaloShader(), pk / 10F);
+        ModShaders.setScreenSize(ModShaders.getHaloShader());
 
         Minecraft mc = Minecraft.getInstance();
+        RenderTarget mainTarget = Minecraft.instance.mainRenderTarget;
+
         float yaw = 0.0F;
         float pitch = 0.0F;
+        float screenWidth = (float)mainTarget.width;
+        float screenHeight = (float)mainTarget.height;
 
-        if (mc.player != null)
-        {
+        if (mc.player != null) {
             yaw = (float) (mc.player.getYRot() * 2.0F * Math.PI / 360.0);
             pitch = -(float) (mc.player.getXRot() * 2.0F * Math.PI / 360.0);
         }
 
+        AvaritiaShaders.useType.set(10);
         AvaritiaShaders.cosmicTime.set((System.currentTimeMillis() - AvaritiaShaders.renderTime) / 2000.0F);
         AvaritiaShaders.cosmicYaw.set(yaw);
         AvaritiaShaders.cosmicPitch.set(pitch);
         AvaritiaShaders.cosmicExternalScale.set(0.6F);
         AvaritiaShaders.cosmicOpacity.set(1.0F);
+        AvaritiaShaders.cosmicIs2D.set(0);
+        AvaritiaShaders.cosmicScreenSize.set(screenWidth, screenHeight);
 
         // 准备纹理UV
-        for (int i = 0; i < 10; ++i)
-        {
+        for (int i = 0; i < 10; ++i) {
             TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "item/misc/cosmic_" + i));
             AvaritiaShaders.COSMIC_UVS[i * 4] = sprite.getU0();
             AvaritiaShaders.COSMIC_UVS[i * 4 + 1] = sprite.getV0();
@@ -137,8 +165,7 @@ public class HaloRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerMod
         AvaritiaShaders.cosmicUVs.set(AvaritiaShaders.COSMIC_UVS);
     }
 
-    public static void renderThickSixPointedStar(PoseStack poseStack, MultiBufferSource buffer, float size, float thickness, boolean type)
-    {
+    public static void renderThickSixPointedStar(PoseStack poseStack, MultiBufferSource buffer, float size, float thickness, boolean type) {
         float outerRadius = size / 2.0f;
         float innerRadius = Math.max(outerRadius - thickness, outerRadius * 0.25f);
         float midRadius = outerRadius * 0.4f; // 六芒星内凹点的半径
@@ -156,16 +183,12 @@ public class HaloRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerMod
         float[] outerVerticesX = new float[12];
         float[] outerVerticesY = new float[12];
 
-        for (int i = 0; i < 12; i++)
-        {
+        for (int i = 0; i < 12; i++) {
             float angle = (float) (i * Math.PI / 6.0);
-            if (i % 2 == 0)
-            {
+            if (i % 2 == 0) {
                 outerVerticesX[i] = (float) Math.cos(angle) * outerRadius;
                 outerVerticesY[i] = (float) Math.sin(angle) * outerRadius;
-            }
-            else
-            {
+            } else {
                 outerVerticesX[i] = (float) Math.cos(angle) * midRadius;
                 outerVerticesY[i] = (float) Math.sin(angle) * midRadius;
             }
@@ -174,8 +197,7 @@ public class HaloRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerMod
         float[] innerVerticesX = new float[6];
         float[] innerVerticesY = new float[6];
 
-        for (int i = 0; i < 6; i++)
-        {
+        for (int i = 0; i < 6; i++) {
             float angle = (float) (i * Math.PI / 3.0); // 每60度一个点
             innerVerticesX[i] = (float) Math.cos(angle) * innerRadius;
             innerVerticesY[i] = (float) Math.sin(angle) * innerRadius;
@@ -183,8 +205,7 @@ public class HaloRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerMod
 
         float nx = 0.0f, ny = 0.0f, nz = 1.0f;
 
-        for (int i = 0; i < 12; i++)
-        {
+        for (int i = 0; i < 12; i++) {
             int next = (i + 1) % 12;
 
             int innerIndex = findClosestInnerVertex(outerVerticesX[i], outerVerticesY[i], innerVerticesX, innerVerticesY);

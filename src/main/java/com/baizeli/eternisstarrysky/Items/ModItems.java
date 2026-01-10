@@ -195,8 +195,10 @@ public class ModItems {
             () -> new VioletZenithArmor((IronsExtendedArmorMaterial) ModArmorMaterials.VIOLET_ZENITH, ArmorItem.Type.BOOTS,
                     new Item.Properties().rarity(Rarity.EPIC)));
 
+    // 混沌法术书
     public static final RegistryObject<Item> CHAOS_SPELL_BOOK = ITEMS.register("chaos_spell_book", ChaosSpellBook::new);
 
+    // 星源法术书
     public static final RegistryObject<Item> CELESTIAL_SOURCE_SPELL_BOOK = ITEMS.register("celestial_source_spell_book", CelestialSourceSpellBook::new);
 
     // 混沌法杖
