@@ -1,7 +1,7 @@
 package com.baizeli.eternisstarrysky.Items;
 
 import com.baizeli.eternisstarrysky.Mixin.minecraft.world.entity.LivingEntityAccessor;
-import com.baizeli.eternisstarrysky.Util.TextUtils;
+import com.baizeli.eternisstarrysky.util.TextUtils;
 import com.baizeli.eternisstarrysky.cora.utils.EventUtil;
 import com.baizeli.eternisstarrysky.network.DeadListSyncPacket;
 import com.baizeli.eternisstarrysky.network.MarkDeadPacket;

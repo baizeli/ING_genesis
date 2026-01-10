@@ -32,6 +32,7 @@ import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
@@ -237,7 +238,9 @@ public class EternisStarrySky
     }
 
     // 添加实体属性创建事件处理程序
-    private void addAttribute(EntityAttributeCreationEvent event) {
+    private void addAttribute(EntityAttributeCreationEvent event)
+    {
+        event.put(ModEntities.BLOOD_BOSS.get(), Monster.createMonsterAttributes().build());
     }
 
     private void addToVanillaTabs(BuildCreativeModeTabContentsEvent e) {

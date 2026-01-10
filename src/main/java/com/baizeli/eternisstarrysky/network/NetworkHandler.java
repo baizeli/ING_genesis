@@ -2,8 +2,9 @@ package com.baizeli.eternisstarrysky.network;
 
 import com.baizeli.eternisstarrysky.Content.ArcaneWorkbench.ArcaneWorkbenchRecipeTransferPacket;
 import com.baizeli.eternisstarrysky.EternisStarrySky;
+import com.baizeli.eternisstarrysky.network.manuscript.LearnSpellPacket;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.network.NetworkRegistry;
+import net.minecraftforge.network.*;
 import net.minecraftforge.network.simple.SimpleChannel;
 
 public class NetworkHandler {
@@ -22,5 +23,9 @@ public class NetworkHandler {
                 ArcaneWorkbenchRecipeTransferPacket::encode,
                 ArcaneWorkbenchRecipeTransferPacket::new,
                 ArcaneWorkbenchRecipeTransferPacket::handle);
+        INSTANCE.registerMessage(id++, LearnSpellPacket.class,
+                LearnSpellPacket::encode,
+                LearnSpellPacket::decode,
+                LearnSpellPacket::handle);
     }
 }
