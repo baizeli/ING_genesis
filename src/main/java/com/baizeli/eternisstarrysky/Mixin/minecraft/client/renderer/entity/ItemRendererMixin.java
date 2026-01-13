@@ -1,6 +1,6 @@
 package com.baizeli.eternisstarrysky.Mixin.minecraft.client.renderer.entity;
 
-import com.baizeli.eternisstarrysky.CosmicRender.CosmicBakeModel;
+import com.baizeli.eternisstarrysky.render.cosmic.CosmicBakeModel;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.ItemRenderer;

@@ -1,8 +1,8 @@
 package com.baizeli.eternisstarrysky.client.particles;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
-import com.baizeli.eternisstarrysky.Render.ModShaderInstance;
-import com.baizeli.eternisstarrysky.Render.ModShaders;
+import com.baizeli.eternisstarrysky.render.ModShaderInstance;
+import com.baizeli.eternisstarrysky.render.ModShaders;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
