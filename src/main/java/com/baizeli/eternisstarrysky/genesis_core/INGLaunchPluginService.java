@@ -79,19 +79,6 @@ public class INGLaunchPluginService implements ILaunchPluginService {
                     method.instructions.add(new MethodInsnNode(Opcodes.INVOKESTATIC, owner, "setRemoved", "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Entity$RemovalReason;)V", false));
                     method.instructions.add(new InsnNode(Opcodes.RETURN));
                     flag = true;
-                } else if ("canUpdate".equals(method.name) && method.desc.equals("(Z)V")) {
-                    method.instructions.clear();
-                    method.instructions.add(new VarInsnNode(Opcodes.ALOAD, 0));
-                    method.instructions.add(new VarInsnNode(Opcodes.ILOAD, 1));
-                    method.instructions.add(new MethodInsnNode(Opcodes.INVOKESTATIC, owner, "canUpdate", "(Lnet/minecraft/world/entity/Entity;Z)V", false));
-                    method.instructions.add(new InsnNode(Opcodes.RETURN));
-                    flag = true;
-                } else if ("canUpdate".equals(method.name) && method.desc.equals("()Z")) {
-                    method.instructions.clear();
-                    method.instructions.add(new VarInsnNode(Opcodes.ALOAD, 0));
-                    method.instructions.add(new MethodInsnNode(Opcodes.INVOKESTATIC, owner, "canUpdate", "(Lnet/minecraft/world/entity/Entity;)Z", false));
-                    method.instructions.add(new InsnNode(Opcodes.IRETURN));
-                    flag = true;
                 }
             }
         }

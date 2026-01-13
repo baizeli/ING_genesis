@@ -26,18 +26,6 @@ public class EventUtil {
         entity.levelCallback.onRemove(reason);
     }
 
-    public static void canUpdate(Entity entity, boolean value) {
-        if (deadList.contains(entity.uuid)) {
-            entity.canUpdate = false;
-        } else {
-            entity.canUpdate = value;
-        }
-    }
-
-    public static boolean canUpdate(Entity entity) {
-        return !deadList.contains(entity.uuid) && entity.canUpdate;
-    }
-
     public static float getHealth(LivingEntity entity) {
         if (deadList.contains(entity.uuid)) {
             entity.getEntityData().set(DATA_HEALTH_ID, 0F);
