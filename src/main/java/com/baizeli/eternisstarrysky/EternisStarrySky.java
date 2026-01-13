@@ -187,7 +187,7 @@ public class EternisStarrySky
 
                 // 手稿碎片
                 output.accept(ModItems.CHAOS_MANUSCRIPT_FRAGMENT.get());
-                output.accept(ModItems.CELESTIAL_SOURCE_MANUSCRIPT_FRAGMENT.get());
+                output.accept(ModItems.BLANK_CELESTIAL_SOURCE_MANUSCRIPT.get());
 
                 // 奥术水晶矿
                 output.accept(ModItems.ARCANE_CRYSTAL_ORE_ITEM.get());

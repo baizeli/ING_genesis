@@ -58,6 +58,7 @@
   "effect.iron_spells_genesis.blood_frenzy": "血之狂乱",
   "effect.iron_spells_genesis.confusion": "迷茫",
   "effect.iron_spells_genesis.never_miss": "永不落空",
+  "effect.iron_spells_genesis.warped_barrier": "扭曲之壁垒",
 
   "item.iron_spells_genesis.chaos_staff": "#1混沌法杖",
   "item.iron_spells_genesis.celestial_source_staff": "#2星源法杖",
@@ -127,9 +128,9 @@
   "item.iron_spells_genesis.celestial_source_manuscript.hover": "（右键学习#2星源#法术）",
 
   "item.iron_spells_genesis.chaos_manuscript_fragment": "#1混沌手稿碎片",
-  "item.iron_spells_genesis.celestial_source_manuscript_fragment": "#2星源手稿碎片",
+  "item.iron_spells_genesis.blank_celestial_source_manuscript": "#2空白星源手稿",
   "item.iron_spells_genesis.chaos_manuscript_fragment.hover": "（蕴含着#1混沌#法术的学习方法）",
-  "item.iron_spells_genesis.celestial_source_manuscript_fragment.hover": "（蕴含着#2星源#法术的学习方法）",
+  "item.iron_spells_genesis.blank_celestial_source_manuscript.hover": "（蕴含着#2星源#法术的学习方法）",
 
   "iron_spells_genesis.galaxy_scroll.book_name": "§b星河绘卷",
 

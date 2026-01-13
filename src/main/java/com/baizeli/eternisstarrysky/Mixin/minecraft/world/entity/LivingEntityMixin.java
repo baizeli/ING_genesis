@@ -1,5 +1,6 @@
 package com.baizeli.eternisstarrysky.Mixin.minecraft.world.entity;
 
+import com.baizeli.eternisstarrysky.EternisStarrySky;
 import com.baizeli.eternisstarrysky.Items.AvaritiaSword;
 import com.baizeli.eternisstarrysky.effect.spell.ModEffect;
 import com.baizeli.eternisstarrysky.sound.SoundsRegister;
@@ -145,7 +146,7 @@ public abstract class LivingEntityMixin {
         }));
 
         if (entityMap.containsKey(living)) {
-            if (entityMap.get(living) != null && entityMap.get(living).getPersistentData().getLong("remaining time") >= serverLevel.getGameTime()) {
+            if (entityMap.get(living) != null && entityMap.get(living).getPersistentData().getLong(EternisStarrySky.MOD_ID + "remaining_time") >= serverLevel.getGameTime()) {
                 if (effectInstance.effect.getCategory() == MobEffectCategory.HARMFUL) {
                     entityMap.get(living).addEffect(effectInstance);
                 }
@@ -155,7 +156,7 @@ public abstract class LivingEntityMixin {
             }
         }
 
-        if (entityMap.containsValue(living) && living.getPersistentData().getLong("remaining time") >= serverLevel.getGameTime() && effectInstance.effect.getCategory() == MobEffectCategory.BENEFICIAL) {
+        if (entityMap.containsValue(living) && living.getPersistentData().getLong(EternisStarrySky.MOD_ID + "remaining_time") >= serverLevel.getGameTime() && effectInstance.effect.getCategory() == MobEffectCategory.BENEFICIAL) {
             cir.cancel();
         }
     }

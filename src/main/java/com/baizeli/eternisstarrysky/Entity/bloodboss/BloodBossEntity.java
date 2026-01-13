@@ -1,10 +1,7 @@
 package com.baizeli.eternisstarrysky.Entity.bloodboss;
 
-import com.baizeli.eternisstarrysky.spell.Spells;
 import com.baizeli.eternisstarrysky.util.EntityAttribute;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
-import io.redspace.ironsspellbooks.entity.mobs.abstract_spell_casting_mob.AbstractSpellCastingMob;
-import io.redspace.ironsspellbooks.entity.mobs.goals.SpellBarrageGoal;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.world.entity.EntityType;
@@ -14,7 +11,6 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.network.NetworkHooks;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;

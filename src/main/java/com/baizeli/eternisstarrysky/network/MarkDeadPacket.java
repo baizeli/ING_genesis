@@ -1,6 +1,6 @@
 package com.baizeli.eternisstarrysky.network;
 
-import com.baizeli.eternisstarrysky.cora.utils.EventUtil;
+import com.baizeli.eternisstarrysky.genesis_core.utils.EventUtil;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;

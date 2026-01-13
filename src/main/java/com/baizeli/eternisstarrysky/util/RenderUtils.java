@@ -1,6 +1,6 @@
 package com.baizeli.eternisstarrysky.util;
 
-import com.baizeli.eternisstarrysky.CosmicRender.AvaritiaShaders;
+import com.baizeli.eternisstarrysky.render.cosmic.AvaritiaShaders;
 import com.baizeli.eternisstarrysky.EternisStarrySky;
 import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
@@ -39,7 +39,7 @@ public class RenderUtils {
     public static RenderType createTexturedQuadType(ResourceLocation texture) {
         return RenderType.create("textured_quad_no_cull",
                 DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP,
-                VertexFormat.Mode.QUADS,
+                VertexFormat.Mode.TRIANGLES,
                 256,
                 RenderType.CompositeState.builder()
                         .setShaderState(RenderType.POSITION_COLOR_TEX_LIGHTMAP_SHADER)
@@ -50,8 +50,19 @@ public class RenderUtils {
                         .createCompositeState(false));
     }
 
-    public static RenderType maskType(ResourceLocation tex) {
+    public static RenderType cosmicBackground(ResourceLocation tex) {
         return RenderType.create("", DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP, VertexFormat.Mode.QUADS, 256, RenderType.CompositeState.builder()
+                .setShaderState(new RenderStateShard.ShaderStateShard(() -> AvaritiaShaders.cosmicShader))
+                .setTextureState(AvaritiaShaders.RenderStateShardAccess.COSMIC_TEXTURE_ISOLATED)
+                .setTransparencyState(RenderType.TRANSLUCENT_TRANSPARENCY)
+                .setLightmapState(RenderType.LIGHTMAP)
+                .setWriteMaskState(RenderStateShard.COLOR_WRITE)
+                .setCullState(RenderType.NO_CULL)
+                .createCompositeState(true));
+    }
+
+    public static RenderType cosmicTriangles() {
+        return RenderType.create("", DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP, VertexFormat.Mode.TRIANGLES, 256, RenderType.CompositeState.builder()
                 .setShaderState(new RenderStateShard.ShaderStateShard(() -> AvaritiaShaders.cosmicShader))
                 .setTextureState(AvaritiaShaders.RenderStateShardAccess.COSMIC_TEXTURE_ISOLATED)
                 .setTransparencyState(RenderType.TRANSLUCENT_TRANSPARENCY)
@@ -314,7 +325,7 @@ public class RenderUtils {
         float v0 = sprite.getV0();  // 上边界
         float v1 = sprite.getV1();  // 下边界
 
-        VertexConsumer consumer = buffer.getBuffer(maskType(InventoryMenu.BLOCK_ATLAS));
+        VertexConsumer consumer = buffer.getBuffer(cosmicBackground(InventoryMenu.BLOCK_ATLAS));
 
         renderTextured(poseStack, consumer, width, height, x, y, light, u0, u1, v0, v1);
 
@@ -340,6 +351,155 @@ public class RenderUtils {
         consumer.vertex(matrix, -w,  h, 0).color(255, 255, 255, 255).uv(u0, v0).uv2(light).normal(0, 0, 1).endVertex();
 
         poseStack.popPose();
+    }
+
+    public static void renderCosmicEllipsoid(PoseStack poseStack, MultiBufferSource buffer, ResourceLocation texture,
+                                             float radiusX, float radiusY, float radiusZ,
+                                             double x, double y, double z, int light, int useType) {
+        if (texture == null) {
+            texture = BACKGROUND;
+        }
+
+        RenderTarget mainTarget = Minecraft.instance.mainRenderTarget;
+        float time = (System.currentTimeMillis() - AvaritiaShaders.renderTime) / 1000.0F;
+        float opacity = (float) (0.7F + 0.3F * MathUtils.sin(time * 2.5F));
+
+        // 设置Cosmic着色器参数
+        AvaritiaShaders.useType.set(useType);
+        AvaritiaShaders.cosmicTime.set(time);
+        AvaritiaShaders.cosmicYaw.set(0.0F);
+        AvaritiaShaders.cosmicPitch.set(0.0F);
+        AvaritiaShaders.cosmicExternalScale.set(AvaritiaShaders.inventoryRender ? 50F : 1F);
+        AvaritiaShaders.cosmicOpacity.set(opacity);
+        AvaritiaShaders.cosmicColor.set(new Vector4f(0.1F, 0.1F, 0.1F, 1.33F));
+        AvaritiaShaders.cosmicScreenSize.set((float)mainTarget.width, (float)mainTarget.height);
+        AvaritiaShaders.cosmicIs2D.set(AvaritiaShaders.inventoryRender ? 1 : 0); // 设置为3D模式
+
+        for (int i = 0; i < 10; ++i) {
+            TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "item/misc/cosmic_" + i));
+            AvaritiaShaders.COSMIC_UVS[i * 4] = sprite.getU0();
+            AvaritiaShaders.COSMIC_UVS[i * 4 + 1] = sprite.getV0();
+            AvaritiaShaders.COSMIC_UVS[i * 4 + 2] = sprite.getU1();
+            AvaritiaShaders.COSMIC_UVS[i * 4 + 3] = sprite.getV1();
+        }
+        AvaritiaShaders.cosmicUVs.set(AvaritiaShaders.COSMIC_UVS);
+
+        TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(texture);
+
+        float u0 = sprite.getU0();  // 左边界
+        float u1 = sprite.getU1();  // 右边界
+        float v0 = sprite.getV0();  // 上边界
+        float v1 = sprite.getV1();  // 下边界
+
+        // 渲染椭圆体
+        VertexConsumer consumer = buffer.getBuffer(cosmicTriangles());
+        poseStack.pushPose();
+        poseStack.translate(x, y, z);
+
+        renderEllipsoid0(poseStack, consumer, radiusX, radiusY, radiusZ, light, u0, u1, v1, v0);
+
+        poseStack.popPose();
+
+        if (buffer instanceof MultiBufferSource.BufferSource bufferSource) {
+            bufferSource.endLastBatch();
+        }
+    }
+
+    private static void renderEllipsoid0(PoseStack poseStack, VertexConsumer consumer,
+                                         float radiusX, float radiusY, float radiusZ, int light,
+                                         float u0, float u1, float v0, float v1) {
+        Matrix4f mat = poseStack.last().pose();
+        Matrix3f norm = poseStack.last().normal();
+
+        int stacks = 40;   // 纬度细分
+        int slices = 60;   // 经度细分
+
+        for (int i = 0; i < stacks; i++) {
+            float theta0 = (float) (Math.PI * i / stacks);
+            float theta1 = (float) (Math.PI * (i + 1) / stacks);
+
+            float cosTheta0 = Mth.cos(theta0);
+            float cosTheta1 = Mth.cos(theta1);
+            float sinTheta0 = Mth.sin(theta0);
+            float sinTheta1 = Mth.sin(theta1);
+
+            float y0 = cosTheta0 * radiusY;
+            float y1 = cosTheta1 * radiusY;
+
+            // 计算V坐标（纬度方向）
+            float v00 = v0 + (v1 - v0) * (float)i / stacks;
+            float v11 = v0 + (v1 - v0) * (float)(i + 1) / stacks;
+
+            for (int j = 0; j < slices; j++) {
+                float phi0 = (float) (2 * Math.PI * j / slices);
+                float phi1 = (float) (2 * Math.PI * (j + 1) / slices);
+
+                // 计算U坐标（经度方向）
+                float u00 = u0 + (u1 - u0) * (float)j / slices;
+                float u11 = u0 + (u1 - u0) * (float)(j + 1) / slices;
+
+                float cosPhi0 = Mth.cos(phi0);
+                float sinPhi0 = Mth.sin(phi0);
+                float cosPhi1 = Mth.cos(phi1);
+                float sinPhi1 = Mth.sin(phi1);
+
+                float x0 = cosPhi0 * sinTheta0 * radiusX;
+                float z0 = sinPhi0 * sinTheta0 * radiusZ;
+                float x1 = cosPhi1 * sinTheta0 * radiusX;
+                float z1 = sinPhi1 * sinTheta0 * radiusZ;
+
+                float x2 = cosPhi0 * sinTheta1 * radiusX;
+                float z2 = sinPhi0 * sinTheta1 * radiusZ;
+                float x3 = cosPhi1 * sinTheta1 * radiusX;
+                float z3 = sinPhi1 * sinTheta1 * radiusZ;
+
+                // 法线（针对椭圆体的正确法线计算）
+                float nx0 = cosPhi0 * sinTheta0 / radiusX;
+                float ny0 = cosTheta0 / radiusY;
+                float nz0 = sinPhi0 * sinTheta0 / radiusZ;
+                float len0 = Mth.sqrt(nx0 * nx0 + ny0 * ny0 + nz0 * nz0);
+                nx0 /= len0; ny0 /= len0; nz0 /= len0;
+
+                float nx1 = cosPhi1 * sinTheta0 / radiusX;
+                float ny1 = cosTheta0 / radiusY;
+                float nz1 = sinPhi1 * sinTheta0 / radiusZ;
+                float len1 = Mth.sqrt(nx1 * nx1 + ny1 * ny1 + nz1 * nz1);
+                nx1 /= len1; ny1 /= len1; nz1 /= len1;
+
+                float nx2 = cosPhi0 * sinTheta1 / radiusX;
+                float ny2 = cosTheta1 / radiusY;
+                float nz2 = sinPhi0 * sinTheta1 / radiusZ;
+                float len2 = Mth.sqrt(nx2 * nx2 + ny2 * ny2 + nz2 * nz2);
+                nx2 /= len2; ny2 /= len2; nz2 /= len2;
+
+                float nx3 = cosPhi1 * sinTheta1 / radiusX;
+                float ny3 = cosTheta1 / radiusY;
+                float nz3 = sinPhi1 * sinTheta1 / radiusZ;
+                float len3 = Mth.sqrt(nx3 * nx3 + ny3 * ny3 + nz3 * nz3);
+                nx3 /= len3; ny3 /= len3; nz3 /= len3;
+
+                // 第一个三角形
+                putVertexEllipsoid(mat, norm, consumer, x0, y0, z0, nx0, ny0, nz0, u00, v00, light);
+                putVertexEllipsoid(mat, norm, consumer, x1, y0, z1, nx1, ny1, nz1, u11, v00, light);
+                putVertexEllipsoid(mat, norm, consumer, x2, y1, z2, nx2, ny2, nz2, u00, v11, light);
+
+// 第二个三角形
+                putVertexEllipsoid(mat, norm, consumer, x1, y0, z1, nx1, ny1, nz1, u11, v00, light);
+                putVertexEllipsoid(mat, norm, consumer, x3, y1, z3, nx3, ny3, nz3, u11, v11, light);
+                putVertexEllipsoid(mat, norm, consumer, x2, y1, z2, nx2, ny2, nz2, u00, v11, light);
+            }
+        }
+    }
+
+    private static void putVertexEllipsoid(Matrix4f mat, Matrix3f norm, VertexConsumer c,
+                                           float x, float y, float z, float nx, float ny, float nz,
+                                           float u, float v, int light) {
+        c.vertex(mat, x, y, z).color(255, 255, 255, 255).uv(u, v).uv2(light).normal(norm, nx, ny, nz).endVertex();
+    }
+
+    private static void normalize(float[] n) {
+        float len = Mth.sqrt(n[0] * n[0] + n[1] * n[1] + n[2] * n[2]);
+        n[0] /= len; n[1] /= len; n[2] /= len;
     }
 
     public static void renderNormalTexturedQuad(PoseStack poseStack, MultiBufferSource buffer, ResourceLocation texture, float width, float height, float angleDeg, Axis axis, double x, double y, double z, int light) {
