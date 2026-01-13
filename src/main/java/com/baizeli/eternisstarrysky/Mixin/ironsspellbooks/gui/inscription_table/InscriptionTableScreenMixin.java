@@ -29,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Mixin(InscriptionTableScreen.class)
+@Mixin(value = InscriptionTableScreen.class,remap = false)
 public abstract class InscriptionTableScreenMixin {
     @Shadow private int selectedSpellIndex;
 
