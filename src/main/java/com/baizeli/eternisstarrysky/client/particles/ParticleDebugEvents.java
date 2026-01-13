@@ -3,7 +3,7 @@ package com.baizeli.eternisstarrysky.client.particles;
 import com.baizeli.eternisstarrysky.Entity.ModEntities;
 import com.baizeli.eternisstarrysky.Entity.NyanCat;
 import com.baizeli.eternisstarrysky.EternisStarrySky;
-import com.baizeli.eternisstarrysky.Render.ModShaders;
+import com.baizeli.eternisstarrysky.render.ModShaders;
 import com.mojang.blaze3d.pipeline.TextureTarget;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;

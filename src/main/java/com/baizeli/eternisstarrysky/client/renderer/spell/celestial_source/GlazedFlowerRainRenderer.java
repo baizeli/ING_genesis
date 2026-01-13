@@ -1,5 +1,6 @@
 package com.baizeli.eternisstarrysky.client.renderer.spell.celestial_source;
 
+import com.baizeli.eternisstarrysky.EternisStarrySky;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
@@ -15,6 +16,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -31,11 +33,12 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class GlazedFlowerRainRenderer {
     private static final Minecraft minecraft = Minecraft.instance;
+    private static final ResourceLocation GLAZED_FLOWER_RAIN_LOCATION = new ResourceLocation(EternisStarrySky.MODID, "textures/environment/glazed_flower_rain.png");
     private int rainSoundTime;
 
     public void renderSnowAndRain(LightTexture lightTexture, float partialTick, double entityX, double entityY, double entityZ, double camX, double camY, double camZ) {
         if (minecraft.level != null && minecraft.player != null) {
-            float f = 0.5F;
+            float f = 1.0F;
             lightTexture.turnOnLightLayer();
             ClientLevel level = minecraft.level;
             int i = Mth.floor(entityX);
@@ -86,8 +89,7 @@ public class GlazedFlowerRainRenderer {
                                     }
 
                                     i1 = 0;
-                                    RenderSystem.setShaderTexture(0, LevelRenderer.RAIN_LOCATION);
-                                    RenderSystem.setShaderColor(1.0F, 0.84F, 0.0F, 1.0F);
+                                    RenderSystem.setShaderTexture(0, GLAZED_FLOWER_RAIN_LOCATION);
                                     bufferbuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.PARTICLE);
                                 }
 

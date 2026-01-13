@@ -41,7 +41,7 @@ public class ReversePlagueSpell extends ChaosBaseSpell {
                 .setMinRarity(SpellRarity.LEGENDARY)
                 .setSchoolResource(SpellSchool.CHAOS_RESOURCE)
                 .setMaxLevel(1)
-                .setCooldownSeconds(0)
+                .setCooldownSeconds(90F)
                 .build();
         this.manaCostPerLevel = 0;
         this.baseSpellPower = 0;
@@ -51,7 +51,7 @@ public class ReversePlagueSpell extends ChaosBaseSpell {
     }
 
     public List<MutableComponent> getUniqueInfo(int spellLevel, LivingEntity caster) {
-        return List.of(Component.translatable("ui.irons_spellbooks.cooldown", Utils.timeFromTicks(getCooldownInTicks(CastSource.NONE, caster), 1)));
+        return List.of();
     }
 
 
@@ -71,35 +71,6 @@ public class ReversePlagueSpell extends ChaosBaseSpell {
     }
 
     @Override
-    public int getSpellCooldown() {
-        return 0;// 阻止原有冷却
-    }
-
-    private int getCooldownInTicks(CastSource castSource, LivingEntity caster) {
-        int coolDown = 4800;
-
-        double playerCooldownModifier = caster.getAttributeValue(AttributeRegistry.COOLDOWN_REDUCTION.get());
-        float itemCoolDownModifer = 1.0F;
-        if (castSource == CastSource.SWORD) {
-            itemCoolDownModifer = ServerConfigs.SWORDS_CD_MULTIPLIER.get().floatValue();
-        }
-
-        return (int) (coolDown * ((double) 2.0F - Utils.softCapFormula(playerCooldownModifier)) * itemCoolDownModifer);
-    }
-
-    public void addCooldown(ServerPlayer serverPlayer, AbstractSpell spell, CastSource castSource) {
-        int effectiveCooldown = getCooldownInTicks(castSource, serverPlayer);
-        SpellCooldownAddedEvent.Pre event = new SpellCooldownAddedEvent.Pre(effectiveCooldown, spell, serverPlayer, castSource);
-        boolean pre = MinecraftForge.EVENT_BUS.post(event);
-        if (castSource != CastSource.SCROLL && !pre) {
-            effectiveCooldown = event.getEffectiveCooldown();
-            MagicData.getPlayerMagicData(serverPlayer).getPlayerCooldowns().addCooldown(spell, effectiveCooldown);
-            PacketDistributor.sendToPlayer(serverPlayer, new SyncCooldownPacket(spell.getSpellId(), effectiveCooldown));
-            MinecraftForge.EVENT_BUS.post(new SpellCooldownAddedEvent.Post(effectiveCooldown, spell, serverPlayer, castSource));
-        }
-    }
-
-    @Override
     public boolean checkPreCastConditions(Level level, int spellLevel, LivingEntity entity, MagicData playerMagicData) {
         return Utils.preCastTargetHelper(level, entity, playerMagicData, this, 100, 0.35F);
     }
@@ -107,7 +78,6 @@ public class ReversePlagueSpell extends ChaosBaseSpell {
     @Override
     public void castSpell(Level world, int spellLevel, ServerPlayer serverPlayer, CastSource castSource, boolean triggerCooldown) {
         super.castSpell(world, spellLevel, serverPlayer, castSource, triggerCooldown);
-        addCooldown(serverPlayer, this, castSource);
     }
 
     @Override
@@ -116,6 +86,7 @@ public class ReversePlagueSpell extends ChaosBaseSpell {
         if (entity instanceof LivingEntity living) {
             for (MobEffectInstance effectInstance : living.getActiveEffects().stream().toList()) {
                 if (effectInstance.getEffect().getCategory() == MobEffectCategory.BENEFICIAL) {
+                    effectInstance.duration = Math.min(effectInstance.duration, 2400);
                     livingEntity.addEffect(effectInstance);
                     living.removeEffect(effectInstance.getEffect());
                 }
@@ -126,7 +97,7 @@ public class ReversePlagueSpell extends ChaosBaseSpell {
                     livingEntity.removeEffect(effectInstance.getEffect());
                 }
             }
-            living.getPersistentData().putLong("remaining time", serverLevel.getGameTime() + 600);
+            living.getPersistentData().putLong(EternisStarrySky.MOD_ID + "remaining_time", serverLevel.getGameTime() + 600);
             entityMap.put(livingEntity.getUUID(), living.getUUID());
         }
         super.onServerCastComplete(serverLevel, spellLevel, livingEntity, playerMagicData, cancelled);
