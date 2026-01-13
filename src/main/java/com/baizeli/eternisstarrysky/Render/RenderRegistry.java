@@ -1,6 +1,7 @@
 package com.baizeli.eternisstarrysky.Render;
 
 import com.baizeli.eternisstarrysky.Entity.ModEntities;
+import com.baizeli.eternisstarrysky.Entity.bloodboss.BloodBossRenderer;
 import com.baizeli.eternisstarrysky.EternisStarrySky;
 import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.api.distmarker.Dist;
@@ -16,5 +17,6 @@ public class RenderRegistry {
         event.registerEntityRenderer(EntityType.LIGHTNING_BOLT, PurpleLightningRenderer::new);
         event.registerEntityRenderer(ModEntities.CUSTOM_ARROW.get(), CustomArrowRenderer::new);
         event.registerEntityRenderer(ModEntities.BLOOD_BOSS.get(), BloodBossRenderer::new);
+
     }
 }

@@ -1,5 +1,6 @@
 package com.baizeli.eternisstarrysky.Entity;
 
+import com.baizeli.eternisstarrysky.Entity.bloodboss.BloodBossEntity;
 import com.baizeli.eternisstarrysky.Entity.spells.celestial_source.*;
 import com.baizeli.eternisstarrysky.Entity.spells.celestial_source.notuse.*;
 import com.baizeli.eternisstarrysky.EternisStarrySky;
@@ -68,5 +69,6 @@ public class ModEntities {
                     .updateInterval(1)
                     .build("lighting_bolt"));
 
-    public static final RegistryObject<EntityType<BloodBoss>> BLOOD_BOSS = ENTITY_TYPES.register(BloodBoss.ENTITYID, BloodBoss.supplier());
+    public static final RegistryObject<EntityType<BloodBossEntity>> BLOOD_BOSS = ENTITY_TYPES.register(BloodBossEntity.ENTITYID,
+            BloodBossEntity.supplier());
 }
