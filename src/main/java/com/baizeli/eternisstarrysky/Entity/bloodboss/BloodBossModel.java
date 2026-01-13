@@ -2,7 +2,6 @@ package com.baizeli.eternisstarrysky.Entity.bloodboss;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
 import io.redspace.ironsspellbooks.entity.mobs.abstract_spell_casting_mob.AbstractSpellCastingMob;
-import io.redspace.ironsspellbooks.entity.mobs.abstract_spell_casting_mob.AbstractSpellCastingMobModel;
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib.model.DefaultedEntityGeoModel;
 

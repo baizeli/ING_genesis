@@ -1,6 +1,7 @@
 package com.baizeli.eternisstarrysky.render;
 
 import com.baizeli.eternisstarrysky.Entity.ModEntities;
+import com.baizeli.eternisstarrysky.Entity.bloodboss.BloodBossRenderer;
 import com.baizeli.eternisstarrysky.EternisStarrySky;
 import com.baizeli.eternisstarrysky.render.cosmic.AvaritiaShaders;
 import com.baizeli.eternisstarrysky.render.cosmic.CosmicModelLoader;
