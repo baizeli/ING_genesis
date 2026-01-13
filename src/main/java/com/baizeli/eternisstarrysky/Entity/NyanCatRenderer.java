@@ -1,6 +1,6 @@
 package com.baizeli.eternisstarrysky.Entity;
 
-import com.baizeli.eternisstarrysky.Render.ModShaders;
+import com.baizeli.eternisstarrysky.render.ModShaders;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;

@@ -4,7 +4,6 @@ import com.baizeli.eternisstarrysky.EternisStarrySky;
 import com.baizeli.eternisstarrysky.client.renderer.spell.chaos.WireBoxRenderer;
 import com.baizeli.eternisstarrysky.network.WireBoxSyncPacket;
 import com.baizeli.eternisstarrysky.spell.SpellSchool;
-import com.baizeli.eternisstarrysky.spell.SpellUtils;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
@@ -39,7 +38,7 @@ public class WarpedBloodBurstSpell extends ChaosBaseSpell {
                 .setMinRarity(SpellRarity.COMMON)
                 .setSchoolResource(SpellSchool.CHAOS_RESOURCE)
                 .setMaxLevel(10)
-                .setCooldownSeconds(0)
+                .setCooldownSeconds(60F)
                 .build();
         this.manaCostPerLevel = 50;
         this.baseSpellPower = 16;
@@ -49,8 +48,7 @@ public class WarpedBloodBurstSpell extends ChaosBaseSpell {
     }
 
     public List<MutableComponent> getUniqueInfo(int spellLevel, LivingEntity caster) {
-        return List.of(Component.translatable("ui.irons_spellbooks.cooldown", Utils.timeFromTicks(getCooldownInTicks(spellLevel, CastSource.COMMAND, caster), 1)),
-                Component.translatable("ui.irons_spellbooks.damage", Utils.stringTruncation(getSpellPower(spellLevel, caster), 1)),
+        return List.of(Component.translatable("ui.irons_spellbooks.damage", Utils.stringTruncation(getSpellPower(spellLevel, caster), 1)),
                 Component.translatable("ui.iron_spells_genesis.percent_force_damage", Utils.stringTruncation(getForceDamage(spellLevel, caster), 1)),
                 Component.translatable("ui.irons_spellbooks.radius", Utils.stringTruncation(10, 1))
         );
@@ -71,11 +69,6 @@ public class WarpedBloodBurstSpell extends ChaosBaseSpell {
         return CastType.LONG;
     }
 
-    @Override
-    public int getSpellCooldown() {
-        return 0;// 阻止原有冷却
-    }
-
     private double getForceDamage(int spellLevel, LivingEntity caster) {
         double entitySpellPowerModifier = 1.0F;
         double entitySchoolPowerModifier = 1.0F;
@@ -87,34 +80,9 @@ public class WarpedBloodBurstSpell extends ChaosBaseSpell {
         return spellLevel * entitySpellPowerModifier * entitySchoolPowerModifier * configPowerModifier * 0.5;
     }
 
-    private int getCooldownInTicks(int spellLevel, CastSource castSource, LivingEntity caster) {
-        int coolDown;
-        double playerCooldownModifier = 1.0D;
-
-        if (caster != null) {
-            playerCooldownModifier = caster.getAttributeValue(AttributeRegistry.COOLDOWN_REDUCTION.get());
-        }
-        float itemCoolDownModifer = 1.0F;
-        if (castSource == CastSource.SWORD) {
-            itemCoolDownModifer = ServerConfigs.SWORDS_CD_MULTIPLIER.get().floatValue();
-        }
-
-        if (spellLevel <= 3) {          // 1~3 级
-            coolDown = 250;
-        } else if (spellLevel < 10) {  // 4~9 级
-            coolDown = 250 * (spellLevel - 1);
-        } else {
-            coolDown = 2400;
-        }
-        return (int) (coolDown * ((double) 2.0F - Utils.softCapFormula(playerCooldownModifier)) * itemCoolDownModifer);
-    }
-
     @Override
     public void castSpell(Level world, int spellLevel, ServerPlayer serverPlayer, CastSource castSource, boolean triggerCooldown) {
         super.castSpell(world, spellLevel, serverPlayer, castSource, triggerCooldown);
-        if (serverPlayer.getHealth() > serverPlayer.getMaxHealth() / 2 || (!MagicData.getPlayerMagicData(serverPlayer).getPlayerRecasts().hasRecastForSpell(this.getSpellId()) && triggerCooldown && (!serverPlayer.isCreative() || ServerConfigs.CREATIVE_COOLDOWN.get()))) {
-            SpellUtils.addCooldown(serverPlayer, this, castSource, getCooldownInTicks(spellLevel, castSource, serverPlayer));
-        }
     }
 
     @Override

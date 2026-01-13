@@ -58,6 +58,7 @@
   "effect.iron_spells_genesis.blood_frenzy": "Blood Frenzy",
   "effect.iron_spells_genesis.confusion": "Confusion",
   "effect.iron_spells_genesis.never_miss": "Never Miss",
+  "effect.iron_spells_genesis.warped_barrier": "Warped Barrier",
 
   "item.iron_spells_genesis.chaos_staff": "#1Chaos Staff",
   "item.iron_spells_genesis.celestial_source_staff": "#2Celestial Source Staff",
@@ -127,9 +128,9 @@
   "item.iron_spells_genesis.celestial_source_manuscript.hover": "(Right-click to learn #2Celestial Source# Spell)",
 
   "item.iron_spells_genesis.chaos_manuscript_fragment": "#1Chaos Manuscript Fragment",
-  "item.iron_spells_genesis.celestial_source_manuscript_fragment": "#2Celestial Source Manuscript Fragment",
+  "item.iron_spells_genesis.blank_celestial_source_manuscript": "#2Blank Celestial Source Manuscript",
   "item.iron_spells_genesis.chaos_manuscript_fragment.hover": "(#1Chaos# magic learning method contained within)",
-  "item.iron_spells_genesis.celestial_source_manuscript_fragment.hover": "(#2Celestial Source# magic learning method contained within)",
+  "item.iron_spells_genesis.blank_celestial_source_manuscript.hover": "(#2Celestial Source# magic learning method contained within)",
 
   "iron_spells_genesis.galaxy_scroll.book_name": "§bGalaxy Scroll",
 

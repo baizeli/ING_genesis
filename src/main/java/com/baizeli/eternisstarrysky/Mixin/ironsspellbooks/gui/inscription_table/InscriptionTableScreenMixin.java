@@ -2,8 +2,7 @@ package com.baizeli.eternisstarrysky.Mixin.ironsspellbooks.gui.inscription_table
 
 import com.baizeli.eternisstarrysky.mixinutil.SpellSlotInfoAccessor;
 import com.baizeli.eternisstarrysky.spell.celestial_source.FinalWhisper;
-import com.baizeli.eternisstarrysky.spell.chaos.WarpedBarrierSpell;
-import com.baizeli.eternisstarrysky.spell.chaos.WarpedBloodBurstSpell;
+import com.baizeli.eternisstarrysky.spell.chaos.BloodWarSpell;
 import com.mojang.blaze3d.vertex.PoseStack;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import io.redspace.ironsspellbooks.api.util.Utils;
@@ -97,7 +96,7 @@ public abstract class InscriptionTableScreenMixin {
             descLine += this.drawStatText(var10002, guiHelper, var10004, descLine, "ui.irons_spellbooks.mana_cost", textColor, Component.translatable("" + var10008), colorMana, textScale);
             descLine += this.drawText(screen.font, guiHelper, TooltipsUtils.getCastTimeComponent(spell.getCastType(), Utils.timeFromTicks((float) spell.getEffectiveCastTime(spellLevel, null), 1)), x + margin, descLine, textColor.getColor().getValue(), textScale);
 
-            if (spell instanceof WarpedBloodBurstSpell || spell instanceof WarpedBarrierSpell || spell instanceof FinalWhisper) {
+            if (spell instanceof FinalWhisper || spell instanceof BloodWarSpell) {
                 for (MutableComponent component : spell.getUniqueInfo(spellLevel, null)) {
                     if (Objects.equals(((TranslatableContents) component.getContents()).getKey(), "ui.irons_spellbooks.cooldown")) {
                         descLine += this.drawStatText(screen.font, guiHelper, x + margin, descLine, "ui.irons_spellbooks.cooldown", textColor, Component.translatable((String) ((TranslatableContents) component.getContents()).getArgs()[0]), colorCooldown, textScale);
