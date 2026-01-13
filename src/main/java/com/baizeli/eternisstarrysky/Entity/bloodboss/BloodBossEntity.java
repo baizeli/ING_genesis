@@ -25,6 +25,7 @@ public class BloodBossEntity extends PathfinderMob implements GeoEntity {
 		super(p_33002_, p_33003_);
 		// Modify entity attributes
 		EntityAttribute.require(this, Attributes.MAX_HEALTH).setBaseValue(950);
+		EntityAttribute.require(this, Attributes.FOLLOW_RANGE).setBaseValue(50);
 		EntityAttribute.require(this, AttributeRegistry.MAX_MANA.get()).setBaseValue(14000);
 
 
