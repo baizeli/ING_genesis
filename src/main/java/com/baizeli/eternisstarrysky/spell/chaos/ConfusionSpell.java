@@ -19,7 +19,7 @@ import net.minecraft.world.phys.AABB;
 import java.util.List;
 
 @AutoSpellConfig
-public class ConfusionSpell extends AbstractSpell {
+public class ConfusionSpell extends ChaosBaseSpell {
     private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "confusion");
     private final DefaultConfig defaultConfig = new DefaultConfig()
         .setMinRarity(SpellRarity.LEGENDARY)
@@ -49,11 +49,6 @@ public class ConfusionSpell extends AbstractSpell {
     @Override
     public CastType getCastType() {
         return CastType.LONG;
-    }
-
-    @Override
-    public SchoolType getSchoolType() {
-        return SpellSchool.CHAOS.get();
     }
 
     @Override

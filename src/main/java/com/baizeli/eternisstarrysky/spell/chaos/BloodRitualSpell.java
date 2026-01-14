@@ -10,7 +10,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 
 @AutoSpellConfig
-public class BloodRitualSpell extends AbstractSpell {
+public class BloodRitualSpell extends ChaosBaseSpell {
     private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "blood_ritual");
     private final DefaultConfig defaultConfig = new DefaultConfig()
         .setMinRarity(SpellRarity.LEGENDARY)
@@ -40,11 +40,6 @@ public class BloodRitualSpell extends AbstractSpell {
     @Override
     public CastType getCastType() {
         return CastType.INSTANT;
-    }
-
-    @Override
-    public SchoolType getSchoolType() {
-        return SpellSchool.CHAOS.get();
     }
 
     @Override

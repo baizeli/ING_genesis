@@ -17,7 +17,7 @@ import net.minecraft.world.phys.Vec3;
 import java.util.List;
 
 @AutoSpellConfig
-public class AmenofuwariSpell extends AbstractSpell {
+public class AmenofuwariSpell extends ChaosBaseSpell {
     private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "amenofuwari");
     private final DefaultConfig defaultConfig = new DefaultConfig()
         .setMinRarity(SpellRarity.COMMON)
@@ -47,11 +47,6 @@ public class AmenofuwariSpell extends AbstractSpell {
     @Override
     public CastType getCastType() {
         return CastType.LONG;
-    }
-
-    @Override
-    public SchoolType getSchoolType() {
-        return SpellSchool.CHAOS.get();
     }
 
     @Override

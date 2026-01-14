@@ -29,7 +29,7 @@ import net.minecraftforge.common.MinecraftForge;
 import java.util.List;
 
 @AutoSpellConfig
-public class UnlimitedBladeWorksSpell extends AbstractSpell {
+public class UnlimitedBladeWorksSpell extends CelestialSourceBaseSpell {
     private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "unlimited_blade_works");
     private final DefaultConfig defaultConfig;
 
@@ -66,11 +66,6 @@ public class UnlimitedBladeWorksSpell extends AbstractSpell {
     @Override
     public CastType getCastType() {
         return CastType.LONG;
-    }
-
-    @Override
-    public SchoolType getSchoolType() {
-        return SpellSchool.CELESTIAL_SOURCE.get();
     }
 
     @Override

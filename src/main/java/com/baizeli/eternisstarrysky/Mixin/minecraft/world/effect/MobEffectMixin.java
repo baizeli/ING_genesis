@@ -1,5 +1,6 @@
 package com.baizeli.eternisstarrysky.Mixin.minecraft.world.effect;
 
+import com.baizeli.eternisstarrysky.EternisStarrySky;
 import com.baizeli.eternisstarrysky.spell.chaos.ReversePlagueSpell;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffect;
@@ -34,7 +35,7 @@ public class MobEffectMixin {
             }));
 
             if (entityMap.containsKey(livingEntity) && entityMap.get(livingEntity) != null) {
-                if (entityMap.get(livingEntity) != null && entityMap.get(livingEntity).getPersistentData().getLong("remaining time") >= serverLevel.getGameTime()) {
+                if (entityMap.get(livingEntity) != null && entityMap.get(livingEntity).getPersistentData().getLong(EternisStarrySky.MOD_ID + "remaining_time") >= serverLevel.getGameTime()) {
                     if (this.category == MobEffectCategory.HARMFUL) {
                         ((MobEffect) (Object) this).applyInstantenousEffect(source, indirectSource, entityMap.get(livingEntity), amplifier, health);
                     }
@@ -44,7 +45,7 @@ public class MobEffectMixin {
                 }
             }
 
-            if (entityMap.containsValue(livingEntity) && livingEntity.getPersistentData().getLong("remaining time") >= serverLevel.getGameTime() && this.category == MobEffectCategory.BENEFICIAL) {
+            if (entityMap.containsValue(livingEntity) && livingEntity.getPersistentData().getLong(EternisStarrySky.MOD_ID + "remaining_time") >= serverLevel.getGameTime() && this.category == MobEffectCategory.BENEFICIAL) {
                 ci.cancel();
             }
         }

@@ -17,7 +17,7 @@ import net.minecraft.world.level.Level;
 import java.util.List;
 
 @AutoSpellConfig
-public class StellarSoulControlSpell extends AbstractSpell {
+public class StellarSoulControlSpell extends CelestialSourceBaseSpell {
     private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "stellar_soul_control");
     private final DefaultConfig defaultConfig = new DefaultConfig()
         .setMinRarity(SpellRarity.COMMON)
@@ -47,11 +47,6 @@ public class StellarSoulControlSpell extends AbstractSpell {
     @Override
     public CastType getCastType() {
         return CastType.LONG;
-    }
-
-    @Override
-    public SchoolType getSchoolType() {
-        return SpellSchool.CELESTIAL_SOURCE.get();
     }
 
     @Override
