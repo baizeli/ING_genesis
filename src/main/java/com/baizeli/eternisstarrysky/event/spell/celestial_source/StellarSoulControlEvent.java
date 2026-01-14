@@ -14,8 +14,8 @@ public class StellarSoulControlEvent {
 
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent event) {
-        if (event.getSource().getEntity() instanceof LivingEntity attacker && 
-            event.getSource().getDirectEntity() == attacker
+        if (event.getSource().getEntity() instanceof LivingEntity attacker// &&
+            //event.getSource().getDirectEntity() == attacker
         ) {
             if (attacker.hasEffect(ModEffect.STELLAR_SOUL_CONTROL.get())) {
                 LivingEntity target = event.getEntity();

@@ -5,6 +5,7 @@
   "refmap": "iron_spells_genesis.refmap.json",
   "mixins": [
     "ironsspellbooks.gui.arcane_anvil.ArcaneAnvilMenuMixin",
+    "ironsspellbooks.item.GoldCrownArmorItemMixin",
     "jei.library.gui.recipes.RecipeLayoutMixin",
     "minecraft.world.effect.MobEffectMixin",
     "minecraft.world.entity.EntityMixin",
@@ -13,13 +14,14 @@
     "minecraft.world.food.FoodDataMixin"
   ],
   "client": [
-    "InscriptionTableScreenMixin",
-    "MixinSpellTargetingLayer",
+    "ironsspellbooks.gui.inscription_table.InscriptionTableScreenMixin",
+    "ironsspellbooks.render.MixinSpellTargetingLayer",
     "minecraft.client.renderer.FogRendererMixin",
     "minecraft.client.renderer.GameRendererAccessor",
     "minecraft.client.renderer.GameRendererMixin",
     "minecraft.client.renderer.GuiGraphicsMixin",
     "minecraft.client.renderer.ItemInHandRendererMixin",
+    "minecraft.client.renderer.LevelRendererMixin",
     "minecraft.client.renderer.entity.ItemRendererMixin"
   ],
   "injectors": {

@@ -197,8 +197,10 @@ public class ModItems {
             () -> new VioletZenithArmor((IronsExtendedArmorMaterial) ModArmorMaterials.VIOLET_ZENITH, ArmorItem.Type.BOOTS,
                     new Item.Properties().rarity(Rarity.EPIC)));
 
+    // 混沌法术书
     public static final RegistryObject<Item> CHAOS_SPELL_BOOK = ITEMS.register("chaos_spell_book", ChaosSpellBook::new);
 
+    // 星源法术书
     public static final RegistryObject<Item> CELESTIAL_SOURCE_SPELL_BOOK = ITEMS.register("celestial_source_spell_book", CelestialSourceSpellBook::new);
 
     // 混沌法杖
@@ -334,14 +336,14 @@ public class ModItems {
             });
 
     // 星源手稿碎片
-    public static final RegistryObject<Item> CELESTIAL_SOURCE_MANUSCRIPT_FRAGMENT = ITEMS.register("celestial_source_manuscript_fragment",
+    public static final RegistryObject<Item> BLANK_CELESTIAL_SOURCE_MANUSCRIPT = ITEMS.register("blank_celestial_source_manuscript",
             () -> new CelestialSourceBaseItem(new Item.Properties()
                     .fireResistant()
                     .rarity(Rarity.EPIC)) {
                 @Override
                 public void appendHoverText(@NotNull ItemStack itemstack, @Nullable Level world, @NotNull List<Component> list, @NotNull TooltipFlag flag) {
                     list.add(Component.translatable(
-                            "item." + EternisStarrySky.MOD_ID + ".celestial_source_manuscript_fragment.hover"
+                            "item." + EternisStarrySky.MOD_ID + ".blank_celestial_source_manuscript.hover"
                     ));
                 }
 

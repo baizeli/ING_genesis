@@ -1,8 +1,8 @@
 package com.baizeli.eternisstarrysky.save;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
-import com.baizeli.eternisstarrysky.client.WireBoxRenderer;
-import com.baizeli.eternisstarrysky.cora.utils.EventUtil;
+import com.baizeli.eternisstarrysky.client.renderer.spell.chaos.WireBoxRenderer;
+import com.baizeli.eternisstarrysky.genesis_core.utils.EventUtil;
 import com.baizeli.eternisstarrysky.network.DeadListSyncPacket;
 import com.baizeli.eternisstarrysky.network.WireBoxSyncPacket;
 import com.baizeli.eternisstarrysky.spell.chaos.ReversePlagueSpell;

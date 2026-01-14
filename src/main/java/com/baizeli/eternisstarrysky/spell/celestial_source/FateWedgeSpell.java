@@ -1,7 +1,7 @@
 package com.baizeli.eternisstarrysky.spell.celestial_source;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
-import com.baizeli.eternisstarrysky.Util.spell.celestial_source.FateWedgeUtil;
+import com.baizeli.eternisstarrysky.util.spell.celestial_source.FateWedgeUtil;
 import com.baizeli.eternisstarrysky.effect.spell.ModEffect;
 import com.baizeli.eternisstarrysky.spell.SpellSchool;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
@@ -21,7 +21,7 @@ import net.minecraft.world.level.Level;
 import java.util.*;
 
 @AutoSpellConfig
-public class FateWedgeSpell extends AbstractSpell {
+public class FateWedgeSpell extends CelestialSourceBaseSpell {
     private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "fate_wedge");
     private final DefaultConfig defaultConfig = new DefaultConfig()
         .setMinRarity(SpellRarity.LEGENDARY)
@@ -51,11 +51,6 @@ public class FateWedgeSpell extends AbstractSpell {
     @Override
     public CastType getCastType() {
         return CastType.LONG;
-    }
-
-    @Override
-    public SchoolType getSchoolType() {
-        return SpellSchool.CELESTIAL_SOURCE.get();
     }
 
     @Override
