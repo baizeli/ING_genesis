@@ -28,6 +28,7 @@ public class BloodBossEntity extends PathfinderMob implements GeoEntity {
 		EntityAttribute.require(this, Attributes.FOLLOW_RANGE).setBaseValue(50);
 		EntityAttribute.require(this, AttributeRegistry.MAX_MANA.get()).setBaseValue(14000);
 		this.moveControl = new BloodBossMoveControl(this);
+		this.lookControl = new BloodBossLookControl(this);
 	}
 
 
