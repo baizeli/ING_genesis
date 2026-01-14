@@ -35,7 +35,7 @@ public class DeadStarDecreeCometRenderer extends EntityRenderer<Projectile> {
 
         /*poseStack.mulPose(com.mojang.math.Axis.XP.rotationDegrees(180.0F));*/
         
-        // 渲染Geo陨石模型...
+        // 渲染Geo陨石模型
         VertexConsumer vertexConsumer = buffer.getBuffer(RenderType.entityCutoutNoCull(getTextureLocation(entity)));
         this.model.renderToBuffer(
             poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F

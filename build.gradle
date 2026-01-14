@@ -207,6 +207,9 @@ dependencies {
 
     //nbt编辑器
     modRuntimeOnly  "curse.maven:nbtedit-reborn-678133:5984630"
+
+    // L2 Library
+    modRuntimeOnly "curse.maven:l2library-620203:6806000"
 }
 
 

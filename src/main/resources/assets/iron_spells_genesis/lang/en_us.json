@@ -20,6 +20,7 @@
   "spell.iron_spells_genesis.blood_ritual": "Blood Ritual",
   "spell.iron_spells_genesis.blood_control": "Blood Control",
   "spell.iron_spells_genesis.dead_star_decree": "Dead Star Decree",
+  "spell.iron_spells_genesis.blood_war": "Blood War",
   "spell.iron_spells_genesis.blood_frenzy": "Blood Frenzy",
   "spell.iron_spells_genesis.confusion": "Confusion",
 
@@ -30,7 +31,6 @@
   "spell.iron_spells_genesis.myriad_arrows": "Myriad Arrows",
   "spell.iron_spells_genesis.life_and_death_realm": "Life And Death Realm",
   "spell.iron_spells_genesis.stellar_soul_control": "Stellar Soul Control",
-  "spell.iron_spells_genesis.blood_war": "Blood War",
   "spell.iron_spells_genesis.unlimited_blade_works": "Unlimited Blade Works",
   "spell.iron_spells_genesis.unparalleled": "Unparalleled",
   "spell.iron_spells_genesis.glazed_flower_rain": "Glazed Flower Rain",
@@ -42,7 +42,10 @@
   "spell.iron_spells_genesis.warped_barrier.guide": "Convert 90% of health into Absorption.",
   "spell.iron_spells_genesis.reverse_plague.guide": "Exchange the target's positive effects with your own negative effects, temporarily preventing the target from gaining positive effects, halting your own effect acquisition, and transferring the negative effects.",
   "spell.iron_spells_genesis.final_whisper.guide": "Fire an arrow that creates a 5x5 area on impact, dealing damage per second to mobs for 5 seconds.",
-
+  "spell.iron_spells_genesis.blood_war.guide": "As your health decreases, so does your opponent's strength.",
+  "spell.iron_spells_genesis.blood_frenzy.guide": "Continuously restore health and reduce damage taken by half while also increasing damage dealt by twice. Also, push yourself towards the nearest entity.",
+  "spell.iron_spells_genesis.unparalleled.guide": "Enhance your stats and allow for double jumps while also making you immune to fall damage.",
+  
   "spell.iron_spells_genesis.final_whisper.low_health": "Your health is too weak to unleash the Final Whisper!",
   "spell.iron_spells_genesis.warped_blood_burst.low_health": "Your health is too weak to unleash the Warped Blood Burst!",
 
