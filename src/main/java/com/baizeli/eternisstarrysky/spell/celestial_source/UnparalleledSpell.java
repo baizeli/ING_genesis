@@ -2,6 +2,7 @@ package com.baizeli.eternisstarrysky.spell.celestial_source;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
 import com.baizeli.eternisstarrysky.effect.spell.ModEffect;
+import com.baizeli.eternisstarrysky.event.spell.celestial_source.UnparalleledEvent;
 import com.baizeli.eternisstarrysky.spell.SpellSchool;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
@@ -55,6 +56,18 @@ public class UnparalleledSpell extends CelestialSourceBaseSpell {
             Component.translatable(
                 "ui.irons_spellbooks.effect_length", 
                 Utils.timeFromTicks(getDuration(spellLevel, caster), 1)
+            ),
+            Component.translatable(
+                "ui.iron_spells_genesis.spell_power", 
+                Utils.stringTruncation(UnparalleledEvent.SPELL_POWER_BONUS * 100, 1)
+            ),
+            Component.translatable(
+                "ui.irons_spellbooks.damage", 
+                Utils.stringTruncation(UnparalleledEvent.DAMAGE_BONUS * 100, 1)
+            ),
+            Component.translatable(
+                "ui.iron_spells_genesis.movement_speed", 
+                Utils.stringTruncation(UnparalleledEvent.SPEED_BONUS * 100, 1)
             )
         );
     }
@@ -79,7 +92,7 @@ public class UnparalleledSpell extends CelestialSourceBaseSpell {
     @Override
     public void onCast(Level level, int spellLevel, LivingEntity entity, CastSource castSource, MagicData playerMagicData) {
         if (!level.isClientSide && entity instanceof Player player) {
-            player.addEffect(new MobEffectInstance(
+            player.addEffect(new MobEffectInstance( 
                 ModEffect.UNPARALLELED.get(), 
                 getDuration(spellLevel, entity), 
                 0, 

@@ -2,6 +2,7 @@ package com.baizeli.eternisstarrysky.spell.chaos;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
 import com.baizeli.eternisstarrysky.effect.spell.ModEffect;
+import com.baizeli.eternisstarrysky.event.spell.chaos.BloodWarEvent;
 import com.baizeli.eternisstarrysky.spell.SpellSchool;
 import com.baizeli.eternisstarrysky.spell.SpellUtils;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
@@ -56,12 +57,12 @@ public class BloodWarSpell extends ChaosBaseSpell {
     public List<MutableComponent> getUniqueInfo(int spellLevel, LivingEntity caster) {
         int duration = getBuffDuration(spellLevel);
         return List.of(
-                Component.translatable("ui.irons_spellbooks.cooldown",
-                        Utils.timeFromTicks(getCooldownInTicks(spellLevel, CastSource.COMMAND, caster), 1)
-                ),
-                Component.translatable("ui.irons_spellbooks.effect_length",
-                        Utils.timeFromTicks(duration, 1)
-                )/* ,
+            Component.translatable("ui.irons_spellbooks.cooldown",
+                Utils.timeFromTicks(getCooldownInTicks(spellLevel, CastSource.COMMAND, caster), 1)
+            ),
+            Component.translatable("ui.irons_spellbooks.effect_length",
+                Utils.timeFromTicks(duration, 1)
+            ) ,
             Component.translatable(
                 "ui.iron_spells_genesis.spell_power", 
                 Utils.stringTruncation(BloodWarEvent.SPELL_POWER_BONUS_PER_THRESHOLD * 100, 1)
@@ -73,7 +74,7 @@ public class BloodWarSpell extends ChaosBaseSpell {
             Component.translatable(
                 "ui.iron_spells_genesis.movement_speed", 
                 Utils.stringTruncation(BloodWarEvent.SPEED_BONUS_PER_THRESHOLD * 100, 1)
-            ) */
+            )
         );
     }
 
