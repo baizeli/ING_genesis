@@ -12,7 +12,7 @@ public class DeadStarDecreeCometModel<T extends Entity> extends EntityModel<T> {
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(
 		new ResourceLocation(EternisStarrySky.MOD_ID, "dead_star_decree_comet"), "main"
 	);
-
+    
 	private final ModelPart dead_star_decree_comet;
 
 	public DeadStarDecreeCometModel(ModelPart root) {
