@@ -34,6 +34,9 @@ public class ModParticles {
     public static final RegistryObject<SimpleParticleType> MAGIC_CIRCLE =
             PARTICLE_TYPES.register("magic_circle",
                     () -> new SimpleParticleType(false));
+    public static final RegistryObject<SimpleParticleType> CRESCENT_BLADE =
+            PARTICLE_TYPES.register("crescent_blade",
+                    () -> new SimpleParticleType(false));
     public static void register(IEventBus eventBus) {
         PARTICLE_TYPES.register(eventBus);
     }
@@ -72,6 +75,11 @@ public class ModParticles {
             particleEngine.register(
                     ModParticles.MAGIC_CIRCLE.get(),
                     MagicCircleParticle.Provider::new
+            );
+
+            particleEngine.register(
+                    ModParticles.CRESCENT_BLADE.get(),
+                    CrescentBladeParticle.Provider::new
             );
         }
     }

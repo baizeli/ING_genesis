@@ -9,6 +9,7 @@ import com.baizeli.eternisstarrysky.Entity.spells.celestial_source.notuse.*;
 import com.baizeli.eternisstarrysky.Items.ModItems;
 import com.baizeli.eternisstarrysky.client.ClientEvent;
 import com.baizeli.eternisstarrysky.client.particles.ModParticles;
+import com.baizeli.eternisstarrysky.client.renderer.DistortWorldRender;
 import com.baizeli.eternisstarrysky.client.renderer.spell.celestial_source.DeadStarDecreeCometRenderer;
 import com.baizeli.eternisstarrysky.config.Configuration;
 import com.baizeli.eternisstarrysky.config.ConfigurationFactory;
@@ -300,6 +301,7 @@ public class EternisStarrySky
 
                 CuriosRendererRegistry.register(ModItems.CHAOS_SPELL_BOOK.get(), SpellBookCurioRenderer::new);
                 CuriosRendererRegistry.register(ModItems.CELESTIAL_SOURCE_SPELL_BOOK.get(), SpellBookCurioRenderer::new);
+                DistortWorldRender.initChain(Minecraft.getInstance());
             });
             MinecraftForge.registerConfigScreen(new ConfigurationFactory());
             Minecraft.getInstance().font = FuckFont1.font;

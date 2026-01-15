@@ -1,0 +1,24 @@
+{
+  "targets": [
+    "distort",
+    "swap"
+  ],
+  "passes": [
+    {
+      "name": "iron_spells_genesis:distort",
+      "intarget": "minecraft:main",
+      "outtarget": "swap",
+      "auxtargets": [
+        {
+          "name": "DistortSampler",
+          "id": "distort"
+        }
+      ]
+    },
+    {
+      "name": "blit",
+      "intarget": "swap",
+      "outtarget": "minecraft:main"
+    }
+  ]
+}
