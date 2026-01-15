@@ -1,17 +1,17 @@
 {
   "targets": [
-    "iron_spells_genesis_distort",
+    "iron_spells_genesis_vector_buffer",
     "swap"
   ],
   "passes": [
     {
-      "name": "iron_spells_genesis:distort",
+      "name": "iron_spells_genesis:vector_distort",
       "intarget": "minecraft:main",
       "outtarget": "swap",
       "auxtargets": [
         {
-          "name": "DistortSampler",
-          "id": "iron_spells_genesis_distort"
+          "name": "VectorSampler",
+          "id": "iron_spells_genesis_vector_buffer"
         }
       ]
     },

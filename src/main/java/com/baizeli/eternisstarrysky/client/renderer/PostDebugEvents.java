@@ -4,7 +4,6 @@ import com.baizeli.eternisstarrysky.EternisStarrySky;
 import com.baizeli.eternisstarrysky.client.particles.ModParticles;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -20,9 +19,6 @@ import static com.baizeli.eternisstarrysky.Items.ModItems.INFINITY_SWORD;
 )
 public class PostDebugEvents {
 
-    public static final ResourceLocation DISTORT =
-            new ResourceLocation(EternisStarrySky.MOD_ID, "shaders/post/distort.json");
-
     /** 当前是否启用 Distort */
     private static boolean distortEnabled = false;
 
@@ -32,40 +28,6 @@ public class PostDebugEvents {
         if (event.getItemStack().getItem() != INFINITY_SWORD.get()) return;
 
         Minecraft mc = Minecraft.getInstance();
-
-        try {
-            if(mc.player.isShiftKeyDown()){
-                if (!distortEnabled ) {
-                    // === 开启 ===
-                    if (mc.gameRenderer.currentEffect() != null) {
-                        mc.gameRenderer.shutdownEffect();
-                    }
-
-                    mc.gameRenderer.loadEffect(DISTORT);
-                    distortEnabled = true;
-
-                    mc.player.displayClientMessage(
-                            Component.literal("§dDistort Enabled"),
-                            true
-                    );
-
-                } else {
-                    // === 关闭 ===
-                    mc.gameRenderer.shutdownEffect();
-                    distortEnabled = false;
-
-                    mc.player.displayClientMessage(
-                            Component.literal("§7Distort Disabled"),
-                            true
-                    );
-                }
-            }
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            distortEnabled = false;
-        }
 
         Vec3 look = mc.player.getLookAngle(); // 玩家朝向
         Vec3 pos = mc.player.position().add(0, mc.player.getEyeHeight(), 0); // 从眼睛位置发射
