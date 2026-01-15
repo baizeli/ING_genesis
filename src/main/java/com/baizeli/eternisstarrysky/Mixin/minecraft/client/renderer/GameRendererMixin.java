@@ -11,6 +11,8 @@ import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.*;
 
 import static com.baizeli.eternisstarrysky.client.TrailRender.renderTrail;
+import static com.baizeli.eternisstarrysky.client.renderer.DistortWorldRender.distortChain;
+import static vazkii.patchouli.client.base.ClientTicker.partialTicks;
 
 @Mixin(GameRenderer.class)
 public abstract class GameRendererMixin {
@@ -39,6 +41,23 @@ public abstract class GameRendererMixin {
         )
     )
     private void afterIrisRender(float partialTicks, long finishTimeNano, boolean renderLevel, CallbackInfo ci) {
+
         renderTrail(partialTicks,finishTimeNano,renderLevel);
     }
+
+
+
+    @Inject(
+            method = "render",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/renderer/LevelRenderer;doEntityOutline()V",
+                    shift = At.Shift.AFTER
+            )
+    )
+    private void afterVanillaPostProcessing(float partialTicks, long nanoTime, boolean renderLevel, CallbackInfo ci) {
+        distortChain.process(partialTicks);
+    }
+
+
 }

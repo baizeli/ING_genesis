@@ -4,6 +4,8 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "iron_spells_genesis.refmap.json",
   "mixins": [
+    "minecraft.client.renderer.ParticleAccessor",
+    "minecraft.client.renderer.ParticleEngineAccessor",
     "ironsspellbooks.gui.arcane_anvil.ArcaneAnvilMenuMixin",
     "ironsspellbooks.item.GoldCrownArmorItemMixin",
     "jei.library.gui.recipes.RecipeLayoutMixin",

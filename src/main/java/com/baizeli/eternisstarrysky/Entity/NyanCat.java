@@ -1,5 +1,6 @@
 package com.baizeli.eternisstarrysky.Entity;
 
+import com.baizeli.eternisstarrysky.client.particles.ModParticles;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -132,6 +133,46 @@ public class NyanCat extends AbstractArrow {
     public void tick() {
         super.tick();
         recordTrailPosition();
+        {
+
+
+            Vec3 velocity = this.getDeltaMovement().normalize(); // 获取当前速度方向
+            
+            // 计算垂直于速度方向的两个向量
+            Vec3 perpendicular1, perpendicular2;
+            if (Math.abs(velocity.y) < 0.9) {
+                // 如果不是接近垂直向上/下的方向，使用Y轴作为参考
+                perpendicular1 = new Vec3(0, 1, 0).cross(velocity).normalize();
+            } else {
+                // 如果接近垂直方向，使用X轴作为参考
+                perpendicular1 = new Vec3(1, 0, 0).cross(velocity).normalize();
+            }
+            perpendicular2 = velocity.cross(perpendicular1).normalize();
+            
+            // 在垂直于速度的方向上生成一圈粒子
+            int particleCount = 8; // 圆周上的粒子数
+            for (int i = 0; i < particleCount; i++) {
+                double angle = 2.0 * Math.PI * i / particleCount;
+                double offsetX = Math.cos(angle) * 0.5; // 半径为0.5的圆
+                double offsetZ = Math.sin(angle) * 0.5;
+                
+                // 计算相对于速度方向的偏移
+                Vec3 offset = perpendicular1.scale(offsetX).add(perpendicular2.scale(offsetZ));
+                
+                Vec3 particlePos = new Vec3(this.getX(), this.getY(), this.getZ()).add(offset);
+                
+                // 粒子速度方向垂直于速度方向向外扩散
+                Vec3 direction = offset.normalize().scale(0.5);
+                
+                this.level().addParticle(ModParticles.CRESCENT_BLADE.get(),
+                        particlePos.x, particlePos.y, particlePos.z,
+                        direction.x, direction.y, direction.z);
+
+            }
+
+
+        }
+
 
         if (this.tickCount > 600) {
             this.discard();
