@@ -18,6 +18,10 @@ import java.util.*;
 
 @Mod.EventBusSubscriber(modid = EternisStarrySky.MODID)
 public class UnparalleledEvent {
+    public static final double SPEED_BONUS = 1.0; // 移动速度
+    public static final double DAMAGE_BONUS = 1.0; // 伤害
+    public static final double SPELL_POWER_BONUS = 0.5; // 法术强度
+    
     private static final Map<Player, Boolean> hasUsedSpecialJump = new HashMap<>();
     private static final Map<Player, Boolean> wasJumpPressed = new HashMap<>();
     
@@ -35,7 +39,7 @@ public class UnparalleledEvent {
                     new AttributeModifier(
                         SPEED_MODIFIER_UUID, 
                         "Unparalleled speed boost", 
-                        1.0,
+                        SPEED_BONUS,
                         AttributeModifier.Operation.MULTIPLY_TOTAL
                     )
                 );
@@ -46,7 +50,7 @@ public class UnparalleledEvent {
                     new AttributeModifier(
                         DAMAGE_MODIFIER_UUID, 
                         "Unparalleled damage boost", 
-                        1.0,
+                        DAMAGE_BONUS,
                         AttributeModifier.Operation.MULTIPLY_TOTAL
                     )
                 );
@@ -57,7 +61,7 @@ public class UnparalleledEvent {
                     new AttributeModifier(
                         SPELL_POWER_MODIFIER_UUID, 
                         "Unparalleled spell power boost", 
-                        0.5,
+                        SPELL_POWER_BONUS,
                         AttributeModifier.Operation.ADDITION
                     )
                 );

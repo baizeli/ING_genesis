@@ -20,6 +20,7 @@
   "spell.iron_spells_genesis.blood_ritual": "祭血仪式",
   "spell.iron_spells_genesis.blood_control": "驭血",
   "spell.iron_spells_genesis.dead_star_decree": "死星天裁",
+  "spell.iron_spells_genesis.blood_war": "血战",
   "spell.iron_spells_genesis.blood_frenzy": "血之狂乱",
   "spell.iron_spells_genesis.confusion": "迷茫",
 
@@ -30,7 +31,6 @@
   "spell.iron_spells_genesis.myriad_arrows": "万箭",
   "spell.iron_spells_genesis.life_and_death_realm": "生死之境",
   "spell.iron_spells_genesis.stellar_soul_control": "星魂掌控",
-  "spell.iron_spells_genesis.blood_war": "血战",
   "spell.iron_spells_genesis.unlimited_blade_works": "无限剑制",
   "spell.iron_spells_genesis.unparalleled": "无双",
   "spell.iron_spells_genesis.glazed_flower_rain": "琉璃花雨",
@@ -38,10 +38,13 @@
   "spell.iron_spells_genesis.never_miss": "永不落空",
   "spell.iron_spells_genesis.final_whisper": "最后的轻语",
 
-  "spell.iron_spells_genesis.warped_blood_burst.guide": "消耗自身50%的血量，对一定范围内的生物造成伤害并附带禁疗效果",
-  "spell.iron_spells_genesis.warped_barrier.guide": "将90%的生命值转化成伤害吸收",
-  "spell.iron_spells_genesis.reverse_plague.guide": "将目标正面效果与自身负面效果进行交换，短时间禁止目标获得正面效果，阻止自身获得效果并转嫁负面效果",
-  "spell.iron_spells_genesis.final_whisper.guide": "发射一支箭矢，在落地的地方对5x5范围的生物每秒造成伤害，持续5秒",
+  "spell.iron_spells_genesis.warped_blood_burst.guide": "消耗自身50%的血量，对一定范围内的生物造成伤害并附带禁疗效果。",
+  "spell.iron_spells_genesis.warped_barrier.guide": "将90%的生命值转化成伤害吸收。",
+  "spell.iron_spells_genesis.reverse_plague.guide": "将目标正面效果与自身负面效果进行交换，短时间禁止目标获得正面效果，阻止自身获得效果并转嫁负面效果。",
+  "spell.iron_spells_genesis.final_whisper.guide": "发射一支箭矢，在落地的地方对5x5范围的生物每秒造成伤害，持续5秒。",
+  "spell.iron_spells_genesis.blood_war.guide": "随着生命值的减少加强自身数值。",
+  "spell.iron_spells_genesis.blood_frenzy.guide": "持续恢复生命值并减少受到的一半伤害且造成的伤害翻倍，并持续将自身推向最近的实体。",
+  "spell.iron_spells_genesis.unparalleled.guide": "加强自身数值并可以进行二段跳且免疫摔落伤害。",
 
   "spell.iron_spells_genesis.warped_blood_burst.low_health": "血量不足以释放扭曲之血爆！",
   "spell.iron_spells_genesis.final_whisper.low_health": "血量不足以释放最后的轻语！",
