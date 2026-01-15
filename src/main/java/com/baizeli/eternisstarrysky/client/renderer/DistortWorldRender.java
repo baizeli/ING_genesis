@@ -1,5 +1,6 @@
 package com.baizeli.eternisstarrysky.client.renderer;
 
+import com.baizeli.eternisstarrysky.EternisStarrySky;
 import com.baizeli.eternisstarrysky.Mixin.minecraft.client.renderer.ParticleAccessor;
 import com.baizeli.eternisstarrysky.Mixin.minecraft.client.renderer.ParticleEngineAccessor;
 import com.baizeli.eternisstarrysky.client.particles.CrescentBladeParticle;
@@ -13,6 +14,7 @@ import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.PostChain;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
@@ -26,16 +28,31 @@ import org.lwjgl.opengl.GL11;
 import java.util.Map;
 import java.util.Queue;
 
-import static com.baizeli.eternisstarrysky.client.renderer.PostDebugEvents.DISTORT;
-
 @Mod.EventBusSubscriber(value = Dist.CLIENT)
 public class DistortWorldRender {
+    public static final ResourceLocation DISTORT =
+            new ResourceLocation(EternisStarrySky.MOD_ID, "shaders/post/distort.json");    
+    public static final ResourceLocation VECTOR_DISTORT =
+            new ResourceLocation(EternisStarrySky.MOD_ID, "shaders/post/vector_distort.json");
     public static PostChain distortChain;
+    public static PostChain vectorDistort;
+
+    public static void processMyPostChain(float partialTicks){
+//        distortChain.process(partialTicks);
+        vectorDistort.process(partialTicks);
+    }
     public static void initChain(Minecraft mc) {
         if (distortChain != null) distortChain.close();
         try {
             distortChain = new PostChain(mc.getTextureManager(), mc.getResourceManager(), mc.getMainRenderTarget(), DISTORT);
             distortChain.resize(mc.getWindow().getWidth(), mc.getWindow().getHeight());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (vectorDistort != null) vectorDistort.close();
+        try {
+            vectorDistort = new PostChain(mc.getTextureManager(), mc.getResourceManager(), mc.getMainRenderTarget(), VECTOR_DISTORT);
+            vectorDistort.resize(mc.getWindow().getWidth(), mc.getWindow().getHeight());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -48,12 +65,21 @@ public class DistortWorldRender {
         LocalPlayer player = mc.player;
         if (player == null) return;
 
+        // 处理DISTORT后处理RT
+//        handleDistortRT(event, mc);
+        
+        // 处理VECTOR_DISTORT后处理RT
+        handleVectorDistortRT(event, mc);
+    }
+
+    // 提取处理DISTORT后处理RT的方法
+    private static void handleDistortRT(RenderLevelStageEvent event, Minecraft mc) {
         // ① 必须有后处理在跑
-        PostChain chain =distortChain;
+        PostChain chain = distortChain;
         if (chain == null) return;
         distortChain.resize(mc.getWindow().getWidth(), mc.getWindow().getHeight());
         // ② 拿 PostChain 自己创建的 RT（JSON 里的 "distort"）
-        var rt = chain.getTempTarget("distort");
+        var rt = chain.getTempTarget("iron_spells_genesis_distort");
         if (rt == null) return;
 
         // ③ 复制主屏幕深度 → 保证遮挡
@@ -73,13 +99,11 @@ public class DistortWorldRender {
 //        renderGeometries(event, mc);
 
         // 渲染粒子
-        renderParticles(event.getPoseStack(), mc);
-
+//        renderParticles(event.getPoseStack(), mc);
+        renderParticlesInVectorBuffer(event.getPoseStack(), mc);
 
         //  切回主屏幕
         mc.getMainRenderTarget().bindWrite(true);
-
-
 
         //测试rt
 //         rt.blitToScreen(
@@ -87,8 +111,46 @@ public class DistortWorldRender {
 //                mc.getWindow().getHeight(),
 //                false
 //        );
+    }
 
+    // 添加处理VECTOR_DISTORT后处理RT的方法
+    private static void handleVectorDistortRT(RenderLevelStageEvent event, Minecraft mc) {
+        // ① 必须有后处理在跑
+        PostChain chain = vectorDistort;
+        if (chain == null) return;
+        vectorDistort.resize(mc.getWindow().getWidth(), mc.getWindow().getHeight());
+        // ② 拿 PostChain 自己创建的 RT（JSON 里的 "vector_distort"）
+        var rt = chain.getTempTarget("iron_spells_genesis_vector_buffer");
+        if (rt == null) return;
 
+        // ③ 复制主屏幕深度 → 保证遮挡
+        rt.copyDepthFrom(mc.getMainRenderTarget());
+
+        // ④ 绑定这个 RT
+        rt.bindWrite(true);
+
+        // ⑤ 只清颜色，不清深度
+        RenderSystem.clearColor(0, 0, 0, 0);
+        RenderSystem.clear(GL11.GL_COLOR_BUFFER_BIT, false);
+
+        RenderSystem.enableDepthTest();
+        RenderSystem.depthFunc(GL11.GL_LEQUAL);
+
+        // 渲染各种几何体
+//        renderGeometries(event, mc);
+
+        // 渲染粒子
+        renderParticlesInVectorBuffer(event.getPoseStack(), mc);
+
+        //  切回主屏幕
+        mc.getMainRenderTarget().bindWrite(true);
+
+        //测试rt
+//         rt.blitToScreen(
+//                mc.getWindow().getWidth(),
+//                mc.getWindow().getHeight(),
+//                false
+//        );
     }
 
     private static void renderGeometries(RenderLevelStageEvent event, Minecraft mc) {
@@ -194,6 +256,106 @@ public class DistortWorldRender {
 
         BufferUploader.drawWithShader(buf.end());
     }
+
+    private static final ResourceLocation VECTOR_DISTORT_TEX =
+            new ResourceLocation("iron_spells_genesis", "textures/misc/vector_distort.png");
+
+
+    private static void renderParticlesInVectorBuffer(PoseStack poseStack, Minecraft mc) {
+        ParticleEngineAccessor accessor = (ParticleEngineAccessor) mc.particleEngine;
+        Map<ParticleRenderType, Queue<Particle>> map = accessor.getParticles();
+
+        Camera camera = mc.gameRenderer.getMainCamera();
+        Vec3 camPos = camera.getPosition();
+
+        PoseStack renderStack = new PoseStack();
+        renderStack.mulPose(Axis.XP.rotationDegrees(camera.getXRot()));
+        renderStack.mulPose(Axis.YP.rotationDegrees(camera.getYRot() + 180.0F));
+
+
+        RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
+        RenderSystem.setShaderTexture(0, VECTOR_DISTORT_TEX);
+
+        BufferBuilder buf = Tesselator.getInstance().getBuilder();
+        buf.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX_COLOR);
+
+        for (Queue<Particle> queue : map.values()) {
+            for (Particle p : queue) {
+                if (!(p instanceof CrescentBladeParticle cbp)) continue;
+                ParticleAccessor acc = (ParticleAccessor) cbp;
+
+                float partialTicks = mc.getFrameTime();
+
+                double x = Mth.lerp(partialTicks, acc.getXo(), acc.getX());
+                double y = Mth.lerp(partialTicks, acc.getYo(), acc.getY());
+                double z = Mth.lerp(partialTicks, acc.getZo(), acc.getZ());
+
+                float relX = (float) (x - camPos.x);
+                float relY = (float) (y - camPos.y);
+                float relZ = (float) (z - camPos.z);
+
+                renderStack.pushPose();
+                renderStack.translate(relX, relY, relZ);
+
+                // ===== 原样保留你的正交基计算 =====
+                Vec3 dir = new Vec3(acc.getXd(), acc.getYd(), acc.getZd()).normalize();
+                Vector3f forward = new Vector3f((float) dir.x, (float) dir.y, (float) dir.z);
+
+                Vector3f temp = new Vector3f(0, 1, 0);
+                if (Math.abs(forward.dot(temp)) > 0.99f) temp.set(1, 0, 0);
+
+                Vector3f right = new Vector3f();
+                forward.cross(temp, right).normalize();
+
+                Vector3f up = new Vector3f();
+                right.cross(forward, up).normalize();
+
+                float s = cbp.radius;
+                Matrix4f mat = renderStack.last().pose();
+
+                int r = 255, g = 255, b = 255, a = 255;
+
+                // ===== 只加 UV，不改几何 =====
+                buf.vertex(mat,
+                                (-right.x() - up.x()) * s,
+                                (-right.y() - up.y()) * s,
+                                (-right.z() - up.z()) * s)
+                        .uv(0.0F, 1.0F)
+                        .color(r, g, b, a)
+                        .endVertex();
+
+                buf.vertex(mat,
+                                ( right.x() - up.x()) * s,
+                                ( right.y() - up.y()) * s,
+                                ( right.z() - up.z()) * s)
+                        .uv(1.0F, 1.0F)
+                        .color(r, g, b, a)
+                        .endVertex();
+
+                buf.vertex(mat,
+                                ( right.x() + up.x()) * s,
+                                ( right.y() + up.y()) * s,
+                                ( right.z() + up.z()) * s)
+                        .uv(1.0F, 0.0F)
+                        .color(r, g, b, a)
+                        .endVertex();
+
+                buf.vertex(mat,
+                                (-right.x() + up.x()) * s,
+                                (-right.y() + up.y()) * s,
+                                (-right.z() + up.z()) * s)
+                        .uv(0.0F, 0.0F)
+                        .color(r, g, b, a)
+                        .endVertex();
+
+                renderStack.popPose();
+            }
+        }
+
+        BufferUploader.drawWithShader(buf.end());
+    }
+
+
 
 
 }

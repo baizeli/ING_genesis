@@ -135,7 +135,18 @@ public abstract class LivingEntityMixin {
     @Inject(method = "addEffect(Lnet/minecraft/world/effect/MobEffectInstance;Lnet/minecraft/world/entity/Entity;)Z", at = @At("HEAD"), cancellable = true)
     private void addEffect(MobEffectInstance effectInstance, Entity entity, CallbackInfoReturnable<Boolean> cir) {
         LivingEntity living = (LivingEntity) (Object) this;
-        ServerLevel serverLevel = (ServerLevel) living.level();
+
+
+
+        if (living.level().isClientSide()) {
+            return;
+        }
+
+        if (!(living.level() instanceof ServerLevel serverLevel)) {
+            return;
+        }
+
+
         Map<LivingEntity, LivingEntity> entityMap = new HashMap<>();
         ReversePlagueSpell.entityMap.forEach(((uuid, uuid1) -> {
             LivingEntity livingEntity = (LivingEntity) serverLevel.getEntity(uuid);
