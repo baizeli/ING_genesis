@@ -2,11 +2,14 @@ package com.baizeli.eternisstarrysky.Mixin.minecraft.world.entity;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
 import com.baizeli.eternisstarrysky.Items.AvaritiaSword;
+import com.baizeli.eternisstarrysky.Items.curios.rune_plus.NatureRunePlus;
 import com.baizeli.eternisstarrysky.effect.spell.ModEffect;
 import com.baizeli.eternisstarrysky.sound.SoundsRegister;
 import com.baizeli.eternisstarrysky.client.renderer.EvasionAnimationRenderer;
 import com.baizeli.eternisstarrysky.spell.chaos.ReversePlagueSpell;
 import com.baizeli.eternisstarrysky.event.spell.celestial_source.LifeAndDeathRealmEvent;
+import com.baizeli.eternisstarrysky.util.ModCurios;
+import io.redspace.ironsspellbooks.entity.spells.poison_cloud.PoisonCloud;
 import net.minecraft.server.level.*;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.damagesource.DamageSource;
@@ -32,6 +35,8 @@ public abstract class LivingEntityMixin {
 	@Shadow public abstract void remove(Entity.RemovalReason p_276115_);
 
 	@Shadow public abstract boolean isAlive();
+
+    @Shadow public abstract int getArmorValue();
 
 	@Unique
 	private boolean ava = false;
@@ -170,6 +175,25 @@ public abstract class LivingEntityMixin {
         if (entityMap.containsValue(living) && living.getPersistentData().getLong(EternisStarrySky.MOD_ID + "remaining_time") >= serverLevel.getGameTime() && effectInstance.effect.getCategory() == MobEffectCategory.BENEFICIAL) {
             cir.cancel();
         }
+    }
+
+    @Redirect(
+            method = "getDamageAfterArmorAbsorb",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/world/entity/LivingEntity;getArmorValue()I"
+            )
+    )
+    public int onDamageArmorAbsorb(LivingEntity instance, DamageSource source) {
+        Entity directEntity = source.getDirectEntity();
+        Entity owner = source.getEntity();
+        int armorValue = getArmorValue();
+        if(owner instanceof LivingEntity entity && directEntity instanceof PoisonCloud) {
+            if(ModCurios.hasCurios(entity, NatureRunePlus::test)) {
+                return 0;
+            }
+        }
+        return armorValue;
     }
 	
 /* 	@Overwrite
