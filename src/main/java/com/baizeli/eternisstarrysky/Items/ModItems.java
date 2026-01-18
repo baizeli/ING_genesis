@@ -1,11 +1,14 @@
 package com.baizeli.eternisstarrysky.Items;
 
 import com.baizeli.eternisstarrysky.Content.ModBlocks;
+import com.baizeli.eternisstarrysky.Content.ModTags;
 import com.baizeli.eternisstarrysky.EternisStarrySky;
 import com.baizeli.eternisstarrysky.Items.Staff.*;
 import com.baizeli.eternisstarrysky.Items.armor.*;
+import com.baizeli.eternisstarrysky.Items.curios.EternalRing;
 import com.baizeli.eternisstarrysky.Items.curios.GenesisCurseItem;
 import com.baizeli.eternisstarrysky.Items.curios.LaoWang237Curios;
+import com.baizeli.eternisstarrysky.Items.curios.rune_plus.*;
 import com.baizeli.eternisstarrysky.Items.manuscript.CelestialSourceManuscript;
 import com.baizeli.eternisstarrysky.Items.manuscript.ChaosManuscript;
 import com.baizeli.eternisstarrysky.TooltipParticleHandler.ITooltipParticleItem;
@@ -17,16 +20,22 @@ import io.redspace.ironsspellbooks.item.armor.IronsExtendedArmorMaterial;
 import io.redspace.ironsspellbooks.util.ItemPropertiesHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
+import java.util.*;
+import java.util.function.Supplier;
 
 public class ModItems {
+    //加到创造标签页的用这个注册
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, EternisStarrySky.MOD_ID);
+    //不加到创造标签页的用这个注册
+    public static final DeferredRegister<Item> PRE_ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, EternisStarrySky.MOD_ID);
 
     public static final RegistryObject<Item> PURPLEITE_GALAXY_INGOT = ITEMS.register("purpleite_galaxy_ingot", () -> new EternisMaterial(new Item.Properties(), 0));
 
@@ -365,6 +374,30 @@ public class ModItems {
 
     public static final RegistryObject<BlockItem> END_ARCANE_CRYSTAL_ORE_ITEM =
             ModItems.ITEMS.register("end_arcane_crystal_ore", () -> new BlockItem(ModBlocks.END_ARCANE_CRYSTAL_ORE.get(), new Item.Properties()));
+
+    public static final Map<TagKey<Item>, Set<RegistryObject<Item>>> itemTagMap = new HashMap<>();
+    public static final RegistryObject<Item> ETERNAL_RING = registerCurios("eternal_ring", ModTags.RING, EternalRing::new);
+    public static final RegistryObject<Item> LIGHTNING_RUNE_PLUS = registerCurios("lightning_rune_plus", ModTags.BODY, LightningRunePlus::new);
+    public static final RegistryObject<Item> NATURE_RUNE_PLUS = registerCurios("nature_rune_plus", ModTags.BRACELET, NatureRunePlus::new);
+    public static final RegistryObject<Item> ENDER_RUNE_PLUS = registerCurios("ender_rune_plus", ModTags.RING, EnderRunePlus::new);
+    public static final RegistryObject<Item> HOLY_RUNE_PLUS = registerCurios("holy_rune_plus", ModTags.HANDS, HolyRunePlus::new);
+    public static final RegistryObject<Item> ICE_RUNE_PLUS = registerCurios("ice_rune_plus", ModTags.HANDS, IceRunePlus::new);
+    public static final RegistryObject<Item> BLOOD_RUNE_PLUS = registerCurios("blood_rune_plus", ModTags.CHARM, BloodRunePlus::new);
+    public static final RegistryObject<Item> FIRE_RUNE_PLUS = registerCurios("fire_rune_plus", ModTags.HANDS, FireRunePlus::new);
+    public static final RegistryObject<Item> ELDRITCH_RUNE_PLUS = registerCurios("eldritch_rune_plus", ModTags.HANDS, EldritchRunePlus::new);
+
+    private static RegistryObject<Item> registerCurios(String name, TagKey<Item> tagKey, Supplier<Item> item) {
+        RegistryObject<Item> register = ITEMS.register(name, item);
+        Set<RegistryObject<Item>> set = itemTagMap.getOrDefault(tagKey, new HashSet<>());
+        set.add(register);
+        itemTagMap.put(tagKey, set);
+        return register;
+    }
+
+    public static void register(IEventBus eventBus) {
+        ITEMS.register(eventBus);
+        PRE_ITEMS.register(eventBus);
+    }
 
     public static class ChaosBaseItem extends Item {
         public ChaosBaseItem(Properties properties) {

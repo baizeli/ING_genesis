@@ -2,6 +2,7 @@ package com.baizeli.eternisstarrysky;
 
 import com.baizeli.eternisstarrysky.Content.ArcaneWorkbench.ArcaneWorkbenchScreen;
 import com.baizeli.eternisstarrysky.Content.ModBlocks;
+import com.baizeli.eternisstarrysky.Content.ModCreativeTab;
 import com.baizeli.eternisstarrysky.Content.Workbenchs.*;
 import com.baizeli.eternisstarrysky.Entity.*;
 import com.baizeli.eternisstarrysky.Entity.spells.celestial_source.*;
@@ -75,135 +76,12 @@ public class EternisStarrySky
         return new ResourceLocation(MOD_ID, path);
     }
 
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, MOD_ID);
-
-    public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MOD_ID);
-
-
-    public static final RegistryObject<CreativeModeTab> EXAMPLE_TAB = CREATIVE_MODE_TABS.register("iron_spells_genesis_tab", () -> CreativeModeTab.builder()
-            .withTabsBefore(CreativeModeTabs.COMBAT)
-            .title(Component.translatable("itemGroup." + MOD_ID + ".iron_spells_genesis_tab"))
-            .icon(() -> ModItems.GALAXY_SCROLL.get().getDefaultInstance())
-            .displayItems((parameters, output) -> {
-                output.accept(ModItems.ETERNIS_APPLE.get());
-                output.accept(ModItems.PURPLEITE_GALAXY_INGOT.get());
-                output.accept(ModItems.WHISPER_OF_THE_PAST.get());
-                output.accept(ModItems.CREATE_STAR.get());
-                output.accept(ModItems.GALAXY_SCROLL.get());
-                output.accept(ModItems.GOOD_CAKE.get());
-
-                output.accept(ModItems.INFINITY_SWORD.get());
-                output.accept(ModItems.AVARITIA_SWORD.get());
-                
-                /*output.accept(ModItems.INFINITY_ETERNAL_HELMET.get());
-                output.accept(ModItems.INFINITY_ETERNAL_CHESTPLATE.get());
-                output.accept(ModItems.INFINITY_ETERNAL_LEGGINGS.get());
-                output.accept(ModItems.INFINITY_ETERNAL_BOOTS.get());*/
-
-                // 神圣金属套
-                output.accept(ModItems.DIVINE_METAL_HELMET.get());
-                output.accept(ModItems.DIVINE_METAL_CHESTPLATE.get());
-                output.accept(ModItems.DIVINE_METAL_LEGGINGS.get());
-                output.accept(ModItems.DIVINE_METAL_BOOTS.get());
-
-                // 星源法术套
-                output.accept(ModItems.CELESTIAL_SOURCE_SPELL_HELMET.get());
-                output.accept(ModItems.CELESTIAL_SOURCE_SPELL_CHESTPLATE.get());
-                output.accept(ModItems.CELESTIAL_SOURCE_SPELL_LEGGINGS.get());
-                output.accept(ModItems.CELESTIAL_SOURCE_SPELL_BOOTS.get());
-                
-                // 混沌法术套
-                output.accept(ModItems.CHAOS_SPELL_HELMET.get());
-                output.accept(ModItems.CHAOS_SPELL_CHESTPLATE.get());
-                output.accept(ModItems.CHAOS_SPELL_LEGGINGS.get());
-                output.accept(ModItems.CHAOS_SPELL_BOOTS.get());
-
-                // 紫极战斗套
-                output.accept(ModItems.VIOLET_ZENITH_HELMET.get());
-                output.accept(ModItems.VIOLET_ZENITH_CHESTPLATE.get());
-                output.accept(ModItems.VIOLET_ZENITH_LEGGINGS.get());
-                output.accept(ModItems.VIOLET_ZENITH_BOOTS.get());
-
-                output.accept(ModItems.WORKBENCH.get());
-
-                // 奥术工作台
-                /*output.accept(ModItems.ARCANE_WORKBENCH.get());*/
-
-                // 混沌法术书
-                output.accept(ModItems.CHAOS_SPELL_BOOK.get());
-
-                // 星源法术书
-                output.accept(ModItems.CELESTIAL_SOURCE_SPELL_BOOK.get());
-
-                // 混沌法杖
-                output.accept(ModItems.CHAOS_STAFF.get());
-
-                // 星源法杖
-                output.accept(ModItems.CELESTIAL_SOURCE_STAFF.get());
-
-                // 扭曲之混沌
-                output.accept(ModItems.TWISTED_CHAOS.get());
-
-                // 星源珍珠
-                output.accept(ModItems.CELESTIAL_SOURCE_PEARL.get());
-
-                // 星源铁锭
-                output.accept(ModItems.CELESTIAL_SOURCE_INGOT.get());
-
-                // 神圣金属锭
-                output.accept(ModItems.DIVINE_METAL_INGOT.get());
-
-                // 扭曲混沌锭
-                output.accept(ModItems.TWISTED_CHAOS_INGOT.get());
-                
-                // 老王237
-                output.accept(ModItems.LAO_WANG_237.get());
-
-                // 创世之诅咒
-                output.accept(ModItems.GENESIS_CURSE.get());
-
-                // 无限忏悔石
-                output.accept(ModItems.INFINITE_SHRIVING_STONE.get());
-
-                // 飞燕穿柳
-                output.accept(ModItems.FLYING_SWALLOW_THROUGH_Willow.get());
-
-                // 水晶
-                output.accept(ModItems.ARCANE_CRYSTAL.get());
-                output.accept(ModItems.BLOOD_CRYSTAL.get());
-                output.accept(ModItems.ELDRITCH_CRYSTAL.get());
-                output.accept(ModItems.ENDER_CRYSTAL.get());
-                output.accept(ModItems.EVOCATION_CRYSTAL.get());
-                output.accept(ModItems.FIRE_CRYSTAL.get());
-                output.accept(ModItems.HOLY_CRYSTAL.get());
-                output.accept(ModItems.ICE_CRYSTAL.get());
-                output.accept(ModItems.LIGHTNING_CRYSTAL.get());
-                output.accept(ModItems.NATURE_CRYSTAL.get());
-                output.accept(ModItems.CHAOS_CRYSTAL.get());
-                output.accept(ModItems.CELESTIAL_SOURCE_CRYSTAL.get());
-
-                // 手稿
-                output.accept(ModItems.CHAOS_MANUSCRIPT.get());
-                output.accept(ModItems.CELESTIAL_SOURCE_MANUSCRIPT.get());
-
-                // 手稿碎片
-                output.accept(ModItems.CHAOS_MANUSCRIPT_FRAGMENT.get());
-                output.accept(ModItems.BLANK_CELESTIAL_SOURCE_MANUSCRIPT.get());
-
-                // 奥术水晶矿
-                output.accept(ModItems.ARCANE_CRYSTAL_ORE_ITEM.get());
-                output.accept(ModItems.ARCANE_CRYSTAL_ORE_DEEPSLATE_ITEM.get());
-                output.accept(ModItems.NETHER_ARCANE_CRYSTAL_ORE_ITEM.get());
-                output.accept(ModItems.END_ARCANE_CRYSTAL_ORE_ITEM.get());
-            }).build());
-
     public EternisStarrySky(FMLJavaModLoadingContext context)
     {
         IEventBus modEventBus = context.getModEventBus();
 
-        ITEMS.register(modEventBus);
-        CREATIVE_MODE_TABS.register(modEventBus);
-        ModItems.ITEMS.register(modEventBus);
+        ModItems.register(modEventBus);
+        ModCreativeTab.register(modEventBus);
         ModEntities.ENTITY_TYPES.register(modEventBus);
         ModBlocks.BLOCKS.register(modEventBus);
         SoundsRegister.SOUND_EVENTS.register(modEventBus);

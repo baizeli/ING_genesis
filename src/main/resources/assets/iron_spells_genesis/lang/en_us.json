@@ -192,5 +192,24 @@
   
   "entity.iron_spells_genesis.dead_star_decree_comet": "Dead Star Decree - Comet",
   "entity.iron_spells_genesis.dead_star_decree_large_comet": "Dead Star Decree - Large Comet",
-  "entity.iron_spells_genesis.lighting_bolt": "Rainbow Lighting"
+  "entity.iron_spells_genesis.lighting_bolt": "Rainbow Lighting",
+  "damage_type.iron_spells_genesis.celestial_source_magic": "Celestial Source Magic Damage",
+  "damage_type.iron_spells_genesis.chaos_magic": "Chaos Magic Damage",
+  "item.iron_spells_genesis.blood_rune_plus": "§bBlood Rune Plus",
+  "item.iron_spells_genesis.blood_rune_plus.hover": "......",
+  "item.iron_spells_genesis.ender_rune_plus": "§bEnder Rune Plus",
+  "item.iron_spells_genesis.ender_rune_plus.hover": "......",
+  "item.iron_spells_genesis.eternal_ring": "§dEternal Ring",
+  "item.iron_spells_genesis.eternal_ring.hover": "......",
+  "item.iron_spells_genesis.fire_rune_plus": "§bFire Rune Plus",
+  "item.iron_spells_genesis.fire_rune_plus.hover": "......",
+  "item.iron_spells_genesis.holy_rune_plus": "§bHoly Rune Plus",
+  "item.iron_spells_genesis.holy_rune_plus.hover": "......",
+  "item.iron_spells_genesis.ice_rune_plus": "§bIce Rune Plus",
+  "item.iron_spells_genesis.ice_rune_plus.hover": "......",
+  "item.iron_spells_genesis.lightning_rune_plus": "§bLightning Rune Plus",
+  "item.iron_spells_genesis.lightning_rune_plus.hover": "......",
+  "item.iron_spells_genesis.nature_rune_plus": "§bNature Rune Plus",
+  "item.iron_spells_genesis.nature_rune_plus.hover": "......",
+  "item_group.iron_spells_genesis.iron_spells_genesis": "Iron's Spells 'n Spellbooks: New genesis"
 }
