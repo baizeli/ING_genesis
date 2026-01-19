@@ -15,7 +15,9 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 public class MixinPoisonSplash {
     @Inject(
             method = "createPoisonCloud",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;addFreshEntity(Lnet/minecraft/world/entity/Entity;)Z"),
+            at = @At(value = "INVOKE",
+                    target = "Lnet/minecraft/world/level/Level;addFreshEntity(Lnet/minecraft/world/entity/Entity;)Z",
+                    remap = true),
             locals = LocalCapture.CAPTURE_FAILHARD
     )
     private void createPoisonCloud(CallbackInfo ci, PoisonCloud poisonCloud) {

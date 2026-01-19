@@ -24,10 +24,11 @@ public abstract class MixinIceBlockProjectile extends AbstractMagicProjectile {
     }
 
     @Shadow protected abstract void handleFalling();
-
     @Inject(
             method = "tick",
-            at = @At(value = "INVOKE", target = "Lio/redspace/ironsspellbooks/entity/spells/ice_block/IceBlockProjectile;handleFalling()V")
+            at = @At(value = "INVOKE", target = "Lio/redspace/ironsspellbooks/entity/spells/ice_block/IceBlockProjectile;handleFalling()V",
+                    remap=false),
+            remap = true
     )
     private void handleFalling(CallbackInfo ci) {
         Entity owner = getOwner();
