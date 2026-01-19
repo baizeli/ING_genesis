@@ -23,9 +23,12 @@ public class MixinWispEntity {
 
     @Inject(
             method = "tick",
-            at = @At(value = "INVOKE", target = "Lio/redspace/ironsspellbooks/damage/DamageSources;applyDamage(Lnet/minecraft/world/entity/Entity;FLnet/minecraft/world/damagesource/DamageSource;)Z", shift = At.Shift.AFTER),
-            locals = LocalCapture.CAPTURE_FAILHARD
-    )
+            at = @At(value = "INVOKE",
+                    target = "Lio/redspace/ironsspellbooks/damage/DamageSources;applyDamage(Lnet/minecraft/world/entity/Entity;FLnet/minecraft/world/damagesource/DamageSource;)Z",
+                    remap=false,
+                    shift = At.Shift.AFTER),
+            remap = true,
+            locals = LocalCapture.CAPTURE_FAILHARD    )
     private void onTick(CallbackInfo ci, LivingEntity target) {
         Entity owner = this.cachedOwner;
         if(owner instanceof LivingEntity entity) {

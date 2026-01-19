@@ -18,7 +18,10 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 public class MixinStarfallSpell {
     @Inject(
             method = "shootComet",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;addFreshEntity(Lnet/minecraft/world/entity/Entity;)Z"),
+            at = @At(value = "INVOKE",
+                    target = "Lnet/minecraft/world/level/Level;addFreshEntity(Lnet/minecraft/world/entity/Entity;)Z",
+                    remap = true
+            ),
             locals = LocalCapture.CAPTURE_FAILHARD
     )
     private void cometEnhanced(Level world, int spellLevel, LivingEntity entity, Vec3 spawn, Vec3 trajectory, CallbackInfo ci, Comet fireball) {

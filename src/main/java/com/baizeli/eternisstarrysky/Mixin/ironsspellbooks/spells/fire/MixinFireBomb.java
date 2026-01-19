@@ -25,7 +25,10 @@ public abstract class MixinFireBomb extends AbstractMagicProjectile {
 
     @Inject(
             method = "createFireField",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;addFreshEntity(Lnet/minecraft/world/entity/Entity;)Z"),
+            at = @At(value = "INVOKE",
+                    target = "Lnet/minecraft/world/level/Level;addFreshEntity(Lnet/minecraft/world/entity/Entity;)Z",
+                    remap = true
+            ),
             locals = LocalCapture.CAPTURE_FAILHARD
     )
     private void createFireField(Vec3 location, CallbackInfo ci, FireField fire) {
