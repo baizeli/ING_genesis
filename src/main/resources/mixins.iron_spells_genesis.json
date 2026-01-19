@@ -4,8 +4,7 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "iron_spells_genesis.refmap.json",
   "mixins": [
-    "minecraft.client.renderer.ParticleAccessor",
-    "minecraft.client.renderer.ParticleEngineAccessor",
+    "PostChainAccessor",
     "ironsspellbooks.gui.arcane_anvil.ArcaneAnvilMenuMixin",
     "ironsspellbooks.item.GoldCrownArmorItemMixin",
     "ironsspellbooks.spells.eldritch.MixinEldritchBlastSpell",
@@ -28,6 +27,8 @@
     "ironsspellbooks.spells.nature.MixinPoisonArrowSpell",
     "ironsspellbooks.spells.nature.MixinPoisonSplash",
     "jei.library.gui.recipes.RecipeLayoutMixin",
+    "minecraft.client.renderer.ParticleAccessor",
+    "minecraft.client.renderer.ParticleEngineAccessor",
     "minecraft.world.effect.MobEffectMixin",
     "minecraft.world.entity.EntityMixin",
     "minecraft.world.entity.LivingEntityAccessor",

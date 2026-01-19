@@ -9,8 +9,9 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 public class MixinComet {
     @ModifyArg(
             method = "impactParticles",
-            at = @At(value = "INVOKE", target = "Lio/redspace/ironsspellbooks/particle/BlastwaveParticleOptions;<init>(Lorg/joml/Vector3f;F)V"),
-            index = 1
+            at = @At(value = "INVOKE",
+                    target = "Lio/redspace/ironsspellbooks/particle/BlastwaveParticleOptions;<init>(Lorg/joml/Vector3f;F)V"),
+            index =1
     )
     public float cometEnhanced(float scale) {
         Comet comet = Comet.class.cast(this);
