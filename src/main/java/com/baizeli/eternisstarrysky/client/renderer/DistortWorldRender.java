@@ -1,9 +1,12 @@
 package com.baizeli.eternisstarrysky.client.renderer;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
+import com.baizeli.eternisstarrysky.Mixin.PostChainAccessor;
 import com.baizeli.eternisstarrysky.Mixin.minecraft.client.renderer.ParticleAccessor;
 import com.baizeli.eternisstarrysky.Mixin.minecraft.client.renderer.ParticleEngineAccessor;
 import com.baizeli.eternisstarrysky.client.particles.CrescentBladeParticle;
+import com.mojang.blaze3d.pipeline.RenderTarget;
+import com.mojang.blaze3d.shaders.Uniform;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Axis;
@@ -14,6 +17,7 @@ import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.PostChain;
+import net.minecraft.client.renderer.PostPass;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
@@ -22,9 +26,11 @@ import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.joml.Matrix4f;
+import org.joml.Quaternionf;
 import org.joml.Vector3f;
 import org.lwjgl.opengl.GL11;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
@@ -34,12 +40,71 @@ public class DistortWorldRender {
             new ResourceLocation(EternisStarrySky.MOD_ID, "shaders/post/distort.json");    
     public static final ResourceLocation VECTOR_DISTORT =
             new ResourceLocation(EternisStarrySky.MOD_ID, "shaders/post/vector_distort.json");
+    public static final ResourceLocation SPHERE_CHAIN =
+            new ResourceLocation(EternisStarrySky.MOD_ID, "shaders/post/sphere_chain.json");
     public static PostChain distortChain;
     public static PostChain vectorDistort;
+    public static PostChain sphereChain;
 
-    public static void processMyPostChain(float partialTicks){
-//        distortChain.process(partialTicks);
-        vectorDistort.process(partialTicks);
+    public static void processMyPostChain(float partialTicks) {
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.level == null || mc.cameraEntity == null) return;
+
+        // 1. 处理原本的 Vector Distort
+        if (vectorDistort != null) {
+            vectorDistort.process(partialTicks);
+        }
+
+        /*
+        * 不知道为啥使用原版深度图无效
+        * 具体表现为深度图为纯白(全1)
+        * 可能得使用rendertarget自定义一个深度图复制原版深度
+        * */
+
+
+        // 2. 处理 Sphere Chain
+        if (sphereChain != null) {
+            // 使用反编译源码中实际存在的 getTempTarget 方法
+            RenderTarget swapTarget = sphereChain.getTempTarget("swap");
+            if (swapTarget != null) {
+                // 将主渲染目标的深度缓冲区拷贝到我们的中间目标
+                swapTarget.copyDepthFrom(mc.getMainRenderTarget());
+            }
+
+            // 保持尺寸同步
+            sphereChain.resize(mc.getWindow().getWidth(), mc.getWindow().getHeight());
+
+            // 注入 Uniform (CameraPos 和 ProjMat)
+            Vec3 cameraPos = mc.gameRenderer.getMainCamera().getPosition();
+
+            // 获取摄像机的旋转四元数
+            Quaternionf cameraRotation = mc.gameRenderer.getMainCamera().rotation();
+            // 将四元数转换为矩阵 (这是 View -> World 的旋转矩阵)
+            Matrix4f viewToWorldRotMat = new Matrix4f().rotation(cameraRotation);
+
+            List<PostPass> passes = ((PostChainAccessor) sphereChain).getPasses();
+            for (PostPass pass : passes) {
+                // 1. 设置相机坐标
+                Uniform cameraPosUniform = pass.getEffect().getUniform("CameraPos");
+                if (cameraPosUniform != null) {
+                    cameraPosUniform.set((float) cameraPos.x, (float) cameraPos.y, (float) cameraPos.z);
+                }
+
+                // 2. 设置投影矩阵
+                Uniform projMatUniform = pass.getEffect().getUniform("ProjMat");
+                if (projMatUniform != null) {
+                    projMatUniform.set(RenderSystem.getProjectionMatrix());
+                }
+
+                // 3. 设置旋转矩阵 (新增)
+                Uniform rotMatUniform = pass.getEffect().getUniform("IViewRotMat");
+                if (rotMatUniform != null) {
+                    rotMatUniform.set(viewToWorldRotMat);
+                }
+            }
+
+//            sphereChain.process(partialTicks);
+        }
     }
     public static void initChain(Minecraft mc) {
         if (distortChain != null) distortChain.close();
@@ -56,6 +121,17 @@ public class DistortWorldRender {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        if (sphereChain != null) sphereChain.close();
+        try {
+            sphereChain = new PostChain(mc.getTextureManager(), mc.getResourceManager(), mc.getMainRenderTarget(), SPHERE_CHAIN);
+            sphereChain.resize(mc.getWindow().getWidth(), mc.getWindow().getHeight());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+
     }
     @SubscribeEvent
     public static void onRenderLevel(RenderLevelStageEvent event) {
