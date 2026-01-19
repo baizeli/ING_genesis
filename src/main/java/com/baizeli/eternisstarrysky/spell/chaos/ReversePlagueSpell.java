@@ -1,18 +1,13 @@
 package com.baizeli.eternisstarrysky.spell.chaos;
 
 import com.baizeli.eternisstarrysky.EternisStarrySky;
+import com.baizeli.eternisstarrysky.Mixin.minecraft.world.effect.MobEffectInstanceAccessor;
 import com.baizeli.eternisstarrysky.spell.SpellSchool;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
-import io.redspace.ironsspellbooks.api.events.SpellCooldownAddedEvent;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
-import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import io.redspace.ironsspellbooks.api.spells.*;
 import io.redspace.ironsspellbooks.api.util.Utils;
 import io.redspace.ironsspellbooks.capabilities.magic.TargetEntityCastData;
-import io.redspace.ironsspellbooks.config.ServerConfigs;
-import io.redspace.ironsspellbooks.network.casting.SyncCooldownPacket;
-import io.redspace.ironsspellbooks.setup.PacketDistributor;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -21,7 +16,6 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.HashMap;
@@ -86,7 +80,7 @@ public class ReversePlagueSpell extends ChaosBaseSpell {
         if (entity instanceof LivingEntity living) {
             for (MobEffectInstance effectInstance : living.getActiveEffects().stream().toList()) {
                 if (effectInstance.getEffect().getCategory() == MobEffectCategory.BENEFICIAL) {
-                    effectInstance.duration = Math.min(effectInstance.duration, 2400);
+                    ((MobEffectInstanceAccessor) effectInstance).setDuration(Math.min(effectInstance.getDuration(), 2400));
                     livingEntity.addEffect(effectInstance);
                     living.removeEffect(effectInstance.getEffect());
                 }
