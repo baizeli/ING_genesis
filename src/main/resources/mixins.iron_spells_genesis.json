@@ -4,9 +4,10 @@
 	"compatibilityLevel": "JAVA_17",
 	"refmap": "iron_spells_genesis.refmap.json",
 	"mixins": [
-		"PostChainAccessor",
+		"minecraft.client.renderer.PostChainAccessor",
 		"ironsspellbooks.gui.arcane_anvil.ArcaneAnvilMenuMixin",
 		"ironsspellbooks.item.GoldCrownArmorItemMixin",
+		"ironsspellbooks.render.MixinChargeSpellLayerGeo",
 		"ironsspellbooks.spells.eldritch.MixinEldritchBlastSpell",
 		"ironsspellbooks.spells.ender.MixinComet",
 		"ironsspellbooks.spells.ender.MixinStarfallSpell",
