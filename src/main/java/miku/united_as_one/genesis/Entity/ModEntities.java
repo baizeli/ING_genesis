@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.Entity;
 
-import miku.united_as_one.genesis.Entity.bloodboss.BloodBossEntity;
+import miku.united_as_one.genesis.Entity.boss.BloodBoss;
 import miku.united_as_one.genesis.Entity.spells.celestial_source.BoxEntity;
 import miku.united_as_one.genesis.Entity.spells.celestial_source.DeadStarDecreeComet;
 import miku.united_as_one.genesis.Entity.spells.celestial_source.notuse.MagicCircle;
@@ -71,6 +71,9 @@ public class ModEntities {
                     .updateInterval(1)
                     .build("lighting_bolt"));
 
-    public static final RegistryObject<EntityType<BloodBossEntity>> BLOOD_BOSS = ENTITY_TYPES.register(BloodBossEntity.ENTITYID,
-            BloodBossEntity.supplier());
+    public static final RegistryObject<EntityType<BloodBoss>> BLOOD_BOSS = ENTITY_TYPES.register("blood_boss",
+            () -> EntityType.Builder.of(BloodBoss::new, MobCategory.MONSTER)
+                    .sized(1, 2)
+                    .clientTrackingRange(64)
+                    .build("blood_boss"));
 }

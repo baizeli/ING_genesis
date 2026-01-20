@@ -5,6 +5,7 @@ import miku.united_as_one.genesis.Content.*;
 import miku.united_as_one.genesis.Content.Workbenchs.*;
 import miku.united_as_one.genesis.Entity.*;
 import miku.united_as_one.genesis.Entity.spells.celestial_source.*;
+import miku.united_as_one.genesis.Entity.boss.BloodBoss;
 import miku.united_as_one.genesis.Entity.spells.celestial_source.notuse.*;
 import miku.united_as_one.genesis.Items.ModItems;
 import miku.united_as_one.genesis.client.ClientEvent;
@@ -24,7 +25,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -80,7 +80,6 @@ public class Genesis
         ModParticles.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);
-        modEventBus.addListener(this::addAttribute); // 添加实体属性创建事件监听器
         modEventBus.addListener(this::addToVanillaTabs); // 给自己的物品加到别人的标签栏里面
         modEventBus.addListener(this::onAttributeCreate);
 
@@ -97,12 +96,6 @@ public class Genesis
             NetworkHandler.register();
             LOGGER.info("Fuck TTTTTT");
         });
-    }
-
-    // 添加实体属性创建事件处理程序
-    private void addAttribute(EntityAttributeCreationEvent event)
-    {
-        event.put(ModEntities.BLOOD_BOSS.get(), Monster.createMonsterAttributes().build());
     }
 
     private void addToVanillaTabs(BuildCreativeModeTabContentsEvent e) {
@@ -130,6 +123,7 @@ public class Genesis
         event.put(ModEntities.MAGIC_CIRCLE.get(), MagicCircle.createAttributes().build());
         event.put(ModEntities.BOX_ENTIYT.get(), BoxEntity.createAttributes().build());
         event.put(ModEntities.SWORD_ENTITY.get(), SwordEntity.createAttributes().build());
+        event.put(ModEntities.BLOOD_BOSS.get(), BloodBoss.setAttributes().build());
     }
 
     public static String resource(String location)
