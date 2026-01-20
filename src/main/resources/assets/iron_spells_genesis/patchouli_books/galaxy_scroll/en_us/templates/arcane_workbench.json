@@ -1,5 +1,5 @@
 {
-    "processor": "miku.united_as_one.genesis.Content.ArcaneWorkbench.ArcaneWorkbenchRecipeProcessor",
+    "processor": "miku.united_as_one.genesis.content.arcaneWorkbench.ArcaneWorkbenchRecipeProcessor",
     "components": [
         {
             "type": "patchouli:header",
