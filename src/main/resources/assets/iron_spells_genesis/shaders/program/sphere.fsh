@@ -7,7 +7,7 @@ uniform vec2 OutSize;
 uniform float Time;
 uniform vec3 CameraPos;
 uniform mat4 ProjMat;
-uniform mat4 IViewRotMat; // 新增：观察空间 -> 世界空间 旋转矩阵
+uniform mat4 IViewRotMat; // 观察空间 -> 世界空间 旋转矩阵
 
 in vec2 texCoord;
 out vec4 fragColor;
@@ -34,10 +34,10 @@ void main() {
     vec2 uv = (texCoord - 0.5);
     uv.x *= OutSize.x / OutSize.y;
 
-    // 2. 深度 (可选，先不管)
+    // 2. 深度 (先不管)
     float sceneDepth = getLinearDepth(texCoord);
 
-    // ================= 核心修改开始 =================
+
 
     // 3. 构建射线 (World Space)
 
@@ -51,10 +51,9 @@ void main() {
     vec3 rd = mat3(IViewRotMat) * rdView;
 
     // 4. 球体位置 (World Space)
-    // 现在直接定义世界坐标即可，不需要减 CameraPos
     vec3 sphereCenter = vec3(0.0, 0.0, 0.0);
 
-    // ================= 核心修改结束 =================
+
 
     vec4 backCol = texture(DiffuseSampler, texCoord);
     vec3 col = backCol.rgb;
@@ -77,7 +76,7 @@ void main() {
         float d = sdSphere(p_rel, 1.5);
 
         // 简易深度遮挡：
-        // 注意：sceneDepth 是 View Space 的 Z 值（负数表示前方）
+        // sceneDepth 是 View Space 的 Z 值（负数表示前方）
         // 而现在的 t 是 World Space 的距离。
         // 在不穿墙的情况下，通常 t < abs(sceneDepth)
         // 但为了简单，先不加深度判断，确保位置对了再说
