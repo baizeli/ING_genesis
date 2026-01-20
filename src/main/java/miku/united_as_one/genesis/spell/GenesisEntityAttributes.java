@@ -1,0 +1,27 @@
+package miku.united_as_one.genesis.spell;
+
+import miku.united_as_one.genesis.EternisStarrySky;
+import net.minecraftforge.event.entity.EntityAttributeModificationEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+
+@Mod.EventBusSubscriber(modid = EternisStarrySky.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+public class GenesisEntityAttributes {
+
+    @SubscribeEvent
+    public static void onEntityAttributeModification(EntityAttributeModificationEvent e) {
+        e.getTypes().forEach(type -> {
+            // 混沌法术抗性/强度
+            e.add(type, SpellAttributes.CHAOS_SPELL_POWER.get());
+            e.add(type, SpellAttributes.CHAOS_MAGIC_RESIST.get());
+            
+            // 星源法术抗性/强度
+            e.add(type, SpellAttributes.CELESTIAL_SOURCE_SPELL_POWER.get());
+            e.add(type, SpellAttributes.CELESTIAL_SOURCE_MAGIC_RESIST.get());
+
+            // 美食法术抗性/强度
+            e.add(type, SpellAttributes.CULINARY_SPELL_POWER.get());
+            e.add(type, SpellAttributes.CULINARY_MAGIC_RESIST.get());
+        });
+    }
+}
