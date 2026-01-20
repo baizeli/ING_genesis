@@ -2,7 +2,7 @@ package miku.united_as_one.genesis.Content;
 
 import miku.united_as_one.genesis.Content.ArcaneWorkbench.ArcaneWorkbenchBlock;
 import miku.united_as_one.genesis.Content.Workbenchs.VanillaWorkbenchBlock;
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -14,7 +14,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
 public class ModBlocks {
-    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, EternisStarrySky.MOD_ID);
+    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Genesis.MOD_ID);
 
     public static final RegistryObject<Block> workbench = BLOCKS.register("workbench",
             () -> new VanillaWorkbenchBlock(BlockBehaviour.Properties.of()

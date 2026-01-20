@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.Items.armor;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.TooltipParticleHandler.ITooltipParticleItem;
 import miku.united_as_one.genesis.TooltipParticleHandler.PTID;
 import miku.united_as_one.genesis.TooltipParticleHandler.TooltipParticleSystem;
@@ -40,21 +40,21 @@ public class CelestialSourceSpellArmor extends ExtendedArmorItem implements IToo
                 @Override
                 public ResourceLocation getModelResource(CelestialSourceSpellArmor object) {
                     return ResourceLocation.fromNamespaceAndPath(
-                        EternisStarrySky.MOD_ID, "geo/armor/celestial_source_spell_armor.geo.json"
+                        Genesis.MOD_ID, "geo/armor/celestial_source_spell_armor.geo.json"
                     );
                 }
 
                 @Override
                 public ResourceLocation getTextureResource(CelestialSourceSpellArmor object) {
                     return ResourceLocation.fromNamespaceAndPath(
-                        EternisStarrySky.MOD_ID, "textures/models/armor/celestial_source_spell.png"
+                        Genesis.MOD_ID, "textures/models/armor/celestial_source_spell.png"
                     );
                 }
 
                 @Override
                 public ResourceLocation getAnimationResource(CelestialSourceSpellArmor animatable) {
                     return ResourceLocation.fromNamespaceAndPath(
-                        EternisStarrySky.MOD_ID, "animations/armor/celestial_source_spell_armor.animation.json"
+                        Genesis.MOD_ID, "animations/armor/celestial_source_spell_armor.animation.json"
                     );
                 }
             }
@@ -66,21 +66,21 @@ public class CelestialSourceSpellArmor extends ExtendedArmorItem implements IToo
                 @Override
                 public ResourceLocation getModelResource(CelestialSourceSpellArmor object) {
                     return ResourceLocation.fromNamespaceAndPath(
-                        EternisStarrySky.MOD_ID, "geo/armor/celestial_source_spell_ring.geo.json"
+                        Genesis.MOD_ID, "geo/armor/celestial_source_spell_ring.geo.json"
                     );
                 }
 
                 @Override
                 public ResourceLocation getTextureResource(CelestialSourceSpellArmor object) {
                     return ResourceLocation.fromNamespaceAndPath(
-                        EternisStarrySky.MOD_ID, "textures/models/armor/celestial_source_spell_ring.png"
+                        Genesis.MOD_ID, "textures/models/armor/celestial_source_spell_ring.png"
                     );
                 }
 
                 @Override
                 public ResourceLocation getAnimationResource(CelestialSourceSpellArmor animatable) {
                     return ResourceLocation.fromNamespaceAndPath(
-                        EternisStarrySky.MOD_ID, "animations/armor/celestial_source_spell_armor.animation.json"
+                        Genesis.MOD_ID, "animations/armor/celestial_source_spell_armor.animation.json"
                     );
                 }
             };
@@ -123,21 +123,21 @@ public class CelestialSourceSpellArmor extends ExtendedArmorItem implements IToo
                 @Override
                 public ResourceLocation getModelResource(CelestialSourceSpellArmor object) {
                     return ResourceLocation.fromNamespaceAndPath(
-                        EternisStarrySky.MOD_ID, "geo/armor/celestial_source_spell_cape.geo.json"
+                        Genesis.MOD_ID, "geo/armor/celestial_source_spell_cape.geo.json"
                     );
                 }
 
                 @Override
                 public ResourceLocation getTextureResource(CelestialSourceSpellArmor object) {
                     return ResourceLocation.fromNamespaceAndPath(
-                        EternisStarrySky.MOD_ID, "textures/models/armor/celestial_source_spell_cape.png"
+                        Genesis.MOD_ID, "textures/models/armor/celestial_source_spell_cape.png"
                     );
                 }
 
                 @Override
                 public ResourceLocation getAnimationResource(CelestialSourceSpellArmor animatable) {
                     return ResourceLocation.fromNamespaceAndPath(
-                        EternisStarrySky.MOD_ID, "animations/armor/celestial_source_spell_armor.animation.json"
+                        Genesis.MOD_ID, "animations/armor/celestial_source_spell_armor.animation.json"
                     );
                 }
             };
@@ -272,21 +272,21 @@ public class CelestialSourceSpellArmor extends ExtendedArmorItem implements IToo
         @Override
         public ResourceLocation getModelResource(CelestialSourceSpellArmor object) {
             return ResourceLocation.fromNamespaceAndPath(
-                EternisStarrySky.MOD_ID, "geo/celestial_source_spell.geo.json"
+                Genesis.MOD_ID, "geo/celestial_source_spell.geo.json"
             );
         }
 
         @Override
         public ResourceLocation getTextureResource(CelestialSourceSpellArmor object) {
             return ResourceLocation.fromNamespaceAndPath(
-                EternisStarrySky.MOD_ID, "textures/models/armor/celestial_source_spell.png"
+                Genesis.MOD_ID, "textures/models/armor/celestial_source_spell.png"
             );
         }
 
         @Override
         public ResourceLocation getAnimationResource(CelestialSourceSpellArmor animatable) {
             return ResourceLocation.fromNamespaceAndPath(
-                EternisStarrySky.MOD_ID, "animations/celestial_source_spell.animation.json"
+                Genesis.MOD_ID, "animations/celestial_source_spell.animation.json"
             );
         }
     }
@@ -296,21 +296,21 @@ public class CelestialSourceSpellArmor extends ExtendedArmorItem implements IToo
         @Override
         public ResourceLocation getModelResource(CelestialSourceSpellArmor object) {
             return ResourceLocation.fromNamespaceAndPath(
-                EternisStarrySky.MOD_ID, "geo/celestial_source_spell_ring.geo.json"
+                Genesis.MOD_ID, "geo/celestial_source_spell_ring.geo.json"
             );
         }
 
         @Override
         public ResourceLocation getTextureResource(CelestialSourceSpellArmor object) {
             return ResourceLocation.fromNamespaceAndPath(
-                EternisStarrySky.MOD_ID, "textures/models/armor/celestial_source_spell_ring.png"
+                Genesis.MOD_ID, "textures/models/armor/celestial_source_spell_ring.png"
             );
         }
 
         @Override
         public ResourceLocation getAnimationResource(CelestialSourceSpellArmor animatable) {
             return ResourceLocation.fromNamespaceAndPath(
-                EternisStarrySky.MOD_ID, "animations/celestial_source_spell.animation.json"
+                Genesis.MOD_ID, "animations/celestial_source_spell.animation.json"
             );
         }
     }
@@ -320,21 +320,21 @@ public class CelestialSourceSpellArmor extends ExtendedArmorItem implements IToo
         @Override
         public ResourceLocation getModelResource(CelestialSourceSpellArmor object) {
             return ResourceLocation.fromNamespaceAndPath(
-                EternisStarrySky.MOD_ID, "geo/celestial_source_spell_cape.geo.json"
+                Genesis.MOD_ID, "geo/celestial_source_spell_cape.geo.json"
             );
         }
 
         @Override
         public ResourceLocation getTextureResource(CelestialSourceSpellArmor object) {
             return ResourceLocation.fromNamespaceAndPath(
-                EternisStarrySky.MOD_ID, "textures/models/armor/celestial_source_spell_cape.png"
+                Genesis.MOD_ID, "textures/models/armor/celestial_source_spell_cape.png"
             );
         }
 
         @Override
         public ResourceLocation getAnimationResource(CelestialSourceSpellArmor animatable) {
             return ResourceLocation.fromNamespaceAndPath(
-                EternisStarrySky.MOD_ID, "animations/celestial_source_spell.animation.json"
+                Genesis.MOD_ID, "animations/celestial_source_spell.animation.json"
             );
         }
     }

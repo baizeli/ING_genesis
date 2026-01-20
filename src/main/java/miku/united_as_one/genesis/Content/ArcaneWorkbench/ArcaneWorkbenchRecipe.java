@@ -28,7 +28,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import static miku.united_as_one.genesis.EternisStarrySky.MODID;
+import static miku.united_as_one.genesis.Genesis.MODID;
 
 public class ArcaneWorkbenchRecipe implements Recipe<CraftingContainer> {
     

@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.spell.celestial_source;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.effect.spell.ModEffect;
 import miku.united_as_one.genesis.spell.SpellSchool;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
@@ -18,7 +18,7 @@ import java.util.List;
 
 @AutoSpellConfig
 public class LifeAndDeathRealmSpell extends CelestialSourceBaseSpell {
-    private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "life_and_death_realm");
+    private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "life_and_death_realm");
     private final DefaultConfig defaultConfig = new DefaultConfig()
         .setMinRarity(SpellRarity.COMMON)
         .setSchoolResource(SpellSchool.CELESTIAL_SOURCE_RESOURCE)

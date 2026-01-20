@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.Content.Workbenchs;
 
 import miku.united_as_one.genesis.Content.ModBlocks;
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -17,7 +17,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 
 public class VanillaWorkbenchRecipeCategory implements IRecipeCategory<VanillaWorkbenchRecipe> {
 
-    public static final ResourceLocation UID = ResourceLocation.parse(EternisStarrySky.resource("vanilla_workbench"));
+    public static final ResourceLocation UID = ResourceLocation.parse(Genesis.resource("vanilla_workbench"));
     public static final RecipeType<VanillaWorkbenchRecipe> RECIPE_TYPE = new RecipeType<>(UID, VanillaWorkbenchRecipe.class);
 
     private final IDrawable background;

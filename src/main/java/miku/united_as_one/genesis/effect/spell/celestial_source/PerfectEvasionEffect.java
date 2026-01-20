@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.effect.spell.celestial_source;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import net.minecraft.world.effect.*;
 
 public class PerfectEvasionEffect extends MobEffect {
@@ -10,6 +10,6 @@ public class PerfectEvasionEffect extends MobEffect {
     
     @Override
     public String getDescriptionId() {
-        return "effect." + EternisStarrySky.MOD_ID + ".perfect_evasion";
+        return "effect." + Genesis.MOD_ID + ".perfect_evasion";
     }
 }

@@ -3,7 +3,7 @@ package miku.united_as_one.genesis.spell.celestial_source;
 import miku.united_as_one.genesis.Entity.spells.celestial_source.notuse.MagicCircle;
 import miku.united_as_one.genesis.Entity.ModEntities;
 import miku.united_as_one.genesis.Entity.spells.celestial_source.notuse.SwordEntity;
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.client.particles.ModParticles;
 import miku.united_as_one.genesis.spell.SpellSchool;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
@@ -30,7 +30,7 @@ import java.util.List;
 
 @AutoSpellConfig
 public class UnlimitedBladeWorksSpell extends CelestialSourceBaseSpell {
-    private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "unlimited_blade_works");
+    private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "unlimited_blade_works");
     private final DefaultConfig defaultConfig;
 
     public UnlimitedBladeWorksSpell() {

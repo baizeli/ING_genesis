@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.client.renderer;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.client.particles.ModParticles;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.phys.Vec3;
@@ -12,7 +12,7 @@ import net.minecraftforge.fml.common.Mod;
 import static miku.united_as_one.genesis.Items.ModItems.INFINITY_SWORD;
 
 @Mod.EventBusSubscriber(
-        modid = EternisStarrySky.MOD_ID,
+        modid = Genesis.MOD_ID,
         bus = Mod.EventBusSubscriber.Bus.FORGE,
         value = Dist.CLIENT
 )

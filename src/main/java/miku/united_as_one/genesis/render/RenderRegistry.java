@@ -2,7 +2,7 @@ package miku.united_as_one.genesis.render;
 
 import miku.united_as_one.genesis.Entity.ModEntities;
 import miku.united_as_one.genesis.Entity.bloodboss.BloodBossRenderer;
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.render.cosmic.AvaritiaShaders;
 import miku.united_as_one.genesis.render.cosmic.CosmicModelLoader;
 import miku.united_as_one.genesis.render.entity.*;
@@ -16,7 +16,7 @@ import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(modid = EternisStarrySky.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = Genesis.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class RenderRegistry {
 
     @SubscribeEvent

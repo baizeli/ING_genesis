@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.Items;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -23,7 +23,7 @@ public class GalaxyScroll extends Item
 	{
 		if (p_41433_ instanceof ServerPlayer)
 			return super.use(p_41432_, p_41433_, p_41434_);
-		PatchouliAPI.get().openBookGUI(ResourceLocation.parse(EternisStarrySky.resource("galaxy_scroll")));
+		PatchouliAPI.get().openBookGUI(ResourceLocation.parse(Genesis.resource("galaxy_scroll")));
 		return InteractionResultHolder.success(p_41433_.getItemInHand(p_41434_));
 	}
 }

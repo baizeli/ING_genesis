@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.spell.chaos;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.effect.spell.ModEffect;
 import miku.united_as_one.genesis.spell.SpellSchool;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
@@ -17,7 +17,7 @@ import java.util.List;
 
 @AutoSpellConfig
 public class SiphonSpell extends ChaosBaseSpell {
-    private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "siphon");
+    private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "siphon");
     private final DefaultConfig defaultConfig = new DefaultConfig()
         .setMinRarity(SpellRarity.COMMON)
         .setSchoolResource(SpellSchool.CHAOS_RESOURCE)

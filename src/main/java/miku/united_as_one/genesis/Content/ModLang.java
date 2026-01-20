@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.Content;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.Items.ModItems;
 import net.minecraft.world.item.Item;
 
@@ -13,7 +13,7 @@ public class ModLang {
 	private static final String hoverText = ".hover";
 	public enum TranslatableMessage{
 		CREATIVE_TAB_NAME(new LangEntity<>(
-				"item_group." + EternisStarrySky.MODID + "." + EternisStarrySky.MODID,
+				"itemGroup." + Genesis.MODID + ".iron_spells_genesis_tab",
 				"铁之魔法书：创世纪",
 				"Iron's Spells 'n Spellbooks: New genesis"
 		)),

@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.event.curios;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.Items.ModItems;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -13,7 +13,7 @@ import top.theillusivec4.curios.api.CuriosApi;
 
 import java.util.*;
 
-@Mod.EventBusSubscriber(modid = EternisStarrySky.MOD_ID)
+@Mod.EventBusSubscriber(modid = Genesis.MOD_ID)
 public class LaoWang237Event {
     private static final Random RANDOM = new Random();
 

@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.render;
 
 import miku.united_as_one.genesis.render.cosmic.AvaritiaShaders;
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ShaderInstance;
@@ -16,7 +16,7 @@ import javax.annotation.Nullable;
 import java.io.IOException;
 import java.util.Objects;
 
-@Mod.EventBusSubscriber(modid = EternisStarrySky.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = Genesis.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ModShaders {
     @Nullable
     public static ShaderInstance haloShader;
@@ -62,14 +62,14 @@ public class ModShaders {
 
         ShaderInstance halo = new ShaderInstance(
                 resourceProvider,
-                new ResourceLocation(EternisStarrySky.MOD_ID, "halo"),
+                new ResourceLocation(Genesis.MOD_ID, "halo"),
                 DefaultVertexFormat.POSITION_COLOR_NORMAL
         );
         event.registerShader(halo, shader -> haloShader = shader);
 
         ModShaderInstance colorful = new ModShaderInstance(
                 resourceProvider,
-                new ResourceLocation(EternisStarrySky.MODID, "colorful_shader").toString(),
+                new ResourceLocation(Genesis.MODID, "colorful_shader").toString(),
                 DefaultVertexFormat.POSITION_COLOR_TEX
         );
         event.registerShader(colorful, shaderInstance -> colorfulShader = shaderInstance);
@@ -77,21 +77,21 @@ public class ModShaders {
 
         ModShaderInstance florid = new ModShaderInstance(
                 resourceProvider,
-                new ResourceLocation(EternisStarrySky.MODID, "florid_shader").toString(),
+                new ResourceLocation(Genesis.MODID, "florid_shader").toString(),
                 DefaultVertexFormat.POSITION_TEX
         );
         event.registerShader(florid, shaderInstance -> floridShader = shaderInstance);
         
         ModShaderInstance rainbow = new ModShaderInstance(
                 resourceProvider,
-                new ResourceLocation(EternisStarrySky.MODID, "rainbow_shader").toString(),
+                new ResourceLocation(Genesis.MODID, "rainbow_shader").toString(),
                 DefaultVertexFormat.POSITION_TEX
         );
         event.registerShader(rainbow, shaderInstance -> rainbowShader = shaderInstance);
 
         ModShaderInstance heat_wave = new ModShaderInstance(
                 resourceProvider,
-                new ResourceLocation(EternisStarrySky.MODID, "heat_wave").toString(),
+                new ResourceLocation(Genesis.MODID, "heat_wave").toString(),
                 DefaultVertexFormat.POSITION_TEX
         );
         event.registerShader(heat_wave, shaderInstance -> heatWaveShader = shaderInstance);

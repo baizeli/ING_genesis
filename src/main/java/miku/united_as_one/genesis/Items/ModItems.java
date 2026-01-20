@@ -2,7 +2,7 @@ package miku.united_as_one.genesis.Items;
 
 import miku.united_as_one.genesis.Content.ModBlocks;
 import miku.united_as_one.genesis.Content.ModTags;
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.Items.Staff.CelestialSourceStaff;
 import miku.united_as_one.genesis.Items.Staff.ChaosStaff;
 import miku.united_as_one.genesis.Items.armor.CelestialSourceSpellArmor;
@@ -56,9 +56,9 @@ import java.util.function.Supplier;
 
 public class ModItems {
     //加到创造标签页的用这个注册
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, EternisStarrySky.MOD_ID);
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Genesis.MOD_ID);
     //不加到创造标签页的用这个注册
-    public static final DeferredRegister<Item> PRE_ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, EternisStarrySky.MOD_ID);
+    public static final DeferredRegister<Item> PRE_ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Genesis.MOD_ID);
 
     public static final RegistryObject<Item> PURPLEITE_GALAXY_INGOT = ITEMS.register("purpleite_galaxy_ingot", () -> new EternisMaterial(new Item.Properties(), 0));
 
@@ -362,7 +362,7 @@ public class ModItems {
                 @Override
                 public void appendHoverText(@NotNull ItemStack itemstack, @Nullable Level world, @NotNull List<Component> list, @NotNull TooltipFlag flag) {
                     list.add(Component.translatable(
-                            "item." + EternisStarrySky.MOD_ID + ".chaos_manuscript_fragment.hover"
+                            "item." + Genesis.MOD_ID + ".chaos_manuscript_fragment.hover"
                     ));
                 }
             });
@@ -375,7 +375,7 @@ public class ModItems {
                 @Override
                 public void appendHoverText(@NotNull ItemStack itemstack, @Nullable Level world, @NotNull List<Component> list, @NotNull TooltipFlag flag) {
                     list.add(Component.translatable(
-                            "item." + EternisStarrySky.MOD_ID + ".blank_celestial_source_manuscript.hover"
+                            "item." + Genesis.MOD_ID + ".blank_celestial_source_manuscript.hover"
                     ));
                 }
 

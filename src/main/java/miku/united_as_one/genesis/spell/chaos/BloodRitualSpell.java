@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.spell.chaos;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.spell.SpellSchool;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
@@ -11,7 +11,7 @@ import net.minecraft.world.level.Level;
 
 @AutoSpellConfig
 public class BloodRitualSpell extends ChaosBaseSpell {
-    private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "blood_ritual");
+    private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "blood_ritual");
     private final DefaultConfig defaultConfig = new DefaultConfig()
         .setMinRarity(SpellRarity.LEGENDARY)
         .setSchoolResource(SpellSchool.CHAOS_RESOURCE)

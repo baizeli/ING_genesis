@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.Content;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.Items.ModItems;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -15,7 +15,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 public class ModCreativeTab {
-    public static final DeferredRegister<CreativeModeTab> REGISTRY = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, EternisStarrySky.MODID);
+    public static final DeferredRegister<CreativeModeTab> REGISTRY = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Genesis.MODID);
     public static final CreativeModeTab.Builder build = CreativeModeTab.builder();
 
     static {
@@ -31,7 +31,7 @@ public class ModCreativeTab {
                 )
         ));
 
-        REGISTRY.register(EternisStarrySky.MODID, build::build);
+        REGISTRY.register(Genesis.MODID, build::build);
     }
 
     public static void register(IEventBus eventBus) {

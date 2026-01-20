@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.Items;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.util.RainbowEffectHelper;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
@@ -25,6 +25,6 @@ public final class EternisMaterial extends Item
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag)
     {
-        if (type == 0) tooltip.add(RainbowEffectHelper.createCustomGradientText(Component.translatable("item." + EternisStarrySky.MOD_ID + ".purpleite_galaxy_ingot1").getString(), RainbowEffectHelper.DEFAULT_RAINBOW, 2, 1, 0.05F, 2f));
+        if (type == 0) tooltip.add(RainbowEffectHelper.createCustomGradientText(Component.translatable("item." + Genesis.MOD_ID + ".purpleite_galaxy_ingot1").getString(), RainbowEffectHelper.DEFAULT_RAINBOW, 2, 1, 0.05F, 2f));
     }
 }

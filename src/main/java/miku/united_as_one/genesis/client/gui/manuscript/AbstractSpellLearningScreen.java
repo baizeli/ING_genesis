@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.client.gui.manuscript;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.network.NetworkHandler;
 import miku.united_as_one.genesis.network.manuscript.LearnSpellPacket;
 import com.mojang.blaze3d.platform.InputConstants;
@@ -216,7 +216,7 @@ public abstract class AbstractSpellLearningScreen extends Screen {
     private static final Component ALREADY_LEARNED = Component.translatable("ui.irons_spellbooks.research_already_learned").withStyle(ChatFormatting.DARK_AQUA);
     
     protected Component getUnlearnedComponent() {
-        return Component.translatable("ui." + EternisStarrySky.MOD_ID + ".research_warning", getRequiredItemName()).withStyle(ChatFormatting.RED);
+        return Component.translatable("ui." + Genesis.MOD_ID + ".research_warning", getRequiredItemName()).withStyle(ChatFormatting.RED);
     }
     
     protected abstract Component getRequiredItemName();

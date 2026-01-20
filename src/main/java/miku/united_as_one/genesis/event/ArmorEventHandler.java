@@ -1,9 +1,9 @@
 package miku.united_as_one.genesis.event;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(modid = EternisStarrySky.MOD_ID)
+@Mod.EventBusSubscriber(modid = Genesis.MOD_ID)
 public class ArmorEventHandler {
 
 //    @SubscribeEvent

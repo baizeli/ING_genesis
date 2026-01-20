@@ -4,7 +4,7 @@ import miku.united_as_one.genesis.Content.ArcaneWorkbench.ArcaneWorkbenchRecipe;
 import miku.united_as_one.genesis.Content.ArcaneWorkbench.ArcaneWorkbenchRecipeCategory;
 import miku.united_as_one.genesis.Content.ArcaneWorkbench.ArcaneWorkbenchRecipeTransferHandler;
 import miku.united_as_one.genesis.Content.ModBlocks;
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.helpers.IStackHelper;
@@ -21,7 +21,7 @@ public class VanillaWorkbenchJeiPlugin implements IModPlugin {
 
     @Override
     public ResourceLocation getPluginUid() {
-        return ResourceLocation.parse(EternisStarrySky.resource("vanilla_workbench_jei"));
+        return ResourceLocation.parse(Genesis.resource("vanilla_workbench_jei"));
     }
 
     @Override

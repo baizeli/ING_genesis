@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.client.model.spell.celestial_source;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.*;
@@ -10,7 +10,7 @@ import net.minecraft.world.entity.Entity;
 
 public class DeadStarDecreeCometModel<T extends Entity> extends EntityModel<T> {
 	public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(
-		new ResourceLocation(EternisStarrySky.MOD_ID, "dead_star_decree_comet"), "main"
+		new ResourceLocation(Genesis.MOD_ID, "dead_star_decree_comet"), "main"
 	);
 
 	private final ModelPart dead_star_decree_comet;

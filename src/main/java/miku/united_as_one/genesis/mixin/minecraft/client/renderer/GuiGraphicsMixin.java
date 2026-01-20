@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.mixin.minecraft.client.renderer;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.util.RenderUtils;
 import miku.united_as_one.genesis.spell.SpellSchool;
 import io.redspace.ironsspellbooks.api.spells.ISpellContainer;
@@ -96,7 +96,7 @@ public class GuiGraphicsMixin {
             double centerX = l + i / 2.0;
             double centerY = i1 + j / 2.0;
 
-            if (registryName != null && registryName.getNamespace().equals(EternisStarrySky.MOD_ID)) {
+            if (registryName != null && registryName.getNamespace().equals(Genesis.MOD_ID)) {
                 RenderUtils.renderCosmicBackground(guiGraphics.pose(), guiGraphics.bufferSource(), null, i + 3, j + 3, centerX, centerY, 15728880, 15);
             } else if (isChaosSpell) {
                 RenderUtils.renderCosmicBackground(guiGraphics.pose(), guiGraphics.bufferSource(), null, i + 3, j + 3, centerX, centerY, 15728880, 14);

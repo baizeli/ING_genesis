@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.client.particles;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.SpriteSet;
@@ -9,7 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public class StardustTrailParticle extends TrailParticle {
     private static final ResourceLocation TEXTURE =
-            ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "textures/particle/stardust_trail.png");
+            ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "textures/particle/stardust_trail.png");
 
     public StardustTrailParticle(ClientLevel world, double x, double y, double z,
                                  double xSpeed, double ySpeed, double zSpeed,

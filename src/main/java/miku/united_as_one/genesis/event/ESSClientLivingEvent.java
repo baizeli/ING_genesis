@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.event;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.Items.curios.EternalRing;
 import miku.united_as_one.genesis.util.ModCurios;
 import net.minecraft.client.Minecraft;
@@ -13,7 +13,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 
-@Mod.EventBusSubscriber(modid = EternisStarrySky.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = Genesis.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class ESSClientLivingEvent {
     @SubscribeEvent
     public static void overlayModify(RenderGuiOverlayEvent.Pre event) {

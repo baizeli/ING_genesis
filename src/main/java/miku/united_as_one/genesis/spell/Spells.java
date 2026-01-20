@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.spell;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import miku.united_as_one.genesis.spell.celestial_source.*;
@@ -40,7 +40,7 @@ public class Spells {
     public static final RegistryObject<AbstractSpell> NYAN_CAT_JET_SPELL;
 
     static {
-        SPELLS = DeferredRegister.create(SpellRegistry.SPELL_REGISTRY_KEY, EternisStarrySky.MOD_ID);
+        SPELLS = DeferredRegister.create(SpellRegistry.SPELL_REGISTRY_KEY, Genesis.MOD_ID);
 
         // 混沌法术卷轴
         WARPED_BLOOD_BURST_SPELL = registerSpell(new WarpedBloodBurstSpell());

@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.Items.armor;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import io.redspace.ironsspellbooks.entity.armor.*;
 import io.redspace.ironsspellbooks.item.armor.*;
 import net.minecraft.resources.ResourceLocation;
@@ -22,21 +22,21 @@ public class ChaosSpellArmor extends ExtendedArmorItem {
                 @Override
                 public ResourceLocation getModelResource(ChaosSpellArmor object) {
                     return ResourceLocation.fromNamespaceAndPath(
-                        EternisStarrySky.MOD_ID, "geo/armor/chaos_spell_armor.geo.json"
+                        Genesis.MOD_ID, "geo/armor/chaos_spell_armor.geo.json"
                     );
                 }
 
                 @Override
                 public ResourceLocation getTextureResource(ChaosSpellArmor object) {
                     return ResourceLocation.fromNamespaceAndPath(
-                        EternisStarrySky.MOD_ID, "textures/models/armor/chaos_spell.png"
+                        Genesis.MOD_ID, "textures/models/armor/chaos_spell.png"
                     );
                 }
 
                 @Override
                 public ResourceLocation getAnimationResource(ChaosSpellArmor animatable) {
                     return ResourceLocation.fromNamespaceAndPath(
-                        EternisStarrySky.MOD_ID, "animations/armor/chaos_spell_armor.animation.json"
+                        Genesis.MOD_ID, "animations/armor/chaos_spell_armor.animation.json"
                     );
                 }
             }

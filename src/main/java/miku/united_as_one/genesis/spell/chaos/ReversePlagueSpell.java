@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.spell.chaos;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.mixin.minecraft.world.effect.MobEffectInstanceAccessor;
 import miku.united_as_one.genesis.spell.SpellSchool;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
@@ -24,9 +24,9 @@ import java.util.Map;
 import java.util.UUID;
 
 @AutoSpellConfig
-@Mod.EventBusSubscriber(modid = EternisStarrySky.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+@Mod.EventBusSubscriber(modid = Genesis.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ReversePlagueSpell extends ChaosBaseSpell {
-    private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "reverse_plague");
+    private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "reverse_plague");
     private final DefaultConfig defaultConfig;
     public static Map<UUID, UUID> entityMap = new HashMap<>();
 
@@ -91,7 +91,7 @@ public class ReversePlagueSpell extends ChaosBaseSpell {
                     livingEntity.removeEffect(effectInstance.getEffect());
                 }
             }
-            living.getPersistentData().putLong(EternisStarrySky.MOD_ID + "remaining_time", serverLevel.getGameTime() + 600);
+            living.getPersistentData().putLong(Genesis.MOD_ID + "remaining_time", serverLevel.getGameTime() + 600);
             entityMap.put(livingEntity.getUUID(), living.getUUID());
         }
         super.onServerCastComplete(serverLevel, spellLevel, livingEntity, playerMagicData, cancelled);

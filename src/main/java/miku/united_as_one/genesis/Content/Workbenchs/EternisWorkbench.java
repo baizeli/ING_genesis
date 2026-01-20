@@ -1,13 +1,13 @@
 package miku.united_as_one.genesis.Content.Workbenchs;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 
 public class EternisWorkbench
 {
-	public static final String ASSETS_WORKBENCH = EternisStarrySky.resource("textures/gui/eternisstarrysky_workbench.png");
-	public static final String ASSETS_INVENTORY = EternisStarrySky.resource("textures/gui/eternisstarrysky_inventory.png");
+	public static final String ASSETS_WORKBENCH = Genesis.resource("textures/gui/eternisstarrysky_workbench.png");
+	public static final String ASSETS_INVENTORY = Genesis.resource("textures/gui/eternisstarrysky_inventory.png");
 	public static final ResourceLocation RESOURCE_WORKBENCH = ResourceLocation.parse(ASSETS_WORKBENCH);
 	public static final ResourceLocation RESOURCE_INVENTORY = ResourceLocation.parse(ASSETS_INVENTORY);
 	public static final int ASSETS_WORKBENCH_WIDTH = 256;

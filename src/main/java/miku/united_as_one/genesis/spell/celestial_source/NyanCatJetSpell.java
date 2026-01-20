@@ -2,7 +2,7 @@ package miku.united_as_one.genesis.spell.celestial_source;
 
 import miku.united_as_one.genesis.Entity.ModEntities;
 import miku.united_as_one.genesis.Entity.NyanCat;
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.registry.SchoolRegistry;
@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class NyanCatJetSpell extends AbstractSpell {
-    private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "nyan_cat_jet");
+    private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "nyan_cat_jet");
     private final DefaultConfig defaultConfig;
 
 

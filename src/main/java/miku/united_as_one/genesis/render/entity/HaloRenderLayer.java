@@ -3,7 +3,7 @@ package miku.united_as_one.genesis.render.entity;
 import miku.united_as_one.genesis.render.ModRenderType;
 import miku.united_as_one.genesis.render.ModShaders;
 import miku.united_as_one.genesis.render.cosmic.AvaritiaShaders;
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.Items.ModItems;
 import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -144,7 +144,7 @@ public class HaloRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerMod
 
         // 准备纹理UV
         for (int i = 0; i < 10; ++i) {
-            TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "item/misc/cosmic_" + i));
+            TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "item/misc/cosmic_" + i));
             AvaritiaShaders.COSMIC_UVS[i * 4] = sprite.getU0();
             AvaritiaShaders.COSMIC_UVS[i * 4 + 1] = sprite.getV0();
             AvaritiaShaders.COSMIC_UVS[i * 4 + 2] = sprite.getU1();

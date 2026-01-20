@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.event;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.Items.curios.rune_plus.EnderRunePlus;
 import miku.united_as_one.genesis.Items.curios.rune_plus.LightningRunePlus;
 import miku.united_as_one.genesis.util.ModCurios;
@@ -32,7 +32,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import org.joml.Vector3f;
 
-@Mod.EventBusSubscriber(modid = EternisStarrySky.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+@Mod.EventBusSubscriber(modid = Genesis.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ESSProjectileEvent {
     @SubscribeEvent
     public static void lightningLanceProjectile(ProjectileImpactEvent event) {

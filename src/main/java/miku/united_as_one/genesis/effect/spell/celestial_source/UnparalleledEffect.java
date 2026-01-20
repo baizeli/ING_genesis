@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.effect.spell.celestial_source;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import net.minecraft.world.effect.*;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
@@ -13,7 +13,7 @@ public class UnparalleledEffect extends MobEffect {
     
     @Override
     public String getDescriptionId() {
-        return "effect." + EternisStarrySky.MOD_ID + ".unparalleled";
+        return "effect." + Genesis.MOD_ID + ".unparalleled";
     }
     
     @Override

@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.client.particles;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.render.ModShaderInstance;
 import miku.united_as_one.genesis.render.ModShaders;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
@@ -30,7 +30,7 @@ import java.util.Arrays;
 
 public class TestAParticle extends Particle {
     private static final ResourceLocation TEXTURE =
-            ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "textures/particle/trail.png");
+            ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "textures/particle/trail.png");
 
     public final Vec3[] trailPositions = new Vec3[64];
     public int trailPointer = -1;

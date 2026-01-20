@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.event;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.Items.CelestialSourceSpellBook;
 import miku.united_as_one.genesis.Items.ChaosSpellBook;
 import miku.united_as_one.genesis.Items.ModItems;
@@ -33,9 +33,9 @@ import net.minecraftforge.network.PacketDistributor;
 import java.util.*;
 import java.util.List;
 
-import static miku.united_as_one.genesis.EternisStarrySky.CHANNEL;
+import static miku.united_as_one.genesis.Genesis.CHANNEL;
 
-@Mod.EventBusSubscriber(modid = EternisStarrySky.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+@Mod.EventBusSubscriber(modid = Genesis.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class EventHandler {
     @SubscribeEvent
     public static void onLivingHeal(LivingHealEvent event) {

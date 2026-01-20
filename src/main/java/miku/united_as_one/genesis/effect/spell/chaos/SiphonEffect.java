@@ -1,11 +1,11 @@
 package miku.united_as_one.genesis.effect.spell.chaos;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import net.minecraft.world.effect.*;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(modid = EternisStarrySky.MOD_ID)
+@Mod.EventBusSubscriber(modid = Genesis.MOD_ID)
 public class SiphonEffect extends MobEffect {
     public SiphonEffect() {
         super(MobEffectCategory.BENEFICIAL, 0xFF0000);
@@ -13,7 +13,7 @@ public class SiphonEffect extends MobEffect {
     
     @Override
     public String getDescriptionId() {
-        return "effect." + EternisStarrySky.MOD_ID + ".siphon";
+        return "effect." + Genesis.MOD_ID + ".siphon";
     }
     
     @Override

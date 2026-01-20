@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.damage;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.resources.ResourceKey;
@@ -13,7 +13,7 @@ public class DamageTypes {
     public static final ResourceKey<DamageType> CELESTIAL_SOURCE_MAGIC = register("celestial_source_magic");
 
     public static ResourceKey<DamageType> register(String name) {
-        return ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MODID, name));
+        return ResourceKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(Genesis.MODID, name));
     }
 
     public static void bootstrap(BootstapContext<DamageType> context) {

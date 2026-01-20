@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.Content.Workbenchs;
 
 import miku.united_as_one.genesis.Content.ArcaneWorkbench.ArcaneWorkbenchRecipe;
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -10,7 +10,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class ModRecipeSerializers
 {
-    public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, EternisStarrySky.MOD_ID);
+    public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, Genesis.MOD_ID);
 
     public static final RegistryObject<RecipeSerializer<VanillaWorkbenchRecipe>> VANILLA_WORKBENCH_RECIPE = RECIPE_SERIALIZERS.register("vanilla_workbench_s", VanillaWorkbenchRecipe.Serializer::new);
     public static final RegistryObject<RecipeSerializer<ArcaneWorkbenchRecipe>> ARCANE_WORKBENCH_RECIPE_SERIALIZER =

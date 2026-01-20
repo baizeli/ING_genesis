@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.event;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.Items.curios.EternalRing;
 import miku.united_as_one.genesis.Items.curios.rune_plus.BloodRunePlus;
 import miku.united_as_one.genesis.Items.curios.rune_plus.NatureRunePlus;
@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-@Mod.EventBusSubscriber(modid = EternisStarrySky.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+@Mod.EventBusSubscriber(modid = Genesis.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class ESSIronSpellEvent {
 
     public static final Map<UUID, Integer> bloodStepUsedMap = new HashMap<>();

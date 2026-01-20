@@ -17,7 +17,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import org.jetbrains.annotations.Nullable;
 
 import static miku.united_as_one.genesis.Content.ArcaneWorkbench.ArcaneWorkbenchBlockEntity.ARCANE_WORKBENCH_COMPONENT;
-import static miku.united_as_one.genesis.EternisStarrySky.MODID;
+import static miku.united_as_one.genesis.Genesis.MODID;
 import static io.redspace.ironsspellbooks.registries.ItemRegistry.ARCANE_ESSENCE;
 
 public class ArcaneWorkbenchRecipeCategory implements IRecipeCategory<ArcaneWorkbenchRecipe> {

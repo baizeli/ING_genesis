@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.client.particles;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.util.RenderUtils;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -21,7 +21,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class MagicCircleParticle extends Particle {
     private static final ResourceLocation DEFAULT_TEXTURE =
-            ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MODID, "textures/magic_circle.png");
+            ResourceLocation.fromNamespaceAndPath(Genesis.MODID, "textures/magic_circle.png");
 
     protected MagicCircleParticle(ClientLevel level, double x, double y, double z) {
         super(level, x, y, z);

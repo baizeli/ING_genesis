@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.effect.spell.chaos;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import net.minecraft.world.effect.*;
 
 public class BloodWarEffect extends MobEffect {
@@ -10,6 +10,6 @@ public class BloodWarEffect extends MobEffect {
     
     @Override
     public String getDescriptionId() {
-        return "effect." + EternisStarrySky.MOD_ID + ".blood_war";
+        return "effect." + Genesis.MOD_ID + ".blood_war";
     }
 }
