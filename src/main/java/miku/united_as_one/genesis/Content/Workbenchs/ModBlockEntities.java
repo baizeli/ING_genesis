@@ -13,10 +13,6 @@ public class ModBlockEntities {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
             DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, Genesis.MOD_ID);
 
-    public static final RegistryObject<BlockEntityType<VanillaWorkbenchBlockEntity>> VANILLA_WORKBENCH =
-            BLOCK_ENTITIES.register("vanilla_workbench", () ->
-                    BlockEntityType.Builder.of(VanillaWorkbenchBlockEntity::new, ModBlocks.workbench.get()).build(null));
-
     public static final RegistryObject<BlockEntityType<ArcaneWorkbenchBlockEntity>> ARCANE_WORKBENCH =
             BLOCK_ENTITIES.register("arcane_workbench",
                     () -> BlockEntityType.Builder.of(ArcaneWorkbenchBlockEntity::new, ModBlocks.ARCANE_WORKBENCH.get()).build(null));

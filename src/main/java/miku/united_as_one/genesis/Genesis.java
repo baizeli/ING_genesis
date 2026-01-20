@@ -138,7 +138,6 @@ public class Genesis
         public static void onClientSetup(FMLClientSetupEvent event)
         {
             event.enqueueWork(() -> {
-                MenuScreens.register(ModMenuTypes.VANILLA_WORKBENCH_MENU.get(), VanillaWorkbenchScreen::new);
                 MenuScreens.register(ModMenuTypes.ARCANE_WORKBENCH_MENU.get(), ArcaneWorkbenchScreen::new);
                 EntityRenderers.register(ModEntities.NYAN_CAT.get(), NyanCatRenderer::new);
                 EntityRenderers.register(ModEntities.MAGIC_CIRCLE.get(), MagicCircleRenderer::new);
