@@ -2,7 +2,7 @@ package miku.united_as_one.genesis.spell.celestial_source;
 
 import miku.united_as_one.genesis.Entity.ModEntities;
 import miku.united_as_one.genesis.Entity.spells.celestial_source.DeadStarDecreeComet;
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.spell.SpellSchool;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
@@ -27,7 +27,7 @@ import java.util.*;
 
 @AutoSpellConfig
 public class DeadStarDecreeSpell extends AbstractSpell {
-    private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "dead_star_decree");
+    private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "dead_star_decree");
     private final DefaultConfig defaultConfig = new DefaultConfig()
         .setMinRarity(SpellRarity.COMMON)
         .setSchoolResource(SpellSchool.CELESTIAL_SOURCE_RESOURCE)

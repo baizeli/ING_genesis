@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.spell.chaos;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.client.renderer.spell.chaos.WireBoxRenderer;
 import miku.united_as_one.genesis.network.WireBoxSyncPacket;
 import miku.united_as_one.genesis.spell.SpellSchool;
@@ -26,11 +26,11 @@ import net.minecraft.world.phys.AABB;
 
 import java.util.List;
 
-import static miku.united_as_one.genesis.EternisStarrySky.CHANNEL;
+import static miku.united_as_one.genesis.Genesis.CHANNEL;
 
 @AutoSpellConfig
 public class WarpedBloodBurstSpell extends ChaosBaseSpell {
-    private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "warped_blood_burst");
+    private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "warped_blood_burst");
     private final DefaultConfig defaultConfig;
 
     public WarpedBloodBurstSpell() {

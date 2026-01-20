@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.spell;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import io.redspace.ironsspellbooks.api.attribute.MagicPercentAttribute;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -16,7 +16,7 @@ public class SpellAttributes {
     public static final RegistryObject<Attribute> CULINARY_SPELL_POWER;
 
     static {
-        ATTRIBUTES = DeferredRegister.create(ForgeRegistries.ATTRIBUTES, EternisStarrySky.MOD_ID);
+        ATTRIBUTES = DeferredRegister.create(ForgeRegistries.ATTRIBUTES, Genesis.MOD_ID);
         // 混沌法术强度/抗性
         CHAOS_MAGIC_RESIST = SpellAttributes.newResistanceAttribute("chaos");
         CHAOS_SPELL_POWER = SpellAttributes.newPowerAttribute("chaos");
@@ -35,10 +35,10 @@ public class SpellAttributes {
     }
 
     private static RegistryObject<Attribute> newResistanceAttribute(String id) {
-        return ATTRIBUTES.register(id + "_magic_resist", () -> (new MagicPercentAttribute("attribute." + EternisStarrySky.MOD_ID + "." + id + "_magic_resist", 1.0F, Double.MIN_VALUE, Double.MAX_VALUE)).setSyncable(true));
+        return ATTRIBUTES.register(id + "_magic_resist", () -> (new MagicPercentAttribute("attribute." + Genesis.MOD_ID + "." + id + "_magic_resist", 1.0F, Double.MIN_VALUE, Double.MAX_VALUE)).setSyncable(true));
     }
 
     private static RegistryObject<Attribute> newPowerAttribute(String id) {
-        return ATTRIBUTES.register(id + "_spell_power", () -> (new MagicPercentAttribute("attribute." + EternisStarrySky.MOD_ID + "." + id + "_spell_power", 1.0F, Double.MIN_VALUE, Double.MAX_VALUE)).setSyncable(true));
+        return ATTRIBUTES.register(id + "_spell_power", () -> (new MagicPercentAttribute("attribute." + Genesis.MOD_ID + "." + id + "_spell_power", 1.0F, Double.MIN_VALUE, Double.MAX_VALUE)).setSyncable(true));
     }
 }

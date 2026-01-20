@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.TooltipParticleHandler;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
@@ -114,7 +114,7 @@ public class TooltipParticleSystem
     // 注册纹理
     private static void registerParticle(String name, int frames, int duration, int loops)
     {
-        PARTICLE_TEXTURES.put(name, new ParticleTextureInfo(ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "textures/misc/" + name + ".png"), frames, duration, loops));
+        PARTICLE_TEXTURES.put(name, new ParticleTextureInfo(ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "textures/misc/" + name + ".png"), frames, duration, loops));
     }
 
     public static void registerParticleTexture(String key, ResourceLocation texture)

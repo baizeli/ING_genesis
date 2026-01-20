@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.spell.celestial_source;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.spell.SpellSchool;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
@@ -16,7 +16,7 @@ import net.minecraftforge.common.Tags;
 
 @AutoSpellConfig
 public class AbsoluteEqualitySpell extends CelestialSourceBaseSpell {
-    private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "absolute_equality");
+    private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "absolute_equality");
     private final DefaultConfig defaultConfig = new DefaultConfig()
         .setMinRarity(SpellRarity.LEGENDARY)
         .setSchoolResource(SpellSchool.CELESTIAL_SOURCE_RESOURCE)

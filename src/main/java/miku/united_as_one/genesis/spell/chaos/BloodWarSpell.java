@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.spell.chaos;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.effect.spell.ModEffect;
 import miku.united_as_one.genesis.event.spell.chaos.BloodWarEvent;
 import miku.united_as_one.genesis.spell.SpellSchool;
@@ -22,7 +22,7 @@ import java.util.List;
 
 @AutoSpellConfig
 public class BloodWarSpell extends ChaosBaseSpell {
-    private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "blood_war");
+    private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "blood_war");
     private final DefaultConfig defaultConfig = new DefaultConfig()
         .setMinRarity(SpellRarity.COMMON)
         .setSchoolResource(SpellSchool.CHAOS_RESOURCE)

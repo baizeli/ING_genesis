@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.util;
 
 import miku.united_as_one.genesis.render.cosmic.AvaritiaShaders;
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -33,8 +33,8 @@ import org.joml.Vector4f;
 import static com.mojang.math.Axis.*;
 
 public class RenderUtils {
-    private static final ResourceLocation TEX = new ResourceLocation(EternisStarrySky.MODID, "textures/misc/white.png");
-    private static final ResourceLocation BACKGROUND = ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "item/mask/background");
+    private static final ResourceLocation TEX = new ResourceLocation(Genesis.MODID, "textures/misc/white.png");
+    private static final ResourceLocation BACKGROUND = ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "item/mask/background");
 
     public static RenderType createTexturedQuadType(ResourceLocation texture) {
         return RenderType.create("textured_quad_no_cull",
@@ -310,7 +310,7 @@ public class RenderUtils {
 
         for (int i = 0; i < 10; ++i)
         {
-            TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "item/misc/cosmic_" + i));
+            TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "item/misc/cosmic_" + i));
             AvaritiaShaders.COSMIC_UVS[i * 4] = sprite.getU0();
             AvaritiaShaders.COSMIC_UVS[i * 4 + 1] = sprite.getV0();
             AvaritiaShaders.COSMIC_UVS[i * 4 + 2] = sprite.getU1();
@@ -376,7 +376,7 @@ public class RenderUtils {
         AvaritiaShaders.cosmicIs2D.set(AvaritiaShaders.inventoryRender ? 1 : 0); // 设置为3D模式
 
         for (int i = 0; i < 10; ++i) {
-            TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "item/misc/cosmic_" + i));
+            TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "item/misc/cosmic_" + i));
             AvaritiaShaders.COSMIC_UVS[i * 4] = sprite.getU0();
             AvaritiaShaders.COSMIC_UVS[i * 4 + 1] = sprite.getV0();
             AvaritiaShaders.COSMIC_UVS[i * 4 + 2] = sprite.getU1();

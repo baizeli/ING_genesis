@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.spell;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.damage.DamageTypes;
 import miku.united_as_one.genesis.sound.SoundsRegister;
 import io.redspace.ironsspellbooks.api.registry.SchoolRegistry;
@@ -25,20 +25,20 @@ public class SpellSchool {
     public static final RegistryObject<SchoolType> CULINARY;
 
     public static final TagKey<Item> CHAOS_FOCUS = ItemTags.create(
-        ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "chaos_focus")
+        ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "chaos_focus")
     );
     public static final TagKey<Item> CELESTIAL_SOURCE_FOCUS = ItemTags.create(
-        ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "celestial_source_focus")
+        ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "celestial_source_focus")
     );
     public static final TagKey<Item> CULINARY_FOCUS = ItemTags.create(
-        ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "culinary_focus")
+        ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "culinary_focus")
     );
 
     static {
-        SCHOOLS =  DeferredRegister.create(SchoolRegistry.SCHOOL_REGISTRY_KEY, EternisStarrySky.MOD_ID);
-        CHAOS_RESOURCE = ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "chaos");
-        CELESTIAL_SOURCE_RESOURCE = ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "celestial_source");
-        CULINARY_RESOURCE = ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "culinary");
+        SCHOOLS =  DeferredRegister.create(SchoolRegistry.SCHOOL_REGISTRY_KEY, Genesis.MOD_ID);
+        CHAOS_RESOURCE = ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "chaos");
+        CELESTIAL_SOURCE_RESOURCE = ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "celestial_source");
+        CULINARY_RESOURCE = ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "culinary");
 
         // 混沌流派
         CHAOS = registerSchool(
@@ -46,7 +46,7 @@ public class SpellSchool {
                 CHAOS_RESOURCE, 
                 CHAOS_FOCUS, 
                 Component.translatable(
-                    "school." + EternisStarrySky.MOD_ID + ".chaos"
+                    "school." + Genesis.MOD_ID + ".chaos"
                 ).withStyle(ChatFormatting.DARK_RED), 
                 SpellAttributes.CHAOS_SPELL_POWER,
                 SpellAttributes.CHAOS_MAGIC_RESIST,
@@ -63,7 +63,7 @@ public class SpellSchool {
                 CELESTIAL_SOURCE_RESOURCE, 
                 CELESTIAL_SOURCE_FOCUS, 
                 Component.translatable(
-                    "school." + EternisStarrySky.MOD_ID + ".celestial_source"
+                    "school." + Genesis.MOD_ID + ".celestial_source"
                 ).withStyle(ChatFormatting.DARK_AQUA), 
                 SpellAttributes.CELESTIAL_SOURCE_SPELL_POWER,
                 SpellAttributes.CELESTIAL_SOURCE_MAGIC_RESIST,
@@ -80,7 +80,7 @@ public class SpellSchool {
                 CULINARY_RESOURCE, 
                 CULINARY_FOCUS, 
                 Component.translatable(
-                    "school." + EternisStarrySky.MOD_ID + ".culinary"
+                    "school." + Genesis.MOD_ID + ".culinary"
                 ).withStyle(ChatFormatting.GOLD), 
                 SpellAttributes.CULINARY_SPELL_POWER,
                 SpellAttributes.CULINARY_MAGIC_RESIST,

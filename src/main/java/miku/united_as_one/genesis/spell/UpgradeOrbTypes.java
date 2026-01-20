@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.spell;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import io.redspace.ironsspellbooks.item.armor.UpgradeOrbType;
 import io.redspace.ironsspellbooks.registries.UpgradeOrbTypeRegistry;
 import net.minecraft.core.Registry;
@@ -10,14 +10,14 @@ public class UpgradeOrbTypes {
     public static final ResourceKey<Registry<UpgradeOrbType>> KEY = UpgradeOrbTypeRegistry.UPGRADE_ORB_REGISTRY_KEY;
 
     public static final ResourceKey<UpgradeOrbType> CHAOS_SPELL_POWER = ResourceKey.create(
-        KEY, EternisStarrySky.rl("chaos_power")
+        KEY, Genesis.rl("chaos_power")
     );
 
     public static final ResourceKey<UpgradeOrbType> CELESTIAL_SOURCE_SPELL_POWER = ResourceKey.create(
-        KEY, EternisStarrySky.rl("celestial_source_power")
+        KEY, Genesis.rl("celestial_source_power")
     );
     
     public static final ResourceKey<UpgradeOrbType> CULINARY_SPELL_POWER = ResourceKey.create(
-        KEY, EternisStarrySky.rl("culinary_power")
+        KEY, Genesis.rl("culinary_power")
     );
 }

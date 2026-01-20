@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.spell.chaos;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.effect.spell.ModEffect;
 import miku.united_as_one.genesis.spell.SpellSchool;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
@@ -21,7 +21,7 @@ import java.util.List;
 
 @AutoSpellConfig
 public class WarpedBarrierSpell extends ChaosBaseSpell {
-    private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "warped_barrier");
+    private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "warped_barrier");
     private final DefaultConfig defaultConfig;
 
     public WarpedBarrierSpell() {
@@ -91,7 +91,7 @@ public class WarpedBarrierSpell extends ChaosBaseSpell {
         }
 
         float convertedShield = (float) (damage * getConvertPercent(spellLevel, entity));
-        entity.getPersistentData().putFloat(EternisStarrySky.MOD_ID + ":shield_amount", convertedShield);
+        entity.getPersistentData().putFloat(Genesis.MOD_ID + ":shield_amount", convertedShield);
 
         entity.addEffect(new MobEffectInstance(
                 ModEffect.WARPED_BARRIER.get(),

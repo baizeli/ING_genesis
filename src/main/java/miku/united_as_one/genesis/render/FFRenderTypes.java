@@ -19,7 +19,7 @@ import com.mojang.blaze3d.vertex.VertexFormat;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 
-import static miku.united_as_one.genesis.EternisStarrySky.MODID;
+import static miku.united_as_one.genesis.Genesis.MODID;
 
 public class FFRenderTypes extends RenderType {
     public static ResourceLocation DEMON_1 = new ResourceLocation(MODID,"textures/effects/demon.png");

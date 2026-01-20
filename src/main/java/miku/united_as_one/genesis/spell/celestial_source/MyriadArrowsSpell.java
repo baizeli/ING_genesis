@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.spell.celestial_source;
 
 import miku.united_as_one.genesis.Entity.CustomArrowEntity;
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.spell.SpellSchool;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
@@ -21,7 +21,7 @@ import java.util.Optional;
 
 @AutoSpellConfig
 public class MyriadArrowsSpell extends CelestialSourceBaseSpell {
-    private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "myriad_arrows");
+    private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "myriad_arrows");
     private final DefaultConfig defaultConfig = new DefaultConfig()
         .setMinRarity(SpellRarity.COMMON)
         .setSchoolResource(SpellSchool.CELESTIAL_SOURCE_RESOURCE)

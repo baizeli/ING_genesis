@@ -1,13 +1,13 @@
 package miku.united_as_one.genesis.event.armor;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.util.ArmorSetUtil;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.eventbus.api.*;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(modid = EternisStarrySky.MOD_ID)
+@Mod.EventBusSubscriber(modid = Genesis.MOD_ID)
 public class CelestialSourceArmorEvent {
 
     @SubscribeEvent

@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.mixin.minecraft.world.entity;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.Items.AvaritiaSword;
 import miku.united_as_one.genesis.Items.curios.rune_plus.NatureRunePlus;
 import miku.united_as_one.genesis.mixin.minecraft.world.effect.MobEffectInstanceAccessor;
@@ -163,7 +163,7 @@ public abstract class LivingEntityMixin {
         }));
 
         if (entityMap.containsKey(living)) {
-            if (entityMap.get(living) != null && entityMap.get(living).getPersistentData().getLong(EternisStarrySky.MOD_ID + "remaining_time") >= serverLevel.getGameTime()) {
+            if (entityMap.get(living) != null && entityMap.get(living).getPersistentData().getLong(Genesis.MOD_ID + "remaining_time") >= serverLevel.getGameTime()) {
                 if (((MobEffectInstanceAccessor) effectInstance).getEffect().getCategory() == MobEffectCategory.HARMFUL) {
                     entityMap.get(living).addEffect(effectInstance);
                 }
@@ -173,7 +173,7 @@ public abstract class LivingEntityMixin {
             }
         }
 
-        if (entityMap.containsValue(living) && living.getPersistentData().getLong(EternisStarrySky.MOD_ID + "remaining_time") >= serverLevel.getGameTime() && ((MobEffectInstanceAccessor) effectInstance).getEffect().getCategory() == MobEffectCategory.BENEFICIAL) {
+        if (entityMap.containsValue(living) && living.getPersistentData().getLong(Genesis.MOD_ID + "remaining_time") >= serverLevel.getGameTime() && ((MobEffectInstanceAccessor) effectInstance).getEffect().getCategory() == MobEffectCategory.BENEFICIAL) {
             cir.cancel();
         }
     }

@@ -30,7 +30,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-import static miku.united_as_one.genesis.EternisStarrySky.CHANNEL;
+import static miku.united_as_one.genesis.Genesis.CHANNEL;
 
 public class AvaritiaSword extends SwordItem
 {

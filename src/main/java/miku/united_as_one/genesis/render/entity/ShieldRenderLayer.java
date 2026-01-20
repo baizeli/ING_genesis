@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.render.entity;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.effect.spell.ModEffect;
 import miku.united_as_one.genesis.render.cosmic.PerspectiveModelState;
 import com.mojang.math.Axis;
@@ -49,7 +49,7 @@ public class ShieldRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerM
                     quads.add(new FaceBakery().bakeQuad(
                             element.from, element.to, entry.getValue(), sprite, entry.getKey(),
                             new PerspectiveModelState(ImmutableMap.of()), element.rotation, element.shade,
-                            ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "dynamic")
+                            ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "dynamic")
                     ));
                 }
             }

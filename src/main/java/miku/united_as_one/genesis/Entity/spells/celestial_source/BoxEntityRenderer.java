@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.Entity.spells.celestial_source;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.util.RenderUtils;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
@@ -18,7 +18,7 @@ public class BoxEntityRenderer extends EntityRenderer<BoxEntity> {
 
     @Override
     public ResourceLocation getTextureLocation(BoxEntity magicCircle) {
-        return ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MODID, "<null>");
+        return ResourceLocation.fromNamespaceAndPath(Genesis.MODID, "<null>");
     }
 
     @Override

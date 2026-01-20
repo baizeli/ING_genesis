@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.event.spell.chaos;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.effect.spell.chaos.ConfusionEffect;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import java.util.*;
 
-@Mod.EventBusSubscriber(modid = EternisStarrySky.MOD_ID)
+@Mod.EventBusSubscriber(modid = Genesis.MOD_ID)
 public class ConfusionEvent {
     private static final Map<UUID, Long> aiDisabledEntities = new HashMap<>();
     

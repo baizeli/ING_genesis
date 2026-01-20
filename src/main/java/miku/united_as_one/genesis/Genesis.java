@@ -1,42 +1,24 @@
 package miku.united_as_one.genesis;
 
-import miku.united_as_one.genesis.Content.ArcaneWorkbench.ArcaneWorkbenchScreen;
-import miku.united_as_one.genesis.Content.ModBlocks;
-import miku.united_as_one.genesis.Content.ModCreativeTab;
-import miku.united_as_one.genesis.Content.Workbenchs.ModBlockEntities;
-import miku.united_as_one.genesis.Content.Workbenchs.ModMenuTypes;
-import miku.united_as_one.genesis.Content.Workbenchs.ModRecipeSerializers;
-import miku.united_as_one.genesis.Content.Workbenchs.ModRecipeTypes;
-import miku.united_as_one.genesis.Content.Workbenchs.VanillaWorkbenchScreen;
-import miku.united_as_one.genesis.Entity.LightningBoltRenderer;
-import miku.united_as_one.genesis.Entity.ModEntities;
-import miku.united_as_one.genesis.Entity.NyanCatRenderer;
-import miku.united_as_one.genesis.Entity.spells.celestial_source.BoxEntity;
-import miku.united_as_one.genesis.Entity.spells.celestial_source.BoxEntityRenderer;
-import miku.united_as_one.genesis.Entity.spells.celestial_source.notuse.MagicCircle;
-import miku.united_as_one.genesis.Entity.spells.celestial_source.notuse.MagicCircleRenderer;
-import miku.united_as_one.genesis.Entity.spells.celestial_source.notuse.SwordEntity;
-import miku.united_as_one.genesis.Entity.spells.celestial_source.notuse.SwordEntityRenderer;
+import miku.united_as_one.genesis.Content.ArcaneWorkbench.*;
+import miku.united_as_one.genesis.Content.*;
+import miku.united_as_one.genesis.Content.Workbenchs.*;
+import miku.united_as_one.genesis.Entity.*;
+import miku.united_as_one.genesis.Entity.spells.celestial_source.*;
+import miku.united_as_one.genesis.Entity.spells.celestial_source.notuse.*;
 import miku.united_as_one.genesis.Items.ModItems;
 import miku.united_as_one.genesis.client.ClientEvent;
 import miku.united_as_one.genesis.client.particles.ModParticles;
 import miku.united_as_one.genesis.client.renderer.DistortWorldRender;
 import miku.united_as_one.genesis.client.renderer.spell.celestial_source.DeadStarDecreeCometRenderer;
-import miku.united_as_one.genesis.config.Configuration;
-import miku.united_as_one.genesis.config.ConfigurationFactory;
+import miku.united_as_one.genesis.config.*;
 import miku.united_as_one.genesis.effect.spell.ModEffect;
 import miku.united_as_one.genesis.fonts.FuckFont1;
-import miku.united_as_one.genesis.network.DeadListSyncPacket;
-import miku.united_as_one.genesis.network.MarkDeadPacket;
-import miku.united_as_one.genesis.network.NetworkHandler;
-import miku.united_as_one.genesis.network.WireBoxSyncPacket;
+import miku.united_as_one.genesis.network.*;
 import miku.united_as_one.genesis.sound.SoundsRegister;
-import miku.united_as_one.genesis.spell.SpellAttributes;
-import miku.united_as_one.genesis.spell.SpellSchool;
-import miku.united_as_one.genesis.spell.Spells;
+import miku.united_as_one.genesis.spell.*;
 import com.mojang.logging.LogUtils;
-import io.redspace.ironsspellbooks.registries.CreativeTabRegistry;
-import io.redspace.ironsspellbooks.registries.ItemRegistry;
+import io.redspace.ironsspellbooks.registries.*;
 import io.redspace.ironsspellbooks.render.SpellBookCurioRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -48,20 +30,18 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.*;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.*;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
 import org.slf4j.Logger;
 import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
 
-@Mod(EternisStarrySky.MOD_ID)
-public class EternisStarrySky
+@Mod(Genesis.MOD_ID)
+public class Genesis
 {
     
     public static final String MOD_ID = "iron_spells_genesis";
@@ -79,7 +59,7 @@ public class EternisStarrySky
         return new ResourceLocation(MOD_ID, path);
     }
 
-    public EternisStarrySky(FMLJavaModLoadingContext context)
+    public Genesis(FMLJavaModLoadingContext context)
     {
         IEventBus modEventBus = context.getModEventBus();
 

@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.Entity.spells.celestial_source.notuse;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.util.RenderUtils;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
@@ -13,7 +13,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public class MagicCircleRenderer extends EntityRenderer<MagicCircle> {
     private static final ResourceLocation DEFAULT_TEXTURE =
-            ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MODID, "textures/magic_circle.png");
+            ResourceLocation.fromNamespaceAndPath(Genesis.MODID, "textures/magic_circle.png");
 
     public MagicCircleRenderer(EntityRendererProvider.Context context) {
         super(context);

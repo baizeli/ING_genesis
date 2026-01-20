@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.util.spell;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
@@ -10,7 +10,7 @@ import net.minecraft.world.entity.LivingEntity;
 
 public class SpellEffectUtil {
     public static final TagKey<MobEffect> CHAOS_EFFECT = TagKey.create(
-        Registries.MOB_EFFECT, new ResourceLocation(EternisStarrySky.MOD_ID, "spell_effect/chaos")
+        Registries.MOB_EFFECT, new ResourceLocation(Genesis.MOD_ID, "spell_effect/chaos")
     );
     
     public static boolean isAffectedByChaosEffect(LivingEntity entity) {

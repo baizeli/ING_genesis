@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.render.cosmic;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.Items.ModItems;
 import miku.united_as_one.genesis.spell.SpellSchool;
 import com.google.common.collect.ImmutableMap;
@@ -140,7 +140,7 @@ public final class CosmicBakeModel implements BakedModel {
         // 准备纹理UV
         for (int i = 0; i < 10; ++i)
         {
-            TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "item/misc/cosmic_" + i));
+            TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "item/misc/cosmic_" + i));
             AvaritiaShaders.COSMIC_UVS[i * 4] = sprite.getU0();
             AvaritiaShaders.COSMIC_UVS[i * 4 + 1] = sprite.getV0();
             AvaritiaShaders.COSMIC_UVS[i * 4 + 2] = sprite.getU1();
@@ -181,7 +181,7 @@ public final class CosmicBakeModel implements BakedModel {
                             new PerspectiveModelState(ImmutableMap.of()),
                             element.rotation,
                             element.shade,
-                            ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "dynamic")
+                            ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "dynamic")
                     ));
                 }
             }

@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.effect.spell;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.effect.spell.celestial_source.*;
 import miku.united_as_one.genesis.effect.spell.chaos.*;
 import net.minecraft.core.registries.Registries;
@@ -10,7 +10,7 @@ import net.minecraftforge.registries.*;
 
 public class ModEffect {
     public static final DeferredRegister<MobEffect> MOB_EFFECTS =
-            DeferredRegister.create(Registries.MOB_EFFECT, EternisStarrySky.MOD_ID);
+            DeferredRegister.create(Registries.MOB_EFFECT, Genesis.MOD_ID);
 
     public static final RegistryObject<MobEffect> FATE_WEDGE =
             MOB_EFFECTS.register("fate_wedge", FateWedgeEffect::new);

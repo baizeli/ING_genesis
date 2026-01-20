@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.Items;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.particles.*;
 import net.minecraft.server.level.ServerLevel;
@@ -88,17 +88,17 @@ public class FlyingSwallowThroughWillow extends SwordItem implements GeoItem {
                     this.renderer = new GeoItemRenderer<>(new GeoModel<FlyingSwallowThroughWillow>() {
                         @Override
                         public ResourceLocation getModelResource(FlyingSwallowThroughWillow object) {
-                            return new ResourceLocation(EternisStarrySky.MOD_ID, "geo/item/flying_swallow_through_willow.geo.json");
+                            return new ResourceLocation(Genesis.MOD_ID, "geo/item/flying_swallow_through_willow.geo.json");
                         }
 
                         @Override
                         public ResourceLocation getTextureResource(FlyingSwallowThroughWillow object) {
-                            return new ResourceLocation(EternisStarrySky.MOD_ID, "textures/item/flying_swallow_through_willow_models.png");
+                            return new ResourceLocation(Genesis.MOD_ID, "textures/item/flying_swallow_through_willow_models.png");
                         }
 
                         @Override
                         public ResourceLocation getAnimationResource(FlyingSwallowThroughWillow animatable) {
-                            return new ResourceLocation(EternisStarrySky.MOD_ID, "animations/item/flying_swallow_through_willow.animation.json");
+                            return new ResourceLocation(Genesis.MOD_ID, "animations/item/flying_swallow_through_willow.animation.json");
                         }
                     });
                 

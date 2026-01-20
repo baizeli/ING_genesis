@@ -9,7 +9,7 @@ import net.minecraftforge.network.PacketDistributor;
 import java.util.UUID;
 import java.util.function.Supplier;
 
-import static miku.united_as_one.genesis.EternisStarrySky.CHANNEL;
+import static miku.united_as_one.genesis.Genesis.CHANNEL;
 
 public class MarkDeadPacket {
     private final UUID targetUuid;

@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.client.renderer.spell.celestial_source;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
@@ -33,7 +33,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class GlazedFlowerRainRenderer {
     private static final Minecraft minecraft = Minecraft.instance;
-    private static final ResourceLocation GLAZED_FLOWER_RAIN_LOCATION = new ResourceLocation(EternisStarrySky.MODID, "textures/environment/glazed_flower_rain.png");
+    private static final ResourceLocation GLAZED_FLOWER_RAIN_LOCATION = new ResourceLocation(Genesis.MODID, "textures/environment/glazed_flower_rain.png");
     private int rainSoundTime;
 
     public void renderSnowAndRain(LightTexture lightTexture, float partialTick, double entityX, double entityY, double entityZ, double camX, double camY, double camZ) {

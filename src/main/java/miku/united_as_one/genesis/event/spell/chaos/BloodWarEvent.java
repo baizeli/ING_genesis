@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.event.spell.chaos;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.effect.spell.ModEffect;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import net.minecraft.world.entity.ai.attributes.*;
@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import java.util.*;
 
-@Mod.EventBusSubscriber(modid = EternisStarrySky.MODID)
+@Mod.EventBusSubscriber(modid = Genesis.MODID)
 public class BloodWarEvent {
     private static final Map<Player, Map<UUID, AttributeModifier>> playerModifiers = new HashMap<>();
 

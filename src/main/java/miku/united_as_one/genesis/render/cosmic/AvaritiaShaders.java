@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.render.cosmic;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.VertexFormat;
@@ -20,7 +20,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import java.util.Objects;
 
-@Mod.EventBusSubscriber(modid = EternisStarrySky.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
+@Mod.EventBusSubscriber(modid = Genesis.MOD_ID, value = Dist.CLIENT, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public final class AvaritiaShaders {
     public static class RenderStateShardAccess extends RenderStateShard {
         private static final DepthTestStateShard EQUAL_DEPTH_TEST = RenderStateShard.EQUAL_DEPTH_TEST;
@@ -63,7 +63,7 @@ public final class AvaritiaShaders {
     public static CCUniform cosmicScreenSize;
     public static CCUniform cosmicIs2D;
     public static final RenderType COSMIC_RENDER_TYPE = RenderType.create(
-            EternisStarrySky.MOD_ID + ":cosmic",
+            Genesis.MOD_ID + ":cosmic",
             DefaultVertexFormat.BLOCK,
             VertexFormat.Mode.QUADS,
             2097152,
@@ -79,7 +79,7 @@ public final class AvaritiaShaders {
     //public static final RenderType COSMIC_RENDER_TYPE_2 = RenderType.create(EternisStarrySky.MOD_ID + ":cosmic_1", DefaultVertexFormat.BLOCK, VertexFormat.Mode.QUADS, 2097152, true, false, RenderType.CompositeState.builder().setShaderState(new RenderStateShard.ShaderStateShard(() -> cosmicShader)).setDepthTestState(RenderStateShardAccess.EQUAL_DEPTH_TEST).setLightmapState(RenderStateShardAccess.LIGHT_MAP).setTransparencyState(RenderStateShardAccess.TRANSLUCENT_TRANSPARENCY).setTextureState(RenderStateShardAccess.BLOCK_SHEET_MIPPED).createCompositeState(true));
 
     public static void onRegisterShaders(RegisterShadersEvent event) {
-        event.registerShader(CCShaderInstance.create(event.getResourceProvider(), ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "cosmic"), DefaultVertexFormat.BLOCK), e -> {
+        event.registerShader(CCShaderInstance.create(event.getResourceProvider(), ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "cosmic"), DefaultVertexFormat.BLOCK), e -> {
             cosmicShader = (CCShaderInstance) e;
             cosmicTime = Objects.requireNonNull(cosmicShader.getUniform("time"));
             cosmicYaw = Objects.requireNonNull(cosmicShader.getUniform("yaw"));

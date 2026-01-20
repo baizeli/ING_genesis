@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.spell.celestial_source;
 
 import miku.united_as_one.genesis.Entity.CustomArrowEntity;
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.spell.SpellSchool;
 import miku.united_as_one.genesis.spell.SpellUtils;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
@@ -25,7 +25,7 @@ import java.util.List;
 
 @AutoSpellConfig
 public class FinalWhisper extends AbstractSpell {
-    private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "final_whisper");
+    private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "final_whisper");
     private final DefaultConfig defaultConfig = new DefaultConfig()
             .setMinRarity(SpellRarity.LEGENDARY)
             .setSchoolResource(SpellSchool.CELESTIAL_SOURCE_RESOURCE)

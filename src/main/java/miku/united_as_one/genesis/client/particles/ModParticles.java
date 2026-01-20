@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.client.particles;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
@@ -14,7 +14,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 public class ModParticles {
     public static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES =
-            DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, EternisStarrySky.MOD_ID);
+            DeferredRegister.create(ForgeRegistries.PARTICLE_TYPES, Genesis.MOD_ID);
 
     public static final RegistryObject<SimpleParticleType> STARDUST_TRAIL =
             PARTICLE_TYPES.register("stardust_trail",
@@ -41,7 +41,7 @@ public class ModParticles {
         PARTICLE_TYPES.register(eventBus);
     }
 
-    @Mod.EventBusSubscriber(modid = EternisStarrySky.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+    @Mod.EventBusSubscriber(modid = Genesis.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
     public static class ClientSetup {
         @SubscribeEvent
         public static void registerParticleFactories(RegisterParticleProvidersEvent event) {

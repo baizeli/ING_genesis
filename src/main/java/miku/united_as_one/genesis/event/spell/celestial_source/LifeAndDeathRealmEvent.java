@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.event.spell.celestial_source;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.effect.spell.ModEffect;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.*;
@@ -10,7 +10,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.common.Tags;
 
-@Mod.EventBusSubscriber(modid = EternisStarrySky.MODID)
+@Mod.EventBusSubscriber(modid = Genesis.MODID)
 public class LifeAndDeathRealmEvent {
     private static boolean playerHasBeenSacrificed = false;
     private static long sacrificeImmunityEndTime = 0;

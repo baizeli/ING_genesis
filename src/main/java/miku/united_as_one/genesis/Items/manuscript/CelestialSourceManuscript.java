@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.Items.manuscript;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.Items.ModItems;
 import miku.united_as_one.genesis.client.gui.manuscript.CelestialSourceSpellLearningScreen;
 import net.minecraft.network.chat.Component;
@@ -20,7 +20,7 @@ public class CelestialSourceManuscript extends ModItems.CelestialSourceBaseItem 
 
     @Override
     public void appendHoverText(@NotNull ItemStack itemstack, @Nullable Level world, @NotNull List<Component> list, @NotNull TooltipFlag flag) {
-        list.add(Component.translatable("item." + EternisStarrySky.MOD_ID + ".celestial_source_manuscript.hover"));
+        list.add(Component.translatable("item." + Genesis.MOD_ID + ".celestial_source_manuscript.hover"));
     }
 
     @Override

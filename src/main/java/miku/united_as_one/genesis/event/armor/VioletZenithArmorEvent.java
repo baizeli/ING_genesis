@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.event.armor;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.util.ArmorSetUtil;
 import net.minecraft.world.effect.*;
 import net.minecraft.world.entity.player.Player;
@@ -8,7 +8,7 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(modid = EternisStarrySky.MOD_ID)
+@Mod.EventBusSubscriber(modid = Genesis.MOD_ID)
 public class VioletZenithArmorEvent {
 
     @SubscribeEvent

@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.save;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.client.renderer.spell.chaos.WireBoxRenderer;
 import miku.united_as_one.genesis_core.utils.EventUtil;
 import miku.united_as_one.genesis.network.DeadListSyncPacket;
@@ -21,7 +21,7 @@ import java.nio.file.Path;
 import java.util.Map;
 import java.util.UUID;
 
-import static miku.united_as_one.genesis.EternisStarrySky.CHANNEL;
+import static miku.united_as_one.genesis.Genesis.CHANNEL;
 
 public class SaveManager {
     private static Path SAVE_PATH;
@@ -32,7 +32,7 @@ public class SaveManager {
 
     public static void init(MinecraftServer server) {
         SAVE_PATH = server.getWorldPath(LevelResource.ROOT)
-                .resolve(EternisStarrySky.MODID + "_save.json");
+                .resolve(Genesis.MODID + "_save.json");
     }
 
 

@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.client.renderer;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.client.model.WingModel;
 import miku.united_as_one.genesis.effect.spell.ModEffect;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -18,7 +18,7 @@ import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import static miku.united_as_one.genesis.EternisStarrySky.MODID;
+import static miku.united_as_one.genesis.Genesis.MODID;
 
 public class WingLayer extends RenderLayer<Player, PlayerModel<Player>> {
     private static final ResourceLocation WING_TEXTURE = new ResourceLocation(MODID, "textures/models/armor/spell_wing.png");
@@ -75,7 +75,7 @@ public class WingLayer extends RenderLayer<Player, PlayerModel<Player>> {
         poseStack.translate(0.0D, -0.1D, 0.1D);
     }
 
-    @Mod.EventBusSubscriber(modid = EternisStarrySky.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+    @Mod.EventBusSubscriber(modid = Genesis.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class WingLayerRegistry {
 
         @SubscribeEvent

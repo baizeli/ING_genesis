@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.client.gui.manuscript;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.Items.ModItems;
 import miku.united_as_one.genesis.spell.SpellSchool;
 import io.redspace.ironsspellbooks.api.spells.*;
@@ -27,7 +27,7 @@ public class ChaosSpellLearningScreen extends AbstractSpellLearningScreen {
 
             @Override
             public ResourceLocation getSpellResource() {
-                return ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MOD_ID, "chaos_filter");
+                return ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "chaos_filter");
             }
 
             @Override
@@ -49,6 +49,6 @@ public class ChaosSpellLearningScreen extends AbstractSpellLearningScreen {
 
     @Override
     protected Component getRequiredItemName() {
-        return Component.translatable("item." + EternisStarrySky.MOD_ID + ".chaos_manuscript");
+        return Component.translatable("item." + Genesis.MOD_ID + ".chaos_manuscript");
     }
 }

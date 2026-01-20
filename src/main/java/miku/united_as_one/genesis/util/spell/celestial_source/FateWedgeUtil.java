@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.util.spell.celestial_source;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.effect.spell.ModEffect;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import java.util.*;
 
-@Mod.EventBusSubscriber(modid = EternisStarrySky.MOD_ID)
+@Mod.EventBusSubscriber(modid = Genesis.MOD_ID)
 public class FateWedgeUtil {
     private static final Map<LivingEntity, LivingEntity> targetToCasterMap = new HashMap<>();
     private static final Map<LivingEntity, Map<LivingEntity, Float>> initialHealthMap = new HashMap<>();

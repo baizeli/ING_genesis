@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.Entity.spells.celestial_source.notuse;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.util.RenderUtils;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
@@ -22,7 +22,7 @@ public class SwordEntityRenderer extends EntityRenderer<SwordEntity> {
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(@NotNull SwordEntity swordEntity) {
-        return ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MODID, "nop");
+        return ResourceLocation.fromNamespaceAndPath(Genesis.MODID, "nop");
     }
 
     @Override

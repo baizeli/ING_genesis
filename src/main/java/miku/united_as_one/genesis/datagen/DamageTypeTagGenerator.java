@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.datagen;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.damage.DamageTypes;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -19,11 +19,11 @@ public class DamageTypeTagGenerator extends TagsProvider<DamageType> {
     public static final TagKey<DamageType> CELESTIAL_SOURCE_MAGIC = create("celestial_source_magic");
 
     public DamageTypeTagGenerator(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper existingFileHelper) {
-        super(output, Registries.DAMAGE_TYPE, lookupProvider, EternisStarrySky.MODID, existingFileHelper);
+        super(output, Registries.DAMAGE_TYPE, lookupProvider, Genesis.MODID, existingFileHelper);
     }
 
     private static TagKey<DamageType> create(String name) {
-        return TagKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(EternisStarrySky.MODID, name));
+        return TagKey.create(Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath(Genesis.MODID, name));
     }
 
     @Override

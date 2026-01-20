@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.Items.armor;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import io.redspace.ironsspellbooks.entity.armor.*;
 import io.redspace.ironsspellbooks.item.armor.*;
 import net.minecraft.resources.ResourceLocation;
@@ -22,21 +22,21 @@ public class VioletZenithArmor extends ExtendedArmorItem {
                 @Override
                 public ResourceLocation getModelResource(VioletZenithArmor object) {
                     return ResourceLocation.fromNamespaceAndPath(
-                        EternisStarrySky.MOD_ID, "geo/armor/violet_zenith_armor.geo.json"
+                        Genesis.MOD_ID, "geo/armor/violet_zenith_armor.geo.json"
                     );
                 }
 
                 @Override
                 public ResourceLocation getTextureResource(VioletZenithArmor object) {
                     return ResourceLocation.fromNamespaceAndPath(
-                        EternisStarrySky.MOD_ID, "textures/models/armor/violet_zenith.png"
+                        Genesis.MOD_ID, "textures/models/armor/violet_zenith.png"
                     );
                 }
 
                 @Override
                 public ResourceLocation getAnimationResource(VioletZenithArmor animatable) {
                     return ResourceLocation.fromNamespaceAndPath(
-                        EternisStarrySky.MOD_ID, "animations/armor/violet_zenith_armor.animation.json"
+                        Genesis.MOD_ID, "animations/armor/violet_zenith_armor.animation.json"
                     );
                 }
             }

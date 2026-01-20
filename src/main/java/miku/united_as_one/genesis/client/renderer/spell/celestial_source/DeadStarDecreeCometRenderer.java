@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.client.renderer.spell.celestial_source;
 
-import miku.united_as_one.genesis.EternisStarrySky;
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.client.model.spell.celestial_source.DeadStarDecreeCometModel;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -13,7 +13,7 @@ import net.minecraft.world.entity.projectile.Projectile;
 
 public class DeadStarDecreeCometRenderer extends EntityRenderer<Projectile> {
     private final static ResourceLocation BASE_TEXTURE = ResourceLocation.fromNamespaceAndPath(
-        EternisStarrySky.MOD_ID, "textures/entity/dead_star_decree_comet.png"
+        Genesis.MOD_ID, "textures/entity/dead_star_decree_comet.png"
     );
     
     private final DeadStarDecreeCometModel<Projectile> model;
