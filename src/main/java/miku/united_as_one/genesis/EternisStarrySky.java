@@ -63,7 +63,7 @@ import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
 @Mod(EternisStarrySky.MOD_ID)
 public class EternisStarrySky
 {
-
+    
     public static final String MOD_ID = "iron_spells_genesis";
     public static final String MODID = MOD_ID; // 添加这个别名以保持兼容性
     private static final Logger LOGGER = LogUtils.getLogger();
