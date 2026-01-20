@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.mixin.minecraft.client.renderer;
 
-import miku.united_as_one.genesis.Items.armor.VioletZenithArmor;
+import miku.united_as_one.genesis.items.armor.VioletZenithArmor;
 import net.minecraft.client.renderer.*;
 import net.minecraft.world.effect.*;
 import net.minecraft.world.entity.*;

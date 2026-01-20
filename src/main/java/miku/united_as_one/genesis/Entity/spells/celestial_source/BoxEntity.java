@@ -1,4 +1,4 @@
-package miku.united_as_one.genesis.Entity.spells.celestial_source;
+package miku.united_as_one.genesis.entity.spells.celestial_source;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;

@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.mixin.ironsspellbooks.spells.ice;
 
-import miku.united_as_one.genesis.Items.curios.rune_plus.IceRunePlus;
+import miku.united_as_one.genesis.items.curios.rune_plus.IceRunePlus;
 import miku.united_as_one.genesis.util.ModCurios;
 import io.redspace.ironsspellbooks.entity.spells.AbstractMagicProjectile;
 import io.redspace.ironsspellbooks.entity.spells.icicle.IcicleProjectile;

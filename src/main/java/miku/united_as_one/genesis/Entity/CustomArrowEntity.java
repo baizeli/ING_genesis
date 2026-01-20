@@ -1,6 +1,6 @@
-package miku.united_as_one.genesis.Entity;
+package miku.united_as_one.genesis.entity;
 
-import miku.united_as_one.genesis.Entity.spells.celestial_source.BoxEntity;
+import miku.united_as_one.genesis.entity.spells.celestial_source.BoxEntity;
 import miku.united_as_one.genesis.spell.Spells;
 import io.redspace.ironsspellbooks.damage.SpellDamageSource;
 import net.minecraft.core.BlockPos;

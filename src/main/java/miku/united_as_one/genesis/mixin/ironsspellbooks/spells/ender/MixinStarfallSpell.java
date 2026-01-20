@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.mixin.ironsspellbooks.spells.ender;
 
-import miku.united_as_one.genesis.Items.curios.rune_plus.EnderRunePlus;
+import miku.united_as_one.genesis.items.curios.rune_plus.EnderRunePlus;
 import miku.united_as_one.genesis.util.ModCurios;
 import io.redspace.ironsspellbooks.entity.spells.comet.Comet;
 import io.redspace.ironsspellbooks.spells.ender.StarfallSpell;

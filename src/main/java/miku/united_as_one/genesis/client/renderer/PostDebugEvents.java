@@ -9,7 +9,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import static miku.united_as_one.genesis.Items.ModItems.INFINITY_SWORD;
+import static miku.united_as_one.genesis.items.ModItems.INFINITY_SWORD;
 
 @Mod.EventBusSubscriber(
         modid = Genesis.MOD_ID,

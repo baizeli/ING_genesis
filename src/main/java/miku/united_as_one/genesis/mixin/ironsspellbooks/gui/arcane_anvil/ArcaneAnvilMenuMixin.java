@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.mixin.ironsspellbooks.gui.arcane_anvil;
 
-import miku.united_as_one.genesis.Items.InfiniteShrivingStoneItem;
+import miku.united_as_one.genesis.items.InfiniteShrivingStoneItem;
 import io.redspace.ironsspellbooks.gui.arcane_anvil.ArcaneAnvilMenu;
 import net.minecraft.world.item.*;
 import org.spongepowered.asm.mixin.Mixin;

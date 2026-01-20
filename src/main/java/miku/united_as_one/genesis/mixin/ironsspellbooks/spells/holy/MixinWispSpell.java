@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.mixin.ironsspellbooks.spells.holy;
 
-import miku.united_as_one.genesis.Items.curios.rune_plus.HolyRunePlus;
+import miku.united_as_one.genesis.items.curios.rune_plus.HolyRunePlus;
 import miku.united_as_one.genesis.util.ModCurios;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import io.redspace.ironsspellbooks.spells.holy.WispSpell;

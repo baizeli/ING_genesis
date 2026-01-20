@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.render.entity;
 
-import miku.united_as_one.genesis.Entity.CustomArrowEntity;
+import miku.united_as_one.genesis.entity.CustomArrowEntity;
 import miku.united_as_one.genesis.Genesis;
 import net.minecraft.client.renderer.entity.ArrowRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

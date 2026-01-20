@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.render;
 
-import miku.united_as_one.genesis.Entity.ModEntities;
+import miku.united_as_one.genesis.entity.ModEntities;
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.client.renderer.boss.BloodBossRenderer;
 import miku.united_as_one.genesis.render.cosmic.AvaritiaShaders;

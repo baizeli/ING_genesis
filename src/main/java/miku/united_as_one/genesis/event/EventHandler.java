@@ -1,13 +1,13 @@
 package miku.united_as_one.genesis.event;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.Items.CelestialSourceSpellBook;
-import miku.united_as_one.genesis.Items.ChaosSpellBook;
-import miku.united_as_one.genesis.Items.ModItems;
-import miku.united_as_one.genesis.Items.Staff.CelestialSourceStaff;
-import miku.united_as_one.genesis.Items.Staff.ChaosStaff;
-import miku.united_as_one.genesis.Items.armor.CelestialSourceSpellArmor;
-import miku.united_as_one.genesis.Items.armor.ChaosSpellArmor;
+import miku.united_as_one.genesis.items.CelestialSourceSpellBook;
+import miku.united_as_one.genesis.items.ChaosSpellBook;
+import miku.united_as_one.genesis.items.ModItems;
+import miku.united_as_one.genesis.items.staff.CelestialSourceStaff;
+import miku.united_as_one.genesis.items.staff.ChaosStaff;
+import miku.united_as_one.genesis.items.armor.CelestialSourceSpellArmor;
+import miku.united_as_one.genesis.items.armor.ChaosSpellArmor;
 import miku.united_as_one.genesis.client.renderer.spell.chaos.WireBoxRenderer;
 import miku.united_as_one.genesis_core.utils.EventUtil;
 import miku.united_as_one.genesis.network.DeadListSyncPacket;

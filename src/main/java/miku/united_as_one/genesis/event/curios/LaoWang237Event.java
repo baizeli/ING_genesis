@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.event.curios;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.Items.ModItems;
+import miku.united_as_one.genesis.items.ModItems;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;

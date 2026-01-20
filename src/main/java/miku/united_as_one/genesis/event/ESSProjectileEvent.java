@@ -1,8 +1,8 @@
 package miku.united_as_one.genesis.event;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.Items.curios.rune_plus.EnderRunePlus;
-import miku.united_as_one.genesis.Items.curios.rune_plus.LightningRunePlus;
+import miku.united_as_one.genesis.items.curios.rune_plus.EnderRunePlus;
+import miku.united_as_one.genesis.items.curios.rune_plus.LightningRunePlus;
 import miku.united_as_one.genesis.util.ModCurios;
 import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
 import io.redspace.ironsspellbooks.api.util.Utils;

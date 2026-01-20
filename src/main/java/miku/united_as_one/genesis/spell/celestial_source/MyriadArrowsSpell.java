@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.spell.celestial_source;
 
-import miku.united_as_one.genesis.Entity.CustomArrowEntity;
+import miku.united_as_one.genesis.entity.CustomArrowEntity;
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.spell.SpellSchool;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;

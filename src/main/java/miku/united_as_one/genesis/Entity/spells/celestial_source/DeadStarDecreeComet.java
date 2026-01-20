@@ -1,4 +1,4 @@
-package miku.united_as_one.genesis.Entity.spells.celestial_source;
+package miku.united_as_one.genesis.entity.spells.celestial_source;
 
 import miku.united_as_one.genesis.damage.DamageTypes;
 import io.redspace.ironsspellbooks.api.util.Utils;
