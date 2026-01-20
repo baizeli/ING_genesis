@@ -1,8 +1,8 @@
 package miku.united_as_one.genesis.event;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.Items.curios.EternalRing;
-import miku.united_as_one.genesis.Items.curios.rune_plus.BloodRunePlus;
+import miku.united_as_one.genesis.items.curios.EternalRing;
+import miku.united_as_one.genesis.items.curios.rune_plus.BloodRunePlus;
 import miku.united_as_one.genesis.util.ModCurios;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;

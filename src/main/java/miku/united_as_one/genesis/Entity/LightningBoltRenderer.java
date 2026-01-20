@@ -1,4 +1,4 @@
-package miku.united_as_one.genesis.Entity;
+package miku.united_as_one.genesis.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;

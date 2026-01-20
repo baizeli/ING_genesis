@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.client.particles;
 
-import miku.united_as_one.genesis.Entity.ModEntities;
-import miku.united_as_one.genesis.Entity.NyanCat;
+import miku.united_as_one.genesis.entity.ModEntities;
+import miku.united_as_one.genesis.entity.NyanCat;
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.render.ModShaders;
 import com.mojang.blaze3d.pipeline.TextureTarget;
@@ -22,7 +22,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static miku.united_as_one.genesis.Genesis.MODID;
-import static miku.united_as_one.genesis.Items.ModItems.INFINITY_SWORD;
+import static miku.united_as_one.genesis.items.ModItems.INFINITY_SWORD;
 
 @Mod.EventBusSubscriber(modid = Genesis.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class ParticleDebugEvents {

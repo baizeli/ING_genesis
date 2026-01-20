@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.event;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.Items.ModItems;
+import miku.united_as_one.genesis.items.ModItems;
 import miku.united_as_one.genesis.config.AnimationConfig;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;

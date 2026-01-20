@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.mixin.ironsspellbooks.spells.nature;
 
-import miku.united_as_one.genesis.Items.curios.rune_plus.NatureRunePlus;
+import miku.united_as_one.genesis.items.curios.rune_plus.NatureRunePlus;
 import miku.united_as_one.genesis.util.ModCurios;
 import io.redspace.ironsspellbooks.entity.spells.poison_arrow.PoisonArrow;
 import io.redspace.ironsspellbooks.entity.spells.poison_cloud.PoisonCloud;

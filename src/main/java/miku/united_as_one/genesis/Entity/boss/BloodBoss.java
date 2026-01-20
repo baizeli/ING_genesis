@@ -1,4 +1,4 @@
-package miku.united_as_one.genesis.Entity.boss;
+package miku.united_as_one.genesis.entity.boss;
 
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.*;

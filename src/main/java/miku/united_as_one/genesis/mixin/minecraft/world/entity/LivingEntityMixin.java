@@ -1,8 +1,8 @@
 package miku.united_as_one.genesis.mixin.minecraft.world.entity;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.Items.AvaritiaSword;
-import miku.united_as_one.genesis.Items.curios.rune_plus.NatureRunePlus;
+import miku.united_as_one.genesis.items.AvaritiaSword;
+import miku.united_as_one.genesis.items.curios.rune_plus.NatureRunePlus;
 import miku.united_as_one.genesis.mixin.minecraft.world.effect.MobEffectInstanceAccessor;
 import miku.united_as_one.genesis.effect.spell.ModEffect;
 import miku.united_as_one.genesis.sound.SoundsRegister;

@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.spell.celestial_source;
 
-import miku.united_as_one.genesis.Entity.ModEntities;
-import miku.united_as_one.genesis.Entity.spells.celestial_source.DeadStarDecreeComet;
+import miku.united_as_one.genesis.entity.ModEntities;
+import miku.united_as_one.genesis.entity.spells.celestial_source.DeadStarDecreeComet;
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.spell.SpellSchool;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;

@@ -1,4 +1,4 @@
-package miku.united_as_one.genesis.Entity;
+package miku.united_as_one.genesis.entity;
 
 import miku.united_as_one.genesis.client.particles.ModParticles;
 import net.minecraft.sounds.SoundEvents;

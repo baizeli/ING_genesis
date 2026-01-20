@@ -1,13 +1,13 @@
 package miku.united_as_one.genesis;
 
-import miku.united_as_one.genesis.Content.ArcaneWorkbench.*;
-import miku.united_as_one.genesis.Content.*;
-import miku.united_as_one.genesis.Content.Workbenchs.*;
-import miku.united_as_one.genesis.Entity.*;
-import miku.united_as_one.genesis.Entity.spells.celestial_source.*;
-import miku.united_as_one.genesis.Entity.boss.BloodBoss;
-import miku.united_as_one.genesis.Entity.spells.celestial_source.notuse.*;
-import miku.united_as_one.genesis.Items.ModItems;
+import miku.united_as_one.genesis.content.arcaneWorkbench.*;
+import miku.united_as_one.genesis.content.*;
+import miku.united_as_one.genesis.content.workbenchs.*;
+import miku.united_as_one.genesis.entity.*;
+import miku.united_as_one.genesis.entity.spells.celestial_source.*;
+import miku.united_as_one.genesis.entity.boss.BloodBoss;
+import miku.united_as_one.genesis.entity.spells.celestial_source.notuse.*;
+import miku.united_as_one.genesis.items.ModItems;
 import miku.united_as_one.genesis.client.ClientEvent;
 import miku.united_as_one.genesis.client.particles.ModParticles;
 import miku.united_as_one.genesis.client.renderer.DistortWorldRender;

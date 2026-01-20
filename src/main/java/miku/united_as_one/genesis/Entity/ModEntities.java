@@ -1,10 +1,10 @@
-package miku.united_as_one.genesis.Entity;
+package miku.united_as_one.genesis.entity;
 
-import miku.united_as_one.genesis.Entity.boss.BloodBoss;
-import miku.united_as_one.genesis.Entity.spells.celestial_source.BoxEntity;
-import miku.united_as_one.genesis.Entity.spells.celestial_source.DeadStarDecreeComet;
-import miku.united_as_one.genesis.Entity.spells.celestial_source.notuse.MagicCircle;
-import miku.united_as_one.genesis.Entity.spells.celestial_source.notuse.SwordEntity;
+import miku.united_as_one.genesis.entity.boss.BloodBoss;
+import miku.united_as_one.genesis.entity.spells.celestial_source.BoxEntity;
+import miku.united_as_one.genesis.entity.spells.celestial_source.DeadStarDecreeComet;
+import miku.united_as_one.genesis.entity.spells.celestial_source.notuse.MagicCircle;
+import miku.united_as_one.genesis.entity.spells.celestial_source.notuse.SwordEntity;
 import miku.united_as_one.genesis.Genesis;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;

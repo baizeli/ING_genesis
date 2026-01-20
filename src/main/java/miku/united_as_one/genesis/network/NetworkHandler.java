@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.network;
 
-import miku.united_as_one.genesis.Content.ArcaneWorkbench.ArcaneWorkbenchRecipeTransferPacket;
+import miku.united_as_one.genesis.content.arcaneWorkbench.ArcaneWorkbenchRecipeTransferPacket;
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.network.manuscript.LearnSpellPacket;
 import net.minecraft.resources.ResourceLocation;

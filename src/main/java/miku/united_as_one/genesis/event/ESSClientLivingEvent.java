@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.event;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.Items.curios.EternalRing;
+import miku.united_as_one.genesis.items.curios.EternalRing;
 import miku.united_as_one.genesis.util.ModCurios;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;

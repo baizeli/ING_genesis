@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.render.cosmic;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.Items.ModItems;
+import miku.united_as_one.genesis.items.ModItems;
 import miku.united_as_one.genesis.spell.SpellSchool;
 import com.google.common.collect.ImmutableMap;
 import com.mojang.blaze3d.pipeline.RenderTarget;

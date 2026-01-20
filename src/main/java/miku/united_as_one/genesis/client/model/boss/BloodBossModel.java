@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.client.model.boss;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.Entity.boss.BloodBoss;
+import miku.united_as_one.genesis.entity.boss.BloodBoss;
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib.model.GeoModel;
 
