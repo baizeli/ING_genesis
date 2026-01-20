@@ -138,8 +138,6 @@ public class ModItems {
             )
     );
 
-    public static final RegistryObject<Item> WORKBENCH = ITEMS.register("workbench", () -> new BlockItem(ModBlocks.workbench.get(), new Item.Properties()));
-
     // 奥术工作台
     public static final RegistryObject<Item> ARCANE_WORKBENCH = ITEMS.register("arcane_workbench",
         () -> new BlockItem(ModBlocks.ARCANE_WORKBENCH.get(), new Item.Properties()));

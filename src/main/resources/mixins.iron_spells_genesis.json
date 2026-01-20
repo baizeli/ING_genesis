@@ -26,7 +26,6 @@
 		"ironsspellbooks.spells.nature.MixinPoisonArrow",
 		"ironsspellbooks.spells.nature.MixinPoisonArrowSpell",
 		"ironsspellbooks.spells.nature.MixinPoisonSplash",
-		"jei.library.gui.recipes.RecipeLayoutMixin",
 		"minecraft.client.renderer.ParticleAccessor",
 		"minecraft.client.renderer.ParticleEngineAccessor",
 		"minecraft.world.effect.MobEffectInstanceAccessor",

@@ -12,7 +12,6 @@ public class ModRecipeSerializers
 {
     public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, Genesis.MOD_ID);
 
-    public static final RegistryObject<RecipeSerializer<VanillaWorkbenchRecipe>> VANILLA_WORKBENCH_RECIPE = RECIPE_SERIALIZERS.register("vanilla_workbench_s", VanillaWorkbenchRecipe.Serializer::new);
     public static final RegistryObject<RecipeSerializer<ArcaneWorkbenchRecipe>> ARCANE_WORKBENCH_RECIPE_SERIALIZER =
             RECIPE_SERIALIZERS.register("arcane_workbench_recipe", ArcaneWorkbenchRecipe.Serializer::new);
     public static void register(IEventBus eventBus) {
