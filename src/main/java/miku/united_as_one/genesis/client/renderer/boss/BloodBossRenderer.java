@@ -19,7 +19,9 @@ public class BloodBossRenderer extends AbstractSpellCastingMobRenderer{
 
     public BloodBossRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new BloodBossModel());
+        this.addRenderLayer(new BloodBossGlowLayer(this));
     }
+
 
 
 

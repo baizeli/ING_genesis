@@ -4,6 +4,8 @@ import miku.united_as_one.genesis.content.arcaneWorkbench.*;
 import miku.united_as_one.genesis.content.*;
 import miku.united_as_one.genesis.content.workbenchs.*;
 import miku.united_as_one.genesis.entity.*;
+import miku.united_as_one.genesis.entity.ai.ModActivity;
+import miku.united_as_one.genesis.entity.ai.ModMemoryModuleType;
 import miku.united_as_one.genesis.entity.spells.celestial_source.*;
 import miku.united_as_one.genesis.entity.boss.BloodBoss;
 import miku.united_as_one.genesis.entity.spells.celestial_source.notuse.*;
@@ -78,6 +80,9 @@ public class Genesis
         ModRecipeSerializers.register(modEventBus);
         ModEffect.register(modEventBus);
         ModParticles.register(modEventBus);
+
+        ModActivity.register(modEventBus);
+        ModMemoryModuleType.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);
         modEventBus.addListener(this::addToVanillaTabs); // 给自己的物品加到别人的标签栏里面
