@@ -1,28 +1,31 @@
 package miku.united_as_one.genesis.client.renderer.boss;
 
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import io.redspace.ironsspellbooks.entity.mobs.abstract_spell_casting_mob.AbstractSpellCastingMob;
 import io.redspace.ironsspellbooks.entity.mobs.abstract_spell_casting_mob.AbstractSpellCastingMobRenderer;
-import io.redspace.ironsspellbooks.render.ChargeSpellLayer;
-import io.redspace.ironsspellbooks.render.EnergySwirlLayer;
-import io.redspace.ironsspellbooks.render.GlowingEyesLayer;
-import io.redspace.ironsspellbooks.render.SpellTargetingLayer;
-import miku.united_as_one.genesis.entity.boss.BloodBoss;
 import miku.united_as_one.genesis.client.model.boss.BloodBossModel;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import software.bernie.geckolib.renderer.layer.GeoRenderLayer;
-import software.bernie.geckolib.renderer.layer.GeoRenderLayersContainer;
+import com.mojang.blaze3d.vertex.PoseStack;
+import software.bernie.geckolib.cache.object.BakedGeoModel;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class BloodBossRenderer extends AbstractSpellCastingMobRenderer{
+public class BloodBossRenderer extends AbstractSpellCastingMobRenderer {
 
     public BloodBossRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new BloodBossModel());
+        this.shadowRadius = 0.65F;
         this.addRenderLayer(new BloodBossGlowLayer(this));
     }
 
+    @Override
+    public void preRender(PoseStack poseStack, AbstractSpellCastingMob animatable, BakedGeoModel model,
+                          MultiBufferSource bufferSource, VertexConsumer buffer, boolean isReRender,
+                          float partialTick, int packedLight, int packedOverlay,
+                          float red, float green, float blue, float alpha) {
 
-
-
+        super.preRender(poseStack, animatable, model, bufferSource, buffer, isReRender,
+                partialTick, packedLight, packedOverlay, red, green, blue, alpha);
+        float scale = 1.75F;
+        poseStack.scale(scale, scale, scale);
+    }
 }

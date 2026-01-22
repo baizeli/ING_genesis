@@ -18,20 +18,17 @@ public class SelectTargetBehavior extends Behavior<BloodBoss> {
     }
 
     public SelectTargetBehavior(){
+        //所需记忆模块的状态
         super(Map.of(
-                MemoryModuleType.ATTACK_TARGET, MemoryStatus.VALUE_ABSENT,
-                MemoryModuleType.NEAREST_LIVING_ENTITIES, MemoryStatus.VALUE_PRESENT,
-                ModMemoryModuleType.BOOLEAN_TEST_MEMORY_MODULE.get(), MemoryStatus.VALUE_ABSENT
+                MemoryModuleType.ATTACK_TARGET, MemoryStatus.VALUE_ABSENT,//无攻击目标
+                MemoryModuleType.NEAREST_LIVING_ENTITIES, MemoryStatus.VALUE_PRESENT,//有最近的生物
+                ModMemoryModuleType.BOOLEAN_TEST_MEMORY_MODULE.get(), MemoryStatus.VALUE_ABSENT//无布尔测试记忆模块
         ));
     }
 
     @Override
     protected boolean checkExtraStartConditions(ServerLevel level, BloodBoss owner) {
-
-
-
         return super.checkExtraStartConditions(level, owner);
-
     }
 
     @Override
@@ -55,7 +52,7 @@ public class SelectTargetBehavior extends Behavior<BloodBoss> {
 
     @Override
     protected boolean canStillUse(ServerLevel level, BloodBoss entity, long gameTime) {
-        // 这是一个一次性行为，一旦开始消化就不需要继续执行
+        // 这是一个一次性行为，一旦开始就不需要继续执行
         return false;
     }
 

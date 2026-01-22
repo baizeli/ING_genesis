@@ -104,8 +104,7 @@ public class BloodBossAi {
         addSleepActivities(brain);
         // 设置核心活动和默认活动
         brain.setCoreActivities(ImmutableSet.of(
-                Activity.CORE,
-                ModActivity.TEST_ACTIVITY.get()
+                Activity.CORE
         ));
         brain.setDefaultActivity(Activity.IDLE);
 
@@ -162,11 +161,13 @@ public class BloodBossAi {
     }
 
     private static void addIdleActivities(Brain<BloodBoss> brain, BloodBoss BloodBoss) {
-        brain.addActivity(Activity.IDLE, idleStartPriority, ImmutableList.of(
+        brain.addActivity(Activity.IDLE, idleStartPriority,
+            ImmutableList.of(
                 // 随机游走
                 new RunOne<>(ImmutableList.of(
-                        Pair.of(RandomStroll.swim(1.5F), 2),
-                        Pair.of(RandomStroll.stroll(1F, false), 2)
+                        Pair.of(RandomStroll.swim(1.5F), 1),
+                        Pair.of(RandomStroll.stroll(1F, false), 1),
+                        Pair.of(new DoNothing(1500, 3000), 3)
                 )),
                 // 寻找附近实体 - 触发战斗
                 new SelectTargetBehavior(),
@@ -174,7 +175,8 @@ public class BloodBossAi {
                 SetEntityLookTarget.create(
                         (entity) -> isTarget(BloodBoss, entity),
                         (float) BloodBoss.getAttributeValue(Attributes.FOLLOW_RANGE))
-        ));
+            )
+        );
     }
 
     private static boolean isTarget(BloodBoss BloodBoss, LivingEntity entity) {
@@ -203,17 +205,23 @@ public class BloodBossAi {
     }
 
     private static void addCoreActivities(Brain<BloodBoss> brain) {
-        brain.addActivity(Activity.CORE, 0, ImmutableList.of(
+        //无论切换到哪个活动，核心活动都会保持激活状态
+        brain.addActivity(Activity.CORE, 0,
+            //行为列表
+            //在同一个活动内，每tick只执行一个行为
+            //不同活动之间是并行的，所以核心活动和主活动可以各执行一个行为
+            ImmutableList.of(
                 new AnimalPanic(2.0F),
                 new LookAtTargetSink(45, 90),
                 new MoveToTargetSink(100, 200)
-        ));
+            )
+        );
 
     }
 
     // 添加这些方法到类中
     private static float getSpeedModifierChasing(LivingEntity entity) {
-        return entity.isInWaterOrBubble() ? 1.0F : 1.5F;
+        return entity.isInWaterOrBubble() ? 0.9F : 1.0F;
     }
 
     private static float getSpeedModifier(LivingEntity entity) {
@@ -237,7 +245,7 @@ public class BloodBossAi {
                 });
     }
 
-    public static void IncludedInStomachPouch(Brain<BloodBoss> brain, LivingEntity entity) {
+    public static void includedInNbtTestMemoryModule(Brain<BloodBoss> brain, LivingEntity entity) {
         Optional<List<CompoundTag>> memory = brain.getMemory(ModMemoryModuleType.NBT_TEST_MEMORY_MODULE.get());
         List<CompoundTag> entityInStomach = memory.orElse(new ArrayList<CompoundTag>());
         CompoundTag tag = new CompoundTag();
