@@ -5,6 +5,7 @@ import com.mojang.serialization.Dynamic;
 import io.redspace.ironsspellbooks.api.network.IClientEventEntity;
 import io.redspace.ironsspellbooks.entity.mobs.IAnimatedAttacker;
 import io.redspace.ironsspellbooks.entity.mobs.abstract_spell_casting_mob.AbstractSpellCastingMob;
+import io.redspace.ironsspellbooks.entity.mobs.wizards.fire_boss.FireBossEntity;
 import miku.united_as_one.genesis.entity.ai.ModMemoryModuleType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -18,7 +19,10 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.entity.IEntityAdditionalSpawnData;
 import org.slf4j.Logger;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.*;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.List;
@@ -28,37 +32,39 @@ import java.util.Optional;
 public class BloodBoss extends AbstractSpellCastingMob implements Enemy, IAnimatedAttacker, IEntityAdditionalSpawnData, IClientEventEntity {
     private static final Logger BLOOD_BOSS_LOGGER = LogUtils.getLogger();
     int spawnTimer;
+    private final AnimationController<BloodBoss> skillAnimationController;
+    RawAnimation animationToPlay;
+    private final AnimationController<BloodBoss> animationControllerWalk;
+    private AnimatableInstanceCache factory = new SingletonAnimatableInstanceCache(this);
 
 
     public BloodBoss(EntityType<? extends AbstractSpellCastingMob> entityType, Level level) {
         super(entityType, level);
+        this.animationControllerWalk =new AnimationController(
+                this, "walk_controller", 5, this::walkPredicate);
+        this.skillAnimationController = new AnimationController(
+                this, "skill_animation_controller",
+                0, this::animationPredicate);
+
     }
 
     public static AttributeSupplier.Builder setAttributes() {
         return Mob.createMobAttributes()
             .add(Attributes.MAX_HEALTH, 950)
-            .add(Attributes.MOVEMENT_SPEED, 0.42)
+            .add(Attributes.MOVEMENT_SPEED, 0.21)
             .add(Attributes.ATTACK_DAMAGE, 10)
             .add(Attributes.ARMOR, 20);
     }
 
-    @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {}
 
-    @Override
-    public AnimatableInstanceCache getAnimatableInstanceCache() {
-        return GeckoLibUtil.createInstanceCache(this);
-    }
+
+
 
     @Override
     public void handleClientEvent(byte b) {
 
     }
 
-    @Override
-    public void playAnimation(String s) {
-
-    }
 
     @Override
     public void writeSpawnData(FriendlyByteBuf friendlyByteBuf) {
@@ -75,6 +81,62 @@ public class BloodBoss extends AbstractSpellCastingMob implements Enemy, IAnimat
         return super.isCasting(); // 或你的自定义逻辑
     }
 
+
+//===========================动画===========================
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return factory;
+    }
+    @Override
+    public void playAnimation(String s) {
+
+    }
+
+    @Override
+    public boolean shouldBeExtraAnimated() {
+        return false;
+    }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+        super.registerControllers(controllerRegistrar); // 保持原有的施法动画控制器
+        controllerRegistrar.add(animationControllerWalk); // 添加行走动画控制器
+    }
+
+
+    private PlayState walkPredicate(AnimationState animationState) {
+        if(animationState.isMoving()) {
+            animationState.getController().setAnimation(RawAnimation.begin().then("行走循环", Animation.LoopType.LOOP));
+            return PlayState.CONTINUE;
+        }
+
+        animationState.getController().setAnimation(RawAnimation.begin().then("待机", Animation.LoopType.LOOP));
+        return PlayState.CONTINUE;
+    }
+    /**
+     * 动画控制器的动画状态谓词方法
+     * 处理当前待播放动画的设置和播放逻辑
+     *
+     * @param animationEvent 包含动画控制器和相关数据的动画状态事件
+     * @return 返回动画播放状态，始终返回CONTINUE以继续播放
+     */
+    private PlayState animationPredicate(AnimationState<BloodBoss> animationEvent) {
+
+        // 获取动画控制器实例
+        AnimationController<BloodBoss> controller = animationEvent.getController();
+        // 检查是否有待播放的动画
+        if (this.animationToPlay != null) {
+            // 强制重置动画控制器，确保新动画能够正确播放
+            controller.forceAnimationReset();
+            // 设置要播放的新动画
+            controller.setAnimation(this.animationToPlay);
+            // 清空待播放动画引用，避免重复播放
+            this.animationToPlay = null;
+        }
+
+        return PlayState.CONTINUE;
+    }
 
 
     //-----------------------------------AI------------------------------------------
