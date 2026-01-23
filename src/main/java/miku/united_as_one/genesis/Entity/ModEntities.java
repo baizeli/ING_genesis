@@ -73,7 +73,7 @@ public class ModEntities {
 
     public static final RegistryObject<EntityType<BloodBoss>> BLOOD_BOSS = ENTITY_TYPES.register("blood_boss",
             () -> EntityType.Builder.of(BloodBoss::new, MobCategory.MONSTER)
-                    .sized(1, 2)
+                    .sized(1.4875001F, 3.6749997F)
                     .clientTrackingRange(64)
                     .build("blood_boss"));
 }
