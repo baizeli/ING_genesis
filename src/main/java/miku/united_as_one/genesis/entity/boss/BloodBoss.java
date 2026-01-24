@@ -2,7 +2,12 @@ package miku.united_as_one.genesis.entity.boss;
 
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Dynamic;
+import io.redspace.ironsspellbooks.api.config.IronConfigParameters;
+import io.redspace.ironsspellbooks.api.config.SpellConfigManager;
 import io.redspace.ironsspellbooks.api.network.IClientEventEntity;
+import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
+import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
+import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import io.redspace.ironsspellbooks.entity.mobs.IAnimatedAttacker;
 import io.redspace.ironsspellbooks.entity.mobs.abstract_spell_casting_mob.AbstractSpellCastingMob;
 import io.redspace.ironsspellbooks.entity.mobs.wizards.fire_boss.FireBossEntity;
@@ -16,6 +21,7 @@ import net.minecraft.world.entity.ai.attributes.*;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.entity.IEntityAdditionalSpawnData;
 import org.slf4j.Logger;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -25,6 +31,7 @@ import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
+import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -53,7 +60,11 @@ public class BloodBoss extends AbstractSpellCastingMob implements Enemy, IAnimat
             .add(Attributes.MAX_HEALTH, 950)
             .add(Attributes.MOVEMENT_SPEED, 0.21)
             .add(Attributes.ATTACK_DAMAGE, 10)
-            .add(Attributes.ARMOR, 20);
+            .add(Attributes.ARMOR, 20)
+            .add(AttributeRegistry.MAX_MANA.get(), 50000.0)  // 最大法力值
+            .add(ForgeMod.ENTITY_GRAVITY.get(), 0.03)
+            .add(ForgeMod.ENTITY_REACH.get(), 3.0)
+            .add(AttributeRegistry.SPELL_POWER.get(), 1.25);
     }
 
 
@@ -81,6 +92,11 @@ public class BloodBoss extends AbstractSpellCastingMob implements Enemy, IAnimat
         return super.isCasting(); // 或你的自定义逻辑
     }
 
+    @Nullable
+    @Override
+    public LivingEntity getTarget() {
+        return this.getBrain().getMemory(MemoryModuleType.ATTACK_TARGET).orElse((LivingEntity)null);
+    }
 
 //===========================动画===========================
 
@@ -111,6 +127,9 @@ public class BloodBoss extends AbstractSpellCastingMob implements Enemy, IAnimat
             return PlayState.CONTINUE;
         }
 
+        if (this.isCasting()) {
+            return PlayState.STOP;
+        }
         animationState.getController().setAnimation(RawAnimation.begin().then("待机", Animation.LoopType.LOOP));
         return PlayState.CONTINUE;
     }
@@ -142,24 +161,36 @@ public class BloodBoss extends AbstractSpellCastingMob implements Enemy, IAnimat
     //-----------------------------------AI------------------------------------------
     @Override
     protected void customServerAiStep() {
-        ServerLevel serverlevel = (ServerLevel) this.level();
+        if (isSpellConfigLoaded()){
+            ServerLevel serverlevel = (ServerLevel) this.level();
 
-        serverlevel.getProfiler().push("BloodBossBrain");
-        this.getBrain().tick(serverlevel, this);
-        serverlevel.getProfiler().pop();
+            serverlevel.getProfiler().push("BloodBossBrain");
+            this.getBrain().tick(serverlevel, this);
+            serverlevel.getProfiler().pop();
 
-        super.customServerAiStep();
-        BloodBossAi.updateActivity(this);
-        // 调试输出：当前大脑的活动
-        if (this.tickCount % 40 == 0) {
-            printLog();
+            super.customServerAiStep();
+            BloodBossAi.updateActivity(this);
+            // 调试输出：当前大脑的活动
+            if (this.tickCount % 40 == 0) {
+                printLog();
+            }
         }
+
 
 
         updateStage();
     }
 
-
+    public boolean isSpellConfigLoaded() {
+        try {
+            // 随便尝试获取一个法术的开关状态，这会触发内部对 config 的访问
+            // 如果 config 为 null，这里会抛出 NPE
+            SpellConfigManager.getSpellConfigValue(SpellRegistry.none(), IronConfigParameters.ENABLED);
+            return true;
+        } catch (NullPointerException e) {
+            return false;
+        }
+    }
     public void updateStage() {
 
     }
@@ -167,6 +198,14 @@ public class BloodBoss extends AbstractSpellCastingMob implements Enemy, IAnimat
     private void printLog() {
 
         BLOOD_BOSS_LOGGER.debug("当前activity: {}", this.getBrain().getActiveActivities());
+        //打印当前攻击目标实体id
+        this.getBrain().getMemory(MemoryModuleType.ATTACK_TARGET).ifPresent(target -> {
+            BLOOD_BOSS_LOGGER.debug("攻击目标: {}", target.getType().getDescription().getString());
+        });
+        //打印剩余法力值
+        BLOOD_BOSS_LOGGER.debug("剩余法力值: {}", this.getMagicData().getMana());
+
+
         BLOOD_BOSS_LOGGER.debug("坐标: {}", this.blockPosition());
         BLOOD_BOSS_LOGGER.debug("移动: {}", this.getDeltaMovement());
         BLOOD_BOSS_LOGGER.debug("是否在地上: {}", this.onGround());

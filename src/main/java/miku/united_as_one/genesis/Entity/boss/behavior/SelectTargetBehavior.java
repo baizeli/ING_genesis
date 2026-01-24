@@ -8,6 +8,7 @@ import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.behavior.Behavior;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.util.FakePlayer;
 
 import java.util.Map;
@@ -39,7 +40,13 @@ public class SelectTargetBehavior extends Behavior<BloodBoss> {
         brain.getMemory(MemoryModuleType.NEAREST_LIVING_ENTITIES)
                 .ifPresent(nearestLivingEntities -> {
                     for (Entity target : nearestLivingEntities){
-                        if (!(target instanceof FakePlayer)){
+
+
+                        // 排除假玩家、创造模式玩家、或旁观者模式玩家、
+                        if (!(target instanceof FakePlayer) && 
+                            (target instanceof Player player ? 
+                            (!player.isCreative() && !player.isSpectator()) :
+                                target.isAlive())) {
                             brain.setMemory(MemoryModuleType.ATTACK_TARGET, nearestLivingEntities.get(0));
                             break;
                         }

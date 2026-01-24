@@ -5,7 +5,7 @@ import miku.united_as_one.genesis.entity.boss.BloodBoss;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
 
-public class FireBlastBehavior extends AnimatedActionBehavior<BloodBoss> {
+    public class FireBlastBehavior extends AnimatedActionBehavior<BloodBoss> {
     public FireBlastBehavior() {
         super(ImmutableMap.of(MemoryModuleType.ATTACK_TARGET, MemoryStatus.VALUE_PRESENT));
     }
