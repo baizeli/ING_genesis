@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "iron_spells_genesis:block/chaos_portal_ns"
+    },
+    "axis=z": {
+      "model": "iron_spells_genesis:block/chaos_portal_ew"
+    }
+  }
+}
