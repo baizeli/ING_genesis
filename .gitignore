@@ -20,7 +20,7 @@ build
 # other
 eclipse
 run
-
+/src/main/java/miku/united_as_one/genesis/md
 # Files from Forge MDK
 forge*changelog.txt
 /src/generated/resources/.cache/
