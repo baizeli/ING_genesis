@@ -1,4 +1,4 @@
-package miku.united_as_one.genesis.entity_temp;
+package miku.united_as_one.genesis.entity;
 
 import miku.united_as_one.genesis.render.ModShaders;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
