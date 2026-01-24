@@ -1,4 +1,4 @@
-package miku.united_as_one.genesis.entity_temp;
+package miku.united_as_one.genesis.entity;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
