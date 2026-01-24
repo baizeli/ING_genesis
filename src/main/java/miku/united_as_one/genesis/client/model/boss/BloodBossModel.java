@@ -20,26 +20,23 @@ import software.bernie.geckolib.model.GeoModel;
 import software.bernie.geckolib.model.data.EntityModelData;
 
 @SuppressWarnings("removal")
-public class BloodBossModel extends AbstractSpellCastingMobModel {
+public class BloodBossModel extends GeoModel<BloodBoss> {
     private static final ResourceLocation MODEL_RESOURCE = new ResourceLocation(Genesis.MOD_ID, "geo/entity/blood_boss.geo.json");
     private static final ResourceLocation TEXTURE_RESOURCE = new ResourceLocation(Genesis.MOD_ID, "textures/entity/blood_boss/stage_1.png");
     private static final ResourceLocation ANIMATION_RESOURCE = new ResourceLocation(Genesis.MOD_ID, "animations/entity/blood_boss.animation.json");
 
     @Override
-    public ResourceLocation getModelResource(AbstractSpellCastingMob object) {
+    public ResourceLocation getModelResource(BloodBoss object) {
         return MODEL_RESOURCE;
     }
 
     @Override
-    public ResourceLocation getTextureResource(AbstractSpellCastingMob abstractSpellCastingMob) {
+    public ResourceLocation getTextureResource(BloodBoss abstractSpellCastingMob) {
         return TEXTURE_RESOURCE;
     }
 
     @Override
-    public ResourceLocation getAnimationResource(AbstractSpellCastingMob animatable) {
+    public ResourceLocation getAnimationResource(BloodBoss animatable) {
         return ANIMATION_RESOURCE;
     }
-
-
-
 }

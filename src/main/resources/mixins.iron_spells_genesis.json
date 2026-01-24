@@ -6,7 +6,6 @@
   "mixins": [
     "ironsspellbooks.gui.arcane_anvil.ArcaneAnvilMenuMixin",
     "ironsspellbooks.item.GoldCrownArmorItemMixin",
-    "ironsspellbooks.render.MixinChargeSpellLayerGeo",
     "ironsspellbooks.spells.eldritch.MixinEldritchBlastSpell",
     "ironsspellbooks.spells.ender.MixinComet",
     "ironsspellbooks.spells.ender.MixinStarfallSpell",
