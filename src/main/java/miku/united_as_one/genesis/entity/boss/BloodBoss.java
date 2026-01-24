@@ -89,6 +89,14 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     private AbstractSpell delayedSpell;
     private int delayedSpellLevel;
 
+    private static final RawAnimation IDLE = RawAnimation.begin().thenLoop("待机");
+    private static final RawAnimation WALK = RawAnimation.begin().thenLoop("行走循环");
+    private static final RawAnimation CAST_IDLE = RawAnimation.begin().thenLoop("施法待机");
+    private static final RawAnimation CAST_WALK = RawAnimation.begin().thenLoop("施法行走循环");
+
+    // 施法缓冲时间（20 ticks = 1秒），你可以根据动作的收招长度调整
+    private static final int CASTING_POST_DELAY = 20;
+    private int lastCastTick = -100; // 初始化为一个较小的值，防止刚生成时触发
 
     public BloodBoss(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);
@@ -96,13 +104,13 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
 //        this.lookControl = new BloodBossLookControl(this);
 //        this.jumpControl = new BloodBossJumpControl(this);
 
-        this.animationControllerWalk = new AnimationController<>(this, "walk_controller", 5, this::walkPredicate);
-        this.skillAnimationController = new AnimationController<>(this, "skill_animation_controller", 0, this::animationPredicate);
+        this.animationControllerWalk = new AnimationController<>(this, "walk_controller", 20, this::walkPredicate);
+        this.skillAnimationController = new AnimationController<>(this, "skill_animation_controller", 5, this::animationPredicate);
 
 
-        this.instantCastController = new AnimationController<>(this, "instant_cast", 0, this::instantCastingPredicate);
-        this.longCastController = new AnimationController<>(this, "long_cast", 0, this::longCastingPredicate);
-        this.continuousCastController = new AnimationController<>(this, "continuous_cast", 0, this::continuousCastingPredicate);
+        this.instantCastController = new AnimationController<>(this, "instant_cast", 5, this::instantCastingPredicate);
+        this.longCastController = new AnimationController<>(this, "long_cast", 5, this::longCastingPredicate);
+        this.continuousCastController = new AnimationController<>(this, "continuous_cast", 5, this::continuousCastingPredicate);
 
 
         // 初始化魔法数据
@@ -185,6 +193,7 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
             this.magicData.resetCastingState();
         }
         this.castingSpell = null;
+
     }
 
     @Override
@@ -194,6 +203,7 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         } else {
             if (this.level.isClientSide) {
                 this.cancelCastAnimation = false;
+                this.lastCastTick = this.tickCount;
             }
 
             this.castingSpell = new SpellData(spell, spellLevel);
@@ -229,7 +239,7 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
                         this.castComplete();
                     } else {
                         // --- 核心修改：设置延迟释放 ---
-                        this.delayedCastTick = 5;
+                        this.delayedCastTick = 10;
                         this.delayedSpell = spell;
                         this.delayedSpellLevel = spellLevel;
                         // 注意：此处不调用 castComplete()，直到延迟结束
@@ -319,14 +329,17 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
 
     private void setFinishAnimationFromSpell(AnimationController<BloodBoss> controller, AbstractSpell spell) {
         if (spell.getCastFinishAnimation().isPass) {
+            // 如果没有收招动画，不要直接停止，给它一个缓冲时间
             this.cancelCastAnimation = false;
         } else {
             spell.getCastFinishAnimation().getForMob().ifPresentOrElse(animationBuilder -> {
                 controller.forceAnimationReset();
+                // 设置一个更长的收招过渡
+                controller.transitionLength(8);
                 controller.setAnimation(animationBuilder);
                 this.lastCastSpellType = SpellRegistry.none();
-                this.cancelCastAnimation = false;
             }, () -> {
+                // 如果没配置动画，手动平滑淡出
                 this.cancelCastAnimation = true;
             });
         }
@@ -346,20 +359,27 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         controllerRegistrar.add(continuousCastController);
     }
 
-    private PlayState walkPredicate(AnimationState animationState) {
+    private PlayState walkPredicate(AnimationState<BloodBoss> state) {
+
+
+
+
         if (this.isCasting()) {
-            // 施法时停止行走动画
-            return PlayState.STOP;
+            this.lastCastTick = this.tickCount;
         }
 
-        if(animationState.isMoving()) {
-            animationState.getController().setAnimation(RawAnimation.begin().then("行走循环", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
+        boolean isRecentlyCasting = (this.tickCount - this.lastCastTick) < CASTING_POST_DELAY;
+
+        RawAnimation target;
+        if (this.isCasting() || isRecentlyCasting) {
+            target = state.isMoving() ? CAST_WALK : CAST_IDLE;
+        } else {
+            target = state.isMoving() ? WALK : IDLE;
         }
 
-        animationState.getController().setAnimation(RawAnimation.begin().then("待机", Animation.LoopType.LOOP));
-        return PlayState.CONTINUE;
+        return state.setAndContinue(target);
     }
+
 
     private PlayState animationPredicate(AnimationState<BloodBoss> animationEvent) {
         AnimationController<BloodBoss> controller = animationEvent.getController();
@@ -607,6 +627,10 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
 
         }
         super.tick();
+
+        if (this.level().isClientSide && this.isCasting()) {
+            this.lastCastTick = this.tickCount;
+        }
     }
 
     @Override
