@@ -4,12 +4,14 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import io.redspace.ironsspellbooks.entity.mobs.abstract_spell_casting_mob.AbstractSpellCastingMob;
 import io.redspace.ironsspellbooks.entity.mobs.abstract_spell_casting_mob.AbstractSpellCastingMobRenderer;
 import miku.united_as_one.genesis.client.model.boss.BloodBossModel;
+import miku.united_as_one.genesis.entity.boss.BloodBoss;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import com.mojang.blaze3d.vertex.PoseStack;
 import software.bernie.geckolib.cache.object.BakedGeoModel;
+import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
-public class BloodBossRenderer extends AbstractSpellCastingMobRenderer {
+public class BloodBossRenderer extends GeoEntityRenderer<BloodBoss> {
 
     public BloodBossRenderer(EntityRendererProvider.Context renderManager) {
         super(renderManager, new BloodBossModel());
@@ -18,7 +20,7 @@ public class BloodBossRenderer extends AbstractSpellCastingMobRenderer {
     }
 
     @Override
-    public void preRender(PoseStack poseStack, AbstractSpellCastingMob animatable, BakedGeoModel model,
+    public void preRender(PoseStack poseStack, BloodBoss animatable, BakedGeoModel model,
                           MultiBufferSource bufferSource, VertexConsumer buffer, boolean isReRender,
                           float partialTick, int packedLight, int packedOverlay,
                           float red, float green, float blue, float alpha) {
