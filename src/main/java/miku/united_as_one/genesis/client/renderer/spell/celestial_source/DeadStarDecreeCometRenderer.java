@@ -18,7 +18,7 @@ public class DeadStarDecreeCometRenderer extends EntityRenderer<Projectile> {
     
     private final DeadStarDecreeCometModel<Projectile> model;
     private final float scale;
-
+    
     public DeadStarDecreeCometRenderer(EntityRendererProvider.Context context, float scale) {
         super(context);
         this.model = new DeadStarDecreeCometModel<>(context.bakeLayer(DeadStarDecreeCometModel.LAYER_LOCATION));
