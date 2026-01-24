@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.client.renderer;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.mixin.PostChainAccessor;
+import miku.united_as_one.genesis.mixin.minecraft.client.renderer.PostChainAccessor;
 import miku.united_as_one.genesis.mixin.minecraft.client.renderer.ParticleAccessor;
 import miku.united_as_one.genesis.mixin.minecraft.client.renderer.ParticleEngineAccessor;
 import miku.united_as_one.genesis.client.particles.CrescentBladeParticle;

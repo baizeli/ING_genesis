@@ -1,4 +1,4 @@
-package miku.united_as_one.genesis.mixin;
+package miku.united_as_one.genesis.mixin.minecraft.client.renderer;
 
 import net.minecraft.client.renderer.PostChain;
 import net.minecraft.client.renderer.PostPass;
