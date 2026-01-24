@@ -17,6 +17,7 @@ import io.redspace.ironsspellbooks.api.spells.SpellData;
 import io.redspace.ironsspellbooks.api.util.Utils;
 import io.redspace.ironsspellbooks.capabilities.magic.SyncedSpellData;
 import io.redspace.ironsspellbooks.entity.mobs.IAnimatedAttacker;
+import miku.united_as_one.genesis.entity.ai.ModMemoryModuleType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -34,11 +35,13 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.monster.Enemy;
+import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.entity.IEntityAdditionalSpawnData;
 import org.slf4j.Logger;
+import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
@@ -46,9 +49,12 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 import javax.annotation.Nullable;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
-public class BloodBoss extends PathfinderMob implements GeoAnimatable, Enemy, IAnimatedAttacker, IEntityAdditionalSpawnData, IClientEventEntity, IMagicEntity {
+public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAttacker, IEntityAdditionalSpawnData, IClientEventEntity, IMagicEntity {
     private static final Logger BLOOD_BOSS_LOGGER = LogUtils.getLogger();
 
     // 魔法相关字段
@@ -69,10 +75,35 @@ public class BloodBoss extends PathfinderMob implements GeoAnimatable, Enemy, IA
     private final AnimationController<BloodBoss> animationControllerWalk;
     private AnimatableInstanceCache factory = new SingletonAnimatableInstanceCache(this);
 
-    public BloodBoss(EntityType<? extends PathfinderMob> entityType, Level level) {
+    private AbstractSpell lastCastSpellType = SpellRegistry.none();
+    private AbstractSpell instantCastSpellType = SpellRegistry.none();
+    private boolean cancelCastAnimation = false;
+
+    // 新增动画控制器
+    private final AnimationController<BloodBoss> instantCastController;
+    private final AnimationController<BloodBoss> longCastController;
+    private final AnimationController<BloodBoss> continuousCastController;
+
+    //用于延迟释放瞬时法术
+    private int delayedCastTick = -1;
+    private AbstractSpell delayedSpell;
+    private int delayedSpellLevel;
+
+
+    public BloodBoss(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);
-        this.animationControllerWalk = new AnimationController(this, "walk_controller", 5, this::walkPredicate);
-        this.skillAnimationController = new AnimationController(this, "skill_animation_controller", 0, this::animationPredicate);
+        this.moveControl = new BloodBossMoveControl(this);
+//        this.lookControl = new BloodBossLookControl(this);
+//        this.jumpControl = new BloodBossJumpControl(this);
+
+        this.animationControllerWalk = new AnimationController<>(this, "walk_controller", 5, this::walkPredicate);
+        this.skillAnimationController = new AnimationController<>(this, "skill_animation_controller", 0, this::animationPredicate);
+
+
+        this.instantCastController = new AnimationController<>(this, "instant_cast", 0, this::instantCastingPredicate);
+        this.longCastController = new AnimationController<>(this, "long_cast", 0, this::longCastingPredicate);
+        this.continuousCastController = new AnimationController<>(this, "continuous_cast", 0, this::continuousCastingPredicate);
+
 
         // 初始化魔法数据
         this.magicData.setSyncedData(new SyncedSpellData(this));
@@ -97,6 +128,8 @@ public class BloodBoss extends PathfinderMob implements GeoAnimatable, Enemy, IA
         this.entityData.define(DATA_CANCEL_CAST, false);
         this.entityData.define(DATA_DRINKING_POTION, false);
     }
+
+    //================================================================ 魔法/法术 ========================================================================
 
     // IMagicEntity 接口实现
     @Override
@@ -131,32 +164,6 @@ public class BloodBoss extends PathfinderMob implements GeoAnimatable, Enemy, IA
     }
 
     @Override
-    public void initiateCastSpell(AbstractSpell spell, int spellLevel) {
-        if (spell == SpellRegistry.none()) {
-            this.castingSpell = null;
-        } else {
-            this.castingSpell = new SpellData(spell, spellLevel);
-
-            // 施法开始时立即看向目标
-            if (this.getTarget() != null) {
-                this.forceLookAtTarget(this.getTarget());
-            }
-
-            if (!this.level().isClientSide && !spell.checkPreCastConditions(this.level(), spellLevel, this, this.magicData)) {
-                this.castingSpell = null;
-            } else {
-                this.magicData.initiateCast(spell, spellLevel,
-                        spell.getEffectiveCastTime(spellLevel, this), CastSource.MOB,
-                        SpellSelectionManager.MAINHAND);
-
-                if (!this.level().isClientSide) {
-                    spell.onServerPreCast(this.level(), spellLevel, this, this.magicData);
-                }
-            }
-        }
-    }
-
-    @Override
     public void cancelCast() {
         if (this.isCasting()) {
             if (this.level.isClientSide) {
@@ -178,6 +185,428 @@ public class BloodBoss extends PathfinderMob implements GeoAnimatable, Enemy, IA
             this.magicData.resetCastingState();
         }
         this.castingSpell = null;
+    }
+
+    @Override
+    public void initiateCastSpell(AbstractSpell spell, int spellLevel) {
+        if (spell == SpellRegistry.none()) {
+            this.castingSpell = null;
+        } else {
+            if (this.level.isClientSide) {
+                this.cancelCastAnimation = false;
+            }
+
+            this.castingSpell = new SpellData(spell, spellLevel);
+
+            // 施法开始时立即看向目标
+            if (this.getTarget() != null) {
+                this.forceLookAtTarget(this.getTarget());
+            }
+
+            if (!this.level().isClientSide && !spell.checkPreCastConditions(this.level(), spellLevel, this, this.magicData)) {
+                this.castingSpell = null;
+            } else {
+                // 特殊法术处理（传送/位移类）
+                if (spell != SpellRegistry.TELEPORT_SPELL.get() && spell != SpellRegistry.FROST_STEP_SPELL.get()) {
+                    if (spell == SpellRegistry.BLOOD_STEP_SPELL.get()) {
+                        this.setTeleportLocationBehindTarget(3);
+                    } else if (spell == SpellRegistry.BURNING_DASH_SPELL.get()) {
+                        this.setBurningDashDirectionData();
+                    }
+                } else {
+                    this.setTeleportLocationBehindTarget(10);
+                }
+
+                this.magicData.initiateCast(spell, spellLevel,
+                        spell.getEffectiveCastTime(spellLevel, this), CastSource.MOB,
+                        SpellSelectionManager.MAINHAND);
+
+                // 处理瞬时施法逻辑
+                if (spell.getCastType() == CastType.INSTANT) {
+                    this.instantCastSpellType = spell;
+                    if (this.level().isClientSide) {
+                        spell.onClientPreCast(this.level(), spellLevel, this, InteractionHand.MAIN_HAND, this.magicData);
+                        this.castComplete();
+                    } else {
+                        // --- 核心修改：设置延迟释放 ---
+                        this.delayedCastTick = 5;
+                        this.delayedSpell = spell;
+                        this.delayedSpellLevel = spellLevel;
+                        // 注意：此处不调用 castComplete()，直到延迟结束
+                    }
+                } else {
+                    if (!this.level().isClientSide) {
+                        spell.onServerPreCast(this.level(), spellLevel, this, this.magicData);
+                    }
+                }
+            }
+        }
+    }
+    //================================================================ 动画 ========================================================================
+
+    // 动画相关方法
+    public void playAnimation(String animationId) {
+        this.animationToPlay = RawAnimation.begin().thenPlay(animationId);
+    }
+
+    private PlayState instantCastingPredicate(AnimationState<BloodBoss> event) {
+        if (this.cancelCastAnimation) {
+            return PlayState.STOP;
+        }
+
+        AnimationController<BloodBoss> controller = event.getController();
+        if (this.instantCastSpellType != SpellRegistry.none() &&
+                controller.getAnimationState() == AnimationController.State.STOPPED) {
+
+            // 设置瞬时施法动画
+            this.setStartAnimationFromSpell(controller, this.instantCastSpellType);
+            this.instantCastSpellType = SpellRegistry.none();
+        }
+
+        return PlayState.CONTINUE;
+    }
+
+    private PlayState longCastingPredicate(AnimationState<BloodBoss> event) {
+        AnimationController<BloodBoss> controller = event.getController();
+
+        if (this.cancelCastAnimation ||
+                (controller.getAnimationState() == AnimationController.State.STOPPED &&
+                        (!this.isCasting() || this.castingSpell == null ||
+                                this.castingSpell.getSpell().getCastType() != CastType.LONG))) {
+            return PlayState.STOP;
+        }
+
+        if (this.isCasting()) {
+            if (controller.getAnimationState() == AnimationController.State.STOPPED) {
+                this.setStartAnimationFromSpell(controller, this.castingSpell.getSpell());
+            }
+        } else if (this.lastCastSpellType.getCastType() == CastType.LONG) {
+            this.setFinishAnimationFromSpell(controller, this.lastCastSpellType);
+        }
+
+        return PlayState.CONTINUE;
+    }
+
+    private PlayState continuousCastingPredicate(AnimationState<BloodBoss> event) {
+        if (this.cancelCastAnimation) {
+            return PlayState.STOP;
+        }
+
+        AnimationController<BloodBoss> controller = event.getController();
+        if (this.isCasting() && this.castingSpell != null &&
+                controller.getAnimationState() == AnimationController.State.STOPPED) {
+
+            if (this.castingSpell.getSpell().getCastType() == CastType.CONTINUOUS) {
+                this.setStartAnimationFromSpell(controller, this.castingSpell.getSpell());
+            }
+            return PlayState.CONTINUE;
+        }
+
+        return this.isCasting() ? PlayState.CONTINUE : PlayState.STOP;
+    }
+
+
+    private void setStartAnimationFromSpell(AnimationController<BloodBoss> controller, AbstractSpell spell) {
+        spell.getCastStartAnimation().getForMob().ifPresentOrElse(animationBuilder -> {
+            controller.forceAnimationReset();
+            controller.setAnimation(animationBuilder);
+            this.lastCastSpellType = spell;
+            this.cancelCastAnimation = false;
+        }, () -> {
+            this.cancelCastAnimation = true;
+        });
+    }
+
+    private void setFinishAnimationFromSpell(AnimationController<BloodBoss> controller, AbstractSpell spell) {
+        if (spell.getCastFinishAnimation().isPass) {
+            this.cancelCastAnimation = false;
+        } else {
+            spell.getCastFinishAnimation().getForMob().ifPresentOrElse(animationBuilder -> {
+                controller.forceAnimationReset();
+                controller.setAnimation(animationBuilder);
+                this.lastCastSpellType = SpellRegistry.none();
+                this.cancelCastAnimation = false;
+            }, () -> {
+                this.cancelCastAnimation = true;
+            });
+        }
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return factory;
+    }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+        controllerRegistrar.add(animationControllerWalk);
+        controllerRegistrar.add(skillAnimationController);
+        controllerRegistrar.add(instantCastController);
+        controllerRegistrar.add(longCastController);
+        controllerRegistrar.add(continuousCastController);
+    }
+
+    private PlayState walkPredicate(AnimationState animationState) {
+        if (this.isCasting()) {
+            // 施法时停止行走动画
+            return PlayState.STOP;
+        }
+
+        if(animationState.isMoving()) {
+            animationState.getController().setAnimation(RawAnimation.begin().then("行走循环", Animation.LoopType.LOOP));
+            return PlayState.CONTINUE;
+        }
+
+        animationState.getController().setAnimation(RawAnimation.begin().then("待机", Animation.LoopType.LOOP));
+        return PlayState.CONTINUE;
+    }
+
+    private PlayState animationPredicate(AnimationState<BloodBoss> animationEvent) {
+        AnimationController<BloodBoss> controller = animationEvent.getController();
+        if (this.animationToPlay != null) {
+            controller.forceAnimationReset();
+            controller.setAnimation(this.animationToPlay);
+            this.animationToPlay = null;
+        }
+        return PlayState.CONTINUE;
+    }
+
+    //================================================================ AI ========================================================================
+
+    @Nullable
+    @Override
+    public LivingEntity getTarget() {
+        return this.getBrain().getMemory(MemoryModuleType.ATTACK_TARGET).orElse(null);
+    }
+
+    @Override
+    public Brain<BloodBoss> getBrain() {
+        return (Brain<BloodBoss>) super.getBrain();
+    }
+
+    @Override
+    protected Brain<?> makeBrain(Dynamic<?> dynamic) {
+        return BloodBossAi.makeBrain(this, dynamic);
+    }
+
+    @Override
+    protected void customServerAiStep() {
+        // 先调用父类逻辑
+        super.customServerAiStep();
+
+        // 处理法术重现
+        if (this.recreateSpell) {
+            this.recreateSpell = false;
+            SyncedSpellData syncedSpellData = this.magicData.getSyncedData();
+            AbstractSpell spell = SpellRegistry.getSpell(syncedSpellData.getCastingSpellId());
+            this.initiateCastSpell(spell, syncedSpellData.getCastingSpellLevel());
+        }
+
+        // --- 核心修改：处理瞬时法术的延迟释放 ---
+        if (this.delayedCastTick > 0) {
+            this.delayedCastTick--;
+            // 延迟期间持续看向目标以保证指向性法术精度
+            if (this.getTarget() != null) {
+                this.forceLookAtTarget(this.getTarget());
+            }
+
+            if (this.delayedCastTick == 0) {
+                if (this.delayedSpell != SpellRegistry.none()) {
+                    // 真正执行法术效果
+                    this.delayedSpell.onCast(this.level(), this.delayedSpellLevel, this, CastSource.MOB, this.magicData);
+                    this.castComplete();
+                    this.delayedSpell = SpellRegistry.none();
+                }
+            }
+        }
+
+        // 处理药水饮用
+        if (this.isDrinkingPotion()) {
+            if (this.drinkTime-- <= 0) {
+                this.finishDrinkingPotion();
+            } else if (this.drinkTime % 4 == 0 && !this.isSilent()) {
+                this.level().playSound(null, this.getX(), this.getY(), this.getZ(),
+                        SoundEvents.GENERIC_DRINK, this.getSoundSource(), 1.0F,
+                        Utils.random.nextFloat() * 0.1F + 0.9F);
+            }
+        }
+
+        // 安全检查：配置是否加载
+        if (!isSpellConfigLoaded()) {
+            updateStage();
+            return;
+        }
+
+        // 处理非瞬时施法（持续或长法术）状态
+        if (this.castingSpell != null && this.castingSpell.getSpell().getCastType() != CastType.INSTANT) {
+            this.magicData.handleCastDuration();
+
+            if (this.magicData.isCasting()) {
+                this.castingSpell.getSpell().onServerCastTick(this.level(), this.castingSpell.getLevel(), this, this.magicData);
+            }
+
+            this.forceLookAtTarget(this.getTarget());
+
+            if (this.magicData.getCastDurationRemaining() <= 0) {
+                CastType castType = this.castingSpell.getSpell().getCastType();
+                if (castType == CastType.LONG) {
+                    this.castingSpell.getSpell().onCast(this.level(), this.castingSpell.getLevel(), this, CastSource.MOB, this.magicData);
+                }
+                this.castComplete();
+            } else if (this.castingSpell.getSpell().getCastType() == CastType.CONTINUOUS &&
+                    (this.magicData.getCastDurationRemaining() + 1) % 10 == 0) {
+                this.castingSpell.getSpell().onCast(this.level(), this.castingSpell.getLevel(), this, CastSource.MOB, this.magicData);
+            }
+        }
+
+        // AI 脑部逻辑
+        ServerLevel serverlevel = (ServerLevel) this.level();
+        serverlevel.getProfiler().push("BloodBossBrain");
+        this.getBrain().tick(serverlevel, this);
+        serverlevel.getProfiler().pop();
+        BloodBossAi.updateActivity(this);
+
+        if (this.tickCount % 40 == 0) {
+            printLog();
+        }
+
+        updateStage();
+    }
+
+    private void forceLookAtTarget(@Nullable LivingEntity target) {
+        if (target != null) {
+            double d0 = target.getX() - this.getX();
+            double d2 = target.getZ() - this.getZ();
+            double d1 = target.getEyeY() - this.getEyeY();
+            double d3 = Math.sqrt(d0 * d0 + d2 * d2);
+            float f = (float)(Mth.atan2(d2, d0) * 57.2957763671875) - 90.0F;
+            float f1 = (float)(-(Mth.atan2(d1, d3) * 57.2957763671875));
+            this.setXRot(f1);
+            this.setYRot(f);
+        }
+    }
+
+    public boolean isSpellConfigLoaded() {
+        try {
+            // 添加多层安全检查
+            if (SpellConfigManager.INSTANCE == null) {
+                return false;
+            }
+            SpellConfigManager.getSpellConfigValue(SpellRegistry.none(), IronConfigParameters.ENABLED);
+            return true;
+        } catch (NullPointerException e) {
+            BLOOD_BOSS_LOGGER.warn("法术配置未加载，跳过AI逻辑");
+            return false;
+        } catch (Exception e) {
+            BLOOD_BOSS_LOGGER.error("检查法术配置时发生错误", e);
+            return false;
+        }
+    }
+
+    public void updateStage() {
+        // 自定义阶段更新逻辑
+    }
+
+    private void printLog() {
+        BLOOD_BOSS_LOGGER.debug("==============开始打印bloodBoss信息=================");
+        BLOOD_BOSS_LOGGER.debug("当前activity: {}", this.getBrain().getActiveActivities());
+        
+        // 打印当前攻击目标实体id
+        if (this.getBrain().hasMemoryValue(MemoryModuleType.ATTACK_TARGET)) {
+            this.getBrain().getMemory(MemoryModuleType.ATTACK_TARGET).ifPresent(target -> {
+                BLOOD_BOSS_LOGGER.debug("攻击目标: {}", target.getType().getDescription().getString());
+            });
+        } else {
+            BLOOD_BOSS_LOGGER.debug("攻击目标: 无");
+        }
+        
+        // 打印剩余法力值
+        BLOOD_BOSS_LOGGER.debug("剩余法力值: {}", this.getMagicData().getMana());
+
+        BLOOD_BOSS_LOGGER.debug("坐标: {}", this.blockPosition());
+        BLOOD_BOSS_LOGGER.debug("移动: {}", this.getDeltaMovement());
+        BLOOD_BOSS_LOGGER.debug("是否在地上: {}", this.onGround());
+        
+        // 打印当前阶段
+        if (this.getBrain().hasMemoryValue(ModMemoryModuleType.BOSS_STAGE.get())) {
+            this.getBrain().getMemory(ModMemoryModuleType.BOSS_STAGE.get()).ifPresent(stage -> {
+                BLOOD_BOSS_LOGGER.debug("当前阶段: {}", stage);
+            });
+        } else {
+            BLOOD_BOSS_LOGGER.debug("当前阶段: 无");
+        }
+        
+        // 检查移动目标记忆
+        if (this.getBrain().hasMemoryValue(MemoryModuleType.WALK_TARGET)) {
+            this.getBrain().getMemory(MemoryModuleType.WALK_TARGET).ifPresent(walkTarget -> {
+                BLOOD_BOSS_LOGGER.debug("Walk target: {}", walkTarget.getTarget().currentBlockPosition());
+            });
+        } else {
+            BLOOD_BOSS_LOGGER.debug("Walk target: 无");
+        }
+        
+        // 打印实体类型计数
+        if (this.getBrain().hasMemoryValue(ModMemoryModuleType.ENTITY_TYPE_COUNT.get())) {
+            this.getBrain()
+                    .getMemory(ModMemoryModuleType.ENTITY_TYPE_COUNT.get())
+                    .ifPresent(entityTypeCount -> {
+                        BLOOD_BOSS_LOGGER.debug(
+                                "Total entity types: {}",
+                                entityTypeCount.size()
+                        );
+
+                        for (Map.Entry<EntityType<?>, Integer> entry : entityTypeCount.entrySet()) {
+                            EntityType<?> type = entry.getKey();
+                            int count = entry.getValue();
+
+                            BLOOD_BOSS_LOGGER.debug(
+                                    "entity: {} × {}",
+                                    type.getDescription().getString(),
+                                    count
+                            );
+                        }
+                    });
+        } else {
+            BLOOD_BOSS_LOGGER.debug("Total entity types: 0");
+        }
+
+        // 打印实体信息
+        if (this.getBrain().hasMemoryValue(ModMemoryModuleType.NBT_TEST_MEMORY_MODULE.get())) {
+            Optional<List<CompoundTag>> memory = this.getBrain()
+                    .getMemory(ModMemoryModuleType.NBT_TEST_MEMORY_MODULE.get());
+
+            memory.ifPresent(stomach -> {
+                BLOOD_BOSS_LOGGER.debug(
+                        "Stomach size: {}",
+                        stomach.size()
+                );
+
+                for (int i = 0; i < stomach.size(); i++) {
+                    CompoundTag entry = stomach.get(i);
+                    String entityId = entry.getString("id");
+                    BLOOD_BOSS_LOGGER.debug(
+                            "  [{}] {}",
+                            i,
+                            entityId
+                    );
+                }
+            });
+        } else {
+            BLOOD_BOSS_LOGGER.debug("Stomach size: 0");
+        }
+    }
+
+    //================================================================ 其他方法 ========================================================================
+
+
+    @Override
+    public void tick() {
+        if (!isSpellConfigLoaded()) {
+
+                return;
+
+        }
+        super.tick();
     }
 
     @Override
@@ -242,146 +671,6 @@ public class BloodBoss extends PathfinderMob implements GeoAnimatable, Enemy, IA
         this.spawnTimer = friendlyByteBuf.readInt();
     }
 
-    @Nullable
-    @Override
-    public LivingEntity getTarget() {
-        return this.getBrain().getMemory(MemoryModuleType.ATTACK_TARGET).orElse(null);
-    }
-
-    // 动画相关方法保持不变
-    @Override
-    public AnimatableInstanceCache getAnimatableInstanceCache() {
-        return factory;
-    }
-
-    @Override
-    public double getTick(Object o) {
-        return 0;
-    }
-
-    @Override
-    public void playAnimation(String s) {
-        // 自定义动画播放逻辑
-    }
-
-
-    @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
-        controllerRegistrar.add(animationControllerWalk);
-    }
-
-    private PlayState walkPredicate(AnimationState animationState) {
-        if(animationState.isMoving()) {
-            animationState.getController().setAnimation(RawAnimation.begin().then("行走循环", Animation.LoopType.LOOP));
-            return PlayState.CONTINUE;
-        }
-        if (this.isCasting()) {
-            return PlayState.STOP;
-        }
-        animationState.getController().setAnimation(RawAnimation.begin().then("待机", Animation.LoopType.LOOP));
-        return PlayState.CONTINUE;
-    }
-
-    private PlayState animationPredicate(AnimationState<BloodBoss> animationEvent) {
-        AnimationController<BloodBoss> controller = animationEvent.getController();
-        if (this.animationToPlay != null) {
-            controller.forceAnimationReset();
-            controller.setAnimation(this.animationToPlay);
-            this.animationToPlay = null;
-        }
-        return PlayState.CONTINUE;
-    }
-
-
-    @Override
-    protected void customServerAiStep() {
-        // 先调用父类逻辑
-        super.customServerAiStep();
-
-        // 处理法术重现（从NBT加载时）
-        if (this.recreateSpell) {
-            this.recreateSpell = false;
-            SyncedSpellData syncedSpellData = this.magicData.getSyncedData();
-            AbstractSpell spell = SpellRegistry.getSpell(syncedSpellData.getCastingSpellId());
-            this.initiateCastSpell(spell, syncedSpellData.getCastingSpellLevel());
-        }
-
-        // 处理药水饮用
-        if (this.isDrinkingPotion()) {
-            if (this.drinkTime-- <= 0) {
-                this.finishDrinkingPotion();
-            } else if (this.drinkTime % 4 == 0 && !this.isSilent()) {
-                this.level().playSound(null, this.getX(), this.getY(), this.getZ(),
-                        SoundEvents.GENERIC_DRINK, this.getSoundSource(), 1.0F,
-                        Utils.random.nextFloat() * 0.1F + 0.9F);
-            }
-        }
-
-        // 关键修复：在访问配置之前检查是否已加载
-        if (!isSpellConfigLoaded()) {
-            // 如果配置未加载，跳过AI逻辑，只执行基本更新
-            updateStage();
-            return;
-        }
-
-        // 处理施法状态 - 添加安全检查
-        if (this.castingSpell != null) {
-            this.magicData.handleCastDuration();
-
-            if (this.magicData.isCasting()) {
-                // 施法中的每tick处理 - 添加null检查
-                if (this.castingSpell.getSpell() != null) {
-                    this.castingSpell.getSpell().onServerCastTick(this.level(), this.castingSpell.getLevel(), this, this.magicData);
-                }
-            }
-
-            // 施法时持续看向目标
-            this.forceLookAtTarget(this.getTarget());
-
-            // 检查施法是否完成
-            if (this.magicData.getCastDurationRemaining() <= 0) {
-                // 根据施法类型触发完成事件 - 添加null检查
-                if (this.castingSpell.getSpell() != null) {
-                    CastType castType = this.castingSpell.getSpell().getCastType();
-                    if (castType == CastType.LONG || castType == CastType.INSTANT) {
-                        this.castingSpell.getSpell().onCast(this.level(), this.castingSpell.getLevel(), this, CastSource.MOB, this.magicData);
-                    }
-                }
-                this.castComplete();
-            } else if (this.castingSpell.getSpell() != null &&
-                    this.castingSpell.getSpell().getCastType() == CastType.CONTINUOUS &&
-                    (this.magicData.getCastDurationRemaining() + 1) % 10 == 0) {
-                // 持续施法的周期性触发
-                this.castingSpell.getSpell().onCast(this.level(), this.castingSpell.getLevel(), this, CastSource.MOB, this.magicData);
-            }
-        }
-
-        // 您原有的AI逻辑 - 只在配置加载后执行
-        ServerLevel serverlevel = (ServerLevel) this.level();
-        serverlevel.getProfiler().push("BloodBossBrain");
-        this.getBrain().tick(serverlevel, this);
-        serverlevel.getProfiler().pop();
-        BloodBossAi.updateActivity(this);
-
-        if (this.tickCount % 40 == 0) {
-            printLog();
-        }
-
-        updateStage();
-    }
-
-    private void forceLookAtTarget(@Nullable LivingEntity target) {
-        if (target != null) {
-            double d0 = target.getX() - this.getX();
-            double d2 = target.getZ() - this.getZ();
-            double d1 = target.getEyeY() - this.getEyeY();
-            double d3 = Math.sqrt(d0 * d0 + d2 * d2);
-            float f = (float)(Mth.atan2(d2, d0) * 57.2957763671875) - 90.0F;
-            float f1 = (float)(-(Mth.atan2(d1, d3) * 57.2957763671875));
-            this.setXRot(f1);
-            this.setYRot(f);
-        }
-    }
     private void finishDrinkingPotion() {
         this.entityData.set(DATA_DRINKING_POTION, false);
         this.heal(Math.min(Math.max(10.0F, this.getMaxHealth() / 10.0F), this.getMaxHealth() / 4.0F));
@@ -391,46 +680,6 @@ public class BloodBoss extends PathfinderMob implements GeoAnimatable, Enemy, IA
                     SoundEvents.WITCH_DRINK, this.getSoundSource(), 1.0F,
                     0.8F + this.random.nextFloat() * 0.4F);
         }
-    }
-
-    public boolean isSpellConfigLoaded() {
-        try {
-            // 添加多层安全检查
-            if (SpellConfigManager.INSTANCE == null) {
-                return false;
-            }
-            SpellConfigManager.getSpellConfigValue(SpellRegistry.none(), IronConfigParameters.ENABLED);
-            return true;
-        } catch (NullPointerException e) {
-            BLOOD_BOSS_LOGGER.warn("法术配置未加载，跳过AI逻辑");
-            return false;
-        } catch (Exception e) {
-            BLOOD_BOSS_LOGGER.error("检查法术配置时发生错误", e);
-            return false;
-        }
-    }
-
-    public void updateStage() {
-        // 自定义阶段更新逻辑
-    }
-
-    private void printLog() {
-        // 调试日志输出
-        BLOOD_BOSS_LOGGER.debug("当前activity: {}", this.getBrain().getActiveActivities());
-        this.getBrain().getMemory(MemoryModuleType.ATTACK_TARGET).ifPresent(target -> {
-            BLOOD_BOSS_LOGGER.debug("攻击目标: {}", target.getType().getDescription().getString());
-        });
-        BLOOD_BOSS_LOGGER.debug("剩余法力值: {}", this.getMagicData().getMana());
-    }
-
-    @Override
-    public Brain<BloodBoss> getBrain() {
-        return (Brain<BloodBoss>) super.getBrain();
-    }
-
-    @Override
-    protected Brain<?> makeBrain(Dynamic<?> dynamic) {
-        return BloodBossAi.makeBrain(this, dynamic);
     }
 
     // 添加NBT数据保存和读取

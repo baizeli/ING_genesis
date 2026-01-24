@@ -10,6 +10,7 @@ import miku.united_as_one.genesis.entity.ai.ModActivity;
 import miku.united_as_one.genesis.entity.ai.ModMemoryModuleType;
 import miku.united_as_one.genesis.entity.boss.behavior.SelectTargetBehavior;
 import miku.united_as_one.genesis.entity.boss.behavior.SpellCastingBehavior;
+import miku.united_as_one.genesis.entity.boss.behavior.SpellLockAimingBehavior;
 import miku.united_as_one.genesis.spell.Spells;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EntityType;
@@ -216,15 +217,13 @@ public class BloodBossAi {
         );
 
         brain.addActivityAndRemoveMemoryWhenStopped(
-                activity,//要添加的活动为蘸豆活动
+                activity,
                 i,
                 ImmutableList.of(
-                        // 停止攻击无效目标
-                        StopAttackingIfTargetInvalid.create(
-                                livingEntity -> false,
-                                (mob, target) -> {},
-                                true
-                        ),
+                        StopAttackingIfTargetInvalid.create(livingEntity -> false, (mob, target) -> {}, true),
+
+                        new SpellLockAimingBehavior(),
+
                         spellCasting
                 ),
                 MemoryModuleType.ATTACK_TARGET
@@ -260,8 +259,7 @@ public class BloodBossAi {
                 // 随机游走
                 new RunOne<>(ImmutableList.of(
                         Pair.of(RandomStroll.swim(1.5F), 1),
-                        Pair.of(RandomStroll.stroll(1F, false), 1),
-                        Pair.of(new DoNothing(1500, 3000), 3)
+                        Pair.of(RandomStroll.stroll(1F, false), 1)
                 )),
                 // 寻找附近实体 - 触发战斗
                 new SelectTargetBehavior(),
@@ -306,8 +304,8 @@ public class BloodBossAi {
             //不同活动之间是并行的，所以核心活动和主活动可以各执行一个行为
             ImmutableList.of(
 //                new AnimalPanic(2.0F),
-                new LookAtTargetSink(45, 90)
-//                new MoveToTargetSink(100, 200)
+                new LookAtTargetSink(45, 90),
+                new MoveToTargetSink(100, 200)
             )
         );
 
