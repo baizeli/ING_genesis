@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:nether_cave",
+  "config": {
+    "floor_level": -0.7,
+    "horizontal_radius_multiplier": 1.0,
+    "lava_level": {
+      "above_bottom": 10
+    },
+    "probability": 0.1,
+    "replaceable": "#minecraft:nether_carver_replaceables",
+    "vertical_radius_multiplier": 0.8,
+    "y": {
+      "type": "minecraft:uniform",
+      "max_inclusive": {
+        "absolute": 30
+      },
+      "min_inclusive": {
+        "absolute": -40
+      }
+    },
+    "yScale": 0.3
+  }
+}

@@ -3,13 +3,9 @@ package miku.united_as_one.genesis.content;
 import miku.united_as_one.genesis.content.arcaneWorkbench.ArcaneWorkbenchBlock;
 import miku.united_as_one.genesis.Genesis;
 import net.minecraft.world.item.DyeColor;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.minecraftforge.registries.*;
 
 public class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Genesis.MOD_ID);
@@ -49,4 +45,14 @@ public class ModBlocks {
                     .requiresCorrectToolForDrops()
                     .strength(20.0F, 99999.0F)
                     .sound(SoundType.ANCIENT_DEBRIS)));
+
+    // 混沌传送门方块
+    public static final RegistryObject<ChaosPortalBlock> CHAOS_PORTAL = BLOCKS.register("chaos_portal",
+            () -> new ChaosPortalBlock(BlockBehaviour.Properties.of()
+                    .noCollission()
+                    .randomTicks()
+                    .strength(-1.0F)
+                    .sound(SoundType.GLASS)
+                    .lightLevel((state) -> 11)
+                    .noOcclusion()));
 }

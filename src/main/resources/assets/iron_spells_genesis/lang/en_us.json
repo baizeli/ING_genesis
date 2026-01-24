@@ -135,6 +135,10 @@
   "item.iron_spells_genesis.chaos_manuscript_fragment.hover": "(#1Chaos# magic learning method contained within)",
   "item.iron_spells_genesis.blank_celestial_source_manuscript.hover": "(#2Celestial Source# magic learning method contained within)",
 
+  "item.iron_spells_genesis.flesh_soul_bell": "Flesh Soul Bell",
+  "item.iron_spells_genesis.chaos_core": "Chaos Core",
+  "item.iron_spells_genesis.flesh_soul_fragment": "Flesh Soul Fragment",
+
   "iron_spells_genesis.galaxy_scroll.book_name": "§bGalaxy Scroll",
 
   "block.iron_spells_genesis.arcane_workbench": "Arcane Workbench",
@@ -142,6 +146,7 @@
   "block.iron_spells_genesis.deepslate_arcane_crystal_ore": "Deepslate Arcane Crystal Ore",
   "block.iron_spells_genesis.nether_arcane_crystal_ore": "Nether Arcane Crystal Ore",
   "block.iron_spells_genesis.end_arcane_crystal_ore": "End Arcane Crystal Ore",
+  "block.iron_spells_genesis.chaos_portal": "1145141919810",
 
   "container.iron_spells_genesis.vanilla_workbench": "Ordered Ultimate Crafting",
   "container.iron_spells_genesis.arcane_workbench": "Arcane Crafting",
