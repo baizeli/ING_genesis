@@ -145,7 +145,7 @@ public class BloodBossAi {
                 SpellRegistry.BLOOD_NEEDLES_SPELL.get(),
                 SpellRegistry.WITHER_SKULL_SPELL.get(),
                 SpellRegistry.ACUPUNCTURE_SPELL.get(),
-//                SpellRegistry.SONIC_BOOM_SPELL.get(),
+                SpellRegistry.SONIC_BOOM_SPELL.get(),
                 SpellRegistry.ELDRITCH_BLAST_SPELL.get()
 
 /*                SpellRegistry.FIREBALL_SPELL.get(),
