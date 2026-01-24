@@ -4,9 +4,13 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Dynamic;
+import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
+import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import miku.united_as_one.genesis.entity.ai.ModActivity;
 import miku.united_as_one.genesis.entity.ai.ModMemoryModuleType;
 import miku.united_as_one.genesis.entity.boss.behavior.SelectTargetBehavior;
+import miku.united_as_one.genesis.entity.boss.behavior.SpellCastingBehavior;
+import miku.united_as_one.genesis.spell.Spells;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -135,7 +139,97 @@ public class BloodBossAi {
         Activity activity = Activity.FIGHT;
         int i = fightStartPriority;
 
+        List<AbstractSpell> spellList = List.of(
+                SpellRegistry.BLOOD_SLASH_SPELL.get(),
+                SpellRegistry.BLOOD_NEEDLES_SPELL.get(),
+                SpellRegistry.WITHER_SKULL_SPELL.get(),
+                SpellRegistry.ACUPUNCTURE_SPELL.get(),
+//                SpellRegistry.SONIC_BOOM_SPELL.get(),
+                SpellRegistry.ELDRITCH_BLAST_SPELL.get()
+
+/*                SpellRegistry.FIREBALL_SPELL.get(),
+
+                SpellRegistry.BLOOD_STEP_SPELL.get(),
+                SpellRegistry.DEVOUR_SPELL.get(),
+                SpellRegistry.HEARTSTOP_SPELL.get(),
+                SpellRegistry.RAY_OF_SIPHONING_SPELL.get(),
+
+                SpellRegistry.DRAGON_BREATH_SPELL.get(),
+                SpellRegistry.MAGIC_ARROW_SPELL.get(),
+                SpellRegistry.MAGIC_MISSILE_SPELL.get(),
+                SpellRegistry.TELEPORT_SPELL.get(),
+                SpellRegistry.ECHOING_STRIKES_SPELL.get(),
+                SpellRegistry.SHADOW_SLASH.get(),
+                SpellRegistry.CHAIN_CREEPER_SPELL.get(),
+                SpellRegistry.FANG_STRIKE_SPELL.get(),
+                SpellRegistry.FIRECRACKER_SPELL.get(),
+                SpellRegistry.GUST_SPELL.get(),
+                SpellRegistry.LOB_CREEPER_SPELL.get(),
+                SpellRegistry.SLOW_SPELL.get(),
+                SpellRegistry.ARROW_VOLLEY_SPELL.get(),
+                SpellRegistry.THROW_SPELL.get(),
+                SpellRegistry.BLAZE_STORM_SPELL.get(),
+                SpellRegistry.BURNING_DASH_SPELL.get(),
+                SpellRegistry.FIREBOLT_SPELL.get(),
+                SpellRegistry.FIRE_BREATH_SPELL.get(),
+                SpellRegistry.MAGMA_BOMB_SPELL.get(),
+                SpellRegistry.WALL_OF_FIRE_SPELL.get(),
+                SpellRegistry.HEAT_SURGE_SPELL.get(),
+                SpellRegistry.FLAMING_STRIKE_SPELL.get(),
+                SpellRegistry.SCORCH_SPELL.get(),
+                SpellRegistry.FLAMING_BARRAGE_SPELL.get(),
+                SpellRegistry.FIRE_ARROW_SPELL.get(),
+                SpellRegistry.ICICLE_SPELL.get(),
+                SpellRegistry.RAY_OF_FROST_SPELL.get(),
+                SpellRegistry.FROSTWAVE_SPELL.get(),
+                SpellRegistry.ICE_SPIKES_SPELL.get(),
+                SpellRegistry.ICE_TOMB_SPELL.get(),
+                SpellRegistry.SNOWBALL_SPELL.get(),
+                SpellRegistry.FROSTBITE_SPELL.get(),
+                SpellRegistry.CHAIN_LIGHTNING_SPELL.get(),
+                SpellRegistry.ELECTROCUTE_SPELL.get(),
+                SpellRegistry.LIGHTNING_BOLT_SPELL.get(),
+                SpellRegistry.LIGHTNING_LANCE_SPELL.get(),
+                SpellRegistry.SHOCKWAVE_SPELL.get(),
+                SpellRegistry.THUNDERSTORM_SPELL.get(),
+                SpellRegistry.BALL_LIGHTNING_SPELL.get(),
+                SpellRegistry.VOLT_STRIKE_SPELL.get(),
+                SpellRegistry.ACID_ORB_SPELL.get(),
+                SpellRegistry.BLIGHT_SPELL.get(),
+                SpellRegistry.POISON_ARROW_SPELL.get(),
+                SpellRegistry.POISON_BREATH_SPELL.get(),
+                SpellRegistry.POISON_SPLASH_SPELL.get(),
+                SpellRegistry.ROOT_SPELL.get(),
+                SpellRegistry.SPIDER_ASPECT_SPELL.get(),
+                SpellRegistry.FIREFLY_SWARM_SPELL.get(),
+                SpellRegistry.EARTHQUAKE_SPELL.get(),
+                SpellRegistry.STOMP_SPELL.get(),
+                SpellRegistry.TOUCH_DIG.get(),
+                SpellRegistry.TELEKINESIS_SPELL.get()*/
+
+        );
+
+        SpellCastingBehavior spellCasting = new SpellCastingBehavior(
+                spellList,
+                10,  // 冷却时间
+                20.0f // 最大施法距离
+        );
+
         brain.addActivityAndRemoveMemoryWhenStopped(
+                activity,//要添加的活动为蘸豆活动
+                i,
+                ImmutableList.of(
+                        // 停止攻击无效目标
+                        StopAttackingIfTargetInvalid.create(
+                                livingEntity -> false,
+                                (mob, target) -> {},
+                                true
+                        ),
+                        spellCasting
+                ),
+                MemoryModuleType.ATTACK_TARGET
+        );
+/*        brain.addActivityAndRemoveMemoryWhenStopped(
                 activity,//要添加的活动为蘸豆活动
                 i,
                 ImmutableList.of(
@@ -157,7 +251,7 @@ public class BloodBossAi {
                         ))
                 ),
                 MemoryModuleType.ATTACK_TARGET
-        );
+        );*/
     }
 
     private static void addIdleActivities(Brain<BloodBoss> brain, BloodBoss BloodBoss) {
@@ -211,9 +305,9 @@ public class BloodBossAi {
             //在同一个活动内，每tick只执行一个行为
             //不同活动之间是并行的，所以核心活动和主活动可以各执行一个行为
             ImmutableList.of(
-                new AnimalPanic(2.0F),
-                new LookAtTargetSink(45, 90),
-                new MoveToTargetSink(100, 200)
+//                new AnimalPanic(2.0F),
+                new LookAtTargetSink(45, 90)
+//                new MoveToTargetSink(100, 200)
             )
         );
 
