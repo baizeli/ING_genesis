@@ -396,6 +396,23 @@ public class ModItems {
     public static final RegistryObject<BlockItem> END_ARCANE_CRYSTAL_ORE_ITEM =
             ModItems.ITEMS.register("end_arcane_crystal_ore", () -> new BlockItem(ModBlocks.END_ARCANE_CRYSTAL_ORE.get(), new Item.Properties()));
 
+    // 血肉魂铃
+    public static final RegistryObject<Item> FLESH_SOUL_BELL = ITEMS.register("flesh_soul_bell",
+           () -> new Item(new Item.Properties()
+                .stacksTo(1)
+                .rarity(Rarity.EPIC)
+           ));
+
+    // 混沌原核
+    public static final RegistryObject<Item> CHAOS_CORE = ModItems.ITEMS.register("chaos_core", ChaosCore::new);
+
+    // 血肉灵魂碎片
+    public static final RegistryObject<Item> FLESH_SOUL_FRAGMENT = ITEMS.register("flesh_soul_fragment",
+           () -> new Item(new Item.Properties()
+                .stacksTo(1)
+                .rarity(Rarity.EPIC)
+           ));
+
     public static final Map<TagKey<Item>, Set<RegistryObject<Item>>> itemTagMap = new HashMap<>();
     public static final RegistryObject<Item> ETERNAL_RING = registerCurios("eternal_ring", ModTags.RING, EternalRing::new);
     public static final RegistryObject<Item> LIGHTNING_RUNE_PLUS = registerCurios("lightning_rune_plus", ModTags.BODY, LightningRunePlus::new);

@@ -135,6 +135,10 @@
   "item.iron_spells_genesis.chaos_manuscript_fragment.hover": "（蕴含着#1混沌#法术的学习方法）",
   "item.iron_spells_genesis.blank_celestial_source_manuscript.hover": "（蕴含着#2星源#法术的学习方法）",
 
+  "item.iron_spells_genesis.flesh_soul_bell": "血肉魂铃",
+  "item.iron_spells_genesis.chaos_core": "混沌原核",
+  "item.iron_spells_genesis.flesh_soul_fragment": "血肉灵魂碎片",
+
   "iron_spells_genesis.galaxy_scroll.book_name": "§b星河绘卷",
 
   "block.iron_spells_genesis.arcane_workbench": "奥术工作台",
@@ -142,6 +146,7 @@
   "block.iron_spells_genesis.deepslate_arcane_crystal_ore": "深层奥术水晶矿",
   "block.iron_spells_genesis.nether_arcane_crystal_ore": "下界奥术水晶矿",
   "block.iron_spells_genesis.end_arcane_crystal_ore": "末地奥术水晶矿",
+  "block.iron_spells_genesis.chaos_portal": "114514",
 
   "container.iron_spells_genesis.vanilla_workbench": "有序终极合成",
   "container.iron_spells_genesis.arcane_workbench": "奥术合成",
