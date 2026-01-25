@@ -60,16 +60,16 @@ public class SpellCastingBehavior extends Behavior<BloodBoss> {
         }
 
 
-/*        // 检查距离
+        // 检查距离
         double distanceSq = owner.distanceToSqr(target);
         if (distanceSq > maxCastDistanceSq) {
             return false;
-        }*/
+        }
 
-/*        // 检查视线
+        // 检查视线
         if (!Utils.hasLineOfSight(owner.level(), owner, target, true)) {
             return false;
-        }*/
+        }
 
         return true;
     }

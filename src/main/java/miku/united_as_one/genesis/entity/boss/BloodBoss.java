@@ -104,7 +104,7 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
 //        this.lookControl = new BloodBossLookControl(this);
 //        this.jumpControl = new BloodBossJumpControl(this);
 
-        this.animationControllerWalk = new AnimationController<>(this, "walk_controller", 20, this::walkPredicate);
+        this.animationControllerWalk = new AnimationController<>(this, "walk_controller", 10, this::walkPredicate);
         this.skillAnimationController = new AnimationController<>(this, "skill_animation_controller", 5, this::animationPredicate);
 
 
@@ -127,6 +127,7 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
                 .add(AttributeRegistry.MAX_MANA.get(), 50000.0)
                 .add(ForgeMod.ENTITY_GRAVITY.get(), 0.03)
                 .add(ForgeMod.ENTITY_REACH.get(), 3.0)
+                .add(Attributes.KNOCKBACK_RESISTANCE,5.0)
                 .add(AttributeRegistry.SPELL_POWER.get(), 1.25);
     }
 
@@ -358,10 +359,15 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         controllerRegistrar.add(longCastController);
         controllerRegistrar.add(continuousCastController);
     }
-
     private PlayState walkPredicate(AnimationState<BloodBoss> state) {
+        double horizontalSpeed = this.getDeltaMovement().horizontalDistance();
 
-
+        if (state.isMoving()) {
+            double speedMultiplier = (horizontalSpeed / 0.053) * 1.5;
+            animationControllerWalk.setAnimationSpeed(Math.max(0.5, speedMultiplier));
+        } else {
+            animationControllerWalk.setAnimationSpeed(1.0);
+        }
 
 
         if (this.isCasting()) {
@@ -371,6 +377,8 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         boolean isRecentlyCasting = (this.tickCount - this.lastCastTick) < CASTING_POST_DELAY;
 
         RawAnimation target;
+
+
         if (this.isCasting() || isRecentlyCasting) {
             target = state.isMoving() ? CAST_WALK : CAST_IDLE;
         } else {
@@ -379,7 +387,6 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
 
         return state.setAndContinue(target);
     }
-
 
     private PlayState animationPredicate(AnimationState<BloodBoss> animationEvent) {
         AnimationController<BloodBoss> controller = animationEvent.getController();

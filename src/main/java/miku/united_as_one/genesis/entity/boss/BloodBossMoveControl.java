@@ -22,20 +22,16 @@ public class BloodBossMoveControl extends MoveControl {
 
     @Override
     public void tick() {
-
-        
         if (!boss.isCasting()) {
             super.tick();
             return;
         }
 
-        
         if (this.operation != Operation.MOVE_TO) {
             super.tick();
             return;
         }
 
-        
         this.operation = Operation.WAIT;
 
         double dx = this.wantedX - this.mob.getX();
@@ -45,6 +41,7 @@ public class BloodBossMoveControl extends MoveControl {
         double distSq = dx * dx + dz * dz + dy * dy;
         if (distSq < MIN_SPEED_SQR) {
             this.mob.setZza(0.0F);
+            this.mob.setXxa(0.0F); 
             return;
         }
 
@@ -70,14 +67,36 @@ public class BloodBossMoveControl extends MoveControl {
         float baseSpeed = (float)this.mob.getAttributeValue(Attributes.MOVEMENT_SPEED);
         float speed = (float)this.speedModifier * baseSpeed;
 
+        
         double dist = Math.sqrt(dx * dx + dz * dz);
-        Vec3 moveDir = new Vec3(dx / dist, 0.0, dz / dist);
 
+        
+        
+        double worldNormX = dx / dist;
+        double worldNormZ = dz / dist;
+
+        
+        
+        float checkDist = 1.5F;
+        double checkX = worldNormX * checkDist;
+        double checkZ = worldNormZ * checkDist;
+
+        
+        if (!isSafe(checkX, checkZ)) {
+            
+            this.mob.setZza(0.0F);
+            this.mob.setXxa(0.0F);
+            return;
+        }
+
+        
         
         float yawRad = this.mob.getYRot() * Mth.DEG_TO_RAD;
 
-        double localX =  moveDir.x * Mth.cos(-yawRad) - moveDir.z * Mth.sin(-yawRad);
-        double localZ =  moveDir.x * Mth.sin(-yawRad) + moveDir.z * Mth.cos(-yawRad);
+        
+        
+        double localX = worldNormX * Mth.cos(-yawRad) - worldNormZ * Mth.sin(-yawRad);
+        double localZ = worldNormX * Mth.sin(-yawRad) + worldNormZ * Mth.cos(-yawRad);
 
         float strafe = (float)localX;
         float forward = (float)localZ;
@@ -88,19 +107,44 @@ public class BloodBossMoveControl extends MoveControl {
             len = 1.0F;
         }
 
+        
+        
         float scale = speed / len;
         strafe *= scale;
         forward *= scale;
 
         
-        if (!this.isWalkable(forward, strafe)) {
-            forward = speed;
-            strafe = 0.0F;
-        }
-
-        
         this.mob.setSpeed(speed);
         this.mob.setZza(forward);
         this.mob.setXxa(strafe);
+    }
+
+    
+    private boolean isSafe(double worldRelX, double worldRelZ) {
+        
+        if (!this.isWalkable((float)worldRelX, (float)worldRelZ)) {
+            return false;
+        }
+
+        
+        double nextX = this.mob.getX() + worldRelX;
+        double nextY = this.mob.getY();
+        double nextZ = this.mob.getZ() + worldRelZ;
+
+        
+        
+        BlockPos groundPos = new BlockPos(
+                Mth.floor(nextX),
+                Mth.floor(nextY - 1.0), 
+                Mth.floor(nextZ)
+        );
+
+        
+        
+        if (this.mob.level().getBlockState(groundPos).isAir()) {
+            return false;
+        }
+
+        return true;
     }
 }
