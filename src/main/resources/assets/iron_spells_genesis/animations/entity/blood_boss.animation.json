@@ -2222,7 +2222,7 @@
 							"lerp_mode": "catmullrom"
 						},
 						"2.0": {
-							"post": [0, 7.5, 0],
+							"post": [0, 22.5, 0],
 							"lerp_mode": "catmullrom"
 						}
 					}
@@ -2331,6 +2331,10 @@
 				"right_arm": {
 					"rotation": {
 						"0.0": {
+							"post": [-227.7267, 17.7312, -64.49435],
+							"lerp_mode": "catmullrom"
+						},
+						"2.0": {
 							"post": [-227.7267, 17.7312, -64.49435],
 							"lerp_mode": "catmullrom"
 						}
