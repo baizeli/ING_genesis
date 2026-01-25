@@ -3,7 +3,9 @@ package miku.united_as_one.genesis.entity.boss.behavior;
 import miku.united_as_one.genesis.entity.boss.BloodBoss;
 import miku.united_as_one.genesis.entity.boss.BloodBossMoveControl;
 import miku.united_as_one.genesis.entity.boss.SkillMovementTask;
+import miku.united_as_one.genesis.sound.SoundsRegister;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
@@ -18,8 +20,8 @@ public class LightningWhirlSlashBehavior
         extends AnimatedActionBehavior<BloodBoss> {
 
     private static final int DURATION = 30;
-    private static final int HIT_1 = 16;
-    private static final int HIT_2 = 21;
+    private static final int HIT_1 = 19;
+    private static final int HIT_2 = 24;
 
     private boolean hit1Done = false;
     private boolean hit2Done = false;
@@ -43,14 +45,41 @@ public class LightningWhirlSlashBehavior
         hit1Done = false;
         hit2Done = false;
 
+
+        level.playSound(
+                null,
+                boss.getX(),
+                boss.getY(),
+                boss.getZ(),
+                SoundsRegister.VAN_SH_HIT.get(),
+                SoundSource.HOSTILE,
+                1.0F,
+                0.3F
+        );
+
         if (boss.getMoveControl() instanceof BloodBossMoveControl move) {
             move.addSkillMovement(createDashMovement());
         }
     }
 
+
     @Override
     protected void tick(ServerLevel level, BloodBoss boss, long gameTime) {
         super.tick(level, boss, gameTime);
+
+        if (abilityTimer % 3 == 0) {
+            float pitch = 0.5F + (abilityTimer / (float) DURATION) * 0.5F; 
+            level.playSound( 
+                    null, 
+                    boss.getX(), 
+                    boss.getY(), 
+                    boss.getZ(), 
+                    SoundsRegister.VAN_SH_HIT.get(),
+                    SoundSource.HOSTILE, 
+                    0.4F, 
+                    pitch 
+            ); 
+        }
 
         if (abilityTimer >= HIT_1 && !hit1Done) {
             hit1Done = true;
