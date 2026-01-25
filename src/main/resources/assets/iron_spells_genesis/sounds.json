@@ -28,5 +28,11 @@
       "iron_spells_genesis:evasion"
     ],
     "subtitle": "subtitles.iron_spells_genesis.evasion"
+  },
+  "van_sh_hit": {
+    "sounds": [
+      "iron_spells_genesis:van_sh_hit"
+    ],
+    "subtitle": "subtitles.iron_spells_genesis.van_sh_hit"
   }
 }
