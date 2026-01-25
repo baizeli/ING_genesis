@@ -11,9 +11,16 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 public class BloodBossMoveControl extends MoveControl {
 
     private final BloodBoss boss;
+
+    
+    private final List<SkillMovementTask> skillTasks = new ArrayList<>();
 
     public BloodBossMoveControl(BloodBoss mob) {
         super(mob);
@@ -22,6 +29,34 @@ public class BloodBossMoveControl extends MoveControl {
 
     @Override
     public void tick() {
+
+        
+        if (!skillTasks.isEmpty()) {
+            Vec3 total = Vec3.ZERO;
+
+            Iterator<SkillMovementTask> it = skillTasks.iterator();
+            while (it.hasNext()) {
+                SkillMovementTask task = it.next();
+                task.tick(mob);
+
+                total = total.add(task.compute(mob, task.progress()));
+
+                if (task.finished()) {
+                    task.end(mob);
+                    it.remove();
+                }
+            }
+
+            
+            mob.setDeltaMovement(
+                    mob.getDeltaMovement().add(total)
+            );
+
+            
+        }
+
+        
+
         if (!boss.isCasting()) {
             super.tick();
             return;
@@ -41,11 +76,10 @@ public class BloodBossMoveControl extends MoveControl {
         double distSq = dx * dx + dz * dz + dy * dy;
         if (distSq < MIN_SPEED_SQR) {
             this.mob.setZza(0.0F);
-            this.mob.setXxa(0.0F); 
+            this.mob.setXxa(0.0F);
             return;
         }
 
-        
         BlockPos blockpos = this.mob.blockPosition();
         BlockState blockstate = this.mob.level().getBlockState(blockpos);
         VoxelShape voxelshape = blockstate.getCollisionShape(this.mob.level(), blockpos);
@@ -63,88 +97,69 @@ public class BloodBossMoveControl extends MoveControl {
             this.operation = Operation.JUMPING;
         }
 
-        
         float baseSpeed = (float)this.mob.getAttributeValue(Attributes.MOVEMENT_SPEED);
         float speed = (float)this.speedModifier * baseSpeed;
 
-        
         double dist = Math.sqrt(dx * dx + dz * dz);
-
-        
-        
         double worldNormX = dx / dist;
         double worldNormZ = dz / dist;
 
-        
-        
         float checkDist = 1.5F;
         double checkX = worldNormX * checkDist;
         double checkZ = worldNormZ * checkDist;
 
-        
         if (!isSafe(checkX, checkZ)) {
-            
             this.mob.setZza(0.0F);
             this.mob.setXxa(0.0F);
             return;
         }
 
-        
-        
         float yawRad = this.mob.getYRot() * Mth.DEG_TO_RAD;
-
-        
-        
         double localX = worldNormX * Mth.cos(-yawRad) - worldNormZ * Mth.sin(-yawRad);
         double localZ = worldNormX * Mth.sin(-yawRad) + worldNormZ * Mth.cos(-yawRad);
 
         float strafe = (float)localX;
         float forward = (float)localZ;
 
-        
         float len = Mth.sqrt(strafe * strafe + forward * forward);
-        if (len < 1.0F) {
-            len = 1.0F;
-        }
+        if (len < 1.0F) len = 1.0F;
 
-        
-        
         float scale = speed / len;
         strafe *= scale;
         forward *= scale;
 
-        
         this.mob.setSpeed(speed);
         this.mob.setZza(forward);
         this.mob.setXxa(strafe);
     }
 
     
+
+    public void addSkillMovement(SkillMovementTask task) {
+        task.start(mob);
+        skillTasks.add(task);
+    }
+
+    public void clearSkillMovements() {
+        skillTasks.forEach(t -> t.end(mob));
+        skillTasks.clear();
+    }
+
     private boolean isSafe(double worldRelX, double worldRelZ) {
-        
         if (!this.isWalkable((float)worldRelX, (float)worldRelZ)) {
             return false;
         }
 
-        
         double nextX = this.mob.getX() + worldRelX;
         double nextY = this.mob.getY();
         double nextZ = this.mob.getZ() + worldRelZ;
 
-        
-        
         BlockPos groundPos = new BlockPos(
                 Mth.floor(nextX),
-                Mth.floor(nextY - 1.0), 
+                Mth.floor(nextY - 1.0),
                 Mth.floor(nextZ)
         );
 
-        
-        
-        if (this.mob.level().getBlockState(groundPos).isAir()) {
-            return false;
-        }
-
-        return true;
+        return !this.mob.level().getBlockState(groundPos).isAir();
     }
 }
