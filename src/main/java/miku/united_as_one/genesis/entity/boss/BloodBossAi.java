@@ -8,6 +8,7 @@ import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import miku.united_as_one.genesis.entity.ai.ModActivity;
 import miku.united_as_one.genesis.entity.ai.ModMemoryModuleType;
+import miku.united_as_one.genesis.entity.boss.behavior.LightningWhirlSlashBehavior;
 import miku.united_as_one.genesis.entity.boss.behavior.SelectTargetBehavior;
 import miku.united_as_one.genesis.entity.boss.behavior.SpellCastingBehavior;
 import miku.united_as_one.genesis.entity.boss.behavior.SpellLockAimingBehavior;
@@ -145,7 +146,7 @@ public class BloodBossAi {
                 SpellRegistry.BLOOD_NEEDLES_SPELL.get(),
                 SpellRegistry.WITHER_SKULL_SPELL.get(),
                 SpellRegistry.ACUPUNCTURE_SPELL.get(),
-//                SpellRegistry.SONIC_BOOM_SPELL.get(),
+                SpellRegistry.SONIC_BOOM_SPELL.get(),
                 SpellRegistry.ELDRITCH_BLAST_SPELL.get()
 
 /*                SpellRegistry.FIREBALL_SPELL.get(),
@@ -221,10 +222,10 @@ public class BloodBossAi {
                 i,
                 ImmutableList.of(
                         StopAttackingIfTargetInvalid.create(livingEntity -> false, (mob, target) -> {}, true),
-
-                        new SpellLockAimingBehavior(),
-
-                        spellCasting
+                        new LightningWhirlSlashBehavior()
+//                        new SpellLockAimingBehavior(),
+//
+//                        spellCasting
                 ),
                 MemoryModuleType.ATTACK_TARGET
         );
