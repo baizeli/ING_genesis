@@ -102,16 +102,16 @@ public class ItemRegistry {
     );
 
     public static final ItemEntry<CreateStar> CREATE_STAR = Genesis.L2_REGISTRATE
-            .item("create_star", properties -> new CreateStar(
-                    properties.rarity(Rarity.COMMON)
+            .item("create_star", properties -> new CreateStar(properties
+                .rarity(Rarity.COMMON)
             ))
             .defaultModel()
             .register();
 
     public static final ItemEntry<GalaxyScroll> GALAXY_SCROLL = Genesis.L2_REGISTRATE
-            .item("galaxy_scroll", properties -> new GalaxyScroll(
-                    properties.rarity(Rarity.RARE)
-                            .stacksTo(1)
+            .item("galaxy_scroll", properties -> new GalaxyScroll(properties
+                .rarity(Rarity.RARE)
+                .stacksTo(1)
             ))
             .defaultModel()
             .register();
@@ -243,109 +243,111 @@ public class ItemRegistry {
 
     // 奥术水晶
     public static final ItemEntry<Item> ARCANE_CRYSTAL = Genesis.L2_REGISTRATE
-            .item("arcane_crystal", properties -> new Item(
-                    properties.stacksTo(16)
-                            .rarity(Rarity.EPIC)
+            .item("arcane_crystal", properties -> new Item(properties
+                .stacksTo(16)
+                .rarity(Rarity.EPIC)
             ))
             .defaultModel()
             .register();
 
     // 猩红水晶
     public static final ItemEntry<Item> BLOOD_CRYSTAL = Genesis.L2_REGISTRATE
-            .item("blood_crystal", properties -> new Item(
-                    properties.stacksTo(16)
-                            .rarity(Rarity.EPIC)
+            .item("blood_crystal", properties -> new Item(properties
+                .stacksTo(16)
+                .rarity(Rarity.EPIC)
             ))
             .defaultModel()
             .register();
 
     // 邪术水晶
     public static final ItemEntry<Item> ELDRITCH_CRYSTAL = Genesis.L2_REGISTRATE
-            .item("eldritch_crystal", properties -> new Item(
-                    properties.stacksTo(16)
-                            .rarity(Rarity.EPIC)
+            .item("eldritch_crystal", properties -> new Item(properties
+                .stacksTo(16)
+                .rarity(Rarity.EPIC)
             ))
             .defaultModel()
             .register();
 
     // 末影水晶
     public static final ItemEntry<Item> ENDER_CRYSTAL = Genesis.L2_REGISTRATE
-            .item("ender_crystal", properties -> new Item(
-                    properties.stacksTo(16)
-                            .rarity(Rarity.EPIC)
+            .item("ender_crystal", properties -> new Item(properties
+                .stacksTo(16)
+                .rarity(Rarity.EPIC)
             ))
             .defaultModel()
             .register();
 
     // 唤魔水晶
     public static final ItemEntry<Item> EVOCATION_CRYSTAL = Genesis.L2_REGISTRATE
-            .item("evocation_crystal", properties -> new Item(
-                    properties.stacksTo(16)
-                            .rarity(Rarity.EPIC)
+            .item("evocation_crystal", properties -> new Item(properties
+                .stacksTo(16)
+                .rarity(Rarity.EPIC)
             ))
             .defaultModel()
             .register();
 
     // 炽焰水晶
     public static final ItemEntry<Item> FIRE_CRYSTAL = Genesis.L2_REGISTRATE
-            .item("fire_crystal", properties -> new Item(
-                    properties.stacksTo(16)
-                            .rarity(Rarity.EPIC)
+            .item("fire_crystal", properties -> new Item(properties
+                .stacksTo(16)
+                .rarity(Rarity.EPIC)
             ))
             .defaultModel()
             .register();
 
     // 神圣水晶
     public static final ItemEntry<Item> HOLY_CRYSTAL = Genesis.L2_REGISTRATE
-            .item("holy_crystal", properties -> new Item(
-                    properties.stacksTo(16)
-                            .rarity(Rarity.EPIC)
+            .item("holy_crystal", properties -> new Item(properties
+                .stacksTo(16)
+                .rarity(Rarity.EPIC)
             ))
             .defaultModel()
             .register();
 
     // 冰霜水晶
     public static final ItemEntry<Item> ICE_CRYSTAL = Genesis.L2_REGISTRATE
-            .item("ice_crystal", properties -> new Item(
-                    properties.stacksTo(16)
-                            .rarity(Rarity.EPIC)
+            .item("ice_crystal", properties -> new Item(properties
+                .stacksTo(16)
+                .rarity(Rarity.EPIC)
             ))
             .defaultModel()
             .register();
 
     // 雷霆水晶
     public static final ItemEntry<Item> LIGHTNING_CRYSTAL = Genesis.L2_REGISTRATE
-            .item("lightning_crystal", properties -> new Item(
-                    properties.stacksTo(16)
-                            .rarity(Rarity.EPIC)
+            .item("lightning_crystal", properties -> new Item(properties
+                .stacksTo(16)
+                .rarity(Rarity.EPIC)
             ))
             .defaultModel()
             .register();
 
     // 自然水晶
     public static final ItemEntry<Item> NATURE_CRYSTAL = Genesis.L2_REGISTRATE
-            .item("nature_crystal", properties -> new Item(
-                    properties.stacksTo(16)
-                            .rarity(Rarity.EPIC)
+            .item("nature_crystal", properties -> new Item(properties
+                .stacksTo(16)
+                .rarity(Rarity.EPIC)
             ))
             .defaultModel()
             .register();
 
     // 混沌水晶
     public static final ItemEntry<Item> CHAOS_CRYSTAL = Genesis.L2_REGISTRATE
-            .item("chaos_crystal", properties -> new Item(
-                    properties.stacksTo(16)
-                            .rarity(Rarity.EPIC)
+            .item("chaos_crystal", properties -> new Item(properties
+                .stacksTo(16)
+                .rarity(Rarity.EPIC)
             ))
             .defaultModel()
             .register();
 
     // 星源水晶
-    public static final RegistryObject<Item> CELESTIAL_SOURCE_CRYSTAL = ITEMS.register("celestial_source_crystal",
-            () -> new CelestialSourceBaseItem(new Item.Properties()
-                    .stacksTo(16)
-                    .rarity(Rarity.EPIC)
-            ));
+    public static final ItemEntry<CelestialSourceBaseItem> CELESTIAL_SOURCE_CRYSTAL = Genesis.L2_REGISTRATE
+            .item("celestial_source_crystal", properties -> new CelestialSourceBaseItem(properties
+                .stacksTo(16)
+                .rarity(Rarity.EPIC)
+            ))
+            .defaultModel()
+            .register();
 
     public static final RegistryObject<Item> CHAOS_MANUSCRIPT = ITEMS.register("chaos_manuscript",
             ChaosManuscript::new);
@@ -398,21 +400,24 @@ public class ItemRegistry {
 
     // 血肉魂铃
     public static final ItemEntry<Item> FLESH_SOUL_BELL = Genesis.L2_REGISTRATE
-            .item("flesh_soul_bell", properties -> new Item(
-                    properties.stacksTo(1)
-                            .rarity(Rarity.EPIC)
+            .item("flesh_soul_bell", properties -> new Item(properties
+                .stacksTo(1)
+                .rarity(Rarity.EPIC)
             ))
             .defaultModel()
             .register();
 
     // 混沌原核
-    public static final RegistryObject<Item> CHAOS_CORE = ItemRegistry.ITEMS.register("chaos_core", ChaosCore::new);
+    public static final ItemEntry<ChaosCore> CHAOS_CORE = Genesis.L2_REGISTRATE
+        .item("chaos_core", properties -> new ChaosCore())
+        .defaultModel()
+        .register();
 
     // 血肉灵魂碎片
     public static final ItemEntry<Item> FLESH_SOUL_FRAGMENT = Genesis.L2_REGISTRATE
-            .item("flesh_soul_fragment", properties -> new Item(
-                    properties.stacksTo(1)
-                            .rarity(Rarity.EPIC)
+            .item("flesh_soul_fragment", properties -> new Item(properties
+                .stacksTo(1)
+                .rarity(Rarity.EPIC)
             ))
             .defaultModel()
             .register();
