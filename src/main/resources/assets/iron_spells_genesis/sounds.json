@@ -34,5 +34,16 @@
       "iron_spells_genesis:van_sh_hit"
     ],
     "subtitle": "subtitles.iron_spells_genesis.van_sh_hit"
+  },
+  "cute_hit": {
+    "sounds": [
+      "iron_spells_genesis:cute_hit"
+    ],
+    "subtitle": "subtitles.iron_spells_genesis.cute_hit"
+  },
+  "battle_sanctuary": {
+    "sounds": [
+      "iron_spells_genesis:battle_sanctuary"
+    ]
   }
 }

@@ -28,4 +28,12 @@ public class SoundsRegister {
 
     public static final RegistryObject<SoundEvent> VAN_SH_HIT = SOUND_EVENTS.register("van_sh_hit",
             () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(Genesis.MOD_ID, "van_sh_hit")));
+
+
+    public static final RegistryObject<SoundEvent> CUTE_HIT = SOUND_EVENTS.register("cute_hit",
+            () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(Genesis.MOD_ID, "cute_hit")));
+
+
+    public static final RegistryObject<SoundEvent> BLOOD_BOSS_MUSIC = SOUND_EVENTS.register("battle_sanctuary",
+            () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(Genesis.MOD_ID, "battle_sanctuary")));
 }
