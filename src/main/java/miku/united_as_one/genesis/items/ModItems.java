@@ -1,30 +1,14 @@
 package miku.united_as_one.genesis.items;
 
-import miku.united_as_one.genesis.content.ModBlocks;
-import miku.united_as_one.genesis.content.ModTags;
+import com.tterrag.registrate.util.entry.ItemEntry;
+import miku.united_as_one.genesis.content.*;
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.items.staff.CelestialSourceStaff;
-import miku.united_as_one.genesis.items.staff.ChaosStaff;
-import miku.united_as_one.genesis.items.armor.CelestialSourceSpellArmor;
-import miku.united_as_one.genesis.items.armor.ChaosSpellArmor;
-import miku.united_as_one.genesis.items.armor.DivineMetalArmor;
-import miku.united_as_one.genesis.items.armor.VioletZenithArmor;
-import miku.united_as_one.genesis.items.curios.EternalRing;
-import miku.united_as_one.genesis.items.curios.GenesisCurseItem;
-import miku.united_as_one.genesis.items.curios.LaoWang237Curios;
-import miku.united_as_one.genesis.items.curios.rune_plus.BloodRunePlus;
-import miku.united_as_one.genesis.items.curios.rune_plus.EldritchRunePlus;
-import miku.united_as_one.genesis.items.curios.rune_plus.EnderRunePlus;
-import miku.united_as_one.genesis.items.curios.rune_plus.FireRunePlus;
-import miku.united_as_one.genesis.items.curios.rune_plus.HolyRunePlus;
-import miku.united_as_one.genesis.items.curios.rune_plus.IceRunePlus;
-import miku.united_as_one.genesis.items.curios.rune_plus.LightningRunePlus;
-import miku.united_as_one.genesis.items.curios.rune_plus.NatureRunePlus;
-import miku.united_as_one.genesis.items.manuscript.CelestialSourceManuscript;
-import miku.united_as_one.genesis.items.manuscript.ChaosManuscript;
-import miku.united_as_one.genesis.tooltipParticleHandler.ITooltipParticleItem;
-import miku.united_as_one.genesis.tooltipParticleHandler.PTID;
-import miku.united_as_one.genesis.tooltipParticleHandler.TooltipParticleSystem;
+import miku.united_as_one.genesis.items.staff.*;
+import miku.united_as_one.genesis.items.armor.*;
+import miku.united_as_one.genesis.items.curios.*;
+import miku.united_as_one.genesis.items.curios.rune_plus.*;
+import miku.united_as_one.genesis.items.manuscript.*;
+import miku.united_as_one.genesis.tooltipParticleHandler.*;
 import miku.united_as_one.genesis.spell.UpgradeOrbTypes;
 import io.redspace.ironsspellbooks.item.UpgradeOrbItem;
 import io.redspace.ironsspellbooks.item.armor.IronsExtendedArmorMaterial;
@@ -32,26 +16,13 @@ import io.redspace.ironsspellbooks.util.ItemPropertiesHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Rarity;
-import net.minecraft.world.item.Tiers;
-import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import net.minecraftforge.registries.*;
+import org.jetbrains.annotations.*;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Supplier;
 
 public class ModItems {
@@ -63,16 +34,16 @@ public class ModItems {
     public static final RegistryObject<Item> PURPLEITE_GALAXY_INGOT = ITEMS.register("purpleite_galaxy_ingot", () -> new EternisMaterial(new Item.Properties(), 0));
 
     // 神圣金属锭
-    public static final RegistryObject<Item> DIVINE_METAL_INGOT = ITEMS.register("divine_metal_ingot",
-            () -> new Item(new Item.Properties()
-                    .rarity(Rarity.EPIC)
-            ));
+    public static final ItemEntry<Item> DIVINE_METAL_INGOT = Genesis.L2_REGISTRATE
+            .item("divine_metal_ingot", properties -> new Item(properties.rarity(Rarity.EPIC)))
+            .defaultModel()
+            .register();
 
     // 扭曲混沌锭
-    public static final RegistryObject<Item> TWISTED_CHAOS_INGOT = ITEMS.register("twisted_chaos_ingot",
-            () -> new ChaosBaseItem(new Item.Properties()
-                    .rarity(Rarity.EPIC)
-            ));
+    public static final ItemEntry<? extends Item> TWISTED_CHAOS_INGOT = Genesis.L2_REGISTRATE
+            .item("twisted_chaos_ingot", properties -> new ModItems.ChaosBaseItem(properties.rarity(Rarity.EPIC)))
+            .defaultModel()
+            .register();
 
     // 扭曲之混沌-[混沌]法术材料
     public static final RegistryObject<Item> TWISTED_CHAOS = ITEMS.register("twisted_chaos",
