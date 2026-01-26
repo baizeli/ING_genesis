@@ -14,19 +14,28 @@ import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import io.redspace.ironsspellbooks.api.spells.CastSource;
 import io.redspace.ironsspellbooks.api.spells.CastType;
 import io.redspace.ironsspellbooks.api.spells.SpellData;
+import io.redspace.ironsspellbooks.api.util.BossbarManager;
+import io.redspace.ironsspellbooks.api.util.MusicManager;
 import io.redspace.ironsspellbooks.api.util.Utils;
 import io.redspace.ironsspellbooks.capabilities.magic.SyncedSpellData;
 import io.redspace.ironsspellbooks.entity.mobs.IAnimatedAttacker;
+import io.redspace.ironsspellbooks.entity.mobs.wizards.fire_boss.ExtendedServerBossEvent;
 import miku.united_as_one.genesis.entity.ai.ModMemoryModuleType;
+import miku.united_as_one.genesis.sound.SoundsRegister;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -53,6 +62,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.BossEvent;
+
+import static miku.united_as_one.genesis.Genesis.MODID;
 
 public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAttacker, IEntityAdditionalSpawnData, IClientEventEntity, IMagicEntity {
     private static final Logger BLOOD_BOSS_LOGGER = LogUtils.getLogger();
@@ -98,6 +111,25 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     private static final int CASTING_POST_DELAY = 20;
     private int lastCastTick = -100; // 初始化为一个较小的值，防止刚生成时触发
 
+    // 音乐播放事件
+    public static final byte START_MUSIC = 10;
+    public static final byte STOP_MUSIC = 11;
+
+    //boss血条
+    public static final byte START_BOSSBAR = 12;
+    public static final byte STOP_BOSSBAR  = 13;
+
+    //boss血条相关字段
+    private ExtendedServerBossEvent bossEvent;
+    private static final BossbarManager.BossbarSprite BLOOD_BOSSBAR_SPRITE =
+            new BossbarManager.BossbarSprite(
+                    new ResourceLocation(MODID, "boss_bars/blood_bossbar"),
+                    219,
+                    45,
+                    47,
+                    -1
+            );
+
     public BloodBoss(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);
         this.moveControl = new BloodBossMoveControl(this);
@@ -116,6 +148,19 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         // 初始化魔法数据
         this.magicData.setSyncedData(new SyncedSpellData(this));
         this.noCulling = true;
+
+
+        this.bossEvent =
+                (ExtendedServerBossEvent)(
+                        new ExtendedServerBossEvent(
+                                this.getUUID(),
+                                this.getDisplayName(),
+                                BossEvent.BossBarColor.RED,
+                                BossEvent.BossBarOverlay.PROGRESS
+                        )
+                ).setCreateWorldFog(true);
+        this.bossEvent.setDarkenScreen(true); // 可选：压暗屏幕
+
     }
 
     public static AttributeSupplier.Builder setAttributes() {
@@ -638,7 +683,77 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         if (this.level().isClientSide && this.isCasting()) {
             this.lastCastTick = this.tickCount;
         }
+
+        if (!this.level().isClientSide) {
+            float progress = this.getHealth() / this.getMaxHealth();
+            this.bossEvent.setProgress(Mth.clamp(progress, 0.0F, 1.0F));
+        }
+
     }
+
+
+    @Override
+    public void handleClientEvent(byte eventId) {
+        switch (eventId) {
+            case START_MUSIC -> {
+                MusicManager.createEvent(
+                        this,
+                        new BloodBossMusicHandler(getBossMusicEvent())
+                );
+            }
+            case STOP_MUSIC -> {
+                MusicManager.stopEvent(this.getUUID());
+            }
+
+            case START_BOSSBAR -> {
+                BossbarManager.startTracking(this.getUUID(), BLOOD_BOSSBAR_SPRITE);
+            }
+
+            case STOP_BOSSBAR -> {
+                BossbarManager.stopTracking(this.getUUID());
+            }
+        }
+    }
+
+
+
+    private SoundEvent getBossMusicEvent() {
+
+        return SoundsRegister.BLOOD_BOSS_MUSIC.get();
+    }
+
+    @Override
+    public void startSeenByPlayer(ServerPlayer player) {
+        super.startSeenByPlayer(player);
+
+        this.serverTriggerEvent(START_MUSIC);
+        this.serverTriggerEvent(START_BOSSBAR);
+
+        this.bossEvent.addPlayer(player);
+    }
+
+    @Override
+    public void stopSeenByPlayer(ServerPlayer player) {
+        super.stopSeenByPlayer(player);
+
+        this.serverTriggerEvent(STOP_MUSIC);
+        this.serverTriggerEvent(STOP_BOSSBAR);
+
+        this.bossEvent.removePlayer(player);
+    }
+
+
+    @Override
+    public void die(DamageSource cause) {
+        if (!this.level().isClientSide) {
+            this.serverTriggerEvent(STOP_MUSIC);
+            this.serverTriggerEvent(STOP_BOSSBAR);
+            this.bossEvent.removeAllPlayers();
+        }
+        super.die(cause);
+    }
+
+
 
     @Override
     public void notifyDangerousProjectile(Projectile projectile) {
@@ -686,11 +801,7 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         }
     }
 
-    // 其他方法保持不变
-    @Override
-    public void handleClientEvent(byte b) {
-        // 自定义客户端事件处理
-    }
+
 
     @Override
     public void writeSpawnData(FriendlyByteBuf friendlyByteBuf) {

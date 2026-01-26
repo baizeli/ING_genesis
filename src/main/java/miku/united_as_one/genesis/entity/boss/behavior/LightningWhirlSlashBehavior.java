@@ -22,6 +22,7 @@ public class LightningWhirlSlashBehavior
     private static final int DURATION = 30;
     private static final int HIT_1 = 19;
     private static final int HIT_2 = 24;
+    public static final String SKILL_ANIMATION = "闪电旋风劈2";
 
     private boolean hit1Done = false;
     private boolean hit2Done = false;
@@ -46,20 +47,25 @@ public class LightningWhirlSlashBehavior
         hit2Done = false;
 
 
+
+        playHitSound(level, boss, 1.0F, 0.3F);
+
+        if (boss.getMoveControl() instanceof BloodBossMoveControl move) {
+            move.addSkillMovement(createDashMovement());
+        }
+    }
+
+    private static void playHitSound(ServerLevel level, BloodBoss boss, float volume, float pitch) {
         level.playSound(
                 null,
                 boss.getX(),
                 boss.getY(),
                 boss.getZ(),
-                SoundsRegister.VAN_SH_HIT.get(),
+                SoundsRegister.CUTE_HIT.get(),
                 SoundSource.HOSTILE,
-                1.0F,
-                0.3F
+                volume,
+                pitch
         );
-
-        if (boss.getMoveControl() instanceof BloodBossMoveControl move) {
-            move.addSkillMovement(createDashMovement());
-        }
     }
 
 
@@ -67,18 +73,9 @@ public class LightningWhirlSlashBehavior
     protected void tick(ServerLevel level, BloodBoss boss, long gameTime) {
         super.tick(level, boss, gameTime);
 
-        if (abilityTimer % 3 == 0) {
-            float pitch = 0.5F + (abilityTimer / (float) DURATION) * 0.5F; 
-            level.playSound( 
-                    null, 
-                    boss.getX(), 
-                    boss.getY(), 
-                    boss.getZ(), 
-                    SoundsRegister.VAN_SH_HIT.get(),
-                    SoundSource.HOSTILE, 
-                    0.4F, 
-                    pitch 
-            ); 
+        if (abilityTimer % 3 == 0 && abilityTimer < DURATION-10) {
+            float pitch = 0.5F + (abilityTimer / (float) DURATION) * 0.5F;
+            playHitSound(level, boss, 0.4F, pitch);
         }
 
         if (abilityTimer >= HIT_1 && !hit1Done) {
@@ -104,7 +101,7 @@ public class LightningWhirlSlashBehavior
     @Override protected int getActionTimestamp() { return 0; }
     @Override protected int getActionDuration() { return DURATION; }
     @Override protected int getCooldown() { return 60; }
-    @Override protected String getAnimationId() { return "闪电旋风劈2"; }
+    @Override protected String getAnimationId() { return SKILL_ANIMATION; }
     @Override protected void doAction(BloodBoss entity) {}
 
 
