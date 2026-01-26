@@ -119,7 +119,11 @@ repositories {
     }
     maven {
         name = "Flemmli97"
-        url "https://maven.blazing-coop.net/releases"
+        url = "https://maven.blazing-coop.net/releases"
+    }
+    
+    maven {
+        url "https://maven.tterrag.com/"
     }
 
 }
@@ -138,6 +142,11 @@ mixin {
 
 dependencies {
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+
+    modImplementation "com.tterrag.registrate:Registrate:${registrate_version}"
+    if (rootMod.toBoolean()) {
+        jarJar(group: 'com.tterrag.registrate', name: 'Registrate', version: "[MC1.20,MC1.21)")
+    }
 }
 
 jar {
@@ -156,6 +165,16 @@ tasks.withType(JavaCompile).configureEach {
 
 
 dependencies {
+    // L2
+    modImplementation(jarJar("dev.xkmc.l2library:l2library:${l2library_version}-slim")) {
+        transitive = false
+    }
+    modImplementation(jarJar("dev.xkmc.l2serial:l2serial:1.2.2")) {
+        transitive = false
+    }
+    modImplementation(jarJar("dev.xkmc.l2tabs:l2tabs:0.3.3")) {
+        transitive = false
+    }
 
     modCompileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
     modCompileOnly "mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}"
@@ -207,9 +226,6 @@ dependencies {
 
     //nbt编辑器
     modRuntimeOnly  "curse.maven:nbtedit-reborn-678133:5984630"
-
-    // L2 Library
-    modRuntimeOnly "curse.maven:l2library-620203:6806000"
 }
 
 
