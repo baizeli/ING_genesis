@@ -1,8 +1,8 @@
 package miku.united_as_one.genesis.client.gui.manuscript;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.items.ModItems;
-import miku.united_as_one.genesis.spell.SpellSchool;
+import miku.united_as_one.genesis.registry.ItemRegistry;
+import miku.united_as_one.genesis.registry.spell.SpellSchoolRegistry;
 import io.redspace.ironsspellbooks.api.spells.*;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
 import net.minecraft.world.InteractionHand;
@@ -22,7 +22,7 @@ public class ChaosSpellLearningScreen extends AbstractSpellLearningScreen {
         return new AbstractSpell() {
             @Override
             public SchoolType getSchoolType() {
-                return SpellSchool.CHAOS.get();
+                return SpellSchoolRegistry.CHAOS.get();
             }
 
             @Override
@@ -44,7 +44,7 @@ public class ChaosSpellLearningScreen extends AbstractSpellLearningScreen {
 
     @Override
     protected boolean isCorrectManuscript() {
-        return Minecraft.getInstance().player.getItemInHand(activeHand).getItem() == ModItems.CHAOS_MANUSCRIPT.get();
+        return Minecraft.getInstance().player.getItemInHand(activeHand).getItem() == ItemRegistry.CHAOS_MANUSCRIPT.get();
     }
 
     @Override

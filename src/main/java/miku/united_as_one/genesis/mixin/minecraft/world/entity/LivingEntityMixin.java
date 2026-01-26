@@ -4,8 +4,8 @@ import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.items.AvaritiaSword;
 import miku.united_as_one.genesis.items.curios.rune_plus.NatureRunePlus;
 import miku.united_as_one.genesis.mixin.minecraft.world.effect.MobEffectInstanceAccessor;
-import miku.united_as_one.genesis.effect.spell.ModEffect;
-import miku.united_as_one.genesis.sound.SoundsRegister;
+import miku.united_as_one.genesis.registry.EffectRegistry;
+import miku.united_as_one.genesis.registry.SoundRegister;
 import miku.united_as_one.genesis.client.renderer.EvasionAnimationRenderer;
 import miku.united_as_one.genesis.spell.chaos.ReversePlagueSpell;
 import miku.united_as_one.genesis.event.spell.celestial_source.LifeAndDeathRealmEvent;
@@ -72,13 +72,13 @@ public abstract class LivingEntityMixin {
 			cir.cancel();
 		}
 
-		if (entity.hasEffect(ModEffect.PERFECT_EVASION.get())) {
+		if (entity.hasEffect(EffectRegistry.PERFECT_EVASION.get())) {
 			Random random = new Random();
 
 			if (random.nextInt(100) < 75) {
 				entity.level().playSound(
 					null, entity.getX(), entity.getY(), entity.getZ(), 
-					SoundsRegister.EVASION.get(), SoundSource.PLAYERS, 1.0F, 1.0F
+					SoundRegister.EVASION.get(), SoundSource.PLAYERS, 1.0F, 1.0F
 				);
 					
 				if (FMLEnvironment.dist == Dist.CLIENT) {

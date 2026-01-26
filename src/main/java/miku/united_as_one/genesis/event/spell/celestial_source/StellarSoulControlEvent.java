@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.event.spell.celestial_source;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.effect.spell.ModEffect;
+import miku.united_as_one.genesis.registry.EffectRegistry;
 import io.redspace.ironsspellbooks.registries.MobEffectRegistry;
 import net.minecraft.world.effect.*;
 import net.minecraft.world.entity.*;
@@ -17,7 +17,7 @@ public class StellarSoulControlEvent {
         if (event.getSource().getEntity() instanceof LivingEntity attacker// &&
             //event.getSource().getDirectEntity() == attacker
         ) {
-            if (attacker.hasEffect(ModEffect.STELLAR_SOUL_CONTROL.get())) {
+            if (attacker.hasEffect(EffectRegistry.STELLAR_SOUL_CONTROL.get())) {
                 LivingEntity target = event.getEntity();
                 
                 // 枯萎

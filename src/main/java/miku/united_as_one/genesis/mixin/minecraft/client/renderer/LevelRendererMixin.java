@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.mixin.minecraft.client.renderer;
 
 import miku.united_as_one.genesis.client.renderer.spell.celestial_source.GlazedFlowerRainRenderer;
-import miku.united_as_one.genesis.effect.spell.ModEffect;
+import miku.united_as_one.genesis.registry.EffectRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.LightTexture;
@@ -25,7 +25,7 @@ public class LevelRendererMixin {
     private void renderLevel(LightTexture lightTexture, float partialTick, double camX, double camY, double camZ, CallbackInfo ci) {
         if (minecraft.level != null) {
             minecraft.level.getEntities().getAll().forEach(entity -> {
-                if (entity instanceof LivingEntity living && living.hasEffect(ModEffect.GLAZED_FLOWER_RAIN.get())) {
+                if (entity instanceof LivingEntity living && living.hasEffect(EffectRegistry.GLAZED_FLOWER_RAIN.get())) {
                     GlazedFlowerRainRenderer renderer = new GlazedFlowerRainRenderer();
                     renderer.renderSnowAndRain(
                             lightTexture,

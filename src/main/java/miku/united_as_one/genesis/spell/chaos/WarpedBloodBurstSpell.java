@@ -3,7 +3,7 @@ package miku.united_as_one.genesis.spell.chaos;
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.client.renderer.spell.chaos.WireBoxRenderer;
 import miku.united_as_one.genesis.network.WireBoxSyncPacket;
-import miku.united_as_one.genesis.spell.SpellSchool;
+import miku.united_as_one.genesis.registry.spell.SpellSchoolRegistry;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
@@ -36,7 +36,7 @@ public class WarpedBloodBurstSpell extends ChaosBaseSpell {
     public WarpedBloodBurstSpell() {
         this.defaultConfig = new DefaultConfig()
                 .setMinRarity(SpellRarity.COMMON)
-                .setSchoolResource(SpellSchool.CHAOS_RESOURCE)
+                .setSchoolResource(SpellSchoolRegistry.CHAOS_RESOURCE)
                 .setMaxLevel(10)
                 .setCooldownSeconds(60F)
                 .build();

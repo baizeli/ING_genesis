@@ -1,7 +1,8 @@
 package miku.united_as_one.genesis.entity;
 
+import miku.united_as_one.genesis.registry.spell.SpellRegistry;
 import miku.united_as_one.genesis.entity.spells.celestial_source.BoxEntity;
-import miku.united_as_one.genesis.spell.Spells;
+import miku.united_as_one.genesis.registry.EntityRegistry;
 import io.redspace.ironsspellbooks.damage.SpellDamageSource;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -51,8 +52,8 @@ public class CustomArrowEntity extends AbstractArrow {
 
     private Map<LivingEntity, Long> attackedTargets = new HashMap<>();
     public CustomArrowEntity(EntityType<? extends CustomArrowEntity> entityType, Level level) {super(entityType, level);}
-    public CustomArrowEntity(Level level, LivingEntity shooter) {super(ModEntities.CUSTOM_ARROW.get(), shooter, level);}
-    public CustomArrowEntity(Level level, double x, double y, double z) {super(ModEntities.CUSTOM_ARROW.get(), x, y, z, level);}
+    public CustomArrowEntity(Level level, LivingEntity shooter) {super(EntityRegistry.CUSTOM_ARROW.get(), shooter, level);}
+    public CustomArrowEntity(Level level, double x, double y, double z) {super(EntityRegistry.CUSTOM_ARROW.get(), x, y, z, level);}
     public void setSpawn(boolean spawn) {this.spawn = spawn;}
 
     // 万箭法术的一些参数
@@ -397,9 +398,9 @@ public class CustomArrowEntity extends AbstractArrow {
         // 不知名原因导致打到玩家的时候这个逻辑会执行两次
         if (!wasShow) {
             for (int i = 0; i < 3; ++i) {
-                this.level().addFreshEntity(new LightningBolt(ModEntities.LIGHTNING_BOLT.get(), this.level(), this.getX(), this.getY(), this.getZ()));
+                this.level().addFreshEntity(new LightningBolt(EntityRegistry.LIGHTNING_BOLT.get(), this.level(), this.getX(), this.getY(), this.getZ()));
             }
-            this.level().addFreshEntity(new BoxEntity(ModEntities.BOX_ENTIYT.get(), this.level(), this.getX(), this.getY(), this.getZ()));
+            this.level().addFreshEntity(new BoxEntity(EntityRegistry.BOX_ENTIYT.get(), this.level(), this.getX(), this.getY(), this.getZ()));
 
             new Thread(() -> {
                 for (int i = 0; i < 5; ++i) {
@@ -410,7 +411,7 @@ public class CustomArrowEntity extends AbstractArrow {
                     for (LivingEntity target : targets) {
                         target.invulnerableTime = 0;
                         target.hurtTime = 0;
-                        target.hurt(SpellDamageSource.source(target, Objects.requireNonNull(this.getOwner()), Spells.FINAL_WHISPER_SPELL.get()), (float) damage);
+                        target.hurt(SpellDamageSource.source(target, Objects.requireNonNull(this.getOwner()), SpellRegistry.FINAL_WHISPER_SPELL.get()), (float) damage);
                         target.setHealth((float) (target.getHealth() - damage));
                     }
                     try {

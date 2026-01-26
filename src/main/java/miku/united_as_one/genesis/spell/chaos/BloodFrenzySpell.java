@@ -1,8 +1,8 @@
 package miku.united_as_one.genesis.spell.chaos;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.effect.spell.ModEffect;
-import miku.united_as_one.genesis.spell.SpellSchool;
+import miku.united_as_one.genesis.registry.EffectRegistry;
+import miku.united_as_one.genesis.registry.spell.SpellSchoolRegistry;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.spells.*;
@@ -21,7 +21,7 @@ public class BloodFrenzySpell extends ChaosBaseSpell {
     private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "blood_frenzy");
     private final DefaultConfig defaultConfig = new DefaultConfig()
         .setMinRarity(SpellRarity.COMMON)
-        .setSchoolResource(SpellSchool.CHAOS_RESOURCE)
+        .setSchoolResource(SpellSchoolRegistry.CHAOS_RESOURCE)
         .setMaxLevel(3)
         .setCooldownSeconds(420.0F)
         .build();
@@ -86,7 +86,7 @@ public class BloodFrenzySpell extends ChaosBaseSpell {
     public void onCast(Level level, int spellLevel, LivingEntity entity, CastSource castSource, MagicData playerMagicData) {
         if (!level.isClientSide && entity instanceof ServerPlayer player) {
             player.addEffect(new MobEffectInstance(
-                ModEffect.BLOOD_FRENZY.get(),
+                EffectRegistry.BLOOD_FRENZY.get(),
                 getDuration(spellLevel, entity),
                 spellLevel - 1,
                 false,

@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.items;
 
 import miku.united_as_one.genesis.fonts.FuckFont1;
-import miku.united_as_one.genesis.spell.SpellAttributes;
+import miku.united_as_one.genesis.registry.spell.SpellAttributesRegistry;
 import io.redspace.ironsspellbooks.api.item.curios.AffinityData;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import io.redspace.ironsspellbooks.item.SpellBook;
@@ -22,7 +22,7 @@ import java.util.function.Consumer;
 public class ChaosSpellBook extends SpellBook {
     public ChaosSpellBook() {
         super(14);
-        this.withSpellbookAttributes(new AttributeContainer(SpellAttributes.CHAOS_SPELL_POWER, 0.2, AttributeModifier.Operation.MULTIPLY_BASE), new AttributeContainer(AttributeRegistry.COOLDOWN_REDUCTION, 0.6, AttributeModifier.Operation.MULTIPLY_BASE), new AttributeContainer(AttributeRegistry.SPELL_POWER, 0.2, AttributeModifier.Operation.MULTIPLY_BASE), new AttributeContainer(AttributeRegistry.MAX_MANA, 600, AttributeModifier.Operation.ADDITION));
+        this.withSpellbookAttributes(new AttributeContainer(SpellAttributesRegistry.CHAOS_SPELL_POWER, 0.2, AttributeModifier.Operation.MULTIPLY_BASE), new AttributeContainer(AttributeRegistry.COOLDOWN_REDUCTION, 0.6, AttributeModifier.Operation.MULTIPLY_BASE), new AttributeContainer(AttributeRegistry.SPELL_POWER, 0.2, AttributeModifier.Operation.MULTIPLY_BASE), new AttributeContainer(AttributeRegistry.MAX_MANA, 600, AttributeModifier.Operation.ADDITION));
     }
 
     public void initializeClient(Consumer<IClientItemExtensions> consumer) {

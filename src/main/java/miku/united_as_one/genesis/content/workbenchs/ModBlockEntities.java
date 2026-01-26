@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.content.workbenchs;
 
 import miku.united_as_one.genesis.content.arcaneWorkbench.ArcaneWorkbenchBlockEntity;
-import miku.united_as_one.genesis.content.ModBlocks;
+import miku.united_as_one.genesis.registry.BlockRegistry;
 import miku.united_as_one.genesis.Genesis;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -15,7 +15,7 @@ public class ModBlockEntities {
 
     public static final RegistryObject<BlockEntityType<ArcaneWorkbenchBlockEntity>> ARCANE_WORKBENCH =
             BLOCK_ENTITIES.register("arcane_workbench",
-                    () -> BlockEntityType.Builder.of(ArcaneWorkbenchBlockEntity::new, ModBlocks.ARCANE_WORKBENCH.get()).build(null));
+                    () -> BlockEntityType.Builder.of(ArcaneWorkbenchBlockEntity::new, BlockRegistry.ARCANE_WORKBENCH.get()).build(null));
 
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);

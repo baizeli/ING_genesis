@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.client.renderer;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.client.particles.ModParticles;
+import miku.united_as_one.genesis.registry.client.ParticleRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
@@ -9,7 +9,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import static miku.united_as_one.genesis.items.ModItems.INFINITY_SWORD;
+import static miku.united_as_one.genesis.registry.ItemRegistry.INFINITY_SWORD;
 
 @Mod.EventBusSubscriber(
         modid = Genesis.MOD_ID,
@@ -55,7 +55,7 @@ public class PostDebugEvents {
             // 设置粒子速度方向
             Vec3 direction = new Vec3(rotatedLook.x * 2.0, rotatedLook.y * 2.0, rotatedLook.z * 2.0);
             
-            mc.level.addParticle(ModParticles.CRESCENT_BLADE.get(),
+            mc.level.addParticle(ParticleRegistry.CRESCENT_BLADE.get(),
                     particlePos.x, particlePos.y, particlePos.z,
                     direction.x, direction.y, direction.z);
         }

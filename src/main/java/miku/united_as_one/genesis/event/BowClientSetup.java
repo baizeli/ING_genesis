@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.event;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.items.ModItems;
+import miku.united_as_one.genesis.registry.ItemRegistry;
 import miku.united_as_one.genesis.config.AnimationConfig;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
@@ -17,7 +17,7 @@ public class BowClientSetup {
         AnimationConfig.loadConfig();
 
         event.enqueueWork(() -> {
-            ItemProperties.register(ModItems.WHISPER_OF_THE_PAST.get(),
+            ItemProperties.register(ItemRegistry.WHISPER_OF_THE_PAST.get(),
                     ResourceLocation.parse("pull"), (stack, level, entity, seed) -> {
                         if (entity == null) {
                             return 0.0F;
@@ -26,7 +26,7 @@ public class BowClientSetup {
                         }
                     });
 
-            ItemProperties.register(ModItems.WHISPER_OF_THE_PAST.get(),
+            ItemProperties.register(ItemRegistry.WHISPER_OF_THE_PAST.get(),
                     ResourceLocation.parse("pulling"), (stack, level, entity, seed) -> {
                         return entity != null && entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F;
                     });

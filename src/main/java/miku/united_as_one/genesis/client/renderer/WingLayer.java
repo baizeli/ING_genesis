@@ -2,7 +2,7 @@ package miku.united_as_one.genesis.client.renderer;
 
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.client.model.WingModel;
-import miku.united_as_one.genesis.effect.spell.ModEffect;
+import miku.united_as_one.genesis.registry.EffectRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.PlayerModel;
@@ -58,7 +58,7 @@ public class WingLayer extends RenderLayer<Player, PlayerModel<Player>> {
     }
 
     private boolean shouldRenderWings(Player player) {
-        return player.hasEffect(ModEffect.I_FLY.get());
+        return player.hasEffect(EffectRegistry.I_FLY.get());
     }
 
     private void adjustPoseForPlayerModel(PoseStack poseStack, Player player) {

@@ -1,8 +1,8 @@
 package miku.united_as_one.genesis.spell.celestial_source;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.effect.spell.ModEffect;
-import miku.united_as_one.genesis.spell.SpellSchool;
+import miku.united_as_one.genesis.registry.EffectRegistry;
+import miku.united_as_one.genesis.registry.spell.SpellSchoolRegistry;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.spells.*;
@@ -21,7 +21,7 @@ public class IFlySpell extends CelestialSourceBaseSpell {
     private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "i_fly");
     private final DefaultConfig defaultConfig = new DefaultConfig()
         .setMinRarity(SpellRarity.COMMON)
-        .setSchoolResource(SpellSchool.CELESTIAL_SOURCE_RESOURCE)
+        .setSchoolResource(SpellSchoolRegistry.CELESTIAL_SOURCE_RESOURCE)
         .setMaxLevel(3)
         .setCooldownSeconds(360.0F)
         .build();
@@ -80,7 +80,7 @@ public class IFlySpell extends CelestialSourceBaseSpell {
     public void onCast(Level level, int spellLevel, LivingEntity entity, CastSource castSource, MagicData playerMagicData) {
         if (entity instanceof Player player) {
             player.addEffect(new MobEffectInstance(
-                ModEffect.I_FLY.get(), 
+                EffectRegistry.I_FLY.get(),
                 getDuration(spellLevel, entity), 
                 0, 
                 false, 

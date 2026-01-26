@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.network.manuscript;
 
-import miku.united_as_one.genesis.items.ModItems;
-import miku.united_as_one.genesis.spell.SpellSchool;
+import miku.united_as_one.genesis.registry.ItemRegistry;
+import miku.united_as_one.genesis.registry.spell.SpellSchoolRegistry;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
@@ -47,14 +47,14 @@ public class LearnSpellPacket {
             boolean canLearn = false;
 
             // 混沌手稿
-            if (itemStack.is(ModItems.CHAOS_MANUSCRIPT.get()) && 
-                spell.getSchoolType().equals(SpellSchool.CHAOS.get())) {
+            if (itemStack.is(ItemRegistry.CHAOS_MANUSCRIPT.get()) &&
+                spell.getSchoolType().equals(SpellSchoolRegistry.CHAOS.get())) {
                 canLearn = true;
             }
             
             // 星源手稿
-            if (itemStack.is(ModItems.CELESTIAL_SOURCE_MANUSCRIPT.get()) && 
-                spell.getSchoolType().equals(SpellSchool.CELESTIAL_SOURCE.get())) {
+            if (itemStack.is(ItemRegistry.CELESTIAL_SOURCE_MANUSCRIPT.get()) &&
+                spell.getSchoolType().equals(SpellSchoolRegistry.CELESTIAL_SOURCE.get())) {
                 canLearn = true;
             }
 

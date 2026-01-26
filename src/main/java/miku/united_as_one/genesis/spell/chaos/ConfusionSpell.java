@@ -1,8 +1,8 @@
 package miku.united_as_one.genesis.spell.chaos;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.effect.spell.ModEffect;
-import miku.united_as_one.genesis.spell.SpellSchool;
+import miku.united_as_one.genesis.registry.EffectRegistry;
+import miku.united_as_one.genesis.registry.spell.SpellSchoolRegistry;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.spells.*;
@@ -23,7 +23,7 @@ public class ConfusionSpell extends ChaosBaseSpell {
     private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "confusion");
     private final DefaultConfig defaultConfig = new DefaultConfig()
         .setMinRarity(SpellRarity.LEGENDARY)
-        .setSchoolResource(SpellSchool.CHAOS_RESOURCE)
+        .setSchoolResource(SpellSchoolRegistry.CHAOS_RESOURCE)
         .setMaxLevel(1)
         .setCooldownSeconds(420.0F)
         .build();
@@ -73,7 +73,7 @@ public class ConfusionSpell extends ChaosBaseSpell {
             level.getEntitiesOfClass(LivingEntity.class, boundingBox).forEach((target) -> {
                 if (!(target instanceof Player) && entity.distanceTo(target) <= 7) {
                     target.addEffect(new MobEffectInstance(
-                        ModEffect.CONFUSION.get(),
+                        EffectRegistry.CONFUSION.get(),
                         getDuration(spellLevel),
                         0,
                         false,

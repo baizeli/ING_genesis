@@ -1,8 +1,8 @@
 package miku.united_as_one.genesis.spell.chaos;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.effect.spell.ModEffect;
-import miku.united_as_one.genesis.spell.SpellSchool;
+import miku.united_as_one.genesis.registry.EffectRegistry;
+import miku.united_as_one.genesis.registry.spell.SpellSchoolRegistry;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.spells.*;
@@ -20,7 +20,7 @@ public class SiphonSpell extends ChaosBaseSpell {
     private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "siphon");
     private final DefaultConfig defaultConfig = new DefaultConfig()
         .setMinRarity(SpellRarity.COMMON)
-        .setSchoolResource(SpellSchool.CHAOS_RESOURCE)
+        .setSchoolResource(SpellSchoolRegistry.CHAOS_RESOURCE)
         .setMaxLevel(5)
         .setCooldownSeconds(180.0F)
         .build();
@@ -74,7 +74,7 @@ public class SiphonSpell extends ChaosBaseSpell {
     public void onCast(Level level, int spellLevel, LivingEntity entity, CastSource castSource, MagicData playerMagicData) {
         if (!level.isClientSide) {
             entity.addEffect(new MobEffectInstance(
-                ModEffect.SIPHON.get(),
+                EffectRegistry.SIPHON.get(),
                 getDuration(spellLevel),
                 spellLevel - 1,
                 false,

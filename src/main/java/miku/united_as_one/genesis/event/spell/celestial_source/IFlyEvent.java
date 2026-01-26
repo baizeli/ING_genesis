@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.event.spell.celestial_source;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.effect.spell.ModEffect;
+import miku.united_as_one.genesis.registry.EffectRegistry;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.MobEffectEvent;
@@ -16,7 +16,7 @@ public class IFlyEvent {
         if (event.phase == TickEvent.Phase.END) {
             Player player = event.player;
 
-            if (player.hasEffect(ModEffect.I_FLY.get())) {
+            if (player.hasEffect(EffectRegistry.I_FLY.get())) {
                 if (!player.getAbilities().mayfly) {
                     player.getAbilities().mayfly = true;
                     /*player.onUpdateAbilities();*/
@@ -27,7 +27,7 @@ public class IFlyEvent {
     
     @SubscribeEvent
     public static void onEffectRemoved(MobEffectEvent.Remove event) {
-        if (event.getEntity() instanceof Player player && event.getEffect() == ModEffect.I_FLY.get()) {
+        if (event.getEntity() instanceof Player player && event.getEffect() == EffectRegistry.I_FLY.get()) {
             if (!player.isCreative() && !player.isSpectator()) {
                 player.getAbilities().mayfly = false;
                 player.getAbilities().flying = false;
@@ -38,7 +38,7 @@ public class IFlyEvent {
     
     @SubscribeEvent
     public static void onEffectExpired(MobEffectEvent.Expired event) {
-        if (event.getEntity() instanceof Player player && event.getEffectInstance().getEffect() == ModEffect.I_FLY.get()) {
+        if (event.getEntity() instanceof Player player && event.getEffectInstance().getEffect() == EffectRegistry.I_FLY.get()) {
             if (!player.isCreative() && !player.isSpectator()) {
                 player.getAbilities().mayfly = false;
                 player.getAbilities().flying = false;

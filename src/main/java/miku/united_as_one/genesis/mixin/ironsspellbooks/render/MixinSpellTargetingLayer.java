@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.mixin.ironsspellbooks.render;
 
 import miku.united_as_one.genesis.util.RenderUtils;
-import miku.united_as_one.genesis.spell.SpellSchool;
+import miku.united_as_one.genesis.registry.spell.SpellSchoolRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
@@ -22,8 +22,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class MixinSpellTargetingLayer {
     @Inject(method = "renderTargetLayer", at = @At("HEAD"), remap = false, cancellable = true)
     private static void injectRenderWireCube(PoseStack poseStack, MultiBufferSource bufferSource, LivingEntity entity, CallbackInfo ci) {
-        if (SpellRegistry.getSpell(ClientMagicData.getTargetingData().spellId).getSchoolType() == SpellSchool.CHAOS.get()
-                //|| SpellRegistry.getSpell(ClientMagicData.getTargetingData().spellId).getSchoolType() == SpellSchool.CELESTIAL_SOURCE.get()
+        if (SpellRegistry.getSpell(ClientMagicData.getTargetingData().spellId).getSchoolType() == SpellSchoolRegistry.CHAOS.get()
+                //|| SpellRegistry.getSpell(ClientMagicData.getTargetingData().spellId).getSchoolType() == SpellSchoolRegistry.CELESTIAL_SOURCE.get()
         ) {
             Vector3f color = null;
             if (ClientMagicData.getRecasts().hasRecastsActive()) {
@@ -52,7 +52,7 @@ public class MixinSpellTargetingLayer {
             int b = (int) (color.z() * 255);
 
             float angle = (System.currentTimeMillis() % 360000L) / 1000F * 90F;
-            if (SpellRegistry.getSpell(ClientMagicData.getTargetingData().spellId).getSchoolType() == SpellSchool.CHAOS.get()) {
+            if (SpellRegistry.getSpell(ClientMagicData.getTargetingData().spellId).getSchoolType() == SpellSchoolRegistry.CHAOS.get()) {
                 RenderUtils.renderWireCube(poseStack, bufferSource, 1.0F, angle, Axis.YP, r, g, b, 0, magicYOffset, 0);
                 RenderUtils.renderWireCube(poseStack, bufferSource, 1.0F, angle, Axis.XP, r, g, b, 0, magicYOffset, 0);
                 RenderUtils.renderWireCube(poseStack, bufferSource, 1.0F, angle, Axis.ZP, r, g, b, 0, magicYOffset, 0);

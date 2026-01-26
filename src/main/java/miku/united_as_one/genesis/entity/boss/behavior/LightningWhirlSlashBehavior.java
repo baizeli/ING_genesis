@@ -3,7 +3,7 @@ package miku.united_as_one.genesis.entity.boss.behavior;
 import miku.united_as_one.genesis.entity.boss.BloodBoss;
 import miku.united_as_one.genesis.entity.boss.BloodBossMoveControl;
 import miku.united_as_one.genesis.entity.boss.SkillMovementTask;
-import miku.united_as_one.genesis.sound.SoundsRegister;
+import miku.united_as_one.genesis.registry.SoundRegister;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -61,7 +61,7 @@ public class LightningWhirlSlashBehavior
                 boss.getX(),
                 boss.getY(),
                 boss.getZ(),
-                SoundsRegister.CUTE_HIT.get(),
+                SoundRegister.CUTE_HIT.get(),
                 SoundSource.HOSTILE,
                 volume,
                 pitch

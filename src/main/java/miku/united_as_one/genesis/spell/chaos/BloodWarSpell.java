@@ -1,10 +1,10 @@
 package miku.united_as_one.genesis.spell.chaos;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.effect.spell.ModEffect;
+import miku.united_as_one.genesis.registry.EffectRegistry;
 import miku.united_as_one.genesis.event.spell.chaos.BloodWarEvent;
-import miku.united_as_one.genesis.spell.SpellSchool;
-import miku.united_as_one.genesis.spell.SpellUtils;
+import miku.united_as_one.genesis.registry.spell.SpellSchoolRegistry;
+import miku.united_as_one.genesis.util.spell.SpellUtils;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
@@ -25,7 +25,7 @@ public class BloodWarSpell extends ChaosBaseSpell {
     private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "blood_war");
     private final DefaultConfig defaultConfig = new DefaultConfig()
         .setMinRarity(SpellRarity.COMMON)
-        .setSchoolResource(SpellSchool.CHAOS_RESOURCE)
+        .setSchoolResource(SpellSchoolRegistry.CHAOS_RESOURCE)
         .setMaxLevel(3)
         .setCooldownSeconds(0F)
         .build();
@@ -114,7 +114,7 @@ public class BloodWarSpell extends ChaosBaseSpell {
             int duration = getBuffDuration(spellLevel);
 
             player.addEffect(new MobEffectInstance(
-                ModEffect.BLOOD_WAR.get(),
+                EffectRegistry.BLOOD_WAR.get(),
                 duration,
                 0,
                 false,

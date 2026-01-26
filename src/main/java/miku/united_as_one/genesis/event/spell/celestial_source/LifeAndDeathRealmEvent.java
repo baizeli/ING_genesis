@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.event.spell.celestial_source;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.effect.spell.ModEffect;
+import miku.united_as_one.genesis.registry.EffectRegistry;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.*;
 import net.minecraft.world.entity.LivingEntity;
@@ -18,7 +18,7 @@ public class LifeAndDeathRealmEvent {
     @SubscribeEvent
     public static void onEffectAdded(MobEffectEvent.Added event) {
         if (event.getEffectInstance() != null && 
-            event.getEffectInstance().getEffect() == ModEffect.LIFE_AND_DEATH_REALM.get() &&
+            event.getEffectInstance().getEffect() == EffectRegistry.LIFE_AND_DEATH_REALM.get() &&
             event.getEntity() instanceof ServerPlayer
         ) {
             playerHasBeenSacrificed = false;
@@ -29,7 +29,7 @@ public class LifeAndDeathRealmEvent {
     @SubscribeEvent
     public static void onEffectExpired(MobEffectEvent.Expired event) {
         if (event.getEffectInstance() != null && 
-            event.getEffectInstance().getEffect() == ModEffect.LIFE_AND_DEATH_REALM.get() &&
+            event.getEffectInstance().getEffect() == EffectRegistry.LIFE_AND_DEATH_REALM.get() &&
             event.getEntity() instanceof ServerPlayer player
         ) {
             // 如果buff期间内被替死了以后buff结束就不会将自己杀了
@@ -51,7 +51,7 @@ public class LifeAndDeathRealmEvent {
     @SubscribeEvent
     public static void onLivingDamage(LivingDamageEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) {
-            if (player.hasEffect(ModEffect.LIFE_AND_DEATH_REALM.get())) {
+            if (player.hasEffect(EffectRegistry.LIFE_AND_DEATH_REALM.get())) {
                 if (event.getSource().getEntity() instanceof LivingEntity attacker) {
                     if (event.getAmount() >= player.getHealth()) {
                         // 只能替死一次
@@ -78,7 +78,7 @@ public class LifeAndDeathRealmEvent {
                         
                         // 标记施法者已被替死/移除效果
                         playerHasBeenSacrificed = true;
-                        player.removeEffect(ModEffect.LIFE_AND_DEATH_REALM.get());
+                        player.removeEffect(EffectRegistry.LIFE_AND_DEATH_REALM.get());
                         sacrificeImmunityEndTime = player.level().getGameTime() + (5 * 20);
                     }
                 }

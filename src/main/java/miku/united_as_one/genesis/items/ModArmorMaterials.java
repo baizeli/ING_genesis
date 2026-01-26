@@ -1,6 +1,7 @@
 package miku.united_as_one.genesis.items;
 
-import miku.united_as_one.genesis.spell.SpellAttributes;
+import miku.united_as_one.genesis.registry.ItemRegistry;
+import miku.united_as_one.genesis.registry.spell.SpellAttributesRegistry;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import io.redspace.ironsspellbooks.item.armor.IronsExtendedArmorMaterial;
 import net.minecraft.sounds.*;
@@ -13,7 +14,7 @@ import java.util.*;
 public class ModArmorMaterials {
     public static final ArmorMaterial INFINITY_ETERNAL = new ArmorMaterial() {
 
-        @Override public Ingredient getRepairIngredient() {return Ingredient.of(ModItems.ETERNIS_APPLE.get());}
+        @Override public Ingredient getRepairIngredient() {return Ingredient.of(ItemRegistry.ETERNIS_APPLE.get());}
         @Override public int getDurabilityForType(ArmorItem.Type type) {return Integer.MAX_VALUE;}
         @Override public SoundEvent getEquipSound() {return SoundEvents.ARMOR_EQUIP_NETHERITE;}
         @Override public String getName() {return "infinity_eternal";}
@@ -37,7 +38,7 @@ public class ModArmorMaterials {
 
         @Override
         public Ingredient getRepairIngredient() {
-            return Ingredient.of(ModItems.DIVINE_METAL_INGOT.get());
+            return Ingredient.of(ItemRegistry.DIVINE_METAL_INGOT.get());
         }
 
         @Override
@@ -168,7 +169,7 @@ public class ModArmorMaterials {
                 ),
 
                 // 星源法术强度
-                SpellAttributes.CELESTIAL_SOURCE_SPELL_POWER.get(), new AttributeModifier(
+                SpellAttributesRegistry.CELESTIAL_SOURCE_SPELL_POWER.get(), new AttributeModifier(
                     "Celestial Source School Power", 0.30, AttributeModifier.Operation.MULTIPLY_BASE
                 ),
 
@@ -257,7 +258,7 @@ public class ModArmorMaterials {
                 ),
 
                 // 混沌法术强度
-                SpellAttributes.CHAOS_SPELL_POWER.get(), new AttributeModifier(
+                SpellAttributesRegistry.CHAOS_SPELL_POWER.get(), new AttributeModifier(
                     "Chaos School Power", 0.25, AttributeModifier.Operation.MULTIPLY_BASE
                 ),
 
@@ -298,7 +299,7 @@ public class ModArmorMaterials {
     public static final IronsExtendedArmorMaterial VIOLET_ZENITH = new IronsExtendedArmorMaterial() {
         @Override
         public Ingredient getRepairIngredient() {
-            return Ingredient.of(ModItems.PURPLEITE_GALAXY_INGOT.get());
+            return Ingredient.of(ItemRegistry.PURPLEITE_GALAXY_INGOT.get());
         }
 
         @Override 

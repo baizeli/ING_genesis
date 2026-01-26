@@ -1,8 +1,8 @@
 package miku.united_as_one.genesis.spell.celestial_source;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.effect.spell.ModEffect;
-import miku.united_as_one.genesis.spell.SpellSchool;
+import miku.united_as_one.genesis.registry.EffectRegistry;
+import miku.united_as_one.genesis.registry.spell.SpellSchoolRegistry;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.spells.*;
@@ -21,7 +21,7 @@ public class StellarSoulControlSpell extends CelestialSourceBaseSpell {
     private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "stellar_soul_control");
     private final DefaultConfig defaultConfig = new DefaultConfig()
         .setMinRarity(SpellRarity.COMMON)
-        .setSchoolResource(SpellSchool.CELESTIAL_SOURCE_RESOURCE)
+        .setSchoolResource(SpellSchoolRegistry.CELESTIAL_SOURCE_RESOURCE)
         .setMaxLevel(3)
         .setCooldownSeconds(180.0F)
         .build();
@@ -77,7 +77,7 @@ public class StellarSoulControlSpell extends CelestialSourceBaseSpell {
             int duration = getBuffDuration(spellLevel, entity);
 
             player.addEffect(new MobEffectInstance(
-                ModEffect.STELLAR_SOUL_CONTROL.get(),
+                EffectRegistry.STELLAR_SOUL_CONTROL.get(),
                 duration,
                 0,
                 false,

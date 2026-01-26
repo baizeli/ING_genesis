@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.spell.celestial_source;
 
-import miku.united_as_one.genesis.entity.ModEntities;
+import miku.united_as_one.genesis.registry.EntityRegistry;
 import miku.united_as_one.genesis.entity.NyanCat;
 import miku.united_as_one.genesis.Genesis;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
@@ -87,7 +87,7 @@ public class NyanCatJetSpell extends AbstractSpell {
 
     private void spawnNyanCat(ServerLevel serverLevel, LivingEntity player, int spellLevel) {
         Vec3 lookVec = player.getLookAngle();
-        NyanCat nyanCat = new NyanCat(ModEntities.NYAN_CAT.get(), player, serverLevel);
+        NyanCat nyanCat = new NyanCat(EntityRegistry.NYAN_CAT.get(), player, serverLevel);
         Vec3 spawnPos = player.position()
                 .add(0.0, player.getEyeHeight() * 0.7, 0.0)
                 .add(lookVec.scale(0.1));

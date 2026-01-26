@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.render;
 
-import miku.united_as_one.genesis.entity.ModEntities;
+import miku.united_as_one.genesis.registry.EntityRegistry;
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.client.renderer.boss.BloodBossRenderer;
 import miku.united_as_one.genesis.render.cosmic.AvaritiaShaders;
@@ -22,8 +22,8 @@ public class RenderRegistry {
     @SubscribeEvent
     public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(EntityType.LIGHTNING_BOLT, PurpleLightningRenderer::new);
-        event.registerEntityRenderer(ModEntities.CUSTOM_ARROW.get(), CustomArrowRenderer::new);
-        event.registerEntityRenderer(ModEntities.BLOOD_BOSS.get(), BloodBossRenderer::new);
+        event.registerEntityRenderer(EntityRegistry.CUSTOM_ARROW.get(), CustomArrowRenderer::new);
+        event.registerEntityRenderer(EntityRegistry.BLOOD_BOSS.get(), BloodBossRenderer::new);
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)

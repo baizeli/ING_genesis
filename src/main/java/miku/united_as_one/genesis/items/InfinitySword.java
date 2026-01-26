@@ -1,5 +1,6 @@
 package miku.united_as_one.genesis.items;
 
+import miku.united_as_one.genesis.registry.ItemRegistry;
 import miku.united_as_one.genesis.sound.Sounds;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -133,7 +134,7 @@ public class InfinitySword extends SwordItem
 				double ratioX = Mth.sin(player.getYRot() * ((float) Math.PI / 180F));
 				double ratioZ = -Mth.cos(player.getYRot() * ((float) Math.PI / 180));
 				living.knockback(0.4, ratioX, ratioZ);
-				if (item.is(ModItems.AVARITIA_SWORD.get())) {
+				if (item.is(ItemRegistry.AVARITIA_SWORD.get())) {
 					AvaritiaSword.kill(player, living);
 				} else {
 					living.hurt(player.damageSources().fellOutOfWorld(), (float) sweepDamage);

@@ -229,7 +229,7 @@ dependencies {
     modRuntimeOnly "curse.maven:lan-server-properties-387365:4776657"
 
     //nbt编辑器
-    modRuntimeOnly  "curse.maven:nbtedit-reborn-678133:5984630"
+    modRuntimeOnly "curse.maven:nbtedit-reborn-678133:5984630"
 }
 
 

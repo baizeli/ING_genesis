@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.event.spell.chaos;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.effect.spell.ModEffect;
+import miku.united_as_one.genesis.registry.EffectRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -19,7 +19,7 @@ public class BloodFrenzyEvent {
     public static void onLivingTick(LivingEvent.LivingTickEvent event) {
         LivingEntity entity = event.getEntity();
 
-        if (entity.hasEffect(ModEffect.BLOOD_FRENZY.get())) {
+        if (entity.hasEffect(EffectRegistry.BLOOD_FRENZY.get())) {
             if (entity instanceof Player player) {
                 // 获取施法者攻击范围
                 double reach = player.getEntityReach();
@@ -78,7 +78,7 @@ public class BloodFrenzyEvent {
     public static void onLivingHurt(LivingHurtEvent event) {
         // 攻击的伤害增加
         if (event.getSource().getEntity() instanceof LivingEntity attacker) {
-            if (attacker.hasEffect(ModEffect.BLOOD_FRENZY.get())) {
+            if (attacker.hasEffect(EffectRegistry.BLOOD_FRENZY.get())) {
                 event.setAmount(event.getAmount() * 2.0f);
             }
         }
@@ -86,7 +86,7 @@ public class BloodFrenzyEvent {
         // 受伤的减免
         if (event.getEntity() instanceof LivingEntity) {
             LivingEntity victim = (LivingEntity) event.getEntity();
-            if (victim.hasEffect(ModEffect.BLOOD_FRENZY.get())) {
+            if (victim.hasEffect(EffectRegistry.BLOOD_FRENZY.get())) {
                 event.setAmount(event.getAmount() * 0.5f);
             }
         }

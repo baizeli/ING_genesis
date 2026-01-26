@@ -1,8 +1,8 @@
 package miku.united_as_one.genesis.client.gui.manuscript;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.items.ModItems;
-import miku.united_as_one.genesis.spell.SpellSchool;
+import miku.united_as_one.genesis.registry.ItemRegistry;
+import miku.united_as_one.genesis.registry.spell.SpellSchoolRegistry;
 import io.redspace.ironsspellbooks.api.spells.*;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
 import net.minecraft.world.InteractionHand;
@@ -22,7 +22,7 @@ public class CelestialSourceSpellLearningScreen extends AbstractSpellLearningScr
         return new AbstractSpell() {
             @Override
             public SchoolType getSchoolType() {
-                return SpellSchool.CELESTIAL_SOURCE.get();
+                return SpellSchoolRegistry.CELESTIAL_SOURCE.get();
             }
 
             @Override
@@ -44,7 +44,7 @@ public class CelestialSourceSpellLearningScreen extends AbstractSpellLearningScr
 
     @Override
     protected boolean isCorrectManuscript() {
-        return Minecraft.getInstance().player.getItemInHand(activeHand).getItem() == ModItems.CELESTIAL_SOURCE_MANUSCRIPT.get();
+        return Minecraft.getInstance().player.getItemInHand(activeHand).getItem() == ItemRegistry.CELESTIAL_SOURCE_MANUSCRIPT.get();
     }
 
     @Override

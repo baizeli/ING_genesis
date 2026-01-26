@@ -3,7 +3,7 @@ package miku.united_as_one.genesis.items.staff;
 import miku.united_as_one.genesis.tooltipParticleHandler.ITooltipParticleItem;
 import miku.united_as_one.genesis.tooltipParticleHandler.PTID;
 import miku.united_as_one.genesis.tooltipParticleHandler.TooltipParticleSystem;
-import miku.united_as_one.genesis.spell.SpellAttributes;
+import miku.united_as_one.genesis.registry.spell.SpellAttributesRegistry;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import io.redspace.ironsspellbooks.item.weapons.*;
 import net.minecraft.client.Minecraft;
@@ -19,7 +19,7 @@ public class CelestialSourceStaff extends StaffItem implements ITooltipParticleI
                     AttributeModifier.Operation.MULTIPLY_BASE
                 ),
                 new AttributeContainer(
-                    SpellAttributes.CELESTIAL_SOURCE_SPELL_POWER, 0.25,
+                    SpellAttributesRegistry.CELESTIAL_SOURCE_SPELL_POWER, 0.25,
                     AttributeModifier.Operation.MULTIPLY_BASE
                 ),
                 new AttributeContainer(

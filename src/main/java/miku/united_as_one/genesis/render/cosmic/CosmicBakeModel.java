@@ -1,8 +1,8 @@
 package miku.united_as_one.genesis.render.cosmic;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.items.ModItems;
-import miku.united_as_one.genesis.spell.SpellSchool;
+import miku.united_as_one.genesis.registry.ItemRegistry;
+import miku.united_as_one.genesis.registry.spell.SpellSchoolRegistry;
 import com.google.common.collect.ImmutableMap;
 import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -83,7 +83,7 @@ public final class CosmicBakeModel implements BakedModel {
 
         if (stack.getItem() instanceof Scroll) {
             SchoolType schoolType = ISpellContainer.getOrCreate(stack).getSpellAtIndex(0).getSpell().getSchoolType();
-            if (schoolType.equals(SpellSchool.CELESTIAL_SOURCE.get())) {
+            if (schoolType.equals(SpellSchoolRegistry.CELESTIAL_SOURCE.get())) {
                 renderCosmicEffect(stack, transformType, pStack, buffers, packedLight, packedOverlay, 15, 0.6F, new Vector4f(0.1F, 0.1F, 0.1F, 1.0F),2);
             }
         }
@@ -252,13 +252,13 @@ public final class CosmicBakeModel implements BakedModel {
 
     static
     {
-            COSMIC_EFFECTS.put(ModItems.INFINITY_SWORD.get(), new EffectConfig(10, 0.6F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
+            COSMIC_EFFECTS.put(ItemRegistry.INFINITY_SWORD.get(), new EffectConfig(10, 0.6F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
             /*COSMIC_EFFECTS.put(ModItems.INFINITY_ETERNAL_HELMET.get(), new EffectConfig(0, 0.5F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
             COSMIC_EFFECTS.put(ModItems.INFINITY_ETERNAL_CHESTPLATE.get(), new EffectConfig(0, 0.5F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
             COSMIC_EFFECTS.put(ModItems.INFINITY_ETERNAL_LEGGINGS.get(), new EffectConfig(0, 0.5F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
             COSMIC_EFFECTS.put(ModItems.INFINITY_ETERNAL_BOOTS.get(), new EffectConfig(0, 0.5F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));*/
-            COSMIC_EFFECTS.put(ModItems.PURPLEITE_GALAXY_INGOT.get(), new EffectConfig(0, 0.6F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
-            COSMIC_EFFECTS.put(ModItems.ETERNIS_APPLE.get(), new EffectConfig(0, 0.5F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
-            COSMIC_EFFECTS.put(ModItems.AVARITIA_SWORD.get(), new EffectConfig(15, 0.6F, new Vector4f(0.1F, 0.1F, 0.1F, 1.0F)));
+            COSMIC_EFFECTS.put(ItemRegistry.PURPLEITE_GALAXY_INGOT.get(), new EffectConfig(0, 0.6F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
+            COSMIC_EFFECTS.put(ItemRegistry.ETERNIS_APPLE.get(), new EffectConfig(0, 0.5F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
+            COSMIC_EFFECTS.put(ItemRegistry.AVARITIA_SWORD.get(), new EffectConfig(15, 0.6F, new Vector4f(0.1F, 0.1F, 0.1F, 1.0F)));
     }
 }

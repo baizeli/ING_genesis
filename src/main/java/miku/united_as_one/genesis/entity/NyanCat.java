@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.entity;
 
-import miku.united_as_one.genesis.client.particles.ModParticles;
+import miku.united_as_one.genesis.registry.client.ParticleRegistry;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -164,7 +164,7 @@ public class NyanCat extends AbstractArrow {
                 // 粒子速度方向垂直于速度方向向外扩散
                 Vec3 direction = offset.normalize().scale(0.5);
                 
-                this.level().addParticle(ModParticles.CRESCENT_BLADE.get(),
+                this.level().addParticle(ParticleRegistry.CRESCENT_BLADE.get(),
                         particlePos.x, particlePos.y, particlePos.z,
                         direction.x, direction.y, direction.z);
 
