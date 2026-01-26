@@ -2,8 +2,8 @@ package miku.united_as_one.genesis.spell.celestial_source;
 
 import miku.united_as_one.genesis.entity.CustomArrowEntity;
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.spell.SpellSchool;
-import miku.united_as_one.genesis.spell.SpellUtils;
+import miku.united_as_one.genesis.registry.spell.SpellSchoolRegistry;
+import miku.united_as_one.genesis.util.spell.SpellUtils;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
@@ -28,7 +28,7 @@ public class FinalWhisper extends AbstractSpell {
     private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "final_whisper");
     private final DefaultConfig defaultConfig = new DefaultConfig()
             .setMinRarity(SpellRarity.LEGENDARY)
-            .setSchoolResource(SpellSchool.CELESTIAL_SOURCE_RESOURCE)
+            .setSchoolResource(SpellSchoolRegistry.CELESTIAL_SOURCE_RESOURCE)
             .setMaxLevel(1)
             .setCooldownSeconds(420.0F)
             .build();
@@ -65,7 +65,7 @@ public class FinalWhisper extends AbstractSpell {
 
     @Override
     public SchoolType getSchoolType() {
-        return SpellSchool.CELESTIAL_SOURCE.get();
+        return SpellSchoolRegistry.CELESTIAL_SOURCE.get();
     }
 
     @Override

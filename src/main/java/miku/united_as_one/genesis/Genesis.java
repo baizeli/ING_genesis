@@ -1,28 +1,30 @@
 package miku.united_as_one.genesis;
 
 import miku.united_as_one.genesis.content.arcaneWorkbench.*;
-import miku.united_as_one.genesis.content.*;
 import miku.united_as_one.genesis.content.workbenchs.*;
 import miku.united_as_one.genesis.entity.*;
+import miku.united_as_one.genesis.registry.*;
 import miku.united_as_one.genesis.entity.ai.ModActivity;
 import miku.united_as_one.genesis.entity.ai.ModMemoryModuleType;
 import miku.united_as_one.genesis.entity.spells.celestial_source.*;
 import miku.united_as_one.genesis.entity.boss.BloodBoss;
 import miku.united_as_one.genesis.entity.spells.celestial_source.notuse.*;
-import miku.united_as_one.genesis.items.ModItems;
 import miku.united_as_one.genesis.client.ClientEvent;
-import miku.united_as_one.genesis.client.particles.ModParticles;
+import miku.united_as_one.genesis.registry.BlockRegistry;
+import miku.united_as_one.genesis.registry.CreativeTabRegistry;
+import miku.united_as_one.genesis.registry.EntityRegistry;
+import miku.united_as_one.genesis.registry.ItemRegistry;
+import miku.united_as_one.genesis.registry.client.ParticleRegistry;
 import miku.united_as_one.genesis.client.renderer.DistortWorldRender;
 import miku.united_as_one.genesis.client.renderer.spell.celestial_source.DeadStarDecreeCometRenderer;
 import miku.united_as_one.genesis.config.*;
-import miku.united_as_one.genesis.effect.spell.ModEffect;
 import miku.united_as_one.genesis.fonts.FuckFont1;
 import miku.united_as_one.genesis.network.*;
-import miku.united_as_one.genesis.sound.SoundsRegister;
-import miku.united_as_one.genesis.spell.*;
+import miku.united_as_one.genesis.registry.spell.SpellAttributesRegistry;
+import miku.united_as_one.genesis.registry.spell.SpellRegistry;
+import miku.united_as_one.genesis.registry.spell.SpellSchoolRegistry;
 import dev.xkmc.l2library.base.L2Registrate;
 import com.mojang.logging.LogUtils;
-import io.redspace.ironsspellbooks.registries.*;
 import io.redspace.ironsspellbooks.render.SpellBookCurioRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -67,21 +69,21 @@ public class Genesis
     {
         IEventBus modEventBus = context.getModEventBus();
 
-        ModItems.register(modEventBus);
-        CreativeTab.register(modEventBus);
-        ModEntities.ENTITY_TYPES.register(modEventBus);
-        ModBlocks.BLOCKS.register(modEventBus);
-        SoundsRegister.SOUND_EVENTS.register(modEventBus);
+        ItemRegistry.register(modEventBus);
+        CreativeTabRegistry.register(modEventBus);
+        EntityRegistry.ENTITY_TYPES.register(modEventBus);
+        BlockRegistry.BLOCKS.register(modEventBus);
+        SoundRegister.SOUND_EVENTS.register(modEventBus);
 
-        SpellSchool.register(modEventBus);
-        Spells.register(modEventBus);
-        SpellAttributes.register(modEventBus);
+        SpellSchoolRegistry.register(modEventBus);
+        SpellRegistry.register(modEventBus);
+        SpellAttributesRegistry.register(modEventBus);
         ModBlockEntities.register(modEventBus);
         ModMenuTypes.register(modEventBus);
         ModRecipeTypes.register(modEventBus);
         ModRecipeSerializers.register(modEventBus);
-        ModEffect.register(modEventBus);
-        ModParticles.register(modEventBus);
+        EffectRegistry.register(modEventBus);
+        ParticleRegistry.register(modEventBus);
 
         ModActivity.register(modEventBus);
         ModMemoryModuleType.register(modEventBus);
@@ -106,31 +108,31 @@ public class Genesis
     }
 
     private void addToVanillaTabs(BuildCreativeModeTabContentsEvent e) {
-        if (e.getTabKey() == CreativeTabRegistry.MATERIALS_TAB.getKey()) {
+        if (e.getTabKey() == io.redspace.ironsspellbooks.registries.CreativeTabRegistry.MATERIALS_TAB.getKey()) {
             // 加到自然符文的后面
-            e.getEntries().putAfter(ItemRegistry.NATURE_RUNE.get().getDefaultInstance(),
-                    ModItems.CHAOS_RUNE.get().getDefaultInstance(),
+            e.getEntries().putAfter(io.redspace.ironsspellbooks.registries.ItemRegistry.NATURE_RUNE.get().getDefaultInstance(),
+                    ItemRegistry.CHAOS_RUNE.get().getDefaultInstance(),
                     CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
             // 混沌后面
-            e.getEntries().putAfter(ModItems.CHAOS_RUNE.get().getDefaultInstance(),
-                    ModItems.CELESTIAL_SOURCE_RUNE.get().getDefaultInstance(),
+            e.getEntries().putAfter(ItemRegistry.CHAOS_RUNE.get().getDefaultInstance(),
+                    ItemRegistry.CELESTIAL_SOURCE_RUNE.get().getDefaultInstance(),
                     CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
             // 加到自然升级法球的后面
-            e.getEntries().putAfter(ItemRegistry.NATURE_UPGRADE_ORB.get().getDefaultInstance(),
-                    ModItems.CHAOS_UPGRADE_ORB.get().getDefaultInstance(),
+            e.getEntries().putAfter(io.redspace.ironsspellbooks.registries.ItemRegistry.NATURE_UPGRADE_ORB.get().getDefaultInstance(),
+                    ItemRegistry.CHAOS_UPGRADE_ORB.get().getDefaultInstance(),
                     CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
             // 混沌后面
-            e.getEntries().putAfter(ModItems.CHAOS_UPGRADE_ORB.get().getDefaultInstance(),
-                    ModItems.CELESTIAL_SOURCE_UPGRADE_ORB.get().getDefaultInstance(),
+            e.getEntries().putAfter(ItemRegistry.CHAOS_UPGRADE_ORB.get().getDefaultInstance(),
+                    ItemRegistry.CELESTIAL_SOURCE_UPGRADE_ORB.get().getDefaultInstance(),
                     CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
         }
     }
 
     public void onAttributeCreate(EntityAttributeCreationEvent event) {
-        event.put(ModEntities.MAGIC_CIRCLE.get(), MagicCircle.createAttributes().build());
-        event.put(ModEntities.BOX_ENTIYT.get(), BoxEntity.createAttributes().build());
-        event.put(ModEntities.SWORD_ENTITY.get(), SwordEntity.createAttributes().build());
-        event.put(ModEntities.BLOOD_BOSS.get(), BloodBoss.setAttributes().build());
+        event.put(EntityRegistry.MAGIC_CIRCLE.get(), MagicCircle.createAttributes().build());
+        event.put(EntityRegistry.BOX_ENTIYT.get(), BoxEntity.createAttributes().build());
+        event.put(EntityRegistry.SWORD_ENTITY.get(), SwordEntity.createAttributes().build());
+        event.put(EntityRegistry.BLOOD_BOSS.get(), BloodBoss.setAttributes().build());
     }
 
     public static String resource(String location)
@@ -146,22 +148,22 @@ public class Genesis
         {
             event.enqueueWork(() -> {
                 MenuScreens.register(ModMenuTypes.ARCANE_WORKBENCH_MENU.get(), ArcaneWorkbenchScreen::new);
-                EntityRenderers.register(ModEntities.NYAN_CAT.get(), NyanCatRenderer::new);
-                EntityRenderers.register(ModEntities.MAGIC_CIRCLE.get(), MagicCircleRenderer::new);
-                EntityRenderers.register(ModEntities.BOX_ENTIYT.get(), BoxEntityRenderer::new);
-                EntityRenderers.register(ModEntities.LIGHTNING_BOLT.get(), LightningBoltRenderer::new);
-                EntityRenderers.register(ModEntities.SWORD_ENTITY.get(), SwordEntityRenderer::new);
+                EntityRenderers.register(EntityRegistry.NYAN_CAT.get(), NyanCatRenderer::new);
+                EntityRenderers.register(EntityRegistry.MAGIC_CIRCLE.get(), MagicCircleRenderer::new);
+                EntityRenderers.register(EntityRegistry.BOX_ENTIYT.get(), BoxEntityRenderer::new);
+                EntityRenderers.register(EntityRegistry.LIGHTNING_BOLT.get(), LightningBoltRenderer::new);
+                EntityRenderers.register(EntityRegistry.SWORD_ENTITY.get(), SwordEntityRenderer::new);
 
-                EntityRenderers.register(ModEntities.DEAD_STAR_DECREE_COMET.get(), 
+                EntityRenderers.register(EntityRegistry.DEAD_STAR_DECREE_COMET.get(),
                     context -> new DeadStarDecreeCometRenderer(context, 0.25f)
                 );
                 
-                EntityRenderers.register(ModEntities.DEAD_STAR_DECREE_LARGE_COMET.get(), 
+                EntityRenderers.register(EntityRegistry.DEAD_STAR_DECREE_LARGE_COMET.get(),
                     context -> new DeadStarDecreeCometRenderer(context, 6.0f)
                 );
 
-                CuriosRendererRegistry.register(ModItems.CHAOS_SPELL_BOOK.get(), SpellBookCurioRenderer::new);
-                CuriosRendererRegistry.register(ModItems.CELESTIAL_SOURCE_SPELL_BOOK.get(), SpellBookCurioRenderer::new);
+                CuriosRendererRegistry.register(ItemRegistry.CHAOS_SPELL_BOOK.get(), SpellBookCurioRenderer::new);
+                CuriosRendererRegistry.register(ItemRegistry.CELESTIAL_SOURCE_SPELL_BOOK.get(), SpellBookCurioRenderer::new);
                 DistortWorldRender.initChain(Minecraft.getInstance());
             });
             MinecraftForge.registerConfigScreen(new ConfigurationFactory());

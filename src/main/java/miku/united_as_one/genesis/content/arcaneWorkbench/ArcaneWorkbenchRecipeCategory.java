@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.content.arcaneWorkbench;
 
-import miku.united_as_one.genesis.items.ModItems;
+import miku.united_as_one.genesis.registry.ItemRegistry;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.drawable.IDrawable;
@@ -30,7 +30,7 @@ public class ArcaneWorkbenchRecipeCategory implements IRecipeCategory<ArcaneWork
 
     public ArcaneWorkbenchRecipeCategory(IGuiHelper guiHelper) {
         this.background = guiHelper.createDrawable(CRAFTING_TABLE_LOCATION, 0, 0, 176, 119);
-        this.icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ModItems.AVARITIA_SWORD.get()));
+        this.icon = guiHelper.createDrawableIngredient(VanillaTypes.ITEM_STACK, new ItemStack(ItemRegistry.AVARITIA_SWORD.get()));
     }
 
     @Override

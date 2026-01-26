@@ -1,8 +1,8 @@
 package miku.united_as_one.genesis.spell.celestial_source;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.effect.spell.ModEffect;
-import miku.united_as_one.genesis.spell.SpellSchool;
+import miku.united_as_one.genesis.registry.EffectRegistry;
+import miku.united_as_one.genesis.registry.spell.SpellSchoolRegistry;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.spells.*;
@@ -21,7 +21,7 @@ public class LifeAndDeathRealmSpell extends CelestialSourceBaseSpell {
     private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "life_and_death_realm");
     private final DefaultConfig defaultConfig = new DefaultConfig()
         .setMinRarity(SpellRarity.COMMON)
-        .setSchoolResource(SpellSchool.CELESTIAL_SOURCE_RESOURCE)
+        .setSchoolResource(SpellSchoolRegistry.CELESTIAL_SOURCE_RESOURCE)
         .setMaxLevel(3)
         .setCooldownSeconds(240.0F)
         .build();
@@ -77,7 +77,7 @@ public class LifeAndDeathRealmSpell extends CelestialSourceBaseSpell {
             int duration = getBuffDuration(spellLevel, entity);
             
             player.addEffect(new MobEffectInstance(
-                ModEffect.LIFE_AND_DEATH_REALM.get(),
+                EffectRegistry.LIFE_AND_DEATH_REALM.get(),
                 duration,
                 0,
                 false,

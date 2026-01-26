@@ -34,7 +34,7 @@ public class DataGenerators {
         generator.addProvider(event.includeServer(), registryProvider);
         generator.addProvider(event.includeServer(), new DamageTypeTagGenerator(output, fullLookupProvider, existingFileHelper));
         PackMetadataGenerator packMeta = new PackMetadataGenerator(output);
-        MutableComponent description = Component.literal("Resources for Iron Spells Genesis");
+        MutableComponent description = Component.literal("Resources for Iron SpellRegistry Genesis");
 
         PackMetadataSection metadata = new PackMetadataSection(
                 description,

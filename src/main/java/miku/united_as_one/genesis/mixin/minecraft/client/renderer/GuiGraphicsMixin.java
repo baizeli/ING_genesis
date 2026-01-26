@@ -1,8 +1,8 @@
 package miku.united_as_one.genesis.mixin.minecraft.client.renderer;
 
 import miku.united_as_one.genesis.Genesis;
+import miku.united_as_one.genesis.registry.spell.SpellSchoolRegistry;
 import miku.united_as_one.genesis.util.RenderUtils;
-import miku.united_as_one.genesis.spell.SpellSchool;
 import io.redspace.ironsspellbooks.api.spells.ISpellContainer;
 import io.redspace.ironsspellbooks.api.spells.SchoolType;
 import io.redspace.ironsspellbooks.item.Scroll;
@@ -87,8 +87,8 @@ public class GuiGraphicsMixin {
 
             if (item instanceof Scroll) {
                 SchoolType schoolType = ISpellContainer.getOrCreate(this.tooltipStack).getSpellAtIndex(0).getSpell().getSchoolType();
-                isChaosSpell = schoolType.equals(SpellSchool.CHAOS.get());
-                isCelestialSourceSpell = schoolType.equals(SpellSchool.CELESTIAL_SOURCE.get());
+                isChaosSpell = schoolType.equals(SpellSchoolRegistry.CHAOS.get());
+                isCelestialSourceSpell = schoolType.equals(SpellSchoolRegistry.CELESTIAL_SOURCE.get());
             }
 
             ResourceLocation registryName = ForgeRegistries.ITEMS.getKey(item);

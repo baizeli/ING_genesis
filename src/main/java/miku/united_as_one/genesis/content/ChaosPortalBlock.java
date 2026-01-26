@@ -1,6 +1,7 @@
 package miku.united_as_one.genesis.content;
 
 import miku.united_as_one.genesis.Genesis;
+import miku.united_as_one.genesis.registry.BlockRegistry;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -264,7 +265,7 @@ public class ChaosPortalBlock extends Block {
         }
 
         private static boolean isEmpty(BlockState state) {
-            return state.isAir() || state.is(ModBlocks.CHAOS_PORTAL.get());
+            return state.isAir() || state.is(BlockRegistry.CHAOS_PORTAL.get());
         }
     }
 }

@@ -1,8 +1,8 @@
 package miku.united_as_one.genesis.spell.chaos;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.effect.spell.ModEffect;
-import miku.united_as_one.genesis.spell.SpellSchool;
+import miku.united_as_one.genesis.registry.EffectRegistry;
+import miku.united_as_one.genesis.registry.spell.SpellSchoolRegistry;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
 import io.redspace.ironsspellbooks.api.config.IronConfigParameters;
 import io.redspace.ironsspellbooks.api.config.SpellConfigManager;
@@ -27,7 +27,7 @@ public class WarpedBarrierSpell extends ChaosBaseSpell {
     public WarpedBarrierSpell() {
         this.defaultConfig = new DefaultConfig()
                 .setMinRarity(SpellRarity.COMMON)
-                .setSchoolResource(SpellSchool.CHAOS_RESOURCE)
+                .setSchoolResource(SpellSchoolRegistry.CHAOS_RESOURCE)
                 .setMaxLevel(3)
                 .setCooldownSeconds(120F)
                 .build();
@@ -86,15 +86,15 @@ public class WarpedBarrierSpell extends ChaosBaseSpell {
         entity.setHealth(entity.getHealth() - damage);
 
         // 先移除之前的效果，防止nbt在entity.addEffect里被移除导致无法正常扣除伤害吸收血量
-        if (entity.getEffect(ModEffect.WARPED_BARRIER.get()) != null) {
-            entity.removeEffect(ModEffect.WARPED_BARRIER.get());
+        if (entity.getEffect(EffectRegistry.WARPED_BARRIER.get()) != null) {
+            entity.removeEffect(EffectRegistry.WARPED_BARRIER.get());
         }
 
         float convertedShield = (float) (damage * getConvertPercent(spellLevel, entity));
         entity.getPersistentData().putFloat(Genesis.MOD_ID + ":shield_amount", convertedShield);
 
         entity.addEffect(new MobEffectInstance(
-                ModEffect.WARPED_BARRIER.get(),
+                EffectRegistry.WARPED_BARRIER.get(),
                 (int)getEffectDuration(spellLevel, entity),
                 0,
                 false,

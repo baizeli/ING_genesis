@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.render.entity;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.effect.spell.ModEffect;
+import miku.united_as_one.genesis.registry.EffectRegistry;
 import miku.united_as_one.genesis.render.cosmic.PerspectiveModelState;
 import com.mojang.math.Axis;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -33,7 +33,7 @@ public class ShieldRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerM
 
     @Override
     public void render(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, AbstractClientPlayer player, float limbSwing, float limbSwingAmount, float partialTick, float ageInTicks, float netHeadYaw, float headPitch) {
-        if (player.hasEffect(ModEffect.WARPED_BARRIER.get()) && player.getAbsorptionAmount() > 0.0F) {
+        if (player.hasEffect(EffectRegistry.WARPED_BARRIER.get()) && player.getAbsorptionAmount() > 0.0F) {
             Minecraft mc = Minecraft.getInstance();
 
             // 获取sprite

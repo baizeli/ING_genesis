@@ -1,11 +1,11 @@
 package miku.united_as_one.genesis.spell.celestial_source;
 
 import miku.united_as_one.genesis.entity.spells.celestial_source.notuse.MagicCircle;
-import miku.united_as_one.genesis.entity.ModEntities;
+import miku.united_as_one.genesis.registry.EntityRegistry;
 import miku.united_as_one.genesis.entity.spells.celestial_source.notuse.SwordEntity;
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.client.particles.ModParticles;
-import miku.united_as_one.genesis.spell.SpellSchool;
+import miku.united_as_one.genesis.registry.client.ParticleRegistry;
+import miku.united_as_one.genesis.registry.spell.SpellSchoolRegistry;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
 import io.redspace.ironsspellbooks.api.events.SpellCooldownAddedEvent;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
@@ -36,7 +36,7 @@ public class UnlimitedBladeWorksSpell extends CelestialSourceBaseSpell {
     public UnlimitedBladeWorksSpell() {
         this.defaultConfig = new DefaultConfig()
                 .setMinRarity(SpellRarity.LEGENDARY)
-                .setSchoolResource(SpellSchool.CELESTIAL_SOURCE_RESOURCE)
+                .setSchoolResource(SpellSchoolRegistry.CELESTIAL_SOURCE_RESOURCE)
                 .setMaxLevel(1)
                 .setCooldownSeconds(0)
                 .build();
@@ -113,15 +113,15 @@ public class UnlimitedBladeWorksSpell extends CelestialSourceBaseSpell {
 //        if (entity instanceof Player player) {
 //            magicCircle((ServerLevel) serverLevel, player, lookVec);
 //        }
-        SwordEntity sword = new SwordEntity(ModEntities.SWORD_ENTITY.get(), serverLevel, entity.getX(), entity.getY(), entity.getZ(), entity);
-        serverLevel.addFreshEntity(new MagicCircle(ModEntities.MAGIC_CIRCLE.get(), serverLevel, entity.getX(), entity.getY(), entity.getZ()));
+        SwordEntity sword = new SwordEntity(EntityRegistry.SWORD_ENTITY.get(), serverLevel, entity.getX(), entity.getY(), entity.getZ(), entity);
+        serverLevel.addFreshEntity(new MagicCircle(EntityRegistry.MAGIC_CIRCLE.get(), serverLevel, entity.getX(), entity.getY(), entity.getZ()));
         serverLevel.addFreshEntity(sword);
         super.onServerCastComplete(serverLevel, spellLevel, entity, playerMagicData, cancelled);
     }
 
     private static void magicCircle(ServerLevel serverLevel, Player entity, Vec3 lookVec) {
         serverLevel.sendParticles(
-                ModParticles.MAGIC_CIRCLE.get(),
+                ParticleRegistry.MAGIC_CIRCLE.get(),
                 entity.position().x, entity.position().y, entity.position().z,
                 1,
                 lookVec.x, lookVec.y, lookVec.z,

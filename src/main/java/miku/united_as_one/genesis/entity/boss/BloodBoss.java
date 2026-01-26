@@ -21,14 +21,13 @@ import io.redspace.ironsspellbooks.capabilities.magic.SyncedSpellData;
 import io.redspace.ironsspellbooks.entity.mobs.IAnimatedAttacker;
 import io.redspace.ironsspellbooks.entity.mobs.wizards.fire_boss.ExtendedServerBossEvent;
 import miku.united_as_one.genesis.entity.ai.ModMemoryModuleType;
-import miku.united_as_one.genesis.sound.SoundsRegister;
+import miku.united_as_one.genesis.registry.SoundRegister;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -51,7 +50,6 @@ import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.entity.IEntityAdditionalSpawnData;
 import org.slf4j.Logger;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.core.animatable.instance.SingletonAnimatableInstanceCache;
 import software.bernie.geckolib.core.animation.*;
@@ -62,7 +60,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
-import net.minecraft.server.level.ServerPlayer;
+
 import net.minecraft.world.BossEvent;
 
 import static miku.united_as_one.genesis.Genesis.MODID;
@@ -719,7 +717,7 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
 
     private SoundEvent getBossMusicEvent() {
 
-        return SoundsRegister.BLOOD_BOSS_MUSIC.get();
+        return SoundRegister.BLOOD_BOSS_MUSIC.get();
     }
 
     @Override

@@ -1,8 +1,9 @@
 package miku.united_as_one.genesis.client.particles;
 
-import miku.united_as_one.genesis.entity.ModEntities;
+import miku.united_as_one.genesis.registry.EntityRegistry;
 import miku.united_as_one.genesis.entity.NyanCat;
 import miku.united_as_one.genesis.Genesis;
+import miku.united_as_one.genesis.registry.client.ParticleRegistry;
 import miku.united_as_one.genesis.render.ModShaders;
 import com.mojang.blaze3d.pipeline.TextureTarget;
 import com.mojang.blaze3d.platform.GlStateManager;
@@ -22,7 +23,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static miku.united_as_one.genesis.Genesis.MODID;
-import static miku.united_as_one.genesis.items.ModItems.INFINITY_SWORD;
+import static miku.united_as_one.genesis.registry.ItemRegistry.INFINITY_SWORD;
 
 @Mod.EventBusSubscriber(modid = Genesis.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class ParticleDebugEvents {
@@ -46,7 +47,7 @@ public class ParticleDebugEvents {
     }
 
     private static void spawnNyanCat(ServerLevel serverLevel, Player player, Vec3 lookVec) {
-        NyanCat nyanCat = new NyanCat(ModEntities.NYAN_CAT.get(), player, serverLevel);
+        NyanCat nyanCat = new NyanCat(EntityRegistry.NYAN_CAT.get(), player, serverLevel);
         nyanCat.setPos(player.getX(), player.getY() + player.getEyeHeight(), player.getZ());
         nyanCat.shoot(lookVec.x, lookVec.y, lookVec.z, 1.5F, 1.0F);
         serverLevel.addFreshEntity(nyanCat);
@@ -54,7 +55,7 @@ public class ParticleDebugEvents {
 
     private static void cubeTest(ServerLevel serverLevel, Player entity, Vec3 lookVec) {
         serverLevel.sendParticles(
-                ModParticles.CUBE.get(),
+                ParticleRegistry.CUBE.get(),
                 entity.position().x, entity.position().y, entity.position().z,
                 1,
                 lookVec.x, lookVec.y, lookVec.z,
@@ -62,7 +63,7 @@ public class ParticleDebugEvents {
     }
     private static void testTest(ServerLevel serverLevel, Player entity, Vec3 lookVec) {
         serverLevel.sendParticles(
-                ModParticles.TEST.get(),
+                ParticleRegistry.TEST.get(),
                 entity.position().x, entity.position().y, entity.position().z,
                 1,
                 lookVec.x, lookVec.y, lookVec.z,
@@ -70,7 +71,7 @@ public class ParticleDebugEvents {
     }
     private static void testTestA(ServerLevel serverLevel, Player entity, Vec3 lookVec) {
         serverLevel.sendParticles(
-                ModParticles.TESTA.get(),
+                ParticleRegistry.TESTA.get(),
                 entity.position().x, entity.position().y, entity.position().z,
                 1,
                 lookVec.x, lookVec.y, lookVec.z,
@@ -78,7 +79,7 @@ public class ParticleDebugEvents {
     }
     private static void testTestb(ServerLevel serverLevel, Player entity, Vec3 lookVec) {
         serverLevel.sendParticles(
-                ModParticles.TESTB.get(),
+                ParticleRegistry.TESTB.get(),
                 entity.position().x, entity.position().y, entity.position().z,
                 1,
                 lookVec.x, lookVec.y, lookVec.z,
@@ -87,7 +88,7 @@ public class ParticleDebugEvents {
 
     private static void magicCircle(ServerLevel serverLevel, Player entity, Vec3 lookVec) {
         serverLevel.sendParticles(
-                ModParticles.MAGIC_CIRCLE.get(),
+                ParticleRegistry.MAGIC_CIRCLE.get(),
                 entity.position().x, entity.position().y, entity.position().z,
                 1,
                 lookVec.x, lookVec.y, lookVec.z,

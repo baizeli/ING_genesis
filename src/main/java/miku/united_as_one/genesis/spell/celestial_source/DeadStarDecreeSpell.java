@@ -1,9 +1,9 @@
 package miku.united_as_one.genesis.spell.celestial_source;
 
-import miku.united_as_one.genesis.entity.ModEntities;
+import miku.united_as_one.genesis.registry.EntityRegistry;
 import miku.united_as_one.genesis.entity.spells.celestial_source.DeadStarDecreeComet;
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.spell.SpellSchool;
+import miku.united_as_one.genesis.registry.spell.SpellSchoolRegistry;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.spells.*;
@@ -30,7 +30,7 @@ public class DeadStarDecreeSpell extends AbstractSpell {
     private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "dead_star_decree");
     private final DefaultConfig defaultConfig = new DefaultConfig()
         .setMinRarity(SpellRarity.COMMON)
-        .setSchoolResource(SpellSchool.CELESTIAL_SOURCE_RESOURCE)
+        .setSchoolResource(SpellSchoolRegistry.CELESTIAL_SOURCE_RESOURCE)
         .setMaxLevel(3)
         .setCooldownSeconds(240.0F)
         .build();
@@ -171,7 +171,7 @@ public class DeadStarDecreeSpell extends AbstractSpell {
     }
 
     public void shootComet(Level world, int spellLevel, LivingEntity entity, Vec3 spawn, Vec3 trajectory, float explosionRadius) {
-        DeadStarDecreeComet fireball = new DeadStarDecreeComet(ModEntities.DEAD_STAR_DECREE_COMET.get(), world);
+        DeadStarDecreeComet fireball = new DeadStarDecreeComet(EntityRegistry.DEAD_STAR_DECREE_COMET.get(), world);
         fireball.setPos(spawn.add(-1, 0, 0));
         fireball.shoot(trajectory, .075f);
         fireball.setDamage(getDamage(spellLevel, entity));
@@ -182,7 +182,7 @@ public class DeadStarDecreeSpell extends AbstractSpell {
     }
 
     public void shootLargeComet(Level world, int spellLevel, LivingEntity entity, Vec3 spawn, Vec3 trajectory) {
-        DeadStarDecreeComet fireball = new DeadStarDecreeComet(ModEntities.DEAD_STAR_DECREE_LARGE_COMET.get(), world);
+        DeadStarDecreeComet fireball = new DeadStarDecreeComet(EntityRegistry.DEAD_STAR_DECREE_LARGE_COMET.get(), world);
         fireball.setPos(spawn);
         fireball.shoot(trajectory, 0);
         fireball.setDamage(getLargeCometDamage(spellLevel, entity));

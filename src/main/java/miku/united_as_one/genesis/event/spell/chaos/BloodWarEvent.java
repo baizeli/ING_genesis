@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.event.spell.chaos;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.effect.spell.ModEffect;
+import miku.united_as_one.genesis.registry.EffectRegistry;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import net.minecraft.world.entity.ai.attributes.*;
 import net.minecraft.world.entity.player.Player;
@@ -22,7 +22,7 @@ public class BloodWarEvent {
     @SubscribeEvent
     public static void onLivingHurt(LivingHurtEvent event) {
         if (event.getEntity() instanceof Player player) {
-            if (player.hasEffect(ModEffect.BLOOD_WAR.get())) {
+            if (player.hasEffect(EffectRegistry.BLOOD_WAR.get())) {
                 float currentHealth = player.getHealth();
                 float maxHealth = player.getMaxHealth();
                 
@@ -126,7 +126,7 @@ public class BloodWarEvent {
     @SubscribeEvent
     public static void onEffectRemoved(MobEffectEvent.Expired event) {
         if (event.getEffectInstance() != null && 
-            event.getEffectInstance().getEffect() == ModEffect.BLOOD_WAR.get() && 
+            event.getEffectInstance().getEffect() == EffectRegistry.BLOOD_WAR.get() &&
             event.getEntity() instanceof Player player
         ) {
             Map<UUID, AttributeModifier> modifiers = playerModifiers.get(player);

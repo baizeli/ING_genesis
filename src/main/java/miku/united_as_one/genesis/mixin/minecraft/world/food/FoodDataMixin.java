@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.mixin.minecraft.world.food;
 
-import miku.united_as_one.genesis.effect.spell.ModEffect;
+import miku.united_as_one.genesis.registry.EffectRegistry;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodData;
 import org.spongepowered.asm.mixin.*;
@@ -15,7 +15,7 @@ public class FoodDataMixin {
 
     @Inject(method = "tick", at = @At("HEAD"))
     private void onTickHead(Player player, CallbackInfo ci) {
-        if (player.hasEffect(ModEffect.UNPARALLELED.get())) {
+        if (player.hasEffect(EffectRegistry.UNPARALLELED.get())) {
             tickTimer += 1;
         }
     }

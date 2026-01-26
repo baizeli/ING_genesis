@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.util.spell.celestial_source;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.effect.spell.ModEffect;
+import miku.united_as_one.genesis.registry.EffectRegistry;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -59,7 +59,7 @@ public class FateWedgeUtil {
             LivingEntity caster = targetToCasterMap.get(deadEntity);
 
             if (caster instanceof Player && !caster.isDeadOrDying()) {
-                caster.removeEffect(ModEffect.FATE_WEDGE.get());
+                caster.removeEffect(EffectRegistry.FATE_WEDGE.get());
             }
 
             targetToCasterMap.remove(deadEntity);

@@ -4,7 +4,7 @@ import miku.united_as_one.genesis.render.ModRenderType;
 import miku.united_as_one.genesis.render.ModShaders;
 import miku.united_as_one.genesis.render.cosmic.AvaritiaShaders;
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.items.ModItems;
+import miku.united_as_one.genesis.registry.ItemRegistry;
 import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -42,7 +42,7 @@ public class HaloRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerMod
 
     @Override
     public void render(PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, AbstractClientPlayer player, float limbSwing, float limbSwingAmount, float partialTick, float ageInTicks, float netHeadYaw, float headPitch) {
-        if (isEquippedAndVisible(player, ModItems.GENESIS_CURSE.get())) {
+        if (isEquippedAndVisible(player, ItemRegistry.GENESIS_CURSE.get())) {
             poseStack.pushPose();
 
             ModelPart head = this.getParentModel().getHead();

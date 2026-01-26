@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.event.spell.chaos;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.effect.spell.ModEffect;
+import miku.united_as_one.genesis.registry.EffectRegistry;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -12,9 +12,9 @@ public class SiphonEvent {
     @SubscribeEvent
     public static void onLivingHurt(LivingHurtEvent event) {
         if (event.getSource().getEntity() instanceof LivingEntity attacker) {
-            if (attacker.hasEffect(ModEffect.SIPHON.get())) {
+            if (attacker.hasEffect(EffectRegistry.SIPHON.get())) {
                 // 获取buff等级
-                int amplifier = attacker.getEffect(ModEffect.SIPHON.get()).getAmplifier();
+                int amplifier = attacker.getEffect(EffectRegistry.SIPHON.get()).getAmplifier();
                 
                 // 计算转换的血量
                 float healAmount = event.getAmount() * 0.06f * (amplifier + 1);

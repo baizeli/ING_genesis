@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.spell.chaos;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.spell.SpellSchool;
+import miku.united_as_one.genesis.registry.spell.SpellSchoolRegistry;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.spells.*;
@@ -14,7 +14,7 @@ public class BloodRitualSpell extends ChaosBaseSpell {
     private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "blood_ritual");
     private final DefaultConfig defaultConfig = new DefaultConfig()
         .setMinRarity(SpellRarity.LEGENDARY)
-        .setSchoolResource(SpellSchool.CHAOS_RESOURCE)
+        .setSchoolResource(SpellSchoolRegistry.CHAOS_RESOURCE)
         .setMaxLevel(1)
         .setCooldownSeconds(120.0F)
         .build();

@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.items;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.content.ModBlocks;
+import miku.united_as_one.genesis.registry.BlockRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.*;
@@ -43,7 +43,7 @@ public class ChaosCore extends Item {
                     Context.getPlayer().blockPosition(), BuiltinStructures.ANCIENT_CITY).isValid()) {
                     BlockPos clickedPos = Context.getClickedPos().relative(Context.getClickedFace());
 
-                    if(ModBlocks.CHAOS_PORTAL.get().spawnPortal(Context.getLevel(), clickedPos)) {
+                    if(BlockRegistry.CHAOS_PORTAL.get().spawnPortal(Context.getLevel(), clickedPos)) {
                         Context.getLevel().playSound(
                             Context.getPlayer(), 
                             clickedPos, 

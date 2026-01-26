@@ -2,7 +2,7 @@ package miku.united_as_one.genesis.event.spell.celestial_source;
 
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.client.renderer.AfterImageManager;
-import miku.united_as_one.genesis.effect.spell.ModEffect;
+import miku.united_as_one.genesis.registry.EffectRegistry;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import net.minecraft.client.player.Input;
 import net.minecraft.tags.DamageTypeTags;
@@ -32,7 +32,7 @@ public class UnparalleledEvent {
     @SubscribeEvent
     public static void onLivingUpdate(LivingEvent.LivingTickEvent event) {
         if (event.getEntity() instanceof Player player) {
-            if (player.hasEffect(ModEffect.UNPARALLELED.get())) {
+            if (player.hasEffect(EffectRegistry.UNPARALLELED.get())) {
                 // 速度
                 player.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(SPEED_MODIFIER_UUID);
                 player.getAttribute(Attributes.MOVEMENT_SPEED).addTransientModifier(
@@ -88,7 +88,7 @@ public class UnparalleledEvent {
     public static void onLivingAttack(LivingAttackEvent event) {
         if (event.getEntity() instanceof Player player) {
             // 摔落伤害肘开
-            if (player.hasEffect(ModEffect.UNPARALLELED.get()) && event.getSource().is(DamageTypeTags.IS_FALL)) {
+            if (player.hasEffect(EffectRegistry.UNPARALLELED.get()) && event.getSource().is(DamageTypeTags.IS_FALL)) {
                 event.setCanceled(true);
             }
         }
@@ -99,7 +99,7 @@ public class UnparalleledEvent {
         Player player = event.getEntity();
         Input input = event.getInput();
 
-        if (player.hasEffect(ModEffect.UNPARALLELED.get())) {
+        if (player.hasEffect(EffectRegistry.UNPARALLELED.get())) {
             Boolean lastJumpPressed = wasJumpPressed.get(player);
             if (lastJumpPressed == null) lastJumpPressed = false;
 
