@@ -20,6 +20,7 @@ import miku.united_as_one.genesis.fonts.FuckFont1;
 import miku.united_as_one.genesis.network.*;
 import miku.united_as_one.genesis.sound.SoundsRegister;
 import miku.united_as_one.genesis.spell.*;
+import dev.xkmc.l2library.base.L2Registrate;
 import com.mojang.logging.LogUtils;
 import io.redspace.ironsspellbooks.registries.*;
 import io.redspace.ironsspellbooks.render.SpellBookCurioRenderer;
@@ -48,6 +49,7 @@ public class Genesis
     
     public static final String MOD_ID = "iron_spells_genesis";
     public static final String MODID = MOD_ID; // 添加这个别名以保持兼容性
+    public static final L2Registrate L2_REGISTRATE = new L2Registrate(MOD_ID);
     private static final Logger LOGGER = LogUtils.getLogger();
 
     public static SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
@@ -66,7 +68,7 @@ public class Genesis
         IEventBus modEventBus = context.getModEventBus();
 
         ModItems.register(modEventBus);
-        ModCreativeTab.register(modEventBus);
+        CreativeTab.register(modEventBus);
         ModEntities.ENTITY_TYPES.register(modEventBus);
         ModBlocks.BLOCKS.register(modEventBus);
         SoundsRegister.SOUND_EVENTS.register(modEventBus);
