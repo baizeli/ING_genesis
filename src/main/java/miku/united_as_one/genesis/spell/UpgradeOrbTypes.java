@@ -20,4 +20,8 @@ public class UpgradeOrbTypes {
     public static final ResourceKey<UpgradeOrbType> CULINARY_SPELL_POWER = ResourceKey.create(
         KEY, Genesis.rl("culinary_power")
     );
+
+    public static final ResourceKey<UpgradeOrbType> ELDRITCH_SPELL_POWER = ResourceKey.create(
+        KEY, Genesis.rl("eldritch_power")
+    );
 }

@@ -1,36 +1,39 @@
 package miku.united_as_one.genesis.registry;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.content.ModLang;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.chat.*;
+import net.minecraft.resources.*;
 import net.minecraft.world.item.*;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.*;
 
+@SuppressWarnings("removal")
 public class CreativeTabRegistry {
-    public static final DeferredRegister<CreativeModeTab> REGISTRY = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Genesis.MODID);
-    public static final CreativeModeTab.Builder build = CreativeModeTab.builder();
+    public static final ResourceKey<CreativeModeTab> IRON_SPELLS_GENESIS_BLOCK = ResourceKey.create(
+        Registries.CREATIVE_MODE_TAB, new ResourceLocation(Genesis.MOD_ID, "block"));
+
+    public static final ResourceKey<CreativeModeTab> IRON_SPELLS_GENESIS_MATERIAL = ResourceKey.create(
+        Registries.CREATIVE_MODE_TAB, new ResourceLocation(Genesis.MOD_ID, "material"));
+
+    public static final ResourceKey<CreativeModeTab> IRON_SPELLS_GENESIS_EQUIPMENT = ResourceKey.create(
+        Registries.CREATIVE_MODE_TAB, new ResourceLocation(Genesis.MOD_ID, "equipment"));
 
     static {
-        build.title(Component.translatable(
-            ModLang.TranslatableMessage.CREATIVE_TAB_NAME.getKey()
-        ));
-        build.icon(() -> ItemRegistry.GALAXY_SCROLL.get().getDefaultInstance());
-        build.displayItems(((itemDisplayParameters, output) -> {
-            ItemRegistry.ITEMS.getEntries().forEach(itemRegistryObject ->
-                output.accept(itemRegistryObject.get())
+        Genesis.L2_REGISTRATE
+            .buildModCreativeTab("block", "itemGroup." + Genesis.MOD_ID, builder -> builder
+                .icon(() -> ItemRegistry.CELESTIAL_SOURCE_BLOCK_ITEM.get().getDefaultInstance())
+            );
+            
+        Genesis.L2_REGISTRATE
+            .buildModCreativeTab("material", "itemGroup." + Genesis.MOD_ID, builder -> builder
+                .icon(() -> ItemRegistry.GALAXY_SCROLL.get().getDefaultInstance())
             );
 
-            Genesis.L2_REGISTRATE.getAll(Registries.ITEM).forEach(entry -> {
-                output.accept(entry.get());
-            });
-        }));
+        Genesis.L2_REGISTRATE
+            .buildModCreativeTab("equipment", "itemGroup." + Genesis.MOD_ID, builder -> builder
+                .icon(() -> ItemRegistry.AVARITIA_SWORD.get().getDefaultInstance())
+            );
 
-        REGISTRY.register(Genesis.MODID, build::build);
+        Genesis.L2_REGISTRATE.defaultCreativeTab(CreativeModeTabs.SEARCH);
     }
 
-    public static void register(IEventBus eventBus) {
-        REGISTRY.register(eventBus);
-    }
+    public static void register() {}
 }
