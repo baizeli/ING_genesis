@@ -1,6 +1,5 @@
 package miku.united_as_one.genesis.event.curios;
 
-import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.registry.ItemRegistry;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -13,7 +12,7 @@ import top.theillusivec4.curios.api.CuriosApi;
 
 import java.util.*;
 
-@Mod.EventBusSubscriber(modid = Genesis.MOD_ID)
+@Mod.EventBusSubscriber
 public class LaoWang237Event {
     private static final Random RANDOM = new Random();
 
@@ -38,9 +37,7 @@ public class LaoWang237Event {
             ));
         }
 
-        Entity killer = event.getSource().getEntity();
-
-        if (killer instanceof Player player) {
+        if (event.getSource().getEntity() instanceof Player player) {
             CuriosApi.getCuriosInventory(player).ifPresent(handler -> {
                 handler.findFirstCurio(ItemRegistry.LAO_WANG_237.get()).ifPresent(result -> {
                     ItemStack porkchopStack = new ItemStack(Items.PORKCHOP, PORKCHOP_COUNT);
