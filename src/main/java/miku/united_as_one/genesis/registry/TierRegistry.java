@@ -1,6 +1,5 @@
 package miku.united_as_one.genesis.registry;
 
-import io.redspace.ironsspellbooks.registries.ItemRegistry;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.util.LazyLoadedValue;
@@ -10,7 +9,7 @@ import java.util.function.Supplier;
 
 @SuppressWarnings("deprecation")
 public enum TierRegistry implements Tier {
-    MITHRIL(4, 4062, 18, 0, 30, () -> Ingredient.of(ItemRegistry.MITHRIL_INGOT.get()));
+    MITHRIL(4, 4062, 18, 0, 30, () -> Ingredient.of(ItemRegistry.ARCANE_CRYSTAL.get()));
 
     private final int level;
     private final int uses;
