@@ -10,6 +10,8 @@ import miku.united_as_one.genesis.items.armor.*;
 import miku.united_as_one.genesis.items.curios.*;
 import miku.united_as_one.genesis.items.curios.rune_plus.*;
 import miku.united_as_one.genesis.items.manuscript.*;
+import miku.united_as_one.genesis.items.pickaxe.*;
+import miku.united_as_one.genesis.items.sword.*;
 import miku.united_as_one.genesis.tooltipParticleHandler.*;
 import miku.united_as_one.genesis.spell.UpgradeOrbTypes;
 import io.redspace.ironsspellbooks.item.UpgradeOrbItem;
@@ -104,6 +106,28 @@ public class ItemRegistry {
                 properties.durability(Integer.MAX_VALUE)
             ))
             .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
+            .register();
+
+    // 秘银剑
+    public static final ItemEntry<MithrilSword> MITHRIL_SWORD = Genesis.L2_REGISTRATE
+            .item("mithril_sword", properties -> new MithrilSword(
+                TierRegistry.MITHRIL,
+                7,
+                -1.7F,
+                properties
+            ))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
+            .register();
+
+    // 秘银镐
+    public static final ItemEntry<MithrilPickaxe> MITHRIL_PICKAXE = Genesis.L2_REGISTRATE
+            .item("mithril_pickaxe", properties -> new MithrilPickaxe(
+                TierRegistry.MITHRIL,
+                0,
+                -1.6F,
+                properties
+            ))
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
