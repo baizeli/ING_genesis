@@ -1,5 +1,6 @@
 package miku.united_as_one.genesis.entity.boss.behavior;
 
+import miku.united_as_one.genesis.entity.ai.ModMemoryModuleType;
 import miku.united_as_one.genesis.entity.boss.BloodBoss;
 import miku.united_as_one.genesis.entity.boss.BloodBossMoveControl;
 import miku.united_as_one.genesis.entity.boss.SkillMovementTask;
@@ -29,7 +30,8 @@ public class LightningWhirlSlashBehavior
 
     public LightningWhirlSlashBehavior() {
         super(Map.of(
-                MemoryModuleType.ATTACK_TARGET, MemoryStatus.VALUE_PRESENT
+                MemoryModuleType.ATTACK_TARGET, MemoryStatus.VALUE_PRESENT,
+                ModMemoryModuleType.IS_CASTING_SKILL.get(), MemoryStatus.VALUE_ABSENT
         ));
     }
 
@@ -42,6 +44,7 @@ public class LightningWhirlSlashBehavior
     @Override
     protected void start(ServerLevel level, BloodBoss boss, long gameTime) {
         super.start(level, boss, gameTime);
+        boss.getBrain().setMemory(ModMemoryModuleType.IS_CASTING_SKILL.get(), true);
 
         hit1Done = false;
         hit2Done = false;
@@ -92,7 +95,7 @@ public class LightningWhirlSlashBehavior
     @Override
     protected void stop(ServerLevel level, BloodBoss boss, long gameTime) {
         super.stop(level, boss, gameTime);
-
+        boss.getBrain().eraseMemory(ModMemoryModuleType.IS_CASTING_SKILL.get());
         if (boss.getMoveControl() instanceof BloodBossMoveControl move) {
             move.clearSkillMovements();
         }
@@ -158,13 +161,23 @@ public class LightningWhirlSlashBehavior
         );
 
         for (LivingEntity target : targets) {
-            target.invulnerableTime = 0;
-            target.hurt(
-                    boss.damageSources().mobAttack(boss),
-                    (float) boss.getAttributeValue(
-                            net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE
-                    ) * 1.2F
-            );
+            applyDamageToTarget(boss, target);
         }
+    }
+
+    /**
+     * 计算并应用伤害到单个目标
+     * 
+     * @param boss 攻击者（血 Boss）
+     * @param target 受害者
+     */
+    private void applyDamageToTarget(BloodBoss boss, LivingEntity target) {
+        float baseDamage = (float) boss.getAttributeValue(
+                net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE
+        );
+        float skillDamage = baseDamage * 1.2F;
+        
+        // 使用 Boss 类中的通用方法
+        boss.applySkillDamage(target, baseDamage, 1.2F);
     }
 }

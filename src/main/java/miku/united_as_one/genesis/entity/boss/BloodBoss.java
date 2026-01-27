@@ -68,17 +68,7 @@ import static miku.united_as_one.genesis.Genesis.MODID;
 public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAttacker, IEntityAdditionalSpawnData, IClientEventEntity, IMagicEntity {
     private static final Logger BLOOD_BOSS_LOGGER = LogUtils.getLogger();
 
-    // 魔法相关字段
-    private static final EntityDataAccessor<Boolean> DATA_CANCEL_CAST = SynchedEntityData.defineId(BloodBoss.class, EntityDataSerializers.BOOLEAN);
-    private static final EntityDataAccessor<Boolean> DATA_DRINKING_POTION = SynchedEntityData.defineId(BloodBoss.class, EntityDataSerializers.BOOLEAN);
-    private static final AttributeModifier SPEED_MODIFIER_DRINKING = new AttributeModifier(UUID.fromString("5CD17E52-A79A-43D3-A529-90FDE04B181E"), "Drinking speed penalty", -0.15, AttributeModifier.Operation.MULTIPLY_TOTAL);
 
-    private final MagicData magicData = new MagicData(true);
-    @Nullable
-    private SpellData castingSpell;
-    private int drinkTime;
-    private boolean hasUsedSingleAttack;
-    private boolean recreateSpell;
 
     int spawnTimer;
     private final AnimationController<BloodBoss> skillAnimationController;
@@ -90,11 +80,22 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     private AbstractSpell instantCastSpellType = SpellRegistry.none();
     private boolean cancelCastAnimation = false;
 
-    // 新增动画控制器
+    // 动画控制器
     private final AnimationController<BloodBoss> instantCastController;
     private final AnimationController<BloodBoss> longCastController;
     private final AnimationController<BloodBoss> continuousCastController;
 
+    // 魔法相关字段
+    private static final EntityDataAccessor<Boolean> DATA_CANCEL_CAST = SynchedEntityData.defineId(BloodBoss.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> DATA_DRINKING_POTION = SynchedEntityData.defineId(BloodBoss.class, EntityDataSerializers.BOOLEAN);
+    private static final AttributeModifier SPEED_MODIFIER_DRINKING = new AttributeModifier(UUID.fromString("5CD17E52-A79A-43D3-A529-90FDE04B181E"), "Drinking speed penalty", -0.15, AttributeModifier.Operation.MULTIPLY_TOTAL);
+
+    private final MagicData magicData = new MagicData(true);
+    @Nullable
+    private SpellData castingSpell;
+    private int drinkTime;
+    private boolean hasUsedSingleAttack;
+    private boolean recreateSpell;
     //用于延迟释放瞬时法术
     private int delayedCastTick = -1;
     private AbstractSpell delayedSpell;
@@ -127,7 +128,21 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
                     47,
                     -1
             );
+    //属性
+    public static AttributeSupplier.Builder setAttributes() {
+        return Mob.createMobAttributes()
+                .add(Attributes.MAX_HEALTH, 950)
+                .add(Attributes.MOVEMENT_SPEED, 0.21)
+                .add(Attributes.ATTACK_DAMAGE, 10)
+                .add(Attributes.ARMOR, 20)
+                .add(AttributeRegistry.MAX_MANA.get(), 50000.0)
+                .add(ForgeMod.ENTITY_GRAVITY.get(), 0.03)
+                .add(ForgeMod.ENTITY_REACH.get(), 3.0)
+                .add(Attributes.KNOCKBACK_RESISTANCE,5.0)
+                .add(AttributeRegistry.SPELL_POWER.get(), 1.25);
+    }
 
+    //================================================================ 生命周期 ========================================================================
     public BloodBoss(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);
         this.moveControl = new BloodBossMoveControl(this);
@@ -135,7 +150,7 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
 //        this.jumpControl = new BloodBossJumpControl(this);
 
         this.animationControllerWalk = new AnimationController<>(this, "walk_controller", 10, this::walkPredicate);
-        this.skillAnimationController = new AnimationController<>(this, "skill_animation_controller", 5, this::animationPredicate);
+        this.skillAnimationController = new AnimationController<>(this, "skill_animation_controller", 0, this::animationPredicate);
 
 
         this.instantCastController = new AnimationController<>(this, "instant_cast", 5, this::instantCastingPredicate);
@@ -161,18 +176,45 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
 
     }
 
-    public static AttributeSupplier.Builder setAttributes() {
-        return Mob.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 950)
-                .add(Attributes.MOVEMENT_SPEED, 0.21)
-                .add(Attributes.ATTACK_DAMAGE, 10)
-                .add(Attributes.ARMOR, 20)
-                .add(AttributeRegistry.MAX_MANA.get(), 50000.0)
-                .add(ForgeMod.ENTITY_GRAVITY.get(), 0.03)
-                .add(ForgeMod.ENTITY_REACH.get(), 3.0)
-                .add(Attributes.KNOCKBACK_RESISTANCE,5.0)
-                .add(AttributeRegistry.SPELL_POWER.get(), 1.25);
+    @Override
+    public void tick() {
+        if (!isSpellConfigLoaded()) {
+
+            return;
+
+        }
+        super.tick();
+
+        if (this.level().isClientSide && this.isCasting()) {
+            this.lastCastTick = this.tickCount;
+        }
+
+        if (!this.level().isClientSide) {
+            float progress = this.getHealth() / this.getMaxHealth();
+            this.bossEvent.setProgress(Mth.clamp(progress, 0.0F, 1.0F));
+        }
+
     }
+
+    @Override
+    public void die(DamageSource cause) {
+        if (!this.level().isClientSide) {
+            this.serverTriggerEvent(STOP_MUSIC);
+            this.serverTriggerEvent(STOP_BOSSBAR);
+            this.bossEvent.removeAllPlayers();
+        }
+        super.die(cause);
+    }
+
+    @Override
+    public void remove(RemovalReason reason) {
+        this.serverTriggerEvent(STOP_MUSIC);
+        super.remove(reason);
+    }
+
+
+
+
 
     @Override
     protected void defineSynchedData() {
@@ -403,32 +445,32 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         controllerRegistrar.add(continuousCastController);
     }
     private PlayState walkPredicate(AnimationState<BloodBoss> state) {
+
+        // ===== 技能 / 施法期间：完全冻结行走控制器 =====
+        boolean isCastingSkill =
+                this.getBrain()
+                        .getMemory(ModMemoryModuleType.IS_CASTING_SKILL.get())
+                        .orElse(false);
+
+        if (isCastingSkill || this.isCasting()) {
+            animationControllerWalk.setAnimationSpeed(1.0);
+            return PlayState.STOP;
+        }
+
+        // ===== 非施法状态 =====
         double horizontalSpeed = this.getDeltaMovement().horizontalDistance();
 
-        if (state.isMoving()) {
-            double speedMultiplier = (horizontalSpeed / 0.053) * 1.5;
-            animationControllerWalk.setAnimationSpeed(Math.max(0.5, speedMultiplier));
-        } else {
-            animationControllerWalk.setAnimationSpeed(1.0);
+        // 只在非技能状态下根据真实速度调动画
+        if (horizontalSpeed > 0.01) {
+            double speedMultiplier = (horizontalSpeed / 0.053) * 1.2;
+            animationControllerWalk.setAnimationSpeed(
+                    Mth.clamp(speedMultiplier, 0.6, 1.8)
+            );
+            return state.setAndContinue(WALK);
         }
 
-
-        if (this.isCasting()) {
-            this.lastCastTick = this.tickCount;
-        }
-
-        boolean isRecentlyCasting = (this.tickCount - this.lastCastTick) < CASTING_POST_DELAY;
-
-        RawAnimation target;
-
-
-        if (this.isCasting() || isRecentlyCasting) {
-            target = state.isMoving() ? CAST_WALK : CAST_IDLE;
-        } else {
-            target = state.isMoving() ? WALK : IDLE;
-        }
-
-        return state.setAndContinue(target);
+        animationControllerWalk.setAnimationSpeed(1.0);
+        return state.setAndContinue(IDLE);
     }
 
     private PlayState animationPredicate(AnimationState<BloodBoss> animationEvent) {
@@ -666,28 +708,12 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         }
     }
 
+
+
     //================================================================ 其他方法 ========================================================================
 
 
-    @Override
-    public void tick() {
-        if (!isSpellConfigLoaded()) {
 
-                return;
-
-        }
-        super.tick();
-
-        if (this.level().isClientSide && this.isCasting()) {
-            this.lastCastTick = this.tickCount;
-        }
-
-        if (!this.level().isClientSide) {
-            float progress = this.getHealth() / this.getMaxHealth();
-            this.bossEvent.setProgress(Mth.clamp(progress, 0.0F, 1.0F));
-        }
-
-    }
 
 
     @Override
@@ -741,15 +767,7 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     }
 
 
-    @Override
-    public void die(DamageSource cause) {
-        if (!this.level().isClientSide) {
-            this.serverTriggerEvent(STOP_MUSIC);
-            this.serverTriggerEvent(STOP_BOSSBAR);
-            this.bossEvent.removeAllPlayers();
-        }
-        super.die(cause);
-    }
+
 
 
 
@@ -840,5 +858,63 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         }
         this.magicData.setSyncedData(syncedSpellData);
         this.hasUsedSingleAttack = compound.getBoolean("usedSpecial");
+    }
+    
+    //================================================================ 战斗伤害方法 ========================================================================
+    
+    /**
+     * 对主要目标造成伤害（常用于抓取技能等高伤害技能）
+     * 
+     * @param target 目标实体
+     * @param baseDamage 基础伤害值
+     * @param damageMultiplier 伤害倍数，默认为2.5f
+     */
+    public void applyMainTargetDamage(LivingEntity target, float baseDamage, float damageMultiplier) {
+        float actualDamage = baseDamage * damageMultiplier;
+        target.hurt(this.damageSources().mobAttack(this), actualDamage);
+        target.push(0, 0.5, 0);
+    }
+    
+    /**
+     * 对主要目标造成伤害（默认2.5倍伤害）
+     * 
+     * @param target 目标实体
+     * @param baseDamage 基础伤害值
+     */
+    public void applyMainTargetDamage(LivingEntity target, float baseDamage) {
+        applyMainTargetDamage(target, baseDamage, 2.5f);
+    }
+    
+    /**
+     * 对范围内的多个目标造成伤害
+     * 
+     * @param level 服务器级别
+     * @param targets 目标实体列表
+     * @param baseDamage 基础伤害值
+     * @param damageMultiplier 伤害倍数
+     */
+    public void applyAreaOfEffectDamage(ServerLevel level, List<LivingEntity> targets, float baseDamage, float damageMultiplier) {
+        float aoeDamage = baseDamage * damageMultiplier;
+        for (LivingEntity target : targets) {
+            if (target != this && target.isAlive()) {
+                target.hurt(this.damageSources().mobAttack(this), aoeDamage);
+                double dx = target.getX() - this.getX();
+                double dz = target.getZ() - this.getZ();
+                target.knockback(0.8, -dx, -dz);
+            }
+        }
+    }
+    
+    /**
+     * 对单个目标造成技能伤害
+     * 
+     * @param target 目标实体
+     * @param baseDamage 基础伤害值
+     * @param damageMultiplier 伤害倍数
+     */
+    public void applySkillDamage(LivingEntity target, float baseDamage, float damageMultiplier) {
+        float skillDamage = baseDamage * damageMultiplier;
+        target.invulnerableTime = 0;
+        target.hurt(this.damageSources().mobAttack(this), skillDamage);
     }
 }
