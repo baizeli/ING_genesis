@@ -117,6 +117,7 @@ public class ItemRegistry {
                 -1.7F,
                 properties
             ))
+            .model((ctx, prov) -> prov.handheld(ctx::getEntry))
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
@@ -128,6 +129,7 @@ public class ItemRegistry {
                 -1.6F,
                 properties
             ))
+            .model((ctx, prov) -> prov.handheld(ctx::getEntry))
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
