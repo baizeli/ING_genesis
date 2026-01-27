@@ -6,6 +6,7 @@
   "itemGroup.iron_spells_genesis.block": "iron的法术创世纪：方块",
   "itemGroup.iron_spells_genesis.material": "iron的法术创世纪：材料",
   "itemGroup.iron_spells_genesis.equipment": "iron的法术创世纪：装备",
+  "itemGroup.iron_spells_genesis.spell_scroll": "iron的法术创世纪：法术卷轴",
 
   "attribute.iron_spells_genesis.chaos_magic_resist": "#1混沌#法术抗性",
   "attribute.iron_spells_genesis.chaos_spell_power": "#1混沌#法术强度",

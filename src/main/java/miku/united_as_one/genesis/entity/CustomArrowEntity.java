@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.entity;
 
-import miku.united_as_one.genesis.registry.spell.SpellRegistry;
+import miku.united_as_one.genesis.registry.CreativeTabRegistry;
 import miku.united_as_one.genesis.entity.spells.celestial_source.BoxEntity;
 import miku.united_as_one.genesis.registry.EntityRegistry;
 import io.redspace.ironsspellbooks.damage.SpellDamageSource;
@@ -411,7 +411,7 @@ public class CustomArrowEntity extends AbstractArrow {
                     for (LivingEntity target : targets) {
                         target.invulnerableTime = 0;
                         target.hurtTime = 0;
-                        target.hurt(SpellDamageSource.source(target, Objects.requireNonNull(this.getOwner()), SpellRegistry.FINAL_WHISPER_SPELL.get()), (float) damage);
+                        target.hurt(SpellDamageSource.source(target, Objects.requireNonNull(this.getOwner()), CreativeTabRegistry.FINAL_WHISPER_SPELL.get()), (float) damage);
                         target.setHealth((float) (target.getHealth() - damage));
                     }
                     try {

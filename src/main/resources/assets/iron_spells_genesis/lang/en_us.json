@@ -6,6 +6,7 @@
   "itemGroup.iron_spells_genesis.block": "iron's Spells: Genesis: Block",
   "itemGroup.iron_spells_genesis.material": "iron's Spells: Genesis: Material",
   "itemGroup.iron_spells_genesis.equipment": "iron's Spells: Genesis: Equipment",
+  "itemGroup.iron_spells_genesis.spell_scroll": "iron's Spells: Genesis: Spell Scroll",
 
   "attribute.iron_spells_genesis.chaos_magic_resist": "#1Chaos# Magic Resistance",
   "attribute.iron_spells_genesis.chaos_spell_power": "#1Chaos# Spell Power",
