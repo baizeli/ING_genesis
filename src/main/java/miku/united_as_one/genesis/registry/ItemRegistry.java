@@ -239,36 +239,72 @@ public class ItemRegistry {
             .register();
 
     // 混沌法术书
-    public static final RegistryObject<Item> CHAOS_SPELL_BOOK = ITEMS.register("chaos_spell_book", ChaosSpellBook::new);
+    public static final ItemEntry<ChaosSpellBook> CHAOS_SPELL_BOOK = Genesis.L2_REGISTRATE
+            .item("chaos_spell_book", properties -> new ChaosSpellBook())
+            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .register();
 
     // 星源法术书
-    public static final RegistryObject<Item> CELESTIAL_SOURCE_SPELL_BOOK = ITEMS.register("celestial_source_spell_book", CelestialSourceSpellBook::new);
+    public static final ItemEntry<CelestialSourceSpellBook> CELESTIAL_SOURCE_SPELL_BOOK = Genesis.L2_REGISTRATE
+            .item("celestial_source_spell_book", properties -> new CelestialSourceSpellBook())
+            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .register();
 
     // 混沌法杖
-    public static final RegistryObject<Item> CHAOS_STAFF = ITEMS.register("chaos_staff", ChaosStaff::new);
+    public static final ItemEntry<ChaosStaff> CHAOS_STAFF = Genesis.L2_REGISTRATE
+            .item("chaos_staff", properties -> new ChaosStaff())
+            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .register();
 
     // 星源法杖
-    public static final RegistryObject<Item> CELESTIAL_SOURCE_STAFF = ITEMS.register("celestial_source_staff", CelestialSourceStaff::new);
+    public static final ItemEntry<CelestialSourceStaff> CELESTIAL_SOURCE_STAFF = Genesis.L2_REGISTRATE
+            .item("celestial_source_staff", properties -> new CelestialSourceStaff())
+            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .register();
 
-    public static final RegistryObject<Item> CHAOS_RUNE = ITEMS.register("chaos_rune", () -> new Item(ItemPropertiesHelper.material()));
+    // 混沌符文
+    public static final ItemEntry<Item> CHAOS_RUNE = Genesis.L2_REGISTRATE
+            .item("chaos_rune", properties -> new Item(ItemPropertiesHelper.material()))
+            .register();
 
-    public static final RegistryObject<Item> CELESTIAL_SOURCE_RUNE = ITEMS.register("celestial_source_rune", () -> new Item(ItemPropertiesHelper.material()));
+    // 星源符文
+    public static final ItemEntry<Item> CELESTIAL_SOURCE_RUNE = Genesis.L2_REGISTRATE
+            .item("celestial_source_rune", properties -> new Item(ItemPropertiesHelper.material()))
+            .register();
+            
+    // 混沌升级法球
+    public static final ItemEntry<UpgradeOrbItem> CHAOS_UPGRADE_ORB = Genesis.L2_REGISTRATE
+            .item("chaos_upgrade_orb", properties -> new UpgradeOrbItem(
+                ItemPropertiesHelper.material().rarity(Rarity.UNCOMMON),
+                UpgradeOrbTypes.CHAOS_SPELL_POWER
+            ))
+            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .register();
 
-    public static final RegistryObject<Item> CHAOS_UPGRADE_ORB = ITEMS.register("chaos_upgrade_orb", () -> new UpgradeOrbItem(ItemPropertiesHelper.material().rarity(Rarity.UNCOMMON), UpgradeOrbTypes.CHAOS_SPELL_POWER));
-
-    public static final RegistryObject<Item> CELESTIAL_SOURCE_UPGRADE_ORB = ITEMS.register("celestial_source_upgrade_orb", () -> new UpgradeOrbItem(ItemPropertiesHelper.material().rarity(Rarity.UNCOMMON), UpgradeOrbTypes.CELESTIAL_SOURCE_SPELL_POWER));
+    // 星源升级法球
+    public static final ItemEntry<UpgradeOrbItem> CELESTIAL_SOURCE_UPGRADE_ORB = Genesis.L2_REGISTRATE
+            .item("celestial_source_upgrade_orb", properties -> new UpgradeOrbItem(
+                ItemPropertiesHelper.material().rarity(Rarity.UNCOMMON),
+                UpgradeOrbTypes.CELESTIAL_SOURCE_SPELL_POWER
+            ))
+            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .register();
 
     // 老王237
-    public static final RegistryObject<Item> LAO_WANG_237 = ITEMS.register("lao_wang_237", LaoWang237Curios::new);
+    public static final ItemEntry<LaoWang237Curios> LAO_WANG_237 = Genesis.L2_REGISTRATE
+            .item("lao_wang_237", properties -> new LaoWang237Curios())
+            .register();
 
     // 创世之诅咒
-    public static final RegistryObject<Item> GENESIS_CURSE = ITEMS.register("genesis_curse", GenesisCurseItem::new);
-
+    public static final ItemEntry<GenesisCurseItem> GENESIS_CURSE = Genesis.L2_REGISTRATE
+            .item("genesis_curse", properties -> new GenesisCurseItem())
+            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .register();
 
     // 无限忏悔石
-    public static final RegistryObject<Item> INFINITE_SHRIVING_STONE = ITEMS.register(
-        "infinite_shriving_stone", InfiniteShrivingStoneItem::new
-    );
+    public static final ItemEntry<InfiniteShrivingStoneItem> INFINITE_SHRIVING_STONE = Genesis.L2_REGISTRATE
+            .item("infinite_shriving_stone", properties -> new InfiniteShrivingStoneItem())
+            .register();
 
     // 飞燕穿柳
     public static final ItemEntry<FlyingSwallowThroughWillow> FLYING_SWALLOW_THROUGH_Willow = Genesis.L2_REGISTRATE
@@ -371,9 +407,11 @@ public class ItemRegistry {
             ))
             .register();
 
-    public static final RegistryObject<Item> CHAOS_MANUSCRIPT = ITEMS.register("chaos_manuscript",
+    // 混沌手稿
+    public static final RegistryObject<Item> CHAOS_MANUSCRIPT = ITEMS.register("chaos_manuscript", 
             ChaosManuscript::new);
 
+    // 星源手稿
     public static final RegistryObject<Item> CELESTIAL_SOURCE_MANUSCRIPT = ITEMS.register("celestial_source_manuscript",
             CelestialSourceManuscript::new);
 
