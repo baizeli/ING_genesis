@@ -29,7 +29,7 @@ public class CreativeTabRegistry {
 
         Genesis.L2_REGISTRATE
             .buildModCreativeTab("equipment", "itemGroup." + Genesis.MOD_ID, builder -> builder
-                .icon(() -> ItemRegistry.AVARITIA_SWORD.get().getDefaultInstance())
+                .icon(() -> ItemRegistry.MITHRIL_SWORD.get().getDefaultInstance())
             );
 
         Genesis.L2_REGISTRATE.defaultCreativeTab(CreativeModeTabs.SEARCH);
