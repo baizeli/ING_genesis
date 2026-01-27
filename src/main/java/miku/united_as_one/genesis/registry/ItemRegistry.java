@@ -38,21 +38,25 @@ public class ItemRegistry {
     // 紫极锭
     public static final ItemEntry<EternisMaterial> PURPLEITE_GALAXY_INGOT = Genesis.L2_REGISTRATE
             .item("purpleite_galaxy_ingot", properties -> new EternisMaterial(properties, 0))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
 
     // 神圣金属锭
     public static final ItemEntry<Item> DIVINE_METAL_INGOT = Genesis.L2_REGISTRATE
             .item("divine_metal_ingot", properties -> new Item(properties.rarity(Rarity.EPIC)))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
 
     // 扭曲混沌锭
     public static final ItemEntry<? extends Item> TWISTED_CHAOS_INGOT = Genesis.L2_REGISTRATE
             .item("twisted_chaos_ingot", properties -> new ItemRegistry.ChaosBaseItem(properties.rarity(Rarity.EPIC)))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
 
     // 扭曲之混沌
     public static final ItemEntry<ChaosBaseItem> TWISTED_CHAOS = Genesis.L2_REGISTRATE
             .item("twisted_chaos", properties -> new ChaosBaseItem(properties.rarity(Rarity.EPIC)))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
 
     // 星源珍珠
