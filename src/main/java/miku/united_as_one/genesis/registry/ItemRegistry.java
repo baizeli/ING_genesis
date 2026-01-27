@@ -34,6 +34,7 @@ public class ItemRegistry {
     //不加到创造标签页的用这个注册
     public static final DeferredRegister<Item> PRE_ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Genesis.MOD_ID);
 
+    // 紫极锭
     public static final ItemEntry<EternisMaterial> PURPLEITE_GALAXY_INGOT = Genesis.L2_REGISTRATE
             .item("purpleite_galaxy_ingot", properties -> new EternisMaterial(properties, 0))
             .register();
@@ -63,14 +64,17 @@ public class ItemRegistry {
             .item("celestial_source_ingot", properties -> new CelestialSourceBaseItem(properties.rarity(Rarity.EPIC)))
             .register();
 
+    // 寰宇大苹果
     public static final ItemEntry<EternisAppleItem> ETERNIS_APPLE = Genesis.L2_REGISTRATE
             .item("eternis_apple", properties -> new EternisAppleItem(properties.stacksTo(64).rarity(Rarity.EPIC)))
             .register();
 
+    // good_cake
     public static final ItemEntry<GoodCake> GOOD_CAKE = Genesis.L2_REGISTRATE
             .item("good_cake", properties -> new GoodCake())
             .register();
 
+    // 天火圣裁 [伪]
     public static final ItemEntry<InfinitySword> INFINITY_SWORD = Genesis.L2_REGISTRATE
             .item("infinity_sword", properties -> new InfinitySword(
                 Tiers.NETHERITE,
@@ -81,6 +85,7 @@ public class ItemRegistry {
             .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
             .register();
 
+    // 暮光极致者
     public static final ItemEntry<AvaritiaSword> AVARITIA_SWORD = Genesis.L2_REGISTRATE
             .item("avaritia_infinity_sword", properties -> new AvaritiaSword(
                 Integer.MAX_VALUE,
@@ -89,7 +94,8 @@ public class ItemRegistry {
             ))
             .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
             .register();
-    
+
+    // 往世的飞花
     public static final ItemEntry<NewBowItem> WHISPER_OF_THE_PAST = Genesis.L2_REGISTRATE
             .item("whisper_of_the_past", properties -> new NewBowItem(properties
                 .rarity(Rarity.EPIC)
@@ -278,7 +284,6 @@ public class ItemRegistry {
                 ItemPropertiesHelper.material().rarity(Rarity.UNCOMMON),
                 UpgradeOrbTypes.CHAOS_SPELL_POWER
             ))
-            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
             .register();
 
     // 星源升级法球
@@ -287,7 +292,6 @@ public class ItemRegistry {
                 ItemPropertiesHelper.material().rarity(Rarity.UNCOMMON),
                 UpgradeOrbTypes.CELESTIAL_SOURCE_SPELL_POWER
             ))
-            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
             .register();
 
     // 老王237
@@ -408,55 +412,66 @@ public class ItemRegistry {
             .register();
 
     // 混沌手稿
-    public static final RegistryObject<Item> CHAOS_MANUSCRIPT = ITEMS.register("chaos_manuscript", 
-            ChaosManuscript::new);
+    public static final ItemEntry<ChaosManuscript> CHAOS_MANUSCRIPT = Genesis.L2_REGISTRATE
+            .item("chaos_manuscript", properties -> new ChaosManuscript())
+            .register();
 
     // 星源手稿
-    public static final RegistryObject<Item> CELESTIAL_SOURCE_MANUSCRIPT = ITEMS.register("celestial_source_manuscript",
-            CelestialSourceManuscript::new);
+    public static final ItemEntry<CelestialSourceManuscript> CELESTIAL_SOURCE_MANUSCRIPT = Genesis.L2_REGISTRATE
+            .item("celestial_source_manuscript", properties -> new CelestialSourceManuscript())
+            .register();
 
     // 混沌手稿碎片
-    public static final RegistryObject<Item> CHAOS_MANUSCRIPT_FRAGMENT = ITEMS.register("chaos_manuscript_fragment",
-            () -> new ChaosBaseItem(new Item.Properties()
+    public static final ItemEntry CHAOS_MANUSCRIPT_FRAGMENT = Genesis.L2_REGISTRATE
+            .item("chaos_manuscript_fragment", properties -> new ChaosBaseItem(properties
                     .rarity(Rarity.EPIC)) {
                 @Override
                 public void appendHoverText(@NotNull ItemStack itemstack, @Nullable Level world, @NotNull List<Component> list, @NotNull TooltipFlag flag) {
-                    list.add(Component.translatable(
-                            "item." + Genesis.MOD_ID + ".chaos_manuscript_fragment.hover"
-                    ));
+                    list.add(Component.translatable("item." + Genesis.MOD_ID + ".chaos_manuscript_fragment.hover"));
                 }
-            });
+            })
+            .register();
 
-    // 星源手稿碎片
-    public static final RegistryObject<Item> BLANK_CELESTIAL_SOURCE_MANUSCRIPT = ITEMS.register("blank_celestial_source_manuscript",
-            () -> new CelestialSourceBaseItem(new Item.Properties()
+    // 空白星源手稿碎片
+    public static final ItemEntry BLANK_CELESTIAL_SOURCE_MANUSCRIPT = Genesis.L2_REGISTRATE
+            .item("blank_celestial_source_manuscript", properties -> new CelestialSourceBaseItem(properties
                     .fireResistant()
                     .rarity(Rarity.EPIC)) {
                 @Override
                 public void appendHoverText(@NotNull ItemStack itemstack, @Nullable Level world, @NotNull List<Component> list, @NotNull TooltipFlag flag) {
-                    list.add(Component.translatable(
-                            "item." + Genesis.MOD_ID + ".blank_celestial_source_manuscript.hover"
-                    ));
+                    list.add(Component.translatable("item." + Genesis.MOD_ID + ".blank_celestial_source_manuscript.hover"));
                 }
 
                 @Override
                 public boolean isFoil(@NotNull ItemStack stack) {
                     return true;
                 }
-            });
+            })
+            .register();
 
     // 奥术水晶矿
-    public static final RegistryObject<BlockItem> ARCANE_CRYSTAL_ORE_ITEM =
-            ItemRegistry.ITEMS.register("arcane_crystal_ore", () -> new BlockItem(BlockRegistry.ARCANE_CRYSTAL_ORE.get(), new Item.Properties()));
+    public static final ItemEntry<BlockItem> ARCANE_CRYSTAL_ORE_ITEM = Genesis.L2_REGISTRATE
+            .item("arcane_crystal_ore", properties -> new BlockItem(BlockRegistry.ARCANE_CRYSTAL_ORE.get(), properties))
+            .model((ctx, prov) -> prov.blockItem(ctx::getEntry))
+            .register();
 
-    public static final RegistryObject<BlockItem> ARCANE_CRYSTAL_ORE_DEEPSLATE_ITEM =
-            ItemRegistry.ITEMS.register("deepslate_arcane_crystal_ore", () -> new BlockItem(BlockRegistry.ARCANE_CRYSTAL_ORE_DEEPSLATE.get(), new Item.Properties()));
+    // 深层奥术水晶矿
+    public static final ItemEntry<BlockItem> ARCANE_CRYSTAL_ORE_DEEPSLATE_ITEM = Genesis.L2_REGISTRATE
+            .item("deepslate_arcane_crystal_ore", properties -> new BlockItem(BlockRegistry.ARCANE_CRYSTAL_ORE_DEEPSLATE.get(), properties))
+            .model((ctx, prov) -> prov.blockItem(ctx::getEntry))
+            .register();
 
-    public static final RegistryObject<BlockItem> NETHER_ARCANE_CRYSTAL_ORE_ITEM =
-            ItemRegistry.ITEMS.register("nether_arcane_crystal_ore", () -> new BlockItem(BlockRegistry.NETHER_ARCANE_CRYSTAL_ORE.get(), new Item.Properties()));
+    // 下界奥术水晶矿
+    public static final ItemEntry<BlockItem> NETHER_ARCANE_CRYSTAL_ORE_ITEM = Genesis.L2_REGISTRATE
+            .item("nether_arcane_crystal_ore", properties -> new BlockItem(BlockRegistry.NETHER_ARCANE_CRYSTAL_ORE.get(), properties))
+            .model((ctx, prov) -> prov.blockItem(ctx::getEntry))
+            .register();
 
-    public static final RegistryObject<BlockItem> END_ARCANE_CRYSTAL_ORE_ITEM =
-            ItemRegistry.ITEMS.register("end_arcane_crystal_ore", () -> new BlockItem(BlockRegistry.END_ARCANE_CRYSTAL_ORE.get(), new Item.Properties()));
+    // 末地奥术水晶矿
+    public static final ItemEntry<BlockItem> END_ARCANE_CRYSTAL_ORE_ITEM = Genesis.L2_REGISTRATE
+            .item("end_arcane_crystal_ore", properties -> new BlockItem(BlockRegistry.END_ARCANE_CRYSTAL_ORE.get(), properties))
+            .model((ctx, prov) -> prov.blockItem(ctx::getEntry))
+            .register();
 
     // 血肉魂铃
     public static final ItemEntry<Item> FLESH_SOUL_BELL = Genesis.L2_REGISTRATE
