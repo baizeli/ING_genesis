@@ -19,7 +19,7 @@ public class CreativeTabRegistry {
     static {
         Genesis.L2_REGISTRATE
             .buildModCreativeTab("block", "itemGroup." + Genesis.MOD_ID, builder -> builder
-                .icon(() -> ItemRegistry.ARCANE_CRYSTAL_ORE_ITEM.get().getDefaultInstance())
+                .icon(() -> ItemRegistry.CELESTIAL_SOURCE_BLOCK_ITEM.get().getDefaultInstance())
             );
             
         Genesis.L2_REGISTRATE
