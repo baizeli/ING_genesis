@@ -7,6 +7,7 @@ import com.mojang.serialization.Dynamic;
 import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import miku.united_as_one.genesis.entity.ai.ModMemoryModuleType;
+import miku.united_as_one.genesis.entity.boss.behavior.BloodBossGrabBehavior;
 import miku.united_as_one.genesis.entity.boss.behavior.LightningWhirlSlashBehavior;
 import miku.united_as_one.genesis.entity.boss.behavior.SelectTargetBehavior;
 import miku.united_as_one.genesis.entity.boss.behavior.SpellCastingBehavior;
@@ -16,6 +17,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.behavior.*;
+import net.minecraft.world.entity.ai.behavior.warden.SetWardenLookTarget;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.sensing.Sensor;
 import net.minecraft.world.entity.ai.sensing.SensorType;
@@ -82,7 +84,8 @@ public class BloodBossAi {
                     ModMemoryModuleType.BOSS_STAGE.get(),//阶段
                     ModMemoryModuleType.BOOLEAN_TEST_MEMORY_MODULE.get(),//布尔
                     ModMemoryModuleType.NBT_TEST_MEMORY_MODULE.get(),//NBT
-                    ModMemoryModuleType.INT_TEST_MEMORY_MODULE.get()//INT
+                    ModMemoryModuleType.INT_TEST_MEMORY_MODULE.get(),//INT
+                    ModMemoryModuleType.IS_CASTING_SKILL.get()//标记正在释放boss技能
                      );
         }
 
@@ -132,123 +135,83 @@ public class BloodBossAi {
                 )
         );
     }
-
-
     private static void addFightActivities(Brain<BloodBoss> brain) {
         Activity activity = Activity.FIGHT;
         int i = fightStartPriority;
 
-        List<AbstractSpell> spellList = List.of(
-                SpellRegistry.BLOOD_SLASH_SPELL.get(),
-                SpellRegistry.BLOOD_NEEDLES_SPELL.get(),
-                SpellRegistry.WITHER_SKULL_SPELL.get(),
-                SpellRegistry.ACUPUNCTURE_SPELL.get(),
-                SpellRegistry.SONIC_BOOM_SPELL.get(),
-                SpellRegistry.ELDRITCH_BLAST_SPELL.get()
-
-/*                SpellRegistry.FIREBALL_SPELL.get(),
-
-                SpellRegistry.BLOOD_STEP_SPELL.get(),
-                SpellRegistry.DEVOUR_SPELL.get(),
-                SpellRegistry.HEARTSTOP_SPELL.get(),
-                SpellRegistry.RAY_OF_SIPHONING_SPELL.get(),
-
-                SpellRegistry.DRAGON_BREATH_SPELL.get(),
-                SpellRegistry.MAGIC_ARROW_SPELL.get(),
-                SpellRegistry.MAGIC_MISSILE_SPELL.get(),
-                SpellRegistry.TELEPORT_SPELL.get(),
-                SpellRegistry.ECHOING_STRIKES_SPELL.get(),
-                SpellRegistry.SHADOW_SLASH.get(),
-                SpellRegistry.CHAIN_CREEPER_SPELL.get(),
-                SpellRegistry.FANG_STRIKE_SPELL.get(),
-                SpellRegistry.FIRECRACKER_SPELL.get(),
-                SpellRegistry.GUST_SPELL.get(),
-                SpellRegistry.LOB_CREEPER_SPELL.get(),
-                SpellRegistry.SLOW_SPELL.get(),
-                SpellRegistry.ARROW_VOLLEY_SPELL.get(),
-                SpellRegistry.THROW_SPELL.get(),
-                SpellRegistry.BLAZE_STORM_SPELL.get(),
-                SpellRegistry.BURNING_DASH_SPELL.get(),
-                SpellRegistry.FIREBOLT_SPELL.get(),
-                SpellRegistry.FIRE_BREATH_SPELL.get(),
-                SpellRegistry.MAGMA_BOMB_SPELL.get(),
-                SpellRegistry.WALL_OF_FIRE_SPELL.get(),
-                SpellRegistry.HEAT_SURGE_SPELL.get(),
-                SpellRegistry.FLAMING_STRIKE_SPELL.get(),
-                SpellRegistry.SCORCH_SPELL.get(),
-                SpellRegistry.FLAMING_BARRAGE_SPELL.get(),
-                SpellRegistry.FIRE_ARROW_SPELL.get(),
-                SpellRegistry.ICICLE_SPELL.get(),
-                SpellRegistry.RAY_OF_FROST_SPELL.get(),
-                SpellRegistry.FROSTWAVE_SPELL.get(),
-                SpellRegistry.ICE_SPIKES_SPELL.get(),
-                SpellRegistry.ICE_TOMB_SPELL.get(),
-                SpellRegistry.SNOWBALL_SPELL.get(),
-                SpellRegistry.FROSTBITE_SPELL.get(),
-                SpellRegistry.CHAIN_LIGHTNING_SPELL.get(),
-                SpellRegistry.ELECTROCUTE_SPELL.get(),
-                SpellRegistry.LIGHTNING_BOLT_SPELL.get(),
-                SpellRegistry.LIGHTNING_LANCE_SPELL.get(),
-                SpellRegistry.SHOCKWAVE_SPELL.get(),
-                SpellRegistry.THUNDERSTORM_SPELL.get(),
-                SpellRegistry.BALL_LIGHTNING_SPELL.get(),
-                SpellRegistry.VOLT_STRIKE_SPELL.get(),
-                SpellRegistry.ACID_ORB_SPELL.get(),
-                SpellRegistry.BLIGHT_SPELL.get(),
-                SpellRegistry.POISON_ARROW_SPELL.get(),
-                SpellRegistry.POISON_BREATH_SPELL.get(),
-                SpellRegistry.POISON_SPLASH_SPELL.get(),
-                SpellRegistry.ROOT_SPELL.get(),
-                SpellRegistry.SPIDER_ASPECT_SPELL.get(),
-                SpellRegistry.FIREFLY_SWARM_SPELL.get(),
-                SpellRegistry.EARTHQUAKE_SPELL.get(),
-                SpellRegistry.STOMP_SPELL.get(),
-                SpellRegistry.TOUCH_DIG.get(),
-                SpellRegistry.TELEKINESIS_SPELL.get()*/
-
+        // 创建施法行为列表
+        ImmutableList<SpellCastingBehavior> spellBehaviors = createSpellCastingBehaviors(
+            createSpellData(SpellRegistry.BLOOD_SLASH_SPELL.get(), 10, 20.0f),
+            createSpellData(SpellRegistry.BLOOD_NEEDLES_SPELL.get(), 25, 18.0f),
+            createSpellData(SpellRegistry.WITHER_SKULL_SPELL.get(), 30, 25.0f),
+            createSpellData(SpellRegistry.ACUPUNCTURE_SPELL.get(), 20, 15.0f),
+            createSpellData(SpellRegistry.SONIC_BOOM_SPELL.get(), 15, 16.0f),
+            createSpellData(SpellRegistry.ELDRITCH_BLAST_SPELL.get(), 12, 22.0f)
         );
 
-        SpellCastingBehavior spellCasting = new SpellCastingBehavior(
-                spellList,
-                10,  // 冷却时间
-                20.0f // 最大施法距离
-        );
+
+        ImmutableList.Builder<BehaviorControl<BloodBoss>>
+                fightBuilder = ImmutableList.builder();
+
+        //清除无效目标
+        fightBuilder.add(StopAttackingIfTargetInvalid.create(livingEntity -> false, (mob, target) -> {}, true));
+        fightBuilder.add(new LightningWhirlSlashBehavior());//闪电旋风劈
+        //抓取技能
+        fightBuilder.add(new BloodBossGrabBehavior());
+
+
+        // 添加所有施法行为
+        for (SpellCastingBehavior behavior : spellBehaviors) {
+            fightBuilder.add(behavior);
+        }
+
+        ImmutableList<BehaviorControl<BloodBoss>> fightBehaviors = fightBuilder.build();
 
         brain.addActivityAndRemoveMemoryWhenStopped(
                 activity,
                 i,
-                ImmutableList.of(
-                        StopAttackingIfTargetInvalid.create(livingEntity -> false, (mob, target) -> {}, true),
-                        new LightningWhirlSlashBehavior()
-//                        new SpellLockAimingBehavior(),
-//
-//                        spellCasting
-                ),
+                fightBehaviors,
                 MemoryModuleType.ATTACK_TARGET
         );
-/*        brain.addActivityAndRemoveMemoryWhenStopped(
-                activity,//要添加的活动为蘸豆活动
-                i,
-                ImmutableList.of(
-                        // 停止攻击无效目标
-                        StopAttackingIfTargetInvalid.create(
-                                livingEntity -> false,
-                                (mob, target) -> {},
-                                true
-                        ),
-                        // 移动向目标（从IDLE移到FIGHT）
-                        SetWalkTargetFromAttackTargetIfTargetOutOfReach.create(BloodBossAi::getSpeedModifierChasing),
+    }
 
-                        // 近战攻击
-                        MeleeAttack.create(20),
-                        // 备用行为
-                        new RunOne<>(ImmutableList.of(
-                                Pair.of(RandomStroll.stroll(1.0F), 2),
-                                Pair.of(new DoNothing(10, 20), 1)
-                        ))
-                ),
-                MemoryModuleType.ATTACK_TARGET
-        );*/
+    /**
+     * 创建法术数据，包含法术、冷却时间和最大施法距离
+     * 
+     * @param spell 法术
+     * @param cooldown 冷却时间
+     * @param maxCastDistance 最大施法距离
+     * @return 法术数据
+     */
+    private static Pair<AbstractSpell, Pair<Integer, Float>> createSpellData(AbstractSpell spell, int cooldown, float maxCastDistance) {
+        return Pair.of(spell, Pair.of(cooldown, maxCastDistance));
+    }
+
+    /**
+     * 根据法术、冷却时间和施法距离创建施法行为列表
+     * 
+     * @param spellData 包含法术、冷却时间和最大施法距离的数据
+     * @return 施法行为列表
+     */
+    @SafeVarargs
+    private static ImmutableList<SpellCastingBehavior> createSpellCastingBehaviors(Pair<AbstractSpell, Pair<Integer, Float>>... spellData) {
+        ImmutableList.Builder<SpellCastingBehavior> builder = ImmutableList.builder();
+        
+        for (Pair<AbstractSpell, Pair<Integer, Float>> data : spellData) {
+            AbstractSpell spell = data.getFirst();
+            int cooldown = data.getSecond().getFirst();
+            float maxCastDistance = data.getSecond().getSecond();
+            
+            SpellCastingBehavior behavior = new SpellCastingBehavior(
+                List.of(spell),
+                cooldown,
+                maxCastDistance
+            );
+            
+            builder.add(behavior);
+        }
+        
+        return builder.build();
     }
 
     private static void addIdleActivities(Brain<BloodBoss> brain, BloodBoss BloodBoss) {
@@ -298,10 +261,11 @@ public class BloodBossAi {
         //无论切换到哪个活动，核心活动都会保持激活状态
         brain.addActivity(Activity.CORE, 0,
             //行为列表
-            //在同一个活动内，每tick只执行一个行为
+            //在同一个活动内，每tick并行执行多个行为,每次都检查行为开始的条件
             //不同活动之间是并行的，所以核心活动和主活动可以各执行一个行为
             ImmutableList.of(
 //                new AnimalPanic(2.0F),
+                SetWardenLookTarget.create(),
                 new LookAtTargetSink(45, 90),
                 new MoveToTargetSink(100, 200)
             )
