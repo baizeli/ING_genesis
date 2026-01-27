@@ -31,6 +31,9 @@ public class ModMemoryModuleType {
     // 测试记录NBT列表
     public static final RegistryObject<MemoryModuleType<List<CompoundTag>>> NBT_TEST_MEMORY_MODULE;
 
+    //用于标记正在释放技能
+    public static final RegistryObject<MemoryModuleType<Boolean>> IS_CASTING_SKILL ;
+
     //codec
     static {
         ENTITY_TYPE_COUNT_CODEC = CodecUtils.createEntityTypeCountCodec();
@@ -49,6 +52,8 @@ public class ModMemoryModuleType {
                 () -> new MemoryModuleType<>(Optional.of(Codec.INT)));
         NBT_TEST_MEMORY_MODULE = MEMORY_MODULES.register("nbt_test_memory_module",
                 () -> new MemoryModuleType<>(Optional.of(CompoundTag.CODEC.listOf())));
+        IS_CASTING_SKILL = MEMORY_MODULES.register("is_casting_skill",
+                () -> new MemoryModuleType<>(Optional.empty()));
     }
 
     public static void register(IEventBus modEventBus) {
