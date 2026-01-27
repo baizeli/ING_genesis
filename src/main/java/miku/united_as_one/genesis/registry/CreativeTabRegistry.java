@@ -24,12 +24,12 @@ public class CreativeTabRegistry {
             
         Genesis.L2_REGISTRATE
             .buildModCreativeTab("material", "itemGroup." + Genesis.MOD_ID, builder -> builder
-                .icon(() -> ItemRegistry.ARCANE_CRYSTAL.get().getDefaultInstance())
+                .icon(() -> ItemRegistry.GALAXY_SCROLL.get().getDefaultInstance())
             );
 
         Genesis.L2_REGISTRATE
             .buildModCreativeTab("equipment", "itemGroup." + Genesis.MOD_ID, builder -> builder
-                .icon(() -> ItemRegistry.INFINITY_SWORD.get().getDefaultInstance())
+                .icon(() -> ItemRegistry.AVARITIA_SWORD.get().getDefaultInstance())
             );
 
         Genesis.L2_REGISTRATE.defaultCreativeTab(CreativeModeTabs.SEARCH);

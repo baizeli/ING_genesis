@@ -11,6 +11,7 @@ import miku.united_as_one.genesis.items.curios.rune_plus.*;
 import miku.united_as_one.genesis.items.manuscript.*;
 import miku.united_as_one.genesis.tooltipParticleHandler.*;
 import miku.united_as_one.genesis.spell.UpgradeOrbTypes;
+import miku.united_as_one.genesis.registry.CreativeTabRegistry;
 import io.redspace.ironsspellbooks.item.UpgradeOrbItem;
 import io.redspace.ironsspellbooks.item.armor.IronsExtendedArmorMaterial;
 import io.redspace.ironsspellbooks.util.ItemPropertiesHelper;
@@ -62,21 +63,25 @@ public class ItemRegistry {
     // 星源珍珠
     public static final ItemEntry<CelestialSourceBaseItem> CELESTIAL_SOURCE_PEARL = Genesis.L2_REGISTRATE
             .item("celestial_source_pearl", properties -> new CelestialSourceBaseItem(properties.rarity(Rarity.EPIC)))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
 
     // 星源锭
     public static final ItemEntry<CelestialSourceBaseItem> CELESTIAL_SOURCE_INGOT = Genesis.L2_REGISTRATE
             .item("celestial_source_ingot", properties -> new CelestialSourceBaseItem(properties.rarity(Rarity.EPIC)))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
 
     // 寰宇大苹果
     public static final ItemEntry<EternisAppleItem> ETERNIS_APPLE = Genesis.L2_REGISTRATE
             .item("eternis_apple", properties -> new EternisAppleItem(properties.stacksTo(64).rarity(Rarity.EPIC)))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
 
     // good_cake
     public static final ItemEntry<GoodCake> GOOD_CAKE = Genesis.L2_REGISTRATE
             .item("good_cake", properties -> new GoodCake())
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
 
     // 天火圣裁 [伪]
@@ -88,6 +93,7 @@ public class ItemRegistry {
                 properties.durability(Integer.MAX_VALUE)
             ))
             .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
     // 暮光极致者
@@ -98,6 +104,7 @@ public class ItemRegistry {
                 properties.durability(Integer.MAX_VALUE)
             ))
             .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
     // 往世的飞花
@@ -110,6 +117,7 @@ public class ItemRegistry {
             .model((ctx, prov) -> {
                 prov.withExistingParent(ctx.getName(), new ResourceLocation(Genesis.MOD_ID, "item/whisper_of_the_past"));
             })
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
     // 创造之星
@@ -117,6 +125,7 @@ public class ItemRegistry {
             .item("create_star", properties -> new CreateStar(properties
                 .rarity(Rarity.COMMON)
             ))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
 
     // 星源绘卷
@@ -125,12 +134,14 @@ public class ItemRegistry {
                 .rarity(Rarity.RARE)
                 .stacksTo(1)
             ))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
 
     // 奥术工作台
     public static final ItemEntry<BlockItem> ARCANE_WORKBENCH = Genesis.L2_REGISTRATE
             .item("arcane_workbench", properties -> new BlockItem(BlockRegistry.ARCANE_WORKBENCH.get(), properties))
             .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
             .register();
 
     // 神圣金属套
@@ -139,6 +150,7 @@ public class ItemRegistry {
                 (IronsExtendedArmorMaterial) ModArmorMaterials.DIVINE_METAL, ArmorItem.Type.HELMET, properties
             ))
             .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
     public static final ItemEntry<DivineMetalArmor> DIVINE_METAL_CHESTPLATE = Genesis.L2_REGISTRATE
@@ -146,6 +158,7 @@ public class ItemRegistry {
                 (IronsExtendedArmorMaterial) ModArmorMaterials.DIVINE_METAL, ArmorItem.Type.CHESTPLATE, properties
             ))
             .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
     public static final ItemEntry<DivineMetalArmor> DIVINE_METAL_LEGGINGS = Genesis.L2_REGISTRATE
@@ -153,6 +166,7 @@ public class ItemRegistry {
                 (IronsExtendedArmorMaterial) ModArmorMaterials.DIVINE_METAL, ArmorItem.Type.LEGGINGS, properties
             ))
             .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
     public static final ItemEntry<DivineMetalArmor> DIVINE_METAL_BOOTS = Genesis.L2_REGISTRATE
@@ -160,6 +174,7 @@ public class ItemRegistry {
                 (IronsExtendedArmorMaterial) ModArmorMaterials.DIVINE_METAL, ArmorItem.Type.BOOTS, properties
             ))
             .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
     // 星源法术套
@@ -168,6 +183,7 @@ public class ItemRegistry {
                 ModArmorMaterials.CELESTIAL_SOURCE_SPELL, ArmorItem.Type.HELMET, properties
             ))
             .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
     public static final ItemEntry<CelestialSourceSpellArmor> CELESTIAL_SOURCE_SPELL_CHESTPLATE = Genesis.L2_REGISTRATE
@@ -175,6 +191,7 @@ public class ItemRegistry {
                 ModArmorMaterials.CELESTIAL_SOURCE_SPELL, ArmorItem.Type.CHESTPLATE, properties
             ))
             .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
     public static final ItemEntry<CelestialSourceSpellArmor> CELESTIAL_SOURCE_SPELL_LEGGINGS = Genesis.L2_REGISTRATE
@@ -182,6 +199,7 @@ public class ItemRegistry {
                 ModArmorMaterials.CELESTIAL_SOURCE_SPELL, ArmorItem.Type.LEGGINGS, properties
             ))
             .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
     public static final ItemEntry<CelestialSourceSpellArmor> CELESTIAL_SOURCE_SPELL_BOOTS = Genesis.L2_REGISTRATE
@@ -189,6 +207,7 @@ public class ItemRegistry {
                 ModArmorMaterials.CELESTIAL_SOURCE_SPELL, ArmorItem.Type.BOOTS, properties
             ))
             .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
     // 混沌法术套
@@ -197,6 +216,7 @@ public class ItemRegistry {
                 ModArmorMaterials.CHAOS_SPELL, ArmorItem.Type.HELMET, properties
             ))
             .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
     public static final ItemEntry<ChaosSpellArmor> CHAOS_SPELL_CHESTPLATE = Genesis.L2_REGISTRATE
@@ -204,6 +224,7 @@ public class ItemRegistry {
                 ModArmorMaterials.CHAOS_SPELL, ArmorItem.Type.CHESTPLATE, properties
             ))
             .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
     public static final ItemEntry<ChaosSpellArmor> CHAOS_SPELL_LEGGINGS = Genesis.L2_REGISTRATE
@@ -211,6 +232,7 @@ public class ItemRegistry {
                 ModArmorMaterials.CHAOS_SPELL, ArmorItem.Type.LEGGINGS, properties
             ))
             .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
     public static final ItemEntry<ChaosSpellArmor> CHAOS_SPELL_BOOTS = Genesis.L2_REGISTRATE
@@ -218,6 +240,7 @@ public class ItemRegistry {
                 ModArmorMaterials.CHAOS_SPELL, ArmorItem.Type.BOOTS, properties
             ))
             .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
     // 紫极战斗套
@@ -226,6 +249,7 @@ public class ItemRegistry {
                 ModArmorMaterials.VIOLET_ZENITH, ArmorItem.Type.HELMET, properties
             ))
             .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
     public static final ItemEntry<VioletZenithArmor> VIOLET_ZENITH_CHESTPLATE = Genesis.L2_REGISTRATE
@@ -233,6 +257,7 @@ public class ItemRegistry {
                 ModArmorMaterials.VIOLET_ZENITH, ArmorItem.Type.CHESTPLATE, properties
             ))
             .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
     public static final ItemEntry<VioletZenithArmor> VIOLET_ZENITH_LEGGINGS = Genesis.L2_REGISTRATE
@@ -240,6 +265,7 @@ public class ItemRegistry {
                 ModArmorMaterials.VIOLET_ZENITH, ArmorItem.Type.LEGGINGS, properties
             ))
             .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
     public static final ItemEntry<VioletZenithArmor> VIOLET_ZENITH_BOOTS = Genesis.L2_REGISTRATE
@@ -247,40 +273,53 @@ public class ItemRegistry {
                 ModArmorMaterials.VIOLET_ZENITH, ArmorItem.Type.BOOTS, properties
             ))
             .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
     // 混沌法术书
     public static final ItemEntry<ChaosSpellBook> CHAOS_SPELL_BOOK = Genesis.L2_REGISTRATE
             .item("chaos_spell_book", properties -> new ChaosSpellBook())
             .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
     // 星源法术书
     public static final ItemEntry<CelestialSourceSpellBook> CELESTIAL_SOURCE_SPELL_BOOK = Genesis.L2_REGISTRATE
             .item("celestial_source_spell_book", properties -> new CelestialSourceSpellBook())
             .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
     // 混沌法杖
     public static final ItemEntry<ChaosStaff> CHAOS_STAFF = Genesis.L2_REGISTRATE
             .item("chaos_staff", properties -> new ChaosStaff())
             .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
     // 星源法杖
     public static final ItemEntry<CelestialSourceStaff> CELESTIAL_SOURCE_STAFF = Genesis.L2_REGISTRATE
             .item("celestial_source_staff", properties -> new CelestialSourceStaff())
             .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
+            .register();
+
+    // 飞燕穿柳
+    public static final ItemEntry<FlyingSwallowThroughWillow> FLYING_SWALLOW_THROUGH_Willow = Genesis.L2_REGISTRATE
+            .item("flying_swallow_through_willow", properties -> new FlyingSwallowThroughWillow())
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
     // 混沌符文
     public static final ItemEntry<Item> CHAOS_RUNE = Genesis.L2_REGISTRATE
             .item("chaos_rune", properties -> new Item(ItemPropertiesHelper.material()))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
 
     // 星源符文
     public static final ItemEntry<Item> CELESTIAL_SOURCE_RUNE = Genesis.L2_REGISTRATE
             .item("celestial_source_rune", properties -> new Item(ItemPropertiesHelper.material()))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
             
     // 混沌升级法球
@@ -289,6 +328,7 @@ public class ItemRegistry {
                 ItemPropertiesHelper.material().rarity(Rarity.UNCOMMON),
                 UpgradeOrbTypes.CHAOS_SPELL_POWER
             ))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
 
     // 星源升级法球
@@ -297,27 +337,26 @@ public class ItemRegistry {
                 ItemPropertiesHelper.material().rarity(Rarity.UNCOMMON),
                 UpgradeOrbTypes.CELESTIAL_SOURCE_SPELL_POWER
             ))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
 
     // 老王237
     public static final ItemEntry<LaoWang237Curios> LAO_WANG_237 = Genesis.L2_REGISTRATE
             .item("lao_wang_237", properties -> new LaoWang237Curios())
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
     // 创世之诅咒
     public static final ItemEntry<GenesisCurseItem> GENESIS_CURSE = Genesis.L2_REGISTRATE
             .item("genesis_curse", properties -> new GenesisCurseItem())
             .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
     // 无限忏悔石
     public static final ItemEntry<InfiniteShrivingStoneItem> INFINITE_SHRIVING_STONE = Genesis.L2_REGISTRATE
             .item("infinite_shriving_stone", properties -> new InfiniteShrivingStoneItem())
-            .register();
-
-    // 飞燕穿柳
-    public static final ItemEntry<FlyingSwallowThroughWillow> FLYING_SWALLOW_THROUGH_Willow = Genesis.L2_REGISTRATE
-            .item("flying_swallow_through_willow", properties -> new FlyingSwallowThroughWillow())
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
 
     // 奥术水晶
@@ -326,6 +365,7 @@ public class ItemRegistry {
                 .stacksTo(16)
                 .rarity(Rarity.EPIC)
             ))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
 
     // 猩红水晶
@@ -334,6 +374,7 @@ public class ItemRegistry {
                 .stacksTo(16)
                 .rarity(Rarity.EPIC)
             ))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
 
     // 邪术水晶
@@ -342,6 +383,7 @@ public class ItemRegistry {
                 .stacksTo(16)
                 .rarity(Rarity.EPIC)
             ))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
 
     // 末影水晶
@@ -350,6 +392,7 @@ public class ItemRegistry {
                 .stacksTo(16)
                 .rarity(Rarity.EPIC)
             ))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
 
     // 唤魔水晶
@@ -358,6 +401,7 @@ public class ItemRegistry {
                 .stacksTo(16)
                 .rarity(Rarity.EPIC)
             ))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
 
     // 炽焰水晶
@@ -366,6 +410,7 @@ public class ItemRegistry {
                 .stacksTo(16)
                 .rarity(Rarity.EPIC)
             ))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
 
     // 神圣水晶
@@ -374,6 +419,7 @@ public class ItemRegistry {
                 .stacksTo(16)
                 .rarity(Rarity.EPIC)
             ))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
 
     // 冰霜水晶
@@ -382,6 +428,7 @@ public class ItemRegistry {
                 .stacksTo(16)
                 .rarity(Rarity.EPIC)
             ))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
 
     // 雷霆水晶
@@ -390,6 +437,7 @@ public class ItemRegistry {
                 .stacksTo(16)
                 .rarity(Rarity.EPIC)
             ))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
 
     // 自然水晶
@@ -398,6 +446,7 @@ public class ItemRegistry {
                 .stacksTo(16)
                 .rarity(Rarity.EPIC)
             ))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
 
     // 混沌水晶
@@ -406,6 +455,7 @@ public class ItemRegistry {
                 .stacksTo(16)
                 .rarity(Rarity.EPIC)
             ))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
 
     // 星源水晶
@@ -414,16 +464,19 @@ public class ItemRegistry {
                 .stacksTo(16)
                 .rarity(Rarity.EPIC)
             ))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
 
     // 混沌手稿
     public static final ItemEntry<ChaosManuscript> CHAOS_MANUSCRIPT = Genesis.L2_REGISTRATE
             .item("chaos_manuscript", properties -> new ChaosManuscript())
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
 
     // 星源手稿
     public static final ItemEntry<CelestialSourceManuscript> CELESTIAL_SOURCE_MANUSCRIPT = Genesis.L2_REGISTRATE
             .item("celestial_source_manuscript", properties -> new CelestialSourceManuscript())
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
 
     // 混沌手稿碎片
@@ -435,6 +488,7 @@ public class ItemRegistry {
                     list.add(Component.translatable("item." + Genesis.MOD_ID + ".chaos_manuscript_fragment.hover"));
                 }
             })
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
 
     // 空白星源手稿碎片
@@ -452,30 +506,35 @@ public class ItemRegistry {
                     return true;
                 }
             })
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
 
     // 奥术水晶矿
     public static final ItemEntry<BlockItem> ARCANE_CRYSTAL_ORE_ITEM = Genesis.L2_REGISTRATE
             .item("arcane_crystal_ore", properties -> new BlockItem(BlockRegistry.ARCANE_CRYSTAL_ORE.get(), properties))
             .model((ctx, prov) -> prov.blockItem(ctx::getEntry))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
             .register();
 
     // 深层奥术水晶矿
     public static final ItemEntry<BlockItem> ARCANE_CRYSTAL_ORE_DEEPSLATE_ITEM = Genesis.L2_REGISTRATE
             .item("deepslate_arcane_crystal_ore", properties -> new BlockItem(BlockRegistry.ARCANE_CRYSTAL_ORE_DEEPSLATE.get(), properties))
             .model((ctx, prov) -> prov.blockItem(ctx::getEntry))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
             .register();
 
     // 下界奥术水晶矿
     public static final ItemEntry<BlockItem> NETHER_ARCANE_CRYSTAL_ORE_ITEM = Genesis.L2_REGISTRATE
             .item("nether_arcane_crystal_ore", properties -> new BlockItem(BlockRegistry.NETHER_ARCANE_CRYSTAL_ORE.get(), properties))
             .model((ctx, prov) -> prov.blockItem(ctx::getEntry))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
             .register();
 
     // 末地奥术水晶矿
     public static final ItemEntry<BlockItem> END_ARCANE_CRYSTAL_ORE_ITEM = Genesis.L2_REGISTRATE
             .item("end_arcane_crystal_ore", properties -> new BlockItem(BlockRegistry.END_ARCANE_CRYSTAL_ORE.get(), properties))
             .model((ctx, prov) -> prov.blockItem(ctx::getEntry))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
             .register();
 
     // 血肉魂铃
@@ -484,11 +543,13 @@ public class ItemRegistry {
                 .stacksTo(1)
                 .rarity(Rarity.EPIC)
             ))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
 
     // 混沌原核
     public static final ItemEntry<ChaosCore> CHAOS_CORE = Genesis.L2_REGISTRATE
         .item("chaos_core", properties -> new ChaosCore())
+        .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
         .register();
 
     // 血肉灵魂碎片
@@ -497,60 +558,70 @@ public class ItemRegistry {
                 .stacksTo(1)
                 .rarity(Rarity.EPIC)
             ))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
 
     // 恒久之戒
     public static final ItemEntry<EternalRing> ETERNAL_RING = Genesis.L2_REGISTRATE
             .item("eternal_ring", properties -> new EternalRing())
             .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
     // 雷霆胸饰
     public static final ItemEntry<LightningRunePlus> LIGHTNING_RUNE_PLUS = Genesis.L2_REGISTRATE
             .item("lightning_rune_plus", properties -> new LightningRunePlus())
             .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
     // 自然手镯
     public static final ItemEntry<NatureRunePlus> NATURE_RUNE_PLUS = Genesis.L2_REGISTRATE
             .item("nature_rune_plus", properties -> new NatureRunePlus())
             .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
     // 末影指环
     public static final ItemEntry<EnderRunePlus> ENDER_RUNE_PLUS = Genesis.L2_REGISTRATE
             .item("ender_rune_plus", properties -> new EnderRunePlus())
             .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
     // 神圣拳套
     public static final ItemEntry<HolyRunePlus> HOLY_RUNE_PLUS = Genesis.L2_REGISTRATE
             .item("holy_rune_plus", properties -> new HolyRunePlus())
             .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
     // 冰霜脚链
     public static final ItemEntry<IceRunePlus> ICE_RUNE_PLUS = Genesis.L2_REGISTRATE
             .item("ice_rune_plus", properties -> new IceRunePlus())
             .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
     // 猩红之牙
     public static final ItemEntry<BloodRunePlus> BLOOD_RUNE_PLUS = Genesis.L2_REGISTRATE
             .item("blood_rune_plus", properties -> new BloodRunePlus())
             .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
     // 赤焰手饰
     public static final ItemEntry<FireRunePlus> FIRE_RUNE_PLUS = Genesis.L2_REGISTRATE
             .item("fire_rune_plus", properties -> new FireRunePlus())
             .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
     // 邪术符文
     public static final ItemEntry<EldritchRunePlus> ELDRITCH_RUNE_PLUS = Genesis.L2_REGISTRATE
             .item("eldritch_rune_plus", properties -> new EldritchRunePlus())
             .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
     
     private static RegistryObject<Item> registerCurios(String name, TagKey<Item> tagKey, Supplier<Item> item) {
