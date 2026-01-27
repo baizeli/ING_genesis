@@ -1,5 +1,5 @@
 {
-  "parent": "item/generated",
+  "parent": "minecraft:item/generated",
   "textures": {
     "layer0": "iron_spells_genesis:item/chaos_rune"
   }
