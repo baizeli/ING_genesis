@@ -29,6 +29,7 @@ import java.util.function.Supplier;
 
 @SuppressWarnings("removal")
 public class ItemRegistry {
+    public static final Map<TagKey<Item>, Set<RegistryObject<Item>>> itemTagMap = new HashMap<>();
     //加到创造标签页的用这个注册
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Genesis.MOD_ID);
     //不加到创造标签页的用这个注册
@@ -494,17 +495,60 @@ public class ItemRegistry {
             ))
             .register();
 
-    public static final Map<TagKey<Item>, Set<RegistryObject<Item>>> itemTagMap = new HashMap<>();
-    public static final RegistryObject<Item> ETERNAL_RING = registerCurios("eternal_ring", TagRegistry.RING, EternalRing::new);
-    public static final RegistryObject<Item> LIGHTNING_RUNE_PLUS = registerCurios("lightning_rune_plus", TagRegistry.BODY, LightningRunePlus::new);
-    public static final RegistryObject<Item> NATURE_RUNE_PLUS = registerCurios("nature_rune_plus", TagRegistry.BRACELET, NatureRunePlus::new);
-    public static final RegistryObject<Item> ENDER_RUNE_PLUS = registerCurios("ender_rune_plus", TagRegistry.RING, EnderRunePlus::new);
-    public static final RegistryObject<Item> HOLY_RUNE_PLUS = registerCurios("holy_rune_plus", TagRegistry.HANDS, HolyRunePlus::new);
-    public static final RegistryObject<Item> ICE_RUNE_PLUS = registerCurios("ice_rune_plus", TagRegistry.HANDS, IceRunePlus::new);
-    public static final RegistryObject<Item> BLOOD_RUNE_PLUS = registerCurios("blood_rune_plus", TagRegistry.CHARM, BloodRunePlus::new);
-    public static final RegistryObject<Item> FIRE_RUNE_PLUS = registerCurios("fire_rune_plus", TagRegistry.HANDS, FireRunePlus::new);
-    public static final RegistryObject<Item> ELDRITCH_RUNE_PLUS = registerCurios("eldritch_rune_plus", TagRegistry.HANDS, EldritchRunePlus::new);
+    // 恒久之戒
+    public static final ItemEntry<EternalRing> ETERNAL_RING = Genesis.L2_REGISTRATE
+            .item("eternal_ring", properties -> new EternalRing())
+            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .register();
 
+    // 雷霆胸饰
+    public static final ItemEntry<LightningRunePlus> LIGHTNING_RUNE_PLUS = Genesis.L2_REGISTRATE
+            .item("lightning_rune_plus", properties -> new LightningRunePlus())
+            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .register();
+
+    // 自然手镯
+    public static final ItemEntry<NatureRunePlus> NATURE_RUNE_PLUS = Genesis.L2_REGISTRATE
+            .item("nature_rune_plus", properties -> new NatureRunePlus())
+            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .register();
+
+    // 末影指环
+    public static final ItemEntry<EnderRunePlus> ENDER_RUNE_PLUS = Genesis.L2_REGISTRATE
+            .item("ender_rune_plus", properties -> new EnderRunePlus())
+            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .register();
+
+    // 神圣拳套
+    public static final ItemEntry<HolyRunePlus> HOLY_RUNE_PLUS = Genesis.L2_REGISTRATE
+            .item("holy_rune_plus", properties -> new HolyRunePlus())
+            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .register();
+
+    // 冰霜脚链
+    public static final ItemEntry<IceRunePlus> ICE_RUNE_PLUS = Genesis.L2_REGISTRATE
+            .item("ice_rune_plus", properties -> new IceRunePlus())
+            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .register();
+
+    // 猩红之牙
+    public static final ItemEntry<BloodRunePlus> BLOOD_RUNE_PLUS = Genesis.L2_REGISTRATE
+            .item("blood_rune_plus", properties -> new BloodRunePlus())
+            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .register();
+
+    // 赤焰手饰
+    public static final ItemEntry<FireRunePlus> FIRE_RUNE_PLUS = Genesis.L2_REGISTRATE
+            .item("fire_rune_plus", properties -> new FireRunePlus())
+            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .register();
+
+    // 邪术符文
+    public static final ItemEntry<EldritchRunePlus> ELDRITCH_RUNE_PLUS = Genesis.L2_REGISTRATE
+            .item("eldritch_rune_plus", properties -> new EldritchRunePlus())
+            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .register();
+    
     private static RegistryObject<Item> registerCurios(String name, TagKey<Item> tagKey, Supplier<Item> item) {
         RegistryObject<Item> register = ITEMS.register(name, item);
         Set<RegistryObject<Item>> set = itemTagMap.getOrDefault(tagKey, new HashSet<>());
