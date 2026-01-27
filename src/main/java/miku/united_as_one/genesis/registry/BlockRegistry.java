@@ -1,5 +1,6 @@
 package miku.united_as_one.genesis.registry;
 
+import com.tterrag.registrate.util.entry.RegistryEntry;
 import miku.united_as_one.genesis.content.ChaosPortalBlock;
 import miku.united_as_one.genesis.content.arcaneWorkbench.ArcaneWorkbenchBlock;
 import miku.united_as_one.genesis.Genesis;
@@ -10,6 +11,15 @@ import net.minecraftforge.registries.*;
 
 public class BlockRegistry {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Genesis.MOD_ID);
+
+    // 星源块
+    public static final RegistryEntry<Block> CELESTIAL_SOURCE_BLOCK = Genesis.L2_REGISTRATE
+            .block("celestial_source_block", Block::new)
+            .properties(properties -> properties
+                    .requiresCorrectToolForDrops()
+                    .strength(20, 9999)
+                    .sound(SoundType.NETHERITE_BLOCK))
+            .register();
 
     // 奥术工作台
     public static final RegistryObject<Block> ARCANE_WORKBENCH = BLOCKS.register("arcane_workbench",

@@ -3,9 +3,9 @@
   "curios.modifiers.crown": "作为冠冕佩戴时：",
 
   "itemGroup.iron_spells_genesis.iron_spells_genesis_tab": "铁之魔法书：创世纪",
-  "itemGroup.iron_spells_genesis.block": "iron法术：创世纪：方块",
-  "itemGroup.iron_spells_genesis.material": "iron法术：创世纪：材料",
-  "itemGroup.iron_spells_genesis.equipment": "iron法术：创世纪：装备",
+  "itemGroup.iron_spells_genesis.block": "iron的法术创世纪：方块",
+  "itemGroup.iron_spells_genesis.material": "iron的法术创世纪：材料",
+  "itemGroup.iron_spells_genesis.equipment": "iron的法术创世纪：装备",
 
   "attribute.iron_spells_genesis.chaos_magic_resist": "#1混沌#法术抗性",
   "attribute.iron_spells_genesis.chaos_spell_power": "#1混沌#法术强度",
@@ -141,9 +141,11 @@
   "item.iron_spells_genesis.flesh_soul_bell": "血肉魂铃",
   "item.iron_spells_genesis.chaos_core": "混沌原核",
   "item.iron_spells_genesis.flesh_soul_fragment": "血肉灵魂碎片",
+  "item.iron_spells_genesis.eldritch_upgrade_orb": "邪术升级法球",
 
   "iron_spells_genesis.galaxy_scroll.book_name": "§b星河绘卷",
 
+  "block.iron_spells_genesis.celestial_source_block": "星源块",
   "block.iron_spells_genesis.arcane_workbench": "奥术工作台",
   "block.iron_spells_genesis.arcane_crystal_ore": "奥术水晶矿",
   "block.iron_spells_genesis.deepslate_arcane_crystal_ore": "深层奥术水晶矿",

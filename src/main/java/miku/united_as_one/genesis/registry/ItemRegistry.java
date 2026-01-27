@@ -2,6 +2,7 @@ package miku.united_as_one.genesis.registry;
 
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.util.entry.ItemEntry;
+import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.items.*;
 import miku.united_as_one.genesis.items.staff.*;
@@ -11,7 +12,6 @@ import miku.united_as_one.genesis.items.curios.rune_plus.*;
 import miku.united_as_one.genesis.items.manuscript.*;
 import miku.united_as_one.genesis.tooltipParticleHandler.*;
 import miku.united_as_one.genesis.spell.UpgradeOrbTypes;
-import miku.united_as_one.genesis.registry.CreativeTabRegistry;
 import io.redspace.ironsspellbooks.item.UpgradeOrbItem;
 import io.redspace.ironsspellbooks.item.armor.IronsExtendedArmorMaterial;
 import io.redspace.ironsspellbooks.util.ItemPropertiesHelper;
@@ -340,6 +340,15 @@ public class ItemRegistry {
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
 
+    // 邪术升级法球
+    public static final ItemEntry<UpgradeOrbItem> ELDRITCH_UPGRADE_ORB = Genesis.L2_REGISTRATE
+            .item("eldritch_upgrade_orb", properties -> new UpgradeOrbItem(
+                ItemPropertiesHelper.material().rarity(Rarity.UNCOMMON),
+                UpgradeOrbTypes.ELDRITCH_SPELL_POWER
+            ))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
+            .register();
+
     // 老王237
     public static final ItemEntry<LaoWang237Curios> LAO_WANG_237 = Genesis.L2_REGISTRATE
             .item("lao_wang_237", properties -> new LaoWang237Curios())
@@ -507,6 +516,14 @@ public class ItemRegistry {
                 }
             })
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
+            .register();
+
+    // 星源块
+    public static final ItemEntry<BlockItem> CELESTIAL_SOURCE_BLOCK_ITEM = Genesis.L2_REGISTRATE
+            .item("celestial_source_block", properties -> new BlockItem(BlockRegistry.CELESTIAL_SOURCE_BLOCK.get(), properties))
+            .model((ctx, prov) -> prov.blockItem(ctx::getEntry))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
+            .setData(ProviderType.LANG, NonNullBiConsumer.noop())
             .register();
 
     // 奥术水晶矿
