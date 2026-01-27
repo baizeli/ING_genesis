@@ -3,6 +3,7 @@ package miku.united_as_one.genesis.entity.boss.behavior;
 import com.google.common.collect.ImmutableMap;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import io.redspace.ironsspellbooks.api.util.Utils;
+import miku.united_as_one.genesis.entity.ai.ModMemoryModuleType;
 import miku.united_as_one.genesis.entity.boss.BloodBoss;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
@@ -25,7 +26,8 @@ public class SpellCastingBehavior extends Behavior<BloodBoss> {
 
     public SpellCastingBehavior(List<AbstractSpell> spells, int cooldownTicks, float maxCastDistance) {
         super(ImmutableMap.of(
-                MemoryModuleType.ATTACK_TARGET, MemoryStatus.VALUE_PRESENT
+                MemoryModuleType.ATTACK_TARGET, MemoryStatus.VALUE_PRESENT,
+                ModMemoryModuleType.IS_CASTING_SKILL.get(), MemoryStatus.VALUE_ABSENT
 //                ,MemoryModuleType.CANT_REACH_WALK_TARGET_SINCE, MemoryStatus.REGISTERED
         ), 100);
 
