@@ -20,10 +20,17 @@ import java.util.Map;
 public class LightningWhirlSlashBehavior
         extends AnimatedActionBehavior<BloodBoss> {
 
+
+    //冷却(tick)
+    public static final int COOL_DOWN = 60;
+    //伤害倍率
+    public static final float DAMAGE_MULTIPLIER = 3.5F;
+
     private static final int DURATION = 30;
     private static final int HIT_1 = 19;
     private static final int HIT_2 = 24;
     public static final String SKILL_ANIMATION = "闪电旋风劈2";
+
 
     private boolean hit1Done = false;
     private boolean hit2Done = false;
@@ -103,7 +110,7 @@ public class LightningWhirlSlashBehavior
 
     @Override protected int getActionTimestamp() { return 0; }
     @Override protected int getActionDuration() { return DURATION; }
-    @Override protected int getCooldown() { return 60; }
+    @Override protected int getCooldown() { return COOL_DOWN; }
     @Override protected String getAnimationId() { return SKILL_ANIMATION; }
     @Override protected void doAction(BloodBoss entity) {}
 
@@ -151,7 +158,7 @@ public class LightningWhirlSlashBehavior
     private void dealAreaDamage(BloodBoss boss) {
         ServerLevel level = (ServerLevel) boss.level();
 
-        double radius = 4.5;
+        double radius = 4;
         AABB box = boss.getBoundingBox().inflate(radius);
 
         List<LivingEntity> targets = level.getEntitiesOfClass(
@@ -168,16 +175,11 @@ public class LightningWhirlSlashBehavior
     /**
      * 计算并应用伤害到单个目标
      * 
-     * @param boss 攻击者（血 Boss）
+     * @param boss 攻击者
      * @param target 受害者
      */
     private void applyDamageToTarget(BloodBoss boss, LivingEntity target) {
-        float baseDamage = (float) boss.getAttributeValue(
-                net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE
-        );
-        float skillDamage = baseDamage * 1.2F;
-        
-        // 使用 Boss 类中的通用方法
-        boss.applySkillDamage(target, baseDamage, 1.2F);
+
+        boss.applySkillDamage(target, DAMAGE_MULTIPLIER);
     }
 }
