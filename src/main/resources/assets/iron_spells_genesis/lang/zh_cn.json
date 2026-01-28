@@ -6,6 +6,7 @@
   "itemGroup.iron_spells_genesis.block": "iron的法术创世纪：方块",
   "itemGroup.iron_spells_genesis.material": "iron的法术创世纪：材料",
   "itemGroup.iron_spells_genesis.equipment": "iron的法术创世纪：装备",
+  "itemGroup.iron_spells_genesis.spell_scroll": "iron的法术创世纪：法术卷轴",
 
   "attribute.iron_spells_genesis.chaos_magic_resist": "#1混沌#法术抗性",
   "attribute.iron_spells_genesis.chaos_spell_power": "#1混沌#法术强度",
@@ -92,6 +93,8 @@
   "item.iron_spells_genesis.infinite_shriving_stone": "无限忏悔石",
 
   "item.iron_spells_genesis.flying_swallow_through_willow": "飞燕穿柳",
+  "item.iron_spells_genesis.mithril_sword": "秘银剑",
+  "item.iron_spells_genesis.mithril_pickaxe": "秘银镐",
   
   "item.iron_spells_genesis.divine_metal_helmet": "gold431的皇冠",
   "item.iron_spells_genesis.divine_metal_chestplate": "神圣金属胸甲",

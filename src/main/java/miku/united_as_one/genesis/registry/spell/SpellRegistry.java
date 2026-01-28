@@ -7,8 +7,10 @@ import miku.united_as_one.genesis.spell.chaos.*;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.*;
 
+import static io.redspace.ironsspellbooks.api.registry.SpellRegistry.SPELL_REGISTRY_KEY;
+
 public class SpellRegistry {
-    private static final DeferredRegister<AbstractSpell> SPELLS;
+/*    private static final DeferredRegister<AbstractSpell> SPELLS;
 
     // 混沌法术卷轴
     public static final RegistryObject<AbstractSpell> WARPED_BLOOD_BURST_SPELL;
@@ -39,7 +41,7 @@ public class SpellRegistry {
     public static final RegistryObject<AbstractSpell> NYAN_CAT_JET_SPELL;
 
     static {
-        SPELLS = DeferredRegister.create(io.redspace.ironsspellbooks.api.registry.SpellRegistry.SPELL_REGISTRY_KEY, Genesis.MOD_ID);
+        SPELLS = DeferredRegister.create(SPELL_REGISTRY_KEY, Genesis.MOD_ID);
 
         // 混沌法术卷轴
         WARPED_BLOOD_BURST_SPELL = registerSpell(new WarpedBloodBurstSpell());
@@ -76,5 +78,5 @@ public class SpellRegistry {
 
     private static RegistryObject<AbstractSpell> registerSpell(AbstractSpell spell) {
         return SPELLS.register(spell.getSpellName(), () -> spell);
-    }
+    }*/
 }

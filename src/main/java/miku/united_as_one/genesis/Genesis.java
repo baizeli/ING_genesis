@@ -21,7 +21,6 @@ import miku.united_as_one.genesis.config.*;
 import miku.united_as_one.genesis.fonts.FuckFont1;
 import miku.united_as_one.genesis.network.*;
 import miku.united_as_one.genesis.registry.spell.SpellAttributesRegistry;
-import miku.united_as_one.genesis.registry.spell.SpellRegistry;
 import miku.united_as_one.genesis.registry.spell.SpellSchoolRegistry;
 import dev.xkmc.l2library.base.L2Registrate;
 import com.mojang.logging.LogUtils;
@@ -70,13 +69,13 @@ public class Genesis
         IEventBus modEventBus = context.getModEventBus();
 
         ItemRegistry.register(modEventBus);
-        CreativeTabRegistry.register();
+        CreativeTabRegistry.register(modEventBus);
         EntityRegistry.ENTITY_TYPES.register(modEventBus);
         BlockRegistry.BLOCKS.register(modEventBus);
         SoundRegister.SOUND_EVENTS.register(modEventBus);
 
         SpellSchoolRegistry.register(modEventBus);
-        SpellRegistry.register(modEventBus);
+        /*SpellRegistry.register(modEventBus);*/
         SpellAttributesRegistry.register(modEventBus);
         ModBlockEntities.register(modEventBus);
         ModMenuTypes.register(modEventBus);
