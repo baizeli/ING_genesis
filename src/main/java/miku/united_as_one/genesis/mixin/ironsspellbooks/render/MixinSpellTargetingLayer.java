@@ -1,5 +1,7 @@
 package miku.united_as_one.genesis.mixin.ironsspellbooks.render;
 
+import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
+import io.redspace.ironsspellbooks.capabilities.magic.ClientSpellTargetingData;
 import miku.united_as_one.genesis.util.RenderUtils;
 import miku.united_as_one.genesis.registry.spell.SpellSchoolRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -22,6 +24,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class MixinSpellTargetingLayer {
     @Inject(method = "renderTargetLayer", at = @At("HEAD"), remap = false, cancellable = true)
     private static void injectRenderWireCube(PoseStack poseStack, MultiBufferSource bufferSource, LivingEntity entity, CallbackInfo ci) {
+     /*
         if (SpellRegistry.getSpell(ClientMagicData.getTargetingData().spellId).getSchoolType() == SpellSchoolRegistry.CHAOS.get()
                 //|| SpellRegistry.getSpell(ClientMagicData.getTargetingData().spellId).getSchoolType() == SpellSchoolRegistry.CELESTIAL_SOURCE.get()
         ) {
@@ -62,6 +65,6 @@ public class MixinSpellTargetingLayer {
 //            }
 
             ci.cancel();
-        }
+        }*/
     }
 }
