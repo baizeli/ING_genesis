@@ -9,7 +9,7 @@ import java.util.function.Supplier;
 
 @SuppressWarnings("deprecation")
 public enum TierRegistry implements Tier {
-    MITHRIL(6, 4062, 18, 0, 30, () -> Ingredient.of(ItemRegistry.ARCANE_CRYSTAL.get()));
+    MITHRIL(4, 4062, 18, 0, 30, () -> Ingredient.of(ItemRegistry.ARCANE_CRYSTAL.get()));
 
     private final int level;
     private final int uses;
