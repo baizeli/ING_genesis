@@ -149,7 +149,7 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
 //        this.lookControl = new BloodBossLookControl(this);
 //        this.jumpControl = new BloodBossJumpControl(this);
 
-        this.animationControllerWalk = new AnimationController<>(this, "walk_controller", 10, this::walkPredicate);
+        this.animationControllerWalk = new AnimationController<>(this, "walk_controller", 0, this::walkPredicate);
         this.skillAnimationController = new AnimationController<>(this, "skill_animation_controller", 0, this::animationPredicate);
 
 
@@ -343,18 +343,22 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     // 动画相关方法
     public void playAnimation(String animationId) {
         this.animationToPlay = RawAnimation.begin().thenPlay(animationId);
+
+        this.cancelCastAnimation = true;
+        if (this.isCasting()) {
+            this.cancelCast();
+        }
     }
 
     private PlayState instantCastingPredicate(AnimationState<BloodBoss> event) {
-        if (this.cancelCastAnimation) {
+
+        if (this.cancelCastAnimation || this.skillAnimationController.getAnimationState() != AnimationController.State.STOPPED) {
             return PlayState.STOP;
         }
 
         AnimationController<BloodBoss> controller = event.getController();
         if (this.instantCastSpellType != SpellRegistry.none() &&
                 controller.getAnimationState() == AnimationController.State.STOPPED) {
-
-            // 设置瞬时施法动画
             this.setStartAnimationFromSpell(controller, this.instantCastSpellType);
             this.instantCastSpellType = SpellRegistry.none();
         }
@@ -363,15 +367,15 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     }
 
     private PlayState longCastingPredicate(AnimationState<BloodBoss> event) {
-        AnimationController<BloodBoss> controller = event.getController();
 
-        if (this.cancelCastAnimation ||
-                (controller.getAnimationState() == AnimationController.State.STOPPED &&
+        if (this.cancelCastAnimation || this.skillAnimationController.getAnimationState() != AnimationController.State.STOPPED ||
+                (event.getController().getAnimationState() == AnimationController.State.STOPPED &&
                         (!this.isCasting() || this.castingSpell == null ||
                                 this.castingSpell.getSpell().getCastType() != CastType.LONG))) {
             return PlayState.STOP;
         }
 
+        AnimationController<BloodBoss> controller = event.getController();
         if (this.isCasting()) {
             if (controller.getAnimationState() == AnimationController.State.STOPPED) {
                 this.setStartAnimationFromSpell(controller, this.castingSpell.getSpell());
@@ -384,7 +388,8 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     }
 
     private PlayState continuousCastingPredicate(AnimationState<BloodBoss> event) {
-        if (this.cancelCastAnimation) {
+
+        if (this.cancelCastAnimation || this.skillAnimationController.getAnimationState() != AnimationController.State.STOPPED) {
             return PlayState.STOP;
         }
 
@@ -400,8 +405,6 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
 
         return this.isCasting() ? PlayState.CONTINUE : PlayState.STOP;
     }
-
-
     private void setStartAnimationFromSpell(AnimationController<BloodBoss> controller, AbstractSpell spell) {
         spell.getCastStartAnimation().getForMob().ifPresentOrElse(animationBuilder -> {
             controller.forceAnimationReset();
@@ -863,56 +866,22 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     //================================================================ 战斗伤害方法 ========================================================================
     
     /**
-     * 对主要目标造成伤害（常用于抓取技能等高伤害技能）
+     * 获取基础攻击伤害
      * 
-     * @param target 目标实体
-     * @param baseDamage 基础伤害值
-     * @param damageMultiplier 伤害倍数，默认为2.5f
+     * @return 基础攻击伤害值
      */
-    public void applyMainTargetDamage(LivingEntity target, float baseDamage, float damageMultiplier) {
-        float actualDamage = baseDamage * damageMultiplier;
-        target.hurt(this.damageSources().mobAttack(this), actualDamage);
-        target.push(0, 0.5, 0);
+    public float getBaseAttackDamage() {
+        return (float) this.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE);
     }
     
     /**
-     * 对主要目标造成伤害（默认2.5倍伤害）
+     * 造成技能伤害
      * 
      * @param target 目标实体
-     * @param baseDamage 基础伤害值
-     */
-    public void applyMainTargetDamage(LivingEntity target, float baseDamage) {
-        applyMainTargetDamage(target, baseDamage, 2.5f);
-    }
-    
-    /**
-     * 对范围内的多个目标造成伤害
-     * 
-     * @param level 服务器级别
-     * @param targets 目标实体列表
-     * @param baseDamage 基础伤害值
      * @param damageMultiplier 伤害倍数
      */
-    public void applyAreaOfEffectDamage(ServerLevel level, List<LivingEntity> targets, float baseDamage, float damageMultiplier) {
-        float aoeDamage = baseDamage * damageMultiplier;
-        for (LivingEntity target : targets) {
-            if (target != this && target.isAlive()) {
-                target.hurt(this.damageSources().mobAttack(this), aoeDamage);
-                double dx = target.getX() - this.getX();
-                double dz = target.getZ() - this.getZ();
-                target.knockback(0.8, -dx, -dz);
-            }
-        }
-    }
-    
-    /**
-     * 对单个目标造成技能伤害
-     * 
-     * @param target 目标实体
-     * @param baseDamage 基础伤害值
-     * @param damageMultiplier 伤害倍数
-     */
-    public void applySkillDamage(LivingEntity target, float baseDamage, float damageMultiplier) {
+    public void applySkillDamage(LivingEntity target, float damageMultiplier) {
+        float baseDamage = getBaseAttackDamage();
         float skillDamage = baseDamage * damageMultiplier;
         target.invulnerableTime = 0;
         target.hurt(this.damageSources().mobAttack(this), skillDamage);
