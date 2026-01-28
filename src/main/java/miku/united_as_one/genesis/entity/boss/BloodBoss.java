@@ -48,6 +48,7 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.entity.IEntityAdditionalSpawnData;
+import net.minecraftforge.fml.common.Mod;
 import org.slf4j.Logger;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -128,6 +129,17 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
                     47,
                     -1
             );
+
+    private static final EntityDataAccessor<Boolean> DATA_IS_CASTING_SKILL = SynchedEntityData.defineId(BloodBoss.class, EntityDataSerializers.BOOLEAN);
+
+    public boolean isCastingSkill() {
+        return this.entityData.get(DATA_IS_CASTING_SKILL);
+    }
+
+    public void setCastingSkill(boolean castingSkill) {
+        this.entityData.set(DATA_IS_CASTING_SKILL, castingSkill);
+    }
+
     //属性
     public static AttributeSupplier.Builder setAttributes() {
         return Mob.createMobAttributes()
@@ -141,6 +153,9 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
                 .add(Attributes.KNOCKBACK_RESISTANCE,5.0)
                 .add(AttributeRegistry.SPELL_POWER.get(), 1.25);
     }
+
+
+
 
     //================================================================ 生命周期 ========================================================================
     public BloodBoss(EntityType<? extends Monster> entityType, Level level) {
@@ -178,6 +193,13 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
 
     @Override
     public void tick() {
+        if(!level.isClientSide){
+            this.setCastingSkill(
+                    this.getBrain()
+                            .getMemory(ModMemoryModuleType.IS_CASTING_SKILL.get())
+                            .orElse(false));
+        }
+
         if (!isSpellConfigLoaded()) {
 
             return;
@@ -221,6 +243,7 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         super.defineSynchedData();
         this.entityData.define(DATA_CANCEL_CAST, false);
         this.entityData.define(DATA_DRINKING_POTION, false);
+        this.entityData.define(DATA_IS_CASTING_SKILL, false);
     }
 
     //================================================================ 魔法/法术 ========================================================================
@@ -343,18 +366,22 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     // 动画相关方法
     public void playAnimation(String animationId) {
         this.animationToPlay = RawAnimation.begin().thenPlay(animationId);
+
+        this.cancelCastAnimation = true;
+        if (this.isCasting()) {
+            this.cancelCast();
+        }
     }
 
     private PlayState instantCastingPredicate(AnimationState<BloodBoss> event) {
-        if (this.cancelCastAnimation) {
+
+        if (this.cancelCastAnimation || this.skillAnimationController.getAnimationState() != AnimationController.State.STOPPED) {
             return PlayState.STOP;
         }
 
         AnimationController<BloodBoss> controller = event.getController();
         if (this.instantCastSpellType != SpellRegistry.none() &&
                 controller.getAnimationState() == AnimationController.State.STOPPED) {
-
-            // 设置瞬时施法动画
             this.setStartAnimationFromSpell(controller, this.instantCastSpellType);
             this.instantCastSpellType = SpellRegistry.none();
         }
@@ -363,15 +390,12 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     }
 
     private PlayState longCastingPredicate(AnimationState<BloodBoss> event) {
-        AnimationController<BloodBoss> controller = event.getController();
 
-        if (this.cancelCastAnimation ||
-                (controller.getAnimationState() == AnimationController.State.STOPPED &&
-                        (!this.isCasting() || this.castingSpell == null ||
-                                this.castingSpell.getSpell().getCastType() != CastType.LONG))) {
+        if ( this.skillAnimationController.getAnimationState() != AnimationController.State.STOPPED) {
             return PlayState.STOP;
         }
 
+        AnimationController<BloodBoss> controller = event.getController();
         if (this.isCasting()) {
             if (controller.getAnimationState() == AnimationController.State.STOPPED) {
                 this.setStartAnimationFromSpell(controller, this.castingSpell.getSpell());
@@ -384,7 +408,8 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     }
 
     private PlayState continuousCastingPredicate(AnimationState<BloodBoss> event) {
-        if (this.cancelCastAnimation) {
+
+        if (this.skillAnimationController.getAnimationState() != AnimationController.State.STOPPED) {
             return PlayState.STOP;
         }
 
@@ -398,10 +423,8 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
             return PlayState.CONTINUE;
         }
 
-        return this.isCasting() ? PlayState.CONTINUE : PlayState.STOP;
+        return PlayState.CONTINUE;
     }
-
-
     private void setStartAnimationFromSpell(AnimationController<BloodBoss> controller, AbstractSpell spell) {
         spell.getCastStartAnimation().getForMob().ifPresentOrElse(animationBuilder -> {
             controller.forceAnimationReset();
@@ -438,29 +461,28 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+        // 1. 底层：行走/待机 (Base Layer)
         controllerRegistrar.add(animationControllerWalk);
+        // 2. 中层：技能
         controllerRegistrar.add(skillAnimationController);
+
+        // 3. 顶层：施法 (Top Layer)
         controllerRegistrar.add(instantCastController);
         controllerRegistrar.add(longCastController);
         controllerRegistrar.add(continuousCastController);
     }
     private PlayState walkPredicate(AnimationState<BloodBoss> state) {
 
-        // ===== 技能 / 施法期间：完全冻结行走控制器 =====
-        boolean isCastingSkill =
-                this.getBrain()
-                        .getMemory(ModMemoryModuleType.IS_CASTING_SKILL.get())
-                        .orElse(false);
+        boolean isCastingSkill = this.isCastingSkill();
 
         if (isCastingSkill || this.isCasting()) {
             animationControllerWalk.setAnimationSpeed(1.0);
-            return PlayState.STOP;
+            return state.setAndContinue(IDLE);
         }
 
-        // ===== 非施法状态 =====
+
         double horizontalSpeed = this.getDeltaMovement().horizontalDistance();
 
-        // 只在非技能状态下根据真实速度调动画
         if (horizontalSpeed > 0.01) {
             double speedMultiplier = (horizontalSpeed / 0.053) * 1.2;
             animationControllerWalk.setAnimationSpeed(
@@ -474,6 +496,9 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     }
 
     private PlayState animationPredicate(AnimationState<BloodBoss> animationEvent) {
+        if(!(isCastingSkill())){
+            return PlayState.STOP;
+        }
         AnimationController<BloodBoss> controller = animationEvent.getController();
         if (this.animationToPlay != null) {
             controller.forceAnimationReset();
@@ -863,56 +888,22 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     //================================================================ 战斗伤害方法 ========================================================================
     
     /**
-     * 对主要目标造成伤害（常用于抓取技能等高伤害技能）
+     * 获取基础攻击伤害
      * 
-     * @param target 目标实体
-     * @param baseDamage 基础伤害值
-     * @param damageMultiplier 伤害倍数，默认为2.5f
+     * @return 基础攻击伤害值
      */
-    public void applyMainTargetDamage(LivingEntity target, float baseDamage, float damageMultiplier) {
-        float actualDamage = baseDamage * damageMultiplier;
-        target.hurt(this.damageSources().mobAttack(this), actualDamage);
-        target.push(0, 0.5, 0);
+    public float getBaseAttackDamage() {
+        return (float) this.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE);
     }
     
     /**
-     * 对主要目标造成伤害（默认2.5倍伤害）
+     * 造成技能伤害
      * 
      * @param target 目标实体
-     * @param baseDamage 基础伤害值
-     */
-    public void applyMainTargetDamage(LivingEntity target, float baseDamage) {
-        applyMainTargetDamage(target, baseDamage, 2.5f);
-    }
-    
-    /**
-     * 对范围内的多个目标造成伤害
-     * 
-     * @param level 服务器级别
-     * @param targets 目标实体列表
-     * @param baseDamage 基础伤害值
      * @param damageMultiplier 伤害倍数
      */
-    public void applyAreaOfEffectDamage(ServerLevel level, List<LivingEntity> targets, float baseDamage, float damageMultiplier) {
-        float aoeDamage = baseDamage * damageMultiplier;
-        for (LivingEntity target : targets) {
-            if (target != this && target.isAlive()) {
-                target.hurt(this.damageSources().mobAttack(this), aoeDamage);
-                double dx = target.getX() - this.getX();
-                double dz = target.getZ() - this.getZ();
-                target.knockback(0.8, -dx, -dz);
-            }
-        }
-    }
-    
-    /**
-     * 对单个目标造成技能伤害
-     * 
-     * @param target 目标实体
-     * @param baseDamage 基础伤害值
-     * @param damageMultiplier 伤害倍数
-     */
-    public void applySkillDamage(LivingEntity target, float baseDamage, float damageMultiplier) {
+    public void applySkillDamage(LivingEntity target, float damageMultiplier) {
+        float baseDamage = getBaseAttackDamage();
         float skillDamage = baseDamage * damageMultiplier;
         target.invulnerableTime = 0;
         target.hurt(this.damageSources().mobAttack(this), skillDamage);

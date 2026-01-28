@@ -12,7 +12,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.behavior.EntityTracker;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.phys.AABB;
@@ -22,6 +22,14 @@ import java.util.List;
 import java.util.Map;
 
 public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
+
+    //冷却
+    public static final int COOL_DOWN = 80;
+    //范围伤害倍率
+    public static final float DAMAGE_MULTIPLIER_AREA = 2f;
+    //主要目标伤害倍率
+    public static final float DAMAGE_MULTIPLIER_MAIN = 3.4f;
+
 
     private static final String ANIM_START = "登！";
     private static final String ANIM_SLAM  = "龙！";
@@ -33,11 +41,12 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
     private static final int DURATION_SUCCESS = 49;
     private static final int DURATION_FAIL    = 34;
 
-    private static final int DASH_WINDUP = 8; 
+    private static final int DASH_WINDUP = 8;
 
     private static final int DASH_START_TICK = DASH_WINDUP;
     private static final int DASH_END_TICK   = DASH_WINDUP + DASH_DURATION;
-    public static final int Cooldown = 80;
+
+
 
     private LivingEntity grabbedTarget;
     private LivingEntity impactTarget;
@@ -59,35 +68,6 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
                 MemoryModuleType.ATTACK_TARGET, MemoryStatus.VALUE_PRESENT,
                 ModMemoryModuleType.IS_CASTING_SKILL.get(), MemoryStatus.VALUE_ABSENT
         ));
-    }
-
-    /**
-     * 计算并应用主要目标受到的伤害
-     * 
-     * @param boss 攻击者（血 Boss）
-     * @param target 受害者（主要目标）
-     * @param baseDamage 基础伤害值
-     */
-    private void applyMainTargetDamage(BloodBoss boss, LivingEntity target, float baseDamage) {
-        // 此方法已被弃用，请直接使用 boss.applyMainTargetDamage 方法
-        boss.applyMainTargetDamage(target, baseDamage, 2.5f);
-    }
-
-    /**
-     * 计算并应用范围伤害效果
-     * 
-     * @param level 游戏世界
-     * @param boss 攻击者（血 Boss）
-     * @param baseDamage 基础伤害值
-     */
-    private void applyAreaOfEffectDamage(ServerLevel level, BloodBoss boss, float baseDamage) {
-        float aoeDamage = baseDamage * 0.75f;
-        AABB box = boss.getBoundingBox().inflate(5.5, 2.5, 5.5);
-        java.util.List<LivingEntity> targets = level.getEntitiesOfClass(LivingEntity.class, box,
-                ent -> ent != boss && ent.isAlive());
-        
-        // 使用 Boss 类中的通用方法
-        boss.applyAreaOfEffectDamage(level, targets, baseDamage, 0.75f);
     }
 
     @Override
@@ -124,43 +104,50 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
 
         boss.getBrain().setMemory(ModMemoryModuleType.IS_CASTING_SKILL.get(), true);
 
-        
+
         boss.serverTriggerAnimation(ANIM_START);
     }
 
 
     @Override
     protected void tick(ServerLevel level, BloodBoss boss, long gameTime) {
+        //设置面向目标
+        LivingEntity target = boss.getTarget();
+        if (target != null){
+            boss.getBrain().setMemory(MemoryModuleType.LOOK_TARGET, new EntityTracker(target, true));
+        }
+
+
         abilityTimer++;
 
         boss.getBrain().eraseMemory(MemoryModuleType.WALK_TARGET);
         boss.getNavigation().stop();
 
-        
+
         if (abilityTimer < DASH_START_TICK) {
-            
+
             boss.setDeltaMovement(Vec3.ZERO);
             return;
         }
 
-        
+
         if (abilityTimer == DASH_START_TICK) {
             ((BloodBossMoveControl) boss.getMoveControl())
                     .addSkillMovement(new GrabDashTask(DASH_DURATION));
         }
 
-        
+
         if (!grabSuccess && abilityTimer <= DASH_END_TICK) {
             attemptGrabDuringDash(boss);
         }
 
-        
+
         else if (!grabSuccess && !grabFailed && abilityTimer > DASH_END_TICK) {
             grabFailed = true;
             boss.serverTriggerAnimation(ANIM_FAIL);
         }
 
-        
+
         if (grabSuccess) {
             handleSlamSequence(level, boss);
         }
@@ -178,7 +165,7 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
         float yawRad = boss.getYRot() * Mth.DEG_TO_RAD;
         Vec3 right = new Vec3(Mth.cos(yawRad), 0, -Mth.sin(yawRad));
 
-        
+
         Vec3 center = boss.position()
                 .add(dir.scale(1.2))
                 .add(right.scale(0.5));
@@ -213,7 +200,7 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
     private void handleSlamSequence(ServerLevel level, BloodBoss boss) {
         slamTimer++;
 
-        
+
         if (slamTimer < 8) {
             boss.setDeltaMovement(0, 0.8, 0);
         } else if (slamTimer < 14) {
@@ -224,13 +211,13 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
 
         float t = slamTimer / (float) IMPACT_TIME;
 
-        
+
         float angularSpeed = Mth.lerp(t, 0.35F, 0.05F);
 
-        
+
         slamAngle += angularSpeed;
 
-        
+
         float theta = -(slamAngle / (slamAngle + angularSpeed * (IMPACT_TIME - slamTimer)))
                 * Mth.TWO_PI;
 
@@ -281,15 +268,14 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
         impactDealt = true;
         boss.setNoGravity(false);
 
-        float baseDamage = (float) boss.getAttributeValue(Attributes.ATTACK_DAMAGE);
-
         // 对主要目标造成伤害
         if (impactTarget != null && impactTarget.isAlive()) {
-            boss.applyMainTargetDamage(impactTarget, baseDamage, 2.5f);
+            boss.applySkillDamage(impactTarget, DAMAGE_MULTIPLIER_MAIN);
+            impactTarget.push(0, 0.5, 0);
         }
 
         // 对范围内的其他实体造成伤害
-        applyAreaOfEffectDamage(level, boss, baseDamage);
+        applyAreaOfEffectDamage(level, boss);
 
         level.sendParticles(
                 ParticleTypes.EXPLOSION_EMITTER,
@@ -304,7 +290,24 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
         );
     }
 
-
+    /**
+     * 计算并应用范围伤害效果
+     * 
+     * @param level 游戏世界
+     * @param boss 攻击者
+     */
+    private void applyAreaOfEffectDamage(ServerLevel level, BloodBoss boss) {
+        AABB box = boss.getBoundingBox().inflate(5.5, 2.5, 5.5);
+        java.util.List<LivingEntity> targets = level.getEntitiesOfClass(LivingEntity.class, box,
+                ent -> ent != boss && ent.isAlive());
+        
+        for (LivingEntity target : targets) {
+            boss.applySkillDamage(target, DAMAGE_MULTIPLIER_AREA);
+            double dx = target.getX() - boss.getX();
+            double dz = target.getZ() - boss.getZ();
+            target.knockback(0.8, -dx, -dz);
+        }
+    }
 
     @Override
     protected void stop(ServerLevel level, BloodBoss boss, long gameTime) {
@@ -320,10 +323,10 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
     }
 
     @Override protected int getActionDuration() {
-        return grabSuccess ? DURATION_SUCCESS : DURATION_FAIL;
+        return DURATION_SUCCESS;
     }
 
-    @Override protected int getCooldown() { return Cooldown; }
+    @Override protected int getCooldown() { return COOL_DOWN; }
     @Override protected String getAnimationId() { return ANIM_START; }
     @Override protected void doAction(BloodBoss boss) {}
 
