@@ -1,9 +1,10 @@
-package miku.united_as_one.genesis.entity.boss.behavior;
+package miku.united_as_one.genesis.entity.boss.behavior.bloodbossskill;
 
 import miku.united_as_one.genesis.entity.ai.ModMemoryModuleType;
 import miku.united_as_one.genesis.entity.boss.BloodBoss;
 import miku.united_as_one.genesis.entity.boss.BloodBossMoveControl;
 import miku.united_as_one.genesis.entity.boss.SkillMovementTask;
+import miku.united_as_one.genesis.entity.boss.behavior.AnimatedActionBehavior;
 import miku.united_as_one.genesis.registry.SoundRegister;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
@@ -22,7 +23,7 @@ public class LightningWhirlSlashBehavior
 
 
     //冷却(tick)
-    public static final int COOL_DOWN = 60;
+    public static final int COOL_DOWN = 8*20;
     //伤害倍率
     public static final float DAMAGE_MULTIPLIER = 3.5F;
 
@@ -58,7 +59,7 @@ public class LightningWhirlSlashBehavior
 
 
 
-        playHitSound(level, boss, 1.0F, 0.3F);
+        playHitSound(level, boss, 5.0F, 0.3F);
 
         if (boss.getMoveControl() instanceof BloodBossMoveControl move) {
             move.addSkillMovement(createDashMovement());
@@ -85,7 +86,7 @@ public class LightningWhirlSlashBehavior
 
         if (abilityTimer % 3 == 0 && abilityTimer < DURATION-10) {
             float pitch = 0.5F + (abilityTimer / (float) DURATION) * 0.5F;
-            playHitSound(level, boss, 0.4F, pitch);
+            playHitSound(level, boss, 5F, pitch);
         }
 
         if (abilityTimer >= HIT_1 && !hit1Done) {
