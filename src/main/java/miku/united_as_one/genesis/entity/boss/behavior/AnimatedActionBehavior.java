@@ -2,6 +2,7 @@ package miku.united_as_one.genesis.entity.boss.behavior;
 
 import io.redspace.ironsspellbooks.api.entity.IMagicEntity;
 import io.redspace.ironsspellbooks.entity.mobs.IAnimatedAttacker;
+import miku.united_as_one.genesis.entity.ai.ModMemoryModuleType;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -66,6 +67,7 @@ public abstract class AnimatedActionBehavior<E extends Mob & IMagicEntity & IAni
         this.abilityTimer = 0;
         // 触发动画
         entity.serverTriggerAnimation(this.getAnimationId());
+        entity.getBrain().setMemory(ModMemoryModuleType.IS_CASTING_SKILL.get(), true);
     }
 
     /**
@@ -96,6 +98,7 @@ public abstract class AnimatedActionBehavior<E extends Mob & IMagicEntity & IAni
      */
     @Override
     protected void stop(ServerLevel level, E entity, long gameTime) {
+        entity.getBrain().setMemory(ModMemoryModuleType.IS_CASTING_SKILL.get(), false);
         super.stop(level, entity, gameTime);
         // 设定冷却时间
         this.nextAttackGameTime = gameTime + this.getCooldown();

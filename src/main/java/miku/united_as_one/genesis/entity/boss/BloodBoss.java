@@ -48,6 +48,7 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.entity.IEntityAdditionalSpawnData;
+import net.minecraftforge.fml.common.Mod;
 import org.slf4j.Logger;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -128,6 +129,17 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
                     47,
                     -1
             );
+
+    private static final EntityDataAccessor<Boolean> DATA_IS_CASTING_SKILL = SynchedEntityData.defineId(BloodBoss.class, EntityDataSerializers.BOOLEAN);
+
+    public boolean isCastingSkill() {
+        return this.entityData.get(DATA_IS_CASTING_SKILL);
+    }
+
+    public void setCastingSkill(boolean castingSkill) {
+        this.entityData.set(DATA_IS_CASTING_SKILL, castingSkill);
+    }
+
     //属性
     public static AttributeSupplier.Builder setAttributes() {
         return Mob.createMobAttributes()
@@ -142,6 +154,9 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
                 .add(AttributeRegistry.SPELL_POWER.get(), 1.25);
     }
 
+
+
+
     //================================================================ 生命周期 ========================================================================
     public BloodBoss(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);
@@ -149,7 +164,7 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
 //        this.lookControl = new BloodBossLookControl(this);
 //        this.jumpControl = new BloodBossJumpControl(this);
 
-        this.animationControllerWalk = new AnimationController<>(this, "walk_controller", 0, this::walkPredicate);
+        this.animationControllerWalk = new AnimationController<>(this, "walk_controller", 10, this::walkPredicate);
         this.skillAnimationController = new AnimationController<>(this, "skill_animation_controller", 0, this::animationPredicate);
 
 
@@ -178,6 +193,13 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
 
     @Override
     public void tick() {
+        if(!level.isClientSide){
+            this.setCastingSkill(
+                    this.getBrain()
+                            .getMemory(ModMemoryModuleType.IS_CASTING_SKILL.get())
+                            .orElse(false));
+        }
+
         if (!isSpellConfigLoaded()) {
 
             return;
@@ -221,6 +243,7 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         super.defineSynchedData();
         this.entityData.define(DATA_CANCEL_CAST, false);
         this.entityData.define(DATA_DRINKING_POTION, false);
+        this.entityData.define(DATA_IS_CASTING_SKILL, false);
     }
 
     //================================================================ 魔法/法术 ========================================================================
@@ -368,10 +391,7 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
 
     private PlayState longCastingPredicate(AnimationState<BloodBoss> event) {
 
-        if (this.cancelCastAnimation || this.skillAnimationController.getAnimationState() != AnimationController.State.STOPPED ||
-                (event.getController().getAnimationState() == AnimationController.State.STOPPED &&
-                        (!this.isCasting() || this.castingSpell == null ||
-                                this.castingSpell.getSpell().getCastType() != CastType.LONG))) {
+        if ( this.skillAnimationController.getAnimationState() != AnimationController.State.STOPPED) {
             return PlayState.STOP;
         }
 
@@ -389,7 +409,7 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
 
     private PlayState continuousCastingPredicate(AnimationState<BloodBoss> event) {
 
-        if (this.cancelCastAnimation || this.skillAnimationController.getAnimationState() != AnimationController.State.STOPPED) {
+        if (this.skillAnimationController.getAnimationState() != AnimationController.State.STOPPED) {
             return PlayState.STOP;
         }
 
@@ -403,7 +423,7 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
             return PlayState.CONTINUE;
         }
 
-        return this.isCasting() ? PlayState.CONTINUE : PlayState.STOP;
+        return PlayState.CONTINUE;
     }
     private void setStartAnimationFromSpell(AnimationController<BloodBoss> controller, AbstractSpell spell) {
         spell.getCastStartAnimation().getForMob().ifPresentOrElse(animationBuilder -> {
@@ -441,29 +461,28 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+        // 1. 底层：行走/待机 (Base Layer)
         controllerRegistrar.add(animationControllerWalk);
+        // 2. 中层：技能
         controllerRegistrar.add(skillAnimationController);
+
+        // 3. 顶层：施法 (Top Layer)
         controllerRegistrar.add(instantCastController);
         controllerRegistrar.add(longCastController);
         controllerRegistrar.add(continuousCastController);
     }
     private PlayState walkPredicate(AnimationState<BloodBoss> state) {
 
-        // ===== 技能 / 施法期间：完全冻结行走控制器 =====
-        boolean isCastingSkill =
-                this.getBrain()
-                        .getMemory(ModMemoryModuleType.IS_CASTING_SKILL.get())
-                        .orElse(false);
+        boolean isCastingSkill = this.isCastingSkill();
 
         if (isCastingSkill || this.isCasting()) {
             animationControllerWalk.setAnimationSpeed(1.0);
-            return PlayState.STOP;
+            return state.setAndContinue(IDLE);
         }
 
-        // ===== 非施法状态 =====
+
         double horizontalSpeed = this.getDeltaMovement().horizontalDistance();
 
-        // 只在非技能状态下根据真实速度调动画
         if (horizontalSpeed > 0.01) {
             double speedMultiplier = (horizontalSpeed / 0.053) * 1.2;
             animationControllerWalk.setAnimationSpeed(
@@ -477,6 +496,9 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     }
 
     private PlayState animationPredicate(AnimationState<BloodBoss> animationEvent) {
+        if(!(isCastingSkill())){
+            return PlayState.STOP;
+        }
         AnimationController<BloodBoss> controller = animationEvent.getController();
         if (this.animationToPlay != null) {
             controller.forceAnimationReset();

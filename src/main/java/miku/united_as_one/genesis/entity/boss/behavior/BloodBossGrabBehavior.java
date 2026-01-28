@@ -323,7 +323,7 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
     }
 
     @Override protected int getActionDuration() {
-        return grabSuccess ? DURATION_SUCCESS : DURATION_FAIL;
+        return DURATION_SUCCESS;
     }
 
     @Override protected int getCooldown() { return COOL_DOWN; }
