@@ -6,6 +6,7 @@
   "itemGroup.iron_spells_genesis.block": "iron's Spells: Genesis: Block",
   "itemGroup.iron_spells_genesis.material": "iron's Spells: Genesis: Material",
   "itemGroup.iron_spells_genesis.equipment": "iron's Spells: Genesis: Equipment",
+  "itemGroup.iron_spells_genesis.spell_scroll": "iron's Spells: Genesis: Spell Scroll",
 
   "attribute.iron_spells_genesis.chaos_magic_resist": "#1Chaos# Magic Resistance",
   "attribute.iron_spells_genesis.chaos_spell_power": "#1Chaos# Spell Power",
@@ -93,6 +94,8 @@
   "item.iron_spells_genesis.infinite_shriving_stone": "Infinite Shriving Stone",
 
   "item.iron_spells_genesis.flying_swallow_through_willow": "Flying Swallow Through Willow",
+  "item.iron_spells_genesis.mithril_sword": "Mithril Sword",
+  "item.iron_spells_genesis.mithril_pickaxe": "Mithril Pickaxe",
   
   "item.iron_spells_genesis.divine_metal_helmet": "bai_ze_li\"crown",
   "item.iron_spells_genesis.divine_metal_chestplate": "Divine Metal Chestplate",
