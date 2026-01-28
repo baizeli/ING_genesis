@@ -738,8 +738,10 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     //================================================================ 其他方法 ========================================================================
 
 
-
-
+    @Override
+    public boolean hurt(DamageSource source, float amount) {
+        return super.hurt(source, amount);
+    }
 
     @Override
     public void handleClientEvent(byte eventId) {
