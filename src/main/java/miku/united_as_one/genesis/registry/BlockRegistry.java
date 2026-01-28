@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.registry;
 
 import com.tterrag.registrate.util.entry.RegistryEntry;
-import miku.united_as_one.genesis.content.ChaosPortalBlock;
+import miku.united_as_one.genesis.block.ChaosPortalBlock;
 import miku.united_as_one.genesis.content.arcaneWorkbench.ArcaneWorkbenchBlock;
 import miku.united_as_one.genesis.Genesis;
 import net.minecraft.util.valueproviders.UniformInt;
