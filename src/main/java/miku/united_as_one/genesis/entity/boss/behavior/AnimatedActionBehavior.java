@@ -43,8 +43,8 @@ public abstract class AnimatedActionBehavior<E extends Mob & IMagicEntity & IAni
     @Override
     protected boolean checkExtraStartConditions(ServerLevel level, E owner) {
         long gameTime = level.getGameTime();
-        // 检查冷却是否结束，以及自定义条件
-        return gameTime >= this.nextAttackGameTime && this.canStartAction(owner);
+        // 检查冷却是否结束，以及自定义条件，并且确保实体当前没有在施法
+        return gameTime >= this.nextAttackGameTime && this.canStartAction(owner) && !owner.getMagicData().isCasting();
     }
 
     /**
