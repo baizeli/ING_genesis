@@ -70,6 +70,7 @@
   "item.iron_spells_genesis.nature_crystal": "Nature Crystal",
   "item.iron_spells_genesis.nature_rune_plus": "Nature Rune Plus",
   "item.iron_spells_genesis.purpleite_galaxy_ingot": "Purpleite Galaxy Ingot",
+  "item.iron_spells_genesis.thunder_longbow": "Thunder Longbow",
   "item.iron_spells_genesis.twisted_chaos": "Twisted Chaos",
   "item.iron_spells_genesis.twisted_chaos_ingot": "Twisted Chaos Ingot",
   "item.iron_spells_genesis.violet_zenith_boots": "Violet Zenith Boots",
@@ -79,5 +80,6 @@
   "item.iron_spells_genesis.whisper_of_the_past": "Whisper Of The Past",
   "itemGroup.iron_spells_genesis.block": "itemGroup.iron_spells_genesis",
   "itemGroup.iron_spells_genesis.equipment": "itemGroup.iron_spells_genesis",
-  "itemGroup.iron_spells_genesis.material": "itemGroup.iron_spells_genesis"
+  "itemGroup.iron_spells_genesis.material": "itemGroup.iron_spells_genesis",
+  "itemGroup.iron_spells_genesis.spell_scroll": "itemGroup.iron_spells_genesis"
 }
