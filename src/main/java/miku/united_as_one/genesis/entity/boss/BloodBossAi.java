@@ -148,11 +148,13 @@ public class BloodBossAi {
         );
 
 
+
         ImmutableList.Builder<BehaviorControl<BloodBoss>>
                 fightBuilder = ImmutableList.builder();
 
         //清除无效目标
         fightBuilder.add(StopAttackingIfTargetInvalid.create(livingEntity -> false, (mob, target) -> {}, true));
+        fightBuilder.add(new DragonDiveBehavior());//下落攻击
         fightBuilder.add(new LightningWhirlSlashBehavior());//闪电旋风劈
         fightBuilder.add(new BloodBossGrabBehavior());        //抓取技能
         fightBuilder.add(new DoubleSlashBehavior());//二连斩技能
