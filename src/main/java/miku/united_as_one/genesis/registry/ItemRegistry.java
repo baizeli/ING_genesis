@@ -20,24 +20,14 @@ import io.redspace.ironsspellbooks.util.ItemPropertiesHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.*;
 import org.jetbrains.annotations.*;
 
 import java.util.*;
-import java.util.function.Supplier;
 
 @SuppressWarnings("removal")
 public class ItemRegistry {
-    public static final Map<TagKey<Item>, Set<RegistryObject<Item>>> itemTagMap = new HashMap<>();
-    //加到创造标签页的用这个注册
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Genesis.MOD_ID);
-    //不加到创造标签页的用这个注册
-    public static final DeferredRegister<Item> PRE_ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Genesis.MOD_ID);
-
     // 紫极锭
     public static final ItemEntry<EternisMaterial> PURPLEITE_GALAXY_INGOT = Genesis.L2_REGISTRATE
             .item("purpleite_galaxy_ingot", properties -> new EternisMaterial(properties, 0))
@@ -658,19 +648,8 @@ public class ItemRegistry {
             .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
-    
-    private static RegistryObject<Item> registerCurios(String name, TagKey<Item> tagKey, Supplier<Item> item) {
-        RegistryObject<Item> register = ITEMS.register(name, item);
-        Set<RegistryObject<Item>> set = itemTagMap.getOrDefault(tagKey, new HashSet<>());
-        set.add(register);
-        itemTagMap.put(tagKey, set);
-        return register;
-    }
 
-    public static void register(IEventBus eventBus) {
-        ITEMS.register(eventBus);
-        PRE_ITEMS.register(eventBus);
-    }
+    public static void register() {}
 
     public static class ChaosBaseItem extends Item {
         public ChaosBaseItem(Properties properties) {
