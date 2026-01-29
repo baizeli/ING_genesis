@@ -102,8 +102,9 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     private AbstractSpell delayedSpell;
     private int delayedSpellLevel;
 
-    private static final RawAnimation IDLE = RawAnimation.begin().thenLoop("待机");
-    private static final RawAnimation WALK = RawAnimation.begin().thenLoop("行走循环");
+
+    private static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle"); // 待机
+    private static final RawAnimation WALK = RawAnimation.begin().thenLoop("walk_cycle"); // 行走循环
     private static final RawAnimation CAST_IDLE = RawAnimation.begin().thenLoop("施法待机");
     private static final RawAnimation CAST_WALK = RawAnimation.begin().thenLoop("施法行走循环");
 

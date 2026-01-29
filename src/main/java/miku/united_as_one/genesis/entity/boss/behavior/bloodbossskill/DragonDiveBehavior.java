@@ -19,7 +19,7 @@ import java.util.Map;
 
 public class DragonDiveBehavior extends AnimatedActionBehavior<BloodBoss> {
 
-    public static final String ANIMATION_ID = "龙！";
+    public static final String ANIMATION_ID = "dragon_slam"; // 龙！
 
     private static final int DURATION  = 24; 
     private static final int IMPACT_T  = 15; 

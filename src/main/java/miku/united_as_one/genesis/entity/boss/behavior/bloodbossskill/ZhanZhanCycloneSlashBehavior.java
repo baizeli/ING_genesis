@@ -39,7 +39,8 @@ public class ZhanZhanCycloneSlashBehavior extends AnimatedActionBehavior<BloodBo
     private static final double THIRD_RANGE = 3.0;   // 3x3
     private static final double FOURTH_RANGE = 5.5;  // 5.5x5.5
 
-    public static final String ANIMATION_ID = "斩斩旋风劈2";
+    // 原名称: 斩斩旋风劈2
+    public static final String ANIMATION_ID = "zhan_zhan_xuan_feng_pi_2";
 
     private boolean[] slashDone = new boolean[4];
 

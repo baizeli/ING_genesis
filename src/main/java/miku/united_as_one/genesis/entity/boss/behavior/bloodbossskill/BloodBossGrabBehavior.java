@@ -32,9 +32,11 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
     public static final float DAMAGE_MULTIPLIER_MAIN = 3.4f;
 
 
-    private static final String ANIM_START = "登！";
-    private static final String ANIM_SLAM  = "龙！";
-    public static final String ANIM_FAIL = "寄！";
+    //"登!"
+    private static final String ANIM_START = "ascend";
+
+    private static final String ANIM_SLAM  = "dragon_slam"; // 龙！
+    public static final String ANIM_FAIL = "failure"; // 寄！
 
     private static final int DASH_DURATION = 9;
     private static final int IMPACT_TIME   = 20;
