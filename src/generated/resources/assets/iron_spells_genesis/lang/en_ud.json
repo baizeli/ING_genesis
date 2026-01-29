@@ -70,6 +70,7 @@
   "item.iron_spells_genesis.nature_crystal": "ןɐʇsʎɹƆ ǝɹnʇɐN",
   "item.iron_spells_genesis.nature_rune_plus": "snןԀ ǝunᴚ ǝɹnʇɐN",
   "item.iron_spells_genesis.purpleite_galaxy_ingot": "ʇobuI ʎxɐןɐ⅁ ǝʇıǝןdɹnԀ",
+  "item.iron_spells_genesis.thunder_longbow": "ʍoqbuoꞀ ɹǝpunɥ⟘",
   "item.iron_spells_genesis.twisted_chaos": "soɐɥƆ pǝʇsıʍ⟘",
   "item.iron_spells_genesis.twisted_chaos_ingot": "ʇobuI soɐɥƆ pǝʇsıʍ⟘",
   "item.iron_spells_genesis.violet_zenith_boots": "sʇooᗺ ɥʇıuǝZ ʇǝןoıΛ",
@@ -79,5 +80,6 @@
   "item.iron_spells_genesis.whisper_of_the_past": "ʇsɐԀ ǝɥ⟘ ɟO ɹǝdsıɥM",
   "itemGroup.iron_spells_genesis.block": "sısǝuǝb‾sןןǝds‾uoɹı˙dnoɹ⅁ɯǝʇı",
   "itemGroup.iron_spells_genesis.equipment": "sısǝuǝb‾sןןǝds‾uoɹı˙dnoɹ⅁ɯǝʇı",
-  "itemGroup.iron_spells_genesis.material": "sısǝuǝb‾sןןǝds‾uoɹı˙dnoɹ⅁ɯǝʇı"
+  "itemGroup.iron_spells_genesis.material": "sısǝuǝb‾sןןǝds‾uoɹı˙dnoɹ⅁ɯǝʇı",
+  "itemGroup.iron_spells_genesis.spell_scroll": "sısǝuǝb‾sןןǝds‾uoɹı˙dnoɹ⅁ɯǝʇı"
 }
