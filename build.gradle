@@ -207,6 +207,15 @@ dependencies {
     // 玉
     modImplementation "curse.maven:jade-324717:6855440"
 
+    // Better Combat
+    modImplementation "curse.maven:better-combat-by-daedelus-639842:7287334"
+
+    // playerAnimator
+    modImplementation "curse.maven:playeranimator-658587:4587214"
+
+    // Cloth Config API
+    modImplementation "curse.maven:cloth-config-348521:5729105"
+
     // 试验假人
     modImplementation "curse.maven:mmmmmmmmmmmm-225738:6860192"
 
