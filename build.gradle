@@ -44,7 +44,6 @@ legacyForge {
 
         server {
             server()
-            programArgument '--nogui'
             systemProperty 'forge.enabledGameTestNamespaces', project.mod_id
         }
 
@@ -182,7 +181,8 @@ dependencies {
     modCompileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
     modCompileOnly "mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}"
     modImplementation "mezz.jei:jei-${minecraft_version}-forge:${jei_version}"
-    modCompileOnly "vazkii.patchouli:Patchouli:1.20.1-84.1-FORGE:api"
+    modCompileOnly "vazkii.patchouli:Patchouli:1.20." +
+            "1-84.1-FORGE:api"
     modImplementation "vazkii.patchouli:Patchouli:1.20.1-84.1-FORGE"
 
     modImplementation "curse.maven:caelus-308989:5281700"

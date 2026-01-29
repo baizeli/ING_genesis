@@ -102,8 +102,9 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     private AbstractSpell delayedSpell;
     private int delayedSpellLevel;
 
-    private static final RawAnimation IDLE = RawAnimation.begin().thenLoop("待机");
-    private static final RawAnimation WALK = RawAnimation.begin().thenLoop("行走循环");
+
+    private static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle"); // 待机
+    private static final RawAnimation WALK = RawAnimation.begin().thenLoop("walk_cycle"); // 行走循环
     private static final RawAnimation CAST_IDLE = RawAnimation.begin().thenLoop("施法待机");
     private static final RawAnimation CAST_WALK = RawAnimation.begin().thenLoop("施法行走循环");
 
@@ -146,11 +147,11 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
                 .add(Attributes.MAX_HEALTH, 950)
                 .add(Attributes.MOVEMENT_SPEED, 0.21)
                 .add(Attributes.ATTACK_DAMAGE, 10)
-                .add(Attributes.ARMOR, 20)
-                .add(AttributeRegistry.MAX_MANA.get(), 50000.0)
+                .add(Attributes.ARMOR, 15)
+                .add(AttributeRegistry.MAX_MANA.get(), 10000.0)
                 .add(ForgeMod.ENTITY_GRAVITY.get(), 0.03)
                 .add(ForgeMod.ENTITY_REACH.get(), 3.0)
-                .add(Attributes.KNOCKBACK_RESISTANCE,5.0)
+                .add(Attributes.KNOCKBACK_RESISTANCE,0.9)
                 .add(AttributeRegistry.SPELL_POWER.get(), 1.25);
     }
 
@@ -738,8 +739,10 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     //================================================================ 其他方法 ========================================================================
 
 
-
-
+    @Override
+    public boolean hurt(DamageSource source, float amount) {
+        return super.hurt(source, amount);
+    }
 
     @Override
     public void handleClientEvent(byte eventId) {
