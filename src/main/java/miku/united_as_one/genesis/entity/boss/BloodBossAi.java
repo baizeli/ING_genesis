@@ -7,10 +7,8 @@ import com.mojang.serialization.Dynamic;
 import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import miku.united_as_one.genesis.entity.ai.ModMemoryModuleType;
-import miku.united_as_one.genesis.entity.boss.behavior.BloodBossGrabBehavior;
-import miku.united_as_one.genesis.entity.boss.behavior.LightningWhirlSlashBehavior;
-import miku.united_as_one.genesis.entity.boss.behavior.SelectTargetBehavior;
-import miku.united_as_one.genesis.entity.boss.behavior.SpellCastingBehavior;
+import miku.united_as_one.genesis.entity.boss.behavior.*;
+import miku.united_as_one.genesis.entity.boss.behavior.bloodbossskill.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -150,14 +148,20 @@ public class BloodBossAi {
         );
 
 
+
         ImmutableList.Builder<BehaviorControl<BloodBoss>>
                 fightBuilder = ImmutableList.builder();
 
         //清除无效目标
         fightBuilder.add(StopAttackingIfTargetInvalid.create(livingEntity -> false, (mob, target) -> {}, true));
+        fightBuilder.add(new DragonDiveBehavior());//下落攻击
         fightBuilder.add(new LightningWhirlSlashBehavior());//闪电旋风劈
-        //抓取技能
-        fightBuilder.add(new BloodBossGrabBehavior());
+        fightBuilder.add(new BloodBossGrabBehavior());        //抓取技能
+        fightBuilder.add(new DoubleSlashBehavior());//二连斩技能
+        fightBuilder.add(new ZhanZhanCycloneSlashBehavior());//斩斩旋风劈技能
+        fightBuilder.add(new GroundSlamBehavior());//砸地技能
+        fightBuilder.add(new StompBehavior());//跺脚技能
+
 
 
         // 添加所有施法行为

@@ -1,9 +1,10 @@
-package miku.united_as_one.genesis.entity.boss.behavior;
+package miku.united_as_one.genesis.entity.boss.behavior.bloodbossskill;
 
 import miku.united_as_one.genesis.entity.ai.ModMemoryModuleType;
 import miku.united_as_one.genesis.entity.boss.BloodBoss;
 import miku.united_as_one.genesis.entity.boss.BloodBossMoveControl;
 import miku.united_as_one.genesis.entity.boss.SkillMovementTask;
+import miku.united_as_one.genesis.entity.boss.behavior.AnimatedActionBehavior;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -24,16 +25,18 @@ import java.util.Map;
 public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
 
     //冷却
-    public static final int COOL_DOWN = 80;
+    public static final int COOL_DOWN = 11*20;
     //范围伤害倍率
     public static final float DAMAGE_MULTIPLIER_AREA = 2f;
     //主要目标伤害倍率
     public static final float DAMAGE_MULTIPLIER_MAIN = 3.4f;
 
 
-    private static final String ANIM_START = "登！";
-    private static final String ANIM_SLAM  = "龙！";
-    public static final String ANIM_FAIL = "寄！";
+    //"登!"
+    private static final String ANIM_START = "ascend";
+
+    private static final String ANIM_SLAM  = "dragon_slam"; // 龙！
+    public static final String ANIM_FAIL = "failure"; // 寄！
 
     private static final int DASH_DURATION = 9;
     private static final int IMPACT_TIME   = 20;
@@ -92,7 +95,7 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
         slamTimer = 0;
 
         super.start(level, boss, gameTime);
-        boss.playSound(SoundEvents.WANDERING_TRADER_HURT, 0.7f, 0.8f);
+        boss.playSound(SoundEvents.EXPERIENCE_ORB_PICKUP, 5f, 1f);
         LivingEntity target = boss.getTarget();
         if (target != null) {
             Vec3 dir = target.position().subtract(boss.position());

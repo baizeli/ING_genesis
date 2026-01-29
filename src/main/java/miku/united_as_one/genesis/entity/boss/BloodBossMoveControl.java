@@ -30,6 +30,9 @@ public class BloodBossMoveControl extends MoveControl {
     @Override
     public void tick() {
 
+
+
+
         
         if (!skillTasks.isEmpty()) {
             Vec3 total = Vec3.ZERO;
@@ -62,10 +65,25 @@ public class BloodBossMoveControl extends MoveControl {
             return;
         }
 
+
         if (this.operation != Operation.MOVE_TO) {
             super.tick();
             return;
         }
+
+
+        if (this.boss.isCastingSkill()) {
+            if (this.boss.getTarget() != null) {
+                Vec3 playerPos = this.boss.getTarget().position();
+                Vec3 bossPos = this.boss.position();
+                double dx = playerPos.x - bossPos.x;
+                double dz = playerPos.z - bossPos.z;
+
+                float targetYaw = (float) Math.toDegrees(Math.atan2(dz, dx)) - 90.0F;
+                this.boss.setYRot(targetYaw);
+            }
+        }
+
 
         this.operation = Operation.WAIT;
 

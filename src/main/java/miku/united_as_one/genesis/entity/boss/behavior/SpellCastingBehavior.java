@@ -64,7 +64,9 @@ public class SpellCastingBehavior extends Behavior<BloodBoss> {
 
         // 检查距离
         double distanceSq = owner.distanceToSqr(target);
-        if (distanceSq > maxCastDistanceSq) {
+
+        // 检查距离是否过远或过近
+        if (distanceSq > maxCastDistanceSq || distanceSq < 6D) {
             return false;
         }
 
@@ -72,6 +74,7 @@ public class SpellCastingBehavior extends Behavior<BloodBoss> {
         if (!Utils.hasLineOfSight(owner.level(), owner, target, true)) {
             return false;
         }
+
 
         return true;
     }
