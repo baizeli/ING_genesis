@@ -34,7 +34,8 @@ public class VerticalHorizontalSlashBehavior extends AnimatedActionBehavior<Bloo
     // 横劈时间 (1.29秒转换为ticks: 1.29 * 20 = 25.8 ≈ 26 ticks)
     private static final int HORIZONTAL_SLASH_TIME = 26;
 
-    public static final String ANIMATION_ID = "劈斩2";
+    // 原名称: "劈斩2"
+    public static final String ANIMATION_ID = "slash_two";
 
     private boolean verticalSlashDone = false;
     private boolean horizontalSlashDone = false;

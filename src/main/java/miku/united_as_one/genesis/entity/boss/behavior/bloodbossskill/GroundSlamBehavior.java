@@ -28,8 +28,7 @@ public class GroundSlamBehavior extends AnimatedActionBehavior<BloodBoss> {
     private static final int DURATION = 40;
     // 伤害时间 (1.58秒转换为ticks: 1.58 * 20 = 31.6 ≈ 32 ticks)
     private static final int SLAM_TIME = 32;
-
-    public static final String ANIMATION_ID = "砸地";
+    public static final String ANIMATION_ID = "ground_slam"; // 砸地
 
     private boolean slamDone = false;
 

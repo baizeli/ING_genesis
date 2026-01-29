@@ -30,7 +30,8 @@ public class LightningWhirlSlashBehavior
     private static final int DURATION = 30;
     private static final int HIT_1 = 19;
     private static final int HIT_2 = 24;
-    public static final String SKILL_ANIMATION = "lightning_whirlwind_2";
+
+    public static final String SKILL_ANIMATION = "lightning_whirlwind_2";//闪电旋风劈2
 
 
     private boolean hit1Done = false;

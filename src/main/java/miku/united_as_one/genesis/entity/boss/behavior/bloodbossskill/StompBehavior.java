@@ -29,7 +29,7 @@ public class StompBehavior extends AnimatedActionBehavior<BloodBoss> {
     // 伤害时间 (0.54秒转换为ticks: 0.54 * 20 = 10.8 ≈ 11 ticks)
     private static final int STOMP_TIME = 11;
 
-    public static final String ANIMATION_ID = "跺脚（一二阶段通用）";
+    public static final String ANIMATION_ID = "stomp_common_phase_one_two"; // 跺脚（一二阶段通用）
 
     private boolean stompDone = false;
 

@@ -30,7 +30,8 @@ public class DoubleSlashBehavior extends AnimatedActionBehavior<BloodBoss> {
 
     private static final int SECOND_HIT_TIME = 32;
 
-    public static final String ANIMATION_ID = "二连斩";
+
+    public static final String ANIMATION_ID = "double_slash"; // 二连斩
 
     private boolean firstHitDone = false;
     private boolean secondHitDone = false;
