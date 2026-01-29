@@ -2,11 +2,18 @@ package miku.united_as_one.genesis.items.bow;
 
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.entity.spells.lightning_lance.LightningLanceProjectile;
+import io.redspace.ironsspellbooks.api.events.SpellOnCastEvent;
+import io.redspace.ironsspellbooks.api.spells.CastSource;
+import io.redspace.ironsspellbooks.network.SyncManaPacket;
+import io.redspace.ironsspellbooks.setup.PacketDistributor;
+import io.redspace.ironsspellbooks.api.registry.SchoolRegistry;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraftforge.common.MinecraftForge;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Predicate;
@@ -47,7 +54,10 @@ public class ThunderLongbow extends BowItem {
         if (!player.getAbilities().instabuild) {
             stack.hurtAndBreak(10, player, (p) -> p.broadcastBreakEvent(player.getUsedItemHand()));
             MagicData magicData = MagicData.getPlayerMagicData(player);
-            magicData.setMana(magicData.getMana() - 20);
+            var event = new SpellOnCastEvent(player, "lightning_lance", 1, 20, SchoolRegistry.LIGHTNING.get(), CastSource.SWORD);
+            MinecraftForge.EVENT_BUS.post(event);
+            magicData.setMana(Math.max(magicData.getMana() - event.getManaCost(), 0));
+            PacketDistributor.sendToPlayer((ServerPlayer) player, new SyncManaPacket(magicData));
         }
     }
 }
