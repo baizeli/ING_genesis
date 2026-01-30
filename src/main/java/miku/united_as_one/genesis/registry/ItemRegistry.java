@@ -139,6 +139,17 @@ public class ItemRegistry {
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
+    // 冰霜长弓
+    public static final ItemEntry<FrostLongbow> FROST_LONGBOW = Genesis.L2_REGISTRATE
+            .item("frost_longbow", properties -> new FrostLongbow(properties
+                .rarity(Rarity.EPIC)
+                .stacksTo(1)
+                .durability(2009)
+            ))
+            .model(ItemRegistry::createBowModel)
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
+            .register();
+
     // 巫术弓
     public static final ItemEntry<WitchcraftBow> WITCHCRAFT_BOW = Genesis.L2_REGISTRATE
             .item("witchcraft_bow", properties -> new WitchcraftBow(properties
