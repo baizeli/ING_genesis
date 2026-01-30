@@ -25,7 +25,7 @@ import java.util.Map;
 public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
 
     //冷却
-    public static final int COOL_DOWN = 2*20;
+    public static final int COOL_DOWN = 8*20;
     //范围伤害倍率
     public static final float DAMAGE_MULTIPLIER_AREA = 2f;
     //主要目标伤害倍率
