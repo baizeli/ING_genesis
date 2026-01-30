@@ -161,6 +161,17 @@ public class ItemRegistry {
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
+    // 火焰弓
+    public static final ItemEntry<FlameBow> FLAME_BOW = Genesis.L2_REGISTRATE
+            .item("flame_bow", properties -> new FlameBow(properties
+                .rarity(Rarity.EPIC)
+                .stacksTo(1)
+                .durability(2009)
+            ))
+            .model(ItemRegistry::createBowModel)
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
+            .register();
+
     // 创造之星
     public static final ItemEntry<CreateStar> CREATE_STAR = Genesis.L2_REGISTRATE
             .item("create_star", properties -> new CreateStar(properties

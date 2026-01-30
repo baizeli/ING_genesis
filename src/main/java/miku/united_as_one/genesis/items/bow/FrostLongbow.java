@@ -19,6 +19,7 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.phys.*;
 import net.minecraftforge.common.MinecraftForge;
 import org.jetbrains.annotations.NotNull;
@@ -76,7 +77,11 @@ public class FrostLongbow extends BowItem {
             50, 0, 0, 0, .3, false
         );
 
-        player.playSound(SoundRegistry.RAY_OF_FROST.get(), 0.3F, 1);
+        level.playSound(
+            null, player.getX(), player.getY(), player.getZ(),
+            SoundRegistry.RAY_OF_FROST.get(), player.getSoundSource(),
+            1, level.random.nextFloat() + 0.3F + 1
+        );
         
         if (!player.getAbilities().instabuild) {
             stack.hurtAndBreak(10, player, (p) -> p.broadcastBreakEvent(player.getUsedItemHand()));
