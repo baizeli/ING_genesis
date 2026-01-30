@@ -139,12 +139,12 @@ public class BloodBossAi {
 
         // 创建施法行为列表
         ImmutableList<SpellCastingBehavior> spellBehaviors = createSpellCastingBehaviors(
-            createSpellData(SpellRegistry.BLOOD_SLASH_SPELL.get(), 10, 20.0f),
-            createSpellData(SpellRegistry.BLOOD_NEEDLES_SPELL.get(), 25, 18.0f),
-            createSpellData(SpellRegistry.WITHER_SKULL_SPELL.get(), 30, 25.0f),
-            createSpellData(SpellRegistry.ACUPUNCTURE_SPELL.get(), 20, 15.0f),
-            createSpellData(SpellRegistry.SONIC_BOOM_SPELL.get(), 15, 16.0f),
-            createSpellData(SpellRegistry.ELDRITCH_BLAST_SPELL.get(), 12, 22.0f)
+            createSpellData(SpellRegistry.BLOOD_SLASH_SPELL.get(), 8*20, 20.0f),
+            createSpellData(SpellRegistry.BLOOD_NEEDLES_SPELL.get(), 8*20, 18.0f),
+            createSpellData(SpellRegistry.WITHER_SKULL_SPELL.get(), 8*20, 25.0f),
+            createSpellData(SpellRegistry.ACUPUNCTURE_SPELL.get(), 8*20, 15.0f),
+            createSpellData(SpellRegistry.SONIC_BOOM_SPELL.get(), 8*20, 16.0f),
+            createSpellData(SpellRegistry.ELDRITCH_BLAST_SPELL.get(), 8*20, 22.0f)
         );
 
 
@@ -154,19 +154,19 @@ public class BloodBossAi {
 
         //清除无效目标
         fightBuilder.add(StopAttackingIfTargetInvalid.create(livingEntity -> false, (mob, target) -> {}, true));
-        fightBuilder.add(new DragonDiveBehavior());//下落攻击
-        fightBuilder.add(new LightningWhirlSlashBehavior());//闪电旋风劈
+//        fightBuilder.add(new DragonDiveBehavior());//下落攻击
+//        fightBuilder.add(new LightningWhirlSlashBehavior());//闪电旋风劈
         fightBuilder.add(new BloodBossGrabBehavior());        //抓取技能
-        fightBuilder.add(new DoubleSlashBehavior());//二连斩技能
-        fightBuilder.add(new ZhanZhanCycloneSlashBehavior());//斩斩旋风劈技能
-        fightBuilder.add(new GroundSlamBehavior());//砸地技能
-        fightBuilder.add(new StompBehavior());//跺脚技能
+//        fightBuilder.add(new DoubleSlashBehavior());//二连斩技能
+//        fightBuilder.add(new ZhanZhanCycloneSlashBehavior());//斩斩旋风劈技能
+//        fightBuilder.add(new GroundSlamBehavior());//砸地技能
+//        fightBuilder.add(new StompBehavior());//跺脚技能
 
 
 
         // 添加所有施法行为
         for (SpellCastingBehavior behavior : spellBehaviors) {
-            fightBuilder.add(behavior);
+//            fightBuilder.add(behavior);
         }
 
         ImmutableList<BehaviorControl<BloodBoss>> fightBehaviors = fightBuilder.build();

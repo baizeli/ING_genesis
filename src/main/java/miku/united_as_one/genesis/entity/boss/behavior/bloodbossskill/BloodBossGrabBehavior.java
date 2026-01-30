@@ -25,7 +25,7 @@ import java.util.Map;
 public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
 
     //冷却
-    public static final int COOL_DOWN = 11*20;
+    public static final int COOL_DOWN = 2*20;
     //范围伤害倍率
     public static final float DAMAGE_MULTIPLIER_AREA = 2f;
     //主要目标伤害倍率
@@ -64,13 +64,14 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
 
     private float slamAngle;
 
-
-
+//应该立刻停止
+    private boolean shouldStopImmediately;
     public BloodBossGrabBehavior() {
         super(Map.of(
                 MemoryModuleType.ATTACK_TARGET, MemoryStatus.VALUE_PRESENT,
                 ModMemoryModuleType.IS_CASTING_SKILL.get(), MemoryStatus.VALUE_ABSENT
         ));
+        shouldStopImmediately = false;
     }
 
     @Override
@@ -111,6 +112,11 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
         boss.serverTriggerAnimation(ANIM_START);
     }
 
+    @Override
+    protected boolean canStillUse(ServerLevel level, BloodBoss entity, long gameTime) {
+
+        return super.canStillUse(level, entity, gameTime)&&!shouldStopImmediately;
+    }
 
     @Override
     protected void tick(ServerLevel level, BloodBoss boss, long gameTime) {
@@ -280,17 +286,18 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
         // 对范围内的其他实体造成伤害
         applyAreaOfEffectDamage(level, boss);
 
-        level.sendParticles(
-                ParticleTypes.EXPLOSION_EMITTER,
-                boss.getX(), boss.getY(), boss.getZ(),
-                1, 0, 0, 0, 0
-        );
+//        level.sendParticles(
+//                ParticleTypes.EXPLOSION_EMITTER,
+//                boss.getX(), boss.getY(), boss.getZ(),
+//                1, 0, 0, 0, 0
+//        );
 
         level.playSound(
                 null, boss.getX(), boss.getY(), boss.getZ(),
                 SoundEvents.GENERIC_EXPLODE, SoundSource.HOSTILE,
                 1.5f, 0.7f
         );
+        this.shouldStopImmediately= true;
     }
 
     /**
@@ -323,6 +330,7 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
         impactTarget  = null;
         grabSuccess   = false;
         impactDealt   = false;
+        shouldStopImmediately = false;
     }
 
     @Override protected int getActionDuration() {
@@ -342,13 +350,21 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
 
         @Override
         public void start(Mob mob) {
-            float yawRad = mob.getYRot() * Mth.DEG_TO_RAD;
-            dir = new Vec3(-Mth.sin(yawRad), 0, Mth.cos(yawRad));
+            if (mob.getTarget() != null) {
+                Vec3 from = mob.position().add(0, mob.getBbHeight() * 0.5, 0);
+                Vec3 to   = mob.getTarget().position().add(0, mob.getTarget().getBbHeight() * 0.5, 0);
+                dir = to.subtract(from).normalize();
+            } else {
+                float yawRad = mob.getYRot() * Mth.DEG_TO_RAD;
+                dir = new Vec3(-Mth.sin(yawRad), 0, Mth.cos(yawRad));
+            }
         }
 
         @Override
         public Vec3 compute(Mob mob, float progress) {
-            return new Vec3(dir.x * 1.3, mob.getDeltaMovement().y, dir.z * 1.3);
+            double speed = 1.35;
+            return dir.scale(speed);
         }
     }
+
 }
