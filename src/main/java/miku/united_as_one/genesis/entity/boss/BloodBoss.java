@@ -48,7 +48,6 @@ import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.entity.IEntityAdditionalSpawnData;
-import net.minecraftforge.fml.common.Mod;
 import org.slf4j.Logger;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -175,12 +174,12 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
 //        this.jumpControl = new BloodBossJumpControl(this);
 
         this.animationControllerWalk = new AnimationController<>(this, "walk_controller", 10, this::walkPredicate);
-        this.skillAnimationController = new AnimationController<>(this, "skill_animation_controller", 0, this::animationPredicate);
+        this.skillAnimationController = new AnimationController<>(this, "skill_animation_controller", 0, this::skillAnimationPredicate);
 
 
-        this.instantCastController = new AnimationController<>(this, "instant_cast", 5, this::instantCastingPredicate);
-        this.longCastController = new AnimationController<>(this, "long_cast", 5, this::longCastingPredicate);
-        this.continuousCastController = new AnimationController<>(this, "continuous_cast", 5, this::continuousCastingPredicate);
+        this.instantCastController = new AnimationController<>(this, "instant_cast", 0, this::instantCastingPredicate);
+        this.longCastController = new AnimationController<>(this, "long_cast", 0, this::longCastingPredicate);
+        this.continuousCastController = new AnimationController<>(this, "continuous_cast", 0, this::continuousCastingPredicate);
 
 
         // 初始化魔法数据
@@ -477,6 +476,9 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         controllerRegistrar.add(longCastController);
         controllerRegistrar.add(continuousCastController);
     }
+
+
+    private int shouldSetWalkTransitionLengthDelay = 0;
     private PlayState walkPredicate(AnimationState<BloodBoss> state) {
         boolean isCastingSkill = this.isCastingSkill();
 
@@ -484,16 +486,25 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         if (isCastingSkill) {
             animationControllerWalk.setTransitionLength(0);
             animationControllerWalk.setAnimationSpeed(1.0);
-            return state.setAndContinue(IDLE);
+
+            shouldSetWalkTransitionLengthDelay = 0;
+            return PlayState.STOP;
         }
 
+
+
+
+        if (shouldSetWalkTransitionLengthDelay <= 10) {
+            animationControllerWalk.setTransitionLength(0);
+            shouldSetWalkTransitionLengthDelay++;
+        }else{
+            animationControllerWalk.setTransitionLength(10);
+        }
         if (this.isCasting()) {
-            animationControllerWalk.setTransitionLength(5);
             animationControllerWalk.setAnimationSpeed(1.0);
             return state.setAndContinue(IDLE);
         }
 
-        animationControllerWalk.setTransitionLength(10);
         double horizontalSpeed = this.getDeltaMovement().horizontalDistance();
         if (horizontalSpeed > 0.01) {
             double speedMultiplier = (horizontalSpeed / 0.053) * 1.2;
@@ -509,24 +520,12 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
 
 
 
-    private boolean shouldPlayForceResetAnimate=false;
+    private PlayState skillAnimationPredicate(AnimationState<BloodBoss> animationEvent) {
 
-    private PlayState animationPredicate(AnimationState<BloodBoss> animationEvent) {
         AnimationController<BloodBoss> controller = animationEvent.getController();
-//        if(!(isCastingSkill())){
-//            if (shouldPlayForceResetAnimate){
-//                controller.forceAnimationReset();
-//                controller.setAnimation(EMPTY);
-//                shouldPlayForceResetAnimate=false;
-//                return PlayState.CONTINUE;
-//            }else{
-//                return PlayState.STOP;
-//            }
-//
-//        }
+
 
         if (this.animationToPlay != null) {
-            shouldPlayForceResetAnimate=true;
             controller.forceAnimationReset();
             controller.setAnimation(this.animationToPlay);
             this.animationToPlay = null;
