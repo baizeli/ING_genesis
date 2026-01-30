@@ -125,20 +125,6 @@ public class ItemRegistry {
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
-    // 往世的飞花
-    public static final ItemEntry<NewBowItem> WHISPER_OF_THE_PAST = Genesis.L2_REGISTRATE
-            .item("whisper_of_the_past", properties -> new NewBowItem(properties
-                .rarity(Rarity.EPIC)
-                .stacksTo(1)
-                .durability(384 * 3)
-            ))
-            .model(ItemRegistry::createBowModel)
-            /*.model((ctx, prov) -> {
-                prov.withExistingParent(ctx.getName(), new ResourceLocation(Genesis.MOD_ID, "item/bow/whisper_of_the_past"));
-            })*/
-            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
-            .register();
-
     // 雷霆长弓
     public static final ItemEntry<ThunderLongbow> THUNDER_LONGBOW = Genesis.L2_REGISTRATE
             .item("thunder_longbow", properties -> new ThunderLongbow(properties
@@ -150,6 +136,17 @@ public class ItemRegistry {
             /*.model((ctx, prov) -> {
                 prov.withExistingParent(ctx.getName(), new ResourceLocation(Genesis.MOD_ID, "item/bow/thunder_longbow"));
             })*/
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
+            .register();
+
+    // 巫术弓
+    public static final ItemEntry<WitchcraftBow> WITCHCRAFT_BOW = Genesis.L2_REGISTRATE
+            .item("witchcraft_bow", properties -> new WitchcraftBow(properties
+                .rarity(Rarity.EPIC)
+                .stacksTo(1)
+                .durability(2009)
+            ))
+            .model(ItemRegistry::createBowModel)
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 

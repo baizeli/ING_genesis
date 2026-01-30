@@ -2,20 +2,20 @@
   "parent": "minecraft:item/handheld",
   "overrides": [
     {
-      "model": "iron_spells_genesis:item/bow/whisper_of_the_past/bow_pulling_0",
+      "model": "iron_spells_genesis:item/bow/witchcraft_bow/bow_pulling_0",
       "predicate": {
         "minecraft:pulling": 1.0
       }
     },
     {
-      "model": "iron_spells_genesis:item/bow/whisper_of_the_past/bow_pulling_1",
+      "model": "iron_spells_genesis:item/bow/witchcraft_bow/bow_pulling_1",
       "predicate": {
         "minecraft:pull": 0.7,
         "minecraft:pulling": 1.0
       }
     },
     {
-      "model": "iron_spells_genesis:item/bow/whisper_of_the_past/bow_pulling_2",
+      "model": "iron_spells_genesis:item/bow/witchcraft_bow/bow_pulling_2",
       "predicate": {
         "minecraft:pull": 0.9,
         "minecraft:pulling": 1.0
@@ -23,6 +23,6 @@
     }
   ],
   "textures": {
-    "layer0": "iron_spells_genesis:item/bow/whisper_of_the_past/bow"
+    "layer0": "iron_spells_genesis:item/bow/witchcraft_bow/bow"
   }
 }
