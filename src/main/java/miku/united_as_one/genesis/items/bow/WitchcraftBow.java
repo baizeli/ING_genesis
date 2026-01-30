@@ -56,6 +56,7 @@ public class WitchcraftBow extends BowItem {
 
         for (Entity target : level.getEntities(player, player.getBoundingBox().expandTowards(end.subtract(start)))) {
             if (Utils.checkEntityIntersecting(target, start, end, .4f).getType() != HitResult.Type.MISS) {
+                target.invulnerableTime = 0;
                 DamageSources.applyDamage(target, power * 16, level.damageSources().sonicBoom(player));
             }
         }
@@ -68,11 +69,12 @@ public class WitchcraftBow extends BowItem {
         Vec3 leftEnd = leftStart.add(player.getForward().scale(range));
         level.addFreshEntity(new EldritchBlastVisualEntity(level, leftStart, leftEnd, player));
 
-        /*for (Entity target : level.getEntities(player, player.getBoundingBox().expandTowards(leftEnd.subtract(leftStart)))) {
+        for (Entity target : level.getEntities(player, player.getBoundingBox().expandTowards(leftEnd.subtract(leftStart)))) {
             if (Utils.checkEntityIntersecting(target, leftStart, leftEnd, .4f).getType() != HitResult.Type.MISS) {
+                target.invulnerableTime = 0;
                 DamageSources.applyDamage(target, power * 8, new EldritchBlastSpell().getDamageSource(target, player));
             }
-        }*/
+        }
 
         // 右侧巫术湮灭射线
         /*Vec3 rightEnd = rightStart.add(player.getForward().scale(range));
@@ -80,6 +82,7 @@ public class WitchcraftBow extends BowItem {
 
         for (Entity target : level.getEntities(player, player.getBoundingBox().expandTowards(rightEnd.subtract(rightStart)))) {
             if (Utils.checkEntityIntersecting(target, rightStart, rightEnd, .4f).getType() != HitResult.Type.MISS) {
+                target.invulnerableTime = 0;
                 DamageSources.applyDamage(target, power * 8, new EldritchBlastSpell().getDamageSource(target, player));
             }
         }*/
