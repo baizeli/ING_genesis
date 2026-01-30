@@ -54,29 +54,34 @@ public class FrostLongbow extends BowItem {
 
         if (power < 0.5) return;
 
-        var hitResult = Utils.raycastForEntity(level, player, 22, true, .15f);
+        var hitResult = Utils.raycastForEntity(level, player, 17, true, .15f);
         level.addFreshEntity(new RayOfFrostVisualEntity(level, player.getEyePosition(), hitResult.getLocation(), player));
 
         if (hitResult.getType() == HitResult.Type.ENTITY) {
             DamageSources.applyDamage(
-                ((EntityHitResult) hitResult).getEntity(), 
-                power * 15, 
-                SpellDamageSource.source(
-                    player, 
+                ((EntityHitResult) hitResult).getEntity(), power * 15, SpellDamageSource.source(player, 
                     SpellRegistry.RAY_OF_FROST_SPELL.get()
                 ).setFreezeTicks((int)(power * 15 * 20))
             );
         } else if (hitResult.getType() == HitResult.Type.BLOCK) {
-            MagicManager.spawnParticles(level, ParticleHelper.ICY_FOG, hitResult.getLocation().x, hitResult.getLocation().y, hitResult.getLocation().z, 4, 0, 0, 0, .3, true);
+            MagicManager.spawnParticles(
+                level, ParticleHelper.ICY_FOG, 
+                hitResult.getLocation().x, hitResult.getLocation().y, hitResult.getLocation().z, 
+                4, 0, 0, 0, .3, true
+            );
         }
-        MagicManager.spawnParticles(level, ParticleHelper.SNOWFLAKE, hitResult.getLocation().x, hitResult.getLocation().y, hitResult.getLocation().z, 50, 0, 0, 0, .3, false);
+        MagicManager.spawnParticles(
+            level, ParticleHelper.SNOWFLAKE, 
+            hitResult.getLocation().x, hitResult.getLocation().y, hitResult.getLocation().z, 
+            50, 0, 0, 0, .3, false
+        );
 
         player.playSound(SoundRegistry.RAY_OF_FROST.get(), 0.3F, 1);
         
         if (!player.getAbilities().instabuild) {
             stack.hurtAndBreak(10, player, (p) -> p.broadcastBreakEvent(player.getUsedItemHand()));
             MagicData magicData = MagicData.getPlayerMagicData(player);
-            var event = new SpellOnCastEvent(player, "ray_of_frost", 1, 20, SchoolRegistry.ICE.get(), CastSource.SWORD);
+            var event = new SpellOnCastEvent(player, "ray_of_frost", 1, 50, SchoolRegistry.ICE.get(), CastSource.SWORD);
             MinecraftForge.EVENT_BUS.post(event);
             magicData.setMana(Math.max(magicData.getMana() - event.getManaCost(), 0));
             PacketDistributor.sendToPlayer((ServerPlayer) player, new SyncManaPacket(magicData));
