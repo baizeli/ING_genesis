@@ -3,6 +3,7 @@ package miku.united_as_one.genesis.entity.boss.behavior;
 import io.redspace.ironsspellbooks.api.entity.IMagicEntity;
 import io.redspace.ironsspellbooks.entity.mobs.IAnimatedAttacker;
 import miku.united_as_one.genesis.entity.ai.ModMemoryModuleType;
+import miku.united_as_one.genesis.entity.boss.BloodBoss;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -44,9 +45,16 @@ public abstract class AnimatedActionBehavior<E extends Mob & IMagicEntity & IAni
     @Override
     protected boolean checkExtraStartConditions(ServerLevel level, E owner) {
         long gameTime = level.getGameTime();
+        if (owner instanceof BloodBoss boss){
+            if (boss.isReallyCasting()){
+                return false;
+            }
+        }
+
         // 检查冷却是否结束，以及自定义条件，并且确保实体当前没有在施法
-        return gameTime >= this.nextAttackGameTime && this.canStartAction(owner) && !owner.getMagicData().isCasting();
+        return gameTime >= this.nextAttackGameTime && this.canStartAction(owner) && !owner.isCasting();
     }
+
 
     /**
      * 行为能否继续运行。
@@ -65,6 +73,8 @@ public abstract class AnimatedActionBehavior<E extends Mob & IMagicEntity & IAni
     @Override
     protected void start(ServerLevel level, E entity, long gameTime) {
         this.abilityTimer = 0;
+
+
         // 触发动画
         entity.serverTriggerAnimation(this.getAnimationId());
         entity.getBrain().setMemory(ModMemoryModuleType.IS_CASTING_SKILL.get(), true);
@@ -98,7 +108,7 @@ public abstract class AnimatedActionBehavior<E extends Mob & IMagicEntity & IAni
      */
     @Override
     protected void stop(ServerLevel level, E entity, long gameTime) {
-        entity.getBrain().setMemory(ModMemoryModuleType.IS_CASTING_SKILL.get(), false);
+        entity.getBrain().eraseMemory(ModMemoryModuleType.IS_CASTING_SKILL.get());
         super.stop(level, entity, gameTime);
         // 设定冷却时间
         this.nextAttackGameTime = gameTime + this.getCooldown();
