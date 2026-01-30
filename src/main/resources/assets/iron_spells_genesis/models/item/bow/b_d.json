@@ -1,6 +1,0 @@
-{
-  "parent": "iron_spells_genesis:item/base_bow",
-  "textures": {
-    "layer0": "iron_spells_genesis:item/bow/b_d"
-  }
-}

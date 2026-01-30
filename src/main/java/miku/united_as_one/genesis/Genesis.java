@@ -44,6 +44,7 @@ import net.minecraftforge.network.simple.SimpleChannel;
 import org.slf4j.Logger;
 import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
 
+@SuppressWarnings("removal")
 @Mod(Genesis.MOD_ID)
 public class Genesis
 {
@@ -68,7 +69,7 @@ public class Genesis
     {
         IEventBus modEventBus = context.getModEventBus();
 
-        ItemRegistry.register(modEventBus);
+        ItemRegistry.register();
         CreativeTabRegistry.register(modEventBus);
         EntityRegistry.ENTITY_TYPES.register(modEventBus);
         BlockRegistry.BLOCKS.register(modEventBus);

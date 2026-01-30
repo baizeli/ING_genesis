@@ -1,12 +1,13 @@
 package miku.united_as_one.genesis.registry;
 
-import com.tterrag.registrate.providers.ProviderType;
+import com.tterrag.registrate.providers.*;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.items.*;
 import miku.united_as_one.genesis.items.staff.*;
 import miku.united_as_one.genesis.items.armor.*;
+import miku.united_as_one.genesis.items.bow.*;
 import miku.united_as_one.genesis.items.curios.*;
 import miku.united_as_one.genesis.items.curios.rune_plus.*;
 import miku.united_as_one.genesis.items.manuscript.*;
@@ -20,24 +21,15 @@ import io.redspace.ironsspellbooks.util.ItemPropertiesHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.*;
+import net.minecraftforge.client.model.generators.*;
 import org.jetbrains.annotations.*;
 
 import java.util.*;
-import java.util.function.Supplier;
 
 @SuppressWarnings("removal")
 public class ItemRegistry {
-    public static final Map<TagKey<Item>, Set<RegistryObject<Item>>> itemTagMap = new HashMap<>();
-    //加到创造标签页的用这个注册
-    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Genesis.MOD_ID);
-    //不加到创造标签页的用这个注册
-    public static final DeferredRegister<Item> PRE_ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Genesis.MOD_ID);
-
     // 紫极锭
     public static final ItemEntry<EternisMaterial> PURPLEITE_GALAXY_INGOT = Genesis.L2_REGISTRATE
             .item("purpleite_galaxy_ingot", properties -> new EternisMaterial(properties, 0))
@@ -133,16 +125,50 @@ public class ItemRegistry {
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
-    // 往世的飞花
-    public static final ItemEntry<NewBowItem> WHISPER_OF_THE_PAST = Genesis.L2_REGISTRATE
-            .item("whisper_of_the_past", properties -> new NewBowItem(properties
+    // 雷霆长弓
+    public static final ItemEntry<ThunderLongbow> THUNDER_LONGBOW = Genesis.L2_REGISTRATE
+            .item("thunder_longbow", properties -> new ThunderLongbow(properties
                 .rarity(Rarity.EPIC)
                 .stacksTo(1)
-                .durability(384 * 3)
+                .durability(2009)
             ))
-            .model((ctx, prov) -> {
-                prov.withExistingParent(ctx.getName(), new ResourceLocation(Genesis.MOD_ID, "item/whisper_of_the_past"));
-            })
+            .model(ItemRegistry::createBowModel)
+            /*.model((ctx, prov) -> {
+                prov.withExistingParent(ctx.getName(), new ResourceLocation(Genesis.MOD_ID, "item/bow/thunder_longbow"));
+            })*/
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
+            .register();
+
+    // 冰霜长弓
+    public static final ItemEntry<FrostLongbow> FROST_LONGBOW = Genesis.L2_REGISTRATE
+            .item("frost_longbow", properties -> new FrostLongbow(properties
+                .rarity(Rarity.EPIC)
+                .stacksTo(1)
+                .durability(2009)
+            ))
+            .model(ItemRegistry::createBowModel)
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
+            .register();
+
+    // 巫术弓
+    public static final ItemEntry<WitchcraftBow> WITCHCRAFT_BOW = Genesis.L2_REGISTRATE
+            .item("witchcraft_bow", properties -> new WitchcraftBow(properties
+                .rarity(Rarity.EPIC)
+                .stacksTo(1)
+                .durability(2009)
+            ))
+            .model(ItemRegistry::createBowModel)
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
+            .register();
+
+    // 火焰弓
+    public static final ItemEntry<FlameBow> FLAME_BOW = Genesis.L2_REGISTRATE
+            .item("flame_bow", properties -> new FlameBow(properties
+                .rarity(Rarity.EPIC)
+                .stacksTo(1)
+                .durability(2009)
+            ))
+            .model(ItemRegistry::createBowModel)
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
@@ -658,18 +684,28 @@ public class ItemRegistry {
             .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
-    
-    private static RegistryObject<Item> registerCurios(String name, TagKey<Item> tagKey, Supplier<Item> item) {
-        RegistryObject<Item> register = ITEMS.register(name, item);
-        Set<RegistryObject<Item>> set = itemTagMap.getOrDefault(tagKey, new HashSet<>());
-        set.add(register);
-        itemTagMap.put(tagKey, set);
-        return register;
-    }
 
-    public static void register(IEventBus eventBus) {
-        ITEMS.register(eventBus);
-        PRE_ITEMS.register(eventBus);
+    public static void register() {}
+
+    public static <T extends Item> void createBowModel(DataGenContext<Item, T> ctx, RegistrateItemModelProvider pvd) {
+        ItemModelBuilder builder = pvd.withExistingParent(ctx.getName(), "item/handheld");
+        builder.texture("layer0", Genesis.MOD_ID + ":item/bow/" + ctx.getName() + "/bow");
+
+        for (int i = 0; i < 3; i++) {
+            String name = "item/bow/" + ctx.getName() + "/bow_pulling_" + i;
+            ItemModelBuilder pullingModel = pvd.getBuilder(name)
+                    .parent(new ModelFile.UncheckedModelFile("item/bow_pulling_" + i));
+            pullingModel.texture("layer0", Genesis.MOD_ID + ":item/bow/" + ctx.getName() + "/bow_pulling_" + i);
+
+            ItemModelBuilder.OverrideBuilder override = builder.override();
+            override.predicate(new ResourceLocation("pulling"), 1);
+            if (i == 1) {
+                override.predicate(new ResourceLocation("pull"), 0.7f);
+            } else if (i == 2) {
+                override.predicate(new ResourceLocation("pull"), 0.9f);
+            }
+            override.model(new ModelFile.UncheckedModelFile(Genesis.MOD_ID + ":" + name));
+        }
     }
 
     public static class ChaosBaseItem extends Item {
