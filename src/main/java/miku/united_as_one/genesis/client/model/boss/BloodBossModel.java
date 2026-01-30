@@ -4,6 +4,7 @@ import io.redspace.ironsspellbooks.entity.mobs.abstract_spell_casting_mob.Abstra
 import io.redspace.ironsspellbooks.entity.mobs.abstract_spell_casting_mob.AbstractSpellCastingMobModel;
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.entity.boss.BloodBoss;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
@@ -38,5 +39,10 @@ public class BloodBossModel extends GeoModel<BloodBoss> {
     @Override
     public ResourceLocation getAnimationResource(BloodBoss animatable) {
         return ANIMATION_RESOURCE;
+    }
+
+    @Override
+    public RenderType getRenderType(BloodBoss animatable, ResourceLocation texture) {
+        return RenderType.entityCutout(texture);
     }
 }
