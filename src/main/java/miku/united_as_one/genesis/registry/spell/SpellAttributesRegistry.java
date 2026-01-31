@@ -54,7 +54,7 @@ public class SpellAttributesRegistry {
     private static RegistryObject<Attribute> newPenetrationAttribute() {
         return ATTRIBUTES.register("flame_spell_penetration", () -> (new MagicPercentAttribute(
             "attribute." + Genesis.MOD_ID + ".flame_spell_penetration",
-            1, -Double.MIN_VALUE, Double.MAX_VALUE)).setSyncable(true)
-        );
+            0, 0, 1
+        )).setSyncable(true));
     }
 }
