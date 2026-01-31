@@ -154,19 +154,19 @@ public class BloodBossAi {
 
         //清除无效目标
         fightBuilder.add(StopAttackingIfTargetInvalid.create(livingEntity -> false, (mob, target) -> {}, true));
-//        fightBuilder.add(new DragonDiveBehavior());//下落攻击
-//        fightBuilder.add(new LightningWhirlSlashBehavior());//闪电旋风劈
+        fightBuilder.add(new DragonDiveBehavior());//下落攻击
+        fightBuilder.add(new LightningWhirlSlashBehavior());//闪电旋风劈
         fightBuilder.add(new BloodBossGrabBehavior());        //抓取技能
-//        fightBuilder.add(new DoubleSlashBehavior());//二连斩技能
-//        fightBuilder.add(new ZhanZhanCycloneSlashBehavior());//斩斩旋风劈技能
-//        fightBuilder.add(new GroundSlamBehavior());//砸地技能
-//        fightBuilder.add(new StompBehavior());//跺脚技能
+        fightBuilder.add(new DoubleSlashBehavior());//二连斩技能
+        fightBuilder.add(new ZhanZhanCycloneSlashBehavior());//斩斩旋风劈技能
+        fightBuilder.add(new GroundSlamBehavior());//砸地技能
+        fightBuilder.add(new StompBehavior());//跺脚技能
 
 
 
         // 添加所有施法行为
         for (SpellCastingBehavior behavior : spellBehaviors) {
-//            fightBuilder.add(behavior);
+            fightBuilder.add(behavior);
         }
 
         ImmutableList<BehaviorControl<BloodBoss>> fightBehaviors = fightBuilder.build();
