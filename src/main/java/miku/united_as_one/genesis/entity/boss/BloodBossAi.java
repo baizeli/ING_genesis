@@ -10,11 +10,13 @@ import miku.united_as_one.genesis.entity.ai.ModMemoryModuleType;
 import miku.united_as_one.genesis.entity.boss.behavior.*;
 import miku.united_as_one.genesis.entity.boss.behavior.bloodbossskill.*;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.behavior.*;
+import net.minecraft.world.entity.ai.behavior.warden.Emerging;
 import net.minecraft.world.entity.ai.behavior.warden.SetWardenLookTarget;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.sensing.Sensor;
@@ -27,6 +29,8 @@ import java.util.function.Predicate;
 
 
 public class BloodBossAi {
+
+    static int emergePriority = 150;
     static int idleStartPriority = 100;
     static int fightStartPriority = 50;
     protected static ImmutableList<MemoryModuleType<?>> MEMORY_TYPES;
@@ -78,6 +82,7 @@ public class BloodBossAi {
                     MemoryModuleType.NEAREST_PLAYER_HOLDING_WANTED_ITEM, // 存储最近持有想要物品的玩家
                     MemoryModuleType.ATE_RECENTLY,                 // 存储最近进食状态
                     MemoryModuleType.NEAREST_REPELLENT,          // 存储最近的驱避物
+                    MemoryModuleType.IS_EMERGING,                   // 存储出场动画状态
                     ModMemoryModuleType.ENTITY_TYPE_COUNT.get(),//杀死过的实体种类
                     ModMemoryModuleType.BOSS_STAGE.get(),//阶段
                     ModMemoryModuleType.BOOLEAN_TEST_MEMORY_MODULE.get(),//布尔
@@ -103,7 +108,7 @@ public class BloodBossAi {
         Brain<BloodBoss> brain = provider.makeBrain(dynamic);
         addCoreActivities(brain);
         addIdleActivities(brain, BloodBoss);
-
+        addEmergeActivity(brain);
         addFightActivities(brain);
         addSleepActivities(brain);
         // 设置核心活动和默认活动
@@ -128,10 +133,17 @@ public class BloodBossAi {
     public static void updateActivity(BloodBoss BloodBoss) {
         BloodBoss.getBrain().setActiveActivityToFirstValid(
                 ImmutableList.of(
+                        Activity.EMERGE,
                         Activity.FIGHT,
                         Activity.IDLE
                 )
         );
+    }
+    private static void addEmergeActivity(Brain<BloodBoss> brain) {
+        brain.addActivityAndRemoveMemoryWhenStopped(
+                Activity.EMERGE, emergePriority,
+                ImmutableList.of(new BloodBossEmergingBehavior()),
+                MemoryModuleType.IS_EMERGING);
     }
     private static void addFightActivities(Brain<BloodBoss> brain) {
         Activity activity = Activity.FIGHT;
