@@ -31,7 +31,8 @@ public class ThunderLongbow extends BowItem {
 
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, Player player, @NotNull InteractionHand hand) {
-        return super.use(level, player, hand);
+        player.startUsingItem(hand);
+        return InteractionResultHolder.consume(player.getItemInHand(hand));
     }
 
     @Override
