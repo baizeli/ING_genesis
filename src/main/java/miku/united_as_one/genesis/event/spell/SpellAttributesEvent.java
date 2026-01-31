@@ -7,7 +7,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = Genesis.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class SpellAttributeEvent {
+public class SpellAttributesEvent {
 
     @SubscribeEvent
     public static void modifyEntityAttributes(EntityAttributeModificationEvent e) {
