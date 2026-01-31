@@ -168,21 +168,14 @@ tasks.withType(JavaCompile).configureEach {
 
 dependencies {
     // L2
-    modImplementation(jarJar("dev.xkmc.l2library:l2library:${l2library_version}-slim")) {
-        transitive = false
-    }
-    modImplementation(jarJar("dev.xkmc.l2serial:l2serial:1.2.2")) {
-        transitive = false
-    }
-    modImplementation(jarJar("dev.xkmc.l2tabs:l2tabs:0.3.3")) {
-        transitive = false
-    }
+    modImplementation(jarJar("dev.xkmc.l2library:l2library:${l2library_version}-slim"))
+    modImplementation(jarJar("dev.xkmc.l2serial:l2serial:1.2.2"))
+    modImplementation(jarJar("dev.xkmc.l2tabs:l2tabs:0.3.3"))
 
     modCompileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
     modCompileOnly "mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}"
     modImplementation "mezz.jei:jei-${minecraft_version}-forge:${jei_version}"
-    modCompileOnly "vazkii.patchouli:Patchouli:1.20." +
-            "1-84.1-FORGE:api"
+    modCompileOnly "vazkii.patchouli:Patchouli:1.20.1-84.1-FORGE:api"
     modImplementation "vazkii.patchouli:Patchouli:1.20.1-84.1-FORGE"
 
     modImplementation "curse.maven:caelus-308989:5281700"
