@@ -58,6 +58,35 @@ public class WitchcraftBow extends BowItem {
             if (Utils.checkEntityIntersecting(target, start, end, .4f).getType() != HitResult.Type.MISS) {
                 target.invulnerableTime = 0;
                 DamageSources.applyDamage(target, power * 16, level.damageSources().sonicBoom(player));
+
+                Vec3 targetPos = target.position();
+                Vec3 targetUp = new Vec3(0, 5, 0);
+
+                Vec3 perpendicularRight = targetPos.subtract(player.position()).normalize().cross(new Vec3(0, 1, 0)).normalize();
+                
+                Vec3 leftStart = targetPos.add(targetUp).subtract(perpendicularRight.scale(2));
+                Vec3 rightStart = targetPos.add(targetUp).add(perpendicularRight.scale(2));
+
+                Vec3 leftEnd = targetPos.add(new Vec3(0, -5, 0));
+                Vec3 rightEnd = targetPos.add(new Vec3(0, -5, 0));
+
+                // 左侧巫术湮灭射线
+                var leftStartEntity = new EldritchBlastVisualEntity(level, leftStart, leftEnd, player);
+                Vec3 leftDirection = leftEnd.subtract(leftStart);
+                leftStartEntity.setYRot((float) (Math.atan2(leftDirection.z, leftDirection.x) * 180 / Math.PI) - 90);
+                leftStartEntity.setXRot((float) (Math.atan2(leftDirection.y, Math.sqrt(leftDirection.x * leftDirection.x + leftDirection.z * leftDirection.z)) * -160 / Math.PI));
+                level.addFreshEntity(leftStartEntity);
+                target.invulnerableTime = 0;
+                DamageSources.applyDamage(target, power * 8, new EldritchBlastSpell().getDamageSource(target, player));
+                
+                // 右侧巫术湮灭射线
+                var rightStartEntity = new EldritchBlastVisualEntity(level, rightStart, rightEnd, player);
+                Vec3 rightDirection = rightEnd.subtract(rightStart);
+                rightStartEntity.setYRot((float) (Math.atan2(rightDirection.z, rightDirection.x) * 180 / Math.PI) - 90);
+                rightStartEntity.setXRot((float) (Math.atan2(rightDirection.y, Math.sqrt(rightDirection.x * rightDirection.x + rightDirection.z * rightDirection.z)) * -160 / Math.PI));
+                level.addFreshEntity(rightStartEntity);
+                target.invulnerableTime = 0;
+                DamageSources.applyDamage(target, power * 8, new EldritchBlastSpell().getDamageSource(target, player));
             }
         }
 
@@ -65,7 +94,7 @@ public class WitchcraftBow extends BowItem {
         Vec3 leftStart = start.add(playerRight.scale(0)).add(new Vec3(0, -0.5, 0));
         /*Vec3 rightStart = start.add(playerRight.scale(0)).add(new Vec3(0, -0.5, 0));*/
 
-        // 左侧巫术湮灭射线
+        // 左侧(中心)巫术湮灭射线
         Vec3 leftEnd = leftStart.add(player.getForward().scale(range));
         level.addFreshEntity(new EldritchBlastVisualEntity(level, leftStart, leftEnd, player));
 
