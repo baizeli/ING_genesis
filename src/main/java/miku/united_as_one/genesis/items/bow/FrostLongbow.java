@@ -62,7 +62,7 @@ public class FrostLongbow extends BowItem {
             DamageSources.applyDamage(
                 ((EntityHitResult) hitResult).getEntity(), power * 15, SpellDamageSource.source(player, 
                     SpellRegistry.RAY_OF_FROST_SPELL.get()
-                ).setFreezeTicks((int)(power * 15 * 20))
+                ).setFreezeTicks((int)(power * 5 * 20))
             );
         } else if (hitResult.getType() == HitResult.Type.BLOCK) {
             MagicManager.spawnParticles(
