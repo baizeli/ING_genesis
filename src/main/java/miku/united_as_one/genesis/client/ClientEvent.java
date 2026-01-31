@@ -60,9 +60,9 @@ public class ClientEvent {
 
 @SuppressWarnings("removal")
 @Mod.EventBusSubscriber(modid = Genesis.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-class ClientModEvents {
+class registerBowAnimationProperties {
     @SubscribeEvent
-    public static void registerBowAnimationProperties(FMLClientSetupEvent event) {
+    public static void BowAnimationProperties(FMLClientSetupEvent event) {
         event.enqueueWork(() -> {
             Stream.of(
                 ItemRegistry.THUNDER_LONGBOW.get(),
