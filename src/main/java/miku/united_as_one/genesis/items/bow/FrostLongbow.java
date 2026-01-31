@@ -9,6 +9,7 @@ import io.redspace.ironsspellbooks.network.SyncManaPacket;
 import io.redspace.ironsspellbooks.setup.PacketDistributor;
 import io.redspace.ironsspellbooks.capabilities.magic.MagicManager;
 import io.redspace.ironsspellbooks.damage.*;
+import io.redspace.ironsspellbooks.entity.spells.ice_block.IceBlockProjectile;
 import io.redspace.ironsspellbooks.entity.spells.ray_of_frost.RayOfFrostVisualEntity;
 import io.redspace.ironsspellbooks.registries.SoundRegistry;
 import io.redspace.ironsspellbooks.util.ParticleHelper;
@@ -19,7 +20,6 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.phys.*;
 import net.minecraftforge.common.MinecraftForge;
 import org.jetbrains.annotations.NotNull;
@@ -55,8 +55,14 @@ public class FrostLongbow extends BowItem {
 
         if (power < 0.5) return;
 
-        var hitResult = Utils.raycastForEntity(level, player, 17, true, .15f);
+        var hitResult = Utils.raycastForEntity(level, player, 100, true, .15f);
         level.addFreshEntity(new RayOfFrostVisualEntity(level, player.getEyePosition(), hitResult.getLocation(), player));
+
+        IceBlockProjectile iceBlock = new IceBlockProjectile(level, player, null);
+        iceBlock.moveTo(hitResult.getLocation().x, hitResult.getLocation().y + 5, hitResult.getLocation().z);
+        iceBlock.setOwner(player);
+        iceBlock.setDamage(power * 8);
+        iceBlock.setAirTime(10);
 
         if (hitResult.getType() == HitResult.Type.ENTITY) {
             DamageSources.applyDamage(
@@ -64,12 +70,14 @@ public class FrostLongbow extends BowItem {
                     SpellRegistry.RAY_OF_FROST_SPELL.get()
                 ).setFreezeTicks((int)(power * 5 * 20))
             );
+            level.addFreshEntity(iceBlock);
         } else if (hitResult.getType() == HitResult.Type.BLOCK) {
             MagicManager.spawnParticles(
                 level, ParticleHelper.ICY_FOG, 
                 hitResult.getLocation().x, hitResult.getLocation().y, hitResult.getLocation().z, 
                 4, 0, 0, 0, .3, true
             );
+            /*level.addFreshEntity(iceBlock);*/
         }
         MagicManager.spawnParticles(
             level, ParticleHelper.SNOWFLAKE, 
