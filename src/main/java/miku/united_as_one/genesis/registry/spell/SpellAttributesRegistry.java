@@ -15,6 +15,15 @@ public class SpellAttributesRegistry {
     public static final RegistryObject<Attribute> CULINARY_MAGIC_RESIST;
     public static final RegistryObject<Attribute> CULINARY_SPELL_POWER;
     public static final RegistryObject<Attribute> FLAME_SPELL_PENETRATION;
+    public static final RegistryObject<Attribute> HOLY_SPELL_PENETRATION;
+    public static final RegistryObject<Attribute> FROST_SPELL_PENETRATION;
+    public static final RegistryObject<Attribute> SCARLET_SPELL_PENETRATION;
+    public static final RegistryObject<Attribute> ENDER_SPELL_PENETRATION;
+    public static final RegistryObject<Attribute> THUNDER_SPELL_PENETRATION;
+    public static final RegistryObject<Attribute> NATURE_SPELL_PENETRATION;
+    public static final RegistryObject<Attribute> WARLOCK_SPELL_PENETRATION;
+    public static final RegistryObject<Attribute> CHAOS_SPELL_PENETRATION;
+    public static final RegistryObject<Attribute> CELESTIAL_SOURCE_SPELL_PENETRATION;
 
     static {
         ATTRIBUTES = DeferredRegister.create(ForgeRegistries.ATTRIBUTES, Genesis.MOD_ID);
@@ -31,7 +40,64 @@ public class SpellAttributesRegistry {
         CULINARY_MAGIC_RESIST = SpellAttributesRegistry.newResistanceAttribute("culinary");
         
         // 烈焰法术穿透
-        FLAME_SPELL_PENETRATION = SpellAttributesRegistry.newPenetrationAttribute();
+        FLAME_SPELL_PENETRATION = ATTRIBUTES.register("flame_spell_penetration", () -> (new MagicPercentAttribute(
+            "attribute." + Genesis.MOD_ID + ".flame_spell_penetration",
+            0, 0, 1
+        )).setSyncable(true));
+        
+        // 神圣法术穿透
+        HOLY_SPELL_PENETRATION = ATTRIBUTES.register("holy_spell_penetration", () -> (new MagicPercentAttribute(
+            "attribute." + Genesis.MOD_ID + ".holy_spell_penetration",
+            0, 0, 1
+        )).setSyncable(true));
+        
+        // 冰霜法术穿透
+        FROST_SPELL_PENETRATION = ATTRIBUTES.register("frost_spell_penetration", () -> (new MagicPercentAttribute(
+            "attribute." + Genesis.MOD_ID + ".frost_spell_penetration",
+            0, 0, 1
+        )).setSyncable(true));
+        
+        // 猩红法术穿透
+        SCARLET_SPELL_PENETRATION = ATTRIBUTES.register("scarlet_spell_penetration", () -> (new MagicPercentAttribute(
+            "attribute." + Genesis.MOD_ID + ".scarlet_spell_penetration",
+            0, 0, 1
+        )).setSyncable(true));
+        
+        // 末影法术穿透
+        ENDER_SPELL_PENETRATION = ATTRIBUTES.register("ender_spell_penetration", () -> (new MagicPercentAttribute(
+            "attribute." + Genesis.MOD_ID + ".ender_spell_penetration",
+            0, 0, 1
+        )).setSyncable(true));
+        
+        // 雷霆法术穿透
+        THUNDER_SPELL_PENETRATION = ATTRIBUTES.register("thunder_spell_penetration", () -> (new MagicPercentAttribute(
+            "attribute." + Genesis.MOD_ID + ".thunder_spell_penetration",
+            0, 0, 1
+        )).setSyncable(true));
+        
+        // 自然法术穿透
+        NATURE_SPELL_PENETRATION = ATTRIBUTES.register("nature_spell_penetration", () -> (new MagicPercentAttribute(
+            "attribute." + Genesis.MOD_ID + ".nature_spell_penetration",
+            0, 0, 1
+        )).setSyncable(true));
+        
+        // 邪术法术穿透
+        WARLOCK_SPELL_PENETRATION = ATTRIBUTES.register("warlock_spell_penetration", () -> (new MagicPercentAttribute(
+            "attribute." + Genesis.MOD_ID + ".warlock_spell_penetration",
+            0, 0, 1
+        )).setSyncable(true));
+        
+        // 混沌法术穿透
+        CHAOS_SPELL_PENETRATION = ATTRIBUTES.register("chaos_spell_penetration", () -> (new MagicPercentAttribute(
+            "attribute." + Genesis.MOD_ID + ".chaos_spell_penetration",
+            0, 0, 1
+        )).setSyncable(true));
+        
+        // 星源法术穿透
+        CELESTIAL_SOURCE_SPELL_PENETRATION = ATTRIBUTES.register("celestial_source_spell_penetration", () -> (new MagicPercentAttribute(
+            "attribute." + Genesis.MOD_ID + ".celestial_source_spell_penetration",
+            0, 0, 1
+        )).setSyncable(true));
     }
 
     public static void register(IEventBus eventBus) {
@@ -48,13 +114,5 @@ public class SpellAttributesRegistry {
 
     private static RegistryObject<Attribute> newPowerAttribute(String id) {
         return ATTRIBUTES.register(id + "_spell_power", () -> (new MagicPercentAttribute("attribute." + Genesis.MOD_ID + "." + id + "_spell_power", 1.0F, Double.MIN_VALUE, Double.MAX_VALUE)).setSyncable(true));
-    }
-
-    // 烈焰法术穿透
-    private static RegistryObject<Attribute> newPenetrationAttribute() {
-        return ATTRIBUTES.register("flame_spell_penetration", () -> (new MagicPercentAttribute(
-            "attribute." + Genesis.MOD_ID + ".flame_spell_penetration",
-            0, 0, 1
-        )).setSyncable(true));
     }
 }
