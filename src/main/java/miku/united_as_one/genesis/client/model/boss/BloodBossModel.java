@@ -24,6 +24,7 @@ import software.bernie.geckolib.model.data.EntityModelData;
 public class BloodBossModel extends GeoModel<BloodBoss> {
     private static final ResourceLocation MODEL_RESOURCE = new ResourceLocation(Genesis.MOD_ID, "geo/entity/blood_boss.geo.json");
     private static final ResourceLocation TEXTURE_RESOURCE = new ResourceLocation(Genesis.MOD_ID, "textures/entity/blood_boss/stage_1.png");
+    private static final ResourceLocation TEXTURE_RESOURCE2 = new ResourceLocation(Genesis.MOD_ID, "textures/entity/blood_boss/stage_2.png");
     private static final ResourceLocation ANIMATION_RESOURCE = new ResourceLocation(Genesis.MOD_ID, "animations/entity/blood_boss.animation.json");
 
     @Override
@@ -33,7 +34,15 @@ public class BloodBossModel extends GeoModel<BloodBoss> {
 
     @Override
     public ResourceLocation getTextureResource(BloodBoss abstractSpellCastingMob) {
-        return TEXTURE_RESOURCE;
+
+        int bossStageData = abstractSpellCastingMob.getBossStageData();
+        if (bossStageData<=1){
+            return TEXTURE_RESOURCE;
+        }else{
+            return TEXTURE_RESOURCE2;
+        }
+
+
     }
 
     @Override

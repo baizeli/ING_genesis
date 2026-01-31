@@ -34,6 +34,13 @@ public class ModMemoryModuleType {
     //用于标记正在释放技能
     public static final RegistryObject<MemoryModuleType<Boolean>> IS_CASTING_SKILL ;
 
+    // 是否已经播放过当前阶段的转阶段动画
+    public static final RegistryObject<MemoryModuleType<Boolean>> HAS_PLAYED_STAGE_TRANSITION;
+
+    // 当前阶段硬直次数
+    public static final RegistryObject<MemoryModuleType<Integer>> STAGE_STUN_COUNT;
+
+
     //codec
     static {
         ENTITY_TYPE_COUNT_CODEC = CodecUtils.createEntityTypeCountCodec();
@@ -54,6 +61,19 @@ public class ModMemoryModuleType {
                 () -> new MemoryModuleType<>(Optional.of(CompoundTag.CODEC.listOf())));
         IS_CASTING_SKILL = MEMORY_MODULES.register("is_casting_skill",
                 () -> new MemoryModuleType<>(Optional.empty()));
+
+        // 是否已播放当前阶段的转阶段动画
+        HAS_PLAYED_STAGE_TRANSITION = MEMORY_MODULES.register(
+                "has_played_stage_transition",
+                () -> new MemoryModuleType<>(Optional.of(Codec.BOOL))
+        );
+
+        // 当前阶段硬直次数
+        STAGE_STUN_COUNT = MEMORY_MODULES.register(
+                "stage_stun_count",
+                () -> new MemoryModuleType<>(Optional.of(Codec.INT))
+        );
+
     }
 
     public static void register(IEventBus modEventBus) {
