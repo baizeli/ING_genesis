@@ -10,12 +10,12 @@ import net.minecraftforge.fml.common.Mod;
 public class SpellAttributesEvent {
 
     @SubscribeEvent
-    public static void modifyEntityAttributes(EntityAttributeModificationEvent e) {
-        e.getTypes().forEach(
+    public static void modifyEntityAttributes(EntityAttributeModificationEvent event) {
+        event.getTypes().forEach(
             entity -> SpellAttributesRegistry
                 .getAttributes()
                 .getEntries()
-                .forEach(attribute -> e.add(entity, attribute.get()))
-        );
+                .forEach(attribute -> event.add(entity, attribute.get()))
+        );    
     }
 }
