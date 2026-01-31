@@ -1,16 +1,16 @@
 package miku.united_as_one.genesis.entity.boss.behavior.bloodbossskill;
 
 import com.google.common.collect.ImmutableMap;
+import miku.united_as_one.genesis.entity.ai.ModMemoryModuleType;
 import miku.united_as_one.genesis.entity.boss.BloodBoss;
 import miku.united_as_one.genesis.entity.boss.behavior.AnimatedActionBehavior;
-import net.minecraft.world.entity.Mob;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
 
-import java.util.Map;
-
 public class BloodBossEmergingBehavior extends AnimatedActionBehavior<BloodBoss> {
-    public static final int EMERGE_DURATION = 175;
+    public static final int EMERGE_SPAWN_DURATION = 175;
 
     /**
      */
@@ -21,8 +21,12 @@ public class BloodBossEmergingBehavior extends AnimatedActionBehavior<BloodBoss>
 
     @Override
     protected boolean canStartAction(BloodBoss entity) {
-        return true;
+
+        return entity.getBrain()
+                .getMemory(ModMemoryModuleType.BOSS_STAGE.get())
+                .orElse(0) == 0;
     }
+
 
     @Override
     protected int getActionTimestamp() {
@@ -50,5 +54,11 @@ public class BloodBossEmergingBehavior extends AnimatedActionBehavior<BloodBoss>
 
     }
 
-
+    @Override
+    protected void stop(ServerLevel level, BloodBoss entity, long gameTime) {
+        Brain<BloodBoss> brain = entity.getBrain();
+        brain.eraseMemory(MemoryModuleType.IS_EMERGING);
+        brain.setMemory(ModMemoryModuleType.BOSS_STAGE.get(), 1);
+        super.stop(level, entity, gameTime);
+    }
 }

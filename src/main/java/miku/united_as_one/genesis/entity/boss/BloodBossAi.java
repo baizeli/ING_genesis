@@ -88,7 +88,10 @@ public class BloodBossAi {
                     ModMemoryModuleType.BOOLEAN_TEST_MEMORY_MODULE.get(),//布尔
                     ModMemoryModuleType.NBT_TEST_MEMORY_MODULE.get(),//NBT
                     ModMemoryModuleType.INT_TEST_MEMORY_MODULE.get(),//INT
-                    ModMemoryModuleType.IS_CASTING_SKILL.get()//标记正在释放boss技能
+                    ModMemoryModuleType.IS_CASTING_SKILL.get(),//标记正在释放boss技能
+                    ModMemoryModuleType.HAS_PLAYED_STAGE_TRANSITION.get(),//当前阶段是否播放了转阶段动画
+                    ModMemoryModuleType.STAGE_STUN_COUNT.get()//当前阶段硬直次数
+
                      );
         }
 
@@ -142,7 +145,11 @@ public class BloodBossAi {
     private static void addEmergeActivity(Brain<BloodBoss> brain) {
         brain.addActivityAndRemoveMemoryWhenStopped(
                 Activity.EMERGE, emergePriority,
-                ImmutableList.of(new BloodBossEmergingBehavior()),
+                ImmutableList.of(
+                        new BloodBossEmergingBehavior(),        // spawn
+                        new BloodBossStunBehavior(),            // 僵直
+                        new BloodBossStageTransitionBehavior()  // 转阶段
+                ),
                 MemoryModuleType.IS_EMERGING);
     }
     private static void addFightActivities(Brain<BloodBoss> brain) {
@@ -280,7 +287,7 @@ public class BloodBossAi {
             //在同一个活动内，每tick并行执行多个行为,每次都检查行为开始的条件
             //不同活动之间是并行的，所以核心活动和主活动可以各执行一个行为
             ImmutableList.of(
-//                new AnimalPanic(2.0F),
+                new BloodBossStageStunCoreBehavior(),
                 SetWardenLookTarget.create(),
                 new LookAtTargetSink(45, 90),
                 new MoveToTargetSink(100, 200)
