@@ -12,6 +12,7 @@
   "attribute.iron_spells_genesis.chaos_spell_power": "#1Chaos# Spell Power",
   "attribute.iron_spells_genesis.celestial_source_magic_resist": "#2Celestial Source# Magic Resistance",
   "attribute.iron_spells_genesis.celestial_source_spell_power": "#2Celestial Source# Spell Power",
+  "attribute.iron_spells_genesis.flame_spell_penetration": "Flame Spell Penetration",
 
   "school.iron_spells_genesis.chaos" : "#1Chaos#",
   "school.iron_spells_genesis.celestial_source": "#2Celestial Source#",

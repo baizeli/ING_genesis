@@ -12,6 +12,7 @@
   "attribute.iron_spells_genesis.chaos_spell_power": "#1混沌#法术强度",
   "attribute.iron_spells_genesis.celestial_source_magic_resist": "#2星源#法术抗性",
   "attribute.iron_spells_genesis.celestial_source_spell_power": "#2星源#法术强度",
+  "attribute.iron_spells_genesis.flame_spell_penetration": "烈焰法术穿透",
 
   "school.iron_spells_genesis.chaos" : "#1混沌#",
   "school.iron_spells_genesis.celestial_source": "#2星源#",
