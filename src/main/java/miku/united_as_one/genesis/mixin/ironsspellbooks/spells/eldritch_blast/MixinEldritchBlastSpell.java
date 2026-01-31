@@ -1,4 +1,4 @@
-package miku.united_as_one.genesis.mixin.ironsspellbooks.spells.eldritch;
+package miku.united_as_one.genesis.mixin.ironsspellbooks.spells.eldritch_blast;
 
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
