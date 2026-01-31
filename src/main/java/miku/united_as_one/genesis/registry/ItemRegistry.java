@@ -693,9 +693,9 @@ public class ItemRegistry {
 
         for (int i = 0; i < 3; i++) {
             String name = "item/bow/" + ctx.getName() + "/bow_pulling_" + i;
-            ItemModelBuilder pullingModel = pvd.getBuilder(name)
-                    .parent(new ModelFile.UncheckedModelFile("item/bow_pulling_" + i));
-            pullingModel.texture("layer0", Genesis.MOD_ID + ":item/bow/" + ctx.getName() + "/bow_pulling_" + i);
+            pvd.getBuilder(name)
+                .parent(new ModelFile.UncheckedModelFile("item/bow_pulling_" + i))
+                .texture("layer0", Genesis.MOD_ID + ":item/bow/" + ctx.getName() + "/bow_pulling_" + i);
 
             ItemModelBuilder.OverrideBuilder override = builder.override();
             override.predicate(new ResourceLocation("pulling"), 1);
