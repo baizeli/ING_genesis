@@ -8,7 +8,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber
-public class FlameSpellPenetrationEvent {
+public class SpellPenetrationEvent {
 
     @SubscribeEvent
     public static void onSpellDamage(SpellDamageEvent event) {
