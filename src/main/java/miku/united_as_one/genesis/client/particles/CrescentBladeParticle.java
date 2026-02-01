@@ -71,6 +71,9 @@ public class CrescentBladeParticle extends Particle {
                     0.0, 0.0, 0.0
                 );
             }
+            if (this.age++ >= this.lifetime) {
+                this.remove();
+            }
         }
     }
 
