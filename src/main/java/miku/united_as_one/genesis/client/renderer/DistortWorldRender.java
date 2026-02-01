@@ -350,6 +350,7 @@ public class DistortWorldRender {
 
 
         RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
+        RenderSystem.disableCull();
         RenderSystem.setShaderTexture(0, VECTOR_DISTORT_TEX);
 
         BufferBuilder buf = Tesselator.getInstance().getBuilder();
@@ -429,6 +430,7 @@ public class DistortWorldRender {
         }
 
         BufferUploader.drawWithShader(buf.end());
+        RenderSystem.enableCull();
     }
 
 

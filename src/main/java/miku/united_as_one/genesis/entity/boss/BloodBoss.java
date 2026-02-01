@@ -24,6 +24,7 @@ import io.redspace.ironsspellbooks.registries.MobEffectRegistry;
 import miku.united_as_one.genesis.entity.ai.ModMemoryModuleType;
 import miku.united_as_one.genesis.entity.boss.behavior.bloodbossskill.BloodBossEmergingBehavior;
 import miku.united_as_one.genesis.registry.SoundRegister;
+import miku.united_as_one.genesis.registry.client.ParticleRegistry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -52,6 +53,8 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.entity.IEntityAdditionalSpawnData;
 import org.slf4j.Logger;
@@ -110,6 +113,7 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
 
     private static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle"); // 待机
     private static final RawAnimation WALK = RawAnimation.begin().thenLoop("walk_cycle"); // 行走循环
+    private static final RawAnimation TENTACLE_WALKING = RawAnimation.begin().thenLoop("tentacle_walking"); // 触手行走
     private static final RawAnimation EMPTY = RawAnimation.begin().thenLoop("blank"); // 行走循环
     private static final RawAnimation CAST_IDLE = RawAnimation.begin().thenLoop("施法待机");
     private static final RawAnimation CAST_WALK = RawAnimation.begin().thenLoop("施法行走循环");
@@ -284,7 +288,11 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         }
 
         if (this.level().isClientSide) {
-            int i=0;
+            if(getBossStageData()>1){
+
+                spawnTrailParticles();
+
+            }
         }
 
         if (!this.level().isClientSide) {
@@ -580,7 +588,14 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
             animationControllerWalk.setAnimationSpeed(
                     Mth.clamp(speedMultiplier, 0.6, 1.8)
             );
-            return state.setAndContinue(WALK);
+
+            if (getBossStageData()<=1){
+                return state.setAndContinue(WALK);
+
+            }else {
+               return state.setAndContinue(TENTACLE_WALKING);
+            }
+
         }
 
         animationControllerWalk.setAnimationSpeed(1.0);
@@ -633,7 +648,6 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
             this.initiateCastSpell(spell, syncedSpellData.getCastingSpellLevel());
         }
 
-        // --- 核心修改：处理瞬时法术的延迟释放 ---
         if (this.delayedCastTick > 0) {
             this.delayedCastTick--;
             // 延迟期间持续看向目标以保证指向性法术精度
@@ -834,11 +848,14 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
-        if (amount>this.getHealth()*0.025){
-            amount = (float)(amount*0.7);
+        double threshold = this.getMaxHealth() * 0.025;
+
+        if (amount>threshold){
+            amount = (float)(threshold + (amount - threshold)*0.7);
         }
         return super.hurt(source, amount);
     }
+
 
     @Override
     public void handleClientEvent(byte eventId) {
@@ -864,6 +881,58 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     }
 
 
+    private void spawnTrailParticles() {
+        Vec3 motion = this.getDeltaMovement();
+        double speed = motion.length();
+
+        // 几乎不动就不生成
+        if (speed < 0.05) return;
+
+        Vec3 direction = motion.normalize();
+
+        // 粒子数量随速度变化（可自己调系数）
+        int count = Mth.clamp((int)(speed * 20), 2, 40);
+
+        // 碰撞箱
+        AABB box = this.getBoundingBox();
+        double height = box.maxY - box.minY;
+
+        for (int i = 0; i < count; i++) {
+
+            double backOffset = this.random.nextDouble() * speed;
+
+            Vec3 basePos = this.position().subtract(direction.scale(backOffset));
+
+
+            double yOffset = this.random.nextDouble() * height;
+
+            double xzSpread = 1d;
+            double xOffset = (this.random.nextDouble() - 0.5) * xzSpread;
+            double zOffset = (this.random.nextDouble() - 0.5) * xzSpread;
+
+            Vec3 particlePos = new Vec3(
+                    basePos.x + xOffset,
+                    box.minY + yOffset,
+                    basePos.z + zOffset
+            );
+
+
+            if (this.random.nextInt(5) == 0) {
+                this.level().addParticle(
+                        ParticleRegistry.BLOOD_DRIP_TWIST.get(),
+                        particlePos.x, particlePos.y, particlePos.z,
+                        0.0, 0.0, 0.0
+                );
+            }
+
+            this.level().addParticle(
+                    ParticleRegistry.BLOOD_DRIP_HANG.get(),
+                    particlePos.x, particlePos.y, particlePos.z,
+                    0, 0, 0
+            );
+
+        }
+    }
 
     private SoundEvent getBossMusicEvent() {
 
