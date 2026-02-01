@@ -219,6 +219,8 @@
   "entity.iron_spells_genesis.dead_star_decree_comet": "Dead Star Decree - Comet",
   "entity.iron_spells_genesis.dead_star_decree_large_comet": "Dead Star Decree - Large Comet",
   "entity.iron_spells_genesis.lighting_bolt": "Rainbow Lighting",
+  "entity.iron_spells_genesis.blood_boss": "§4haos Sequence·Blood Boss",
+
   "damage_type.iron_spells_genesis.celestial_source_magic": "Celestial Source Magic Damage",
   "damage_type.iron_spells_genesis.chaos_magic": "Chaos Magic Damage",
   "item.iron_spells_genesis.blood_rune_plus": "§bBlood Rune Plus",
