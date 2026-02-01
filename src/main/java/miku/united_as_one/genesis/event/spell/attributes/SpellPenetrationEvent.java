@@ -16,7 +16,7 @@ public class SpellPenetrationEvent {
     @SubscribeEvent
     public static void onSpellDamage(SpellDamageEvent event) {
         var spellDamageSource = event.getSpellDamageSource();
-
+        
         if (!(spellDamageSource.getEntity() instanceof LivingEntity livingAttacker)) return;
 
         for (Object[] data : new Object[][] {
