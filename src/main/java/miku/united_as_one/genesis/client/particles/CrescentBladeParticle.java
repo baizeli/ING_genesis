@@ -50,7 +50,7 @@ public class CrescentBladeParticle extends Particle {
     public static class BloodDripTwistParticle extends CrescentBladeParticle {
         public BloodDripTwistParticle(ClientLevel level, double x, double y, double z, Vec3 dir, float radius) {
             super(level, x, y, z, dir, radius);
-            this.setLifetime(200);
+            this.setLifetime(500);
         }
 
         @Override
