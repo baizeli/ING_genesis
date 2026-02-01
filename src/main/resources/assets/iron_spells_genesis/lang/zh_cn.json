@@ -218,6 +218,8 @@
   "entity.iron_spells_genesis.dead_star_decree_comet": "死星天裁-陨石",
   "entity.iron_spells_genesis.dead_star_decree_large_comet": "死星天裁-大陨石",
   "entity.iron_spells_genesis.lighting_bolt": "彩色闪电",
+  "entity.iron_spells_genesis.blood_boss": "§4卡俄斯序曲·混沌受血者",
+
   "item.iron_spells_genesis.infinity_eternal_helmet": "Purpleite Galaxy Helmet",
   "damage_type.iron_spells_genesis.celestial_source_magic": "Celestial Source Magic Damage",
   "damage_type.iron_spells_genesis.chaos_magic": "Chaos Magic Damage",
