@@ -20,6 +20,7 @@ import io.redspace.ironsspellbooks.api.util.Utils;
 import io.redspace.ironsspellbooks.capabilities.magic.SyncedSpellData;
 import io.redspace.ironsspellbooks.entity.mobs.IAnimatedAttacker;
 import io.redspace.ironsspellbooks.entity.mobs.wizards.fire_boss.ExtendedServerBossEvent;
+import io.redspace.ironsspellbooks.registries.MobEffectRegistry;
 import miku.united_as_one.genesis.entity.ai.ModMemoryModuleType;
 import miku.united_as_one.genesis.entity.boss.behavior.bloodbossskill.BloodBossEmergingBehavior;
 import miku.united_as_one.genesis.registry.SoundRegister;
@@ -38,6 +39,7 @@ import net.minecraft.util.Unit;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -136,6 +138,7 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
             );
 
     private static final EntityDataAccessor<Boolean> DATA_IS_CASTING_SKILL = SynchedEntityData.defineId(BloodBoss.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Integer> BOSS_STAGE_DATA = SynchedEntityData.defineId(BloodBoss.class, EntityDataSerializers.INT);
 
     public boolean isCastingSkill() {
         return this.entityData.get(DATA_IS_CASTING_SKILL);
@@ -144,6 +147,18 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     public void setCastingSkill(boolean castingSkill) {
         this.entityData.set(DATA_IS_CASTING_SKILL, castingSkill);
     }
+
+    public int getBossStage(){
+        return this.getBrain().getMemory(ModMemoryModuleType.BOSS_STAGE.get()).orElse(0);
+    }
+    public int getBossStageData(){
+        return this.entityData.get(BOSS_STAGE_DATA);
+    }
+
+    private void syncBossStageData(){
+        this.entityData.set(BOSS_STAGE_DATA, getBossStage());
+    }
+
 
     //属性
     public static AttributeSupplier.Builder setAttributes() {
@@ -208,17 +223,49 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType reason, @org.jetbrains.annotations.Nullable SpawnGroupData spawnData, @org.jetbrains.annotations.Nullable CompoundTag dataTag) {
 
-        this.getBrain().setMemoryWithExpiry(MemoryModuleType.IS_EMERGING, Unit.INSTANCE, BloodBossEmergingBehavior.EMERGE_DURATION);
+        this.getBrain().setMemoryWithExpiry(MemoryModuleType.IS_EMERGING, Unit.INSTANCE, BloodBossEmergingBehavior.EMERGE_SPAWN_DURATION);
         this.playSound(SoundEvents.WARDEN_AGITATED, 5.0F, 1.0F);
 
         return super.finalizeSpawn(level, difficulty, reason, spawnData, dataTag);
     }
 
+
+
+
+    @Override
+    protected boolean isImmobile() {
+        if (this.getBrain().getMemory(MemoryModuleType.IS_EMERGING).isPresent()){
+            return false;
+        }
+        return super.isImmobile();
+    }
+
+    @Override
+    public boolean isInvulnerableTo(DamageSource source) {
+        if(this.getBrain().getMemory(MemoryModuleType.IS_EMERGING).isPresent())
+            return true;
+        return super.isInvulnerableTo(source);
+    }
+
+    private int lastHealthSegment = 0;
+    
+    private void detectAndApplyAbyssalAsylum() {
+        float healthPercentage = this.getHealth() / this.getMaxHealth();
+        int currentHealthSegment = (int) ((1.0f - healthPercentage) / 0.17f);
+        if (currentHealthSegment > lastHealthSegment && currentHealthSegment > 0) {
+            this.addEffect(new MobEffectInstance(MobEffectRegistry.ABYSSAL_SHROUD.get(), 9 * 20, 0, false, false, false));
+            this.lastHealthSegment = currentHealthSegment;
+        }
+        if (currentHealthSegment < lastHealthSegment) {
+            this.lastHealthSegment = currentHealthSegment;
+        }
+    }
+
     @Override
     public void tick() {
 
-
         if(!level.isClientSide){
+            detectAndApplyAbyssalAsylum();
             this.setCastingSkill(
                     this.getBrain()
                             .getMemory(ModMemoryModuleType.IS_CASTING_SKILL.get())
@@ -236,12 +283,19 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
             this.lastCastTick = this.tickCount;
         }
 
+        if (this.level().isClientSide) {
+            int i=0;
+        }
+
         if (!this.level().isClientSide) {
             float progress = this.getHealth() / this.getMaxHealth();
             this.bossEvent.setProgress(Mth.clamp(progress, 0.0F, 1.0F));
+            syncBossStageData();
         }
 
+
     }
+
 
     @Override
     public void die(DamageSource cause) {
@@ -269,6 +323,7 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         this.entityData.define(DATA_CANCEL_CAST, false);
         this.entityData.define(DATA_DRINKING_POTION, false);
         this.entityData.define(DATA_IS_CASTING_SKILL, false);
+        this.entityData.define(BOSS_STAGE_DATA, 0);
     }
 
     //================================================================ 魔法/法术 ========================================================================
@@ -779,6 +834,9 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
+        if (amount>this.getHealth()*0.025){
+            amount = (float)(amount*0.7);
+        }
         return super.hurt(source, amount);
     }
 
