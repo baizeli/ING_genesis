@@ -131,6 +131,7 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     public static final byte STOP_BOSSBAR  = 13;
 
     //boss血条相关字段
+    private boolean isBossBarInitialized = false;
     private ExtendedServerBossEvent bossEvent;
     private static final BossbarManager.BossbarSprite BLOOD_BOSSBAR_SPRITE =
             new BossbarManager.BossbarSprite(
@@ -210,15 +211,7 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         this.noCulling = true;
 
 
-        this.bossEvent =
-                (ExtendedServerBossEvent)(
-                        new ExtendedServerBossEvent(
-                                this.getUUID(),
-                                this.getDisplayName(),
-                                BossEvent.BossBarColor.RED,
-                                BossEvent.BossBarOverlay.PROGRESS
-                        )
-                ).setCreateWorldFog(true);
+        this.createBossEvent();
         this.bossEvent.setDarkenScreen(true); // 可选：压暗屏幕
 
     }
@@ -252,7 +245,19 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     }
 
     private int lastHealthSegment = 0;
-    
+
+    @Override
+    public void setHealth(float health) {
+        float oldHealth = this.getHealth();
+        super.setHealth(health);
+
+        // 同步更新血条显示
+        if (!this.level().isClientSide && this.bossEvent != null) {
+            float progress = health / this.getMaxHealth();
+            this.bossEvent.setProgress(Mth.clamp(progress, 0.0F, 1.0F));
+        }
+    }
+
     private void detectAndApplyAbyssalAsylum() {
         float healthPercentage = this.getHealth() / this.getMaxHealth();
         int currentHealthSegment = (int) ((1.0f - healthPercentage) / 0.17f);
@@ -268,6 +273,9 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     @Override
     public void tick() {
 
+        if (!level.isClientSide && !isBossBarInitialized) {
+            ensureBossEventInitialized();
+        }
         if(!level.isClientSide){
             detectAndApplyAbyssalAsylum();
             this.setCastingSkill(
@@ -295,10 +303,14 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
             }
         }
 
-        if (!this.level().isClientSide) {
-            float progress = this.getHealth() / this.getMaxHealth();
-            this.bossEvent.setProgress(Mth.clamp(progress, 0.0F, 1.0F));
-            syncBossStageData();
+        if (!this.level().isClientSide && this.bossEvent != null) {
+            float currentHealth = this.getHealth();
+            float maxHealth = this.getMaxHealth();
+            float progress = currentHealth / maxHealth;
+
+            if (Math.abs(this.bossEvent.getProgress() - progress) > 0.001f) {
+                this.bossEvent.setProgress(Mth.clamp(progress, 0.0F, 1.0F));
+            }
         }
 
 
@@ -310,20 +322,41 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         if (!this.level().isClientSide) {
             this.serverTriggerEvent(STOP_MUSIC);
             this.serverTriggerEvent(STOP_BOSSBAR);
-            this.bossEvent.removeAllPlayers();
+
+            if (this.bossEvent != null) {
+                this.bossEvent.removeAllPlayers();
+                this.bossEvent.setVisible(false);
+            }
+
+            this.bossEvent = null;
+            this.isBossBarInitialized = false;
         }
         super.die(cause);
     }
 
     @Override
     public void remove(RemovalReason reason) {
-        this.serverTriggerEvent(STOP_MUSIC);
+        if (!this.level().isClientSide) {
+            this.serverTriggerEvent(STOP_MUSIC);
+            this.serverTriggerEvent(STOP_BOSSBAR);
+
+            if (this.bossEvent != null) {
+                this.bossEvent.removeAllPlayers();
+                this.bossEvent.setVisible(false);
+            }
+        }
         super.remove(reason);
     }
 
-
-
-
+    @Override
+    public void setTarget(@org.jetbrains.annotations.Nullable LivingEntity target) {
+        super.setTarget(target);
+        if (target != null) {
+            this.getBrain().setMemory(MemoryModuleType.ATTACK_TARGET, target);
+        } else {
+            this.getBrain().eraseMemory(MemoryModuleType.ATTACK_TARGET);
+        }
+    }
 
     @Override
     protected void defineSynchedData() {
@@ -856,6 +889,44 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         return super.hurt(source, amount);
     }
 
+    private void createBossEvent() {
+        this.bossEvent = (ExtendedServerBossEvent)(
+                new ExtendedServerBossEvent(
+                        this.getUUID(),
+                        this.getDisplayName(),
+                        BossEvent.BossBarColor.RED,
+                        BossEvent.BossBarOverlay.PROGRESS
+                )
+        ).setCreateWorldFog(true);
+        this.bossEvent.setDarkenScreen(true);
+    }
+    @Override
+    public void load(CompoundTag compound) {
+        super.load(compound);
+
+        if (!this.level.isClientSide) {
+            ensureBossEventInitialized();
+
+            // 同步血条进度
+            if (this.bossEvent != null) {
+                float progress = this.getHealth() / this.getMaxHealth();
+                this.bossEvent.setProgress(Mth.clamp(progress, 0.0F, 1.0F));
+                this.bossEvent.setVisible(this.isAlive()); // 根据存活状态设置可见性
+            }
+        }
+    }
+    public void syncHealthFromNBT() {
+        if (!this.level().isClientSide && this.bossEvent != null) {
+            float progress = this.getHealth() / this.getMaxHealth();
+            this.bossEvent.setProgress(Mth.clamp(progress, 0.0F, 1.0F));
+        }
+    }
+    private void ensureBossEventInitialized() {
+        if (!this.level().isClientSide && this.bossEvent == null) {
+            this.createBossEvent();
+            this.isBossBarInitialized = true;
+        }
+    }
 
     @Override
     public void handleClientEvent(byte eventId) {
@@ -943,20 +1014,33 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     public void startSeenByPlayer(ServerPlayer player) {
         super.startSeenByPlayer(player);
 
-        this.serverTriggerEvent(START_MUSIC);
-        this.serverTriggerEvent(START_BOSSBAR);
+        if (!this.level().isClientSide) {
+            ensureBossEventInitialized();
 
-        this.bossEvent.addPlayer(player);
+            if (this.bossEvent != null && this.isAlive()) {
+                this.bossEvent.addPlayer(player);
+                this.bossEvent.setVisible(true);
+            }
+
+            this.serverTriggerEvent(START_MUSIC);
+            this.serverTriggerEvent(START_BOSSBAR);
+        }
     }
 
     @Override
     public void stopSeenByPlayer(ServerPlayer player) {
         super.stopSeenByPlayer(player);
 
-        this.serverTriggerEvent(STOP_MUSIC);
-        this.serverTriggerEvent(STOP_BOSSBAR);
+        if (!this.level().isClientSide && this.bossEvent != null) {
+            this.bossEvent.removePlayer(player);
 
-        this.bossEvent.removePlayer(player);
+            if (this.bossEvent.getPlayers().isEmpty()) {
+                this.bossEvent.setVisible(false);
+            }
+
+            this.serverTriggerEvent(STOP_MUSIC);
+            this.serverTriggerEvent(STOP_BOSSBAR);
+        }
     }
 
 
