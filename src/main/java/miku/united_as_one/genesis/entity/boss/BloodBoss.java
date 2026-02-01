@@ -278,6 +278,7 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         }
         if(!level.isClientSide){
             detectAndApplyAbyssalAsylum();
+            syncBossStageData();
             this.setCastingSkill(
                     this.getBrain()
                             .getMemory(ModMemoryModuleType.IS_CASTING_SKILL.get())
