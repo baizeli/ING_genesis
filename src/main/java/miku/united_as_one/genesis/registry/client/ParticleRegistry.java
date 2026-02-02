@@ -34,6 +34,20 @@ public class ParticleRegistry {
     public static final RegistryObject<SimpleParticleType> CRESCENT_BLADE =
             PARTICLE_TYPES.register("crescent_blade",
                     () -> new SimpleParticleType(false));
+    public static final RegistryObject<SimpleParticleType> BLOOD_DRIP_HANG =
+            PARTICLE_TYPES.register("blood_drip_hang",
+                    () -> new SimpleParticleType(false));
+
+    public static final RegistryObject<SimpleParticleType> BLOOD_DRIP_FALL =
+            PARTICLE_TYPES.register("blood_drip_fall",
+                    () -> new SimpleParticleType(false));
+    public static final RegistryObject<SimpleParticleType> BLOOD_DRIP_LAND =
+            PARTICLE_TYPES.register("blood_drip_land",
+                    () -> new SimpleParticleType(false));
+    public static final RegistryObject<SimpleParticleType> BLOOD_DRIP_TWIST =
+            PARTICLE_TYPES.register("blood_drip_twist",
+                    () -> new SimpleParticleType(false));
+
     public static void register(IEventBus eventBus) {
         PARTICLE_TYPES.register(eventBus);
     }
@@ -78,6 +92,26 @@ public class ParticleRegistry {
                     ParticleRegistry.CRESCENT_BLADE.get(),
                     CrescentBladeParticle.Provider::new
             );
+
+            particleEngine.register(
+                    ParticleRegistry.BLOOD_DRIP_HANG.get(),
+                    BloodDripParticle.HangProvider::new
+            );
+
+            particleEngine.register(
+                    ParticleRegistry.BLOOD_DRIP_FALL.get(),
+                    BloodDripParticle.FallProvider::new
+            );
+            particleEngine.register(
+                    ParticleRegistry.BLOOD_DRIP_LAND.get(),
+                    BloodDripParticle.LandProvider::new
+            );
+
+            particleEngine.register(
+                    ParticleRegistry.BLOOD_DRIP_TWIST.get(),
+                    CrescentBladeParticle.BloodDripTwistProvider::new
+            );
+
         }
     }
 }
