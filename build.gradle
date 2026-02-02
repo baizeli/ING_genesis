@@ -236,7 +236,6 @@ dependencies {
     modRuntimeOnly "curse.maven:nbtedit-reborn-678133:5984630"
 }
 
-
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
     var replaceProperties = [
             minecraft_version        : minecraft_version,
