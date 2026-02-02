@@ -96,17 +96,17 @@ public class ModArmorMaterials {
 
                 // 法术强度
                 AttributeRegistry.SPELL_POWER.get(), new AttributeModifier(
-                    "Divine Spell Power", 0.10, AttributeModifier.Operation.MULTIPLY_BASE
+                    "Divine Spell Power", 0.06, AttributeModifier.Operation.MULTIPLY_BASE
                 ),
 
                 // 神圣法术强度
                 AttributeRegistry.HOLY_SPELL_POWER.get(), new AttributeModifier(
-                    "Divine Holy Power", 0.10, AttributeModifier.Operation.MULTIPLY_BASE
+                    "Divine Holy Power", 0.06, AttributeModifier.Operation.MULTIPLY_BASE
                 ),
 
                 // 施法时间减少
                 AttributeRegistry.CAST_TIME_REDUCTION.get(), new AttributeModifier(
-                    "Divine Cast Time Reduction", 0.10, AttributeModifier.Operation.MULTIPLY_BASE
+                    "Divine Cast Time Reduction", 0.07, AttributeModifier.Operation.MULTIPLY_BASE
                 )
             );
         }
@@ -165,12 +165,12 @@ public class ModArmorMaterials {
             return Map.of(
                 // 法术强度
                 AttributeRegistry.SPELL_POWER.get(), new AttributeModifier(
-                    "Celestial Source Spell Power", 0.30, AttributeModifier.Operation.MULTIPLY_BASE
+                    "Celestial Source Spell Power", 0.10, AttributeModifier.Operation.MULTIPLY_BASE
                 ),
 
                 // 星源法术强度
                 SpellAttributesRegistry.CELESTIAL_SOURCE_SPELL_POWER.get(), new AttributeModifier(
-                    "Celestial Source School Power", 0.30, AttributeModifier.Operation.MULTIPLY_BASE
+                    "Celestial Source School Power", 0.10, AttributeModifier.Operation.MULTIPLY_BASE
                 ),
 
                 // 傻逼移速
@@ -180,22 +180,22 @@ public class ModArmorMaterials {
 
                 // 最大法力值
                 AttributeRegistry.MAX_MANA.get(), new AttributeModifier(
-                    "Celestial Source Max Mana", 3500, AttributeModifier.Operation.ADDITION
+                    "Celestial Source Max Mana", 1000, AttributeModifier.Operation.ADDITION
                 ),
 
                 // 施法时间减少
                 AttributeRegistry.CAST_TIME_REDUCTION.get(), new AttributeModifier(
-                    "Celestial Source Cast Time Reduction", 0.40, AttributeModifier.Operation.MULTIPLY_BASE
+                    "Celestial Source Cast Time Reduction", 0.10, AttributeModifier.Operation.MULTIPLY_BASE
                 ),
 
                 // 法术冷却减少
                 AttributeRegistry.COOLDOWN_REDUCTION.get(), new AttributeModifier(
-                    "Celestial Source Cooldown Reduction", 0.30, AttributeModifier.Operation.MULTIPLY_BASE
+                    "Celestial Source Cooldown Reduction", 0.09, AttributeModifier.Operation.MULTIPLY_BASE
                 ),
 
                 // 法力回复速度
                 AttributeRegistry.MANA_REGEN.get(), new AttributeModifier(
-                    "Celestial Source Mana Regen", 0.25, AttributeModifier.Operation.MULTIPLY_BASE
+                    "Celestial Source Mana Regen", 0.09, AttributeModifier.Operation.MULTIPLY_BASE
                 )
             );
         }
@@ -254,17 +254,17 @@ public class ModArmorMaterials {
             return Map.of(
                 // 法术强度
                 AttributeRegistry.SPELL_POWER.get(), new AttributeModifier(
-                    "Chaos Spell Power", 0.25, AttributeModifier.Operation.MULTIPLY_BASE
+                    "Chaos Spell Power", 0.07, AttributeModifier.Operation.MULTIPLY_BASE
                 ),
 
                 // 混沌法术强度
                 SpellAttributesRegistry.CHAOS_SPELL_POWER.get(), new AttributeModifier(
-                    "Chaos School Power", 0.25, AttributeModifier.Operation.MULTIPLY_BASE
+                    "Chaos School Power", 0.07, AttributeModifier.Operation.MULTIPLY_BASE
                 ),
 
                 // 最大法力值
                 AttributeRegistry.MAX_MANA.get(), new AttributeModifier(
-                    "Chaos Max Mana", 2000, AttributeModifier.Operation.ADDITION
+                    "Chaos Max Mana", 500, AttributeModifier.Operation.ADDITION
                 ),
 
                 // 生命上限
@@ -274,22 +274,22 @@ public class ModArmorMaterials {
 
                 // 神圣法术强度
                 AttributeRegistry.HOLY_SPELL_POWER.get(), new AttributeModifier(
-                    "Chaos Reduction Holy Power", -0.30, AttributeModifier.Operation.MULTIPLY_BASE
+                    "Chaos Reduction Holy Power", -0.03, AttributeModifier.Operation.MULTIPLY_BASE
                 ),
 
                 // 施法时间减少
                 AttributeRegistry.CAST_TIME_REDUCTION.get(), new AttributeModifier(
-                    "Chaos Cast Time Reduction", 0.30, AttributeModifier.Operation.MULTIPLY_BASE
+                    "Chaos Cast Time Reduction", 0.10, AttributeModifier.Operation.MULTIPLY_BASE
                 ),
 
                 // 法术冷却
                 AttributeRegistry.COOLDOWN_REDUCTION.get(), new AttributeModifier(
-                    "Chaos Cooldown Reduction", 0.15, AttributeModifier.Operation.MULTIPLY_BASE
+                    "Chaos Cooldown Reduction", 0.06, AttributeModifier.Operation.MULTIPLY_BASE
                 ),
                 
                 // 法力回复速度
                 AttributeRegistry.MANA_REGEN.get(), new AttributeModifier(
-                    "Chaos Mana Regen", 0.15, AttributeModifier.Operation.MULTIPLY_BASE
+                    "Chaos Mana Regen", 0.06, AttributeModifier.Operation.MULTIPLY_BASE
                 )
             );
         }
@@ -358,7 +358,12 @@ public class ModArmorMaterials {
                 // 法术强度
                 AttributeRegistry.SPELL_POWER.get(), new AttributeModifier(
                     "Violet Zenith Spell Power", 0.07, AttributeModifier.Operation.MULTIPLY_BASE
-                )
+                    ),
+
+
+                AttributeRegistry.COOLDOWN_REDUCTION.get(), new AttributeModifier(
+                    "Violet Zenith Reduction", 0.06, AttributeModifier.Operation.MULTIPLY_BASE
+               )
             );
         }
     };
