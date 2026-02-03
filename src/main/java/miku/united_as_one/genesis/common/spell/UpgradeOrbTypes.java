@@ -1,4 +1,4 @@
-package miku.united_as_one.genesis.common.common.spell;
+package miku.united_as_one.genesis.common.spell;
 
 import miku.united_as_one.genesis.Genesis;
 import io.redspace.ironsspellbooks.item.armor.UpgradeOrbType;
