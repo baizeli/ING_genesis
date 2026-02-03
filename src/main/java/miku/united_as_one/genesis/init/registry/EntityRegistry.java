@@ -1,5 +1,6 @@
 package miku.united_as_one.genesis.init.registry;
 
+import io.redspace.ironsspellbooks.entity.spells.void_tentacle.VoidTentacle;
 import miku.united_as_one.genesis.common.entity.*;
 import miku.united_as_one.genesis.common.entity.LightningBolt;
 import miku.united_as_one.genesis.common.entity.boss.BloodBoss;
@@ -7,6 +8,7 @@ import miku.united_as_one.genesis.common.entity.spells.celestial_source.*;
 import miku.united_as_one.genesis.common.entity.spells.celestial_source.notuse.*;
 import miku.united_as_one.genesis.Genesis;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.*;
 
 public class EntityRegistry {
@@ -73,4 +75,13 @@ public class EntityRegistry {
                     .sized(1.4875001F, 3.6749997F)
                     .clientTrackingRange(64)
                     .build("blood_boss"));
+
+    public static final RegistryObject<EntityType<VoidTentacle>> BLOOD_TENTACLE = ENTITY_TYPES.register("blood_tentacle",
+            () -> EntityType.Builder.of(
+                            (EntityType<VoidTentacle> type, Level level) -> new VoidTentacle(type, level),
+                            MobCategory.MISC
+                    )
+                    .sized(2.5F, 5.5F)
+                    .clientTrackingRange(64)
+                    .build("blood_tentacle"));
 }
