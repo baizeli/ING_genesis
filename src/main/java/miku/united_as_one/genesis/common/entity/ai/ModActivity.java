@@ -15,8 +15,6 @@ public class ModActivity {
 
     public static final RegistryObject<Activity> TEST_ACTIVITY =
             MOD_ACTIVITY.register("test_activity", () -> new Activity("test_activity"));
-    public static final RegistryObject<Activity> FIGHT_STAGE2 =
-            MOD_ACTIVITY.register("fight_stage2", () -> new Activity("fight_stage2"));
 
     public static void register(IEventBus modEventBus) {
         MOD_ACTIVITY.register(modEventBus);
