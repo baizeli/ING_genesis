@@ -1,5 +1,6 @@
 package miku.united_as_one.genesis;
 
+import io.redspace.ironsspellbooks.entity.spells.void_tentacle.VoidTentacle;
 import miku.united_as_one.genesis.common.data.content.arcaneWorkbench.*;
 import miku.united_as_one.genesis.common.data.content.workbenchs.*;
 import miku.united_as_one.genesis.common.entity.*;
@@ -133,6 +134,7 @@ public class Genesis
         event.put(EntityRegistry.BOX_ENTIYT.get(), BoxEntity.createAttributes().build());
         event.put(EntityRegistry.SWORD_ENTITY.get(), SwordEntity.createAttributes().build());
         event.put(EntityRegistry.BLOOD_BOSS.get(), BloodBoss.setAttributes().build());
+        event.put(EntityRegistry.BLOOD_TENTACLE.get(), VoidTentacle.createLivingAttributes().build());
     }
 
     public static String resource(String location)
