@@ -1,4 +1,4 @@
-package miku.united_as_one.genesis_core.utils;
+package miku.united_as_one.genesis.genesis_core.utils;
 
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;

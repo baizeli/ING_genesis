@@ -1,8 +1,8 @@
 package miku.united_as_one.genesis.client;
 
-import miku.united_as_one.genesis.entity.NyanCat;
-import miku.united_as_one.genesis.entity.NyanCatRenderer;
-import miku.united_as_one.genesis.mixin.minecraft.client.renderer.GameRendererAccessor;
+import miku.united_as_one.genesis.common.entity.NyanCat;
+import miku.united_as_one.genesis.common.entity.NyanCatRenderer;
+import miku.united_as_one.genesis.init.mixin.minecraft.client.renderer.GameRendererAccessor;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexSorting;

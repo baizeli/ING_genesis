@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.client.renderer;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.registry.client.ParticleRegistry;
+import miku.united_as_one.genesis.init.registry.client.ParticleRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
@@ -9,7 +9,7 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import static miku.united_as_one.genesis.registry.ItemRegistry.INFINITY_SWORD;
+import static miku.united_as_one.genesis.init.registry.ItemRegistry.INFINITY_SWORD;
 
 @Mod.EventBusSubscriber(
         modid = Genesis.MOD_ID,

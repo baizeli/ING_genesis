@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.client.particles;
 
 import com.mojang.blaze3d.vertex.*;
-import miku.united_as_one.genesis.registry.client.ParticleRegistry;
+import miku.united_as_one.genesis.init.registry.client.ParticleRegistry;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.multiplayer.ClientLevel;
