@@ -1,8 +1,8 @@
 package miku.united_as_one.genesis.client.particles;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.render.ModShaderInstance;
-import miku.united_as_one.genesis.render.ModShaders;
+import miku.united_as_one.genesis.client.render.ModShaderInstance;
+import miku.united_as_one.genesis.client.render.ModShaders;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;

@@ -1,6 +1,6 @@
-package miku.united_as_one.genesis_core;
+package miku.united_as_one.genesis.genesis_core;
 
-import miku.united_as_one.genesis_core.utils.Helper;
+import miku.united_as_one.genesis.genesis_core.utils.Helper;
 import cpw.mods.modlauncher.LaunchPluginHandler;
 import cpw.mods.modlauncher.Launcher;
 import cpw.mods.modlauncher.api.IEnvironment;

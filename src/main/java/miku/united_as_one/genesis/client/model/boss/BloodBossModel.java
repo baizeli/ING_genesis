@@ -3,7 +3,7 @@ package miku.united_as_one.genesis.client.model.boss;
 import io.redspace.ironsspellbooks.entity.mobs.abstract_spell_casting_mob.AbstractSpellCastingMob;
 import io.redspace.ironsspellbooks.entity.mobs.abstract_spell_casting_mob.AbstractSpellCastingMobModel;
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.entity.boss.BloodBoss;
+import miku.united_as_one.genesis.common.entity.boss.BloodBoss;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;

@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.util;
 
-import miku.united_as_one.genesis.items.armor.CelestialSourceSpellArmor;
-import miku.united_as_one.genesis.items.armor.VioletZenithArmor;
+import miku.united_as_one.genesis.common.items.armor.CelestialSourceSpellArmor;
+import miku.united_as_one.genesis.common.items.armor.VioletZenithArmor;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
