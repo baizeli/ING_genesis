@@ -1,8 +1,8 @@
 package miku.united_as_one.genesis.init.mixin.ironsspellbooks.gui.inscription_table;
 
 import miku.united_as_one.genesis.util.mixinutil.SpellSlotInfoAccessor;
-import miku.united_as_one.genesis.common.common.spell.celestial_source.FinalWhisper;
-import miku.united_as_one.genesis.common.common.spell.chaos.BloodWarSpell;
+import miku.united_as_one.genesis.common.spell.celestial_source.FinalWhisper;
+import miku.united_as_one.genesis.common.spell.chaos.BloodWarSpell;
 import com.mojang.blaze3d.vertex.PoseStack;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import io.redspace.ironsspellbooks.api.util.Utils;
