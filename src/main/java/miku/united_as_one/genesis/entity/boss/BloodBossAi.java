@@ -6,6 +6,7 @@ import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Dynamic;
 import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
+import miku.united_as_one.genesis.entity.ai.ModActivity;
 import miku.united_as_one.genesis.entity.ai.ModMemoryModuleType;
 import miku.united_as_one.genesis.entity.boss.behavior.*;
 import miku.united_as_one.genesis.entity.boss.behavior.bloodbossskill.*;
@@ -113,6 +114,7 @@ public class BloodBossAi {
         addIdleActivities(brain, BloodBoss);
         addEmergeActivity(brain);
         addFightActivities(brain);
+        addFightStage2Activities(brain);
         addSleepActivities(brain);
         // 设置核心活动和默认活动
         brain.setCoreActivities(ImmutableSet.of(
@@ -134,13 +136,25 @@ public class BloodBossAi {
      * @param BloodBoss BloodBoss实体
      */
     public static void updateActivity(BloodBoss BloodBoss) {
-        BloodBoss.getBrain().setActiveActivityToFirstValid(
-                ImmutableList.of(
-                        Activity.EMERGE,
-                        Activity.FIGHT,
-                        Activity.IDLE
-                )
-        );
+        if (BloodBoss.getBrain().getMemory(ModMemoryModuleType.BOSS_STAGE.get()).orElse(0)<=1){
+            BloodBoss.getBrain().setActiveActivityToFirstValid(
+                    ImmutableList.of(
+                            Activity.EMERGE,
+                            Activity.FIGHT,
+                            Activity.IDLE
+                    )
+            );
+        }else {
+            BloodBoss.getBrain().setActiveActivityToFirstValid(
+                    ImmutableList.of(
+                            Activity.EMERGE,
+                            ModActivity.FIGHT_STAGE2.get(),
+                            Activity.IDLE
+                    )
+            );
+        }
+
+
     }
     private static void addEmergeActivity(Brain<BloodBoss> brain) {
         brain.addActivityAndRemoveMemoryWhenStopped(
@@ -156,41 +170,84 @@ public class BloodBossAi {
         Activity activity = Activity.FIGHT;
         int i = fightStartPriority;
 
-        // 创建施法行为列表
-        ImmutableList<SpellCastingBehavior> spellBehaviors = createSpellCastingBehaviors(
-            createSpellData(SpellRegistry.BLOOD_SLASH_SPELL.get(), 8*20, 20.0f),
-            createSpellData(SpellRegistry.BLOOD_NEEDLES_SPELL.get(), 8*20, 18.0f),
-            createSpellData(SpellRegistry.WITHER_SKULL_SPELL.get(), 8*20, 25.0f),
-            createSpellData(SpellRegistry.ACUPUNCTURE_SPELL.get(), 8*20, 15.0f),
-            createSpellData(SpellRegistry.SONIC_BOOM_SPELL.get(), 8*20, 16.0f),
-            createSpellData(SpellRegistry.ELDRITCH_BLAST_SPELL.get(), 8*20, 22.0f)
+        ImmutableList.Builder<BehaviorControl<? super BloodBoss>> fightBuilder = ImmutableList.builder();
+
+        List<AbstractSpell> spellList = List.of(
+                SpellRegistry.BLOOD_SLASH_SPELL.get(),
+                SpellRegistry.BLOOD_NEEDLES_SPELL.get()
+
         );
 
-
-
-        ImmutableList.Builder<BehaviorControl<BloodBoss>>
-                fightBuilder = ImmutableList.builder();
+        SpellCastingBehavior spellCasting = new SpellCastingBehavior(
+                spellList,
+                5*20,  // 冷却时间
+                20.0f // 最大施法距离
+        );
 
         //清除无效目标
-        fightBuilder.add(StopAttackingIfTargetInvalid.create(livingEntity -> false, (mob, target) -> {}, true));
-        fightBuilder.add(new DragonDiveBehavior());//下落攻击
-        fightBuilder.add(new TentacleAttackBehavior());//触手攻击
-        fightBuilder.add(new TentacleGrabBehavior());//触手抓取
-        fightBuilder.add(new LightningWhirlSlashBehavior());//闪电旋风劈
-        fightBuilder.add(new BloodBossGrabBehavior());        //抓取技能
-        fightBuilder.add(new DoubleSlashBehavior());//二连斩技能
+        fightBuilder.add(StopAttackingIfTargetInvalid.<BloodBoss>create(
+                livingEntity -> false, (mob, target) -> {}, true));
+
+        // 添加一阶段追击行为：当敌人离开8格范围时追击
+        fightBuilder.add(SetWalkTargetFromAttackTargetIfTargetOutOfReach.<BloodBoss>create(1.0F));
+
+        fightBuilder.add(new DragonDiveBehavior());          //下落攻击
+        fightBuilder.add(new LightningWhirlSlashBehavior()); //闪电旋风劈
+        fightBuilder.add(new BloodBossGrabBehavior());       //抓取技能
+        fightBuilder.add(new DoubleSlashBehavior());         //二连斩技能
         fightBuilder.add(new ZhanZhanCycloneSlashBehavior());//斩斩旋风劈技能
-        fightBuilder.add(new GroundSlamBehavior());//砸地技能
-        fightBuilder.add(new StompBehavior());//跺脚技能
+        fightBuilder.add(new GroundSlamBehavior());          //砸地技能
+        fightBuilder.add(new StompBehavior());               //跺脚技能
+        fightBuilder.add(spellCasting);               //跺脚技能
 
+        ImmutableList<BehaviorControl<? super BloodBoss>> fightBehaviors = fightBuilder.build();
 
+        brain.addActivityAndRemoveMemoryWhenStopped(
+                activity,
+                i,
+                fightBehaviors,
+                MemoryModuleType.ATTACK_TARGET
+        );
+    }
+
+    private static void addFightStage2Activities(Brain<BloodBoss> brain) {
+        Activity activity = ModActivity.FIGHT_STAGE2.get();
+        int i = fightStartPriority;
+
+        // 创建施法行为列表
+        ImmutableList<SpellCastingBehavior> spellBehaviors = createSpellCastingBehaviors(
+                createSpellData(SpellRegistry.BLOOD_SLASH_SPELL.get(), 8 * 20, 20.0f),
+                createSpellData(SpellRegistry.BLOOD_NEEDLES_SPELL.get(), 8 * 20, 18.0f),
+                createSpellData(SpellRegistry.WITHER_SKULL_SPELL.get(), 8 * 20, 25.0f),
+                createSpellData(SpellRegistry.ACUPUNCTURE_SPELL.get(), 8 * 20, 15.0f),
+                createSpellData(SpellRegistry.SONIC_BOOM_SPELL.get(), 8 * 20, 16.0f),
+                createSpellData(SpellRegistry.ELDRITCH_BLAST_SPELL.get(), 8 * 20, 22.0f)
+        );
+
+        ImmutableList.Builder<BehaviorControl<? super BloodBoss>> fightBuilder = ImmutableList.builder();
+
+        //清除无效目标
+        fightBuilder.add(StopAttackingIfTargetInvalid.<BloodBoss>create(livingEntity -> false, (mob, target) -> {}, true));
+
+        // 添加二阶段远离行为：保持8格距离
+        fightBuilder.add(BackUpIfTooClose.<BloodBoss>create(16, 5F)); // 8格距离
+
+        fightBuilder.add(new DragonDiveBehavior());          //下落攻击
+        fightBuilder.add(new TentacleAttackBehavior());      //触手攻击
+        fightBuilder.add(new TentacleGrabBehavior());        //触手抓取
+//        fightBuilder.add(new LightningWhirlSlashBehavior()); //闪电旋风劈
+//        fightBuilder.add(new BloodBossGrabBehavior());       //抓取技能
+        fightBuilder.add(new DoubleSlashBehavior());         //二连斩技能
+        fightBuilder.add(new ZhanZhanCycloneSlashBehavior());//斩斩旋风劈技能
+        fightBuilder.add(new GroundSlamBehavior());          //砸地技能
+        fightBuilder.add(new StompBehavior());               //跺脚技能
 
         // 添加所有施法行为
         for (SpellCastingBehavior behavior : spellBehaviors) {
             fightBuilder.add(behavior);
         }
 
-        ImmutableList<BehaviorControl<BloodBoss>> fightBehaviors = fightBuilder.build();
+        ImmutableList<BehaviorControl<? super BloodBoss>> fightBehaviors = fightBuilder.build();
 
         brain.addActivityAndRemoveMemoryWhenStopped(
                 activity,

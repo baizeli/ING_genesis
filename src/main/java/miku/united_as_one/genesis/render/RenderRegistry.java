@@ -1,5 +1,6 @@
 package miku.united_as_one.genesis.render;
 
+import miku.united_as_one.genesis.client.renderer.BloodTentacleRenderer;
 import miku.united_as_one.genesis.registry.EntityRegistry;
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.client.renderer.boss.BloodBossRenderer;
@@ -24,6 +25,7 @@ public class RenderRegistry {
         event.registerEntityRenderer(EntityType.LIGHTNING_BOLT, PurpleLightningRenderer::new);
         event.registerEntityRenderer(EntityRegistry.CUSTOM_ARROW.get(), CustomArrowRenderer::new);
         event.registerEntityRenderer(EntityRegistry.BLOOD_BOSS.get(), BloodBossRenderer::new);
+        event.registerEntityRenderer(EntityRegistry.BLOOD_TENTACLE.get(), BloodTentacleRenderer::new);
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)

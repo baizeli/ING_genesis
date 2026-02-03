@@ -1,13 +1,18 @@
 package miku.united_as_one.genesis.registry;
 
+import io.redspace.ironsspellbooks.entity.spells.void_tentacle.VoidTentacle;
 import miku.united_as_one.genesis.entity.*;
 import miku.united_as_one.genesis.entity.LightningBolt;
 import miku.united_as_one.genesis.entity.boss.BloodBoss;
 import miku.united_as_one.genesis.entity.spells.celestial_source.*;
 import miku.united_as_one.genesis.entity.spells.celestial_source.notuse.*;
 import miku.united_as_one.genesis.Genesis;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.*;
+
+import static miku.united_as_one.genesis.Genesis.MODID;
 
 public class EntityRegistry {
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES =
@@ -71,6 +76,15 @@ public class EntityRegistry {
     public static final RegistryObject<EntityType<BloodBoss>> BLOOD_BOSS = ENTITY_TYPES.register("blood_boss",
             () -> EntityType.Builder.of(BloodBoss::new, MobCategory.MONSTER)
                     .sized(1.4875001F, 3.6749997F)
-                    .clientTrackingRange(64)
+                    .clientTrackingRange(256)
                     .build("blood_boss"));
+
+    public static final RegistryObject<EntityType<VoidTentacle>> BLOOD_TENTACLE = ENTITY_TYPES.register("blood_tentacle",
+            () -> EntityType.Builder.of(
+                            (EntityType<VoidTentacle> type, Level level) -> new VoidTentacle(type, level),
+                            MobCategory.MISC
+                    )
+                    .sized(2.5F, 5.5F)
+                    .clientTrackingRange(64)
+                    .build("blood_tentacle"));
 }
