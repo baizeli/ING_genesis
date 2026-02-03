@@ -191,7 +191,7 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     }
 
     //================================================================ 生命周期 ========================================================================
-    public BloodBoss(EntityType<? extends BloodBoss> entityType, Level level) {
+    public BloodBoss(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);
         this.moveControl = new BloodBossMoveControl(this);
 //        this.lookControl = new BloodBossLookControl(this);
