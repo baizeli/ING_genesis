@@ -1,4 +1,3 @@
-//很美味的蛋糕🍰，太美味了🥰🥰🥰，太好吃了😋😋😋，太棒了👍🏻👍🏻👍🏻，我非常喜欢吃😋😋😋
 package miku.united_as_one.genesis.items;
 
 import miku.united_as_one.genesis.util.RainbowEffectHelper;
