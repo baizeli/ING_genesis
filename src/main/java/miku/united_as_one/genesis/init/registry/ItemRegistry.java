@@ -15,7 +15,7 @@ import miku.united_as_one.genesis.common.items.manuscript.*;
 import miku.united_as_one.genesis.common.items.pickaxe.*;
 import miku.united_as_one.genesis.common.items.sword.*;
 import miku.united_as_one.genesis.client.tooltipParticleHandler.*;
-import miku.united_as_one.genesis.common.common.spell.UpgradeOrbTypes;
+import miku.united_as_one.genesis.common.spell.UpgradeOrbTypes;
 import io.redspace.ironsspellbooks.item.UpgradeOrbItem;
 import io.redspace.ironsspellbooks.item.armor.IronsExtendedArmorMaterial;
 import io.redspace.ironsspellbooks.util.ItemPropertiesHelper;
