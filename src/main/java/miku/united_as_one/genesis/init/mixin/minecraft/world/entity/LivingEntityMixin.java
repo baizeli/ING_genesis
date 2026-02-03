@@ -7,7 +7,7 @@ import miku.united_as_one.genesis.init.mixin.minecraft.world.effect.MobEffectIns
 import miku.united_as_one.genesis.init.registry.EffectRegistry;
 import miku.united_as_one.genesis.init.registry.SoundRegister;
 import miku.united_as_one.genesis.client.renderer.EvasionAnimationRenderer;
-import miku.united_as_one.genesis.common.common.spell.chaos.ReversePlagueSpell;
+import miku.united_as_one.genesis.common.spell.chaos.ReversePlagueSpell;
 import miku.united_as_one.genesis.common.event.spell.celestial_source.LifeAndDeathRealmEvent;
 import miku.united_as_one.genesis.util.ModCurios;
 import io.redspace.ironsspellbooks.entity.spells.poison_cloud.PoisonCloud;
