@@ -1,4 +1,4 @@
-package miku.united_as_one.genesis.common.common.spell.celestial_source;
+package miku.united_as_one.genesis.common.spell.celestial_source;
 
 import miku.united_as_one.genesis.common.entity.CustomArrowEntity;
 import miku.united_as_one.genesis.Genesis;

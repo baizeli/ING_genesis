@@ -1,4 +1,4 @@
-package miku.united_as_one.genesis.common.common.spell;
+package miku.united_as_one.genesis.common.spell;
 
 import miku.united_as_one.genesis.init.registry.spell.SpellAttributesRegistry;
 import net.minecraftforge.event.entity.EntityAttributeModificationEvent;

@@ -1,4 +1,4 @@
-package miku.united_as_one.genesis.common.common.spell.celestial_source;
+package miku.united_as_one.genesis.common.spell.celestial_source;
 
 import miku.united_as_one.genesis.init.registry.spell.SpellSchoolRegistry;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
