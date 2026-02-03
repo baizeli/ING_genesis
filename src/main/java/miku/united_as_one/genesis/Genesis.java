@@ -133,6 +133,7 @@ public class Genesis
         event.put(EntityRegistry.BOX_ENTIYT.get(), BoxEntity.createAttributes().build());
         event.put(EntityRegistry.SWORD_ENTITY.get(), SwordEntity.createAttributes().build());
         event.put(EntityRegistry.BLOOD_BOSS.get(), BloodBoss.setAttributes().build());
+        event.put(EntityRegistry.BLOOD_TENTACLE.get(),VoidTentacle.createLivingAttributes().build());
     }
 
     public static String resource(String location)
