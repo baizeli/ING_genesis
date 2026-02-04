@@ -1,11 +1,13 @@
 package miku.united_as_one.genesis.init.registry;
 
-import com.sun.jna.platform.win32.NTSecApi;
 import com.tterrag.registrate.providers.*;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.common.items.*;
+import miku.united_as_one.genesis.common.items.spellbook.AEprospellbook;
+import miku.united_as_one.genesis.common.items.spellbook.CelestialSourceSpellBook;
+import miku.united_as_one.genesis.common.items.spellbook.ChaosSpellBook;
 import miku.united_as_one.genesis.common.items.staff.*;
 import miku.united_as_one.genesis.common.items.armor.*;
 import miku.united_as_one.genesis.common.items.bow.*;
@@ -22,7 +24,6 @@ import io.redspace.ironsspellbooks.util.ItemPropertiesHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.client.model.generators.*;
@@ -341,6 +342,12 @@ public class ItemRegistry {
     public static final ItemEntry<CelestialSourceSpellBook> CELESTIAL_SOURCE_SPELL_BOOK = Genesis.L2_REGISTRATE
             .item("celestial_source_spell_book", properties -> new CelestialSourceSpellBook())
             .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
+            .register();
+
+    //法术磁盘
+    public static final ItemEntry<AEprospellbook> DISK_SPELL_BOOK = Genesis.L2_REGISTRATE
+            .item("disk_spell_book",properties -> new AEprospellbook())
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
