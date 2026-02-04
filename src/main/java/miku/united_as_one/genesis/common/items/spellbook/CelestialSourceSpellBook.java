@@ -1,4 +1,4 @@
-package miku.united_as_one.genesis.common.items;
+package miku.united_as_one.genesis.common.items.spellbook;
 
 import miku.united_as_one.genesis.client.tooltipParticleHandler.ITooltipParticleItem;
 import miku.united_as_one.genesis.client.tooltipParticleHandler.PTID;
@@ -26,7 +26,11 @@ import java.util.function.Consumer;
 public class CelestialSourceSpellBook extends SpellBook implements ITooltipParticleItem {
     public CelestialSourceSpellBook() {
         super(15);
-        this.withSpellbookAttributes(new AttributeContainer(AttributeRegistry.SPELL_POWER, 0.6, AttributeModifier.Operation.MULTIPLY_BASE), new AttributeContainer(AttributeRegistry.MAX_MANA, 2000, AttributeModifier.Operation.ADDITION), new AttributeContainer(AttributeRegistry.COOLDOWN_REDUCTION, 0.6, AttributeModifier.Operation.MULTIPLY_BASE), new AttributeContainer(SpellAttributesRegistry.CELESTIAL_SOURCE_SPELL_POWER, 0.5, AttributeModifier.Operation.MULTIPLY_BASE));
+        this.withSpellbookAttributes(new AttributeContainer(AttributeRegistry.SPELL_POWER, 0.1,
+                AttributeModifier.Operation.MULTIPLY_BASE), new AttributeContainer(AttributeRegistry.MAX_MANA, 900,
+                AttributeModifier.Operation.ADDITION), new AttributeContainer(AttributeRegistry.COOLDOWN_REDUCTION, 0.3,
+                AttributeModifier.Operation.MULTIPLY_BASE), new AttributeContainer(SpellAttributesRegistry.CELESTIAL_SOURCE_SPELL_POWER, 0.1,
+                AttributeModifier.Operation.MULTIPLY_BASE));
     }
 
     public void initializeClient(Consumer<IClientItemExtensions> consumer) {

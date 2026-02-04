@@ -1,8 +1,8 @@
 package miku.united_as_one.genesis.common.event;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.common.items.CelestialSourceSpellBook;
-import miku.united_as_one.genesis.common.items.ChaosSpellBook;
+import miku.united_as_one.genesis.common.items.spellbook.CelestialSourceSpellBook;
+import miku.united_as_one.genesis.common.items.spellbook.ChaosSpellBook;
 import miku.united_as_one.genesis.init.registry.ItemRegistry;
 import miku.united_as_one.genesis.common.items.staff.CelestialSourceStaff;
 import miku.united_as_one.genesis.common.items.staff.ChaosStaff;
