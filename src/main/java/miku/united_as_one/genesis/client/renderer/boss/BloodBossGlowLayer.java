@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.client.renderer.boss;
 
 import io.redspace.ironsspellbooks.entity.mobs.abstract_spell_casting_mob.AbstractSpellCastingMob;
-import miku.united_as_one.genesis.entity.boss.BloodBoss;
+import miku.united_as_one.genesis.common.entity.boss.BloodBoss;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import software.bernie.geckolib.renderer.GeoRenderer;

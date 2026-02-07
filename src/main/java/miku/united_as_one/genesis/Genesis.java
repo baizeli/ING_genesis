@@ -1,27 +1,28 @@
 package miku.united_as_one.genesis;
 
-import miku.united_as_one.genesis.content.arcaneWorkbench.*;
-import miku.united_as_one.genesis.content.workbenchs.*;
-import miku.united_as_one.genesis.entity.*;
-import miku.united_as_one.genesis.registry.*;
-import miku.united_as_one.genesis.entity.ai.ModActivity;
-import miku.united_as_one.genesis.entity.ai.ModMemoryModuleType;
-import miku.united_as_one.genesis.entity.spells.celestial_source.*;
-import miku.united_as_one.genesis.entity.boss.BloodBoss;
-import miku.united_as_one.genesis.entity.spells.celestial_source.notuse.*;
+import io.redspace.ironsspellbooks.entity.spells.void_tentacle.VoidTentacle;
+import miku.united_as_one.genesis.common.data.content.arcaneWorkbench.*;
+import miku.united_as_one.genesis.common.data.content.workbenchs.*;
+import miku.united_as_one.genesis.common.entity.*;
+import miku.united_as_one.genesis.init.registry.*;
+import miku.united_as_one.genesis.common.entity.ai.ModActivity;
+import miku.united_as_one.genesis.common.entity.ai.ModMemoryModuleType;
+import miku.united_as_one.genesis.common.entity.spells.celestial_source.*;
+import miku.united_as_one.genesis.common.entity.boss.BloodBoss;
+import miku.united_as_one.genesis.common.entity.spells.celestial_source.notuse.*;
 import miku.united_as_one.genesis.client.ClientEvent;
-import miku.united_as_one.genesis.registry.BlockRegistry;
-import miku.united_as_one.genesis.registry.CreativeTabRegistry;
-import miku.united_as_one.genesis.registry.EntityRegistry;
-import miku.united_as_one.genesis.registry.ItemRegistry;
-import miku.united_as_one.genesis.registry.client.ParticleRegistry;
+import miku.united_as_one.genesis.init.registry.BlockRegistry;
+import miku.united_as_one.genesis.init.registry.CreativeTabRegistry;
+import miku.united_as_one.genesis.init.registry.EntityRegistry;
+import miku.united_as_one.genesis.init.registry.ItemRegistry;
+import miku.united_as_one.genesis.init.registry.client.ParticleRegistry;
 import miku.united_as_one.genesis.client.renderer.DistortWorldRender;
 import miku.united_as_one.genesis.client.renderer.spell.celestial_source.DeadStarDecreeCometRenderer;
-import miku.united_as_one.genesis.config.*;
-import miku.united_as_one.genesis.fonts.FuckFont1;
-import miku.united_as_one.genesis.network.*;
-import miku.united_as_one.genesis.registry.spell.SpellAttributesRegistry;
-import miku.united_as_one.genesis.registry.spell.SpellSchoolRegistry;
+import miku.united_as_one.genesis.init.config.*;
+import miku.united_as_one.genesis.client.fonts.FuckFont1;
+import miku.united_as_one.genesis.common.network.*;
+import miku.united_as_one.genesis.init.registry.spell.SpellAttributesRegistry;
+import miku.united_as_one.genesis.init.registry.spell.SpellSchoolRegistry;
 import dev.xkmc.l2library.base.L2Registrate;
 import com.mojang.logging.LogUtils;
 import io.redspace.ironsspellbooks.render.SpellBookCurioRenderer;
@@ -133,6 +134,7 @@ public class Genesis
         event.put(EntityRegistry.BOX_ENTIYT.get(), BoxEntity.createAttributes().build());
         event.put(EntityRegistry.SWORD_ENTITY.get(), SwordEntity.createAttributes().build());
         event.put(EntityRegistry.BLOOD_BOSS.get(), BloodBoss.setAttributes().build());
+        event.put(EntityRegistry.BLOOD_TENTACLE.get(), VoidTentacle.createLivingAttributes().build());
     }
 
     public static String resource(String location)

@@ -2,7 +2,7 @@ package miku.united_as_one.genesis.client;
 
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.client.renderer.*;
-import miku.united_as_one.genesis.registry.ItemRegistry;
+import miku.united_as_one.genesis.init.registry.ItemRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
