@@ -419,6 +419,15 @@ public class ItemRegistry {
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
 
+    // 神圣穿透升级法球
+    public static final ItemEntry<UpgradeOrbItem> HOLY_ORB_PRO = Genesis.L2_REGISTRATE
+            .item("holy_orb_pro", properties -> new UpgradeOrbItem(
+                    ItemPropertiesHelper.material().rarity(Rarity.UNCOMMON),
+                    UpgradeOrbTypes.HOLY_SPELL_PENETRATION
+            ))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
+            .register();
+
     // 老王237
     public static final ItemEntry<LaoWang237Curios> LAO_WANG_237 = Genesis.L2_REGISTRATE
             .item("lao_wang_237", properties -> new LaoWang237Curios())
@@ -435,6 +444,15 @@ public class ItemRegistry {
     // 无限忏悔石
     public static final ItemEntry<InfiniteShrivingStoneItem> INFINITE_SHRIVING_STONE = Genesis.L2_REGISTRATE
             .item("infinite_shriving_stone", properties -> new InfiniteShrivingStoneItem())
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
+            .register();
+
+    // 空白高级法球
+    public static final ItemEntry<Item> UPGRADE_ORB_PRO = Genesis.L2_REGISTRATE
+            .item("upgrade_orb_pro", properties -> new Item(properties
+                    .stacksTo(16)
+                    .rarity(Rarity.EPIC)
+            ))
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
 
