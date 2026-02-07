@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.util;
 
-import miku.united_as_one.genesis.render.cosmic.AvaritiaShaders;
+import miku.united_as_one.genesis.client.render.cosmic.AvaritiaShaders;
 import miku.united_as_one.genesis.Genesis;
 import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;

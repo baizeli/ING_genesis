@@ -1,8 +1,8 @@
 package miku.united_as_one.genesis.client.gui.manuscript;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.network.NetworkHandler;
-import miku.united_as_one.genesis.network.manuscript.LearnSpellPacket;
+import miku.united_as_one.genesis.common.network.NetworkHandler;
+import miku.united_as_one.genesis.common.network.manuscript.LearnSpellPacket;
 import com.mojang.blaze3d.platform.InputConstants;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;

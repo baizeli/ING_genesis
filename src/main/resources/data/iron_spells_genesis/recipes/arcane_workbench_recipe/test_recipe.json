@@ -2,25 +2,19 @@
   "type": "iron_spells_genesis:arcane_workbench_recipe",
   "category": "misc",
   "pattern": [
-    "  A  ",
-    " ABA ",
-    "ACBCA",
-    " ABA ",
-    "  A  "
+    "AAAAA",
+    "AAAAA",
+    "AAAAA",
+    "AAAAA",
+    "AAAAA"
   ],
   "key": {
     "A": {
       "item": "minecraft:iron_ingot"
-    },
-    "B": {
-      "item": "minecraft:diamond"
-    },
-    "C": {
-      "item": "minecraft:emerald"
     }
   },
   "result": {
-    "item": "minecraft:netherite_ingot",
+    "item": "minecraft:ice",
     "count": 1
   },
   "show_notification": true
