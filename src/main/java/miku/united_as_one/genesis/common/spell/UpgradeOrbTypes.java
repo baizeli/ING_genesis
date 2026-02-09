@@ -62,8 +62,19 @@ public class UpgradeOrbTypes {
     public static final ResourceKey<UpgradeOrbType> NATURE_SPELL_PENETRATION = ResourceKey.create(
             KEY,Genesis.rl("nature_spell_penetration")
     );
+
     //邪术穿透
     public static final ResourceKey<UpgradeOrbType> WARLOCK_SPELL_PENETRATION = ResourceKey.create(
             KEY,Genesis.rl("warlock_spell_penetration")
+    );
+
+    //混沌穿透
+    public static final ResourceKey<UpgradeOrbType> CHAOS_SPELL_PENETRATION = ResourceKey.create(
+            KEY,Genesis.rl("chaos_spell_penetration")
+    );
+
+    //星源穿透
+    public static final ResourceKey<UpgradeOrbType> CELESTIAL_SOURCE_SPELL_PENETRATION = ResourceKey.create(
+            KEY,Genesis.rl("celestial_source_spell_penetration")
     );
 }
