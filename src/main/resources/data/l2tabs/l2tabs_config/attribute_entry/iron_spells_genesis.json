@@ -1,0 +1,184 @@
+{
+  "list": [
+    {
+      "id": "irons_spellbooks:max_mana",
+      "intrinsic": 0.0,
+      "order": 100000,
+      "usePercent": false
+    },
+    {
+      "id": "irons_spellbooks:mana_regen",
+      "intrinsic": 0.0,
+      "order": 200000,
+      "usePercent": false
+    },
+    {
+      "id": "irons_spellbooks:cooldown_reductions",
+      "intrinsic": 0.0,
+      "order": 300000,
+      "usePercent": false
+    },
+    {
+      "id": "irons_spellbooks:spell_power",
+      "intrinsic": 0.0,
+      "order": 400000,
+      "usePercent": false
+    },
+    {
+      "id": "irons_spellbooks:spell_resist",
+      "intrinsic": 0.0,
+      "order": 500000,
+      "usePercent": false
+    },
+    {
+      "id": "irons_spellbooks:cast_time_reduction",
+      "intrinsic": 0.0,
+      "order": 600000,
+      "usePercent": false
+    },
+    {
+      "id": "irons_spellbooks:summon_damage",
+      "intrinsic": 0.0,
+      "order": 700000,
+      "usePercent": false
+    },
+    {
+      "id": "irons_spellbooks:casting_movespeed",
+      "intrinsic": 0.0,
+      "order": 800000,
+      "usePercent": false
+    },
+    {
+      "id": "irons_spellbooks:fire_magic_resist",
+      "intrinsic": 0.0,
+      "order": 900000,
+      "usePercent": false
+    },
+    {
+      "id": "irons_spellbooks:ice_magic_resist",
+      "intrinsic": 0.0,
+      "order": 1000000,
+      "usePercent": false
+    },
+    {
+      "id": "irons_spellbooks:lightning_magic_resist",
+      "intrinsic": 0.0,
+      "order": 1100000,
+      "usePercent": false
+    },
+    {
+      "id": "irons_spellbooks:holy_magic_resist",
+      "intrinsic": 0.0,
+      "order": 1200000,
+      "usePercent": false
+    },
+    {
+      "id": "irons_spellbooks:ender_magic_resist",
+      "intrinsic": 0.0,
+      "order": 1300000,
+      "usePercent": false
+    },
+    {
+      "id": "irons_spellbooks:blood_magic_resist",
+      "intrinsic": 0.0,
+      "order": 1400000,
+      "usePercent": false
+    },
+    {
+      "id": "irons_spellbooks:evocation_magic_resist",
+      "intrinsic": 0.0,
+      "order": 1500000,
+      "usePercent": false
+    },
+    {
+      "id": "irons_spellbooks:nature_magic_resist",
+      "intrinsic": 0.0,
+      "order": 1600000,
+      "usePercent": false
+    },
+    {
+      "id": "irons_spellbooks:eldritch_magic_resist",
+      "intrinsic": 0.0,
+      "order": 1700000,
+      "usePercent": false
+    },
+    {
+      "id": "iron_spells_genesis:chaos_magic_resist",
+      "intrinsic": 0.0,
+      "order": 1800000,
+      "usePercent": false
+    },
+    {
+      "id": "iron_spells_genesis:celestial_source_magic_resist",
+      "intrinsic": 0.0,
+      "order": 1900000,
+      "usePercent": false
+    },
+    {
+      "id": "irons_spellbooks:fire_spell_power",
+      "intrinsic": 0.0,
+      "order": 2000000,
+      "usePercent": false
+    },
+    {
+      "id": "irons_spellbooks:ice_spell_power",
+      "intrinsic": 0.0,
+      "order": 2100000,
+      "usePercent": false
+    },
+    {
+      "id": "irons_spellbooks:lightning_spell_power",
+      "intrinsic": 0.0,
+      "order": 2200000,
+      "usePercent": false
+    },
+    {
+      "id": "irons_spellbooks:holy_spell_power",
+      "intrinsic": 0.0,
+      "order": 2300000,
+      "usePercent": false
+    },
+    {
+      "id": "irons_spellbooks:ender_spell_power",
+      "intrinsic": 0.0,
+      "order": 2400000,
+      "usePercent": false
+    },
+    {
+      "id": "irons_spellbooks:blood_spell_power",
+      "intrinsic": 0.0,
+      "order": 2500000,
+      "usePercent": false
+    },
+    {
+      "id": "irons_spellbooks:evocation_spell_power",
+      "intrinsic": 0.0,
+      "order": 2600000,
+      "usePercent": false
+    },
+    {
+      "id": "irons_spellbooks:nature_spell_power",
+      "intrinsic": 0.0,
+      "order": 2700000,
+      "usePercent": false
+    },
+    {
+      "id": "irons_spellbooks:eldritch_spell_power",
+      "intrinsic": 0.0,
+      "order": 2800000,
+      "usePercent": false
+    },
+    {
+      "id": "iron_spells_genesis:chaos_spell_power",
+      "intrinsic": 0.0,
+      "order": 2900000,
+      "usePercent": false
+    },
+    {
+      "id": "iron_spells_genesis:celestial_source_spell_power",
+      "intrinsic": 0.0,
+      "order": 3000000,
+      "usePercent": false
+    }
+  ]
+}

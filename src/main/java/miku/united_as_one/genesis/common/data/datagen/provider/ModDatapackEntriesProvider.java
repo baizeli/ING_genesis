@@ -1,4 +1,4 @@
-package miku.united_as_one.genesis.common.data.datagen;
+package miku.united_as_one.genesis.common.data.datagen.provider;
 
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.common.data.damage.DamageTypes;
@@ -11,10 +11,10 @@ import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
-public class RegistryDataGenerator extends DatapackBuiltinEntriesProvider {
+public class ModDatapackEntriesProvider extends DatapackBuiltinEntriesProvider {
     private static final RegistrySetBuilder BUILDER;
 
-    public RegistryDataGenerator(PackOutput output, CompletableFuture<HolderLookup.Provider> provider) {
+    public ModDatapackEntriesProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> provider) {
         super(output, provider, BUILDER, Set.of("minecraft", Genesis.MOD_ID));
     }
 
