@@ -22,11 +22,9 @@ public class BloodFrenzyEvent {
         if (entity.hasEffect(EffectRegistry.BLOOD_FRENZY.get())) {
             if (entity instanceof Player player) {
                 // 获取施法者攻击范围
-                double reach = player.getEntityReach();
-                AABB searchBox = player.getBoundingBox().inflate(reach);
                 List<LivingEntity> nearbyEntities = player.level().getEntitiesOfClass(
                     LivingEntity.class,
-                    searchBox,
+                    player.getBoundingBox().inflate(player.getEntityReach()),
                     e -> e != player && e.isAlive() && player.canReach(e, 0)
                 );
 
@@ -85,8 +83,7 @@ public class BloodFrenzyEvent {
 
         // 受伤的减免
         if (event.getEntity() instanceof LivingEntity) {
-            LivingEntity victim = (LivingEntity) event.getEntity();
-            if (victim.hasEffect(EffectRegistry.BLOOD_FRENZY.get())) {
+            if (event.getEntity().hasEffect(EffectRegistry.BLOOD_FRENZY.get())) {
                 event.setAmount(event.getAmount() * 0.5f);
             }
         }
