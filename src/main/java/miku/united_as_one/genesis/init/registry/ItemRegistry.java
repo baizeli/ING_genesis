@@ -428,6 +428,78 @@ public class ItemRegistry {
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
 
+    //冰霜穿透升级法球
+    public static final ItemEntry<UpgradeOrbItem> ICE_ORB_PRO = Genesis.L2_REGISTRATE
+            .item("ice_orb_pro", properties -> new UpgradeOrbItem(
+                    ItemPropertiesHelper.material().rarity(Rarity.UNCOMMON),
+                    UpgradeOrbTypes.FROST_SPELL_PENETRATION
+            ))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
+            .register();
+
+    // 猩红穿透升级法球
+    public static final ItemEntry<UpgradeOrbItem> BLOOD_ORB_PRO = Genesis.L2_REGISTRATE
+            .item("blood_orb_pro", properties -> new UpgradeOrbItem(
+                    ItemPropertiesHelper.material().rarity(Rarity.UNCOMMON),
+                    UpgradeOrbTypes.SCARLET_SPELL_PENETRATION
+            ))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
+            .register();
+
+    // 末影穿透升级法球
+    public static final ItemEntry<UpgradeOrbItem> ENDER_ORB_PRO = Genesis.L2_REGISTRATE
+            .item("ender_orb_pro", properties -> new UpgradeOrbItem(
+                    ItemPropertiesHelper.material().rarity(Rarity.UNCOMMON),
+                    UpgradeOrbTypes.ENDER_SPELL_PENETRATION
+            ))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
+            .register();
+
+    // 雷霆穿透升级法球
+    public static final ItemEntry<UpgradeOrbItem> THUNDER_ORB_PRO = Genesis.L2_REGISTRATE
+            .item("thunder_orb_pro", properties -> new UpgradeOrbItem(
+                    ItemPropertiesHelper.material().rarity(Rarity.UNCOMMON),
+                    UpgradeOrbTypes.THUNDER_SPELL_PENETRATION
+            ))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
+            .register();
+
+    // 自然穿透升级法球
+    public static final ItemEntry<UpgradeOrbItem> NATURE_ORB_PRO = Genesis.L2_REGISTRATE
+            .item("nature_orb_pro", properties -> new UpgradeOrbItem(
+                    ItemPropertiesHelper.material().rarity(Rarity.UNCOMMON),
+                    UpgradeOrbTypes.NATURE_SPELL_PENETRATION
+            ))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
+            .register();
+
+    // 邪术穿透升级法球
+    public static final ItemEntry<UpgradeOrbItem> WARLOCK_ORB_PRO = Genesis.L2_REGISTRATE
+            .item("warlock_orb_pro", properties -> new UpgradeOrbItem(
+                    ItemPropertiesHelper.material().rarity(Rarity.UNCOMMON),
+                    UpgradeOrbTypes.WARLOCK_SPELL_PENETRATION
+            ))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
+            .register();
+
+    // 混沌穿透升级法球
+    public static final ItemEntry<UpgradeOrbItem> CHAOS_ORB_PRO = Genesis.L2_REGISTRATE
+            .item("chaos_orb_pro", properties -> new UpgradeOrbItem(
+                    ItemPropertiesHelper.material().rarity(Rarity.UNCOMMON),
+                    UpgradeOrbTypes.CHAOS_SPELL_PENETRATION
+            ))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
+            .register();
+
+    // 星源穿透升级法球
+    public static final ItemEntry<UpgradeOrbItem> CELESTIAL_SOURCE_ORB_PRO = Genesis.L2_REGISTRATE
+            .item("celestial_source_orb_pro", properties -> new UpgradeOrbItem(
+                    ItemPropertiesHelper.material().rarity(Rarity.UNCOMMON),
+                    UpgradeOrbTypes.CELESTIAL_SOURCE_SPELL_PENETRATION
+            ))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
+            .register();
+
     // 老王237
     public static final ItemEntry<LaoWang237Curios> LAO_WANG_237 = Genesis.L2_REGISTRATE
             .item("lao_wang_237", properties -> new LaoWang237Curios())
