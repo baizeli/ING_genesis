@@ -22,7 +22,6 @@ public class EntityRegistry {
                     .updateInterval(20)
                     .build("custom_arrow"));
 
-
     public static final RegistryObject<EntityType<NyanCat>> NYAN_CAT = ENTITY_TYPES.register("nyan_cat",
             () -> EntityType.Builder.<NyanCat>of(NyanCat::new, MobCategory.MISC)
                     .sized(0.5F, 0.5F)
