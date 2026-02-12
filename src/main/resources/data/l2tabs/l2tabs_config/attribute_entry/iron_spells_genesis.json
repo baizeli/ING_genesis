@@ -179,6 +179,66 @@
       "intrinsic": 0.0,
       "order": 3000000,
       "usePercent": false
+    },
+    {
+      "id": "iron_spells_genesis:flame_spell_penetration",
+      "intrinsic": 0.0,
+      "order": 3000000,
+      "usePercent": false
+    },
+    {
+      "id": "iron_spells_genesis:holy_spell_penetration",
+      "intrinsic": 0.0,
+      "order": 3000000,
+      "usePercent": false
+    },
+    {
+      "id": "iron_spells_genesis:frost_spell_penetration",
+      "intrinsic": 0.0,
+      "order": 3000000,
+      "usePercent": false
+    },
+    {
+      "id": "iron_spells_genesis:scarlet_spell_penetration",
+      "intrinsic": 0.0,
+      "order": 3000000,
+      "usePercent": false
+    },
+    {
+      "id": "iron_spells_genesis:ender_spell_penetration",
+      "intrinsic": 0.0,
+      "order": 3000000,
+      "usePercent": false
+    },
+    {
+      "id": "iron_spells_genesis:thunder_spell_penetration",
+      "intrinsic": 0.0,
+      "order": 3000000,
+      "usePercent": false
+    },
+    {
+      "id": "iron_spells_genesis:nature_spell_penetration",
+      "intrinsic": 0.0,
+      "order": 3000000,
+      "usePercent": false
+    },
+    {
+      "id": "iron_spells_genesis:warlock_spell_penetration",
+      "intrinsic": 0.0,
+      "order": 3000000,
+      "usePercent": false
+    },
+    {
+      "id": "iron_spells_genesis:chaos_spell_penetration",
+      "intrinsic": 0.0,
+      "order": 3000000,
+      "usePercent": false
+    },
+    {
+      "id": "iron_spells_genesis:celestial_source_spell_penetration",
+      "intrinsic": 0.0,
+      "order": 3000000,
+      "usePercent": false
     }
   ]
 }

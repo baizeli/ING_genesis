@@ -1,6 +1,5 @@
 package miku.united_as_one.genesis.common.items.curios;
 
-import miku.united_as_one.genesis.common.data.content.ModLang;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.network.chat.Component;
@@ -32,12 +31,16 @@ public class ESSCurioItem extends Item implements ICurioItem {
             @NotNull List<Component> tooltipComponents,
             @NotNull TooltipFlag isAdvanced
     ) {
-        tooltipComponents.add(Component.translatable(ModLang.getItemTooltipKey(this)));
+        tooltipComponents.add(Component.translatable(getItemTooltipKey(this)));
         super.appendHoverText(stack, level, tooltipComponents, isAdvanced);
     }
 
     @Override
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(SlotContext slotContext, UUID uuid, ItemStack stack) {
         return attributeModifiers;
+    }
+
+    public String getItemTooltipKey(Item item) {
+        return item.getDescriptionId() + ".hover";
     }
 }
