@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "iron_spells_genesis:twisted_chaos_ingot"
+  },
+  "base": {
+    "item": "iron_spells_genesis:chaos_spell_boots"
+  },
+  "result": {
+    "item": "iron_spells_genesis:celestial_source_spell_boots"
+  },
+  "template": {
+    "item": "iron_spells_genesis:chaos_rune"
+  }
+}

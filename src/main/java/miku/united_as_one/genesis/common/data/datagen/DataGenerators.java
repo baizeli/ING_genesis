@@ -1,6 +1,9 @@
 package miku.united_as_one.genesis.common.data.datagen;
 
 import miku.united_as_one.genesis.Genesis;
+import miku.united_as_one.genesis.common.data.datagen.provider.ModDamageTypeTagProvider;
+import miku.united_as_one.genesis.common.data.datagen.provider.ModDatapackEntriesProvider;
+import miku.united_as_one.genesis.common.data.datagen.provider.ModRecipesProvider;
 import net.minecraft.DetectedVersion;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
@@ -29,10 +32,10 @@ public class DataGenerators {
         PackOutput output = generator.getPackOutput();
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
         CompletableFuture<HolderLookup.Provider> lookupProvider = event.getLookupProvider();
-        RegistryDataGenerator registryProvider = new RegistryDataGenerator(output, lookupProvider);
+        ModDatapackEntriesProvider registryProvider = new ModDatapackEntriesProvider(output, lookupProvider);
         CompletableFuture<HolderLookup.Provider> fullLookupProvider = registryProvider.getRegistryProvider();
         generator.addProvider(event.includeServer(), registryProvider);
-        generator.addProvider(event.includeServer(), new DamageTypeTagGenerator(output, fullLookupProvider, existingFileHelper));
+        generator.addProvider(event.includeServer(), new ModDamageTypeTagProvider(output, fullLookupProvider, existingFileHelper));
         PackMetadataGenerator packMeta = new PackMetadataGenerator(output);
         MutableComponent description = Component.literal("Resources for Iron SpellRegistry Genesis");
 
@@ -45,5 +48,6 @@ public class DataGenerators {
         );
 
         generator.addProvider(true, packMeta.add(PackMetadataSection.TYPE, metadata));
+        generator.addProvider(event.includeServer(), new ModRecipesProvider(output));
     }
 }

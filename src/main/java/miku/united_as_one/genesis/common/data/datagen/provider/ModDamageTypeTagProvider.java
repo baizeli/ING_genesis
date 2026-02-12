@@ -1,11 +1,11 @@
-package miku.united_as_one.genesis.common.data.datagen;
+package miku.united_as_one.genesis.common.data.datagen.provider;
 
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.common.data.damage.DamageTypes;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.tags.TagsProvider;
+import net.minecraft.data.tags.DamageTypeTagsProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageType;
@@ -14,12 +14,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.CompletableFuture;
 
-public class DamageTypeTagGenerator extends TagsProvider<DamageType> {
+public class ModDamageTypeTagProvider extends DamageTypeTagsProvider {
     public static final TagKey<DamageType> CHAOS_MAGIC = create("chaos_magic");
     public static final TagKey<DamageType> CELESTIAL_SOURCE_MAGIC = create("celestial_source_magic");
 
-    public DamageTypeTagGenerator(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper existingFileHelper) {
-        super(output, Registries.DAMAGE_TYPE, lookupProvider, Genesis.MODID, existingFileHelper);
+    public ModDamageTypeTagProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper existingFileHelper) {
+        super(output, lookupProvider, Genesis.MODID, existingFileHelper);
     }
 
     private static TagKey<DamageType> create(String name) {
