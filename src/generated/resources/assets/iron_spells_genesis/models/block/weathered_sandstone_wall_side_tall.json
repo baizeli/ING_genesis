@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/template_wall_side_tall",
+  "textures": {
+    "wall": "iron_spells_genesis:block/weathered_sandstone"
+  }
+}
