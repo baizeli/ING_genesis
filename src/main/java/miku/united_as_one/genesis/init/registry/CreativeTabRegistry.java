@@ -92,7 +92,10 @@ public class CreativeTabRegistry {
             .buildModCreativeTab("block", "itemGroup." + Genesis.MOD_ID, builder -> builder
                     .icon(() -> ItemRegistry.CELESTIAL_SOURCE_BLOCK_ITEM.get().getDefaultInstance())
                     .displayItems(((parameters, output) -> {
-
+                        output.accept(ItemRegistry.WEATHERED_SANDSTONE.get());
+                        output.accept(ItemRegistry.WEATHERED_SANDSTONE_SLAB.get());
+                        output.accept(ItemRegistry.WEATHERED_SANDSTONE_STAIRS.get());
+                        output.accept(ItemRegistry.WEATHERED_SANDSTONE_WALL.get());
                     }))
             );
             
