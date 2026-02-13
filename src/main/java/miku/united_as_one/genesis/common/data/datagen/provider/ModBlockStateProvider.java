@@ -15,9 +15,5 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-        simpleBlockItem(BlockRegistry.WEATHERED_SANDSTONE.get(), itemModels().basicItem(ItemRegistry.WEATHERED_SANDSTONE.get()));
-        stairsBlock(BlockRegistry.WEATHERED_SANDSTONE_STAIRS.get(), blockTexture(BlockRegistry.WEATHERED_SANDSTONE.get()));
-        slabBlock(BlockRegistry.WEATHERED_SANDSTONE_SLAB.get(), blockTexture(BlockRegistry.WEATHERED_SANDSTONE.get()), blockTexture(BlockRegistry.WEATHERED_SANDSTONE.get()));
-        wallBlock(BlockRegistry.WEATHERED_SANDSTONE_WALL.get(), blockTexture(BlockRegistry.WEATHERED_SANDSTONE.get()));
     }
 }
