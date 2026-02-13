@@ -26,7 +26,6 @@ public class BlockRegistry {
     public static final BlockEntry<Block> CELESTIAL_SOURCE_BLOCK = Genesis.L2_REGISTRATE
             .block("celestial_source_block", Block::new)
             .properties(p -> p.requiresCorrectToolForDrops().strength(20.0F, 9999.0F).sound(SoundType.NETHERITE_BLOCK))
-            .tag(BlockTags.MINEABLE_WITH_PICKAXE)
             .simpleItem()
             .register();
 
@@ -73,7 +72,6 @@ public class BlockRegistry {
                     .initialProperties(() -> vanillaCopy)
                     .properties(p -> p.requiresCorrectToolForDrops().strength(2.0F, 6.0F).sound(SoundType.STONE))
                     .blockstate((ctx, pvd) -> pvd.simpleBlock(ctx.get()))
-                    .tag(BlockTags.MINEABLE_WITH_PICKAXE)
                     .item()
                     .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
                     .build()
@@ -82,7 +80,6 @@ public class BlockRegistry {
             STAIRS = Genesis.L2_REGISTRATE.block(name + "_stairs", p -> new StairBlock(BASE::getDefaultState, p))
                     .initialProperties(BASE)
                     .blockstate((ctx, pvd) -> pvd.stairsBlock(ctx.get(), tex))
-                    .tag(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.STAIRS)
                     .item()
                     .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
                     .tag(ItemTags.STAIRS)
@@ -94,7 +91,6 @@ public class BlockRegistry {
             SLAB = Genesis.L2_REGISTRATE.block(name + "_slab", SlabBlock::new)
                     .initialProperties(BASE)
                     .blockstate((ctx, pvd) -> pvd.slabBlock(ctx.get(), BASE.getId(), tex))
-                    .tag(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.SLABS)
                     .item()
                     .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
                     .tag(ItemTags.SLABS)
@@ -106,7 +102,6 @@ public class BlockRegistry {
             WALL = Genesis.L2_REGISTRATE.block(name + "_wall", WallBlock::new)
                     .initialProperties(BASE)
                     .blockstate((ctx, pvd) -> pvd.wallBlock(ctx.get(), tex))
-                    .tag(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.WALLS)
                     .item()
                     .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
                     .tag(ItemTags.WALLS)
