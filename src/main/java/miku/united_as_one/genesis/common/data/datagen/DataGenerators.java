@@ -47,7 +47,6 @@ public class DataGenerators {
 
         generator.addProvider(true, packMeta.add(PackMetadataSection.TYPE, metadata));
         generator.addProvider(event.includeServer(), new ModRecipesProvider(output));
-        generator.addProvider(event.includeClient(), new ModItemModelProvider(output, existingFileHelper));
         generator.addProvider(event.includeClient(), new ModBlockStateProvider(output, existingFileHelper));
     }
 }

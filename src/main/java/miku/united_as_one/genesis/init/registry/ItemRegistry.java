@@ -29,6 +29,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.WallBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraftforge.client.model.generators.*;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -946,7 +947,9 @@ public class ItemRegistry {
         ));
     }
 
-    public static void register() {}
+    public static void register(IEventBus modEventBus) {
+        REGISTRY_BLOCK_ITEM.register(modEventBus);
+    }
 
     public static <T extends Item> void createBowModel(DataGenContext<Item, T> ctx, RegistrateItemModelProvider pvd) {
         ItemModelBuilder builder = pvd.withExistingParent(ctx.getName(), "item/handheld");
