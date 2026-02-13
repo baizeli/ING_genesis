@@ -68,21 +68,24 @@ public class BlockRegistry {
             // 明确指定命名空间和路径：genesis:block/weathered_sandstone
             ResourceLocation tex = new ResourceLocation(Genesis.MOD_ID, "block/" + name);
 
-            // 基础方块
+           // 基础方块
             BASE = Genesis.L2_REGISTRATE.block(name, Block::new)
                     .initialProperties(() -> vanillaCopy)
                     .properties(p -> p.requiresCorrectToolForDrops().strength(2.0F, 6.0F).sound(SoundType.STONE))
                     .blockstate((ctx, pvd) -> pvd.simpleBlock(ctx.get()))
                     .tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                    .simpleItem()
+                    .item()
+                    .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
+                    .build()
                     .register();
-
             // 楼梯
             STAIRS = Genesis.L2_REGISTRATE.block(name + "_stairs", p -> new StairBlock(BASE::getDefaultState, p))
                     .initialProperties(BASE)
                     .blockstate((ctx, pvd) -> pvd.stairsBlock(ctx.get(), tex))
                     .tag(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.STAIRS)
-                    .item().tag(ItemTags.STAIRS)
+                    .item()
+                    .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
+                    .tag(ItemTags.STAIRS)
                     .model((ctx, pvd) -> pvd.stairs(ctx.getName(), tex, tex, tex)) // 修复物品模型
                     .build()
                     .register();
@@ -92,8 +95,9 @@ public class BlockRegistry {
                     .initialProperties(BASE)
                     .blockstate((ctx, pvd) -> pvd.slabBlock(ctx.get(), BASE.getId(), tex))
                     .tag(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.SLABS)
-                    .item().tag(ItemTags.SLABS)
-                    // 手动指定物品模型，避免 DataGen 找不到父模型
+                    .item()
+                    .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
+                    .tag(ItemTags.SLABS)
                     .model((ctx, pvd) -> pvd.slab(ctx.getName(), tex, tex, tex))
                     .build()
                     .register();
@@ -103,7 +107,9 @@ public class BlockRegistry {
                     .initialProperties(BASE)
                     .blockstate((ctx, pvd) -> pvd.wallBlock(ctx.get(), tex))
                     .tag(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.WALLS)
-                    .item().tag(ItemTags.WALLS)
+                    .item()
+                    .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
+                    .tag(ItemTags.WALLS)
                     .model((ctx, pvd) -> pvd.wallInventory(ctx.getName(), tex)) // 围墙专用物品模型
                     .build()
                     .register();
