@@ -216,13 +216,6 @@ public class ItemRegistry {
     // 邪术符文
     public static final ItemEntry<EldritchRunePlus> ELDRITCH_RUNE_PLUS;
 
-    //风化砂岩
-    public static final RegistryObject<BlockItem> WEATHERED_SANDSTONE;
-    public static final RegistryObject<BlockItem> WEATHERED_SANDSTONE_STAIRS;
-    public static final RegistryObject<BlockItem> WEATHERED_SANDSTONE_SLAB;
-    public static final RegistryObject<BlockItem> WEATHERED_SANDSTONE_WALL;
-
-
     //初始化
     static {
         PURPLEITE_GALAXY_INGOT = Genesis.L2_REGISTRATE
@@ -929,22 +922,6 @@ public class ItemRegistry {
                 .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
                 .register();
 
-        WEATHERED_SANDSTONE = REGISTRY_BLOCK_ITEM.register("weathered_sandstone", () -> new BlockItem(
-                BlockRegistry.WEATHERED_SANDSTONE.get(), new Item.Properties()
-        ));
-
-        WEATHERED_SANDSTONE_STAIRS = REGISTRY_BLOCK_ITEM.register("weathered_sandstone_stairs", () -> new BlockItem(
-                BlockRegistry.WEATHERED_SANDSTONE_STAIRS.get(), new Item.Properties()
-        ));
-
-        WEATHERED_SANDSTONE_SLAB = REGISTRY_BLOCK_ITEM.register("weathered_sandstone_slab", () -> new BlockItem(
-                BlockRegistry.WEATHERED_SANDSTONE_SLAB.get(),
-                new Item.Properties()
-        ));
-
-        WEATHERED_SANDSTONE_WALL = REGISTRY_BLOCK_ITEM.register("weathered_sandstone_wall", () -> new BlockItem(
-                BlockRegistry.WEATHERED_SANDSTONE_WALL.get(), new Item.Properties()
-        ));
     }
 
     public static void register(IEventBus modEventBus) {
