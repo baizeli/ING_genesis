@@ -11,7 +11,7 @@ import net.minecraft.world.entity.ai.memory.MemoryStatus;
 
 public class BloodBossStageTransitionBehavior extends AnimatedActionBehavior<BloodBoss> {
 
-    public static final int STAGE_TRANSITION_DURATION = (int)(9.5*20);
+    public static final int STAGE_TRANSITION_DURATION = (int)(21*20);
 
     public BloodBossStageTransitionBehavior() {
         super(ImmutableMap.of(
