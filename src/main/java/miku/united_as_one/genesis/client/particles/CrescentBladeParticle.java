@@ -48,32 +48,128 @@ public class CrescentBladeParticle extends Particle {
     }
     @OnlyIn(Dist.CLIENT)
     public static class BloodDripTwistParticle extends CrescentBladeParticle {
+        private final float rotationSpeed;
+        private float currentRotation = 0.0f;
+
         public BloodDripTwistParticle(ClientLevel level, double x, double y, double z, Vec3 dir, float radius) {
             super(level, x, y, z, dir, radius);
             this.setLifetime(500);
+
+            // 设置速度参数
+            this.xd = dir.x;
+            this.yd = dir.y;
+            this.zd = dir.z;
+
+            // 设置旋转速度（基于速度大小）
+            float speed = (float) dir.length();
+            this.rotationSpeed = speed * 20.0f; // 旋转速度与运动速度成正比
+
+            // 禁用物理和重力
+            this.hasPhysics = false;
+            this.gravity = 0.0f; // 设置重力为0
         }
 
         @Override
         public void tick() {
+            // 不调用 super.tick()，而是完全自定义运动逻辑
+
+            // 保存旧位置（用于渲染插值）
+            this.xo = this.x;
+            this.yo = this.y;
+            this.zo = this.z;
+
+            // 应用速度更新位置
+            this.x += this.xd;
+            this.y += this.yd;
+            this.z += this.zd;
+
+            // 更新旋转角度
+            this.currentRotation += this.rotationSpeed;
+            if (this.currentRotation >= 360.0f) {
+                this.currentRotation -= 360.0f;
+            }
+
+            // 添加一些阻力效果，使粒子逐渐减速（可选）
+            this.xd *= 0.98;
+            this.yd *= 0.98;
+            this.zd *= 0.98;
+
+            // 添加轻微的随机运动（模拟空气阻力或湍流）
+            if (this.level.random.nextInt(20) == 0) {
+                this.xd += (this.level.random.nextDouble() - 0.5) * 0.02;
+                this.yd += (this.level.random.nextDouble() - 0.5) * 0.02;
+                this.zd += (this.level.random.nextDouble() - 0.5) * 0.02;
+            }
+
+            // 在移动过程中生成子粒子的逻辑
             if (this.level.random.nextInt(100) < 30) {
-                // 生成平面上半径为0.5的随机偏移向量
-                double angle = this.level.random.nextDouble() * 2 * Math.PI; // 随机角度
-                double distance = this.level.random.nextDouble() * 0.5; // 随机距离，最大为0.5
+                // 根据当前运动方向计算生成位置
+                double angle = this.level.random.nextDouble() * 2 * Math.PI;
+                double distance = this.level.random.nextDouble() * 0.5;
 
-                // 计算平面上的偏移坐标
-                double offsetX = Math.cos(angle) * distance;
-                double offsetZ = Math.sin(angle) * distance;
+                // 计算平面上的偏移坐标（基于当前旋转角度）
+                double cosAngle = Math.cos(angle + this.currentRotation * 0.0174533f);
+                double sinAngle = Math.sin(angle + this.currentRotation * 0.0174533f);
+                double offsetX = cosAngle * distance;
+                double offsetZ = sinAngle * distance;
 
-                // 确保生成位置在平面上（y轴不变）
+                // 计算子粒子的速度（基于父粒子的速度方向）
+                double subParticleSpeed = 0.05 + this.level.random.nextDouble() * 0.1;
+                double dirX = (this.level.random.nextDouble() - 0.5) * 0.2;
+                double dirY = this.level.random.nextDouble() * 0.1;
+                double dirZ = (this.level.random.nextDouble() - 0.5) * 0.2;
+
+                // 添加基于父粒子速度的额外速度
+                if (this.xd != 0 || this.yd != 0 || this.zd != 0) {
+                    double parentSpeed = Math.sqrt(this.xd * this.xd + this.yd * this.yd + this.zd * this.zd);
+                    if (parentSpeed > 0) {
+                        dirX += this.xd / parentSpeed * 0.1;
+                        dirY += this.yd / parentSpeed * 0.1;
+                        dirZ += this.zd / parentSpeed * 0.1;
+                    }
+                }
+
                 this.level.addParticle(
-                    ParticleRegistry.BLOOD_DRIP_HANG.get(),
-                    this.x + offsetX, this.y, this.z + offsetZ,
-                    0.0, 0.0, 0.0
+                        ParticleRegistry.BLOOD_DRIP_HANG.get(),
+                        this.x + offsetX, this.y, this.z + offsetZ,
+                        dirX, dirY, dirZ
                 );
             }
+
+            // 粒子生命周期管理
             if (this.age++ >= this.lifetime) {
+                // 在粒子消失前生成一些尾迹粒子
+                for (int i = 0; i < 5; i++) {
+                    double trailX = this.x + (this.level.random.nextDouble() - 0.5) * 0.5;
+                    double trailY = this.y + (this.level.random.nextDouble() - 0.5) * 0.5;
+                    double trailZ = this.z + (this.level.random.nextDouble() - 0.5) * 0.5;
+                    double trailSpeed = 0.02 + this.level.random.nextDouble() * 0.03;
+
+                    this.level.addParticle(
+                            ParticleRegistry.BLOOD_DRIP_HANG.get(),
+                            trailX, trailY, trailZ,
+                            this.xd * trailSpeed, this.yd * trailSpeed, this.zd * trailSpeed
+                    );
+                }
                 this.remove();
             }
+
+            // 如果粒子速度过小，自动移除
+            double speedSqr = this.xd * this.xd + this.yd * this.yd + this.zd * this.zd;
+            if (speedSqr < 0.001 && this.age > 100) {
+                this.remove();
+            }
+        }
+
+        // 可选：添加一个方法来获取当前旋转角度，可以在渲染时使用
+        public float getCurrentRotation() {
+            return this.currentRotation;
+        }
+
+        // 可选：添加一个方法来设置旋转速度
+        public void setRotationSpeed(float rotationSpeed) {
+            // 由于 rotationSpeed 是 final，我们不能直接修改它
+            // 如果需要动态调整旋转速度，需要修改类的设计
         }
     }
 
