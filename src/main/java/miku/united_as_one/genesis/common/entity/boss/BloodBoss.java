@@ -40,6 +40,7 @@ import net.minecraft.util.Unit;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.Brain;
@@ -891,6 +892,11 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
+        if (source.is(DamageTypes.FALL)) {
+            return false;
+        }
+
+
         double threshold = this.getMaxHealth() * 0.025;
 
         if (amount>threshold){
