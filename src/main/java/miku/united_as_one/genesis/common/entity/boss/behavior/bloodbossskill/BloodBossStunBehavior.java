@@ -20,6 +20,7 @@ import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.util.Mth;
 import java.util.Random;
@@ -41,7 +42,14 @@ public class BloodBossStunBehavior extends AnimatedActionBehavior<BloodBoss> {
 
     
     private static final int PARTICLE_DURATION = 40; 
-    private static final int PARTICLE_INTERVAL = 2; 
+    private static final int PARTICLE_INTERVAL = 2;
+
+    // stun 范围伤害倍率
+    private static final float STUN_DAMAGE_MULTIPLIER = 1.8f;
+
+    // 垂直判定高度
+    private static final double STUN_DAMAGE_HEIGHT = 3.0;
+
 
     public BloodBossStunBehavior() {
         super(ImmutableMap.of(
@@ -74,13 +82,20 @@ public class BloodBossStunBehavior extends AnimatedActionBehavior<BloodBoss> {
         
         for (int i = 0; i < WAVE_START_TIMES.length; i++) {
             if (abilityTimer == WAVE_START_TIMES[i] && currentWave != i + 1) {
+
                 currentWave = i + 1;
                 waveTimer = 0;
                 waveRadius = 0;
-                particleTicks = 0; 
-                spawnTentacles(level, owner, 10*(i+1));
+                particleTicks = 0;
+
+                spawnTentacles(level, owner, 10 * (i + 1));
+
+                int[] waveDamageRadius = {8, 14, 22};
+                applyStunAreaDamage(level, owner, waveDamageRadius[i]);
+
                 break;
             }
+
         }
 
         
@@ -117,6 +132,31 @@ public class BloodBossStunBehavior extends AnimatedActionBehavior<BloodBoss> {
             if (particleTicks % PARTICLE_INTERVAL == 0) {
                 spawnSkillParticles(level, owner, particleTicks, currentWave);
             }
+        }
+    }
+    private void applyStunAreaDamage(ServerLevel level, BloodBoss boss, double radius) {
+
+        AABB box = boss.getBoundingBox().inflate(radius, STUN_DAMAGE_HEIGHT, radius);
+
+        var targets = level.getEntitiesOfClass(
+                net.minecraft.world.entity.LivingEntity.class,
+                box,
+                e -> e != boss && e.isAlive()
+        );
+
+        for (var target : targets) {
+
+            // 距离过滤（圆形判定）
+            double dx = target.getX() - boss.getX();
+            double dz = target.getZ() - boss.getZ();
+
+            if (dx * dx + dz * dz > radius * radius) continue;
+
+            // 技能伤害
+            boss.applySkillDamage(target, STUN_DAMAGE_MULTIPLIER);
+
+            // 轻微震飞
+            target.knockback(0.6, -dx, -dz);
         }
     }
 

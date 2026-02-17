@@ -348,6 +348,16 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         }
         super.remove(reason);
     }
+    @Override
+    protected boolean shouldDespawnInPeaceful() {
+        return false;
+    }
+
+    @Override
+    public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+        return false;
+    }
+
 
     @Override
     public void setTarget(@org.jetbrains.annotations.Nullable LivingEntity target) {
@@ -671,7 +681,7 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
 
     @Override
     protected void customServerAiStep() {
-        // 先调用父类逻辑
+
         super.customServerAiStep();
 
         // 处理法术重现
@@ -756,7 +766,7 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         if (target != null) {
             double d0 = target.getX() - this.getX();
             double d2 = target.getZ() - this.getZ();
-            double d1 = target.getEyeY() - this.getEyeY();
+            double d1 = ( target.getBoundingBox().minY+(target.getBoundingBox().maxY- target.getBoundingBox().minY)/2.0) - this.getEyeY();
             double d3 = Math.sqrt(d0 * d0 + d2 * d2);
             float f = (float)(Mth.atan2(d2, d0) * 57.2957763671875) - 90.0F;
             float f1 = (float)(-(Mth.atan2(d1, d3) * 57.2957763671875));
@@ -767,7 +777,6 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
 
     public boolean isSpellConfigLoaded() {
         try {
-            // 添加多层安全检查
             if (SpellConfigManager.INSTANCE == null) {
                 return false;
             }
@@ -783,7 +792,7 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     }
 
     public void updateStage() {
-        // 自定义阶段更新逻辑
+
     }
 
     private void printLog() {
@@ -887,6 +896,10 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         if (amount>threshold){
             amount = (float)(threshold + (amount - threshold)*0.7);
         }
+        if ( source.getEntity() instanceof LivingEntity target){
+            this.setTarget(target);
+        }
+
         return super.hurt(source, amount);
     }
 
