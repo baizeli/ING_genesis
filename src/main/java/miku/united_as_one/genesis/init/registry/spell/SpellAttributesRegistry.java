@@ -110,6 +110,16 @@ public class SpellAttributesRegistry {
                 "attribute." + Genesis.MOD_ID + ".spell_damage_percent",
                 1.0, -Double.MAX_VALUE, Double.MAX_VALUE
         )).setSyncable(true));
+
+        // 法术伤害和法力值
+        MAX_MANA_PERCENT = ATTRIBUTES.register("max_mana_percent", () -> (new MagicPercentAttribute(
+                "attribute." + Genesis.MOD_ID + ".max_mana_percent",
+                1.0, -Double.MAX_VALUE, Double.MAX_VALUE
+        )).setSyncable(true));
+        SPELL_DAMAGE_PERCENT = ATTRIBUTES.register("spell_damage_percent", () -> (new MagicPercentAttribute(
+                "attribute." + Genesis.MOD_ID + ".spell_damage_percent",
+                1.0, -Double.MAX_VALUE, Double.MAX_VALUE
+        )).setSyncable(true));
     }
 
     public static void register(IEventBus eventBus) {
