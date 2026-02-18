@@ -24,6 +24,8 @@ public class SpellAttributesRegistry {
     public static final RegistryObject<Attribute> WARLOCK_SPELL_PENETRATION;
     public static final RegistryObject<Attribute> CHAOS_SPELL_PENETRATION;
     public static final RegistryObject<Attribute> CELESTIAL_SOURCE_SPELL_PENETRATION;
+    public static final RegistryObject<Attribute> MAX_MANA_PERCENT;
+    public static final RegistryObject<Attribute> SPELL_DAMAGE_PERCENT;
 
     static {
         ATTRIBUTES = DeferredRegister.create(ForgeRegistries.ATTRIBUTES, Genesis.MOD_ID);
@@ -98,6 +100,16 @@ public class SpellAttributesRegistry {
             "attribute." + Genesis.MOD_ID + ".celestial_source_spell_penetration",
             0, 0, 1
         )).setSyncable(true));
+
+        // 法术伤害和法力值
+        MAX_MANA_PERCENT = ATTRIBUTES.register("max_mana_percent", () -> (new MagicPercentAttribute(
+                "attribute." + Genesis.MOD_ID + ".max_mana_percent",
+                1.0, -Double.MAX_VALUE, Double.MAX_VALUE
+        )).setSyncable(true));
+        SPELL_DAMAGE_PERCENT = ATTRIBUTES.register("spell_damage_percent", () -> (new MagicPercentAttribute(
+                "attribute." + Genesis.MOD_ID + ".spell_damage_percent",
+                1.0, -Double.MAX_VALUE, Double.MAX_VALUE
+        )).setSyncable(true));
     }
 
     public static void register(IEventBus eventBus) {
@@ -109,10 +121,10 @@ public class SpellAttributesRegistry {
     }
 
     private static RegistryObject<Attribute> newResistanceAttribute(String id) {
-        return ATTRIBUTES.register(id + "_magic_resist", () -> (new MagicPercentAttribute("attribute." + Genesis.MOD_ID + "." + id + "_magic_resist", 1.0F, Double.MIN_VALUE, Double.MAX_VALUE)).setSyncable(true));
+        return ATTRIBUTES.register(id + "_magic_resist", () -> (new MagicPercentAttribute("attribute." + Genesis.MOD_ID + "." + id + "_magic_resist", 1.0F, -Double.MAX_VALUE, Double.MAX_VALUE)).setSyncable(true));
     }
 
     private static RegistryObject<Attribute> newPowerAttribute(String id) {
-        return ATTRIBUTES.register(id + "_spell_power", () -> (new MagicPercentAttribute("attribute." + Genesis.MOD_ID + "." + id + "_spell_power", 1.0F, Double.MIN_VALUE, Double.MAX_VALUE)).setSyncable(true));
+        return ATTRIBUTES.register(id + "_spell_power", () -> (new MagicPercentAttribute("attribute." + Genesis.MOD_ID + "." + id + "_spell_power", 1.0F, -Double.MAX_VALUE, Double.MAX_VALUE)).setSyncable(true));
     }
 }
