@@ -1,5 +1,5 @@
 {
-  "attribute": "iron_spells_genesis:flame_spell_penetration",
+  "attribute": "iron_spells_genesis:fire_spell_penetration",
   "amount": 0.05,
   "operation": "MULTIPLY_BASE",
   "containerItem": {
