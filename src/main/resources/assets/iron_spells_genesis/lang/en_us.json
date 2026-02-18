@@ -22,6 +22,8 @@
   "attribute.iron_spells_genesis.warlock_spell_penetration": "Warlock Spell Penetration",
   "attribute.iron_spells_genesis.chaos_spell_penetration": "#1Chaos #Spell Penetration",
   "attribute.iron_spells_genesis.celestial_source_spell_penetration": "#2Celestial #Source Spell Penetration",
+  "attribute.iron_spells_genesis.max_mana_percent": "Max Mna Percent",
+  "attribute.iron_spells_genesis.spell_damage_percent": "Spell Damage Percent",
 
   "school.iron_spells_genesis.chaos" : "#1Chaos#",
   "school.iron_spells_genesis.celestial_source": "#2Celestial Source#",
