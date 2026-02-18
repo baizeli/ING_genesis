@@ -47,6 +47,12 @@ public class SelectTargetBehavior extends Behavior<BloodBoss> {
                             (target instanceof Player player ? 
                             (!player.isCreative() && !player.isSpectator()) :
                                 target.isAlive())) {
+                            if (entity.isAlliedTo(target)){
+                                continue;
+                            }
+                            if (!(target instanceof Player)){
+                                continue;
+                            }
                             brain.setMemory(MemoryModuleType.ATTACK_TARGET, nearestLivingEntities.get(0));
                             break;
                         }

@@ -90,7 +90,9 @@ public class CreativeTabRegistry {
         // iron的法术创世纪：方块
         Genesis.L2_REGISTRATE
             .buildModCreativeTab("block", "itemGroup." + Genesis.MOD_ID, builder -> builder
-                .icon(() -> ItemRegistry.CELESTIAL_SOURCE_BLOCK_ITEM.get().getDefaultInstance())
+                    .icon(() -> ItemRegistry.CELESTIAL_SOURCE_BLOCK_ITEM.get().getDefaultInstance())
+                    .displayItems(((parameters, output) -> {
+                    }))
             );
             
         // iron的法术创世纪：材料

@@ -303,7 +303,6 @@ public class BloodBossAi {
                                 Pair.of(RandomStroll.swim(1.5F), 1),
                                 Pair.of(RandomStroll.stroll(1F, false), 1)
                         )),
-                        // 寻找附近实体 - 触发战斗
                         new SelectTargetBehavior(),
                         // 仅设置看向目标，不移动
                         SetEntityLookTarget.create(

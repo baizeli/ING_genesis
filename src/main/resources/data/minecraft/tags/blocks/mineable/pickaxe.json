@@ -4,6 +4,11 @@
     "iron_spells_genesis:arcane_crystal_ore",
     "iron_spells_genesis:deepslate_arcane_crystal_ore",
     "iron_spells_genesis:nether_arcane_crystal_ore",
-    "iron_spells_genesis:end_arcane_crystal_ore"
+    "iron_spells_genesis:end_arcane_crystal_ore",
+    "iron_spells_genesis:weathered_sandstone",
+    "iron_spells_genesis:weathered_sandstone_stairs",
+    "iron_spells_genesis:weathered_sandstone_slab",
+    "iron_spells_genesis:weathered_sandstone_wall",
+    "iron_spells_genesis:celestial_source_block"
   ]
 }

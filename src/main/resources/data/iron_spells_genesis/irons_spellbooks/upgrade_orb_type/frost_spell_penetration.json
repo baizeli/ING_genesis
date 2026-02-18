@@ -1,0 +1,9 @@
+{
+  "attribute": "iron_spells_genesis:frost_spell_penetration",
+  "amount": 0.05,
+  "operation": "MULTIPLY_BASE",
+  "containerItem": {
+    "count": 1,
+    "id": "iron_spells_genesis:ice_orb_pro"
+  }
+}

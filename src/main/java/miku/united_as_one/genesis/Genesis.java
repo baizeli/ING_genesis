@@ -70,7 +70,7 @@ public class Genesis
     {
         IEventBus modEventBus = context.getModEventBus();
 
-        ItemRegistry.register();
+        ItemRegistry.register(modEventBus);
         CreativeTabRegistry.register(modEventBus);
         EntityRegistry.ENTITY_TYPES.register(modEventBus);
         BlockRegistry.BLOCKS.register(modEventBus);

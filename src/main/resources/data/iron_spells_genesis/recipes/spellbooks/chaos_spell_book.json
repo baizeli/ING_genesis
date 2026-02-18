@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "YBY",
+    "ACA",
+    "YXY"
+  ],
+  "key": {
+    "Y": {
+      "item": "iron_spells_genesis.twisted_chaos "
+    },
+    "X": {
+      "item": "irons_spellbooks:dragonskin"
+    },
+    "A":{
+        "item":"irons_spellbooks:dragonskin"
+    },
+    "B":{
+        "item":"minecraft:nether_star"
+    },
+    "C":{
+        "item":"irons_spellbooks:ruined_book"
+    }
+  },
+  "result": {
+    "item": "iron_spells_genesis.chaos_spell_book",
+    "count": 1
+  }
+}

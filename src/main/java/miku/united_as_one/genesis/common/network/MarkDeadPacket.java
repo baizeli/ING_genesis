@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.common.network;
 
-import miku.united_as_one.genesis.genesis_core.utils.EventUtil;
+import miku.united_as_one.genesis_core.utils.EventUtil;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
