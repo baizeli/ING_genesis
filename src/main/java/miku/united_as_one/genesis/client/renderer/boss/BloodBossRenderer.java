@@ -23,7 +23,7 @@ import static net.minecraft.client.renderer.texture.OverlayTexture.NO_OVERLAY;
 
 public class BloodBossRenderer extends GeoEntityRenderer<BloodBoss> {
 
-    private static final ResourceLocation TRAIL_TEXTURE = ResourceLocation.fromNamespaceAndPath(Genesis.MODID, "textures/particle/trail.png");
+    private static final ResourceLocation TRAIL_TEXTURE = ResourceLocation.fromNamespaceAndPath(Genesis.MODID, "textures/misc/blade_trail.png");
 
 
     public BloodBossRenderer(EntityRendererProvider.Context renderManager) {
