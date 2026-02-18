@@ -235,7 +235,7 @@
       "usePercent": false
     },
     {
-      "id": "iron_spells_genesis:warlock_spell_penetration",
+      "id": "iron_spells_genesis:eldritch_spell_penetration",
       "intrinsic": 0.0,
       "order": 3000000,
       "usePercent": false

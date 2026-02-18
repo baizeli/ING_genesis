@@ -26,13 +26,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.WallBlock;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraftforge.client.model.generators.*;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.*;
 
 import java.util.*;
@@ -136,7 +133,7 @@ public class ItemRegistry {
     // 自然穿透升级法球
     public static final ItemEntry<UpgradeOrbItem> NATURE_ORB_PRO;
     // 邪术穿透升级法球
-    public static final ItemEntry<UpgradeOrbItem> WARLOCK_ORB_PRO;
+    public static final ItemEntry<UpgradeOrbItem> ELDRITCH_ORB_PRO;
     // 混沌穿透升级法球
     public static final ItemEntry<UpgradeOrbItem> CHAOS_ORB_PRO;
     // 星源穿透升级法球
@@ -178,9 +175,9 @@ public class ItemRegistry {
     // 星源手稿
     public static final ItemEntry<CelestialSourceManuscript> CELESTIAL_SOURCE_MANUSCRIPT;
     // 混沌手稿碎片
-    public static final ItemEntry CHAOS_MANUSCRIPT_FRAGMENT;
+    public static final ItemEntry<?> CHAOS_MANUSCRIPT_FRAGMENT;
     // 空白星源手稿碎片
-    public static final ItemEntry BLANK_CELESTIAL_SOURCE_MANUSCRIPT;
+    public static final ItemEntry<?> BLANK_CELESTIAL_SOURCE_MANUSCRIPT;
     // 星源块
     public static final ItemEntry<BlockItem> CELESTIAL_SOURCE_BLOCK_ITEM;
     // 奥术水晶矿
@@ -587,7 +584,7 @@ public class ItemRegistry {
         FIRE_ORB_PRO = Genesis.L2_REGISTRATE
                 .item("fire_orb_pro", properties -> new UpgradeOrbItem(
                         ItemPropertiesHelper.material().rarity(Rarity.UNCOMMON),
-                        UpgradeOrbTypes.FLAME_SPELL_PENETRATION
+                        UpgradeOrbTypes.FIRE_SPELL_PENETRATION
                 ))
                 .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
                 .register();
@@ -603,7 +600,7 @@ public class ItemRegistry {
         ICE_ORB_PRO = Genesis.L2_REGISTRATE
                 .item("ice_orb_pro", properties -> new UpgradeOrbItem(
                         ItemPropertiesHelper.material().rarity(Rarity.UNCOMMON),
-                        UpgradeOrbTypes.FROST_SPELL_PENETRATION
+                        UpgradeOrbTypes.IEC_SPELL_PENETRATION
                 ))
                 .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
                 .register();
@@ -611,7 +608,7 @@ public class ItemRegistry {
         BLOOD_ORB_PRO = Genesis.L2_REGISTRATE
                 .item("blood_orb_pro", properties -> new UpgradeOrbItem(
                         ItemPropertiesHelper.material().rarity(Rarity.UNCOMMON),
-                        UpgradeOrbTypes.SCARLET_SPELL_PENETRATION
+                        UpgradeOrbTypes.BLOOD_SPELL_PENETRATION
                 ))
                 .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
                 .register();
@@ -640,10 +637,10 @@ public class ItemRegistry {
                 .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
                 .register();
 
-        WARLOCK_ORB_PRO = Genesis.L2_REGISTRATE
-                .item("warlock_orb_pro", properties -> new UpgradeOrbItem(
+        ELDRITCH_ORB_PRO = Genesis.L2_REGISTRATE
+                .item("eldritch_orb_pro", properties -> new UpgradeOrbItem(
                         ItemPropertiesHelper.material().rarity(Rarity.UNCOMMON),
-                        UpgradeOrbTypes.WARLOCK_SPELL_PENETRATION
+                        UpgradeOrbTypes.ELDRITCH_SPELL_PENETRATION
                 ))
                 .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
                 .register();
