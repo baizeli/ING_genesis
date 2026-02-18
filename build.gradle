@@ -165,7 +165,6 @@ tasks.withType(JavaCompile).configureEach {
     ]
 }
 
-
 dependencies {
     // L2
     modImplementation(jarJar("dev.xkmc.l2library:l2library:${l2library_version}-slim"))
