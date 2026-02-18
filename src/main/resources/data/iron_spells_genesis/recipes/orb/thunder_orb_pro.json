@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "YXY",
+    "XOX",
+    "YXY"
+  ],
+  "key": {
+    "Y": {
+      "item": "irons_spellbooks:lightning_rune"
+    },
+    "X": {
+      "item": "iron_spells_genesis:lightning_crystal"
+    },
+    "O":{
+        "item":"iron_spells_genesis:upgrade_orb_pro"
+      }
+  },
+  "result": {
+    "item": "iron_spells_genesis:thunder_orb_pro",
+    "count": 1
+  }
+}

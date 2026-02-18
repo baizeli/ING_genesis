@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "irons_spellbooks:mithril_ingot"
+  },
+  "base": {
+    "item": "minecraft:netherite_pickaxe"
+  },
+  "result": {
+    "item": "iron_spells_genesis:mithril_pickaxe"
+  },
+  "template": {
+    "item": "irons_spellbooks:mithril_ingot"
+  }
+}

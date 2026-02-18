@@ -9,7 +9,7 @@ import miku.united_as_one.genesis.common.items.staff.ChaosStaff;
 import miku.united_as_one.genesis.common.items.armor.CelestialSourceSpellArmor;
 import miku.united_as_one.genesis.common.items.armor.ChaosSpellArmor;
 import miku.united_as_one.genesis.client.renderer.spell.chaos.WireBoxRenderer;
-import miku.united_as_one.genesis.genesis_core.utils.EventUtil;
+import miku.united_as_one.genesis_core.utils.EventUtil;
 import miku.united_as_one.genesis.common.network.DeadListSyncPacket;
 import miku.united_as_one.genesis.common.network.WireBoxSyncPacket;
 import miku.united_as_one.genesis.common.save.SaveManager;
@@ -22,7 +22,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.entity.LevelEntityGetter;
 import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.event.server.ServerStoppingEvent;
@@ -37,13 +36,6 @@ import static miku.united_as_one.genesis.Genesis.CHANNEL;
 
 @Mod.EventBusSubscriber(modid = Genesis.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class EventHandler {
-    @SubscribeEvent
-    public static void onLivingHeal(LivingHealEvent event) {
-        if (WireBoxRenderer.entitiesForRenderWireBoxRenderer.containsKey(event.getEntity().getUUID())) {
-            event.setCanceled(true);
-        }
-    }
-
     @SubscribeEvent
     public static void onServerStopping(ServerStoppingEvent event) {
         if (Arrays.toString(Thread.currentThread().getStackTrace()).contains("doLoad")) return;

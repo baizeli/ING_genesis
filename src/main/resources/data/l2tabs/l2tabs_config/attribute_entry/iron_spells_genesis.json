@@ -1,6 +1,18 @@
 {
   "list": [
     {
+      "id": "iron_spells_genesis:max_mana_percent",
+      "intrinsic": 0.0,
+      "order": 11000,
+      "usePercent": true
+    },
+    {
+      "id": "iron_spells_genesis:spell_damage_percent",
+      "intrinsic": 0.0,
+      "order": 12000,
+      "usePercent": true
+    },
+    {
       "id": "irons_spellbooks:max_mana",
       "intrinsic": 0.0,
       "order": 100000,
@@ -223,7 +235,7 @@
       "usePercent": false
     },
     {
-      "id": "iron_spells_genesis:warlock_spell_penetration",
+      "id": "iron_spells_genesis:eldritch_spell_penetration",
       "intrinsic": 0.0,
       "order": 3000000,
       "usePercent": false

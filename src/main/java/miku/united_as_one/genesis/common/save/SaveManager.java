@@ -2,7 +2,7 @@ package miku.united_as_one.genesis.common.save;
 
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.client.renderer.spell.chaos.WireBoxRenderer;
-import miku.united_as_one.genesis.genesis_core.utils.EventUtil;
+import miku.united_as_one.genesis_core.utils.EventUtil;
 import miku.united_as_one.genesis.common.network.DeadListSyncPacket;
 import miku.united_as_one.genesis.common.network.WireBoxSyncPacket;
 import miku.united_as_one.genesis.common.spell.chaos.ReversePlagueSpell;

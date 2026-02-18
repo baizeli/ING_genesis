@@ -2,7 +2,7 @@ package miku.united_as_one.genesis.common.items;
 
 import miku.united_as_one.genesis.init.mixin.minecraft.world.entity.LivingEntityAccessor;
 import miku.united_as_one.genesis.util.TextUtils;
-import miku.united_as_one.genesis.genesis_core.utils.EventUtil;
+import miku.united_as_one.genesis_core.utils.EventUtil;
 import miku.united_as_one.genesis.common.network.DeadListSyncPacket;
 import miku.united_as_one.genesis.common.network.MarkDeadPacket;
 import miku.united_as_one.genesis.common.sound.Sounds;

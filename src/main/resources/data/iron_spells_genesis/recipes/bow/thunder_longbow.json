@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " CB",
+    "CAB",
+    " CB"
+  ],
+  "key": {
+    "A": {
+      "item": "irons_spellbooks:energized_core"
+    },
+    "B": {
+      "item": "irons_spellbooks:dragonskin"
+    },
+    "C":{
+        "item":"iron_spells_genesis:lightning_crystal"
+    }
+  },
+  "result": {
+    "item": "iron_spells_genesis:thunder_longbow",
+    "count": 1
+  }
+}

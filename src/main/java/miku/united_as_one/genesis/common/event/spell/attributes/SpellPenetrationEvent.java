@@ -19,22 +19,24 @@ public class SpellPenetrationEvent {
         
         if (!(spellDamageSource.getEntity() instanceof LivingEntity livingAttacker)) return;
 
+        event.setAmount((float) (event.getAmount() * livingAttacker.getAttributeValue(SpellAttributesRegistry.SPELL_DAMAGE_PERCENT.get())));
+
         for (Object[] data : new Object[][] {
-            {SchoolRegistry.FIRE.get(), SpellAttributesRegistry.FLAME_SPELL_PENETRATION},
+            {SchoolRegistry.FIRE.get(), SpellAttributesRegistry.FIRE_SPELL_PENETRATION},
             {SchoolRegistry.HOLY.get(), SpellAttributesRegistry.HOLY_SPELL_PENETRATION},
-            {SchoolRegistry.ICE.get(), SpellAttributesRegistry.FROST_SPELL_PENETRATION},
-            {SchoolRegistry.BLOOD.get(), SpellAttributesRegistry.SCARLET_SPELL_PENETRATION},
+            {SchoolRegistry.ICE.get(), SpellAttributesRegistry.ICE_SPELL_PENETRATION},
+            {SchoolRegistry.BLOOD.get(), SpellAttributesRegistry.BLOOD_SPELL_PENETRATION},
             {SchoolRegistry.ENDER.get(), SpellAttributesRegistry.ENDER_SPELL_PENETRATION},
             {SchoolRegistry.LIGHTNING.get(), SpellAttributesRegistry.THUNDER_SPELL_PENETRATION},
             {SchoolRegistry.NATURE.get(), SpellAttributesRegistry.NATURE_SPELL_PENETRATION},
-            {SchoolRegistry.ELDRITCH.get(), SpellAttributesRegistry.WARLOCK_SPELL_PENETRATION},
+            {SchoolRegistry.ELDRITCH.get(), SpellAttributesRegistry.ELDRITCH_SPELL_PENETRATION},
             {SpellSchoolRegistry.CHAOS.get(), SpellAttributesRegistry.CHAOS_SPELL_PENETRATION},
             {SpellSchoolRegistry.CELESTIAL_SOURCE.get(), SpellAttributesRegistry.CELESTIAL_SOURCE_SPELL_PENETRATION}
         }) {
             if (spellDamageSource.spell().getSchoolType() == data[0]) {
                 double penetration = livingAttacker.getAttributeValue(((RegistryObject<Attribute>) data[1]).get());
                 if (penetration > 0) {
-                    event.setAmount(event.getAmount() * (1 + (float) penetration));
+                    event.setAmount((float) (event.getAmount() * penetration));
                 }
                 break;
             }
