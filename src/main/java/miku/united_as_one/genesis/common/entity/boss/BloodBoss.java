@@ -145,6 +145,13 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     private static final EntityDataAccessor<Boolean> DATA_IS_CASTING_SKILL = SynchedEntityData.defineId(BloodBoss.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> BOSS_STAGE_DATA = SynchedEntityData.defineId(BloodBoss.class, EntityDataSerializers.INT);
 
+    //刀光
+    private final TrailComponent trailComponent = new TrailComponent(64);
+
+    public TrailComponent getTrailComponent() {
+        return trailComponent;
+    }
+
     public boolean isCastingSkill() {
         return this.entityData.get(DATA_IS_CASTING_SKILL);
     }
@@ -272,7 +279,7 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
 
     @Override
     public void tick() {
-
+        trailComponent.setHasTrail(true);
         if(!level.isClientSide){
             detectAndApplyAbyssalAsylum();
             syncBossStageData();
