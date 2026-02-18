@@ -212,6 +212,10 @@ public class ItemRegistry {
     public static final ItemEntry<FireRunePlus> FIRE_RUNE_PLUS;
     // 邪术符文
     public static final ItemEntry<EldritchRunePlus> ELDRITCH_RUNE_PLUS;
+    // 锻造模板
+    public static final ItemEntry<Item> EVIOLET_ZENITH_TEMPLATE;
+    // 锻造模板
+    public static final ItemEntry<Item> DIVINE_TEMPLATE;
 
     //初始化
     static {
@@ -224,6 +228,17 @@ public class ItemRegistry {
                 .item("divine_metal_ingot", properties -> new Item(properties.rarity(Rarity.EPIC)))
                 .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
                 .register();
+
+        DIVINE_TEMPLATE = Genesis.L2_REGISTRATE
+                .item("divine_template", properties -> new Item(properties.rarity(Rarity.EPIC)))
+                .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
+                .register();
+
+        EVIOLET_ZENITH_TEMPLATE = Genesis.L2_REGISTRATE
+                .item("eviolet_smithing_template", properties -> new Item(properties.rarity(Rarity.EPIC)))
+                .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
+                .register();
+
 
         TWISTED_CHAOS_INGOT = Genesis.L2_REGISTRATE
                 .item("twisted_chaos_ingot", properties -> new ChaosBaseItem(properties.rarity(Rarity.EPIC)))
