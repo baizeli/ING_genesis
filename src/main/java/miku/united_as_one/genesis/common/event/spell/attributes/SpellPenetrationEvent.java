@@ -19,6 +19,8 @@ public class SpellPenetrationEvent {
         
         if (!(spellDamageSource.getEntity() instanceof LivingEntity livingAttacker)) return;
 
+        event.setAmount((float) (event.getAmount() * livingAttacker.getAttributeValue(SpellAttributesRegistry.SPELL_DAMAGE_PERCENT.get())));
+
         for (Object[] data : new Object[][] {
             {SchoolRegistry.FIRE.get(), SpellAttributesRegistry.FLAME_SPELL_PENETRATION},
             {SchoolRegistry.HOLY.get(), SpellAttributesRegistry.HOLY_SPELL_PENETRATION},
@@ -34,7 +36,7 @@ public class SpellPenetrationEvent {
             if (spellDamageSource.spell().getSchoolType() == data[0]) {
                 double penetration = livingAttacker.getAttributeValue(((RegistryObject<Attribute>) data[1]).get());
                 if (penetration > 0) {
-                    event.setAmount(event.getAmount() * (1 + (float) penetration));
+                    event.setAmount((float) (event.getAmount() * penetration));
                 }
                 break;
             }

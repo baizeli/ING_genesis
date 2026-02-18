@@ -1,9 +1,7 @@
 package miku.united_as_one.genesis.common.data.datagen;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.common.data.datagen.provider.ModDamageTypeTagProvider;
-import miku.united_as_one.genesis.common.data.datagen.provider.ModDatapackEntriesProvider;
-import miku.united_as_one.genesis.common.data.datagen.provider.ModRecipesProvider;
+import miku.united_as_one.genesis.common.data.datagen.provider.*;
 import net.minecraft.DetectedVersion;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
@@ -49,5 +47,6 @@ public class DataGenerators {
 
         generator.addProvider(true, packMeta.add(PackMetadataSection.TYPE, metadata));
         generator.addProvider(event.includeServer(), new ModRecipesProvider(output));
+        generator.addProvider(event.includeClient(), new ModBlockStateProvider(output, existingFileHelper));
     }
 }

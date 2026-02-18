@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " CB",
+    "CAB",
+    " CB"
+  ],
+  "key": {
+    "A": {
+      "item": "irons_spellbooks:pyrium_ingot"
+    },
+    "B": {
+      "item": "irons_spellbooks:dragonskin"
+    },
+    "C":{
+        "item":"iron_spells_genesis:fire_crystal"
+    }
+  },
+  "result": {
+    "item": "iron_spells_genesis:flame_bow",
+    "count": 1
+  }
+}

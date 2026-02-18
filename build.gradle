@@ -166,24 +166,35 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 dependencies {
+    // MixinExtras
+    modImplementation(jarJar("io.github.llamalad7:mixinextras-forge:0.5.3"))
+
     // L2
     modImplementation(jarJar("dev.xkmc.l2library:l2library:${l2library_version}-slim"))
     modImplementation(jarJar("dev.xkmc.l2serial:l2serial:1.2.2"))
     modImplementation(jarJar("dev.xkmc.l2tabs:l2tabs:0.3.3"))
 
+    // JEI物品管理器
     modCompileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
     modCompileOnly "mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}"
     modImplementation "mezz.jei:jei-${minecraft_version}-forge:${jei_version}"
+
+    // 帕秋莉手册
     modCompileOnly "vazkii.patchouli:Patchouli:1.20.1-84.1-FORGE:api"
     modImplementation "vazkii.patchouli:Patchouli:1.20.1-84.1-FORGE"
 
+    // Caelus
     modImplementation "curse.maven:caelus-308989:5281700"
+
+    // Geckolib
     modImplementation "curse.maven:geckolib-388172:6333474"
 
+    // Curios
     modImplementation "curse.maven:curios-309927:6418456"
-    modImplementation "curse.maven:playeranimator-658587:4587214"
 
+    // 铁魔法
     modImplementation "curse.maven:irons-spells-n-spellbooks-855414:7402504"
+
     // Lionfish Api
     /*modImplementation "curse.maven:lionfish-api-1001614:5922047"*/
 

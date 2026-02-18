@@ -20,7 +20,9 @@ import io.redspace.ironsspellbooks.api.util.Utils;
 import io.redspace.ironsspellbooks.capabilities.magic.SyncedSpellData;
 import io.redspace.ironsspellbooks.entity.mobs.IAnimatedAttacker;
 import io.redspace.ironsspellbooks.entity.mobs.wizards.fire_boss.ExtendedServerBossEvent;
+import io.redspace.ironsspellbooks.network.EntityEventPacket;
 import io.redspace.ironsspellbooks.registries.MobEffectRegistry;
+import io.redspace.ironsspellbooks.setup.PacketDistributor;
 import miku.united_as_one.genesis.common.entity.ai.ModMemoryModuleType;
 import miku.united_as_one.genesis.common.entity.boss.behavior.bloodbossskill.BloodBossEmergingBehavior;
 import miku.united_as_one.genesis.init.registry.SoundRegister;
@@ -40,6 +42,7 @@ import net.minecraft.util.Unit;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.Brain;
@@ -118,9 +121,8 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     private static final RawAnimation CAST_IDLE = RawAnimation.begin().thenLoop("施法待机");
     private static final RawAnimation CAST_WALK = RawAnimation.begin().thenLoop("施法行走循环");
 
-    // 施法缓冲时间（20 ticks = 1秒），你可以根据动作的收招长度调整
     private static final int CASTING_POST_DELAY = 20;
-    private int lastCastTick = -100; // 初始化为一个较小的值，防止刚生成时触发
+    private int lastCastTick = -100;
 
     // 音乐播放事件
     public static final byte START_MUSIC = 10;
@@ -130,8 +132,6 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     public static final byte START_BOSSBAR = 12;
     public static final byte STOP_BOSSBAR  = 13;
 
-    //boss血条相关字段
-    private boolean isBossBarInitialized = false;
     private ExtendedServerBossEvent bossEvent;
     private static final BossbarManager.BossbarSprite BLOOD_BOSSBAR_SPRITE =
             new BossbarManager.BossbarSprite(
@@ -273,9 +273,6 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     @Override
     public void tick() {
 
-        if (!level.isClientSide && !isBossBarInitialized) {
-            ensureBossEventInitialized();
-        }
         if(!level.isClientSide){
             detectAndApplyAbyssalAsylum();
             syncBossStageData();
@@ -329,8 +326,6 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
                 this.bossEvent.setVisible(false);
             }
 
-            this.bossEvent = null;
-            this.isBossBarInitialized = false;
         }
         super.die(cause);
     }
@@ -348,6 +343,16 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         }
         super.remove(reason);
     }
+    @Override
+    protected boolean shouldDespawnInPeaceful() {
+        return false;
+    }
+
+    @Override
+    public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+        return false;
+    }
+
 
     @Override
     public void setTarget(@org.jetbrains.annotations.Nullable LivingEntity target) {
@@ -671,7 +676,7 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
 
     @Override
     protected void customServerAiStep() {
-        // 先调用父类逻辑
+
         super.customServerAiStep();
 
         // 处理法术重现
@@ -756,7 +761,7 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         if (target != null) {
             double d0 = target.getX() - this.getX();
             double d2 = target.getZ() - this.getZ();
-            double d1 = target.getEyeY() - this.getEyeY();
+            double d1 = ( target.getBoundingBox().minY+(target.getBoundingBox().maxY- target.getBoundingBox().minY)/2.0) - this.getEyeY();
             double d3 = Math.sqrt(d0 * d0 + d2 * d2);
             float f = (float)(Mth.atan2(d2, d0) * 57.2957763671875) - 90.0F;
             float f1 = (float)(-(Mth.atan2(d1, d3) * 57.2957763671875));
@@ -767,7 +772,6 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
 
     public boolean isSpellConfigLoaded() {
         try {
-            // 添加多层安全检查
             if (SpellConfigManager.INSTANCE == null) {
                 return false;
             }
@@ -783,7 +787,7 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     }
 
     public void updateStage() {
-        // 自定义阶段更新逻辑
+
     }
 
     private void printLog() {
@@ -882,15 +886,25 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
+        if (source.is(DamageTypes.FALL)) {
+            return false;
+        }
+
+
         double threshold = this.getMaxHealth() * 0.025;
 
         if (amount>threshold){
             amount = (float)(threshold + (amount - threshold)*0.7);
         }
+        if ( source.getEntity() instanceof LivingEntity target){
+            this.setTarget(target);
+        }
+
         return super.hurt(source, amount);
     }
 
     private void createBossEvent() {
+
         this.bossEvent = (ExtendedServerBossEvent)(
                 new ExtendedServerBossEvent(
                         this.getUUID(),
@@ -906,7 +920,6 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         super.load(compound);
 
         if (!this.level.isClientSide) {
-            ensureBossEventInitialized();
 
             // 同步血条进度
             if (this.bossEvent != null) {
@@ -915,17 +928,8 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
                 this.bossEvent.setVisible(this.isAlive()); // 根据存活状态设置可见性
             }
         }
-    }
-    public void syncHealthFromNBT() {
-        if (!this.level().isClientSide && this.bossEvent != null) {
-            float progress = this.getHealth() / this.getMaxHealth();
-            this.bossEvent.setProgress(Mth.clamp(progress, 0.0F, 1.0F));
-        }
-    }
-    private void ensureBossEventInitialized() {
-        if (!this.level().isClientSide && this.bossEvent == null) {
+        if (!this.level.isClientSide) {
             this.createBossEvent();
-            this.isBossBarInitialized = true;
         }
     }
 
@@ -1007,47 +1011,22 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     }
 
     private SoundEvent getBossMusicEvent() {
-
         return SoundRegister.BLOOD_BOSS_MUSIC.get();
     }
 
-    @Override
-    public void startSeenByPlayer(ServerPlayer player) {
-        super.startSeenByPlayer(player);
-
-        if (!this.level().isClientSide) {
-            ensureBossEventInitialized();
-
-            if (this.bossEvent != null && this.isAlive()) {
-                this.bossEvent.addPlayer(player);
-                this.bossEvent.setVisible(true);
-            }
-
-            this.serverTriggerEvent(START_MUSIC);
-            this.serverTriggerEvent(START_BOSSBAR);
-        }
+    public void startSeenByPlayer(ServerPlayer pPlayer) {
+        super.startSeenByPlayer(pPlayer);
+        this.bossEvent.addPlayer(pPlayer);
+        PacketDistributor.sendToPlayer(pPlayer, new EntityEventPacket(this, (byte)START_BOSSBAR));
+        PacketDistributor.sendToPlayer(pPlayer, new EntityEventPacket(this, (byte)START_MUSIC));
     }
 
-    @Override
-    public void stopSeenByPlayer(ServerPlayer player) {
-        super.stopSeenByPlayer(player);
-
-        if (!this.level().isClientSide && this.bossEvent != null) {
-            this.bossEvent.removePlayer(player);
-
-            if (this.bossEvent.getPlayers().isEmpty()) {
-                this.bossEvent.setVisible(false);
-            }
-
-            this.serverTriggerEvent(STOP_MUSIC);
-            this.serverTriggerEvent(STOP_BOSSBAR);
-        }
+    public void stopSeenByPlayer(ServerPlayer pPlayer) {
+        super.stopSeenByPlayer(pPlayer);
+        this.bossEvent.removePlayer(pPlayer);
+        PacketDistributor.sendToPlayer(pPlayer, new EntityEventPacket(this, (byte)STOP_BOSSBAR));
+        PacketDistributor.sendToPlayer(pPlayer, new EntityEventPacket(this, (byte)STOP_MUSIC));
     }
-
-
-
-
-
 
     @Override
     public void notifyDangerousProjectile(Projectile projectile) {
