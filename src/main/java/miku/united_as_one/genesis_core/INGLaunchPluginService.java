@@ -1,4 +1,4 @@
-package miku.united_as_one.genesis.genesis_core;
+package miku.united_as_one.genesis_core;
 
 import cpw.mods.modlauncher.serviceapi.ILaunchPluginService;
 import org.objectweb.asm.ClassReader;
