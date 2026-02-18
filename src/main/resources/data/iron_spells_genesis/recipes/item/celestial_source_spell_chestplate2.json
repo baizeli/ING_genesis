@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "iron_spells_genesis:celestial_source_ingot"
+  },
+  "base": {
+    "item": "iron_spells_genesis:chaos_spell_chestplate"
+  },
+  "result": {
+    "item": "iron_spells_genesis:celestial_source_spell_chestplate"
+  },
+  "template": {
+    "item": "iron_spells_genesis:create_star"
+  }
+}

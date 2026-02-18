@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "YXY",
+    "ABC",
+    "YXY"
+  ],
+  "key": {
+    "Y": {
+      "item": "irons_spellbooks:mithril_ingot "
+    },
+    "X": {
+      "item": "iron_spells_genesis:arcane_crystal"
+    },
+    "A":{
+        "item":"irons_spellbooks:netherite_spell_book"
+    },
+    "B":{
+        "item":"minecraft:nether_star"
+    },
+    "C":{
+        "item":"irons_spellbooks:dragonskin_spell_book"
+    }
+  },
+  "result": {
+    "item": "iron_spells_genesis:disk_spell_book",
+    "count": 1
+  }
+}

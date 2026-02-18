@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "YXY",
+    "XYX",
+    "YXY"
+  ],
+  "key": {
+    "Y": {
+      "item": "minecraft:poisonous_potato"
+    },
+    "X": {
+      "item": "iron_spells_genesis:arcane_crystal"
+    }
+  },
+  "result": {
+    "item": "iron_spells_genesis:nature_crystal",
+    "count": 2
+  }
+}
