@@ -279,7 +279,7 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
 
     @Override
     public void tick() {
-        trailComponent.setHasTrail(true);
+
         if(!level.isClientSide){
             detectAndApplyAbyssalAsylum();
             syncBossStageData();
@@ -301,6 +301,7 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         }
 
         if (this.level().isClientSide) {
+            trailComponent.setHasTrail(this.isCastingSkill()&&this.getBossStageData()<2);
             if(getBossStageData()>1){
 
                 spawnTrailParticles();
