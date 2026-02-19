@@ -85,7 +85,7 @@
   "item.iron_spells_genesis.infinity_sword": "天火圣裁 [伪]",
   "item.iron_spells_genesis.eternis_apple": "寰宇大苹果",
   "item.iron_spells_genesis.broyouhuashuo": "哎呀，我怎么把锭写成袋子了",
-  "item.iron_spells_genesis.purpleite_galaxy_ingot1": "汝掌心中者，永恒之力也",
+  "item.iron_spells_genesis.violet_galaxy_ingot1": "汝掌心中者，永恒之力也",
   "item.iron_spells_genesis.whisper_of_the_past": "往世的飞花",
   "item.iron_spells_genesis.avaritia_infinity_sword": "§4暮光极致者",
   "item.iron_spells_genesis.create_star": "创造之心",
@@ -118,6 +118,10 @@
   "item.iron_spells_genesis.divine_metal_leggings": "神圣金属护腿",
   "item.iron_spells_genesis.divine_metal_boots": "神圣金属靴子",
   "item.iron_spells_genesis.divine_metal_ingot": "神圣金属锭",
+  "item.iron_spells_genesis.smithing_template.divine_upgrade.additions_slot_description": "放入神圣金属锭",
+  "item.iron_spells_genesis.smithing_template.divine_upgrade.applies_to": "下界合金战法盔甲",
+  "item.iron_spells_genesis.smithing_template.divine_upgrade.base_slot_description": "放入下界合金战法盔甲",
+  "item.iron_spells_genesis.smithing_template.divine_upgrade.ingredients": "神圣金属锭",
 
   "item.iron_spells_genesis.celestial_source_spell_helmet": "#2星源法术头盔",
   "item.iron_spells_genesis.celestial_source_spell_chestplate": "#2星源法术胸甲",
@@ -133,7 +137,11 @@
   "item.iron_spells_genesis.violet_zenith_chestplate": "紫极战斗胸甲",
   "item.iron_spells_genesis.violet_zenith_leggings": "紫极战斗护腿",
   "item.iron_spells_genesis.violet_zenith_boots": "紫极战斗靴子",
-  "item.iron_spells_genesis.purpleite_galaxy_ingot": "§5紫极锭",
+  "item.iron_spells_genesis.violet_galaxy_ingot": "§5紫极锭",
+  "item.iron_spells_genesis.smithing_template.violet_upgrade.additions_slot_description": "放入§5紫极锭",
+  "item.iron_spells_genesis.smithing_template.violet_upgrade.applies_to": "奥术水晶装备",
+  "item.iron_spells_genesis.smithing_template.violet_upgrade.base_slot_description": "放入奥术水晶装备",
+  "item.iron_spells_genesis.smithing_template.violet_upgrade.ingredients": "§5紫极锭",
 
   "item.iron_spells_genesis.arcane_crystal": "奥术水晶",
   "item.iron_spells_genesis.blood_crystal": "猩红水晶",
@@ -258,5 +266,8 @@
   "item.iron_spells_genesis.nature_rune_plus": "Nature Rune Plus",
   "itemGroup.iron_spells_genesis_blocks": "iron Spells: Genesis: Blocks",
   "itemGroup.iron_spells_genesis_materials": "iron Spells: Genesis: Materials",
-  "itemGroup.iron_spells_genesis_equipment": "iron Spells: Genesis: Equipment"
+  "itemGroup.iron_spells_genesis_equipment": "iron Spells: Genesis: Equipment",
+
+  "upgrade.iron_spells_genesis.divine_upgrade": "神圣升级",
+  "upgrade.iron_spells_genesis.violet_upgrade": "紫极升级"
 }
