@@ -1,7 +1,7 @@
 {
   "type": "minecraft:smithing_transform",
   "addition": {
-    "item": "iron_spells_genesis:purpleite_galaxy_ingot"
+    "item": "iron_spells_genesis:violet_galaxy_ingot"
   },
   "base": {
     "item": "irons_spellbooks:netherite_mage_leggings"
@@ -10,6 +10,6 @@
     "item": "iron_spells_genesis:violet_zenith_leggings"
   },
   "template": {
-    "item": "iron_spells_genesis:eviolet_smithing_template"
+    "item": "iron_spells_genesis:violet_upgrade_smithing_template"
   }
 }

@@ -10,6 +10,6 @@
     "item": "iron_spells_genesis:divine_metal_boots"
   },
   "template": {
-    "item": "iron_spells_genesis:divine_template"
+    "item": "iron_spells_genesis:divine_upgrade_smithing_template"
   }
 }
