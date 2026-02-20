@@ -133,6 +133,8 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     public static final byte STOP_BOSSBAR  = 13;
 
     private ExtendedServerBossEvent bossEvent;
+
+
     private static final BossbarManager.BossbarSprite BLOOD_BOSSBAR_SPRITE =
             new BossbarManager.BossbarSprite(
                     new ResourceLocation(MODID, "boss_bars/blood_bossbar"),
@@ -143,6 +145,7 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
             );
 
     private static final EntityDataAccessor<Boolean> DATA_IS_CASTING_SKILL = SynchedEntityData.defineId(BloodBoss.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> DATA_IS_VISIBLE = SynchedEntityData.defineId(BloodBoss.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> BOSS_STAGE_DATA = SynchedEntityData.defineId(BloodBoss.class, EntityDataSerializers.INT);
 
     //刀光
@@ -170,6 +173,14 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     private void syncBossStageData(){
         this.entityData.set(BOSS_STAGE_DATA, getBossStage());
     }
+
+    public void setVisable(boolean visable){
+        this.entityData.set(DATA_IS_VISIBLE, visable);
+    }
+    public boolean getVisable(){
+        return this.entityData.get(DATA_IS_VISIBLE);
+    }
+
 
 
     //属性
@@ -220,6 +231,7 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
 
         this.createBossEvent();
         this.bossEvent.setDarkenScreen(true); // 可选：压暗屏幕
+        this.setInvisible(true);
 
     }
 
@@ -228,7 +240,13 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType reason, @org.jetbrains.annotations.Nullable SpawnGroupData spawnData, @org.jetbrains.annotations.Nullable CompoundTag dataTag) {
 
         this.getBrain().setMemoryWithExpiry(MemoryModuleType.IS_EMERGING, Unit.INSTANCE, BloodBossEmergingBehavior.EMERGE_SPAWN_DURATION);
+
         this.playSound(SoundEvents.WARDEN_AGITATED, 5.0F, 1.0F);
+        if (!this.level.isClientSide()){
+
+            this.setVisable(this.getBossStage() > 0);
+        }
+
 
         return super.finalizeSpawn(level, difficulty, reason, spawnData, dataTag);
     }
@@ -303,10 +321,9 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         if (this.level().isClientSide) {
             trailComponent.setHasTrail(this.isCastingSkill()&&this.getBossStageData()<2);
             if(getBossStageData()>1){
-
                 spawnTrailParticles();
-
             }
+            this.setInvisible(!this.getVisable());
         }
 
         if (!this.level().isClientSide && this.bossEvent != null) {
@@ -378,6 +395,7 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         this.entityData.define(DATA_CANCEL_CAST, false);
         this.entityData.define(DATA_DRINKING_POTION, false);
         this.entityData.define(DATA_IS_CASTING_SKILL, false);
+        this.entityData.define(DATA_IS_VISIBLE, true);
         this.entityData.define(BOSS_STAGE_DATA, 0);
     }
 
