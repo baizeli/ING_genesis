@@ -10,13 +10,11 @@ import miku.united_as_one.genesis.common.entity.ai.ModMemoryModuleType;
 import miku.united_as_one.genesis.common.entity.boss.behavior.*;
 import miku.united_as_one.genesis.common.entity.boss.behavior.bloodbossskill.*;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.behavior.*;
-import net.minecraft.world.entity.ai.behavior.warden.Emerging;
 import net.minecraft.world.entity.ai.behavior.warden.SetWardenLookTarget;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.sensing.Sensor;
@@ -197,7 +195,7 @@ public class BloodBossAi {
         fightBuilder.add(new ZhanZhanCycloneSlashBehavior());//斩斩旋风劈技能
         fightBuilder.add(new GroundSlamBehavior());          //砸地技能
         fightBuilder.add(new StompBehavior());               //跺脚技能
-        fightBuilder.add(spellCasting);               //跺脚技能
+        fightBuilder.add(spellCasting);                      //跺脚技能
 
         ImmutableList<BehaviorControl<? super BloodBoss>> fightBehaviors = fightBuilder.build();
 
@@ -240,6 +238,7 @@ public class BloodBossAi {
         fightBuilder.add(new ZhanZhanCycloneSlashBehavior());//斩斩旋风劈技能
         fightBuilder.add(new GroundSlamBehavior());          //砸地技能
         fightBuilder.add(new StompBehavior());               //跺脚技能
+        fightBuilder.add(new FieryDaggerSwarmBehavior());    //七连烈焰飞剑-改
 
         // 添加所有施法行为
         for (SpellCastingBehavior behavior : spellBehaviors) {

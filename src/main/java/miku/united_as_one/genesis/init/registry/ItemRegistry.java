@@ -4,6 +4,7 @@ import com.tterrag.registrate.providers.*;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import miku.united_as_one.genesis.Genesis;
+import miku.united_as_one.genesis.common.entity.boss.BloodBoss;
 import miku.united_as_one.genesis.common.items.*;
 import miku.united_as_one.genesis.common.items.spellbook.AEprospellbook;
 import miku.united_as_one.genesis.common.items.spellbook.CelestialSourceSpellBook;
@@ -22,10 +23,16 @@ import io.redspace.ironsspellbooks.item.UpgradeOrbItem;
 import io.redspace.ironsspellbooks.item.armor.IronsExtendedArmorMaterial;
 import io.redspace.ironsspellbooks.util.ItemPropertiesHelper;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.client.model.generators.*;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -189,7 +196,7 @@ public class ItemRegistry {
     // 末地奥术水晶矿
     public static final ItemEntry<BlockItem> END_ARCANE_CRYSTAL_ORE_ITEM;
     // 血肉魂铃
-    public static final ItemEntry<Item> FLESH_SOUL_BELL;
+    public static final ItemEntry<?> FLESH_SOUL_BELL;
     // 混沌原核
     public static final ItemEntry<ChaosCore> CHAOS_CORE;
     // 血肉灵魂碎片
@@ -883,7 +890,27 @@ public class ItemRegistry {
                 .item("flesh_soul_bell", properties -> new Item(properties
                         .stacksTo(1)
                         .rarity(Rarity.EPIC)
-                ))
+                ) {
+                    @Override
+                    public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand usedHand) {
+                        if (player.isShiftKeyDown()) {
+                            BlockPos playerPos = player.blockPosition();
+
+                            int radius = 15;
+                            AABB area = new AABB(
+                                    playerPos.getX() - radius, playerPos.getY() - radius, playerPos.getZ() - radius,
+                                    playerPos.getX() + radius, playerPos.getY() + radius, playerPos.getZ() + radius
+                            );
+
+                            level.getEntities(player, area).forEach(e -> {
+                                if (e instanceof BloodBoss bloodBoss) {
+                                    bloodBoss.remove(Entity.RemovalReason.KILLED);
+                                }
+                            });
+                        }
+                        return super.use(level, player, usedHand);
+                    }
+                })
                 .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
                 .register();
 
