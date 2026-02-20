@@ -12,5 +12,6 @@ public class ModModel {
     @SubscribeEvent
     public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(DeadStarDecreeCometModel.LAYER_LOCATION, DeadStarDecreeCometModel::createBodyLayer);
+        event.registerLayerDefinition(ThrowBloodAndWoundsModel.LAYER_LOCATION, ThrowBloodAndWoundsModel::createBodyLayer);
     }
 }

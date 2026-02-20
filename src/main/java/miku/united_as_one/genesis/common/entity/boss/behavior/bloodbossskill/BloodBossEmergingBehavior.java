@@ -33,8 +33,6 @@ public class BloodBossEmergingBehavior extends AnimatedActionBehavior<BloodBoss>
     protected void tick(ServerLevel level, BloodBoss boss, long gameTime) {
         super.tick(level, boss, gameTime);
         emergenceTick++;
-
-
         if (emergenceTick <= 10) {
 
             spawnSphericalTwistParticles(level, boss);
@@ -44,9 +42,6 @@ public class BloodBossEmergingBehavior extends AnimatedActionBehavior<BloodBoss>
 
             boss.setVisable(true);
         }
-
-
-        
         if (emergenceTick >= 20 && emergenceTick <= 150) { 
             
             spawnFootRingParticles(level, boss);
