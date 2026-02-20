@@ -68,13 +68,13 @@ public class BloodBossEmergingBehavior extends AnimatedActionBehavior<BloodBoss>
         double yawRad = Math.toRadians(boss.getYRot());
         double behindX = boss.getX() + Math.sin(yawRad) * 5.0;
         double behindZ = boss.getZ() - Math.cos(yawRad) * 5.0;
-        double behindY = boss.getY() + 1.5;
+        double behindY = boss.getY() + 1.8;
 
         double cx = behindX;
         double cy = behindY;
         double cz = behindZ;
         double radius = 2.5;
-        int particleCount = 1000;
+        int particleCount = 200;
 
         for (int i = 0; i < particleCount; i++) {
             double phi = Math.acos(2 * level.random.nextDouble() - 1);
