@@ -85,7 +85,7 @@
   "item.iron_spells_genesis.infinity_sword": "Heavenly Fire Judgment [Fake]",
   "item.iron_spells_genesis.eternis_apple": "Eternis Apple",
   "item.iron_spells_genesis.broyouhuashuo": "Oops, How Did I Write Ingot As Bag",
-  "item.iron_spells_genesis.purpleite_galaxy_ingot1": "What In Your Palm, Eternal Power",
+  "item.iron_spells_genesis.violet_galaxy_ingot1": "What In Your Palm, Eternal Power",
   "item.iron_spells_genesis.divine_metal_ingot": "Divine Metal Ingot",
   "item.iron_spells_genesis.whisper_of_the_past": "Whisper of the Past",
   "item.iron_spells_genesis.avaritia_infinity_sword": "§4Twilight Zenith",
@@ -117,6 +117,10 @@
   "item.iron_spells_genesis.divine_metal_chestplate": "Divine Metal Chestplate",
   "item.iron_spells_genesis.divine_metal_leggings": "Divine Metal Leggings",
   "item.iron_spells_genesis.divine_metal_boots": "Divine Metal Boots",
+  "item.iron_spells_genesis.smithing_template.divine_upgrade.additions_slot_description": "Add Divine Metal Ingot",
+  "item.iron_spells_genesis.smithing_template.divine_upgrade.applies_to": "Netherite Mage Armor",
+  "item.iron_spells_genesis.smithing_template.divine_upgrade.base_slot_description": "Add a piece of netherite mage armor",
+  "item.iron_spells_genesis.smithing_template.divine_upgrade.ingredients": "Divine Metal Ingot",
 
   "item.iron_spells_genesis.celestial_source_spell_helmet": "#2Celestial Source Spell Helmet",
   "item.iron_spells_genesis.celestial_source_spell_chestplate": "#2Celestial Source Spell Chestplate",
@@ -132,7 +136,11 @@
   "item.iron_spells_genesis.violet_zenith_chestplate": "Purple Extreme Battle Chestplate",
   "item.iron_spells_genesis.violet_zenith_leggings": "Purple Extreme Battle Leggings",
   "item.iron_spells_genesis.violet_zenith_boots": "Purple Extreme Battle Boots",
-  "item.iron_spells_genesis.purpleite_galaxy_ingot": "§5Purple Extreme Ingot",
+  "item.iron_spells_genesis.violet_galaxy_ingot": "§5Purple Extreme Ingot",
+  "item.iron_spells_genesis.smithing_template.violet_upgrade.additions_slot_description": "Add §5Purple Extreme Ingot",
+  "item.iron_spells_genesis.smithing_template.violet_upgrade.applies_to": "Arcane Crystal Equipment",
+  "item.iron_spells_genesis.smithing_template.violet_upgrade.base_slot_description": "Add arcane crystal armor, weapon, or tool",
+  "item.iron_spells_genesis.smithing_template.violet_upgrade.ingredients": "§5Purple Extreme Ingot",
 
   "item.iron_spells_genesis.arcane_crystal": "Arcane Crystal",
   "item.iron_spells_genesis.blood_crystal": "Blood Crystal",
@@ -252,5 +260,8 @@
   "item.iron_spells_genesis.lightning_rune_plus.hover": "......",
   "item.iron_spells_genesis.nature_rune_plus": "§bNature Rune Plus",
   "item.iron_spells_genesis.nature_rune_plus.hover": "......",
-  "item_group.iron_spells_genesis.iron_spells_genesis": "Iron's Spells 'n Spellbooks: New genesis"
+  "item_group.iron_spells_genesis.iron_spells_genesis": "Iron's Spells 'n Spellbooks: New genesis",
+
+  "upgrade.iron_spells_genesis.divine_upgrade": "Divine Upgrade",
+  "upgrade.iron_spells_genesis.violet_upgrade": "Violet Upgrade"
 }
