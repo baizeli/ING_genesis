@@ -49,11 +49,16 @@ public class BloodBossRenderer extends GeoEntityRenderer<BloodBoss> {
         if (!trail.hasTrail()) {
             return;
         }
+        Vec3[] previousSegment = trail.getTrailPosition(0, partialTicks);
+
+        if (previousSegment.length<3){
+            return;
+        }
 
         VertexConsumer vertexConsumer = buffer.getBuffer(FFRenderTypes.getGlowingEffect(TRAIL_TEXTURE));
         int sampleCount = 16;
 
-        Vec3[] previousSegment = trail.getTrailPosition(0, partialTicks);
+
         if (previousSegment == null) return;
 
         PoseStack.Pose pose = poseStack.last();
