@@ -39,7 +39,7 @@ public class ItemRegistry {
     public static final DeferredRegister<Item> REGISTRY_BLOCK_ITEM = DeferredRegister.create(ForgeRegistries.ITEMS, Genesis.MODID);
 
     // 紫极锭
-    public static final ItemEntry<EternisMaterial> PURPLEITE_GALAXY_INGOT;
+    public static final ItemEntry<EternisMaterial> VIOLET_GALAXY_INGOT;
     // 神圣金属锭
     public static final ItemEntry<Item> DIVINE_METAL_INGOT;
     // 扭曲混沌锭
@@ -213,14 +213,14 @@ public class ItemRegistry {
     // 邪术符文
     public static final ItemEntry<EldritchRunePlus> ELDRITCH_RUNE_PLUS;
     // 锻造模板
-    public static final ItemEntry<Item> EVIOLET_ZENITH_TEMPLATE;
+    public static final ItemEntry<SmithingTemplateItem> VIOLET_UPGRADE_SMITHING_TEMPLATE;
     // 锻造模板
-    public static final ItemEntry<Item> DIVINE_TEMPLATE;
+    public static final ItemEntry<SmithingTemplateItem> DIVINE_UPGRADE_SMITHING_TEMPLATE;
 
     //初始化
     static {
-        PURPLEITE_GALAXY_INGOT = Genesis.L2_REGISTRATE
-                .item("purpleite_galaxy_ingot", properties -> new EternisMaterial(properties, 0))
+        VIOLET_GALAXY_INGOT = Genesis.L2_REGISTRATE
+                .item("violet_galaxy_ingot", properties -> new EternisMaterial(properties, 0))
                 .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
                 .register();
 
@@ -229,16 +229,29 @@ public class ItemRegistry {
                 .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
                 .register();
 
-        DIVINE_TEMPLATE = Genesis.L2_REGISTRATE
-                .item("divine_template", properties -> new Item(properties.rarity(Rarity.EPIC)))
+        DIVINE_UPGRADE_SMITHING_TEMPLATE = Genesis.L2_REGISTRATE
+                .item("divine_upgrade_smithing_template", properties -> new SmithingTemplateItem(
+                        Component.translatable("item.iron_spells_genesis.smithing_template.divine_upgrade.applies_to").withStyle(SmithingTemplateItem.DESCRIPTION_FORMAT),
+                        Component.translatable("item.iron_spells_genesis.smithing_template.divine_upgrade.ingredients").withStyle(SmithingTemplateItem.DESCRIPTION_FORMAT),
+                        Component.translatable("upgrade.iron_spells_genesis.divine_upgrade").withStyle(SmithingTemplateItem.TITLE_FORMAT),
+                        Component.translatable("item.iron_spells_genesis.smithing_template.divine_upgrade.base_slot_description"),
+                        Component.translatable("item.iron_spells_genesis.smithing_template.divine_upgrade.additions_slot_description"),
+                        SmithingTemplateItem.createTrimmableArmorIconList(), SmithingTemplateItem.createNetheriteUpgradeMaterialList()
+                ))
                 .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
                 .register();
 
-        EVIOLET_ZENITH_TEMPLATE = Genesis.L2_REGISTRATE
-                .item("eviolet_smithing_template", properties -> new Item(properties.rarity(Rarity.EPIC)))
+        VIOLET_UPGRADE_SMITHING_TEMPLATE = Genesis.L2_REGISTRATE
+                .item("violet_upgrade_smithing_template", properties -> new SmithingTemplateItem(
+                        Component.translatable("item.iron_spells_genesis.smithing_template.violet_upgrade.applies_to").withStyle(SmithingTemplateItem.DESCRIPTION_FORMAT),
+                        Component.translatable("item.iron_spells_genesis.smithing_template.violet_upgrade.ingredients").withStyle(SmithingTemplateItem.DESCRIPTION_FORMAT),
+                        Component.translatable("upgrade.iron_spells_genesis.violet_upgrade").withStyle(SmithingTemplateItem.TITLE_FORMAT),
+                        Component.translatable("item.iron_spells_genesis.smithing_template.violet_upgrade.base_slot_description"),
+                        Component.translatable("item.iron_spells_genesis.smithing_template.violet_upgrade.additions_slot_description"),
+                        SmithingTemplateItem.createTrimmableArmorIconList(), SmithingTemplateItem.createNetheriteUpgradeMaterialList()
+                ))
                 .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
                 .register();
-
 
         TWISTED_CHAOS_INGOT = Genesis.L2_REGISTRATE
                 .item("twisted_chaos_ingot", properties -> new ChaosBaseItem(properties.rarity(Rarity.EPIC)))

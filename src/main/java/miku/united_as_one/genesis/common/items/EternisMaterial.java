@@ -25,6 +25,6 @@ public final class EternisMaterial extends Item
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag)
     {
-        if (type == 0) tooltip.add(RainbowEffectHelper.createCustomGradientText(Component.translatable("item." + Genesis.MOD_ID + ".purpleite_galaxy_ingot1").getString(), RainbowEffectHelper.DEFAULT_RAINBOW, 2, 1, 0.05F, 2f));
+        if (type == 0) tooltip.add(RainbowEffectHelper.createCustomGradientText(Component.translatable("item." + Genesis.MOD_ID + ".violet_galaxy_ingot1").getString(), RainbowEffectHelper.DEFAULT_RAINBOW, 2, 1, 0.05F, 2f));
     }
 }
