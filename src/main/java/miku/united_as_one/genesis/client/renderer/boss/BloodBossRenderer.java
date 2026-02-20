@@ -51,7 +51,10 @@ public class BloodBossRenderer extends GeoEntityRenderer<BloodBoss> {
         }
 
         VertexConsumer vertexConsumer = buffer.getBuffer(FFRenderTypes.getGlowingEffect(TRAIL_TEXTURE));
-        int sampleCount = 16;
+        int maxSegments = trail.getAvailableSegments();
+        int sampleCount = Math.min(16, maxSegments);
+
+        if (sampleCount <= 0) return;
 
         Vec3[] previousSegment = trail.getTrailPosition(0, partialTicks);
         if (previousSegment == null) return;
