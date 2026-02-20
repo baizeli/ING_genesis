@@ -5,7 +5,8 @@ import javax.annotation.Nullable;
 
 public class TrailComponent {
     private final Vec3[][] trailPositions;
-    private int trailPointer = -1;
+    private int trailPointer = 0;
+    private int currentSize = 0; // 当前有效采样点的数量
     private boolean hasTrail = false;
     private final int maxLength;
 
@@ -15,68 +16,81 @@ public class TrailComponent {
     }
 
     /**
-     * 更新轨迹。应在模型动画的 setCustomAnimations 中调用，传入两个骨骼的世界坐标。
+     * 更新轨迹。应在模型动画的 setCustomAnimations 中调用。
      */
     public void updateTrail(Vec3 startPos, Vec3 endPos) {
         if (!hasTrail) {
-            // 初始化轨迹数组
-            for (int i = 0; i < maxLength; i++) {
-                trailPositions[i] = new Vec3[]{startPos, endPos};
-            }
-            hasTrail = true;
+            // 重新开启轨迹时，清空计数确保不会读取到旧数据
+            this.currentSize = 0;
+            this.trailPointer = 0;
+            this.hasTrail = true;
         }
 
-        if (++this.trailPointer >= this.maxLength) {
-            this.trailPointer = 0;
-        }
+        // 存入当前点
         this.trailPositions[this.trailPointer] = new Vec3[]{startPos, endPos};
+
+        // 指针后移
+        this.trailPointer = (this.trailPointer + 1) % this.maxLength;
+
+        // 增加有效计数，直到填满缓冲区
+        if (this.currentSize < this.maxLength) {
+            this.currentSize++;
+        }
     }
 
     /**
      * 获取用于渲染的插值后的轨迹点。
-     * @param pointer 历史索引（0为最新，越大越旧）
-     * @param partialTick 部分刻时间，用于平滑插值
-     * @return 包含[startPos, endPos]的数组，如果轨迹未初始化或索引无效返回 null
+     * @param pointer 历史偏移量（0 为最新点，1 为前一个点，以此类推）
+     * @param partialTick 客户端部分刻
      */
     @Nullable
     public Vec3[] getTrailPosition(int pointer, float partialTick) {
 
-        if (!hasTrail || trailPointer == -1) {
-            return null;
-        }
-        if (pointer < 0 || pointer >= maxLength) {
+        if (!hasTrail || currentSize < 2 || pointer >= currentSize - 1) {
             return null;
         }
 
-        int i = (this.trailPointer - pointer) & (maxLength - 1);
-        int j = (this.trailPointer - pointer - 1) & (maxLength - 1);
 
-        Vec3[] prevFrame = trailPositions[j];
+        int latestIdx = (this.trailPointer - 1 + this.maxLength) % this.maxLength;
+
+        int i = (latestIdx - pointer + this.maxLength) % this.maxLength;
+        int j = (latestIdx - pointer - 1 + this.maxLength) % this.maxLength;
+
         Vec3[] currFrame = trailPositions[i];
+        Vec3[] prevFrame = trailPositions[j];
 
-        if (prevFrame == null || currFrame == null ||
-                prevFrame[0] == null || prevFrame[1] == null ||
-                currFrame[0] == null || currFrame[1] == null) {
+        if (currFrame == null || prevFrame == null) {
             return null;
         }
 
-        Vec3 interpolatedStart = prevFrame[0].add(currFrame[0].subtract(prevFrame[0]).scale(partialTick));
-        Vec3 interpolatedEnd = prevFrame[1].add(currFrame[1].subtract(prevFrame[1]).scale(partialTick));
+        Vec3 interpolatedStart = prevFrame[0].lerp(currFrame[0], partialTick);
+        Vec3 interpolatedEnd = prevFrame[1].lerp(currFrame[1], partialTick);
 
         return new Vec3[]{interpolatedStart, interpolatedEnd};
     }
+
     public boolean hasTrail() {
         return hasTrail;
     }
 
     public void setHasTrail(boolean hasTrail) {
-        this.hasTrail = hasTrail;
-        if (!hasTrail) {
-            trailPointer = -1; // 重置指针
+        if (this.hasTrail != hasTrail) {
+            this.hasTrail = hasTrail;
+            if (!hasTrail) {
+                this.currentSize = 0;
+                this.trailPointer = 0;
+            }
         }
     }
 
     public int getMaxLength() {
         return maxLength;
+    }
+
+    /**
+     * 获取当前可渲染的有效段数（点数 - 1）
+     */
+    public int getAvailableSegments() {
+        return Math.max(0, currentSize - 1);
     }
 }
