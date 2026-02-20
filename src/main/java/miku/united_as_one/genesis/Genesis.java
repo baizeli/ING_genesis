@@ -19,7 +19,6 @@ import miku.united_as_one.genesis.init.registry.client.ParticleRegistry;
 import miku.united_as_one.genesis.client.renderer.DistortWorldRender;
 import miku.united_as_one.genesis.client.renderer.spell.celestial_source.DeadStarDecreeCometRenderer;
 import miku.united_as_one.genesis.init.config.*;
-import miku.united_as_one.genesis.client.fonts.FuckFont1;
 import miku.united_as_one.genesis.common.network.*;
 import miku.united_as_one.genesis.init.registry.spell.SpellAttributesRegistry;
 import miku.united_as_one.genesis.init.registry.spell.SpellSchoolRegistry;
@@ -169,7 +168,7 @@ public class Genesis
                 DistortWorldRender.initChain(Minecraft.getInstance());
             });
             MinecraftForge.registerConfigScreen(new ConfigurationFactory());
-            Minecraft.getInstance().font = FuckFont1.font;
+            //Minecraft.getInstance().font = FuckFont1.font;
         }
 
         @SubscribeEvent
