@@ -1,11 +1,13 @@
 package miku.united_as_one.genesis.client.render;
 
+import miku.united_as_one.genesis.common.entity.spells.blood_boss.fiery_dagger.BloodBossFieryDaggerRenderer;
 import miku.united_as_one.genesis.init.registry.EntityRegistry;
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.client.renderer.boss.BloodBossRenderer;
 import miku.united_as_one.genesis.client.render.cosmic.AvaritiaShaders;
 import miku.united_as_one.genesis.client.render.cosmic.CosmicModelLoader;
 import miku.united_as_one.genesis.client.render.entity.*;
+import net.minecraft.client.renderer.entity.NoopRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.api.distmarker.Dist;
@@ -26,6 +28,8 @@ public class RenderRegistry {
         event.registerEntityRenderer(EntityRegistry.THROW_BLOOD_AND_WOUNDS.get(), ThrowBloodAndWoundsRenderer::new);
         event.registerEntityRenderer(EntityRegistry.BLOOD_BOSS.get(), BloodBossRenderer::new);
         event.registerEntityRenderer(EntityRegistry.BLOOD_TENTACLE.get(), BloodTentacleRenderer::new);
+        event.registerEntityRenderer(EntityRegistry.BLOOD_BOSS_FIRE_ERUPTION_AOE.get(), NoopRenderer::new);
+        event.registerEntityRenderer(EntityRegistry.BLOOD_BOSS_FIERY_DAGGER_PROJECTILE.get(), BloodBossFieryDaggerRenderer::new);
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)

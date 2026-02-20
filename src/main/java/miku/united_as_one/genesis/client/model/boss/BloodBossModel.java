@@ -1,26 +1,15 @@
 package miku.united_as_one.genesis.client.model.boss;
 
-import io.redspace.ironsspellbooks.entity.mobs.abstract_spell_casting_mob.AbstractSpellCastingMob;
-import io.redspace.ironsspellbooks.entity.mobs.abstract_spell_casting_mob.AbstractSpellCastingMobModel;
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.client.render.MathUtils;
 import miku.united_as_one.genesis.common.entity.boss.BloodBoss;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.WalkAnimationState;
 import net.minecraft.world.phys.Vec3;
-import org.joml.Vector2f;
-import software.bernie.geckolib.animatable.GeoReplacedEntity;
 import software.bernie.geckolib.cache.object.GeoBone;
-import software.bernie.geckolib.constant.DataTickets;
-import software.bernie.geckolib.core.animatable.GeoAnimatable;
 import software.bernie.geckolib.core.animatable.model.CoreGeoBone;
-import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.model.GeoModel;
-import software.bernie.geckolib.model.data.EntityModelData;
 
 @SuppressWarnings("removal")
 public class BloodBossModel extends GeoModel<BloodBoss> {
