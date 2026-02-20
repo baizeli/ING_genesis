@@ -4,6 +4,8 @@ import io.redspace.ironsspellbooks.entity.spells.void_tentacle.VoidTentacle;
 import miku.united_as_one.genesis.common.entity.*;
 import miku.united_as_one.genesis.common.entity.LightningBolt;
 import miku.united_as_one.genesis.common.entity.boss.BloodBoss;
+import miku.united_as_one.genesis.common.entity.spells.blood_boss.BloodBossFireEruptionAoe;
+import miku.united_as_one.genesis.common.entity.spells.blood_boss.fiery_dagger.BloodBossFieryDaggerEntity;
 import miku.united_as_one.genesis.common.entity.spells.celestial_source.*;
 import miku.united_as_one.genesis.common.entity.spells.celestial_source.notuse.*;
 import miku.united_as_one.genesis.Genesis;
@@ -83,4 +85,20 @@ public class EntityRegistry {
                     .sized(2.5F, 5.5F)
                     .clientTrackingRange(64)
                     .build("blood_tentacle"));
+
+    public static final RegistryObject<EntityType<BloodBossFireEruptionAoe>> BLOOD_BOSS_FIRE_ERUPTION_AOE = ENTITY_TYPES.register("blood_boss_fire_eruption",
+            () -> EntityType.Builder.of(
+                    (EntityType<BloodBossFireEruptionAoe> type, Level level) -> new BloodBossFireEruptionAoe(type, level),
+                            MobCategory.MISC)
+                    .sized(4.0F, 0.8F)
+                    .clientTrackingRange(64)
+                    .build("blood_boss_fire_eruption"));
+
+    public static final RegistryObject<EntityType<BloodBossFieryDaggerEntity>> BLOOD_BOSS_FIERY_DAGGER_PROJECTILE = ENTITY_TYPES.register("blood_boss_fiery_dagger",
+            () -> EntityType.Builder.of(
+                            (EntityType<BloodBossFieryDaggerEntity> type, Level level) -> new BloodBossFieryDaggerEntity(type, level),
+                            MobCategory.MISC)
+                    .sized(0.5F, 0.5F)
+                    .clientTrackingRange(64)
+                    .build("blood_boss_fiery_dagger"));
 }
