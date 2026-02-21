@@ -32,9 +32,7 @@ public class BloodField extends FireField {
 
         if (!DamageSources.isFriendlyFireBetween(this.getOwner(), target)) {
             DamageSources.ignoreNextKnockback(target);
-            if (target.hurt(this.damageSource, this.getDamage())) {
-                target.setRemainingFireTicks(60);
-            }
+            target.hurt(this.damageSource, this.getDamage());
         }
 
     }
