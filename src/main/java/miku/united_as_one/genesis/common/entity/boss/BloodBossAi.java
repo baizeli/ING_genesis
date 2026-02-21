@@ -212,7 +212,7 @@ public class BloodBossAi {
         // 清除无效目标
         fightBuilder.add(StopAttackingIfTargetInvalid.create(livingEntity -> false, (mob, target) -> {}, true));
 
-        // 添加二阶段远离行为：当敌人离开8格范围时快速追击
+        // 添加二阶段追击行为：当敌人离开8格范围时快速追击
         fightBuilder.add(SetWalkTargetFromAttackTargetIfTargetOutOfReach.create(2.5F));
 
         fightBuilder.add(new DragonDiveBehavior());          // 下落攻击
@@ -361,7 +361,7 @@ public class BloodBossAi {
 
     public static void includedInNbtTestMemoryModule(Brain<BloodBoss> brain, LivingEntity entity) {
         Optional<List<CompoundTag>> memory = brain.getMemory(ModMemoryModuleType.NBT_TEST_MEMORY_MODULE.get());
-        List<CompoundTag> entityInStomach = memory.orElse(new ArrayList<CompoundTag>());
+        List<CompoundTag> entityInStomach = memory.orElse(new ArrayList<>());
         CompoundTag tag = new CompoundTag();
         entity.save(tag);
         entityInStomach.add((tag));
