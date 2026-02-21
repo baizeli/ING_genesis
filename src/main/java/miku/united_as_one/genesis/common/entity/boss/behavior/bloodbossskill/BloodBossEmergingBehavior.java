@@ -31,9 +31,11 @@ public class BloodBossEmergingBehavior extends AnimatedActionBehavior<BloodBoss>
 
     @Override
     protected void tick(ServerLevel level, BloodBoss boss, long gameTime) {
+        boss.getNavigation().stop();
+        boss.setDeltaMovement(0, boss.getDeltaMovement().y, 0);
         super.tick(level, boss, gameTime);
         emergenceTick++;
-        if (emergenceTick <= 10) {
+        if (emergenceTick <= 2) {
 
             spawnSphericalTwistParticles(level, boss);
         }
@@ -58,7 +60,7 @@ public class BloodBossEmergingBehavior extends AnimatedActionBehavior<BloodBoss>
 
 
 
-    
+
     private void spawnSphericalTwistParticles(ServerLevel level, BloodBoss boss) {
         double yawRad = Math.toRadians(boss.getYRot());
         double behindX = boss.getX() + Math.sin(yawRad) * 5.0;
@@ -68,19 +70,35 @@ public class BloodBossEmergingBehavior extends AnimatedActionBehavior<BloodBoss>
         double cx = behindX;
         double cy = behindY;
         double cz = behindZ;
-        double radius = 2.5;
+        double radius = 1;
         int particleCount = 200;
 
+        double randomOffset = level.random.nextDouble() * Math.PI * 2;
         for (int i = 0; i < particleCount; i++) {
-            double phi = Math.acos(2 * level.random.nextDouble() - 1);
-            double theta = 2 * Math.PI * level.random.nextDouble();
+            double phi = Math.acos(1 - 2.0 * (i + 0.5) / particleCount);
+            double theta = Math.PI * (1 + Math.sqrt(5)) * i + randomOffset;
             double x = cx + radius * Math.sin(phi) * Math.cos(theta);
             double y = cy + radius * Math.cos(phi);
             double z = cz + radius * Math.sin(phi) * Math.sin(theta);
+
+            double dx = cx - x;
+            double dy = cy - y;
+            double dz = cz - z;
+            double dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+            if (dist > 0) {
+                double speedFactor = -0.05;
+                dx = (dx / dist) * speedFactor;
+                dy = (dy / dist) * speedFactor;
+                dz = (dz / dist) * speedFactor;
+            }
+
             level.sendParticles(
                     ParticleRegistry.BLOOD_DRIP_TWIST.get(),
                     x, y, z,
-                    1, 0.0, 0.0, 0.0, 0.0
+                    0,
+                    dx, dy, dz,
+                    1.0
             );
         }
     }
@@ -90,7 +108,7 @@ public class BloodBossEmergingBehavior extends AnimatedActionBehavior<BloodBoss>
         double centerX = boss.getX();
         double centerY = boss.getY(); 
         double centerZ = boss.getZ();
-        double radius = 2.5; 
+        double radius = 2.5;
         int points = 40; 
 
         for (int i = 0; i < points; i++) {
