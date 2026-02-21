@@ -65,8 +65,7 @@ public class Genesis
         return new ResourceLocation(MOD_ID, path);
     }
 
-    public Genesis(FMLJavaModLoadingContext context)
-    {
+    public Genesis(FMLJavaModLoadingContext context) {
         IEventBus modEventBus = context.getModEventBus();
 
         ItemRegistry.register(modEventBus);
@@ -99,8 +98,7 @@ public class Genesis
         context.registerConfig(ModConfig.Type.COMMON, Configuration.SPECIFICATION);
     }
 
-    private void commonSetup(final FMLCommonSetupEvent event)
-    {
+    private void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
             NetworkHandler.register();
             LOGGER.info("Fuck TTTTTT");
@@ -145,8 +143,7 @@ public class Genesis
     public static class ClientModEvents
     {
         @SubscribeEvent
-        public static void onClientSetup(FMLClientSetupEvent event)
-        {
+        public static void onClientSetup(FMLClientSetupEvent event) {
             event.enqueueWork(() -> {
                 MenuScreens.register(ModMenuTypes.ARCANE_WORKBENCH_MENU.get(), ArcaneWorkbenchScreen::new);
                 EntityRenderers.register(EntityRegistry.NYAN_CAT.get(), NyanCatRenderer::new);
@@ -172,8 +169,7 @@ public class Genesis
         }
 
         @SubscribeEvent
-        public static void onCommonSetup(FMLCommonSetupEvent event)
-        {
+        public static void onCommonSetup(FMLCommonSetupEvent event) {
             CHANNEL.registerMessage(0, WireBoxSyncPacket.class,
                     WireBoxSyncPacket::encode,
                     WireBoxSyncPacket::decode,

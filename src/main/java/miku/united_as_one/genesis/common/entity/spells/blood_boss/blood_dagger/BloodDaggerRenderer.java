@@ -1,4 +1,4 @@
-package miku.united_as_one.genesis.common.entity.spells.blood_boss.fiery_dagger;
+package miku.united_as_one.genesis.common.entity.spells.blood_boss.blood_dagger;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -11,14 +11,14 @@ import software.bernie.geckolib.cache.object.BakedGeoModel;
 import software.bernie.geckolib.core.object.Color;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
-public class BloodBossFieryDaggerRenderer extends GeoEntityRenderer<BloodBossFieryDaggerEntity> {
-    public BloodBossFieryDaggerRenderer(EntityRendererProvider.Context renderManager) {
-        super(renderManager, new BloodBossFieryDaggerModel());
+public class BloodDaggerRenderer extends GeoEntityRenderer<BloodDaggerEntity> {
+    public BloodDaggerRenderer(EntityRendererProvider.Context renderManager) {
+        super(renderManager, new BloodDaggerModel());
     }
 
-    public void preRender(PoseStack poseStack, BloodBossFieryDaggerEntity entity, BakedGeoModel model, MultiBufferSource bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+    public void preRender(PoseStack poseStack, BloodDaggerEntity entity, BakedGeoModel model, MultiBufferSource bufferSource, VertexConsumer buffer, boolean isReRender, float partialTick, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         super.preRender(poseStack, entity, model, bufferSource, buffer, isReRender, partialTick, packedLight, packedOverlay, red, green, blue, alpha);
-        Vec3 motion = entity.deltaMovementOld.add(entity.getDeltaMovement().subtract(entity.deltaMovementOld).scale((double)partialTick));
+        Vec3 motion = entity.deltaMovementOld.add(entity.getDeltaMovement().subtract(entity.deltaMovementOld).scale(partialTick));
         float xRot = (float)(Mth.atan2(motion.horizontalDistance(), motion.y) * (double)(180F / (float)Math.PI)) - 90.0F;
         float yRot = -((float)(Mth.atan2(motion.z, motion.x) * (double)(180F / (float)Math.PI)) - 90.0F);
         poseStack.translate(0.0F, entity.getBbHeight() * 0.5F, 0.0F);
@@ -26,7 +26,7 @@ public class BloodBossFieryDaggerRenderer extends GeoEntityRenderer<BloodBossFie
         poseStack.mulPose(Axis.XP.rotationDegrees(xRot));
     }
 
-    public Color getRenderColor(BloodBossFieryDaggerEntity animatable, float partialTick, int packedLight) {
+    public Color getRenderColor(BloodDaggerEntity animatable, float partialTick, int packedLight) {
         return Color.LIGHT_GRAY;
     }
 }

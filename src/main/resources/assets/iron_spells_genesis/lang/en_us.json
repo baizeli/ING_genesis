@@ -203,6 +203,10 @@
   "death.attack.iron_spells_genesis.warped_blood_burst.item" : "The entire bloodstream of %1$s exploded due to %2$s's %3$s",
   "death.attack.iron_spells_genesis.final_whisper" : "%1$s dissipated because of %2$s",
   "death.attack.iron_spells_genesis.final_whisper.item" : "%1$s dissipated because of %2$s's %3$s",
+  "death.attack.iron_spells_genesis.blood_boss": "%1$s willingly became a drop in the chaos spilled by %2$s",
+  "death.attack.iron_spells_genesis.blood_boss.item": "%1$s willingly became a drop in the chaos spilled by %2$s using %3$s",
+  "death.attack.blood_field": "%1$s was reduced to blood droplets in Blood Field.",
+  "death.attack.blood_field.item": "%1$s was reduced to blood droplets in Blood Field summoned using %3$s.",
 
   "ui.iron_spells_genesis.research_warning": "Hold to learn (needs a %s)",
   "ui.iron_spells_genesis.percent_force_damage": "Percent Force Damage：%d%%",
@@ -240,7 +244,9 @@
   "entity.iron_spells_genesis.dead_star_decree_comet": "Dead Star Decree - Comet",
   "entity.iron_spells_genesis.dead_star_decree_large_comet": "Dead Star Decree - Large Comet",
   "entity.iron_spells_genesis.lighting_bolt": "Rainbow Lighting",
-  "entity.iron_spells_genesis.blood_boss": "§4haos Sequence·Blood Boss",
+  "entity.iron_spells_genesis.blood_boss": "§4Chaos Sequence·Blood Boss",
+  "entity.iron_spells_genesis.blood_dagger": "Blood Dagger",
+  "entity.iron_spells_genesis.blood_field": "Blood Field",
 
   "damage_type.iron_spells_genesis.celestial_source_magic": "Celestial Source Magic Damage",
   "damage_type.iron_spells_genesis.chaos_magic": "Chaos Magic Damage",
