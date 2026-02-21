@@ -206,7 +206,7 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
                 .add(ForgeMod.ENTITY_GRAVITY.get(), 0.03)
                 .add(ForgeMod.ENTITY_REACH.get(), 3.0)
                 .add(Attributes.KNOCKBACK_RESISTANCE,0.9)
-                .add(Attributes.FOLLOW_RANGE,48)
+                .add(Attributes.FOLLOW_RANGE,128)
                 .add(AttributeRegistry.SPELL_POWER.get(), 1.25);
     }
 

@@ -1,5 +1,6 @@
 package miku.united_as_one.genesis.common.entity.boss.behavior.bloodbossskill;
 
+import miku.united_as_one.genesis.common.entity.TremorAoeEntity;
 import miku.united_as_one.genesis.common.entity.ai.ModMemoryModuleType;
 import miku.united_as_one.genesis.common.entity.boss.BloodBoss;
 import miku.united_as_one.genesis.common.entity.boss.BloodBossMoveControl;
@@ -73,6 +74,10 @@ public class GroundSlamBehavior extends AnimatedActionBehavior<BloodBoss> {
         if (abilityTimer >= SLAM_TIME && !slamDone) {
             slamDone = true;
             dealGroundSlamDamage(boss);
+            TremorAoeEntity tremor = new TremorAoeEntity(level, 5F, 0.3F, 0.5F);
+            tremor.setPos(boss.getX(), boss.getY(), boss.getZ());
+            tremor.setOwner(boss);
+            level.addFreshEntity(tremor);
         }
 
         // 在砸地时刻播放强烈音效
@@ -197,7 +202,7 @@ public class GroundSlamBehavior extends AnimatedActionBehavior<BloodBoss> {
         AABB attackBox = AABB.ofSize(
                 attackCenter,
                 5.0,   // 宽
-                2.5,   // 高（贴地就够）
+                0.8,
                 5.0
         );
 

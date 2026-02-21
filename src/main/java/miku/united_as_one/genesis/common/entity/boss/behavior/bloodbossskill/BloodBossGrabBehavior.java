@@ -1,6 +1,7 @@
 package miku.united_as_one.genesis.common.entity.boss.behavior.bloodbossskill;
 
 import miku.united_as_one.genesis.common.entity.ThrowBloodAndWounds;
+import miku.united_as_one.genesis.common.entity.TremorAoeEntity;
 import miku.united_as_one.genesis.common.entity.ai.ModMemoryModuleType;
 import miku.united_as_one.genesis.common.entity.boss.BloodBoss;
 import miku.united_as_one.genesis.common.entity.boss.BloodBossMoveControl;
@@ -269,6 +270,11 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
         }
 
         if (slamTimer >= IMPACT_TIME && !impactDealt) {
+            TremorAoeEntity tremor = new TremorAoeEntity(level, 10.0F, 0.3F, 0.6F);
+            tremor.setPos(boss.getX(), boss.getY(), boss.getZ());
+            tremor.setOwner(boss);
+            level.addFreshEntity(tremor);
+
             spawnArrowCycle(level, boss);
 
             spawnArrowArea(level, boss);
