@@ -1,16 +1,19 @@
 package miku.united_as_one.genesis.common.entity.boss.behavior.bloodbossskill;
 
+import miku.united_as_one.genesis.common.entity.ThrowBloodAndWounds;
 import miku.united_as_one.genesis.common.entity.ai.ModMemoryModuleType;
 import miku.united_as_one.genesis.common.entity.boss.BloodBoss;
 import miku.united_as_one.genesis.common.entity.boss.BloodBossMoveControl;
 import miku.united_as_one.genesis.common.entity.boss.SkillMovementTask;
 import miku.united_as_one.genesis.common.entity.boss.behavior.AnimatedActionBehavior;
+import miku.united_as_one.genesis.init.registry.EntityRegistry;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.behavior.EntityTracker;
@@ -266,11 +269,72 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
         }
 
         if (slamTimer >= IMPACT_TIME && !impactDealt) {
+            spawnArrowCycle(level, boss);
+
+            spawnArrowArea(level, boss);
+
             performImpact(level, boss);
         }
     }
 
+    private static void spawnArrowArea(ServerLevel level, BloodBoss boss) {
+        int arrowCount = 100;
+        double maxRadius = 12.0;
+        double baseHeight = 15.0; // 基础高度
+        RandomSource random = level.random;
 
+        for (int i = 0; i < arrowCount; i++) {
+            double randomValue = random.nextDouble();
+            double randomRadius = Math.sqrt(randomValue) * maxRadius;
+
+            if (randomRadius < 1.0) {
+                randomRadius = 1.0 + random.nextDouble() * (maxRadius - 1.0);
+            }
+
+            float angle = random.nextFloat() * (float) (2 * Math.PI);
+
+            double y = boss.getY() + baseHeight + (random.nextDouble() - 0.5) * 10.0;
+            double x = boss.getX() + Math.cos(angle) * randomRadius;
+            double z = boss.getZ() + Math.sin(angle) * randomRadius;
+
+            ThrowBloodAndWounds arrow = new ThrowBloodAndWounds(EntityRegistry.THROW_BLOOD_AND_WOUNDS.get(), level);
+            arrow.setOwner(boss);
+            arrow.setPos(x, y, z);
+
+            double mx = (random.nextDouble() - 0.5) * 0.3;
+            double mz = (random.nextDouble() - 0.5) * 0.3;
+            double my = -1.5 - random.nextDouble() * 1.0;
+
+            arrow.shoot(mx, my, mz, (float)Math.sqrt(mx*mx + my*my + mz*mz), 0.0F);
+
+            arrow.setPierceLevel((byte) 100);
+
+            level.addFreshEntity(arrow);
+        }
+    }
+    private static void spawnArrowCycle(ServerLevel level, BloodBoss boss) {
+        // 在周围一圈天上生成箭并使其垂直钉向地面，覆盖整个区域
+        int arrowCount = 32; // 增加箭的数量以更好地覆盖区域
+        double radius1 = 12.0; // 扩大半径距离以覆盖更大范围
+        double height = 15.0; // 提高高度以确保箭能覆盖更广的区域
+
+        for (int i = 0; i < arrowCount; i++) {
+            float angle = (float) (i * (2 * Math.PI / arrowCount));
+            double x = boss.getX() + Math.cos(angle) * radius1;
+            double z = boss.getZ() + Math.sin(angle) * radius1;
+            double y = boss.getY() + height;
+
+            // 创建箭实体
+            ThrowBloodAndWounds arrow = new ThrowBloodAndWounds(EntityRegistry.THROW_BLOOD_AND_WOUNDS.get(), level);
+            arrow.setOwner(boss);
+            arrow.setPos(x, y, z);
+            arrow.setDeltaMovement(0, -2.0, 0); // 增加下降速度以更快命中地面
+            arrow.setPierceLevel((byte) 0); // 不穿透
+
+            // 发射箭
+            level.addFreshEntity(arrow);
+        }
+    }
 
 
     private void performImpact(ServerLevel level, BloodBoss boss) {
@@ -286,11 +350,11 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
         // 对范围内的其他实体造成伤害
         applyAreaOfEffectDamage(level, boss);
 
-//        level.sendParticles(
-//                ParticleTypes.EXPLOSION_EMITTER,
-//                boss.getX(), boss.getY(), boss.getZ(),
-//                1, 0, 0, 0, 0
-//        );
+        level.sendParticles(
+                ParticleTypes.EXPLOSION_EMITTER,
+                boss.getX(), boss.getY(), boss.getZ(),
+                1, 0, 0, 0, 0
+        );
 
         level.playSound(
                 null, boss.getX(), boss.getY(), boss.getZ(),

@@ -110,4 +110,11 @@ public class EntityRegistry {
                     .sized(4.0F, 1.2F)
                     .clientTrackingRange(64)
                     .build("blood_field"));
+
+    public static final RegistryObject<EntityType<ThrowBloodAndWounds>> THROW_BLOOD_AND_WOUNDS = ENTITY_TYPES.register("throw_blood_and_wounds",
+            () -> EntityType.Builder.of(ThrowBloodAndWounds::new, MobCategory.MISC)
+                    .sized(0.5F, 0.5F)
+                    .clientTrackingRange(4)
+                    .updateInterval(20)
+                    .build("throw_blood_and_wounds"));
 }

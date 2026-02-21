@@ -25,6 +25,7 @@ public class RenderRegistry {
     public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(EntityType.LIGHTNING_BOLT, PurpleLightningRenderer::new);
         event.registerEntityRenderer(EntityRegistry.CUSTOM_ARROW.get(), CustomArrowRenderer::new);
+        event.registerEntityRenderer(EntityRegistry.THROW_BLOOD_AND_WOUNDS.get(), ThrowBloodAndWoundsRenderer::new);
         event.registerEntityRenderer(EntityRegistry.BLOOD_BOSS.get(), BloodBossRenderer::new);
         event.registerEntityRenderer(EntityRegistry.BLOOD_TENTACLE.get(), BloodTentacleRenderer::new);
         event.registerEntityRenderer(EntityRegistry.BLOOD_BOSS_FIRE_ERUPTION_AOE.get(), NoopRenderer::new);
