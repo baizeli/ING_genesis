@@ -38,9 +38,9 @@ public class BloodBossFireEruptionAoe extends FireEruptionAoe {
         DamageSources.ignoreNextKnockback(target);
         if (target.hurt(damageSource, this.getDamage())) {
             target.setDeltaMovement(target.getDeltaMovement().add(0.0, 0.65, 0.0));
+            target.invulnerableTime = 0;
             target.hurtMarked = true;
         }
-
     }
 
     @Override

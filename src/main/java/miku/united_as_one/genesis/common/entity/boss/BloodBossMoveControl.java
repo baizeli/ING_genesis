@@ -4,10 +4,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction.Axis;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
-import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -30,9 +28,6 @@ public class BloodBossMoveControl extends MoveControl {
 
     @Override
     public void tick() {
-
-
-        
         if (!skillTasks.isEmpty()) {
             Vec3 total = Vec3.ZERO;
 
@@ -49,27 +44,20 @@ public class BloodBossMoveControl extends MoveControl {
                 }
             }
 
-            
             mob.setDeltaMovement(
                     mob.getDeltaMovement().add(total)
             );
-
-            
         }
-
-        
 
         if (!boss.isCasting()) {
             super.tick();
             return;
         }
 
-
         if (this.operation != Operation.MOVE_TO) {
             super.tick();
             return;
         }
-
 
         if (this.boss.isCastingSkill()) {
             if (this.boss.getTarget() != null) {
@@ -82,7 +70,6 @@ public class BloodBossMoveControl extends MoveControl {
                 this.boss.setYRot(targetYaw);
             }
         }
-
 
         this.operation = Operation.WAIT;
 
@@ -150,7 +137,6 @@ public class BloodBossMoveControl extends MoveControl {
         this.mob.setXxa(strafe);
     }
 
-    
 
     public void addSkillMovement(SkillMovementTask task) {
         task.start(mob);
@@ -177,6 +163,6 @@ public class BloodBossMoveControl extends MoveControl {
                 Mth.floor(nextZ)
         );
 
-        return !this.mob.level().getBlockState(groundPos).isAir();
+        return !this.mob.level().getBlockState(groundPos).isAir() || this.mob.isInWaterOrBubble();
     }
 }

@@ -197,6 +197,7 @@ public class FuckFont1 extends Font {
 
         private final int index; // 第几个字（用于相位偏移）
         private static final int SEGMENTS = 256; // 每个字符的分段数
+        private final int[] segmentColors = new int[SEGMENTS + 1];
 
         public MyStringRenderOutput(MultiBufferSource bufferSource, float x, float y,
                                     int color, boolean dropShadow, Matrix4f pose,
@@ -240,7 +241,6 @@ public class FuckFont1 extends Font {
             float advance = glyphInfo.getAdvance(bold);
 
             // 生成多段颜色
-            int[] segmentColors = new int[SEGMENTS + 1];
             for (int i = 0; i <= SEGMENTS; i++) {
                 float phase = (float) i / SEGMENTS;
                 segmentColors[i] = calcColor(phase, this.color);

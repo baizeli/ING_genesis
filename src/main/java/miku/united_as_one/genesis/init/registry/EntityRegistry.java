@@ -5,7 +5,8 @@ import miku.united_as_one.genesis.common.entity.*;
 import miku.united_as_one.genesis.common.entity.LightningBolt;
 import miku.united_as_one.genesis.common.entity.boss.BloodBoss;
 import miku.united_as_one.genesis.common.entity.spells.blood_boss.BloodBossFireEruptionAoe;
-import miku.united_as_one.genesis.common.entity.spells.blood_boss.fiery_dagger.BloodBossFieryDaggerEntity;
+import miku.united_as_one.genesis.common.entity.spells.blood_boss.blood_dagger.BloodDaggerEntity;
+import miku.united_as_one.genesis.common.entity.spells.blood_boss.blood_dagger.BloodField;
 import miku.united_as_one.genesis.common.entity.spells.celestial_source.*;
 import miku.united_as_one.genesis.common.entity.spells.celestial_source.notuse.*;
 import miku.united_as_one.genesis.Genesis;
@@ -94,11 +95,19 @@ public class EntityRegistry {
                     .clientTrackingRange(64)
                     .build("blood_boss_fire_eruption"));
 
-    public static final RegistryObject<EntityType<BloodBossFieryDaggerEntity>> BLOOD_BOSS_FIERY_DAGGER_PROJECTILE = ENTITY_TYPES.register("blood_boss_fiery_dagger",
+    public static final RegistryObject<EntityType<BloodDaggerEntity>> BLOOD_DAGGER_PROJECTILE = ENTITY_TYPES.register("blood_dagger",
             () -> EntityType.Builder.of(
-                            (EntityType<BloodBossFieryDaggerEntity> type, Level level) -> new BloodBossFieryDaggerEntity(type, level),
+                            (EntityType<BloodDaggerEntity> type, Level level) -> new BloodDaggerEntity(type, level),
                             MobCategory.MISC)
                     .sized(0.5F, 0.5F)
                     .clientTrackingRange(64)
-                    .build("blood_boss_fiery_dagger"));
+                    .build("blood_dagger"));
+
+    public static final RegistryObject<EntityType<BloodField>> BLOOD_FIELD = ENTITY_TYPES.register("blood_field",
+            () -> EntityType.Builder.of(
+                            (EntityType<BloodField> type, Level level) -> new BloodField(type, level),
+                            MobCategory.MISC)
+                    .sized(4.0F, 1.2F)
+                    .clientTrackingRange(64)
+                    .build("blood_field"));
 }

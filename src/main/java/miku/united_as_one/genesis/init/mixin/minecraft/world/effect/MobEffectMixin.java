@@ -1,6 +1,7 @@
 package miku.united_as_one.genesis.init.mixin.minecraft.world.effect;
 
 import miku.united_as_one.genesis.Genesis;
+import miku.united_as_one.genesis.common.entity.boss.BloodBoss;
 import miku.united_as_one.genesis.common.spell.chaos.ReversePlagueSpell;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffect;
@@ -25,6 +26,13 @@ public class MobEffectMixin {
     @Inject(method = "applyInstantenousEffect", at = @At("HEAD"), cancellable = true)
     private void applyInstantenousEffect(Entity source, Entity indirectSource, LivingEntity livingEntity, int amplifier, double health, CallbackInfo ci) {
         if (livingEntity.level() instanceof ServerLevel serverLevel) {
+            MobEffect mobEffect = ((MobEffect) (Object) this);
+            if (livingEntity instanceof BloodBoss && !mobEffect.isBeneficial() &&
+                    !mobEffect.getDescriptionId().contains(Genesis.MOD_ID) &&
+                    !mobEffect.getDescriptionId().contains("irons_spellbooks")) {
+                ci.cancel();
+            }
+
             Map<LivingEntity, LivingEntity> entityMap = new HashMap<>();
             ReversePlagueSpell.entityMap.forEach(((uuid, uuid1) -> {
                 LivingEntity living = (LivingEntity) serverLevel.getEntity(uuid);
@@ -37,7 +45,7 @@ public class MobEffectMixin {
             if (entityMap.containsKey(livingEntity) && entityMap.get(livingEntity) != null) {
                 if (entityMap.get(livingEntity) != null && entityMap.get(livingEntity).getPersistentData().getLong(Genesis.MOD_ID + "remaining_time") >= serverLevel.getGameTime()) {
                     if (this.category == MobEffectCategory.HARMFUL) {
-                        ((MobEffect) (Object) this).applyInstantenousEffect(source, indirectSource, entityMap.get(livingEntity), amplifier, health);
+                        mobEffect.applyInstantenousEffect(source, indirectSource, entityMap.get(livingEntity), amplifier, health);
                     }
                     ci.cancel();
                 } else {

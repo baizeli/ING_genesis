@@ -2,6 +2,8 @@ package miku.united_as_one.genesis.common.entity.boss;
 
 import com.mojang.logging.LogUtils;
 import com.mojang.serialization.Dynamic;
+import io.redspace.ironsspellbooks.IronsSpellbooks;
+import io.redspace.ironsspellbooks.api.backwards_compat.AttributeHelper;
 import io.redspace.ironsspellbooks.api.config.IronConfigParameters;
 import io.redspace.ironsspellbooks.api.config.SpellConfigManager;
 import io.redspace.ironsspellbooks.api.entity.IMagicEntity;
@@ -23,8 +25,10 @@ import io.redspace.ironsspellbooks.entity.mobs.wizards.fire_boss.ExtendedServerB
 import io.redspace.ironsspellbooks.network.EntityEventPacket;
 import io.redspace.ironsspellbooks.registries.MobEffectRegistry;
 import io.redspace.ironsspellbooks.setup.PacketDistributor;
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.common.entity.ai.ModMemoryModuleType;
 import miku.united_as_one.genesis.common.entity.boss.behavior.bloodbossskill.BloodBossEmergingBehavior;
+import miku.united_as_one.genesis.common.entity.boss.damage.BloodBossDamageSource;
 import miku.united_as_one.genesis.init.registry.SoundRegister;
 import miku.united_as_one.genesis.init.registry.client.ParticleRegistry;
 import net.minecraft.nbt.CompoundTag;
@@ -51,6 +55,8 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
+import net.minecraft.world.entity.ai.navigation.AmphibiousPathNavigation;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.projectile.Projectile;
@@ -60,6 +66,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
 import net.minecraftforge.entity.IEntityAdditionalSpawnData;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
@@ -68,10 +75,7 @@ import software.bernie.geckolib.core.animation.*;
 import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 import javax.annotation.Nullable;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 import net.minecraft.world.BossEvent;
 
@@ -80,39 +84,13 @@ import static miku.united_as_one.genesis.Genesis.MODID;
 public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAttacker, IEntityAdditionalSpawnData, IClientEventEntity, IMagicEntity {
     private static final Logger BLOOD_BOSS_LOGGER = LogUtils.getLogger();
 
-
-
-    int spawnTimer;
-    private final AnimationController<BloodBoss> skillAnimationController;
-    RawAnimation animationToPlay;
-    private final AnimationController<BloodBoss> animationControllerWalk;
-    private AnimatableInstanceCache factory = new SingletonAnimatableInstanceCache(this);
-
-    private AbstractSpell lastCastSpellType = SpellRegistry.none();
-    private AbstractSpell instantCastSpellType = SpellRegistry.none();
-    private boolean cancelCastAnimation = false;
-
-    // 动画控制器
-    private final AnimationController<BloodBoss> instantCastController;
-    private final AnimationController<BloodBoss> longCastController;
-    private final AnimationController<BloodBoss> continuousCastController;
-
     // 魔法相关字段
     private static final EntityDataAccessor<Boolean> DATA_CANCEL_CAST = SynchedEntityData.defineId(BloodBoss.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> DATA_DRINKING_POTION = SynchedEntityData.defineId(BloodBoss.class, EntityDataSerializers.BOOLEAN);
-    private static final AttributeModifier SPEED_MODIFIER_DRINKING = new AttributeModifier(UUID.fromString("5CD17E52-A79A-43D3-A529-90FDE04B181E"), "Drinking speed penalty", -0.15, AttributeModifier.Operation.MULTIPLY_TOTAL);
-
-    private final MagicData magicData = new MagicData(true);
-    @Nullable
-    private SpellData castingSpell;
-    private int drinkTime;
-    private boolean hasUsedSingleAttack;
-    private boolean recreateSpell;
-    //用于延迟释放瞬时法术
-    private int delayedCastTick = -1;
-    private AbstractSpell delayedSpell;
-    private int delayedSpellLevel;
-
+    private static final AttributeModifier SPEED_MODIFIER_DRINKING = new AttributeModifier(
+            UUID.fromString("5CD17E52-A79A-43D3-A529-90FDE04B181E"),
+            "Drinking speed penalty", -0.15, AttributeModifier.Operation.MULTIPLY_TOTAL
+    );
 
     private static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle"); // 待机
     private static final RawAnimation WALK = RawAnimation.begin().thenLoop("walk_cycle"); // 行走循环
@@ -121,8 +99,19 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     private static final RawAnimation CAST_IDLE = RawAnimation.begin().thenLoop("施法待机");
     private static final RawAnimation CAST_WALK = RawAnimation.begin().thenLoop("施法行走循环");
 
+    private static final BossbarManager.BossbarSprite BLOOD_BOSSBAR_SPRITE = new BossbarManager.BossbarSprite(
+            new ResourceLocation(MODID, "boss_bars/blood_bossbar"),
+            219,
+            45,
+            47,
+            -1
+    );
+
     private static final int CASTING_POST_DELAY = 20;
-    private int lastCastTick = -100;
+
+    private static final EntityDataAccessor<Boolean> DATA_IS_CASTING_SKILL = SynchedEntityData.defineId(BloodBoss.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> DATA_IS_VISIBLE = SynchedEntityData.defineId(BloodBoss.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Integer> BOSS_STAGE_DATA = SynchedEntityData.defineId(BloodBoss.class, EntityDataSerializers.INT);
 
     // 音乐播放事件
     public static final byte START_MUSIC = 10;
@@ -132,24 +121,44 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     public static final byte START_BOSSBAR = 12;
     public static final byte STOP_BOSSBAR  = 13;
 
-    private ExtendedServerBossEvent bossEvent;
-
-
-    private static final BossbarManager.BossbarSprite BLOOD_BOSSBAR_SPRITE =
-            new BossbarManager.BossbarSprite(
-                    new ResourceLocation(MODID, "boss_bars/blood_bossbar"),
-                    219,
-                    45,
-                    47,
-                    -1
-            );
-
-    private static final EntityDataAccessor<Boolean> DATA_IS_CASTING_SKILL = SynchedEntityData.defineId(BloodBoss.class, EntityDataSerializers.BOOLEAN);
-    private static final EntityDataAccessor<Boolean> DATA_IS_VISIBLE = SynchedEntityData.defineId(BloodBoss.class, EntityDataSerializers.BOOLEAN);
-    private static final EntityDataAccessor<Integer> BOSS_STAGE_DATA = SynchedEntityData.defineId(BloodBoss.class, EntityDataSerializers.INT);
-
     //刀光
     private final TrailComponent trailComponent = new TrailComponent(64);
+
+    // 动画控制器
+    private final AnimationController<BloodBoss> instantCastController;
+    private final AnimationController<BloodBoss> longCastController;
+    private final AnimationController<BloodBoss> continuousCastController;
+
+    private final AnimatableInstanceCache factory = new SingletonAnimatableInstanceCache(this);
+
+    private final MagicData magicData = new MagicData(true);
+
+    private int spawnTimer;
+    private final AnimationController<BloodBoss> skillAnimationController;
+    private final AnimationController<BloodBoss> animationControllerWalk;
+    private RawAnimation animationToPlay;
+
+    private AbstractSpell lastCastSpellType = SpellRegistry.none();
+    private AbstractSpell instantCastSpellType = SpellRegistry.none();
+    private boolean cancelCastAnimation = false;
+
+    @Nullable
+    private SpellData castingSpell;
+    private int drinkTime;
+    private boolean hasUsedSingleAttack;
+    private boolean recreateSpell;
+    //用于延迟释放瞬时法术
+    private int delayedCastTick = -1;
+    private int delayedSpellLevel;
+    private AbstractSpell delayedSpell;
+
+    private int lastCastTick = -100;
+
+    private ExtendedServerBossEvent bossEvent;
+
+    private int shouldSetWalkTransitionLengthDelay = 0;
+
+    //================================================================ 方法 ========================================================================
 
     public TrailComponent getTrailComponent() {
         return trailComponent;
@@ -181,8 +190,6 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         return this.entityData.get(DATA_IS_VISIBLE);
     }
 
-
-
     //属性
     public static AttributeSupplier.Builder setAttributes() {
         return Mob.createMobAttributes()
@@ -198,17 +205,14 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
                 .add(AttributeRegistry.SPELL_POWER.get(), 1.25);
     }
 
-
-
     public boolean isReallyCasting() {
-
         if (this.magicData.isCasting()) return true;
         if (this.castingSpell != null) return true;
-        if (this.tickCount - this.lastCastTick <= CASTING_POST_DELAY) return true;
-        return false;
+        return this.tickCount - this.lastCastTick <= CASTING_POST_DELAY;
     }
 
     //================================================================ 生命周期 ========================================================================
+
     public BloodBoss(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);
         this.moveControl = new BloodBossMoveControl(this);
@@ -218,11 +222,9 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         this.animationControllerWalk = new AnimationController<>(this, "walk_controller", 10, this::walkPredicate);
         this.skillAnimationController = new AnimationController<>(this, "skill_animation_controller", 0, this::skillAnimationPredicate);
 
-
         this.instantCastController = new AnimationController<>(this, "instant_cast", 0, this::instantCastingPredicate);
         this.longCastController = new AnimationController<>(this, "long_cast", 0, this::longCastingPredicate);
         this.continuousCastController = new AnimationController<>(this, "continuous_cast", 0, this::continuousCastingPredicate);
-
 
         // 初始化魔法数据
         this.magicData.setSyncedData(new SyncedSpellData(this));
@@ -232,27 +234,33 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         this.createBossEvent();
         this.bossEvent.setDarkenScreen(true); // 可选：压暗屏幕
         this.setInvisible(true);
-
     }
 
-    @org.jetbrains.annotations.Nullable
     @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType reason, @org.jetbrains.annotations.Nullable SpawnGroupData spawnData, @org.jetbrains.annotations.Nullable CompoundTag dataTag) {
+    protected @NotNull PathNavigation createNavigation(@NotNull Level level) {
+        return new AmphibiousPathNavigation(this, level);
+    }
 
-        this.getBrain().setMemoryWithExpiry(MemoryModuleType.IS_EMERGING, Unit.INSTANCE, BloodBossEmergingBehavior.EMERGE_SPAWN_DURATION);
+    @Nullable
+    @Override
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, @NotNull DifficultyInstance difficulty, @NotNull MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag dataTag) {
+        int extraPlayers = Math.max(0, level.players().stream().filter((player) -> this.distanceToSqr(player) < 3600.0 && !player.isSpectator() && !player.isCreative()).toList().size() - 1);
+        double extraHealthPercent = extraPlayers * 0.4 + extraPlayers * extraPlayers * 0.1;
 
+        if (extraHealthPercent != 0.0) {
+            Objects.requireNonNull(this.getAttribute(Attributes.MAX_HEALTH)).addPermanentModifier(new AttributeModifier(AttributeHelper.uuidFromId(IronsSpellbooks.id("player_scale")), "player_scale", extraHealthPercent, AttributeModifier.Operation.MULTIPLY_TOTAL));
+        }
+
+        this.getBrain().setMemoryWithExpiry(MemoryModuleType.IS_EMERGING, Unit.INSTANCE,
+                BloodBossEmergingBehavior.EMERGE_SPAWN_DURATION);
         this.playSound(SoundEvents.WARDEN_AGITATED, 5.0F, 1.0F);
-        if (!this.level.isClientSide()){
 
+        if (!this.level.isClientSide()){
             this.setVisable(this.getBossStage() > 0);
         }
 
-
         return super.finalizeSpawn(level, difficulty, reason, spawnData, dataTag);
     }
-
-
-
 
     @Override
     protected boolean isImmobile() {
@@ -263,7 +271,7 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     }
 
     @Override
-    public boolean isInvulnerableTo(DamageSource source) {
+    public boolean isInvulnerableTo(@NotNull DamageSource source) {
         if(this.getBrain().getMemory(MemoryModuleType.IS_EMERGING).isPresent())
             return true;
         return super.isInvulnerableTo(source);
@@ -287,7 +295,9 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         float healthPercentage = this.getHealth() / this.getMaxHealth();
         int currentHealthSegment = (int) ((1.0f - healthPercentage) / 0.17f);
         if (currentHealthSegment > lastHealthSegment && currentHealthSegment > 0) {
-            this.addEffect(new MobEffectInstance(MobEffectRegistry.ABYSSAL_SHROUD.get(), 9 * 20, 0, false, false, false));
+            this.addEffect(new MobEffectInstance(
+                    MobEffectRegistry.ABYSSAL_SHROUD.get(), 9 * 20, 0, false, false, false
+            ));
             this.lastHealthSegment = currentHealthSegment;
         }
         if (currentHealthSegment < lastHealthSegment) {
@@ -297,20 +307,14 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
 
     @Override
     public void tick() {
-
-        if(!level.isClientSide){
+        if (!level.isClientSide) {
             detectAndApplyAbyssalAsylum();
             syncBossStageData();
-            this.setCastingSkill(
-                    this.getBrain()
-                            .getMemory(ModMemoryModuleType.IS_CASTING_SKILL.get())
-                            .orElse(false));
+            this.setCastingSkill(this.getBrain().getMemory(ModMemoryModuleType.IS_CASTING_SKILL.get()).orElse(false));
         }
 
         if (!isSpellConfigLoaded()) {
-
             return;
-
         }
         super.tick();
 
@@ -335,13 +339,10 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
                 this.bossEvent.setProgress(Mth.clamp(progress, 0.0F, 1.0F));
             }
         }
-
-
     }
 
-
     @Override
-    public void die(DamageSource cause) {
+    public void die(@NotNull DamageSource cause) {
         if (!this.level().isClientSide) {
             this.serverTriggerEvent(STOP_MUSIC);
             this.serverTriggerEvent(STOP_BOSSBAR);
@@ -356,7 +357,7 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     }
 
     @Override
-    public void remove(RemovalReason reason) {
+    public void remove(@NotNull RemovalReason reason) {
         if (!this.level().isClientSide) {
             this.serverTriggerEvent(STOP_MUSIC);
             this.serverTriggerEvent(STOP_BOSSBAR);
@@ -368,6 +369,7 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         }
         super.remove(reason);
     }
+
     @Override
     protected boolean shouldDespawnInPeaceful() {
         return false;
@@ -377,7 +379,6 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     public boolean removeWhenFarAway(double distanceToClosestPlayer) {
         return false;
     }
-
 
     @Override
     public void setTarget(@org.jetbrains.annotations.Nullable LivingEntity target) {
@@ -397,6 +398,13 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         this.entityData.define(DATA_IS_CASTING_SKILL, false);
         this.entityData.define(DATA_IS_VISIBLE, true);
         this.entityData.define(BOSS_STAGE_DATA, 0);
+    }
+
+    @Override
+    public boolean canBeAffected(MobEffectInstance effectInstance) {
+        return effectInstance.getEffect().isBeneficial() ||
+                effectInstance.getDescriptionId().contains(Genesis.MOD_ID) ||
+                effectInstance.getDescriptionId().contains("irons_spellbooks");
     }
 
     //================================================================ 魔法/法术 ========================================================================
@@ -455,7 +463,6 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
             this.magicData.resetCastingState();
         }
         this.castingSpell = null;
-
     }
 
     @Override
@@ -514,9 +521,9 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
             }
         }
     }
+
     //================================================================ 动画 ========================================================================
 
-    // 动画相关方法
     public void playAnimation(String animationId) {
         this.animationToPlay = RawAnimation.begin().thenPlay(animationId);
 
@@ -543,16 +550,14 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     }
 
     private PlayState longCastingPredicate(AnimationState<BloodBoss> event) {
-
-        if ( this.skillAnimationController.getAnimationState() != AnimationController.State.STOPPED) {
+        if (this.skillAnimationController.getAnimationState() != AnimationController.State.STOPPED) {
             return PlayState.STOP;
         }
 
         AnimationController<BloodBoss> controller = event.getController();
-        if (this.isCasting()) {
-            if (controller.getAnimationState() == AnimationController.State.STOPPED) {
-                this.setStartAnimationFromSpell(controller, this.castingSpell.getSpell());
-            }
+        if (this.isCasting() && controller.getAnimationState() == AnimationController.State.STOPPED &&
+                this.castingSpell != null) {
+            this.setStartAnimationFromSpell(controller, this.castingSpell.getSpell());
         } else if (this.lastCastSpellType.getCastType() == CastType.LONG) {
             this.setFinishAnimationFromSpell(controller, this.lastCastSpellType);
         }
@@ -561,15 +566,13 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     }
 
     private PlayState continuousCastingPredicate(AnimationState<BloodBoss> event) {
-
         if (this.skillAnimationController.getAnimationState() != AnimationController.State.STOPPED) {
             return PlayState.STOP;
         }
 
         AnimationController<BloodBoss> controller = event.getController();
-        if (this.isCasting() && this.castingSpell != null &&
-                controller.getAnimationState() == AnimationController.State.STOPPED) {
-
+        if (this.isCasting() && controller.getAnimationState() == AnimationController.State.STOPPED &&
+                this.castingSpell != null) {
             if (this.castingSpell.getSpell().getCastType() == CastType.CONTINUOUS) {
                 this.setStartAnimationFromSpell(controller, this.castingSpell.getSpell());
             }
@@ -578,15 +581,14 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
 
         return PlayState.CONTINUE;
     }
+
     private void setStartAnimationFromSpell(AnimationController<BloodBoss> controller, AbstractSpell spell) {
         spell.getCastStartAnimation().getForMob().ifPresentOrElse(animationBuilder -> {
             controller.forceAnimationReset();
             controller.setAnimation(animationBuilder);
             this.lastCastSpellType = spell;
             this.cancelCastAnimation = false;
-        }, () -> {
-            this.cancelCastAnimation = true;
-        });
+        }, () -> this.cancelCastAnimation = true);
     }
 
     private void setFinishAnimationFromSpell(AnimationController<BloodBoss> controller, AbstractSpell spell) {
@@ -598,9 +600,7 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
                 controller.transitionLength(8);
                 controller.setAnimation(animationBuilder);
                 this.lastCastSpellType = SpellRegistry.none();
-            }, () -> {
-                this.cancelCastAnimation = true;
-            });
+            }, () -> this.cancelCastAnimation = true);
         }
     }
 
@@ -611,7 +611,6 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
 
     @Override
     public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
-
         controllerRegistrar.add(animationControllerWalk);
         controllerRegistrar.add(skillAnimationController);
         controllerRegistrar.add(instantCastController);
@@ -619,11 +618,8 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         controllerRegistrar.add(continuousCastController);
     }
 
-
-    private int shouldSetWalkTransitionLengthDelay = 0;
     private PlayState walkPredicate(AnimationState<BloodBoss> state) {
         boolean isCastingSkill = this.isCastingSkill();
-
 
         if (isCastingSkill) {
             animationControllerWalk.setTransitionLength(0);
@@ -633,15 +629,13 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
             return PlayState.STOP;
         }
 
-
-
-
         if (shouldSetWalkTransitionLengthDelay <= 10) {
             animationControllerWalk.setTransitionLength(0);
             shouldSetWalkTransitionLengthDelay++;
-        }else{
+        } else {
             animationControllerWalk.setTransitionLength(10);
         }
+
         if (this.isCasting()) {
             animationControllerWalk.setAnimationSpeed(1.0);
             return state.setAndContinue(IDLE);
@@ -657,22 +651,17 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
             if (getBossStageData()<=1){
                 return state.setAndContinue(WALK);
 
-            }else {
+            } else {
                return state.setAndContinue(TENTACLE_WALKING);
             }
-
         }
 
         animationControllerWalk.setAnimationSpeed(1.0);
         return state.setAndContinue(IDLE);
     }
 
-
-
     private PlayState skillAnimationPredicate(AnimationState<BloodBoss> animationEvent) {
-
         AnimationController<BloodBoss> controller = animationEvent.getController();
-
 
         if (this.animationToPlay != null) {
             controller.forceAnimationReset();
@@ -690,19 +679,19 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         return this.getBrain().getMemory(MemoryModuleType.ATTACK_TARGET).orElse(null);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
-    public Brain<BloodBoss> getBrain() {
+    public @NotNull Brain<BloodBoss> getBrain() {
         return (Brain<BloodBoss>) super.getBrain();
     }
 
     @Override
-    protected Brain<?> makeBrain(Dynamic<?> dynamic) {
+    protected @NotNull Brain<?> makeBrain(@NotNull Dynamic<?> dynamic) {
         return BloodBossAi.makeBrain(this, dynamic);
     }
 
     @Override
     protected void customServerAiStep() {
-
         super.customServerAiStep();
 
         // 处理法术重现
@@ -813,18 +802,18 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     }
 
     public void updateStage() {
-
     }
 
     private void printLog() {
+        Brain<BloodBoss> brain = this.getBrain();
+
         BLOOD_BOSS_LOGGER.debug("==============开始打印bloodBoss信息=================");
-        BLOOD_BOSS_LOGGER.debug("当前activity: {}", this.getBrain().getActiveActivities());
+        BLOOD_BOSS_LOGGER.debug("当前activity: {}", brain.getActiveActivities());
         
         // 打印当前攻击目标实体id
-        if (this.getBrain().hasMemoryValue(MemoryModuleType.ATTACK_TARGET)) {
-            this.getBrain().getMemory(MemoryModuleType.ATTACK_TARGET).ifPresent(target -> {
-                BLOOD_BOSS_LOGGER.debug("攻击目标: {}", target.getType().getDescription().getString());
-            });
+        if (brain.hasMemoryValue(MemoryModuleType.ATTACK_TARGET)) {
+            brain.getMemory(MemoryModuleType.ATTACK_TARGET).ifPresent(target ->
+                    BLOOD_BOSS_LOGGER.debug("攻击目标: {}", target.getType().getDescription().getString()));
         } else {
             BLOOD_BOSS_LOGGER.debug("攻击目标: 无");
         }
@@ -837,27 +826,24 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         BLOOD_BOSS_LOGGER.debug("是否在地上: {}", this.onGround());
         
         // 打印当前阶段
-        if (this.getBrain().hasMemoryValue(ModMemoryModuleType.BOSS_STAGE.get())) {
-            this.getBrain().getMemory(ModMemoryModuleType.BOSS_STAGE.get()).ifPresent(stage -> {
-                BLOOD_BOSS_LOGGER.debug("当前阶段: {}", stage);
-            });
+        if (brain.hasMemoryValue(ModMemoryModuleType.BOSS_STAGE.get())) {
+            brain.getMemory(ModMemoryModuleType.BOSS_STAGE.get()).ifPresent(stage ->
+                    BLOOD_BOSS_LOGGER.debug("当前阶段: {}", stage));
         } else {
             BLOOD_BOSS_LOGGER.debug("当前阶段: 无");
         }
         
         // 检查移动目标记忆
-        if (this.getBrain().hasMemoryValue(MemoryModuleType.WALK_TARGET)) {
-            this.getBrain().getMemory(MemoryModuleType.WALK_TARGET).ifPresent(walkTarget -> {
-                BLOOD_BOSS_LOGGER.debug("Walk target: {}", walkTarget.getTarget().currentBlockPosition());
-            });
+        if (brain.hasMemoryValue(MemoryModuleType.WALK_TARGET)) {
+            brain.getMemory(MemoryModuleType.WALK_TARGET).ifPresent(walkTarget ->
+                    BLOOD_BOSS_LOGGER.debug("Walk target: {}", walkTarget.getTarget().currentBlockPosition()));
         } else {
             BLOOD_BOSS_LOGGER.debug("Walk target: 无");
         }
         
         // 打印实体类型计数
-        if (this.getBrain().hasMemoryValue(ModMemoryModuleType.ENTITY_TYPE_COUNT.get())) {
-            this.getBrain()
-                    .getMemory(ModMemoryModuleType.ENTITY_TYPE_COUNT.get())
+        if (brain.hasMemoryValue(ModMemoryModuleType.ENTITY_TYPE_COUNT.get())) {
+            brain.getMemory(ModMemoryModuleType.ENTITY_TYPE_COUNT.get())
                     .ifPresent(entityTypeCount -> {
                         BLOOD_BOSS_LOGGER.debug(
                                 "Total entity types: {}",
@@ -880,9 +866,8 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         }
 
         // 打印实体信息
-        if (this.getBrain().hasMemoryValue(ModMemoryModuleType.NBT_TEST_MEMORY_MODULE.get())) {
-            Optional<List<CompoundTag>> memory = this.getBrain()
-                    .getMemory(ModMemoryModuleType.NBT_TEST_MEMORY_MODULE.get());
+        if (brain.hasMemoryValue(ModMemoryModuleType.NBT_TEST_MEMORY_MODULE.get())) {
+            Optional<List<CompoundTag>> memory = brain.getMemory(ModMemoryModuleType.NBT_TEST_MEMORY_MODULE.get());
 
             memory.ifPresent(stomach -> {
                 BLOOD_BOSS_LOGGER.debug(
@@ -905,10 +890,7 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         }
     }
 
-
-
     //================================================================ 其他方法 ========================================================================
-
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
@@ -916,12 +898,12 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
             return false;
         }
 
-
         double threshold = this.getMaxHealth() * 0.025;
 
         if (amount>threshold){
             amount = (float)(threshold + (amount - threshold)*0.7);
         }
+
         if ( source.getEntity() instanceof LivingEntity target){
             this.setTarget(target);
         }
@@ -930,7 +912,6 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     }
 
     private void createBossEvent() {
-
         this.bossEvent = (ExtendedServerBossEvent)(
                 new ExtendedServerBossEvent(
                         this.getUUID(),
@@ -941,12 +922,12 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         ).setCreateWorldFog(true);
         this.bossEvent.setDarkenScreen(true);
     }
+
     @Override
-    public void load(CompoundTag compound) {
+    public void load(@NotNull CompoundTag compound) {
         super.load(compound);
 
         if (!this.level.isClientSide) {
-
             // 同步血条进度
             if (this.bossEvent != null) {
                 float progress = this.getHealth() / this.getMaxHealth();
@@ -954,6 +935,7 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
                 this.bossEvent.setVisible(this.isAlive()); // 根据存活状态设置可见性
             }
         }
+
         if (!this.level.isClientSide) {
             this.createBossEvent();
         }
@@ -962,26 +944,15 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     @Override
     public void handleClientEvent(byte eventId) {
         switch (eventId) {
-            case START_MUSIC -> {
-                MusicManager.createEvent(
-                        this,
-                        new BloodBossMusicHandler(getBossMusicEvent())
-                );
-            }
-            case STOP_MUSIC -> {
-                MusicManager.stopEvent(this.getUUID());
-            }
-
-            case START_BOSSBAR -> {
-                BossbarManager.startTracking(this.getUUID(), BLOOD_BOSSBAR_SPRITE);
-            }
-
-            case STOP_BOSSBAR -> {
-                BossbarManager.stopTracking(this.getUUID());
-            }
+            case START_MUSIC -> MusicManager.createEvent(
+                    this,
+                    new BloodBossMusicHandler(getBossMusicEvent())
+            );
+            case STOP_MUSIC -> MusicManager.stopEvent(this.getUUID());
+            case START_BOSSBAR -> BossbarManager.startTracking(this.getUUID(), BLOOD_BOSSBAR_SPRITE);
+            case STOP_BOSSBAR -> BossbarManager.stopTracking(this.getUUID());
         }
     }
-
 
     private void spawnTrailParticles() {
         Vec3 motion = this.getDeltaMovement();
@@ -1005,7 +976,6 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
 
             Vec3 basePos = this.position().subtract(direction.scale(backOffset));
 
-
             double yOffset = this.random.nextDouble() * height;
 
             double xzSpread = 1d;
@@ -1017,7 +987,6 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
                     box.minY + yOffset,
                     basePos.z + zOffset
             );
-
 
             if (this.random.nextInt(5) == 0) {
                 this.level().addParticle(
@@ -1040,18 +1009,20 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         return SoundRegister.BLOOD_BOSS_MUSIC.get();
     }
 
-    public void startSeenByPlayer(ServerPlayer pPlayer) {
+    public void startSeenByPlayer(@NotNull ServerPlayer pPlayer) {
         super.startSeenByPlayer(pPlayer);
+
         this.bossEvent.addPlayer(pPlayer);
-        PacketDistributor.sendToPlayer(pPlayer, new EntityEventPacket(this, (byte)START_BOSSBAR));
-        PacketDistributor.sendToPlayer(pPlayer, new EntityEventPacket(this, (byte)START_MUSIC));
+        PacketDistributor.sendToPlayer(pPlayer, new EntityEventPacket<>(this, START_BOSSBAR));
+        PacketDistributor.sendToPlayer(pPlayer, new EntityEventPacket<>(this, START_MUSIC));
     }
 
-    public void stopSeenByPlayer(ServerPlayer pPlayer) {
+    public void stopSeenByPlayer(@NotNull ServerPlayer pPlayer) {
         super.stopSeenByPlayer(pPlayer);
+
         this.bossEvent.removePlayer(pPlayer);
-        PacketDistributor.sendToPlayer(pPlayer, new EntityEventPacket(this, (byte)STOP_BOSSBAR));
-        PacketDistributor.sendToPlayer(pPlayer, new EntityEventPacket(this, (byte)STOP_MUSIC));
+        PacketDistributor.sendToPlayer(pPlayer, new EntityEventPacket<>(this, STOP_BOSSBAR));
+        PacketDistributor.sendToPlayer(pPlayer, new EntityEventPacket<>(this, STOP_MUSIC));
     }
 
     @Override
@@ -1063,10 +1034,7 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     public boolean setTeleportLocationBehindTarget(int distance) {
         // 自定义传送位置逻辑
         LivingEntity target = this.getTarget();
-        if (target != null) {
-            return true;
-        }
-        return false;
+        return target != null;
     }
 
     @Override
@@ -1094,13 +1062,12 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         if (!this.level.isClientSide) {
             this.entityData.set(DATA_DRINKING_POTION, true);
             this.drinkTime = 35;
-            AttributeInstance attributeinstance = this.getAttribute(Attributes.MOVEMENT_SPEED);
+
+            AttributeInstance attributeinstance = Objects.requireNonNull(this.getAttribute(Attributes.MOVEMENT_SPEED));
             attributeinstance.removeModifier(SPEED_MODIFIER_DRINKING);
             attributeinstance.addTransientModifier(SPEED_MODIFIER_DRINKING);
         }
     }
-
-
 
     @Override
     public void writeSpawnData(FriendlyByteBuf friendlyByteBuf) {
@@ -1115,7 +1082,9 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     private void finishDrinkingPotion() {
         this.entityData.set(DATA_DRINKING_POTION, false);
         this.heal(Math.min(Math.max(10.0F, this.getMaxHealth() / 10.0F), this.getMaxHealth() / 4.0F));
-        this.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(SPEED_MODIFIER_DRINKING);
+
+        Objects.requireNonNull(this.getAttribute(Attributes.MOVEMENT_SPEED)).removeModifier(SPEED_MODIFIER_DRINKING);
+
         if (!this.isSilent()) {
             this.level().playSound(null, this.getX(), this.getY(), this.getZ(),
                     SoundEvents.WITCH_DRINK, this.getSoundSource(), 1.0F,
@@ -1125,20 +1094,23 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
 
     // 添加NBT数据保存和读取
     @Override
-    public void addAdditionalSaveData(CompoundTag compound) {
+    public void addAdditionalSaveData(@NotNull CompoundTag compound) {
         super.addAdditionalSaveData(compound);
+
         this.magicData.getSyncedData().saveNBTData(compound, this.level.registryAccess());
         compound.putBoolean("usedSpecial", this.hasUsedSingleAttack);
     }
 
     @Override
-    public void readAdditionalSaveData(CompoundTag compound) {
+    public void readAdditionalSaveData(@NotNull CompoundTag compound) {
         super.readAdditionalSaveData(compound);
+
         SyncedSpellData syncedSpellData = new SyncedSpellData(this);
         syncedSpellData.loadNBTData(compound, this.level.registryAccess());
         if (syncedSpellData.isCasting()) {
             this.recreateSpell = true;
         }
+
         this.magicData.setSyncedData(syncedSpellData);
         this.hasUsedSingleAttack = compound.getBoolean("usedSpecial");
     }
@@ -1151,7 +1123,7 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
      * @return 基础攻击伤害值
      */
     public float getBaseAttackDamage() {
-        return (float) this.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE);
+        return (float) this.getAttributeValue(Attributes.ATTACK_DAMAGE);
     }
     
     /**
@@ -1164,6 +1136,6 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         float baseDamage = getBaseAttackDamage();
         float skillDamage = baseDamage * damageMultiplier;
         target.invulnerableTime = 0;
-        target.hurt(this.damageSources().mobAttack(this), skillDamage);
+        target.hurt(new BloodBossDamageSource(this, this, null), skillDamage);
     }
 }

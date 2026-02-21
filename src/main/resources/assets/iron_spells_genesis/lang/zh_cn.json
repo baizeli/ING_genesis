@@ -204,6 +204,10 @@
   "death.attack.iron_spells_genesis.warped_blood_burst.item" : "%1$s的全身血液因为%2$s的%3$s爆炸了。",
   "death.attack.iron_spells_genesis.final_whisper" : "%1$s因为%2$s消散了。",
   "death.attack.iron_spells_genesis.final_whisper.item" : "%1$s的因为%2$s的%3$s消散了。",
+  "death.attack.iron_spells_genesis.blood_boss" : "%1$s自愿成为%2$s泼洒混沌中的一滴",
+  "death.attack.iron_spells_genesis.blood_boss.item" : "%1$s因为%2$s的%3$s自愿成为%2$s泼洒混沌中的一滴",
+  "death.attack.blood_field": "%1$s在猩红场域中化为了血滴。",
+  "death.attack.blood_field.item": "%1$s在%3$s召唤的猩红场域中化为了血滴。",
 
   "ui.iron_spells_genesis.research_warning": "按住以学习（需要一张%s）",
   "ui.iron_spells_genesis.percent_force_damage": "百分比强制伤害：%d%%",
@@ -241,6 +245,8 @@
   "entity.iron_spells_genesis.dead_star_decree_large_comet": "死星天裁-大陨石",
   "entity.iron_spells_genesis.lighting_bolt": "彩色闪电",
   "entity.iron_spells_genesis.blood_boss": "§4卡俄斯序曲·混沌受血者",
+  "entity.iron_spells_genesis.blood_dagger": "猩红匕首",
+  "entity.iron_spells_genesis.blood_field": "猩红场域",
 
   "item.iron_spells_genesis.infinity_eternal_helmet": "Purpleite Galaxy Helmet",
   "damage_type.iron_spells_genesis.celestial_source_magic": "Celestial Source Magic Damage",
