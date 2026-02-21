@@ -31,6 +31,7 @@ public class RenderRegistry {
         event.registerEntityRenderer(EntityRegistry.BLOOD_BOSS_FIRE_ERUPTION_AOE.get(), NoopRenderer::new);
         event.registerEntityRenderer(EntityRegistry.BLOOD_DAGGER_PROJECTILE.get(), BloodDaggerRenderer::new);
         event.registerEntityRenderer(EntityRegistry.BLOOD_FIELD.get(), NoopRenderer::new);
+        event.registerEntityRenderer(EntityRegistry.TREMOR_AOE_ENTITY.get(), NoopRenderer::new);
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
