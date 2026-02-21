@@ -158,6 +158,11 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
 
     private int shouldSetWalkTransitionLengthDelay = 0;
 
+    //用于深渊庇佑计数
+    private int abyssalAsylumTriggers = 0; // 已触发次数
+    private float nextHealthThreshold = 0.80f; // 下一次触发的血量百分比 (100% - 20%)
+
+
     //================================================================ 方法 ========================================================================
 
     public TrailComponent getTrailComponent() {
@@ -291,17 +296,23 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         }
     }
 
+
+
     private void detectAndApplyAbyssalAsylum() {
+
+        if (this.abyssalAsylumTriggers >= 5) {
+            return;
+        }
+
         float healthPercentage = this.getHealth() / this.getMaxHealth();
-        int currentHealthSegment = (int) ((1.0f - healthPercentage) / 0.17f);
-        if (currentHealthSegment > lastHealthSegment && currentHealthSegment > 0) {
+
+        if (healthPercentage <= nextHealthThreshold) {
             this.addEffect(new MobEffectInstance(
                     MobEffectRegistry.ABYSSAL_SHROUD.get(), 9 * 20, 0, false, false, false
             ));
-            this.lastHealthSegment = currentHealthSegment;
-        }
-        if (currentHealthSegment < lastHealthSegment) {
-            this.lastHealthSegment = currentHealthSegment;
+
+            this.abyssalAsylumTriggers++;
+            this.nextHealthThreshold -= 0.20f;
         }
     }
 
@@ -939,6 +950,14 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         if (!this.level.isClientSide) {
             this.createBossEvent();
         }
+    }
+
+    @Override
+    public void push(double x, double y, double z) {
+        if (this.getBrain().getMemory(MemoryModuleType.IS_EMERGING).isPresent()) {
+            return;
+        }
+        super.push(x, y, z);
     }
 
     @Override
