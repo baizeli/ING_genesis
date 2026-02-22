@@ -62,8 +62,8 @@ public class BloodBossStunBehavior extends AnimatedActionBehavior<BloodBoss> {
                 currentWave = i + 1;
                 waveTimer = 0;
 
-                spawnTentacles(level, owner, 5 * (i + 1), 8 + i * 8.0F);
-                int[] waveDamageRadius = {8, 14, 22};
+                spawnTentacles(level, owner, (5 * (i + 1)) / 2, 8 + i * 8.0F);
+                int[] waveDamageRadius = {8, 11, 15};
                 applyStunAreaDamage(level, owner, waveDamageRadius[i]);
                 break;
             }
