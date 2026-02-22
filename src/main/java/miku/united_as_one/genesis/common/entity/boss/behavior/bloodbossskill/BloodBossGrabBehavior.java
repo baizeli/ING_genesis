@@ -21,6 +21,7 @@ import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Map;
@@ -33,7 +34,6 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
     public static final float DAMAGE_MULTIPLIER_AREA = 2f;
     //主要目标伤害倍率
     public static final float DAMAGE_MULTIPLIER_MAIN = 3.4f;
-
 
     //"登!"
     private static final String ANIM_START = "ascend";
@@ -52,8 +52,6 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
     private static final int DASH_START_TICK = DASH_WINDUP;
     private static final int DASH_END_TICK   = DASH_WINDUP + DASH_DURATION;
 
-
-
     private LivingEntity grabbedTarget;
     private LivingEntity impactTarget;
 
@@ -63,7 +61,6 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
     private int slamTimer;
     private float slamYaw;
     private boolean grabFailed;
-
 
     private float slamAngle;
 
@@ -88,9 +85,8 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
     }
 
 
-
     @Override
-    protected void start(ServerLevel level, BloodBoss boss, long gameTime) {
+    protected void start(@NotNull ServerLevel level, @NotNull BloodBoss boss, long gameTime) {
         grabFailed = false;
         grabSuccess = false;
         impactDealt = false;
@@ -116,13 +112,12 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
     }
 
     @Override
-    protected boolean canStillUse(ServerLevel level, BloodBoss entity, long gameTime) {
-
+    protected boolean canStillUse(@NotNull ServerLevel level, @NotNull BloodBoss entity, long gameTime) {
         return super.canStillUse(level, entity, gameTime)&&!shouldStopImmediately;
     }
 
     @Override
-    protected void tick(ServerLevel level, BloodBoss boss, long gameTime) {
+    protected void tick(@NotNull ServerLevel level, BloodBoss boss, long gameTime) {
         //设置面向目标
         LivingEntity target = boss.getTarget();
         if (target != null){
@@ -138,7 +133,7 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
 
         if (abilityTimer < DASH_START_TICK) {
 
-            boss.setDeltaMovement(Vec3.ZERO);
+            boss.realSetDeltaMovement(Vec3.ZERO);
             return;
         }
 
@@ -164,9 +159,6 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
             handleSlamSequence(level, boss);
         }
     }
-
-
-
 
     private void attemptGrabDuringDash(BloodBoss boss) {
         Vec3 vel = boss.getDeltaMovement();
@@ -200,7 +192,7 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
 
 
             ((BloodBossMoveControl) boss.getMoveControl()).clearSkillMovements();
-            boss.setDeltaMovement(Vec3.ZERO);
+            boss.realSetDeltaMovement(Vec3.ZERO);
             boss.setNoGravity(true);
 
             boss.serverTriggerAnimation(ANIM_SLAM);
@@ -208,17 +200,16 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
         }
     }
 
-
     private void handleSlamSequence(ServerLevel level, BloodBoss boss) {
         slamTimer++;
 
 
         if (slamTimer < 8) {
-            boss.setDeltaMovement(0, 0.8, 0);
+            boss.realSetDeltaMovement(0, 0.8, 0);
         } else if (slamTimer < 14) {
-            boss.setDeltaMovement(0, -0.05, 0);
+            boss.realSetDeltaMovement(0, -0.05, 0);
         } else if (slamTimer < IMPACT_TIME) {
-            boss.setDeltaMovement(0, -2.0, 0);
+            boss.realSetDeltaMovement(0, -2.0, 0);
         }
 
         float t = slamTimer / (float) IMPACT_TIME;
@@ -312,6 +303,7 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
             level.addFreshEntity(arrow);
         }
     }
+
     private static void spawnArrowCycle(ServerLevel level, BloodBoss boss) {
         // 在周围一圈天上生成箭并使其垂直钉向地面，覆盖整个区域
         int arrowCount = 32; // 增加箭的数量以更好地覆盖区域
@@ -335,7 +327,6 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
             level.addFreshEntity(arrow);
         }
     }
-
 
     private void performImpact(ServerLevel level, BloodBoss boss) {
         impactDealt = true;
@@ -384,7 +375,7 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
     }
 
     @Override
-    protected void stop(ServerLevel level, BloodBoss boss, long gameTime) {
+    protected void stop(@NotNull ServerLevel level, @NotNull BloodBoss boss, long gameTime) {
         super.stop(level, boss, gameTime);
         boss.getBrain().eraseMemory(ModMemoryModuleType.IS_CASTING_SKILL.get());
         ((BloodBossMoveControl) boss.getMoveControl()).clearSkillMovements();
@@ -430,5 +421,4 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
             return dir.scale(speed);
         }
     }
-
 }

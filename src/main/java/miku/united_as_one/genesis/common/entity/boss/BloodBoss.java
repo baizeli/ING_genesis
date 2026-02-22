@@ -31,8 +31,11 @@ import miku.united_as_one.genesis.common.entity.boss.behavior.bloodbossskill.Blo
 import miku.united_as_one.genesis.common.entity.boss.damage.BloodBossDamageSource;
 import miku.united_as_one.genesis.init.registry.SoundRegister;
 import miku.united_as_one.genesis.init.registry.client.ParticleRegistry;
+import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
+import net.minecraft.network.protocol.game.ClientboundRemoveMobEffectPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -41,12 +44,14 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
 import net.minecraft.util.Unit;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.Brain;
@@ -62,9 +67,12 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.material.Fluid;
+import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
+import net.minecraftforge.common.util.ITeleporter;
 import net.minecraftforge.entity.IEntityAdditionalSpawnData;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -76,6 +84,8 @@ import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 import net.minecraft.world.BossEvent;
 
@@ -83,6 +93,8 @@ import static miku.united_as_one.genesis.Genesis.MODID;
 
 public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAttacker, IEntityAdditionalSpawnData, IClientEventEntity, IMagicEntity {
     private static final Logger BLOOD_BOSS_LOGGER = LogUtils.getLogger();
+
+    public static final ThreadLocal<Boolean> INTERNAL_CALL = ThreadLocal.withInitial(() -> false);
 
     // 魔法相关字段
     private static final EntityDataAccessor<Boolean> DATA_CANCEL_CAST = SynchedEntityData.defineId(BloodBoss.class, EntityDataSerializers.BOOLEAN);
@@ -200,7 +212,7 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
                 .add(AttributeRegistry.MAX_MANA.get(), 10000.0)
                 .add(ForgeMod.ENTITY_GRAVITY.get(), 0.03)
                 .add(ForgeMod.ENTITY_REACH.get(), 3.0)
-                .add(Attributes.KNOCKBACK_RESISTANCE,0.9)
+                .add(Attributes.KNOCKBACK_RESISTANCE,1.0)
                 .add(Attributes.FOLLOW_RANGE,48)
                 .add(AttributeRegistry.SPELL_POWER.get(), 1.25);
     }
@@ -307,6 +319,28 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
 
     @Override
     public void tick() {
+        var iterator = this.activeEffects.entrySet().iterator();
+        while (iterator.hasNext()) {
+            var entry = iterator.next();
+            MobEffect effect = entry.getKey();
+            MobEffectInstance instance = entry.getValue();
+
+            String id = instance.getDescriptionId();
+            if (!effect.isBeneficial() &&
+                    !id.startsWith("effect." + Genesis.MOD_ID) && !id.startsWith("effect." + "irons_spellbooks")) {
+                this.effectsDirty = true;
+                effect.removeAttributeModifiers(this, this.getAttributes(), instance.getAmplifier());
+
+                for(Entity entity : this.getPassengers()) {
+                    if (entity instanceof ServerPlayer serverplayer) {
+                        serverplayer.connection.send(new ClientboundRemoveMobEffectPacket(this.getId(), effect));
+                    }
+                }
+
+                iterator.remove();
+            }
+        }
+
         if (!level.isClientSide) {
             detectAndApplyAbyssalAsylum();
             syncBossStageData();
@@ -405,6 +439,14 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         return effectInstance.getEffect().isBeneficial() ||
                 effectInstance.getDescriptionId().contains(Genesis.MOD_ID) ||
                 effectInstance.getDescriptionId().contains("irons_spellbooks");
+    }
+
+    @Override
+    public void push(@NotNull Entity entity) {
+    }
+
+    @Override
+    public void push(double x, double y, double z) {
     }
 
     //================================================================ 魔法/法术 ========================================================================
@@ -900,15 +942,171 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
 
         double threshold = this.getMaxHealth() * 0.025;
 
-        if (amount>threshold){
-            amount = (float)(threshold + (amount - threshold)*0.7);
+        if (amount > threshold) {
+            amount = (float) (threshold + (amount - threshold) * 0.7);
         }
 
-        if ( source.getEntity() instanceof LivingEntity target){
+        if (source.getEntity() instanceof LivingEntity target){
             this.setTarget(target);
         }
 
         return super.hurt(source, amount);
+    }
+
+    @Override
+    public void knockback(double strength, double x, double z) {
+    }
+
+    /**
+     * @deprecated 请勿直接调用此方法，请使用 {@link #realSetDeltaMovement(Vec3)}，
+     * 或者用withInternalCall
+     */
+    @Deprecated(since = "1.0")
+    @Override
+    public void setDeltaMovement(@NotNull Vec3 deltaMovement) {
+        if (INTERNAL_CALL.get()) {
+            super.setDeltaMovement(deltaMovement);
+        }
+    }
+
+    /**
+     * @deprecated 请勿直接调用此方法，请使用 {@link #realSetDeltaMovement(double, double, double)}，
+     * 或者用withInternalCall
+     */
+    @Deprecated(since = "1.0")
+    @Override
+    public void setDeltaMovement(double x, double y, double z) {
+        if (INTERNAL_CALL.get()) {
+            super.setDeltaMovement(x, y, z);
+        }
+    }
+
+    public void realSetDeltaMovement(@NotNull Vec3 deltaMovement) {
+        super.setDeltaMovement(deltaMovement);
+    }
+
+    public void realSetDeltaMovement(double x, double y, double z) {
+        super.setDeltaMovement(x, y, z);
+    }
+
+    public static void withInternalCall(Runnable action) {
+        boolean old = INTERNAL_CALL.get();
+        INTERNAL_CALL.set(true);
+        try {
+            action.run();
+        } finally {
+            INTERNAL_CALL.set(old);
+        }
+    }
+
+    public static <T> T withInternalCall(Supplier<T> action) {
+        boolean old = INTERNAL_CALL.get();
+        INTERNAL_CALL.set(true);
+        try {
+            return action.get();
+        } finally {
+            INTERNAL_CALL.set(old);
+        }
+    }
+
+    @Override
+    public void move(@NotNull MoverType type, @NotNull Vec3 pos) {
+        withInternalCall(() -> super.move(type, pos));
+    }
+
+    @Override
+    public void moveRelative(float amount, @NotNull Vec3 relative) {
+        withInternalCall(() -> super.moveRelative(amount, relative));
+    }
+
+    @Override
+    public void rideTick() {
+        withInternalCall(super::rideTick);
+    }
+
+    @Override
+    public void lerpMotion(double x, double y, double z) {
+        withInternalCall(() -> super.lerpMotion(x, y, z));
+    }
+
+    @Override
+    public void onAboveBubbleCol(boolean downwards) {
+        withInternalCall(() -> super.onAboveBubbleCol(downwards));
+    }
+
+    @Override
+    public void onInsideBubbleColumn(boolean downwards) {
+        withInternalCall(() -> super.onInsideBubbleColumn(downwards));
+    }
+
+    @Override
+    protected void moveTowardsClosestSpace(double x, double y, double z) {
+        withInternalCall(() -> super.moveTowardsClosestSpace(x, y, z));
+    }
+
+    @Override
+    public @Nullable Entity changeDimension(@NotNull ServerLevel destination, @NotNull ITeleporter teleporter) {
+        return withInternalCall(() -> super.changeDimension(destination, teleporter));
+    }
+
+    @Override
+    public void updateFluidHeightAndDoFluidPushing(@NotNull Predicate<FluidState> shouldUpdate) {
+        withInternalCall(() -> super.updateFluidHeightAndDoFluidPushing(shouldUpdate));
+    }
+
+    @Override
+    protected void tickLeash() {
+        withInternalCall(super::tickLeash);
+    }
+
+    @Override
+    public boolean doHurtTarget(@NotNull Entity entity) {
+        return withInternalCall(() -> super.doHurtTarget(entity));
+    }
+
+    @Override
+    public void jumpInLiquidInternal(@NotNull Runnable onSuper) {
+        withInternalCall(() -> super.jumpInLiquidInternal(onSuper));
+    }
+
+    @Override
+    protected void jumpFromGround() {
+        withInternalCall(super::jumpFromGround);
+    }
+
+    @Override
+    protected void jumpInLiquid(@NotNull TagKey<Fluid> fluidTag) {
+        withInternalCall(() -> super.jumpInLiquid(fluidTag));
+    }
+
+    @Override
+    public void travel(@NotNull Vec3 travelVector) {
+        withInternalCall(() -> super.travel(travelVector));
+    }
+
+    @Override
+    public @NotNull Vec3 handleRelativeFrictionAndCalculateMovement(@NotNull Vec3 deltaMovement, float friction) {
+        return withInternalCall(() -> super.handleRelativeFrictionAndCalculateMovement(deltaMovement, friction));
+    }
+
+    @Override
+    public void aiStep() {
+        withInternalCall(super::aiStep);
+    }
+
+    @Override
+    protected void checkAutoSpinAttack(@NotNull AABB boundingBoxBeforeSpin, @NotNull AABB boundingBoxAfterSpin) {
+        withInternalCall(() -> super.checkAutoSpinAttack(boundingBoxBeforeSpin, boundingBoxAfterSpin));
+    }
+
+    @Override
+    public void startSleeping(@NotNull BlockPos pos) {
+        withInternalCall(() -> super.startSleeping(pos));
+    }
+
+    @Override
+    public void recreateFromPacket(@NotNull ClientboundAddEntityPacket packet) {
+        withInternalCall(() -> super.recreateFromPacket(packet));
     }
 
     private void createBossEvent() {
@@ -925,7 +1123,7 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
 
     @Override
     public void load(@NotNull CompoundTag compound) {
-        super.load(compound);
+        withInternalCall(() -> super.load(compound));
 
         if (!this.level.isClientSide) {
             // 同步血条进度
