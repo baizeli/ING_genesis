@@ -87,7 +87,7 @@ public class BloodBossStunBehavior extends AnimatedActionBehavior<BloodBoss> {
 
         if (currentWave > 0 && waveTimer < WAVE_DURATION) {
             waveTimer++;
-            int[] waveMaxRadii = {16, 28, 40};
+            int[] waveMaxRadii =  {8, 11, 15};
             waveRadius = (int)((float)waveTimer / WAVE_DURATION * waveMaxRadii[currentWave - 1]);
             spawnGroundShakeWave(level, owner, waveRadius, currentWave);
 
