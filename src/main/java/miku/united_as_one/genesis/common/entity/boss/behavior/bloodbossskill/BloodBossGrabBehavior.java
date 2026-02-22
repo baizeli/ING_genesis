@@ -391,12 +391,13 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
     @Override protected void doAction(BloodBoss boss) {}
 
     public static class GrabDashTask extends SkillMovementTask {
+        private Vec3 dir;
         private Vec3 startPos;
-        private Vec3 dashDir;
         private double targetDistance;
         private boolean hasPassedTarget = false;
 
-        private Vec3 lastAppliedMovement = Vec3.ZERO;
+        
+        private Vec3 lastAppliedPush = Vec3.ZERO;
 
         public GrabDashTask(int duration) {
             super(duration);
@@ -405,66 +406,67 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
         @Override
         public void start(Mob mob) {
             this.startPos = mob.position();
-            LivingEntity target = mob.getTarget();
+            this.hasPassedTarget = false;
+            this.lastAppliedPush = Vec3.ZERO;
 
-            if (target != null) {
-                Vec3 toTarget = target.position().subtract(startPos);
-                double dist = toTarget.length();
-
-                if (dist < 1.5) {
-                    this.dashDir = mob.getLookAngle().normalize();
-                    this.targetDistance = 2.5;
-                } else {
-                    this.dashDir = toTarget.normalize();
-                    this.targetDistance = dist;
-                }
+            if (mob.getTarget() != null) {
+                Vec3 from = mob.position().add(0, mob.getBbHeight() * 0.5, 0);
+                Vec3 to   = mob.getTarget().position().add(0, mob.getTarget().getBbHeight() * 0.5, 0);
+                this.dir = to.subtract(from).normalize();
+                this.targetDistance = mob.position().distanceTo(mob.getTarget().position());
             } else {
-                this.dashDir = mob.getLookAngle().normalize();
+                float yawRad = mob.getYRot() * Mth.DEG_TO_RAD;
+                this.dir = new Vec3(-Mth.sin(yawRad), 0, Mth.cos(yawRad));
                 this.targetDistance = 10.0;
             }
-            this.hasPassedTarget = false;
-            this.lastAppliedMovement = Vec3.ZERO;
         }
 
         @Override
         public Vec3 compute(Mob mob, float progress) {
+            
+            
+            Vec3 counterForce = lastAppliedPush.scale(-1.0);
 
-            Vec3 counterForce = lastAppliedMovement.scale(-1.0);
-
+            
             if (!hasPassedTarget) {
                 Vec3 currentOffset = mob.position().subtract(startPos);
-                double currentProjection = currentOffset.dot(dashDir);
+                double currentProjection = currentOffset.dot(dir);
 
-                if (progress > 0.1F && currentProjection > (targetDistance + 0.5)) {
+                
+                if (progress > 0.1F && currentProjection > (targetDistance + 8)) {
                     hasPassedTarget = true;
                 }
             }
 
+            
             if (hasPassedTarget) {
-                lastAppliedMovement = Vec3.ZERO;
+                
                 Vec3 currentVel = mob.getDeltaMovement();
+                lastAppliedPush = Vec3.ZERO; 
 
-                return new Vec3(-currentVel.x, -currentVel.y, -currentVel.z);
+                
+                return counterForce.add(new Vec3(-currentVel.x * 0.4, 0, -currentVel.z * 0.4));
             }
 
+            
             double speed = 1.35;
-            Vec3 desiredPush = dashDir.scale(speed);
+            Vec3 desiredPush = dir.scale(speed);
 
+            
             Vec3 result = counterForce.add(desiredPush);
-            lastAppliedMovement = desiredPush;
+
+            
+            lastAppliedPush = desiredPush;
 
             return result;
         }
 
         @Override
         public void end(Mob mob) {
-            mob.setDeltaMovement(0, 0, 0);
-            lastAppliedMovement = Vec3.ZERO;
-        }
-
-        @Override
-        public boolean finished() {
-            return hasPassedTarget || super.finished();
+            
+            Vec3 currentVel = mob.getDeltaMovement();
+            mob.setDeltaMovement(0, currentVel.y, 0);
+            lastAppliedPush = Vec3.ZERO;
         }
     }
 }
