@@ -294,11 +294,9 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         return super.isInvulnerableTo(source);
     }
 
-    private int lastHealthSegment = 0;
 
     @Override
     public void setHealth(float health) {
-        float oldHealth = this.getHealth();
         super.setHealth(health);
 
         // 同步更新血条显示

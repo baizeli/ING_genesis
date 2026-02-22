@@ -5,6 +5,7 @@ import io.redspace.ironsspellbooks.api.util.CameraShakeData;
 import io.redspace.ironsspellbooks.api.util.CameraShakeManager;
 import io.redspace.ironsspellbooks.api.util.Utils;
 import io.redspace.ironsspellbooks.entity.spells.void_tentacle.VoidTentacle;
+import io.redspace.ironsspellbooks.registries.MobEffectRegistry;
 import miku.united_as_one.genesis.common.entity.ai.ModMemoryModuleType;
 import miku.united_as_one.genesis.common.entity.boss.BloodBoss;
 import miku.united_as_one.genesis.common.entity.boss.behavior.AnimatedActionBehavior;
@@ -12,6 +13,7 @@ import miku.united_as_one.genesis.init.registry.EntityRegistry;
 import miku.united_as_one.genesis.init.registry.client.ParticleRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
@@ -37,6 +39,7 @@ public class BloodBossStunBehavior extends AnimatedActionBehavior<BloodBoss> {
 
     private static final float STUN_DAMAGE_MULTIPLIER = 1.8f;
     private static final double STUN_DAMAGE_HEIGHT = 3.0;
+    int abyssalShroudEffectDuration =0;
 
     public BloodBossStunBehavior() {
         super(ImmutableMap.of(MemoryModuleType.IS_EMERGING, MemoryStatus.VALUE_PRESENT));
@@ -48,6 +51,19 @@ public class BloodBossStunBehavior extends AnimatedActionBehavior<BloodBoss> {
         Integer stunCount = brain.getMemory(ModMemoryModuleType.STAGE_STUN_COUNT.get()).orElse(0);
         if (stunCount >= 1) return false;
         return entity.getHealth() <= entity.getMaxHealth() * 0.7;
+    }
+
+    @Override
+    protected void start(ServerLevel level, BloodBoss entity, long gameTime) {
+        super.start(level, entity, gameTime);
+
+        if (entity.hasEffect(MobEffectRegistry.ABYSSAL_SHROUD.get())) {
+            var abyssalShroudEffect = entity.getEffect(MobEffectRegistry.ABYSSAL_SHROUD.get());
+            if (abyssalShroudEffect != null) {
+                abyssalShroudEffectDuration = abyssalShroudEffect.getDuration();
+            }
+        }
+        entity.removeEffect(MobEffectRegistry.ABYSSAL_SHROUD.get());
     }
 
     @Override
@@ -273,6 +289,12 @@ public class BloodBossStunBehavior extends AnimatedActionBehavior<BloodBoss> {
 
     @Override
     protected void stop(@NotNull ServerLevel level, BloodBoss entity, long gameTime) {
+        if (abyssalShroudEffectDuration!=0){
+            entity.addEffect(new MobEffectInstance(
+                    MobEffectRegistry.ABYSSAL_SHROUD.get(), abyssalShroudEffectDuration, 0, false, false, false
+            ));
+        }
+
         Brain<BloodBoss> brain = entity.getBrain();
         brain.eraseMemory(MemoryModuleType.IS_EMERGING);
         brain.setMemory(ModMemoryModuleType.STAGE_STUN_COUNT.get(), brain.getMemory(ModMemoryModuleType.STAGE_STUN_COUNT.get()).orElse(0) + 1);
