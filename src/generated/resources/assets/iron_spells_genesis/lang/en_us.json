@@ -87,19 +87,21 @@
   "item.iron_spells_genesis.nature_crystal": "Nature Crystal",
   "item.iron_spells_genesis.nature_orb_pro": "Nature Orb Pro",
   "item.iron_spells_genesis.nature_rune_plus": "Nature Rune Plus",
-  "item.iron_spells_genesis.violet_galaxy_ingot": "Purpleite Galaxy Ingot",
   "item.iron_spells_genesis.thunder_longbow": "Thunder Longbow",
   "item.iron_spells_genesis.thunder_orb_pro": "Thunder Orb Pro",
   "item.iron_spells_genesis.twisted_chaos": "Twisted Chaos",
   "item.iron_spells_genesis.twisted_chaos_ingot": "Twisted Chaos Ingot",
   "item.iron_spells_genesis.upgrade_orb_pro": "Upgrade Orb Pro",
+  "item.iron_spells_genesis.violet_galaxy_ingot": "Violet Galaxy Ingot",
   "item.iron_spells_genesis.violet_zenith_boots": "Violet Zenith Boots",
   "item.iron_spells_genesis.violet_zenith_chestplate": "Violet Zenith Chestplate",
   "item.iron_spells_genesis.violet_zenith_helmet": "Violet Zenith Helmet",
   "item.iron_spells_genesis.violet_zenith_leggings": "Violet Zenith Leggings",
   "item.iron_spells_genesis.witchcraft_bow": "Witchcraft Bow",
+  "item.minecraft.smithing_template": "Divine Upgrade Smithing Template",
   "itemGroup.iron_spells_genesis.block": "itemGroup.iron_spells_genesis",
   "itemGroup.iron_spells_genesis.equipment": "itemGroup.iron_spells_genesis",
   "itemGroup.iron_spells_genesis.material": "itemGroup.iron_spells_genesis",
-  "itemGroup.iron_spells_genesis.spell_scroll": "itemGroup.iron_spells_genesis"
+  "itemGroup.iron_spells_genesis.spell_scroll": "itemGroup.iron_spells_genesis",
+  "nmsl": "Violet Upgrade Smithing Template"
 }

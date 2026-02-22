@@ -142,8 +142,6 @@ public abstract class LivingEntityMixin {
     private void addEffect(MobEffectInstance effectInstance, Entity entity, CallbackInfoReturnable<Boolean> cir) {
         LivingEntity living = (LivingEntity) (Object) this;
 
-
-
         if (living.level().isClientSide()) {
             return;
         }

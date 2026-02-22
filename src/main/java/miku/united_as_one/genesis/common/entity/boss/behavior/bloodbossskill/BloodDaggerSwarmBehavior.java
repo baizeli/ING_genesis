@@ -4,7 +4,7 @@ import io.redspace.ironsspellbooks.api.util.Utils;
 import io.redspace.ironsspellbooks.registries.SoundRegistry;
 import miku.united_as_one.genesis.common.entity.boss.BloodBoss;
 import miku.united_as_one.genesis.common.entity.boss.behavior.AnimatedActionBehavior;
-import miku.united_as_one.genesis.common.entity.spells.blood_boss.fiery_dagger.BloodBossFieryDaggerEntity;
+import miku.united_as_one.genesis.common.entity.spells.blood_boss.blood_dagger.BloodDaggerEntity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
@@ -16,18 +16,18 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
-public class FieryDaggerSwarmBehavior extends AnimatedActionBehavior<BloodBoss> {
+public class BloodDaggerSwarmBehavior extends AnimatedActionBehavior<BloodBoss> {
     public static final int ANIM_DURATION = 25;
     public static final int ACTION_TIMESTAMP = 17;
 
-    public FieryDaggerSwarmBehavior() {
+    public BloodDaggerSwarmBehavior() {
         super(Map.of(
                 MemoryModuleType.ATTACK_TARGET, MemoryStatus.VALUE_PRESENT
         ));
     }
 
     @Override
-    protected void start(@NotNull ServerLevel level, BloodBoss entity, long gameTime) {
+    protected void start(@NotNull ServerLevel level, @NotNull BloodBoss entity, long gameTime) {
         this.abilityTimer = 0;
     }
 
@@ -48,7 +48,7 @@ public class FieryDaggerSwarmBehavior extends AnimatedActionBehavior<BloodBoss> 
 
     @Override
     protected int getCooldown() {
-        return Utils.random.nextIntBetweenInclusive(40, 80);
+        return Utils.random.nextIntBetweenInclusive(100, 160);
     }
 
     @Override
@@ -68,7 +68,7 @@ public class FieryDaggerSwarmBehavior extends AnimatedActionBehavior<BloodBoss> 
 
             for(int i = 0; i < count; ++i) {
                 Vec3 offset = new Vec3((double) 1.5F * (double) entity.getScale(), 0.0, 0.0).zRot(Mth.lerp((float) i / ((float) count - 1.0F), 0.0F, -(float) Math.PI)).yRot(yAngle).add(0.0, entity.getEyeHeight(), 0.0);
-                BloodBossFieryDaggerEntity dagger = new BloodBossFieryDaggerEntity(entity.level);
+                BloodDaggerEntity dagger = new BloodDaggerEntity(entity.level);
                 dagger.setOwner(entity);
                 dagger.ownerTrack = offset;
                 dagger.setTarget(entity.getTarget());
