@@ -78,7 +78,7 @@ public class BloodBossStunBehavior extends AnimatedActionBehavior<BloodBoss> {
                 currentWave = i + 1;
                 waveTimer = 0;
 
-                spawnTentacles(level, owner, (5 * (i + 1)) / 2, 8 + i * 8.0F);
+                spawnTentacles(level, owner, (5 * (i + 1)) / 2, new double[]{8, 11, 15}[i]);
                 int[] waveDamageRadius = {8, 11, 15};
                 applyStunAreaDamage(level, owner, waveDamageRadius[i]);
                 break;
@@ -124,8 +124,8 @@ public class BloodBossStunBehavior extends AnimatedActionBehavior<BloodBoss> {
         
         switch (currentWave) {
             case 1 -> spawnSpiralParticles(level, center, progress, 8.0f, 0.5f);
-            case 2 -> spawnRingParticles(level, center, progress, 15.0f);
-            case 3 -> spawnBurstParticles(level, center, progress, 25.0f);
+            case 2 -> spawnRingParticles(level, center, progress, 11.0f);
+            case 3 -> spawnBurstParticles(level, center, progress, 15.0f);
             default -> {
                 if (currentWave == 0 && abilityTimer < WAVE_START_TIMES[0] - 20) spawnCenterParticles(level, center, progress);
             }
