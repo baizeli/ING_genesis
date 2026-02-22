@@ -174,7 +174,9 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     private int abyssalAsylumTriggers = 0; // 已触发次数
     private float nextHealthThreshold = 0.80f; // 下一次触发的血量百分比 (100% - 20%)
 
-
+    //死亡动画
+    private static final RawAnimation DEATH = RawAnimation.begin().thenPlay("blood_boss_death");
+    public static final int DEATH_DURATION = (int)(20*8.25);
     //================================================================ 方法 ========================================================================
 
     public TrailComponent getTrailComponent() {
@@ -392,9 +394,27 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
                 this.bossEvent.removeAllPlayers();
                 this.bossEvent.setVisible(false);
             }
-
+            this.serverTriggerAnimation("blood_boss_death");
         }
         super.die(cause);
+    }
+
+    @Override
+    public void tickDeath() {
+        ++this.deathTime;
+
+        if (!this.level().isClientSide) {
+            if (this.deathTime == 1){
+                spawnSphericalTwistParticles((ServerLevel) level, this, 0.13, 0.01);
+            }
+            if (this.deathTime == DEATH_DURATION-40){
+                spawnSphericalTwistParticles((ServerLevel) level, this, 0.13, 7);
+            }
+
+            if (this.deathTime >= DEATH_DURATION+80 && !this.isRemoved()) {
+                this.remove(RemovalReason.KILLED);
+            }
+        }
     }
 
     @Override
@@ -710,6 +730,12 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     }
 
     private PlayState skillAnimationPredicate(AnimationState<BloodBoss> animationEvent) {
+        if (animationEvent.getController().getName().equals("skill_animation_controller")) {
+            if (this.isDeadOrDying()) {
+                return animationEvent.setAndContinue(DEATH);
+            }
+        }
+
         AnimationController<BloodBoss> controller = animationEvent.getController();
 
         if (this.animationToPlay != null) {
@@ -1319,7 +1345,44 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         this.magicData.setSyncedData(syncedSpellData);
         this.hasUsedSingleAttack = compound.getBoolean("usedSpecial");
     }
-    
+
+    private void spawnSphericalTwistParticles(ServerLevel level, BloodBoss boss, double speedFactor, double radius) {
+        double yawRad = Math.toRadians(boss.getYRot());
+
+        double cx =  boss.getX();
+        double cy = boss.getY()+2.5;
+        double cz =  boss.getZ();
+        int particleCount = 400;
+
+        double randomOffset = level.random.nextDouble() * Math.PI * 2;
+        for (int i = 0; i < particleCount; i++) {
+            double phi = Math.acos(1 - 2.0 * (i + 0.5) / particleCount);
+            double theta = Math.PI * (1 + Math.sqrt(5)) * i + randomOffset;
+            double x = cx + radius * Math.sin(phi) * Math.cos(theta);
+            double y = cy + radius * Math.cos(phi);
+            double z = cz + radius * Math.sin(phi) * Math.sin(theta);
+
+            double dx = cx - x;
+            double dy = cy - y;
+            double dz = cz - z;
+            double dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+            if (dist > 0) {
+                dx = (dx / dist) * speedFactor;
+                dy = (dy / dist) * speedFactor;
+                dz = (dz / dist) * speedFactor;
+            }
+
+            level.sendParticles(
+                    ParticleRegistry.BLOOD_DRIP_TWIST.get(),
+                    x, y, z,
+                    0,
+                    dx, dy, dz,
+                    1.0
+            );
+        }
+    }
+
     //================================================================ 战斗伤害方法 ========================================================================
     
     /**
