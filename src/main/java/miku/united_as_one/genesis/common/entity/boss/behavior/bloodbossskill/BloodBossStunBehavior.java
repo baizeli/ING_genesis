@@ -41,6 +41,9 @@ public class BloodBossStunBehavior extends AnimatedActionBehavior<BloodBoss> {
     private static final double STUN_DAMAGE_HEIGHT = 3.0;
     int abyssalShroudEffectDuration =0;
 
+    
+    private static final java.util.List<Vec3> ALL_SPAWNED_TENTACLES = new java.util.ArrayList<>();
+    
     public BloodBossStunBehavior() {
         super(ImmutableMap.of(MemoryModuleType.IS_EMERGING, MemoryStatus.VALUE_PRESENT));
     }
@@ -78,7 +81,7 @@ public class BloodBossStunBehavior extends AnimatedActionBehavior<BloodBoss> {
                 currentWave = i + 1;
                 waveTimer = 0;
 
-                spawnTentacles(level, owner, (5 * (i + 1)) / 2, 8 + i * 8.0F);
+                spawnTentacles(level, owner, 5 * (i + 1), new double[]{8, 11, 15}[i]);
                 int[] waveDamageRadius = {8, 11, 15};
                 applyStunAreaDamage(level, owner, waveDamageRadius[i]);
                 break;
@@ -87,7 +90,7 @@ public class BloodBossStunBehavior extends AnimatedActionBehavior<BloodBoss> {
 
         if (currentWave > 0 && waveTimer < WAVE_DURATION) {
             waveTimer++;
-            int[] waveMaxRadii = {16, 28, 40};
+            int[] waveMaxRadii =  {8, 11, 15};
             waveRadius = (int)((float)waveTimer / WAVE_DURATION * waveMaxRadii[currentWave - 1]);
             spawnGroundShakeWave(level, owner, waveRadius, currentWave);
 
@@ -124,8 +127,8 @@ public class BloodBossStunBehavior extends AnimatedActionBehavior<BloodBoss> {
         
         switch (currentWave) {
             case 1 -> spawnSpiralParticles(level, center, progress, 8.0f, 0.5f);
-            case 2 -> spawnRingParticles(level, center, progress, 15.0f);
-            case 3 -> spawnBurstParticles(level, center, progress, 25.0f);
+            case 2 -> spawnRingParticles(level, center, progress, 11.0f);
+            case 3 -> spawnBurstParticles(level, center, progress, 15.0f);
             default -> {
                 if (currentWave == 0 && abilityTimer < WAVE_START_TIMES[0] - 20) spawnCenterParticles(level, center, progress);
             }
@@ -172,15 +175,41 @@ public class BloodBossStunBehavior extends AnimatedActionBehavior<BloodBoss> {
     }
 
     private void spawnTentacles(ServerLevel level, BloodBoss owner, int count, double range) {
-        for (int i = 0; i < count; i++) {
+        java.util.List<Vec3> spawnedPositions = new java.util.ArrayList<>();
+        int attempts = 0;
+        int maxAttempts = Math.min(count * 15, 150); 
+        
+        while (spawnedPositions.size() < count && attempts < maxAttempts) {
+            attempts++;
             double randomX = owner.getX() + (owner.getRandom().nextDouble() - 0.5) * range * 2;
             double randomZ = owner.getZ() + (owner.getRandom().nextDouble() - 0.5) * range * 2;
             double groundY = findGroundY(owner, level, randomX, randomZ);
+            
             if (groundY > level.getMinBuildHeight()) {
-                VoidTentacle voidTentacle = new VoidTentacle(EntityRegistry.BLOOD_TENTACLE.get(), level);
-                voidTentacle.setPos(randomX, groundY, randomZ);
-                voidTentacle.setOwner(owner);
-                level.addFreshEntity(voidTentacle);
+                Vec3 newPos = new Vec3(randomX, groundY, randomZ);
+                boolean validPosition = true;
+                
+                
+                synchronized(ALL_SPAWNED_TENTACLES) {
+                    for (Vec3 existingPos : ALL_SPAWNED_TENTACLES) {
+                        double distanceSq = existingPos.distanceToSqr(newPos);
+                        if (distanceSq < 16.0) { 
+                            validPosition = false;
+                            break;
+                        }
+                    }
+                }
+                
+                if (validPosition) {
+                    spawnedPositions.add(newPos);
+                    synchronized(ALL_SPAWNED_TENTACLES) {
+                        ALL_SPAWNED_TENTACLES.add(newPos);
+                    }
+                    VoidTentacle voidTentacle = new VoidTentacle(EntityRegistry.BLOOD_TENTACLE.get(), level);
+                    voidTentacle.setPos(randomX, groundY, randomZ);
+                    voidTentacle.setOwner(owner);
+                    level.addFreshEntity(voidTentacle);
+                }
             }
         }
     }
@@ -289,6 +318,11 @@ public class BloodBossStunBehavior extends AnimatedActionBehavior<BloodBoss> {
 
     @Override
     protected void stop(@NotNull ServerLevel level, BloodBoss entity, long gameTime) {
+        
+        synchronized(ALL_SPAWNED_TENTACLES) {
+            ALL_SPAWNED_TENTACLES.clear();
+        }
+        
         if (abyssalShroudEffectDuration!=0){
             entity.addEffect(new MobEffectInstance(
                     MobEffectRegistry.ABYSSAL_SHROUD.get(), abyssalShroudEffectDuration, 0, false, false, false

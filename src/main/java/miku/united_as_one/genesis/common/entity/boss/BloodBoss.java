@@ -29,6 +29,7 @@ import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.common.entity.ai.ModMemoryModuleType;
 import miku.united_as_one.genesis.common.entity.boss.behavior.bloodbossskill.BloodBossEmergingBehavior;
 import miku.united_as_one.genesis.common.entity.boss.damage.BloodBossDamageSource;
+import miku.united_as_one.genesis.init.registry.EntityRegistry;
 import miku.united_as_one.genesis.init.registry.SoundRegister;
 import miku.united_as_one.genesis.init.registry.client.ParticleRegistry;
 import net.minecraft.core.BlockPos;
@@ -64,6 +65,7 @@ import net.minecraft.world.entity.ai.navigation.AmphibiousPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.monster.warden.WardenAi;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -84,6 +86,7 @@ import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
@@ -174,7 +177,9 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     private int abyssalAsylumTriggers = 0; // 已触发次数
     private float nextHealthThreshold = 0.80f; // 下一次触发的血量百分比 (100% - 20%)
 
-
+    //死亡动画
+    private static final RawAnimation DEATH = RawAnimation.begin().thenPlay("blood_boss_death");
+    public static final int DEATH_DURATION = (int)(20*8.25);
     //================================================================ 方法 ========================================================================
 
     public TrailComponent getTrailComponent() {
@@ -205,6 +210,29 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     }
     public boolean getVisable(){
         return this.entityData.get(DATA_IS_VISIBLE);
+    }
+
+    BloodBoss triggeredSummer(ServerLevel serverLevel, BlockPos spawnPos){
+        return EntityRegistry.BLOOD_BOSS.get().create(
+                serverLevel,
+                null,
+                null,
+                spawnPos,
+                MobSpawnType.TRIGGERED,
+                false,
+                false
+        );
+    }
+    BloodBoss triggeredSummer(ServerLevel serverLevel, BlockPos spawnPos, CompoundTag nbt, @Nullable Consumer<BloodBoss> consumer, BlockPos pos,boolean shouldOffsetY, boolean shouldOffsetYMore){
+        return EntityRegistry.BLOOD_BOSS.get().create(
+                serverLevel,
+                nbt,
+                consumer,
+                spawnPos,
+                MobSpawnType.TRIGGERED,
+                shouldOffsetY,
+                shouldOffsetYMore
+        );
     }
 
     //属性
@@ -268,9 +296,15 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
             Objects.requireNonNull(this.getAttribute(Attributes.MAX_HEALTH)).addPermanentModifier(new AttributeModifier(AttributeHelper.uuidFromId(IronsSpellbooks.id("player_scale")), "player_scale", extraHealthPercent, AttributeModifier.Operation.MULTIPLY_TOTAL));
         }
 
-        this.getBrain().setMemoryWithExpiry(MemoryModuleType.IS_EMERGING, Unit.INSTANCE,
-                BloodBossEmergingBehavior.EMERGE_SPAWN_DURATION);
-        this.playSound(SoundEvents.WARDEN_AGITATED, 5.0F, 1.0F);
+        if (reason == MobSpawnType.TRIGGERED) {
+            this.getBrain().setMemoryWithExpiry(MemoryModuleType.IS_EMERGING, Unit.INSTANCE,
+                    BloodBossEmergingBehavior.EMERGE_SPAWN_DURATION);
+            this.playSound(SoundEvents.WARDEN_AGITATED, 5.0F, 1.0F);
+        }else{
+            this.getBrain().setMemory(ModMemoryModuleType.BOSS_STAGE.get(),1);
+        }
+
+
 
         if (!this.level.isClientSide()){
             this.setVisable(this.getBossStage() > 0);
@@ -392,9 +426,29 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
                 this.bossEvent.removeAllPlayers();
                 this.bossEvent.setVisible(false);
             }
-
+            this.serverTriggerAnimation("blood_boss_death");
         }
         super.die(cause);
+    }
+
+    @Override
+    public void tickDeath() {
+        ++this.deathTime;
+
+        if (!this.level().isClientSide) {
+            if (this.deathTime == 1){
+                spawnSphericalTwistParticles((ServerLevel) level, this, 0.13, 0.01);
+            }
+            if (this.deathTime == DEATH_DURATION-40){
+                spawnSphericalTwistParticles((ServerLevel) level, this, 0.13, 7);
+            }
+            if (this.deathTime >= DEATH_DURATION) {
+                setVisable(false);
+            }
+            if (this.deathTime >= DEATH_DURATION+80 && !this.isRemoved()) {
+                this.remove(RemovalReason.KILLED);
+            }
+        }
     }
 
     @Override
@@ -710,6 +764,12 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     }
 
     private PlayState skillAnimationPredicate(AnimationState<BloodBoss> animationEvent) {
+        if (animationEvent.getController().getName().equals("skill_animation_controller")) {
+            if (this.isDeadOrDying()) {
+                return animationEvent.setAndContinue(DEATH);
+            }
+        }
+
         AnimationController<BloodBoss> controller = animationEvent.getController();
 
         if (this.animationToPlay != null) {
@@ -1319,7 +1379,44 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         this.magicData.setSyncedData(syncedSpellData);
         this.hasUsedSingleAttack = compound.getBoolean("usedSpecial");
     }
-    
+
+    private void spawnSphericalTwistParticles(ServerLevel level, BloodBoss boss, double speedFactor, double radius) {
+        double yawRad = Math.toRadians(boss.getYRot());
+
+        double cx =  boss.getX();
+        double cy = boss.getY()+2.5;
+        double cz =  boss.getZ();
+        int particleCount = 400;
+
+        double randomOffset = level.random.nextDouble() * Math.PI * 2;
+        for (int i = 0; i < particleCount; i++) {
+            double phi = Math.acos(1 - 2.0 * (i + 0.5) / particleCount);
+            double theta = Math.PI * (1 + Math.sqrt(5)) * i + randomOffset;
+            double x = cx + radius * Math.sin(phi) * Math.cos(theta);
+            double y = cy + radius * Math.cos(phi);
+            double z = cz + radius * Math.sin(phi) * Math.sin(theta);
+
+            double dx = cx - x;
+            double dy = cy - y;
+            double dz = cz - z;
+            double dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+            if (dist > 0) {
+                dx = (dx / dist) * speedFactor;
+                dy = (dy / dist) * speedFactor;
+                dz = (dz / dist) * speedFactor;
+            }
+
+            level.sendParticles(
+                    ParticleRegistry.BLOOD_DRIP_TWIST.get(),
+                    x, y, z,
+                    0,
+                    dx, dy, dz,
+                    1.0
+            );
+        }
+    }
+
     //================================================================ 战斗伤害方法 ========================================================================
     
     /**
