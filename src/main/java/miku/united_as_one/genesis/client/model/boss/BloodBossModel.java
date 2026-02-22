@@ -3,6 +3,7 @@ package miku.united_as_one.genesis.client.model.boss;
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.client.render.MathUtils;
 import miku.united_as_one.genesis.common.entity.boss.BloodBoss;
+import miku.united_as_one.genesis.common.entity.boss.TrailComponent;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;
@@ -58,7 +59,12 @@ public class BloodBossModel extends GeoModel<BloodBoss> {
         if (startBone != null && endBone != null) {
             Vec3 worldStart = MathUtils.getWorldPosFromModel(animatable, animatable.yBodyRot, (GeoBone) startBone);
             Vec3 worldEnd = MathUtils.getWorldPosFromModel(animatable, animatable.yBodyRot, (GeoBone) endBone);
-            animatable.getTrailComponent().updateTrail(worldStart, worldEnd);
+
+                TrailComponent trailComponent = animatable.getTrailComponent();
+                if (trailComponent.hasTrail()){
+                    trailComponent.updateTrail(worldStart, worldEnd);
+                }
+
         }
 
     }

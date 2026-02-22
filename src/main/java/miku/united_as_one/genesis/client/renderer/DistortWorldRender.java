@@ -371,8 +371,8 @@ public class DistortWorldRender {
                 float relZ = (float) (z - camPos.z);
 
                 renderStack.pushPose();
-                renderStack.translate(relX, relY, relZ);
 
+                renderStack.translate(relX, relY, relZ);
                 double dx = acc.getXd();
                 double dy = acc.getYd();
                 double dz = acc.getZd();
@@ -381,9 +381,13 @@ public class DistortWorldRender {
                 Vector3f forward = new Vector3f();
 
                 if (speedSq < 1.0E-6D) {
-
-                    float seed = (float) ((p.hashCode() % 100) / 100.0);
-                    forward.set(Mth.sin(seed * 3.1415f), Mth.cos(seed * 3.1415f), 0.5f).normalize();
+                    Vec3 lastVelocity = cbp.getLastVelocity();
+                    if (lastVelocity.lengthSqr() > 1.0E-6D) {
+                        forward.set((float) lastVelocity.x, (float) lastVelocity.y, (float) lastVelocity.z).normalize();
+                    } else {
+                        float seed = (float) ((p.hashCode() % 100) / 100.0);
+                        forward.set(Mth.sin(seed * 3.1415f), Mth.cos(seed * 3.1415f), 0.5f).normalize();
+                    }
                 } else {
                     float speed = (float) Math.sqrt(speedSq);
                     forward.set((float) (dx / speed), (float) (dy / speed), (float) (dz / speed));
@@ -407,6 +411,7 @@ public class DistortWorldRender {
 
                 int r = 255, g = 255, b = 255, a = 255;
 
+//                renderStack.mulPose(Axis.XP.rotationDegrees(90.0F));
                 buf.vertex(mat, (-right.x() - up.x()) * s, (-right.y() - up.y()) * s, (-right.z() - up.z()) * s)
                         .uv(0.0F, 1.0F)
                         .color(r, g, b, a)
