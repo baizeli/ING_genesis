@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.client.render;
 
-import miku.united_as_one.genesis.common.entity.spells.blood_boss.fiery_dagger.BloodBossFieryDaggerRenderer;
+import miku.united_as_one.genesis.common.entity.spells.blood_boss.blood_dagger.BloodDaggerRenderer;
 import miku.united_as_one.genesis.init.registry.EntityRegistry;
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.client.renderer.boss.BloodBossRenderer;
@@ -29,7 +29,9 @@ public class RenderRegistry {
         event.registerEntityRenderer(EntityRegistry.BLOOD_BOSS.get(), BloodBossRenderer::new);
         event.registerEntityRenderer(EntityRegistry.BLOOD_TENTACLE.get(), BloodTentacleRenderer::new);
         event.registerEntityRenderer(EntityRegistry.BLOOD_BOSS_FIRE_ERUPTION_AOE.get(), NoopRenderer::new);
-        event.registerEntityRenderer(EntityRegistry.BLOOD_BOSS_FIERY_DAGGER_PROJECTILE.get(), BloodBossFieryDaggerRenderer::new);
+        event.registerEntityRenderer(EntityRegistry.BLOOD_DAGGER_PROJECTILE.get(), BloodDaggerRenderer::new);
+        event.registerEntityRenderer(EntityRegistry.BLOOD_FIELD.get(), NoopRenderer::new);
+        event.registerEntityRenderer(EntityRegistry.TREMOR_AOE_ENTITY.get(), NoopRenderer::new);
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)

@@ -10,6 +10,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.phys.AABB;
@@ -120,36 +121,91 @@ public class LightningWhirlSlashBehavior
 
     private SkillMovementTask createDashMovement() {
         return new SkillMovementTask(DURATION) {
-
+            private Vec3 startPos;
             private Vec3 lockedDirection;
+            private Vec3 targetPos;
+            private boolean hasTarget = false;
+            private boolean hasPassedTarget = false;
             private static final float DASH_START_P = 13F / 30F;
+
+            private Vec3 lastAppliedMovement = Vec3.ZERO;
 
             @Override
             public void start(net.minecraft.world.entity.Mob mob) {
+                this.startPos = mob.position();
                 LivingEntity target = mob.getTarget();
+
                 if (target != null) {
-
-                    lockedDirection = target.position()
-                            .subtract(mob.position())
-                            .normalize();
+                    this.targetPos = target.position();
+                    double dist = targetPos.subtract(startPos).length();
+                    if (dist < 1.0) {
+                        this.lockedDirection = mob.getLookAngle().normalize();
+                        this.targetDistance = 3.0;
+                        this.hasTarget = false;
+                    } else {
+                        this.lockedDirection = targetPos.subtract(startPos).normalize();
+                        this.targetDistance = dist;
+                        this.hasTarget = true;
+                    }
                 } else {
-
-                    lockedDirection = mob.getLookAngle().normalize();
+                    this.lockedDirection = mob.getLookAngle().normalize();
+                    this.hasTarget = false;
+                    this.targetDistance = 10.0;
                 }
+                this.hasPassedTarget = false;
+                this.lastAppliedMovement = Vec3.ZERO;
             }
 
+            private double targetDistance;
+
             @Override
-            public Vec3 compute(net.minecraft.world.entity.Mob mob, float p) {
+            public Vec3 compute(Mob mob, float p) {
+                Vec3 counterForce = lastAppliedMovement.scale(-1.0);
+
+                if (hasPassedTarget) {
+                    Vec3 currentVel = mob.getDeltaMovement();
+                    lastAppliedMovement = Vec3.ZERO;
+                    return new Vec3(-currentVel.x, 0, -currentVel.z);
+                }
 
                 if (p < DASH_START_P) {
+                    lastAppliedMovement = Vec3.ZERO;
                     return Vec3.ZERO;
+                }
+
+                if (hasTarget) {
+                    Vec3 currentOffset = mob.position().subtract(startPos);
+                    double currentProjection = currentOffset.dot(lockedDirection);
+
+                    if (currentProjection > (targetDistance + 0.5) && p > (DASH_START_P + 0.05F)) {
+                        hasPassedTarget = true;
+                        Vec3 currentVel = mob.getDeltaMovement();
+                        lastAppliedMovement = Vec3.ZERO;
+                        return new Vec3(-currentVel.x, 0, -currentVel.z);
+                    }
                 }
 
                 float dashP = (p - DASH_START_P) / (1.0F - DASH_START_P);
                 dashP = Mth.clamp(dashP, 0.0F, 1.0F);
 
-                double speed = 0.45 * (1.0 - dashP);
-                return lockedDirection.scale(speed);
+                double speed = 0.65 * (1.0 - dashP);
+                Vec3 desiredPush = lockedDirection.scale(speed);
+
+                Vec3 result = counterForce.add(desiredPush);
+                lastAppliedMovement = desiredPush;
+
+                return result;
+            }
+
+            @Override
+            public void end(net.minecraft.world.entity.Mob mob) {
+                Vec3 currentVel = mob.getDeltaMovement();
+                mob.setDeltaMovement(0, currentVel.y, 0);
+            }
+
+            @Override
+            public boolean finished() {
+                return hasPassedTarget || super.finished();
             }
         };
     }

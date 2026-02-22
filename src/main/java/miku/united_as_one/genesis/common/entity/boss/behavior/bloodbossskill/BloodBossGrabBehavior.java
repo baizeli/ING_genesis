@@ -1,6 +1,7 @@
 package miku.united_as_one.genesis.common.entity.boss.behavior.bloodbossskill;
 
 import miku.united_as_one.genesis.common.entity.ThrowBloodAndWounds;
+import miku.united_as_one.genesis.common.entity.TremorAoeEntity;
 import miku.united_as_one.genesis.common.entity.ai.ModMemoryModuleType;
 import miku.united_as_one.genesis.common.entity.boss.BloodBoss;
 import miku.united_as_one.genesis.common.entity.boss.BloodBossMoveControl;
@@ -21,25 +22,22 @@ import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Map;
 
 public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
-
-    //冷却
     public static final int COOL_DOWN = 8*20;
-    //范围伤害倍率
+
     public static final float DAMAGE_MULTIPLIER_AREA = 2f;
-    //主要目标伤害倍率
+
     public static final float DAMAGE_MULTIPLIER_MAIN = 3.4f;
 
-
-    //"登!"
     private static final String ANIM_START = "ascend";
 
-    private static final String ANIM_SLAM  = "dragon_slam"; // 龙！
-    public static final String ANIM_FAIL = "failure"; // 寄！
+    private static final String ANIM_SLAM  = "dragon_slam";
+    public static final String ANIM_FAIL = "failure";
 
     private static final int DASH_DURATION = 9;
     private static final int IMPACT_TIME   = 20;
@@ -52,8 +50,6 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
     private static final int DASH_START_TICK = DASH_WINDUP;
     private static final int DASH_END_TICK   = DASH_WINDUP + DASH_DURATION;
 
-
-
     private LivingEntity grabbedTarget;
     private LivingEntity impactTarget;
 
@@ -64,11 +60,10 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
     private float slamYaw;
     private boolean grabFailed;
 
-
     private float slamAngle;
 
-//应该立刻停止
     private boolean shouldStopImmediately;
+
     public BloodBossGrabBehavior() {
         super(Map.of(
                 MemoryModuleType.ATTACK_TARGET, MemoryStatus.VALUE_PRESENT,
@@ -87,10 +82,8 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
         return DASH_START_TICK;
     }
 
-
-
     @Override
-    protected void start(ServerLevel level, BloodBoss boss, long gameTime) {
+    protected void start(@NotNull ServerLevel level, @NotNull BloodBoss boss, long gameTime) {
         grabFailed = false;
         grabSuccess = false;
         impactDealt = false;
@@ -116,14 +109,12 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
     }
 
     @Override
-    protected boolean canStillUse(ServerLevel level, BloodBoss entity, long gameTime) {
-
+    protected boolean canStillUse(@NotNull ServerLevel level, @NotNull BloodBoss entity, long gameTime) {
         return super.canStillUse(level, entity, gameTime)&&!shouldStopImmediately;
     }
 
     @Override
-    protected void tick(ServerLevel level, BloodBoss boss, long gameTime) {
-        //设置面向目标
+    protected void tick(@NotNull ServerLevel level, BloodBoss boss, long gameTime) {
         LivingEntity target = boss.getTarget();
         if (target != null){
             boss.getBrain().setMemory(MemoryModuleType.LOOK_TARGET, new EntityTracker(target, true));
@@ -138,7 +129,7 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
 
         if (abilityTimer < DASH_START_TICK) {
 
-            boss.setDeltaMovement(Vec3.ZERO);
+            boss.realSetDeltaMovement(Vec3.ZERO);
             return;
         }
 
@@ -164,9 +155,6 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
             handleSlamSequence(level, boss);
         }
     }
-
-
-
 
     private void attemptGrabDuringDash(BloodBoss boss) {
         Vec3 vel = boss.getDeltaMovement();
@@ -200,7 +188,7 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
 
 
             ((BloodBossMoveControl) boss.getMoveControl()).clearSkillMovements();
-            boss.setDeltaMovement(Vec3.ZERO);
+            boss.realSetDeltaMovement(Vec3.ZERO);
             boss.setNoGravity(true);
 
             boss.serverTriggerAnimation(ANIM_SLAM);
@@ -208,17 +196,16 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
         }
     }
 
-
     private void handleSlamSequence(ServerLevel level, BloodBoss boss) {
         slamTimer++;
 
 
         if (slamTimer < 8) {
-            boss.setDeltaMovement(0, 0.8, 0);
+            boss.realSetDeltaMovement(0, 0.8, 0);
         } else if (slamTimer < 14) {
-            boss.setDeltaMovement(0, -0.05, 0);
+            boss.realSetDeltaMovement(0, -0.05, 0);
         } else if (slamTimer < IMPACT_TIME) {
-            boss.setDeltaMovement(0, -2.0, 0);
+            boss.realSetDeltaMovement(0, -2.0, 0);
         }
 
         float t = slamTimer / (float) IMPACT_TIME;
@@ -269,6 +256,11 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
         }
 
         if (slamTimer >= IMPACT_TIME && !impactDealt) {
+            TremorAoeEntity tremor = new TremorAoeEntity(level, 10.0F, 0.3F, 0.6F);
+            tremor.setPos(boss.getX(), boss.getY(), boss.getZ());
+            tremor.setOwner(boss);
+            level.addFreshEntity(tremor);
+
             spawnArrowCycle(level, boss);
 
             spawnArrowArea(level, boss);
@@ -280,7 +272,7 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
     private static void spawnArrowArea(ServerLevel level, BloodBoss boss) {
         int arrowCount = 100;
         double maxRadius = 12.0;
-        double baseHeight = 15.0; // 基础高度
+        double baseHeight = 15.0;
         RandomSource random = level.random;
 
         for (int i = 0; i < arrowCount; i++) {
@@ -312,11 +304,11 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
             level.addFreshEntity(arrow);
         }
     }
+
     private static void spawnArrowCycle(ServerLevel level, BloodBoss boss) {
-        // 在周围一圈天上生成箭并使其垂直钉向地面，覆盖整个区域
-        int arrowCount = 32; // 增加箭的数量以更好地覆盖区域
-        double radius1 = 12.0; // 扩大半径距离以覆盖更大范围
-        double height = 15.0; // 提高高度以确保箭能覆盖更广的区域
+        int arrowCount = 32;
+        double radius1 = 12.0;
+        double height = 15.0;
 
         for (int i = 0; i < arrowCount; i++) {
             float angle = (float) (i * (2 * Math.PI / arrowCount));
@@ -324,30 +316,28 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
             double z = boss.getZ() + Math.sin(angle) * radius1;
             double y = boss.getY() + height;
 
-            // 创建箭实体
+
             ThrowBloodAndWounds arrow = new ThrowBloodAndWounds(EntityRegistry.THROW_BLOOD_AND_WOUNDS.get(), level);
             arrow.setOwner(boss);
             arrow.setPos(x, y, z);
-            arrow.setDeltaMovement(0, -2.0, 0); // 增加下降速度以更快命中地面
-            arrow.setPierceLevel((byte) 0); // 不穿透
+            arrow.setDeltaMovement(0, -2.0, 0);
+            arrow.setPierceLevel((byte) 0);
 
-            // 发射箭
             level.addFreshEntity(arrow);
         }
     }
-
 
     private void performImpact(ServerLevel level, BloodBoss boss) {
         impactDealt = true;
         boss.setNoGravity(false);
 
-        // 对主要目标造成伤害
+
         if (impactTarget != null && impactTarget.isAlive()) {
             boss.applySkillDamage(impactTarget, DAMAGE_MULTIPLIER_MAIN);
             impactTarget.push(0, 0.5, 0);
         }
 
-        // 对范围内的其他实体造成伤害
+
         applyAreaOfEffectDamage(level, boss);
 
         level.sendParticles(
@@ -364,12 +354,7 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
         this.shouldStopImmediately= true;
     }
 
-    /**
-     * 计算并应用范围伤害效果
-     * 
-     * @param level 游戏世界
-     * @param boss 攻击者
-     */
+
     private void applyAreaOfEffectDamage(ServerLevel level, BloodBoss boss) {
         AABB box = boss.getBoundingBox().inflate(5.5, 2.5, 5.5);
         java.util.List<LivingEntity> targets = level.getEntitiesOfClass(LivingEntity.class, box,
@@ -384,7 +369,7 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
     }
 
     @Override
-    protected void stop(ServerLevel level, BloodBoss boss, long gameTime) {
+    protected void stop(@NotNull ServerLevel level, @NotNull BloodBoss boss, long gameTime) {
         super.stop(level, boss, gameTime);
         boss.getBrain().eraseMemory(ModMemoryModuleType.IS_CASTING_SKILL.get());
         ((BloodBossMoveControl) boss.getMoveControl()).clearSkillMovements();
@@ -406,7 +391,12 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
     @Override protected void doAction(BloodBoss boss) {}
 
     public static class GrabDashTask extends SkillMovementTask {
-        private Vec3 dir;
+        private Vec3 startPos;
+        private Vec3 dashDir;
+        private double targetDistance;
+        private boolean hasPassedTarget = false;
+
+        private Vec3 lastAppliedMovement = Vec3.ZERO;
 
         public GrabDashTask(int duration) {
             super(duration);
@@ -414,21 +404,67 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
 
         @Override
         public void start(Mob mob) {
-            if (mob.getTarget() != null) {
-                Vec3 from = mob.position().add(0, mob.getBbHeight() * 0.5, 0);
-                Vec3 to   = mob.getTarget().position().add(0, mob.getTarget().getBbHeight() * 0.5, 0);
-                dir = to.subtract(from).normalize();
+            this.startPos = mob.position();
+            LivingEntity target = mob.getTarget();
+
+            if (target != null) {
+                Vec3 toTarget = target.position().subtract(startPos);
+                double dist = toTarget.length();
+
+                if (dist < 1.5) {
+                    this.dashDir = mob.getLookAngle().normalize();
+                    this.targetDistance = 2.5;
+                } else {
+                    this.dashDir = toTarget.normalize();
+                    this.targetDistance = dist;
+                }
             } else {
-                float yawRad = mob.getYRot() * Mth.DEG_TO_RAD;
-                dir = new Vec3(-Mth.sin(yawRad), 0, Mth.cos(yawRad));
+                this.dashDir = mob.getLookAngle().normalize();
+                this.targetDistance = 10.0;
             }
+            this.hasPassedTarget = false;
+            this.lastAppliedMovement = Vec3.ZERO;
         }
 
         @Override
         public Vec3 compute(Mob mob, float progress) {
+
+            Vec3 counterForce = lastAppliedMovement.scale(-1.0);
+
+            if (!hasPassedTarget) {
+                Vec3 currentOffset = mob.position().subtract(startPos);
+                double currentProjection = currentOffset.dot(dashDir);
+
+                if (progress > 0.1F && currentProjection > (targetDistance + 0.5)) {
+                    hasPassedTarget = true;
+                }
+            }
+
+            if (hasPassedTarget) {
+                lastAppliedMovement = Vec3.ZERO;
+                Vec3 currentVel = mob.getDeltaMovement();
+
+                return new Vec3(-currentVel.x, -currentVel.y, -currentVel.z);
+            }
+
             double speed = 1.35;
-            return dir.scale(speed);
+            Vec3 desiredPush = dashDir.scale(speed);
+
+            Vec3 result = counterForce.add(desiredPush);
+            lastAppliedMovement = desiredPush;
+
+            return result;
+        }
+
+        @Override
+        public void end(Mob mob) {
+            mob.setDeltaMovement(0, 0, 0);
+            lastAppliedMovement = Vec3.ZERO;
+        }
+
+        @Override
+        public boolean finished() {
+            return hasPassedTarget || super.finished();
         }
     }
-
 }

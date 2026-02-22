@@ -1,14 +1,17 @@
 package miku.united_as_one.genesis.init.registry;
 
+import io.redspace.ironsspellbooks.entity.spells.FireEruptionAoe;
 import io.redspace.ironsspellbooks.entity.spells.void_tentacle.VoidTentacle;
 import miku.united_as_one.genesis.common.entity.*;
 import miku.united_as_one.genesis.common.entity.LightningBolt;
 import miku.united_as_one.genesis.common.entity.boss.BloodBoss;
 import miku.united_as_one.genesis.common.entity.spells.blood_boss.BloodBossFireEruptionAoe;
-import miku.united_as_one.genesis.common.entity.spells.blood_boss.fiery_dagger.BloodBossFieryDaggerEntity;
+import miku.united_as_one.genesis.common.entity.spells.blood_boss.blood_dagger.BloodDaggerEntity;
+import miku.united_as_one.genesis.common.entity.spells.blood_boss.blood_dagger.BloodField;
 import miku.united_as_one.genesis.common.entity.spells.celestial_source.*;
 import miku.united_as_one.genesis.common.entity.spells.celestial_source.notuse.*;
 import miku.united_as_one.genesis.Genesis;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.*;
@@ -74,7 +77,7 @@ public class EntityRegistry {
     public static final RegistryObject<EntityType<BloodBoss>> BLOOD_BOSS = ENTITY_TYPES.register("blood_boss",
             () -> EntityType.Builder.of(BloodBoss::new, MobCategory.MONSTER)
                     .sized(1.4875001F, 3.6749997F)
-                    .clientTrackingRange(64)
+                    .clientTrackingRange(128)
                     .build("blood_boss"));
 
     public static final RegistryObject<EntityType<VoidTentacle>> BLOOD_TENTACLE = ENTITY_TYPES.register("blood_tentacle",
@@ -94,17 +97,34 @@ public class EntityRegistry {
                     .clientTrackingRange(64)
                     .build("blood_boss_fire_eruption"));
 
-    public static final RegistryObject<EntityType<BloodBossFieryDaggerEntity>> BLOOD_BOSS_FIERY_DAGGER_PROJECTILE = ENTITY_TYPES.register("blood_boss_fiery_dagger",
+    public static final RegistryObject<EntityType<BloodDaggerEntity>> BLOOD_DAGGER_PROJECTILE = ENTITY_TYPES.register("blood_dagger",
             () -> EntityType.Builder.of(
-                            (EntityType<BloodBossFieryDaggerEntity> type, Level level) -> new BloodBossFieryDaggerEntity(type, level),
+                            (EntityType<BloodDaggerEntity> type, Level level) -> new BloodDaggerEntity(type, level),
                             MobCategory.MISC)
                     .sized(0.5F, 0.5F)
                     .clientTrackingRange(64)
-                    .build("blood_boss_fiery_dagger"));
+                    .build("blood_dagger"));
+
+    public static final RegistryObject<EntityType<BloodField>> BLOOD_FIELD = ENTITY_TYPES.register("blood_field",
+            () -> EntityType.Builder.of(
+                            (EntityType<BloodField> type, Level level) -> new BloodField(type, level),
+                            MobCategory.MISC)
+                    .sized(4.0F, 1.2F)
+                    .clientTrackingRange(64)
+                    .build("blood_field"));
+
     public static final RegistryObject<EntityType<ThrowBloodAndWounds>> THROW_BLOOD_AND_WOUNDS = ENTITY_TYPES.register("throw_blood_and_wounds",
             () -> EntityType.Builder.of(ThrowBloodAndWounds::new, MobCategory.MISC)
                     .sized(0.5F, 0.5F)
                     .clientTrackingRange(4)
                     .updateInterval(20)
                     .build("throw_blood_and_wounds"));
+
+    public static final RegistryObject<EntityType<TremorAoeEntity>> TREMOR_AOE_ENTITY = ENTITY_TYPES.register("tremor_aoe_entity",
+            () -> EntityType.Builder.<TremorAoeEntity>of(TremorAoeEntity::new, MobCategory.MISC)
+                    .sized(1.0F, 1.0F)
+                    .clientTrackingRange(64)
+                    .updateInterval(1)
+                    .setShouldReceiveVelocityUpdates(false)
+                    .build("tremor_aoe_entity"));
 }
