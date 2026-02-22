@@ -410,7 +410,9 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
             if (this.deathTime == DEATH_DURATION-40){
                 spawnSphericalTwistParticles((ServerLevel) level, this, 0.13, 7);
             }
-
+            if (this.deathTime >= DEATH_DURATION) {
+                setVisable(false);
+            }
             if (this.deathTime >= DEATH_DURATION+80 && !this.isRemoved()) {
                 this.remove(RemovalReason.KILLED);
             }
