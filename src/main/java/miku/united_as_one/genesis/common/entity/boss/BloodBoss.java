@@ -29,6 +29,7 @@ import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.common.entity.ai.ModMemoryModuleType;
 import miku.united_as_one.genesis.common.entity.boss.behavior.bloodbossskill.BloodBossEmergingBehavior;
 import miku.united_as_one.genesis.common.entity.boss.damage.BloodBossDamageSource;
+import miku.united_as_one.genesis.init.registry.EntityRegistry;
 import miku.united_as_one.genesis.init.registry.SoundRegister;
 import miku.united_as_one.genesis.init.registry.client.ParticleRegistry;
 import net.minecraft.core.BlockPos;
@@ -64,6 +65,7 @@ import net.minecraft.world.entity.ai.navigation.AmphibiousPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.monster.warden.WardenAi;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -84,6 +86,7 @@ import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.core.object.PlayState;
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
@@ -209,6 +212,29 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         return this.entityData.get(DATA_IS_VISIBLE);
     }
 
+    BloodBoss triggeredSummer(ServerLevel serverLevel, BlockPos spawnPos){
+        return EntityRegistry.BLOOD_BOSS.get().create(
+                serverLevel,
+                null,
+                null,
+                spawnPos,
+                MobSpawnType.TRIGGERED,
+                false,
+                false
+        );
+    }
+    BloodBoss triggeredSummer(ServerLevel serverLevel, BlockPos spawnPos, CompoundTag nbt, @Nullable Consumer<BloodBoss> consumer, BlockPos pos,boolean shouldOffsetY, boolean shouldOffsetYMore){
+        return EntityRegistry.BLOOD_BOSS.get().create(
+                serverLevel,
+                nbt,
+                consumer,
+                spawnPos,
+                MobSpawnType.TRIGGERED,
+                shouldOffsetY,
+                shouldOffsetYMore
+        );
+    }
+
     //属性
     public static AttributeSupplier.Builder setAttributes() {
         return Mob.createMobAttributes()
@@ -270,9 +296,15 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
             Objects.requireNonNull(this.getAttribute(Attributes.MAX_HEALTH)).addPermanentModifier(new AttributeModifier(AttributeHelper.uuidFromId(IronsSpellbooks.id("player_scale")), "player_scale", extraHealthPercent, AttributeModifier.Operation.MULTIPLY_TOTAL));
         }
 
-        this.getBrain().setMemoryWithExpiry(MemoryModuleType.IS_EMERGING, Unit.INSTANCE,
-                BloodBossEmergingBehavior.EMERGE_SPAWN_DURATION);
-        this.playSound(SoundEvents.WARDEN_AGITATED, 5.0F, 1.0F);
+        if (reason == MobSpawnType.TRIGGERED) {
+            this.getBrain().setMemoryWithExpiry(MemoryModuleType.IS_EMERGING, Unit.INSTANCE,
+                    BloodBossEmergingBehavior.EMERGE_SPAWN_DURATION);
+            this.playSound(SoundEvents.WARDEN_AGITATED, 5.0F, 1.0F);
+        }else{
+            this.getBrain().setMemory(ModMemoryModuleType.BOSS_STAGE.get(),1);
+        }
+
+
 
         if (!this.level.isClientSide()){
             this.setVisable(this.getBossStage() > 0);
