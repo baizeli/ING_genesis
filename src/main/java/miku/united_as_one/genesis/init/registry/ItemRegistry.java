@@ -47,6 +47,8 @@ public class ItemRegistry {
 
     // 紫极锭
     public static final ItemEntry<EternisMaterial> VIOLET_GALAXY_INGOT;
+    //紫极碎片
+    public static final ItemEntry<Item> VIOLET_FRAGMENTS;
     // 神圣金属锭
     public static final ItemEntry<Item> DIVINE_METAL_INGOT;
     // 扭曲混沌锭
@@ -223,12 +225,30 @@ public class ItemRegistry {
     public static final ItemEntry<SmithingTemplateItem> VIOLET_UPGRADE_SMITHING_TEMPLATE;
     // 锻造模板
     public static final ItemEntry<SmithingTemplateItem> DIVINE_UPGRADE_SMITHING_TEMPLATE;
+    //紫极稿
+    public static final ItemEntry<VioletPickaxe> VIOLET_PICKAXE;
 
     //初始化
     static {
         VIOLET_GALAXY_INGOT = Genesis.L2_REGISTRATE
                 .item("violet_galaxy_ingot", properties -> new EternisMaterial(properties, 0))
                 .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
+                .register();
+
+        VIOLET_FRAGMENTS = Genesis.L2_REGISTRATE
+                    .item("violet_fragments", properties -> new Item(properties.rarity(Rarity.EPIC)))
+                    .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
+                    .register();
+
+        VIOLET_PICKAXE = Genesis.L2_REGISTRATE
+                .item("violet_pickaxe", properties -> new VioletPickaxe(
+                        TierRegistry.VIOLET_GALAXY_INGOT,
+                        0,
+                        -1.6F,
+                        properties
+                ))
+                .model((ctx, prov) -> prov.handheld(ctx::getEntry))
+                .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
                 .register();
 
         DIVINE_METAL_INGOT = Genesis.L2_REGISTRATE
