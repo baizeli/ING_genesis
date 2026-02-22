@@ -9,6 +9,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
+import org.jetbrains.annotations.NotNull;
 
 public class BloodBossStageTransitionBehavior extends AnimatedActionBehavior<BloodBoss> {
 
@@ -24,7 +25,6 @@ public class BloodBossStageTransitionBehavior extends AnimatedActionBehavior<Blo
 
     @Override
     protected boolean canStartAction(BloodBoss entity) {
-
         Brain<BloodBoss> brain = entity.getBrain();
 
         int stage = brain.getMemory(ModMemoryModuleType.BOSS_STAGE.get()).orElse(1);
@@ -35,8 +35,7 @@ public class BloodBossStageTransitionBehavior extends AnimatedActionBehavior<Blo
     }
 
     @Override
-    protected void tick(ServerLevel level, BloodBoss boss, long gameTime) {
-
+    protected void tick(@NotNull ServerLevel level, BloodBoss boss, long gameTime) {
         Brain<BloodBoss> brain = boss.getBrain();
         brain.eraseMemory(MemoryModuleType.WALK_TARGET);
         boss.setTarget(null);
@@ -46,12 +45,9 @@ public class BloodBossStageTransitionBehavior extends AnimatedActionBehavior<Blo
         double cx = boss.getX();
         double cy = boss.getY() + 1.5;
         double cz = boss.getZ();
-
         
         if (transitionTick < 120) {
-
             for (int i = 0; i < 60; i++) {
-
                 double r = level.random.nextDouble() * 6;
                 double a = level.random.nextDouble() * Math.PI * 2;
 
@@ -67,7 +63,6 @@ public class BloodBossStageTransitionBehavior extends AnimatedActionBehavior<Blo
             }
 
             for (int i = 0; i < 40; i++) {
-
                 double a = i * Math.PI * 2 / 40;
                 double r = 5;
 
@@ -79,16 +74,10 @@ public class BloodBossStageTransitionBehavior extends AnimatedActionBehavior<Blo
                         1, 0, 0, 0, 0
                 );
             }
-        }
-
-        
-        else if (transitionTick < 320) {
-
+        } else if (transitionTick < 320) {
             double t = transitionTick * 0.2;
-
             
             for (int i = 0; i < 80; i++) {
-
                 double angle = t + i * 0.3;
                 double y = cy - 2 + i * 0.05;
 
@@ -101,10 +90,8 @@ public class BloodBossStageTransitionBehavior extends AnimatedActionBehavior<Blo
                 level.sendParticles(ParticleRegistry.BLOOD_DRIP_TWIST.get(), x1, y, z1, 1, 0, 0, 0, 0);
                 level.sendParticles(ParticleRegistry.BLOOD_DRIP_TWIST.get(), x2, y, z2, 1, 0, 0, 0, 0);
             }
-
             
             for (int i = 0; i < 120; i++) {
-
                 double phi = Math.acos(2 * level.random.nextDouble() - 1);
                 double theta = 2 * Math.PI * level.random.nextDouble();
 
@@ -120,7 +107,6 @@ public class BloodBossStageTransitionBehavior extends AnimatedActionBehavior<Blo
                         1, 0, 0, 0, 0
                 );
             }
-
             
             double rot = t * 0.5;
 
@@ -138,12 +124,7 @@ public class BloodBossStageTransitionBehavior extends AnimatedActionBehavior<Blo
                                 1, 0, 0, 0, 0
                         );
                     }
-        }
-
-        
-        else {
-
-            
+        } else {
             for (int i = 0; i < 300; i++) {
 
                 double phi = Math.acos(2 * level.random.nextDouble() - 1);
@@ -177,7 +158,7 @@ public class BloodBossStageTransitionBehavior extends AnimatedActionBehavior<Blo
                 );
             }
 
-            boss.setDeltaMovement(0, 0.05, 0);
+            boss.realSetDeltaMovement(0, 0.05, 0);
         }
 
         super.tick(level, boss, gameTime);
@@ -205,7 +186,6 @@ public class BloodBossStageTransitionBehavior extends AnimatedActionBehavior<Blo
 
     @Override
     protected void doAction(BloodBoss boss) {
-
         Brain<BloodBoss> brain = boss.getBrain();
 
         brain.setMemory(ModMemoryModuleType.HAS_PLAYED_STAGE_TRANSITION.get(), true);
@@ -213,8 +193,7 @@ public class BloodBossStageTransitionBehavior extends AnimatedActionBehavior<Blo
     }
 
     @Override
-    protected void stop(ServerLevel level, BloodBoss boss, long gameTime) {
-
+    protected void stop(@NotNull ServerLevel level, BloodBoss boss, long gameTime) {
         transitionTick = 0;
         boss.getBrain().eraseMemory(MemoryModuleType.IS_EMERGING);
 

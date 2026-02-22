@@ -4,11 +4,11 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.ai.behavior.Behavior;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
-import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.util.Unit;
 
 import miku.united_as_one.genesis.common.entity.boss.BloodBoss;
 import miku.united_as_one.genesis.common.entity.ai.ModMemoryModuleType;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
 
@@ -23,7 +23,7 @@ public class BloodBossStageStunCoreBehavior extends Behavior<BloodBoss> {
     }
 
     @Override
-    protected boolean checkExtraStartConditions(ServerLevel level, BloodBoss boss) {
+    protected boolean checkExtraStartConditions(@NotNull ServerLevel level, BloodBoss boss) {
 
         int stage = boss.getBrain()
                 .getMemory(ModMemoryModuleType.BOSS_STAGE.get())
@@ -50,13 +50,13 @@ public class BloodBossStageStunCoreBehavior extends Behavior<BloodBoss> {
     }
 
     @Override
-    protected void start(ServerLevel level, BloodBoss boss, long gameTime) {
+    protected void start(@NotNull ServerLevel level, BloodBoss boss, long gameTime) {
         boss.getBrain().setMemory(MemoryModuleType.IS_EMERGING, Unit.INSTANCE);
     }
 
 
     @Override
-    protected boolean canStillUse(ServerLevel level, BloodBoss boss, long gameTime) {
+    protected boolean canStillUse(@NotNull ServerLevel level, @NotNull BloodBoss boss, long gameTime) {
         return false;
     }
 }

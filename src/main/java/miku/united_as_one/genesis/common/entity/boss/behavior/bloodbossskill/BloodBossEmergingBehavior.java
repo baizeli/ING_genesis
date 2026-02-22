@@ -9,6 +9,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
+import org.jetbrains.annotations.NotNull;
 
 public class BloodBossEmergingBehavior extends AnimatedActionBehavior<BloodBoss> {
     public static final int EMERGE_SPAWN_DURATION = 175;
@@ -30,7 +31,7 @@ public class BloodBossEmergingBehavior extends AnimatedActionBehavior<BloodBoss>
     }
 
     @Override
-    protected void tick(ServerLevel level, BloodBoss boss, long gameTime) {
+    protected void tick(@NotNull ServerLevel level, @NotNull BloodBoss boss, long gameTime) {
         super.tick(level, boss, gameTime);
         emergenceTick++;
         if (emergenceTick <= 10) {
@@ -65,18 +66,15 @@ public class BloodBossEmergingBehavior extends AnimatedActionBehavior<BloodBoss>
         double behindZ = boss.getZ() - Math.cos(yawRad) * 5.0;
         double behindY = boss.getY() + 1.8;
 
-        double cx = behindX;
-        double cy = behindY;
-        double cz = behindZ;
         double radius = 2.5;
         int particleCount = 200;
 
         for (int i = 0; i < particleCount; i++) {
             double phi = Math.acos(2 * level.random.nextDouble() - 1);
             double theta = 2 * Math.PI * level.random.nextDouble();
-            double x = cx + radius * Math.sin(phi) * Math.cos(theta);
-            double y = cy + radius * Math.cos(phi);
-            double z = cz + radius * Math.sin(phi) * Math.sin(theta);
+            double x = behindX + radius * Math.sin(phi) * Math.cos(theta);
+            double y = behindY + radius * Math.cos(phi);
+            double z = behindZ + radius * Math.sin(phi) * Math.sin(theta);
             level.sendParticles(
                     ParticleRegistry.BLOOD_DRIP_TWIST.get(),
                     x, y, z,
@@ -177,8 +175,7 @@ public class BloodBossEmergingBehavior extends AnimatedActionBehavior<BloodBoss>
         }
     }
     @Override
-    protected void stop(ServerLevel level, BloodBoss entity, long gameTime) {
-        
+    protected void stop(@NotNull ServerLevel level, BloodBoss entity, long gameTime) {
         emergenceTick = 0;
         Brain<BloodBoss> brain = entity.getBrain();
         brain.eraseMemory(MemoryModuleType.IS_EMERGING);

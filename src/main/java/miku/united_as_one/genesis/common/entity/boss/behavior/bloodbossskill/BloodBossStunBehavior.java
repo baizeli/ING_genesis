@@ -5,25 +5,21 @@ import io.redspace.ironsspellbooks.api.util.CameraShakeData;
 import io.redspace.ironsspellbooks.api.util.CameraShakeManager;
 import io.redspace.ironsspellbooks.api.util.Utils;
 import io.redspace.ironsspellbooks.entity.spells.void_tentacle.VoidTentacle;
-import miku.united_as_one.genesis.client.render.entity.BloodTentacleEmissiveLayer;
-import miku.united_as_one.genesis.common.entity.NyanCat;
 import miku.united_as_one.genesis.common.entity.ai.ModMemoryModuleType;
 import miku.united_as_one.genesis.common.entity.boss.BloodBoss;
 import miku.united_as_one.genesis.common.entity.boss.behavior.AnimatedActionBehavior;
 import miku.united_as_one.genesis.init.registry.EntityRegistry;
 import miku.united_as_one.genesis.init.registry.client.ParticleRegistry;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.util.Mth;
-import java.util.Random;
+import org.jetbrains.annotations.NotNull;
 
 public class BloodBossStunBehavior extends AnimatedActionBehavior<BloodBoss> {
 
@@ -36,7 +32,7 @@ public class BloodBossStunBehavior extends AnimatedActionBehavior<BloodBoss> {
     private int particleTicks = 0; 
 
     public static final int STUN_DURATION = (int)(20 * 9.5);
-    private static final int[] WAVE_START_TIMES = {(int)(20 * 6.5), (int)(20 * 7.75), (int)(20 * 9)};
+    private static final int[] WAVE_START_TIMES = {(int)(20 * 6.5), (int)(20 * 7.75), 20 * 9};
     private static final int WAVE_DURATION = 20; 
     private static final int MAX_WAVE_RADIUS = 20; 
 
@@ -465,7 +461,7 @@ public class BloodBossStunBehavior extends AnimatedActionBehavior<BloodBoss> {
     }
 
     @Override
-    protected void stop(ServerLevel level, BloodBoss entity, long gameTime) {
+    protected void stop(@NotNull ServerLevel level, BloodBoss entity, long gameTime) {
         Brain<BloodBoss> brain = entity.getBrain();
         brain.eraseMemory(MemoryModuleType.IS_EMERGING);
         brain.setMemory(ModMemoryModuleType.STAGE_STUN_COUNT.get(), brain.getMemory(ModMemoryModuleType.STAGE_STUN_COUNT.get()).orElse(0) + 1);
