@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "YXY",
+    "XZX",
+    "YXY"
+  ],
+  "key": {
+    "Y": {
+      "item": "irons_spellbooks:mithril_scrap"
+    },
+    "X": {
+      "item": "iron_spells_genesis:twisted_chaos"
+    },
+    "Z": {
+      "item": "irons_spellbooks:pyrium_ingot"
+    }
+  },
+  "result": {
+    "item": "iron_spells_genesis:twisted_chaos_ingot",
+    "count": 1
+  }
+}
