@@ -100,8 +100,6 @@ public class BloodBossStageTransitionBehavior extends AnimatedActionBehavior<Blo
                 double dz = (level.random.nextDouble() - 0.5) * 4;
                 level.sendParticles(ParticleRegistry.BLOOD_DRIP_FALL.get(), cx + dx, cy - 3, cz + dz, 1, 0, 0.3, 0, 0);
             }
-
-            boss.realSetDeltaMovement(0, 0.05, 0);
         }
         super.tick(level, boss, gameTime);
     }
