@@ -222,9 +222,9 @@ public class ItemRegistry {
     // 邪术符文
     public static final ItemEntry<EldritchRunePlus> ELDRITCH_RUNE_PLUS;
     // 锻造模板
-    public static final ItemEntry<SmithingTemplateItem> VIOLET_UPGRADE_SMITHING_TEMPLATE;
+    public static final ItemEntry<ModSmithingTemplateItem> VIOLET_UPGRADE_SMITHING_TEMPLATE;
     // 锻造模板
-    public static final ItemEntry<SmithingTemplateItem> DIVINE_UPGRADE_SMITHING_TEMPLATE;
+    public static final ItemEntry<ModSmithingTemplateItem> DIVINE_UPGRADE_SMITHING_TEMPLATE;
     //紫极稿
     public static final ItemEntry<VioletPickaxe> VIOLET_PICKAXE;
 
@@ -257,27 +257,30 @@ public class ItemRegistry {
                 .register();
 
         DIVINE_UPGRADE_SMITHING_TEMPLATE = Genesis.L2_REGISTRATE
-                .item("divine_upgrade_smithing_template", properties -> new SmithingTemplateItem(
+                .item("divine_upgrade_smithing_template", properties -> new ModSmithingTemplateItem(
                         Component.translatable("item.iron_spells_genesis.smithing_template.divine_upgrade.applies_to").withStyle(SmithingTemplateItem.DESCRIPTION_FORMAT),
                         Component.translatable("item.iron_spells_genesis.smithing_template.divine_upgrade.ingredients").withStyle(SmithingTemplateItem.DESCRIPTION_FORMAT),
                         Component.translatable("upgrade.iron_spells_genesis.divine_upgrade").withStyle(SmithingTemplateItem.TITLE_FORMAT),
                         Component.translatable("item.iron_spells_genesis.smithing_template.divine_upgrade.base_slot_description"),
                         Component.translatable("item.iron_spells_genesis.smithing_template.divine_upgrade.additions_slot_description"),
-                        SmithingTemplateItem.createTrimmableArmorIconList(), SmithingTemplateItem.createNetheriteUpgradeMaterialList()
+                        SmithingTemplateItem.createTrimmableArmorIconList(), SmithingTemplateItem.createNetheriteUpgradeMaterialList(),
+                        "item." + Genesis.MOD_ID + ".divine_upgrade_smithing_template"
                 ))
                 .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
                 .register();
 
         VIOLET_UPGRADE_SMITHING_TEMPLATE = Genesis.L2_REGISTRATE
-                .item("violet_upgrade_smithing_template", properties -> new SmithingTemplateItem(
+                .item("violet_upgrade_smithing_template", properties -> new ModSmithingTemplateItem(
                         Component.translatable("item.iron_spells_genesis.smithing_template.violet_upgrade.applies_to").withStyle(SmithingTemplateItem.DESCRIPTION_FORMAT),
                         Component.translatable("item.iron_spells_genesis.smithing_template.violet_upgrade.ingredients").withStyle(SmithingTemplateItem.DESCRIPTION_FORMAT),
                         Component.translatable("upgrade.iron_spells_genesis.violet_upgrade").withStyle(SmithingTemplateItem.TITLE_FORMAT),
                         Component.translatable("item.iron_spells_genesis.smithing_template.violet_upgrade.base_slot_description"),
                         Component.translatable("item.iron_spells_genesis.smithing_template.violet_upgrade.additions_slot_description"),
-                        SmithingTemplateItem.createTrimmableArmorIconList(), SmithingTemplateItem.createNetheriteUpgradeMaterialList()
+                        SmithingTemplateItem.createTrimmableArmorIconList(), SmithingTemplateItem.createNetheriteUpgradeMaterialList(),
+                        "item." + Genesis.MOD_ID + ".violet_upgrade_smithing_template"
                 ))
                 .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
+                .lang(SmithingTemplateItem::getDescriptionId)
                 .register();
 
         TWISTED_CHAOS_INGOT = Genesis.L2_REGISTRATE

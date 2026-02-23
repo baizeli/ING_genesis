@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "bottom": "iron_spells_genesis:block/quietness_planks",
+    "side": "iron_spells_genesis:block/quietness_planks",
+    "top": "iron_spells_genesis:block/quietness_planks"
+  }
+}
