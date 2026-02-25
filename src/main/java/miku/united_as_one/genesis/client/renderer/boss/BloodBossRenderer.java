@@ -11,6 +11,7 @@ import miku.united_as_one.genesis.common.entity.boss.TrailComponent;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
@@ -123,5 +124,23 @@ public class BloodBossRenderer extends GeoEntityRenderer<BloodBoss> {
             poseStack.popPose();
         }
         super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
+    }
+
+    @Override
+    protected void applyRotations(BloodBoss animatable, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTick) {
+        super.applyRotations(animatable, poseStack, ageInTicks, rotationYaw, partialTick);
+    }
+
+    @Override
+    protected float getDeathMaxRotation(BloodBoss animatable) {
+        return 0.0F;
+    }
+
+    @Override
+    public int getPackedOverlay(BloodBoss animatable, float u) {
+        if (animatable.deathTime > 0) {
+            return OverlayTexture.NO_OVERLAY;
+        }
+        return super.getPackedOverlay(animatable, u);
     }
 }

@@ -1,11 +1,13 @@
 package miku.united_as_one.genesis.common.entity.boss.behavior.bloodbossskill;
 
 import com.google.common.collect.ImmutableMap;
+import io.redspace.ironsspellbooks.registries.MobEffectRegistry;
 import miku.united_as_one.genesis.common.entity.ai.ModMemoryModuleType;
 import miku.united_as_one.genesis.common.entity.boss.BloodBoss;
 import miku.united_as_one.genesis.common.entity.boss.behavior.AnimatedActionBehavior;
 import miku.united_as_one.genesis.init.registry.client.ParticleRegistry;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.ai.Brain;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.ai.memory.MemoryStatus;
@@ -15,12 +17,25 @@ public class BloodBossStageTransitionBehavior extends AnimatedActionBehavior<Blo
 
     public static final int STAGE_TRANSITION_DURATION = 21 * 20;
     private int transitionTick = 0;
+    int abyssalShroudEffectDuration =0;
 
     public BloodBossStageTransitionBehavior() {
         super(ImmutableMap.of(
                 MemoryModuleType.IS_EMERGING, MemoryStatus.VALUE_PRESENT,
                 ModMemoryModuleType.BOSS_STAGE.get(), MemoryStatus.VALUE_PRESENT
         ));
+    }
+
+    @Override
+    protected void start(ServerLevel level, BloodBoss entity, long gameTime) {
+        super.start(level, entity, gameTime);
+        if (entity.hasEffect(MobEffectRegistry.ABYSSAL_SHROUD.get())) {
+            var abyssalShroudEffect = entity.getEffect(MobEffectRegistry.ABYSSAL_SHROUD.get());
+            if (abyssalShroudEffect != null) {
+                abyssalShroudEffectDuration = abyssalShroudEffect.getDuration();
+            }
+        }
+        entity.removeEffect(MobEffectRegistry.ABYSSAL_SHROUD.get());
     }
 
     @Override
@@ -85,8 +100,6 @@ public class BloodBossStageTransitionBehavior extends AnimatedActionBehavior<Blo
                 double dz = (level.random.nextDouble() - 0.5) * 4;
                 level.sendParticles(ParticleRegistry.BLOOD_DRIP_FALL.get(), cx + dx, cy - 3, cz + dz, 1, 0, 0.3, 0, 0);
             }
-
-            boss.realSetDeltaMovement(0, 0.05, 0);
         }
         super.tick(level, boss, gameTime);
     }
@@ -140,6 +153,12 @@ public class BloodBossStageTransitionBehavior extends AnimatedActionBehavior<Blo
 
     @Override
     protected void stop(@NotNull ServerLevel level, BloodBoss boss, long gameTime) {
+        if (abyssalShroudEffectDuration!=0){
+            boss.addEffect(new MobEffectInstance(
+                    MobEffectRegistry.ABYSSAL_SHROUD.get(), abyssalShroudEffectDuration, 0, false, false, false
+            ));
+        }
+
         transitionTick = 0;
         boss.getBrain().eraseMemory(MemoryModuleType.IS_EMERGING);
         super.stop(level, boss, gameTime);

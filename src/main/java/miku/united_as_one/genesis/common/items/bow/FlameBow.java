@@ -48,7 +48,7 @@ public class FlameBow extends BowItem {
         fireArrow.setPos(player.position().add(0, player.getEyeHeight(), 0).add(player.getForward()));
         fireArrow.shoot(player.getLookAngle());
 
-        fireArrow.setDamage(power * 8);
+        fireArrow.setDamage(power * 25);
         fireArrow.setExplosionRadius(5);
 
         level.addFreshEntity(fireArrow);
