@@ -11,20 +11,19 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 
 import java.util.Random;
 
+@SuppressWarnings("deprecation")
 @OnlyIn(Dist.CLIENT)
 public class LightningBoltRenderer extends EntityRenderer<LightningBolt> {
     public LightningBoltRenderer(EntityRendererProvider.Context context) {
         super(context);
     }
 
-
-
-
-    public void render(LightningBolt entity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
+    public void render(LightningBolt entity, float entityYaw, float partialTicks, @NotNull PoseStack poseStack, @NotNull MultiBufferSource buffer, int packedLight) {
         float[] afloat = new float[8];
         float[] afloat1 = new float[8];
         float f = 0.0F;
@@ -97,7 +96,7 @@ public class LightningBoltRenderer extends EntityRenderer<LightningBolt> {
         consumer.vertex(matrix, x1 + (p_115287_ ? p_115284_ : -p_115284_), (float)(index * 16), z1 + (p_115288_ ? p_115284_ : -p_115284_)).color(red, green, blue, alpha).endVertex();
     }
 
-    public ResourceLocation getTextureLocation(LightningBolt entity) {
+    public @NotNull ResourceLocation getTextureLocation(@NotNull LightningBolt entity) {
         return TextureAtlas.LOCATION_BLOCKS;
     }
 }

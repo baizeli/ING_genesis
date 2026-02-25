@@ -38,6 +38,7 @@ public class WarpedBarrierSpell extends ChaosBaseSpell {
         this.baseManaCost = 150;
     }
 
+    @Override
     public List<MutableComponent> getUniqueInfo(int spellLevel, LivingEntity caster) {
         return List.of(Component.translatable("ui.iron_spells_genesis.health_cost_percent", 90, 1),
                 Component.translatable("ui.iron_spells_genesis.health_conversion_efficiency", Utils.stringTruncation(getSpellPower(spellLevel, caster), 1)),

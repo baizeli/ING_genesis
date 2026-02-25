@@ -18,10 +18,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.fml.common.Mod;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @AutoSpellConfig
 @Mod.EventBusSubscriber(modid = Genesis.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
@@ -44,6 +41,7 @@ public class ReversePlagueSpell extends ChaosBaseSpell {
         this.baseManaCost = 10;
     }
 
+    @Override
     public List<MutableComponent> getUniqueInfo(int spellLevel, LivingEntity caster) {
         return List.of();
     }
@@ -76,7 +74,7 @@ public class ReversePlagueSpell extends ChaosBaseSpell {
 
     @Override
     public void onServerCastComplete(Level serverLevel, int spellLevel, LivingEntity livingEntity, MagicData playerMagicData, boolean cancelled) {
-        Entity entity = serverLevel.getEntities().get(((TargetEntityCastData) playerMagicData.getAdditionalCastData()).getTargetUUID());
+        Entity entity = serverLevel.getEntities().get(((TargetEntityCastData) Objects.requireNonNull(playerMagicData.getAdditionalCastData())).getTargetUUID());
         if (entity instanceof LivingEntity living) {
             for (MobEffectInstance effectInstance : living.getActiveEffects().stream().toList()) {
                 if (effectInstance.getEffect().getCategory() == MobEffectCategory.BENEFICIAL) {

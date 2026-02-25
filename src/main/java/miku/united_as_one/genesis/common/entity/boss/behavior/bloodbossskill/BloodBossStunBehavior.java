@@ -22,7 +22,6 @@ import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 
 public class BloodBossStunBehavior extends AnimatedActionBehavior<BloodBoss> {
-
     private int currentWave = 0;
     private int waveTimer = 0;
     private int waveRadius = 0;
@@ -51,7 +50,7 @@ public class BloodBossStunBehavior extends AnimatedActionBehavior<BloodBoss> {
     }
 
     @Override
-    protected void tick(ServerLevel level, BloodBoss owner, long gameTime) {
+    protected void tick(@NotNull ServerLevel level, BloodBoss owner, long gameTime) {
         Brain<BloodBoss> brain = owner.getBrain();
         brain.eraseMemory(MemoryModuleType.WALK_TARGET);
         owner.getNavigation().stop();
@@ -72,7 +71,7 @@ public class BloodBossStunBehavior extends AnimatedActionBehavior<BloodBoss> {
         if (currentWave > 0 && waveTimer < WAVE_DURATION) {
             waveTimer++;
             int[] waveMaxRadii = {16, 28, 40};
-            waveRadius = (int)((float)waveTimer / WAVE_DURATION * waveMaxRadii[currentWave - 1]);
+            waveRadius = (int) ((float) waveTimer / WAVE_DURATION * waveMaxRadii[currentWave - 1]);
             spawnGroundShakeWave(level, owner, waveRadius, currentWave);
 
             CameraShakeManager.addCameraShake(new CameraShakeData(

@@ -1,7 +1,6 @@
 package miku.united_as_one.genesis.common.entity;
 
 import miku.united_as_one.genesis.init.registry.client.ParticleRegistry;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.projectile.AbstractArrow;
@@ -9,6 +8,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 public class ThrowBloodAndWounds extends AbstractArrow {
     private int customLifeTime ;
@@ -27,13 +27,13 @@ public class ThrowBloodAndWounds extends AbstractArrow {
     public void setCustomLifeTime(int ticks) {
         this.customLifeTime = ticks;
     }
+
     @Override
     public void tick() {
         super.tick();
 
         if (this.level().isClientSide && !this.inGround) {
             Vec3 movement = this.getDeltaMovement();
-            double speed = movement.length();
 
             // 1. 基础核心粒子：深红色粉尘
             this.level().addParticle(
@@ -67,7 +67,7 @@ public class ThrowBloodAndWounds extends AbstractArrow {
     }
 
     @Override
-    protected boolean canHitEntity(Entity target) {
+    protected boolean canHitEntity(@NotNull Entity target) {
         Entity owner = this.getOwner();
         if (owner != null && target.is(owner)) {
             return false;
@@ -76,7 +76,7 @@ public class ThrowBloodAndWounds extends AbstractArrow {
     }
 
     @Override
-    protected void onHitEntity(EntityHitResult result) {
+    protected void onHitEntity(@NotNull EntityHitResult result) {
         Vec3 motion = this.getDeltaMovement();
         super.onHitEntity(result);
         this.setDeltaMovement(motion);
@@ -89,6 +89,4 @@ public class ThrowBloodAndWounds extends AbstractArrow {
             this.discard();
         }
     }
-
-
 }

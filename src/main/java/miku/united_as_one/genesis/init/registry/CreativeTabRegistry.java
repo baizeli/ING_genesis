@@ -5,6 +5,7 @@ import io.redspace.ironsspellbooks.api.spells.*;
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.common.spell.celestial_source.*;
 import miku.united_as_one.genesis.common.spell.chaos.*;
+import miku.united_as_one.genesis.common.spell.fire.BlazingBladeBarrageSpell;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.*;
 import net.minecraft.world.item.*;
@@ -41,7 +42,7 @@ public class CreativeTabRegistry {
     public static final RegistryObject<AbstractSpell> BLOOD_CONTROL_SPELL;
     public static final RegistryObject<AbstractSpell> BLOOD_FRENZY_SPELL;
     public static final RegistryObject<AbstractSpell> CONFUSION_SPELL;
-    public static final RegistryObject<AbstractSpell> FINAL_WHISPER_SPELL;
+    public static final RegistryObject<AbstractSpell> GUTERNDER_PUNCTURE_SPELL;
 
     // 星源法术卷轴
     public static final RegistryObject<AbstractSpell> I_FLY_SPELL;
@@ -56,7 +57,11 @@ public class CreativeTabRegistry {
     public static final RegistryObject<AbstractSpell> GLAZED_FLOWER_RAIN_SPELL;
     public static final RegistryObject<AbstractSpell> DEAD_STAR_DECREE_SPELL;
     public static final RegistryObject<AbstractSpell> SUMMON_PIG_SWARM_SPELL;
+    public static final RegistryObject<AbstractSpell> FINAL_WHISPER_SPELL;
     public static final RegistryObject<AbstractSpell> NYAN_CAT_JET_SPELL;
+
+    // 炽焰法术卷轴
+    public static final RegistryObject<AbstractSpell> BLAZING_BLADE_BARRAGE_SPELL;
 
     static {
         // 混沌法术卷轴
@@ -70,6 +75,7 @@ public class CreativeTabRegistry {
         BLOOD_CONTROL_SPELL = registerSpell(new BloodControlSpell());
         BLOOD_FRENZY_SPELL = registerSpell(new BloodFrenzySpell());
         CONFUSION_SPELL = registerSpell(new ConfusionSpell());
+        GUTERNDER_PUNCTURE_SPELL = registerSpell(new GutrenderPunctureSpell());
 
         // 星源法术卷轴
         I_FLY_SPELL = registerSpell(new IFlySpell());
@@ -86,6 +92,8 @@ public class CreativeTabRegistry {
         SUMMON_PIG_SWARM_SPELL = registerSpell(new SummonPigSwarmSpell());
         FINAL_WHISPER_SPELL = registerSpell(new FinalWhisper());
         NYAN_CAT_JET_SPELL = registerSpell(new NyanCatJetSpell());
+
+        BLAZING_BLADE_BARRAGE_SPELL = registerSpell(new BlazingBladeBarrageSpell());
 
         // iron的法术创世纪：方块
         Genesis.L2_REGISTRATE
@@ -109,56 +117,57 @@ public class CreativeTabRegistry {
 
         // iron的法术创世纪：法术卷轴
         Genesis.L2_REGISTRATE
-            .buildModCreativeTab("spell_scroll", "itemGroup." + Genesis.MOD_ID, builder -> builder
-                .icon(() -> createScrollWithSpell(AMENOFUWARI_SPELL.get(), 2009))
-                .displayItems((params, output) -> {
-                    // 混沌法术卷轴
-                    AbstractSpell[] chaosSpells = {
-                        WARPED_BLOOD_BURST_SPELL.get(),
-                        WARPED_BARRIER_SPELL.get(),
-                        AMENOFUWARI_SPELL.get(),
-                        REVERSE_PLAGUE_SPELL.get(),
-                        BLOOD_WAR_SPELL.get(),
-                        SIPHON_SPELL.get(),
-                        BLOOD_RITUAL_SPELL.get(),
-                        BLOOD_CONTROL_SPELL.get(),
-                        BLOOD_FRENZY_SPELL.get(),
-                        CONFUSION_SPELL.get(),
-                        FINAL_WHISPER_SPELL.get()
-                    };
+                .buildModCreativeTab("spell_scroll", "itemGroup." + Genesis.MOD_ID, builder -> builder
+                        .icon(() -> createScrollWithSpell(AMENOFUWARI_SPELL.get(), 2009))
+                        .displayItems((params, output) -> {
+                            // 混沌法术卷轴
+                            AbstractSpell[] chaosSpells = {
+                                    WARPED_BLOOD_BURST_SPELL.get(),
+                                    WARPED_BARRIER_SPELL.get(),
+                                    AMENOFUWARI_SPELL.get(),
+                                    REVERSE_PLAGUE_SPELL.get(),
+                                    BLOOD_WAR_SPELL.get(),
+                                    SIPHON_SPELL.get(),
+                                    BLOOD_RITUAL_SPELL.get(),
+                                    BLOOD_CONTROL_SPELL.get(),
+                                    BLOOD_FRENZY_SPELL.get(),
+                                    CONFUSION_SPELL.get(),
+                                    GUTERNDER_PUNCTURE_SPELL.get()
+                            };
 
-                    // 星源法术卷轴
-                    AbstractSpell[] celestialSpells = {
-                        I_FLY_SPELL.get(),
-                        FATE_WEDGE_SPELL.get(),
-                        PERFECT_EVASION_SPELL.get(),
-                        ABSOLUTE_EQUALITY_SPELL.get(),
-                        MYRIAD_ARROWS_SPELL.get(),
-                        LIFE_AND_DEATH_REALM_SPELL.get(),
-                        STELLAR_SOUL_CONTROL_SPELL.get(),
-                        UNLIMITED_BLADE_WORKS_SPELL.get(),
-                        UNPARALLELED_SPELL.get(),
-                        GLAZED_FLOWER_RAIN_SPELL.get(),
-                        DEAD_STAR_DECREE_SPELL.get(),
-                        SUMMON_PIG_SWARM_SPELL.get(),
-                        NYAN_CAT_JET_SPELL.get()
-                    };
+                            // 星源法术卷轴
+                            AbstractSpell[] celestialSpells = {
+                                    I_FLY_SPELL.get(),
+                                    FATE_WEDGE_SPELL.get(),
+                                    PERFECT_EVASION_SPELL.get(),
+                                    ABSOLUTE_EQUALITY_SPELL.get(),
+                                    MYRIAD_ARROWS_SPELL.get(),
+                                    LIFE_AND_DEATH_REALM_SPELL.get(),
+                                    STELLAR_SOUL_CONTROL_SPELL.get(),
+                                    UNLIMITED_BLADE_WORKS_SPELL.get(),
+                                    UNPARALLELED_SPELL.get(),
+                                    GLAZED_FLOWER_RAIN_SPELL.get(),
+                                    DEAD_STAR_DECREE_SPELL.get(),
+                                    SUMMON_PIG_SWARM_SPELL.get(),
+                                    FINAL_WHISPER_SPELL.get(),
+                                    NYAN_CAT_JET_SPELL.get()
+                            };
 
-                    // 混沌法术卷轴
-                    for (AbstractSpell spell : chaosSpells) {
-                        for (int level = spell.getMinLevel(); level <= spell.getMaxLevel(); level++) {
-                            output.accept(createScrollWithSpell(spell, level));
-                        }
-                    }
-                    
-                    // 星源法术卷轴
-                    for (AbstractSpell spell : celestialSpells) {
-                        for (int level = spell.getMinLevel(); level <= spell.getMaxLevel(); level++) {
-                            output.accept(createScrollWithSpell(spell, level));
-                        }
-                    }
-                })
-            );
+                            // 混沌法术卷轴
+                            for (AbstractSpell spell : chaosSpells) {
+                                for (int level = spell.getMinLevel(); level <= spell.getMaxLevel(); level++) {
+                                    output.accept(createScrollWithSpell(spell, level));
+                                }
+                            }
+
+                            // 星源法术卷轴
+                            for (AbstractSpell spell : celestialSpells) {
+                                for (int level = spell.getMinLevel(); level <= spell.getMaxLevel(); level++) {
+                                    output.accept(createScrollWithSpell(spell, level));
+                                }
+                            }
+                        })
+                );
 
         Genesis.L2_REGISTRATE.defaultCreativeTab(CreativeModeTabs.SEARCH);
     }
