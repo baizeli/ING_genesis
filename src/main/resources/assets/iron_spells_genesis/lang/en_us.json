@@ -39,6 +39,7 @@
   "spell.iron_spells_genesis.blood_war": "Blood War",
   "spell.iron_spells_genesis.blood_frenzy": "Blood Frenzy",
   "spell.iron_spells_genesis.confusion": "Confusion",
+  "spell.iron_spells_genesis.gutrender_puncture": "Gutrender Puncture",
 
   "spell.iron_spells_genesis.i_fly": "I Fly",
   "spell.iron_spells_genesis.fate_wedge": "Fate Wedge",
@@ -53,6 +54,8 @@
   "spell.iron_spells_genesis.summon_pig_swarm": "Summon Pig Swarm",
   "spell.iron_spells_genesis.never_miss": "Never Miss",
   "spell.iron_spells_genesis.final_whisper": "Final Whisper",
+
+  "spell.iron_spells_genesis.blazing_blade_barrage": "Blazing Blade Barrage",
 
   "spell.iron_spells_genesis.warped_blood_burst.guide": "Consume 50% of your own HP to deal damage to all enemies in an area and inflict a healing-negation effect.",
   "spell.iron_spells_genesis.warped_barrier.guide": "Convert 90% of health into Absorption.",

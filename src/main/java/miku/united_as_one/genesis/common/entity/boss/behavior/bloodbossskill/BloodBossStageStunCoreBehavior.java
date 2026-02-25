@@ -24,11 +24,10 @@ public class BloodBossStageStunCoreBehavior extends Behavior<BloodBoss> {
 
     @Override
     protected boolean checkExtraStartConditions(@NotNull ServerLevel level, BloodBoss boss) {
-
         int stage = boss.getBrain()
                 .getMemory(ModMemoryModuleType.BOSS_STAGE.get())
                 .orElse(1);
-        if (stage>1){
+        if (stage > 1){
             return false;
         }
 
@@ -40,9 +39,9 @@ public class BloodBossStageStunCoreBehavior extends Behavior<BloodBoss> {
 
 
         if (stage == 1) {
-            if (stunCount<1){
+            if (stunCount < 1){
                 return health<maxHealth * 0.7f;
-            }else {
+            } else {
                 return health<maxHealth * 0.4f;
             }
         }

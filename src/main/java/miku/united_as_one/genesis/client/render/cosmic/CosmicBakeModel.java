@@ -101,8 +101,7 @@ public final class CosmicBakeModel implements BakedModel {
         }
     }
 
-    private void renderCosmicEffect(ItemStack stack, ItemDisplayContext transformType, PoseStack pStack, MultiBufferSource buffers, int packedLight, int packedOverlay, int useType, float starScale, Vector4f vec4,int shaderType)
-    {
+    private void renderCosmicEffect(ItemStack stack, ItemDisplayContext transformType, PoseStack pStack, MultiBufferSource buffers, int packedLight, int packedOverlay, int useType, float starScale, Vector4f vec4,int shaderType) {
         if (buffers instanceof MultiBufferSource.BufferSource bs) {
             bs.endBatch();
         }
@@ -116,8 +115,7 @@ public final class CosmicBakeModel implements BakedModel {
         float scale = starScale;
 
         // 根据渲染环境调整参数
-        if (AvaritiaShaders.inventoryRender || transformType == ItemDisplayContext.GUI)
-        {
+        if (AvaritiaShaders.inventoryRender || transformType == ItemDisplayContext.GUI) {
             scale = 100.0F;
             AvaritiaShaders.cosmicIs2D.set(1);
         } else {
@@ -138,8 +136,7 @@ public final class CosmicBakeModel implements BakedModel {
         AvaritiaShaders.cosmicScreenSize.set(screenWidth, screenHeight);
 
         // 准备纹理UV
-        for (int i = 0; i < 10; ++i)
-        {
+        for (int i = 0; i < 10; ++i) {
             TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "item/misc/cosmic_" + i));
             AvaritiaShaders.COSMIC_UVS[i * 4] = sprite.getU0();
             AvaritiaShaders.COSMIC_UVS[i * 4 + 1] = sprite.getV0();

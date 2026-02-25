@@ -14,11 +14,11 @@ import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
 public class TremorAoeEntity extends AoeEntity {
-    
     private float tremorHeight = 0.4F;   
     private float expansionSpeed = 1.0F; 
     private float currentRadius = 0.0F;  
@@ -64,6 +64,7 @@ public class TremorAoeEntity extends AoeEntity {
         this.expansionSpeed = pCompound.getFloat("ExpansionSpeed");
         this.currentRadius = pCompound.getFloat("CurrentRadius");
     }
+
     @Override
     public void tick() {
         if (this.level.isClientSide) {
@@ -141,7 +142,7 @@ public class TremorAoeEntity extends AoeEntity {
     @Override public Optional<ParticleOptions> getParticle() { return Optional.empty(); }
 
     @Override
-    public EntityDimensions getDimensions(Pose pPose) {
+    public @NotNull EntityDimensions getDimensions(Pose pPose) {
         return EntityDimensions.scalable(this.getRadius() * 2.0F, 2.0F);
     }
 }

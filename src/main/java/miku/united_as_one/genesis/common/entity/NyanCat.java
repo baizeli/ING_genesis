@@ -11,6 +11,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 
@@ -36,30 +37,21 @@ public class NyanCat extends AbstractArrow {
     }
 
     private void setupNyanCatProperties() {
-
         this.setPierceLevel((byte) 255);
-
         this.setBaseDamage(4.0);
-
         this.setSoundEvent(SoundEvents.CAT_AMBIENT);
     }
 
     @Override
     protected void onHitEntity(EntityHitResult result) {
-
-
         Entity entity = result.getEntity();
         Entity owner = this.getOwner();
 
-        if (!this.level().isClientSide && entity instanceof LivingEntity) {
-            LivingEntity livingEntity = (LivingEntity) entity;
-
-
+        if (!this.level().isClientSide && entity instanceof LivingEntity livingEntity) {
             float damage = (float) this.getBaseDamage();
             if (this.isCritArrow()) {
                 damage += this.random.nextInt((int) (damage / 2) + 2);
             }
-
 
             if (owner == null) {
                 livingEntity.hurt(this.damageSources().arrow(this, this), damage);
@@ -71,39 +63,30 @@ public class NyanCat extends AbstractArrow {
             }
         }
 
-
-
         this.playSound(this.getHitGroundSoundEvent(), 1.0F, 1.2F / (this.random.nextFloat() * 0.2F + 0.9F));
     }
 
     @Override
-    protected void onHitBlock(BlockHitResult result) {
-
+    protected void onHitBlock(@NotNull BlockHitResult result) {
         if (bounceCount < MAX_BOUNCES) {
             bounceCount++;
 
-
             Vec3 currentMotion = this.getDeltaMovement();
-
 
             switch (result.getDirection()) {
                 case UP:
                 case DOWN:
-
                     this.setDeltaMovement(currentMotion.x, -currentMotion.y * 0.8, currentMotion.z);
                     break;
                 case NORTH:
                 case SOUTH:
-
                     this.setDeltaMovement(currentMotion.x, currentMotion.y * 0.8, -currentMotion.z * 0.8);
                     break;
                 case EAST:
                 case WEST:
-
                     this.setDeltaMovement(-currentMotion.x * 0.8, currentMotion.y * 0.8, currentMotion.z);
                     break;
             }
-
 
             this.setDeltaMovement(
                     this.getDeltaMovement().x + (this.random.nextDouble() - 0.5) * 0.1,
@@ -111,21 +94,17 @@ public class NyanCat extends AbstractArrow {
                     this.getDeltaMovement().z + (this.random.nextDouble() - 0.5) * 0.1
             );
 
-
             this.playSound(this.getHitGroundSoundEvent(), 0.8F, 1.0F + (this.random.nextFloat() - 0.5F) * 0.2F);
-
 
             this.inGround = false;
             this.inGroundTime = 0;
         } else {
-
             this.discard();
         }
     }
 
     @Override
     protected ItemStack getPickupItem() {
-
         return null;
     }
 
@@ -134,8 +113,6 @@ public class NyanCat extends AbstractArrow {
         super.tick();
         recordTrailPosition();
         {
-
-
             Vec3 velocity = this.getDeltaMovement().normalize(); // 获取当前速度方向
             
             // 计算垂直于速度方向的两个向量
@@ -167,12 +144,8 @@ public class NyanCat extends AbstractArrow {
                 this.level().addParticle(ParticleRegistry.CRESCENT_BLADE.get(),
                         particlePos.x, particlePos.y, particlePos.z,
                         direction.x, direction.y, direction.z);
-
             }
-
-
         }
-
 
         if (this.tickCount > 600) {
             this.discard();
@@ -183,7 +156,6 @@ public class NyanCat extends AbstractArrow {
         Vec3 currentPos = new Vec3(this.getX(), this.getY(), this.getZ());
         
         if (this.trailPointer == -1) {
-
             Arrays.fill(this.trailPositions, currentPos);
             this.trailPointer = 0;
             return;
@@ -197,8 +169,7 @@ public class NyanCat extends AbstractArrow {
     }
 
     @Override
-    protected boolean tryPickup(net.minecraft.world.entity.player.Player player) {
-
+    protected boolean tryPickup(net.minecraft.world.entity.player.@NotNull Player player) {
         return false;
     }
 

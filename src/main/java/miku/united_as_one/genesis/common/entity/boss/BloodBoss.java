@@ -91,6 +91,7 @@ import net.minecraft.world.BossEvent;
 
 import static miku.united_as_one.genesis.Genesis.MODID;
 
+@SuppressWarnings("deprecation")
 public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAttacker, IEntityAdditionalSpawnData, IClientEventEntity, IMagicEntity {
     private static final Logger BLOOD_BOSS_LOGGER = LogUtils.getLogger();
 
@@ -107,9 +108,9 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     private static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle"); // 待机
     private static final RawAnimation WALK = RawAnimation.begin().thenLoop("walk_cycle"); // 行走循环
     private static final RawAnimation TENTACLE_WALKING = RawAnimation.begin().thenLoop("tentacle_walking"); // 触手行走
-    private static final RawAnimation EMPTY = RawAnimation.begin().thenLoop("blank"); // 行走循环
-    private static final RawAnimation CAST_IDLE = RawAnimation.begin().thenLoop("施法待机");
-    private static final RawAnimation CAST_WALK = RawAnimation.begin().thenLoop("施法行走循环");
+//    private static final RawAnimation EMPTY = RawAnimation.begin().thenLoop("blank"); // 行走循环
+//    private static final RawAnimation CAST_IDLE = RawAnimation.begin().thenLoop("施法待机");
+//    private static final RawAnimation CAST_WALK = RawAnimation.begin().thenLoop("施法行走循环");
 
     private static final BossbarManager.BossbarSprite BLOOD_BOSSBAR_SPRITE = new BossbarManager.BossbarSprite(
             new ResourceLocation(MODID, "boss_bars/blood_bossbar"),
@@ -294,11 +295,8 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         return super.isInvulnerableTo(source);
     }
 
-    private int lastHealthSegment = 0;
-
     @Override
     public void setHealth(float health) {
-        float oldHealth = this.getHealth();
         super.setHealth(health);
 
         // 同步更新血条显示
@@ -309,7 +307,6 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     }
 
     private void detectAndApplyAbyssalAsylum() {
-
         if (this.abyssalAsylumTriggers >= 5) {
             return;
         }
@@ -964,6 +961,11 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
 
     @Override
     public void knockback(double strength, double x, double z) {
+    }
+
+    @Override
+    public void teleportTo(double x, double y, double z) {
+        super.teleportTo(x, y, z);
     }
 
     /**
