@@ -104,7 +104,7 @@ public class CelestialSourceSpellArmor extends ExtendedArmorItem implements IToo
                     this.ringModel.addAdditionalStateData(animatable, instanceId, animationState::setData);
                     this.ringModel.handleAnimations(animatable, instanceId, animationState);
 
-                    RenderType ringRenderType = RenderType.entityCutoutNoCull(this.ringModel.getTextureResource(animatable));
+                    RenderType ringRenderType = RenderType.entityTranslucentEmissive(this.ringModel.getTextureResource(animatable));
                     VertexConsumer ringBuffer = bufferSource.getBuffer(ringRenderType);
 
                     BakedGeoModel ringBakedModel = this.ringModel.getBakedModel(this.ringModel.getModelResource(animatable));
