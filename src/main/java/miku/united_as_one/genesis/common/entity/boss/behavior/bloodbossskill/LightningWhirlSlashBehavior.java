@@ -123,12 +123,11 @@ public class LightningWhirlSlashBehavior
         return new SkillMovementTask(DURATION) {
             private Vec3 startPos;
             private Vec3 lockedDirection;
-            private Vec3 targetPos;
-            private boolean hasTarget = false;
             private boolean hasPassedTarget = false;
             private static final float DASH_START_P = 13F / 30F;
 
-            private Vec3 lastAppliedMovement = Vec3.ZERO;
+            private Vec3 lastAppliedPush = Vec3.ZERO;
+            private double targetDistance;
 
             @Override
             public void start(net.minecraft.world.entity.Mob mob) {
@@ -136,76 +135,59 @@ public class LightningWhirlSlashBehavior
                 LivingEntity target = mob.getTarget();
 
                 if (target != null) {
-                    this.targetPos = target.position();
-                    double dist = targetPos.subtract(startPos).length();
-                    if (dist < 1.0) {
-                        this.lockedDirection = mob.getLookAngle().normalize();
-                        this.targetDistance = 3.0;
-                        this.hasTarget = false;
-                    } else {
-                        this.lockedDirection = targetPos.subtract(startPos).normalize();
-                        this.targetDistance = dist;
-                        this.hasTarget = true;
-                    }
+                    double dist = target.position().subtract(startPos).length();
+                    this.lockedDirection = target.position().subtract(startPos).normalize();
+                    this.targetDistance = dist;
                 } else {
                     this.lockedDirection = mob.getLookAngle().normalize();
-                    this.hasTarget = false;
                     this.targetDistance = 10.0;
                 }
                 this.hasPassedTarget = false;
-                this.lastAppliedMovement = Vec3.ZERO;
+                this.lastAppliedPush = Vec3.ZERO;
             }
-
-            private double targetDistance;
 
             @Override
             public Vec3 compute(Mob mob, float p) {
-                Vec3 counterForce = lastAppliedMovement.scale(-1.0);
+                Vec3 counterForce = lastAppliedPush.scale(-1.0);
 
-                if (hasPassedTarget) {
-                    Vec3 currentVel = mob.getDeltaMovement();
-                    lastAppliedMovement = Vec3.ZERO;
-                    return new Vec3(-currentVel.x, 0, -currentVel.z);
-                }
-
-                if (p < DASH_START_P) {
-                    lastAppliedMovement = Vec3.ZERO;
-                    return Vec3.ZERO;
-                }
-
-                if (hasTarget) {
+                if (!hasPassedTarget) {
                     Vec3 currentOffset = mob.position().subtract(startPos);
                     double currentProjection = currentOffset.dot(lockedDirection);
-
-                    if (currentProjection > (targetDistance + 0.5) && p > (DASH_START_P + 0.05F)) {
+                    if (p > DASH_START_P && currentProjection > (targetDistance + 8.0)) {
                         hasPassedTarget = true;
-                        Vec3 currentVel = mob.getDeltaMovement();
-                        lastAppliedMovement = Vec3.ZERO;
-                        return new Vec3(-currentVel.x, 0, -currentVel.z);
                     }
                 }
 
-                float dashP = (p - DASH_START_P) / (1.0F - DASH_START_P);
-                dashP = Mth.clamp(dashP, 0.0F, 1.0F);
+                if (hasPassedTarget) {
+                    Vec3 currentVel = mob.getDeltaMovement();
+                    lastAppliedPush = Vec3.ZERO;
+                    return counterForce.add(new Vec3(-currentVel.x * 0.4, 0, -currentVel.z * 0.4));
+                }
 
-                double speed = 0.65 * (1.0 - dashP);
+                if (p < DASH_START_P) {
+                    lastAppliedPush = Vec3.ZERO;
+                    return counterForce;
+                }
+
+                double speed = 1.35;
                 Vec3 desiredPush = lockedDirection.scale(speed);
 
                 Vec3 result = counterForce.add(desiredPush);
-                lastAppliedMovement = desiredPush;
+
+                lastAppliedPush = desiredPush;
 
                 return result;
             }
 
             @Override
             public void end(net.minecraft.world.entity.Mob mob) {
-                Vec3 currentVel = mob.getDeltaMovement();
-                mob.setDeltaMovement(0, currentVel.y, 0);
+                mob.setDeltaMovement(0, mob.getDeltaMovement().y, 0);
+                lastAppliedPush = Vec3.ZERO;
             }
 
             @Override
             public boolean finished() {
-                return hasPassedTarget || super.finished();
+                return super.finished();
             }
         };
     }
