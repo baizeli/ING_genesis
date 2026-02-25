@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "iron_spells_genesis:divine_metal_ingot"
+  },
+  "base": {
+    "item": "irons_spellbooks:netherite_mage_leggings"
+  },
+  "result": {
+    "item": "iron_spells_genesis:divine_metal_leggings"
+  },
+  "template": {
+    "item": "iron_spells_genesis:divine_upgrade_smithing_template"
+  }
+}

@@ -4,6 +4,7 @@ import com.tterrag.registrate.providers.*;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import miku.united_as_one.genesis.Genesis;
+import miku.united_as_one.genesis.common.entity.boss.BloodBoss;
 import miku.united_as_one.genesis.common.items.*;
 import miku.united_as_one.genesis.common.items.spellbook.AEprospellbook;
 import miku.united_as_one.genesis.common.items.spellbook.CelestialSourceSpellBook;
@@ -22,17 +23,20 @@ import io.redspace.ironsspellbooks.item.UpgradeOrbItem;
 import io.redspace.ironsspellbooks.item.armor.IronsExtendedArmorMaterial;
 import io.redspace.ironsspellbooks.util.ItemPropertiesHelper;
 import net.minecraft.client.Minecraft;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.WallBlock;
-import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.phys.AABB;
 import net.minecraftforge.client.model.generators.*;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.*;
 
 import java.util.*;
@@ -42,7 +46,9 @@ public class ItemRegistry {
     public static final DeferredRegister<Item> REGISTRY_BLOCK_ITEM = DeferredRegister.create(ForgeRegistries.ITEMS, Genesis.MODID);
 
     // 紫极锭
-    public static final ItemEntry<EternisMaterial> PURPLEITE_GALAXY_INGOT;
+    public static final ItemEntry<EternisMaterial> VIOLET_GALAXY_INGOT;
+    //紫极碎片
+    public static final ItemEntry<Item> VIOLET_FRAGMENTS;
     // 神圣金属锭
     public static final ItemEntry<Item> DIVINE_METAL_INGOT;
     // 扭曲混沌锭
@@ -136,7 +142,7 @@ public class ItemRegistry {
     // 自然穿透升级法球
     public static final ItemEntry<UpgradeOrbItem> NATURE_ORB_PRO;
     // 邪术穿透升级法球
-    public static final ItemEntry<UpgradeOrbItem> WARLOCK_ORB_PRO;
+    public static final ItemEntry<UpgradeOrbItem> ELDRITCH_ORB_PRO;
     // 混沌穿透升级法球
     public static final ItemEntry<UpgradeOrbItem> CHAOS_ORB_PRO;
     // 星源穿透升级法球
@@ -178,9 +184,9 @@ public class ItemRegistry {
     // 星源手稿
     public static final ItemEntry<CelestialSourceManuscript> CELESTIAL_SOURCE_MANUSCRIPT;
     // 混沌手稿碎片
-    public static final ItemEntry CHAOS_MANUSCRIPT_FRAGMENT;
+    public static final ItemEntry<?> CHAOS_MANUSCRIPT_FRAGMENT;
     // 空白星源手稿碎片
-    public static final ItemEntry BLANK_CELESTIAL_SOURCE_MANUSCRIPT;
+    public static final ItemEntry<?> BLANK_CELESTIAL_SOURCE_MANUSCRIPT;
     // 星源块
     public static final ItemEntry<BlockItem> CELESTIAL_SOURCE_BLOCK_ITEM;
     // 奥术水晶矿
@@ -192,7 +198,7 @@ public class ItemRegistry {
     // 末地奥术水晶矿
     public static final ItemEntry<BlockItem> END_ARCANE_CRYSTAL_ORE_ITEM;
     // 血肉魂铃
-    public static final ItemEntry<Item> FLESH_SOUL_BELL;
+    public static final ItemEntry<?> FLESH_SOUL_BELL;
     // 混沌原核
     public static final ItemEntry<ChaosCore> CHAOS_CORE;
     // 血肉灵魂碎片
@@ -216,15 +222,33 @@ public class ItemRegistry {
     // 邪术符文
     public static final ItemEntry<EldritchRunePlus> ELDRITCH_RUNE_PLUS;
     // 锻造模板
-    public static final ItemEntry<Item> EVIOLET_ZENITH_TEMPLATE;
+    public static final ItemEntry<ModSmithingTemplateItem> VIOLET_UPGRADE_SMITHING_TEMPLATE;
     // 锻造模板
-    public static final ItemEntry<Item> DIVINE_TEMPLATE;
+    public static final ItemEntry<ModSmithingTemplateItem> DIVINE_UPGRADE_SMITHING_TEMPLATE;
+    //紫极稿
+    public static final ItemEntry<VioletPickaxe> VIOLET_PICKAXE;
 
     //初始化
     static {
-        PURPLEITE_GALAXY_INGOT = Genesis.L2_REGISTRATE
-                .item("purpleite_galaxy_ingot", properties -> new EternisMaterial(properties, 0))
+        VIOLET_GALAXY_INGOT = Genesis.L2_REGISTRATE
+                .item("violet_galaxy_ingot", properties -> new EternisMaterial(properties, 0))
                 .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
+                .register();
+
+        VIOLET_FRAGMENTS = Genesis.L2_REGISTRATE
+                    .item("violet_fragments", properties -> new Item(properties.rarity(Rarity.EPIC)))
+                    .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
+                    .register();
+
+        VIOLET_PICKAXE = Genesis.L2_REGISTRATE
+                .item("violet_pickaxe", properties -> new VioletPickaxe(
+                        TierRegistry.VIOLET_GALAXY_INGOT,
+                        0,
+                        -1.6F,
+                        properties
+                ))
+                .model((ctx, prov) -> prov.handheld(ctx::getEntry))
+                .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
                 .register();
 
         DIVINE_METAL_INGOT = Genesis.L2_REGISTRATE
@@ -232,16 +256,32 @@ public class ItemRegistry {
                 .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
                 .register();
 
-        DIVINE_TEMPLATE = Genesis.L2_REGISTRATE
-                .item("divine_template", properties -> new Item(properties.rarity(Rarity.EPIC)))
+        DIVINE_UPGRADE_SMITHING_TEMPLATE = Genesis.L2_REGISTRATE
+                .item("divine_upgrade_smithing_template", properties -> new ModSmithingTemplateItem(
+                        Component.translatable("item.iron_spells_genesis.smithing_template.divine_upgrade.applies_to").withStyle(SmithingTemplateItem.DESCRIPTION_FORMAT),
+                        Component.translatable("item.iron_spells_genesis.smithing_template.divine_upgrade.ingredients").withStyle(SmithingTemplateItem.DESCRIPTION_FORMAT),
+                        Component.translatable("upgrade.iron_spells_genesis.divine_upgrade").withStyle(SmithingTemplateItem.TITLE_FORMAT),
+                        Component.translatable("item.iron_spells_genesis.smithing_template.divine_upgrade.base_slot_description"),
+                        Component.translatable("item.iron_spells_genesis.smithing_template.divine_upgrade.additions_slot_description"),
+                        SmithingTemplateItem.createTrimmableArmorIconList(), SmithingTemplateItem.createNetheriteUpgradeMaterialList(),
+                        "item." + Genesis.MOD_ID + ".divine_upgrade_smithing_template"
+                ))
                 .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
                 .register();
 
-        EVIOLET_ZENITH_TEMPLATE = Genesis.L2_REGISTRATE
-                .item("eviolet_smithing_template", properties -> new Item(properties.rarity(Rarity.EPIC)))
+        VIOLET_UPGRADE_SMITHING_TEMPLATE = Genesis.L2_REGISTRATE
+                .item("violet_upgrade_smithing_template", properties -> new ModSmithingTemplateItem(
+                        Component.translatable("item.iron_spells_genesis.smithing_template.violet_upgrade.applies_to").withStyle(SmithingTemplateItem.DESCRIPTION_FORMAT),
+                        Component.translatable("item.iron_spells_genesis.smithing_template.violet_upgrade.ingredients").withStyle(SmithingTemplateItem.DESCRIPTION_FORMAT),
+                        Component.translatable("upgrade.iron_spells_genesis.violet_upgrade").withStyle(SmithingTemplateItem.TITLE_FORMAT),
+                        Component.translatable("item.iron_spells_genesis.smithing_template.violet_upgrade.base_slot_description"),
+                        Component.translatable("item.iron_spells_genesis.smithing_template.violet_upgrade.additions_slot_description"),
+                        SmithingTemplateItem.createTrimmableArmorIconList(), SmithingTemplateItem.createNetheriteUpgradeMaterialList(),
+                        "item." + Genesis.MOD_ID + ".violet_upgrade_smithing_template"
+                ))
                 .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
+                .lang(SmithingTemplateItem::getDescriptionId)
                 .register();
-
 
         TWISTED_CHAOS_INGOT = Genesis.L2_REGISTRATE
                 .item("twisted_chaos_ingot", properties -> new ChaosBaseItem(properties.rarity(Rarity.EPIC)))
@@ -602,7 +642,7 @@ public class ItemRegistry {
         FIRE_ORB_PRO = Genesis.L2_REGISTRATE
                 .item("fire_orb_pro", properties -> new UpgradeOrbItem(
                         ItemPropertiesHelper.material().rarity(Rarity.UNCOMMON),
-                        UpgradeOrbTypes.FLAME_SPELL_PENETRATION
+                        UpgradeOrbTypes.FIRE_SPELL_PENETRATION
                 ))
                 .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
                 .register();
@@ -618,7 +658,7 @@ public class ItemRegistry {
         ICE_ORB_PRO = Genesis.L2_REGISTRATE
                 .item("ice_orb_pro", properties -> new UpgradeOrbItem(
                         ItemPropertiesHelper.material().rarity(Rarity.UNCOMMON),
-                        UpgradeOrbTypes.FROST_SPELL_PENETRATION
+                        UpgradeOrbTypes.IEC_SPELL_PENETRATION
                 ))
                 .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
                 .register();
@@ -626,7 +666,7 @@ public class ItemRegistry {
         BLOOD_ORB_PRO = Genesis.L2_REGISTRATE
                 .item("blood_orb_pro", properties -> new UpgradeOrbItem(
                         ItemPropertiesHelper.material().rarity(Rarity.UNCOMMON),
-                        UpgradeOrbTypes.SCARLET_SPELL_PENETRATION
+                        UpgradeOrbTypes.BLOOD_SPELL_PENETRATION
                 ))
                 .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
                 .register();
@@ -655,10 +695,10 @@ public class ItemRegistry {
                 .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
                 .register();
 
-        WARLOCK_ORB_PRO = Genesis.L2_REGISTRATE
-                .item("warlock_orb_pro", properties -> new UpgradeOrbItem(
+        ELDRITCH_ORB_PRO = Genesis.L2_REGISTRATE
+                .item("eldritch_orb_pro", properties -> new UpgradeOrbItem(
                         ItemPropertiesHelper.material().rarity(Rarity.UNCOMMON),
-                        UpgradeOrbTypes.WARLOCK_SPELL_PENETRATION
+                        UpgradeOrbTypes.ELDRITCH_SPELL_PENETRATION
                 ))
                 .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
                 .register();
@@ -873,7 +913,27 @@ public class ItemRegistry {
                 .item("flesh_soul_bell", properties -> new Item(properties
                         .stacksTo(1)
                         .rarity(Rarity.EPIC)
-                ))
+                ) {
+                    @Override
+                    public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand usedHand) {
+                        if (player.isShiftKeyDown()) {
+                            BlockPos playerPos = player.blockPosition();
+
+                            int radius = 15;
+                            AABB area = new AABB(
+                                    playerPos.getX() - radius, playerPos.getY() - radius, playerPos.getZ() - radius,
+                                    playerPos.getX() + radius, playerPos.getY() + radius, playerPos.getZ() + radius
+                            );
+
+                            level.getEntities(player, area).forEach(e -> {
+                                if (e instanceof BloodBoss bloodBoss) {
+                                    bloodBoss.remove(Entity.RemovalReason.KILLED);
+                                }
+                            });
+                        }
+                        return super.use(level, player, usedHand);
+                    }
+                })
                 .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
                 .register();
 

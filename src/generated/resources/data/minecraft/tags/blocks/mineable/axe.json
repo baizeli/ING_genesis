@@ -1,0 +1,22 @@
+{
+  "values": [
+    "iron_spells_genesis:sway_log",
+    "iron_spells_genesis:stripped_sway_log",
+    "iron_spells_genesis:sway_planks",
+    "iron_spells_genesis:sway_stairs",
+    "iron_spells_genesis:sway_slab",
+    "iron_spells_genesis:sway_vertical_slab",
+    "iron_spells_genesis:sway_trap_door",
+    "iron_spells_genesis:sway_door",
+    "iron_spells_genesis:sway_fence",
+    "iron_spells_genesis:quietness_log",
+    "iron_spells_genesis:stripped_quietness_log",
+    "iron_spells_genesis:quietness_planks",
+    "iron_spells_genesis:quietness_stairs",
+    "iron_spells_genesis:quietness_slab",
+    "iron_spells_genesis:quietness_vertical_slab",
+    "iron_spells_genesis:quietness_trap_door",
+    "iron_spells_genesis:quietness_door",
+    "iron_spells_genesis:quietness_fence"
+  ]
+}

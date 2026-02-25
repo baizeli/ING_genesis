@@ -473,6 +473,16 @@
 					]
 				},
 				{
+					"name": "weapon_handle",
+					"parent": "sword",
+					"pivot": [-6, 14, -8.625]
+				},
+				{
+					"name": "weapon_tip",
+					"parent": "sword",
+					"pivot": [-6, 14, -46]
+				},
+				{
 					"name": "left_arm",
 					"parent": "body",
 					"pivot": [5, 24, 0],

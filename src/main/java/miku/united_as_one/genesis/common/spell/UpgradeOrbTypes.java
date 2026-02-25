@@ -15,8 +15,8 @@ public class UpgradeOrbTypes {
     );
 
     //烈焰穿透+1
-    public static final ResourceKey<UpgradeOrbType> FLAME_SPELL_PENETRATION = ResourceKey.create(
-        KEY, Genesis.rl("flame_spell_penetration")
+    public static final ResourceKey<UpgradeOrbType> FIRE_SPELL_PENETRATION = ResourceKey.create(
+        KEY, Genesis.rl("fire_spell_penetration")
     );
 
     //星源法强+1
@@ -38,14 +38,14 @@ public class UpgradeOrbTypes {
         KEY,Genesis.rl("holy_spell_penetration")
     );
 
-   //傻逼冰霜+1
-    public static final ResourceKey<UpgradeOrbType> FROST_SPELL_PENETRATION = ResourceKey.create(
-        KEY,Genesis.rl("frost_spell_penetration")
+    //傻逼冰霜+1
+    public static final ResourceKey<UpgradeOrbType> IEC_SPELL_PENETRATION = ResourceKey.create(
+        KEY,Genesis.rl("ice_spell_penetration")
     );
 
     //猩红穿透+1
-    public static final ResourceKey<UpgradeOrbType> SCARLET_SPELL_PENETRATION = ResourceKey.create(
-        KEY,Genesis.rl("scarlet_spell_penetration")
+    public static final ResourceKey<UpgradeOrbType> BLOOD_SPELL_PENETRATION = ResourceKey.create(
+        KEY,Genesis.rl("blood_spell_penetration")
     );
 
     //末影穿透+1
@@ -64,8 +64,8 @@ public class UpgradeOrbTypes {
     );
 
     //邪术穿透+1
-    public static final ResourceKey<UpgradeOrbType> WARLOCK_SPELL_PENETRATION = ResourceKey.create(
-            KEY,Genesis.rl("warlock_spell_penetration")
+    public static final ResourceKey<UpgradeOrbType> ELDRITCH_SPELL_PENETRATION = ResourceKey.create(
+            KEY,Genesis.rl("eldritch_spell_penetration")
     );
 
     //混沌穿透

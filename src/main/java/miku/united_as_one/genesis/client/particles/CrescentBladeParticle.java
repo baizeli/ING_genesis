@@ -14,6 +14,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class CrescentBladeParticle extends Particle {
     public final float radius;
+    Vec3 lastVelocity;
 
     public CrescentBladeParticle(ClientLevel level, double x, double y, double z, Vec3 dir, float radius) {
         super(level, x, y, z, dir.x, dir.y, dir.z);
@@ -22,13 +23,24 @@ public class CrescentBladeParticle extends Particle {
         this.setAlpha(1f);
         this.setColor(1f, 1f, 1f);  // 白色，可做 shader 高光
         this.hasPhysics = false;
+        this.lastVelocity= new Vec3(0.0f, 0.0f, 0.0f);
+    }
+
+    public float getRadius() {
+        return radius;
+    }
+
+    public Vec3 getLastVelocity() {
+        return lastVelocity;
     }
 
     @Override
     public void tick() {
         super.tick();
-
-
+        double speed = Math.sqrt(this.xd * this.xd + this.yd * this.yd + this.zd * this.zd);
+        if (speed < 0.1 && this.lastVelocity.equals(Vec3.ZERO)) {
+            this.lastVelocity = new Vec3(this.xd, this.yd, this.zd);
+        }
 
     }
 
@@ -67,12 +79,11 @@ public class CrescentBladeParticle extends Particle {
             // 禁用物理和重力
             this.hasPhysics = false;
             this.gravity = 0.0f; // 设置重力为0
+            this.lifetime=150;
         }
 
         @Override
         public void tick() {
-            // 不调用 super.tick()，而是完全自定义运动逻辑
-
             // 保存旧位置（用于渲染插值）
             this.xo = this.x;
             this.yo = this.y;
@@ -93,12 +104,11 @@ public class CrescentBladeParticle extends Particle {
             this.xd *= 0.98;
             this.yd *= 0.98;
             this.zd *= 0.98;
+            // 记录速度几乎为0时的最后速度向量
+            double speed = Math.sqrt(this.xd * this.xd + this.yd * this.yd + this.zd * this.zd);
+            if (speed < 0.1 && this.lastVelocity.equals(Vec3.ZERO)) {
 
-            // 添加轻微的随机运动（模拟空气阻力或湍流）
-            if (this.level.random.nextInt(20) == 0) {
-                this.xd += (this.level.random.nextDouble() - 0.5) * 0.02;
-                this.yd += (this.level.random.nextDouble() - 0.5) * 0.02;
-                this.zd += (this.level.random.nextDouble() - 0.5) * 0.02;
+                this.lastVelocity = new Vec3(this.xd, this.yd, this.zd);
             }
 
             // 在移动过程中生成子粒子的逻辑
@@ -113,26 +123,10 @@ public class CrescentBladeParticle extends Particle {
                 double offsetX = cosAngle * distance;
                 double offsetZ = sinAngle * distance;
 
-                // 计算子粒子的速度（基于父粒子的速度方向）
-                double subParticleSpeed = 0.05 + this.level.random.nextDouble() * 0.1;
-                double dirX = (this.level.random.nextDouble() - 0.5) * 0.2;
-                double dirY = this.level.random.nextDouble() * 0.1;
-                double dirZ = (this.level.random.nextDouble() - 0.5) * 0.2;
-
-                // 添加基于父粒子速度的额外速度
-                if (this.xd != 0 || this.yd != 0 || this.zd != 0) {
-                    double parentSpeed = Math.sqrt(this.xd * this.xd + this.yd * this.yd + this.zd * this.zd);
-                    if (parentSpeed > 0) {
-                        dirX += this.xd / parentSpeed * 0.1;
-                        dirY += this.yd / parentSpeed * 0.1;
-                        dirZ += this.zd / parentSpeed * 0.1;
-                    }
-                }
-
                 this.level.addParticle(
                         ParticleRegistry.BLOOD_DRIP_HANG.get(),
                         this.x + offsetX, this.y, this.z + offsetZ,
-                        dirX, dirY, dirZ
+                        0, 0, 0
                 );
             }
 
@@ -153,24 +147,8 @@ public class CrescentBladeParticle extends Particle {
                 }
                 this.remove();
             }
-
-            // 如果粒子速度过小，自动移除
-            double speedSqr = this.xd * this.xd + this.yd * this.yd + this.zd * this.zd;
-            if (speedSqr < 0.001 && this.age > 100) {
-                this.remove();
-            }
         }
 
-        // 可选：添加一个方法来获取当前旋转角度，可以在渲染时使用
-        public float getCurrentRotation() {
-            return this.currentRotation;
-        }
-
-        // 可选：添加一个方法来设置旋转速度
-        public void setRotationSpeed(float rotationSpeed) {
-            // 由于 rotationSpeed 是 final，我们不能直接修改它
-            // 如果需要动态调整旋转速度，需要修改类的设计
-        }
     }
 
     @OnlyIn(Dist.CLIENT)

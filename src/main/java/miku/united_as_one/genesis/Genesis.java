@@ -1,6 +1,7 @@
 package miku.united_as_one.genesis;
 
 import io.redspace.ironsspellbooks.entity.spells.void_tentacle.VoidTentacle;
+import miku.united_as_one.genesis.client.render.entity.ThrowBloodAndWoundsRenderer;
 import miku.united_as_one.genesis.common.data.content.arcaneWorkbench.*;
 import miku.united_as_one.genesis.common.data.content.workbenchs.*;
 import miku.united_as_one.genesis.common.entity.*;
@@ -19,7 +20,6 @@ import miku.united_as_one.genesis.init.registry.client.ParticleRegistry;
 import miku.united_as_one.genesis.client.renderer.DistortWorldRender;
 import miku.united_as_one.genesis.client.renderer.spell.celestial_source.DeadStarDecreeCometRenderer;
 import miku.united_as_one.genesis.init.config.*;
-import miku.united_as_one.genesis.client.fonts.FuckFont1;
 import miku.united_as_one.genesis.common.network.*;
 import miku.united_as_one.genesis.init.registry.spell.SpellAttributesRegistry;
 import miku.united_as_one.genesis.init.registry.spell.SpellSchoolRegistry;
@@ -66,8 +66,7 @@ public class Genesis
         return new ResourceLocation(MOD_ID, path);
     }
 
-    public Genesis(FMLJavaModLoadingContext context)
-    {
+    public Genesis(FMLJavaModLoadingContext context) {
         IEventBus modEventBus = context.getModEventBus();
 
         ItemRegistry.register(modEventBus);
@@ -100,8 +99,7 @@ public class Genesis
         context.registerConfig(ModConfig.Type.COMMON, Configuration.SPECIFICATION);
     }
 
-    private void commonSetup(final FMLCommonSetupEvent event)
-    {
+    private void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
             NetworkHandler.register();
             LOGGER.info("Fuck TTTTTT");
@@ -146,8 +144,7 @@ public class Genesis
     public static class ClientModEvents
     {
         @SubscribeEvent
-        public static void onClientSetup(FMLClientSetupEvent event)
-        {
+        public static void onClientSetup(FMLClientSetupEvent event) {
             event.enqueueWork(() -> {
                 MenuScreens.register(ModMenuTypes.ARCANE_WORKBENCH_MENU.get(), ArcaneWorkbenchScreen::new);
                 EntityRenderers.register(EntityRegistry.NYAN_CAT.get(), NyanCatRenderer::new);
@@ -155,6 +152,7 @@ public class Genesis
                 EntityRenderers.register(EntityRegistry.BOX_ENTIYT.get(), BoxEntityRenderer::new);
                 EntityRenderers.register(EntityRegistry.LIGHTNING_BOLT.get(), LightningBoltRenderer::new);
                 EntityRenderers.register(EntityRegistry.SWORD_ENTITY.get(), SwordEntityRenderer::new);
+//                EntityRenderers.register(EntityRegistry.THROW_BLOOD_AND_WOUNDS.get(), ThrowBloodAndWoundsRenderer::new);
 
                 EntityRenderers.register(EntityRegistry.DEAD_STAR_DECREE_COMET.get(),
                     context -> new DeadStarDecreeCometRenderer(context, 0.25f)
@@ -169,12 +167,11 @@ public class Genesis
                 DistortWorldRender.initChain(Minecraft.getInstance());
             });
             MinecraftForge.registerConfigScreen(new ConfigurationFactory());
-            Minecraft.getInstance().font = FuckFont1.font;
+            //Minecraft.getInstance().font = FuckFont1.font;
         }
 
         @SubscribeEvent
-        public static void onCommonSetup(FMLCommonSetupEvent event)
-        {
+        public static void onCommonSetup(FMLCommonSetupEvent event) {
             CHANNEL.registerMessage(0, WireBoxSyncPacket.class,
                     WireBoxSyncPacket::encode,
                     WireBoxSyncPacket::decode,
