@@ -138,15 +138,6 @@ mixin {
     config "mixins.${mod_id}.json"
 }
 
-dependencies {
-    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
-
-    modImplementation "com.tterrag.registrate:Registrate:${registrate_version}"
-    if (rootMod.toBoolean()) {
-        jarJar(group: 'com.tterrag.registrate', name: 'Registrate', version: "[MC1.20,MC1.21)")
-    }
-}
-
 jar {
     manifest.attributes([
             "MixinConfigs": "mixins.${mod_id}.json"
@@ -167,6 +158,13 @@ tasks.withType(JavaCompile).configureEach {
 
 
 dependencies {
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+
+    modImplementation "com.tterrag.registrate:Registrate:${registrate_version}"
+    if (rootMod.toBoolean()) {
+        jarJar(group: 'com.tterrag.registrate', name: 'Registrate', version: "[MC1.20,MC1.21)")
+    }
+
     // MixinExtras
     modImplementation(jarJar("io.github.llamalad7:mixinextras-forge:0.5.3"))
 
@@ -174,6 +172,12 @@ dependencies {
     modImplementation(jarJar("dev.xkmc.l2library:l2library:${l2library_version}-slim"))
     modImplementation(jarJar("dev.xkmc.l2serial:l2serial:1.2.2"))
     modImplementation(jarJar("dev.xkmc.l2tabs:l2tabs:0.3.3"))
+
+    // Cloth Config API
+    modImplementation(jarJar("me.shedaniel.cloth:cloth-config-forge:11.1.136"))
+
+    // 随性修改
+    modImplementation "curse.maven:suixingxiugai-1349188:7147760"
 
     // JEI物品管理器
     modCompileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
@@ -219,9 +223,6 @@ dependencies {
 
     // playerAnimator
     modImplementation "curse.maven:playeranimator-658587:4587214"
-
-    // Cloth Config API
-    modImplementation "curse.maven:cloth-config-348521:5729105"
 
     // 试验假人
     modImplementation "curse.maven:mmmmmmmmmmmm-225738:6860192"
