@@ -299,7 +299,7 @@ public class ModArmorMaterials {
     public static final IronsExtendedArmorMaterial VIOLET_ZENITH = new IronsExtendedArmorMaterial() {
         @Override
         public Ingredient getRepairIngredient() {
-            return Ingredient.of(ItemRegistry.PURPLEITE_GALAXY_INGOT.get());
+            return Ingredient.of(ItemRegistry.VIOLET_GALAXY_INGOT.get());
         }
 
         @Override 

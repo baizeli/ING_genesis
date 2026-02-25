@@ -348,7 +348,6 @@ public class DistortWorldRender {
         renderStack.mulPose(Axis.XP.rotationDegrees(camera.getXRot()));
         renderStack.mulPose(Axis.YP.rotationDegrees(camera.getYRot() + 180.0F));
 
-
         RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
         RenderSystem.disableCull();
         RenderSystem.setShaderTexture(0, VECTOR_DISTORT_TEX);
@@ -372,55 +371,63 @@ public class DistortWorldRender {
                 float relZ = (float) (z - camPos.z);
 
                 renderStack.pushPose();
-                renderStack.translate(relX, relY, relZ);
 
-                // ===== 原样保留你的正交基计算 =====
-                Vec3 dir = new Vec3(acc.getXd(), acc.getYd(), acc.getZd()).normalize();
-                Vector3f forward = new Vector3f((float) dir.x, (float) dir.y, (float) dir.z);
+                renderStack.translate(relX, relY, relZ);
+                double dx = acc.getXd();
+                double dy = acc.getYd();
+                double dz = acc.getZd();
+                double speedSq = dx * dx + dy * dy + dz * dz;
+
+                Vector3f forward = new Vector3f();
+
+                if (speedSq < 1.0E-6D) {
+                    Vec3 lastVelocity = cbp.getLastVelocity();
+                    if (lastVelocity.lengthSqr() > 1.0E-6D) {
+                        forward.set((float) lastVelocity.x, (float) lastVelocity.y, (float) lastVelocity.z).normalize();
+                    } else {
+                        float seed = (float) ((p.hashCode() % 100) / 100.0);
+                        forward.set(Mth.sin(seed * 3.1415f), Mth.cos(seed * 3.1415f), 0.5f).normalize();
+                    }
+                } else {
+                    float speed = (float) Math.sqrt(speedSq);
+                    forward.set((float) (dx / speed), (float) (dy / speed), (float) (dz / speed));
+                }
 
                 Vector3f temp = new Vector3f(0, 1, 0);
-                if (Math.abs(forward.dot(temp)) > 0.99f) temp.set(1, 0, 0);
+                if (Math.abs(forward.dot(temp)) > 0.99f) {
+                    temp.set(1, 0, 0);
+                }
 
                 Vector3f right = new Vector3f();
-                forward.cross(temp, right).normalize();
+                forward.cross(temp, right);
+                right.normalize();
 
                 Vector3f up = new Vector3f();
-                right.cross(forward, up).normalize();
+                right.cross(forward, up);
+                up.normalize();
 
                 float s = cbp.radius;
                 Matrix4f mat = renderStack.last().pose();
 
                 int r = 255, g = 255, b = 255, a = 255;
 
-                // ===== 只加 UV，不改几何 =====
-                buf.vertex(mat,
-                                (-right.x() - up.x()) * s,
-                                (-right.y() - up.y()) * s,
-                                (-right.z() - up.z()) * s)
+//                renderStack.mulPose(Axis.XP.rotationDegrees(90.0F));
+                buf.vertex(mat, (-right.x() - up.x()) * s, (-right.y() - up.y()) * s, (-right.z() - up.z()) * s)
                         .uv(0.0F, 1.0F)
                         .color(r, g, b, a)
                         .endVertex();
 
-                buf.vertex(mat,
-                                ( right.x() - up.x()) * s,
-                                ( right.y() - up.y()) * s,
-                                ( right.z() - up.z()) * s)
+                buf.vertex(mat, (right.x() - up.x()) * s, (right.y() - up.y()) * s, (right.z() - up.z()) * s)
                         .uv(1.0F, 1.0F)
                         .color(r, g, b, a)
                         .endVertex();
 
-                buf.vertex(mat,
-                                ( right.x() + up.x()) * s,
-                                ( right.y() + up.y()) * s,
-                                ( right.z() + up.z()) * s)
+                buf.vertex(mat, (right.x() + up.x()) * s, (right.y() + up.y()) * s, (right.z() + up.z()) * s)
                         .uv(1.0F, 0.0F)
                         .color(r, g, b, a)
                         .endVertex();
 
-                buf.vertex(mat,
-                                (-right.x() + up.x()) * s,
-                                (-right.y() + up.y()) * s,
-                                (-right.z() + up.z()) * s)
+                buf.vertex(mat, (-right.x() + up.x()) * s, (-right.y() + up.y()) * s, (-right.z() + up.z()) * s)
                         .uv(0.0F, 0.0F)
                         .color(r, g, b, a)
                         .endVertex();
@@ -432,8 +439,6 @@ public class DistortWorldRender {
         BufferUploader.drawWithShader(buf.end());
         RenderSystem.enableCull();
     }
-
-
 
 
 }

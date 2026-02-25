@@ -1,5 +1,6 @@
 package miku.united_as_one.genesis.common.entity.boss.behavior.bloodbossskill;
 
+import miku.united_as_one.genesis.common.entity.TremorAoeEntity;
 import miku.united_as_one.genesis.common.entity.ai.ModMemoryModuleType;
 import miku.united_as_one.genesis.common.entity.boss.BloodBoss;
 import miku.united_as_one.genesis.common.entity.boss.BloodBossMoveControl;
@@ -73,6 +74,10 @@ public class StompBehavior extends AnimatedActionBehavior<BloodBoss> {
         // 跺脚伤害
         if (abilityTimer >= STOMP_TIME && !stompDone) {
             stompDone = true;
+            TremorAoeEntity tremor = new TremorAoeEntity(level, 4F, 0.2F, 0.3F);
+            tremor.setPos(boss.getX(), boss.getY(), boss.getZ());
+            tremor.setOwner(boss);
+            level.addFreshEntity(tremor);
             dealStompDamage(boss);
         }
 

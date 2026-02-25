@@ -37,6 +37,7 @@
   "client": [
     "ironsspellbooks.gui.inscription_table.InscriptionTableScreenMixin",
     "ironsspellbooks.render.MixinSpellTargetingLayer",
+    "minecraft.client.multiplayer.ClientLevelMixin",
     "minecraft.client.renderer.FogRendererMixin",
     "minecraft.client.renderer.GameRendererAccessor",
     "minecraft.client.renderer.GameRendererMixin",

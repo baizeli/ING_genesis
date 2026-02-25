@@ -1,24 +1,16 @@
 package miku.united_as_one.genesis.client.model.boss;
 
-import io.redspace.ironsspellbooks.entity.mobs.abstract_spell_casting_mob.AbstractSpellCastingMob;
-import io.redspace.ironsspellbooks.entity.mobs.abstract_spell_casting_mob.AbstractSpellCastingMobModel;
 import miku.united_as_one.genesis.Genesis;
+import miku.united_as_one.genesis.client.render.MathUtils;
 import miku.united_as_one.genesis.common.entity.boss.BloodBoss;
+import miku.united_as_one.genesis.common.entity.boss.TrailComponent;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.WalkAnimationState;
 import net.minecraft.world.phys.Vec3;
-import org.joml.Vector2f;
-import software.bernie.geckolib.animatable.GeoReplacedEntity;
-import software.bernie.geckolib.constant.DataTickets;
-import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.cache.object.GeoBone;
 import software.bernie.geckolib.core.animatable.model.CoreGeoBone;
-import software.bernie.geckolib.core.animation.AnimatableManager;
 import software.bernie.geckolib.core.animation.AnimationState;
 import software.bernie.geckolib.model.GeoModel;
-import software.bernie.geckolib.model.data.EntityModelData;
 
 @SuppressWarnings("removal")
 public class BloodBossModel extends GeoModel<BloodBoss> {
@@ -26,6 +18,10 @@ public class BloodBossModel extends GeoModel<BloodBoss> {
     private static final ResourceLocation TEXTURE_RESOURCE = new ResourceLocation(Genesis.MOD_ID, "textures/entity/blood_boss/stage_1.png");
     private static final ResourceLocation TEXTURE_RESOURCE2 = new ResourceLocation(Genesis.MOD_ID, "textures/entity/blood_boss/stage_2.png");
     private static final ResourceLocation ANIMATION_RESOURCE = new ResourceLocation(Genesis.MOD_ID, "animations/entity/blood_boss.animation.json");
+
+    CoreGeoBone startBone = this.getAnimationProcessor().getBone("weapon_handle");
+    CoreGeoBone endBone = this.getAnimationProcessor().getBone("weapon_tip");
+
 
     @Override
     public ResourceLocation getModelResource(BloodBoss object) {
@@ -53,5 +49,23 @@ public class BloodBossModel extends GeoModel<BloodBoss> {
     @Override
     public RenderType getRenderType(BloodBoss animatable, ResourceLocation texture) {
         return RenderType.entityCutout(texture);
+    }
+
+    @Override
+    public void setCustomAnimations(BloodBoss animatable, long instanceId, AnimationState<BloodBoss> animationState) {
+        super.setCustomAnimations(animatable, instanceId, animationState);
+        CoreGeoBone startBone = this.getAnimationProcessor().getBone("weapon_handle");
+        CoreGeoBone endBone = this.getAnimationProcessor().getBone("weapon_tip");
+        if (startBone != null && endBone != null) {
+            Vec3 worldStart = MathUtils.getWorldPosFromModel(animatable, animatable.yBodyRot, (GeoBone) startBone);
+            Vec3 worldEnd = MathUtils.getWorldPosFromModel(animatable, animatable.yBodyRot, (GeoBone) endBone);
+
+                TrailComponent trailComponent = animatable.getTrailComponent();
+                if (trailComponent.hasTrail()){
+                    trailComponent.updateTrail(worldStart, worldEnd);
+                }
+
+        }
+
     }
 }

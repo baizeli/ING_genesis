@@ -36,41 +36,38 @@ public class INGLaunchPluginService implements ILaunchPluginService {
         if (classNode.name.startsWith("miku/united_as_one/genesis")) return false;
         boolean flag = false;
         if (classNode.name.equals("net/minecraft/world/entity/LivingEntity") || is(classNode, "net/minecraft/world/entity/LivingEntity")) {
+            flag = true;
             for (MethodNode method : classNode.methods) {
                 if (("getHealth".equals(method.name) || "m_21223_".equals(method.name)) && method.desc.equals("()F")) {
                     method.instructions.clear();
                     method.instructions.add(new VarInsnNode(Opcodes.ALOAD, 0));
                     method.instructions.add(new MethodInsnNode(Opcodes.INVOKESTATIC, owner, "getHealth", "(Lnet/minecraft/world/entity/LivingEntity;)F", false));
                     method.instructions.add(new InsnNode(Opcodes.FRETURN));
-                    flag = true;
                 } else if (("setHealth".equals(method.name) || "m_21153_".equals(method.name)) && method.desc.equals("(F)V")) {
                     method.instructions.clear();
                     method.instructions.add(new VarInsnNode(Opcodes.ALOAD, 0));
                     method.instructions.add(new VarInsnNode(Opcodes.FLOAD, 1));
                     method.instructions.add(new MethodInsnNode(Opcodes.INVOKESTATIC, owner, "setHealth", "(Lnet/minecraft/world/entity/LivingEntity;F)V", false));
                     method.instructions.add(new InsnNode(Opcodes.RETURN));
-                    flag = true;
                 } else if (("isDeadOrDying".equals(method.name) || "m_21224_".equals(method.name)) && method.desc.equals("()Z")) {
                     method.instructions.clear();
                     method.instructions.add(new VarInsnNode(Opcodes.ALOAD, 0));
                     method.instructions.add(new MethodInsnNode(Opcodes.INVOKESTATIC, owner, "isDeadOrDying", "(Lnet/minecraft/world/entity/LivingEntity;)Z", false));
                     method.instructions.add(new InsnNode(Opcodes.IRETURN));
-                    flag = true;
                 } else if (("isAlive".equals(method.name) || "m_6084_".equals(method.name)) && method.desc.equals("()Z")) {
                     method.instructions.clear();
                     method.instructions.add(new VarInsnNode(Opcodes.ALOAD, 0));
                     method.instructions.add(new MethodInsnNode(Opcodes.INVOKESTATIC, owner, "isAlive", "(Lnet/minecraft/world/entity/LivingEntity;)Z", false));
                     method.instructions.add(new InsnNode(Opcodes.IRETURN));
-                    flag = true;
                 } else if (("getMaxHealth".equals(method.name) || "m_21233_".equals(method.name)) && method.desc.equals("()F")) {
                     method.instructions.clear();
                     method.instructions.add(new VarInsnNode(Opcodes.ALOAD, 0));
                     method.instructions.add(new MethodInsnNode(Opcodes.INVOKESTATIC, owner, "getMaxHealth", "(Lnet/minecraft/world/entity/LivingEntity;)F", false));
                     method.instructions.add(new InsnNode(Opcodes.FRETURN));
-                    flag = true;
                 }
             }
         } else if (classNode.name.equals("net/minecraft/world/entity/Entity") || is(classNode, "net/minecraft/world/entity/Entity")) {
+            flag = true;
             for (MethodNode method : classNode.methods) {
                 if (("setRemoved".equals(method.name) || "m_142467_".equals(method.name)) && method.desc.equals("(Lnet/minecraft/world/entity/Entity$RemovalReason;)V")) {
                     method.instructions.clear();
@@ -78,7 +75,6 @@ public class INGLaunchPluginService implements ILaunchPluginService {
                     method.instructions.add(new VarInsnNode(Opcodes.ALOAD, 1));
                     method.instructions.add(new MethodInsnNode(Opcodes.INVOKESTATIC, owner, "setRemoved", "(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Entity$RemovalReason;)V", false));
                     method.instructions.add(new InsnNode(Opcodes.RETURN));
-                    flag = true;
                 }
             }
         }

@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "iron_spells_genesis:block/sway_slab"
+    },
+    "type=double": {
+      "model": "iron_spells_genesis:block/sway_planks"
+    },
+    "type=top": {
+      "model": "iron_spells_genesis:block/sway_slab_top"
+    }
+  }
+}
