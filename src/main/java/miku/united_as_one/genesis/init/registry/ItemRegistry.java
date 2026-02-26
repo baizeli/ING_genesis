@@ -738,7 +738,7 @@ public class ItemRegistry {
 
     // 深层奥术水晶矿
     public static final ItemEntry<BlockItem> ARCANE_CRYSTAL_ORE_DEEPSLATE_ITEM = Genesis.L2_REGISTRATE
-            .item("arcane_crystal_ore_deepslate", properties -> new BlockItem(BlockRegistry.ARCANE_CRYSTAL_ORE_DEEPSLATE.get(), properties))
+            .item("deepslate_arcane_crystal_ore", properties -> new BlockItem(BlockRegistry.ARCANE_CRYSTAL_ORE_DEEPSLATE.get(), properties))
             .model((ctx, prov) -> prov.blockItem(ctx::getEntry))
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
             .setData(ProviderType.LANG, NonNullBiConsumer.noop())
