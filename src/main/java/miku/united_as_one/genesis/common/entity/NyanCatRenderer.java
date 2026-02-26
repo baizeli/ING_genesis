@@ -21,6 +21,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.animal.Cat;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
@@ -29,7 +30,6 @@ import static miku.united_as_one.genesis.client.TrailRender.IRIS_Setup;
 
 
 public class NyanCatRenderer extends EntityRenderer<NyanCat> {
-
     private final CatModel<Cat> model;
 
     private static final ResourceLocation DEFAULT_TEXTURE =
@@ -41,11 +41,9 @@ public class NyanCatRenderer extends EntityRenderer<NyanCat> {
     }
 
     @Override
-    public void render(NyanCat entity, float entityYaw, float partialTick,
-                       PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
-
+    public void render(@NotNull NyanCat entity, float entityYaw, float partialTick,
+                       @NotNull PoseStack poseStack, @NotNull MultiBufferSource buffer, int packedLight) {
         if (IRIS_Setup){
-
             IrisConfig irisConfig = Iris.getIrisConfig();
 
             if (!irisConfig.areShadersEnabled()){
@@ -55,8 +53,6 @@ public class NyanCatRenderer extends EntityRenderer<NyanCat> {
             renderTrail(entity, partialTick, poseStack, Minecraft.getInstance().renderBuffers.bufferSource() , packedLight);
         }
 
-
-
         poseStack.pushPose();
         Vector3f direction = new Vector3f(
                 (float) (entity.getX() - entity.xOld),
@@ -64,9 +60,7 @@ public class NyanCatRenderer extends EntityRenderer<NyanCat> {
                 (float) (entity.getZ() - entity.zOld)
         );
         Vector3f normalizedDir = new Vector3f(direction).normalize();
-
         Vector3f right = new Vector3f(0, 1, 0).cross(normalizedDir).normalize();
-
         Vector3f up = new Vector3f(normalizedDir).cross(right).normalize();
 
         Matrix4f rotationMatrix = new Matrix4f();
@@ -91,6 +85,7 @@ public class NyanCatRenderer extends EntityRenderer<NyanCat> {
         poseStack.popPose();
         super.render(entity, entityYaw, partialTick, poseStack, buffer, packedLight);
     }
+
     private static final RenderType SHADER_RENDER_TYPE = RenderType.create(
             "shader_test_a",
             DefaultVertexFormat.POSITION_TEX,
@@ -99,7 +94,7 @@ public class NyanCatRenderer extends EntityRenderer<NyanCat> {
             false,
             false,
             RenderType.CompositeState.builder()
-                    .setShaderState(new RenderStateShard.ShaderStateShard(() -> ModShaders.getRainbowShader()))
+                    .setShaderState(new RenderStateShard.ShaderStateShard(ModShaders::getRainbowShader))
                     .setCullState(RenderStateShard.NO_CULL)
                     .setTransparencyState(RenderStateShard.TRANSLUCENT_TRANSPARENCY)
                     .setDepthTestState(RenderStateShard.LEQUAL_DEPTH_TEST) // 添加深度测试
@@ -110,14 +105,11 @@ public class NyanCatRenderer extends EntityRenderer<NyanCat> {
     
     public void renderTrail(NyanCat entity, float partialTick, PoseStack poseStack,
                             MultiBufferSource.BufferSource buffer, int packedLight) {
-        
         if (entity.trailPointer < 0) {
             return;
         }
 
-        
         VertexConsumer vertexconsumer = buffer.getBuffer(SHADER_RENDER_TYPE);
-
         
         double x = Mth.lerp(partialTick, entity.xOld, entity.getX());
         double y = Mth.lerp(partialTick, entity.yOld, entity.getY());
@@ -125,18 +117,14 @@ public class NyanCatRenderer extends EntityRenderer<NyanCat> {
 
         Vec3 currentPos = new Vec3(x, y, z);
 
-        
         poseStack.pushPose();
         poseStack.translate(-x, -y, -z);
 
-        
-        float trailA = 1.0f;
         int samples = 0;
 
         int sampleSize = 8;
         Vec3 drawFrom = currentPos;
 
-        
         while (samples < sampleSize) {
             Vec3 sample = getTrailPosition(entity, samples + 2, partialTick);
             if (sample == null) {
@@ -146,8 +134,6 @@ public class NyanCatRenderer extends EntityRenderer<NyanCat> {
             
             float u1 = samples / (float) sampleSize;
             float u2 = u1 + 1 / (float) sampleSize;
-
-            
             
             float cameraRot = getCameraRot(entity, partialTick);
             Vec3 topAngleVec = (new Vec3(0.0, getTrailHeight() / 1.0D, 0.0)).zRot(cameraRot);
@@ -156,12 +142,10 @@ public class NyanCatRenderer extends EntityRenderer<NyanCat> {
             PoseStack.Pose posestack$pose = poseStack.last();
             Matrix4f matrix4f = posestack$pose.pose();
             Matrix3f matrix3f = posestack$pose.normal();
-            
-            
+
             float alpha = getTrailAlpha(samples);
             float red = 1.0f, green = 1.0f, blue = 1.0f;
 
-            
             vertexconsumer.vertex(matrix4f, (float)drawFrom.x + (float)bottomAngleVec.x,
                             (float)drawFrom.y + (float)bottomAngleVec.y,
                             (float)drawFrom.z + (float)bottomAngleVec.z)
@@ -225,8 +209,6 @@ public class NyanCatRenderer extends EntityRenderer<NyanCat> {
         // 计算该向量在XZ平面上的角度（绕Y轴旋转的角度）
         return (float) Mth.atan2(entityToCamera.z, entityToCamera.x);
     }
-
-    
     
     private float getTrailHeight() {
         return 0.6F; 
@@ -251,8 +233,6 @@ public class NyanCatRenderer extends EntityRenderer<NyanCat> {
         Vec3 delta = currentPos.subtract(prevPos);
         return prevPos.add(delta.scale(partialTick));
     }
-
-    
     
     private float getTrailAlpha(int sampleIndex) {
         float progress = (float) sampleIndex / 8.0f; 
@@ -262,7 +242,7 @@ public class NyanCatRenderer extends EntityRenderer<NyanCat> {
     }
 
     @Override
-    public ResourceLocation getTextureLocation(NyanCat nyanCat) {
+    public @NotNull ResourceLocation getTextureLocation(@NotNull NyanCat nyanCat) {
         return DEFAULT_TEXTURE;
     }
 }

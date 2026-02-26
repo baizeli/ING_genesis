@@ -11,6 +11,7 @@ import io.redspace.ironsspellbooks.registries.SoundRegistry;
 import miku.united_as_one.genesis.init.registry.EntityRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.Projectile;
@@ -22,6 +23,8 @@ import java.util.List;
 
 public class BloodBossFireEruptionAoe extends FireEruptionAoe {
     int waveAnim;
+    public boolean isSpell;
+    public Entity spellHurtEntity;
 
     public BloodBossFireEruptionAoe(EntityType<? extends Projectile> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
@@ -35,11 +38,23 @@ public class BloodBossFireEruptionAoe extends FireEruptionAoe {
 
     public void applyEffect(LivingEntity target) {
         SpellDamageSource damageSource = SpellRegistry.RAISE_HELL_SPELL.get().getDamageSource(this.getOwner() == null ? this : this.getOwner());
-        DamageSources.ignoreNextKnockback(target);
-        if (target.hurt(damageSource, this.getDamage())) {
-            target.setDeltaMovement(target.getDeltaMovement().add(0.0, 0.65, 0.0));
-            target.invulnerableTime = 0;
-            target.hurtMarked = true;
+        if (isSpell) {
+            if (target != spellHurtEntity) {
+                DamageSources.ignoreNextKnockback(target);
+                if (target.hurt(damageSource, this.damage)) {
+                    target.setDeltaMovement(target.getDeltaMovement().add(0.0, 0.65, 0.0));
+                    target.invulnerableTime = 0;
+                    target.hurtMarked = true;
+                }
+                ((LivingEntity)this.getOwner()).heal(this.damage * 0.5F);
+            }
+        } else {
+            DamageSources.ignoreNextKnockback(target);
+            if (target.hurt(damageSource, this.damage)) {
+                target.setDeltaMovement(target.getDeltaMovement().add(0.0, 0.65, 0.0));
+                target.invulnerableTime = 0;
+                target.hurtMarked = true;
+            }
         }
     }
 

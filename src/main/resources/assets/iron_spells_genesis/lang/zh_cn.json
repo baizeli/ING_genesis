@@ -39,6 +39,7 @@
   "spell.iron_spells_genesis.blood_war": "血战",
   "spell.iron_spells_genesis.blood_frenzy": "血之狂乱",
   "spell.iron_spells_genesis.confusion": "迷茫",
+  "spell.iron_spells_genesis.gutrender_puncture": "七连地狱飞剑",
 
   "spell.iron_spells_genesis.i_fly": "我要飞",
   "spell.iron_spells_genesis.fate_wedge": "刻命之楔",
@@ -53,6 +54,8 @@
   "spell.iron_spells_genesis.summon_pig_swarm": "老王现身",
   "spell.iron_spells_genesis.never_miss": "永不落空",
   "spell.iron_spells_genesis.final_whisper": "最后的轻语",
+
+  "spell.iron_spells_genesis.blazing_blade_barrage": "七连炽焰飞剑",
 
   "spell.iron_spells_genesis.warped_blood_burst.guide": "消耗自身50%的血量，对一定范围内的生物造成伤害并附带禁疗效果。",
   "spell.iron_spells_genesis.warped_barrier.guide": "将90%的生命值转化成伤害吸收。",
