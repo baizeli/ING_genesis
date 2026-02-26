@@ -72,7 +72,7 @@ public class Genesis
     public Genesis(FMLJavaModLoadingContext context) {
         IEventBus modEventBus = context.getModEventBus();
 
-        ItemRegistry.register(modEventBus);
+        ItemRegistry.register();
         CreativeTabRegistry.register(modEventBus);
         EntityRegistry.ENTITY_TYPES.register(modEventBus);
         BlockRegistry.BLOCKS.register(modEventBus);

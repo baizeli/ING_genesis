@@ -1,8 +1,8 @@
 package miku.united_as_one.genesis.common.items.manuscript;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.init.registry.ItemRegistry;
 import miku.united_as_one.genesis.client.gui.manuscript.CelestialSourceSpellLearningScreen;
+import miku.united_as_one.genesis.common.items.CelestialSourceBase;
 import net.minecraft.network.chat.Component;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.*;
@@ -13,7 +13,7 @@ import org.jetbrains.annotations.*;
 
 import java.util.*;
 
-public class CelestialSourceManuscript extends ItemRegistry.CelestialSourceBaseItem {
+public class CelestialSourceManuscript extends CelestialSourceBase {
     public CelestialSourceManuscript() {
         super(new Properties().fireResistant().rarity(Rarity.EPIC));
     }
