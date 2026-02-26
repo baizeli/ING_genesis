@@ -38,7 +38,7 @@ public class IFlyEvent {
     
     @SubscribeEvent
     public static void onEffectExpired(MobEffectEvent.Expired event) {
-        if (event.getEntity() instanceof Player player && event.getEffectInstance().getEffect() == EffectRegistry.I_FLY.get()) {
+        if (event.getEffectInstance() != null && event.getEntity() instanceof Player player && event.getEffectInstance().getEffect() == EffectRegistry.I_FLY.get()) {
             if (!player.isCreative() && !player.isSpectator()) {
                 player.getAbilities().mayfly = false;
                 player.getAbilities().flying = false;
