@@ -1,8 +1,8 @@
 package miku.united_as_one.genesis.common.items.manuscript;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.init.registry.ItemRegistry;
 import miku.united_as_one.genesis.client.gui.manuscript.ChaosSpellLearningScreen;
+import miku.united_as_one.genesis.common.items.ChaosBase;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.*;
@@ -13,7 +13,7 @@ import org.jetbrains.annotations.*;
 
 import java.util.List;
 
-public class ChaosManuscript extends ItemRegistry.ChaosBaseItem {
+public class ChaosManuscript extends ChaosBase {
     public ChaosManuscript() {
         super(new Properties().rarity(Rarity.EPIC));
     }
