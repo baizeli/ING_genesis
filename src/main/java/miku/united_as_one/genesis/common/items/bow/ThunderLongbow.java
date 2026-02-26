@@ -53,7 +53,7 @@ public class ThunderLongbow extends BowItem {
         lightningLance.setPos(player.position().add(0, player.getEyeHeight(), 0).add(player.getForward()));
         lightningLance.shoot(player.getLookAngle());
         
-        lightningLance.setDamage(16 * (1 + (stack.getEnchantmentLevel(Enchantments.POWER_ARROWS) * 0.05F)) + (power * 4));
+        lightningLance.setDamage(16 * (1 + (stack.getEnchantmentLevel(Enchantments.POWER_ARROWS) * 0.05f)) + (power * 4));
         
         level.addFreshEntity(lightningLance);
         
