@@ -19,6 +19,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
@@ -50,7 +51,7 @@ public class CustomArrowEntity extends AbstractArrow {
     private double finalWhisperArrowDamage;
     private boolean wasShow;
 
-    private Map<LivingEntity, Long> attackedTargets = new HashMap<>();
+    private final Map<LivingEntity, Long> attackedTargets = new HashMap<>();
     public CustomArrowEntity(EntityType<? extends CustomArrowEntity> entityType, Level level) {super(entityType, level);}
     public CustomArrowEntity(Level level, LivingEntity shooter) {super(EntityRegistry.CUSTOM_ARROW.get(), shooter, level);}
     public CustomArrowEntity(Level level, double x, double y, double z) {super(EntityRegistry.CUSTOM_ARROW.get(), x, y, z, level);}
@@ -90,7 +91,7 @@ public class CustomArrowEntity extends AbstractArrow {
     }
 
     @Override
-    protected ItemStack getPickupItem() {
+    protected @NotNull ItemStack getPickupItem() {
         if (!spawn) {
             return ItemStack.EMPTY;
         }
@@ -149,7 +150,7 @@ public class CustomArrowEntity extends AbstractArrow {
     }
 
     @Override
-    protected void onHitBlock(BlockHitResult result) {
+    protected void onHitBlock(@NotNull BlockHitResult result) {
         // 穿方块
         if (myriadArrow) {
             return;

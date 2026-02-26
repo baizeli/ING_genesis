@@ -33,6 +33,7 @@ import java.lang.reflect.Field;
 public class BloodDaggerEntity extends FieryDaggerEntity {
     private static final Field ISGROUNDED;
     public boolean isZone;
+    public boolean isSpell;
 
     static {
         try {
@@ -78,9 +79,13 @@ public class BloodDaggerEntity extends FieryDaggerEntity {
     protected void onHit(HitResult hitresult) {
         super.onHit(hitresult);
         if (!isZone) {
-            BloodBossFireEruptionAoe aoe = new BloodBossFireEruptionAoe(level, 8.0F);
+            BloodBossFireEruptionAoe aoe = new BloodBossFireEruptionAoe(level, isSpell ? 5.0F : 8.0F);
             aoe.setOwner(this.getOwner());
-            aoe.setDamage(SpellRegistry.RAISE_HELL_SPELL.get().getSpellPower(1, this.getOwner()) + Utils.getWeaponDamage((LivingEntity) this.getOwner(), MobType.UNDEFINED));
+            aoe.setDamage(isSpell ? this.damage * 0.5F : SpellRegistry.RAISE_HELL_SPELL.get().getSpellPower(1, this.getOwner()) + Utils.getWeaponDamage((LivingEntity) this.getOwner(), MobType.UNDEFINED));
+            if (this.isSpell && hitresult instanceof EntityHitResult result) {
+                aoe.isSpell = true;
+                aoe.spellHurtEntity = result.getEntity();
+            }
             aoe.moveTo(hitresult.getLocation());
             level.addFreshEntity(aoe);
         }

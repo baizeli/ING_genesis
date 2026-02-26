@@ -65,7 +65,6 @@ import net.minecraft.world.entity.ai.navigation.AmphibiousPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.monster.Monster;
-import net.minecraft.world.entity.monster.warden.WardenAi;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -94,6 +93,7 @@ import net.minecraft.world.BossEvent;
 
 import static miku.united_as_one.genesis.Genesis.MODID;
 
+@SuppressWarnings("deprecation")
 public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAttacker, IEntityAdditionalSpawnData, IClientEventEntity, IMagicEntity {
     private static final Logger BLOOD_BOSS_LOGGER = LogUtils.getLogger();
 
@@ -110,9 +110,9 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     private static final RawAnimation IDLE = RawAnimation.begin().thenLoop("idle"); // 待机
     private static final RawAnimation WALK = RawAnimation.begin().thenLoop("walk_cycle"); // 行走循环
     private static final RawAnimation TENTACLE_WALKING = RawAnimation.begin().thenLoop("tentacle_walking"); // 触手行走
-    private static final RawAnimation EMPTY = RawAnimation.begin().thenLoop("blank"); // 行走循环
-    private static final RawAnimation CAST_IDLE = RawAnimation.begin().thenLoop("施法待机");
-    private static final RawAnimation CAST_WALK = RawAnimation.begin().thenLoop("施法行走循环");
+//    private static final RawAnimation EMPTY = RawAnimation.begin().thenLoop("blank"); // 行走循环
+//    private static final RawAnimation CAST_IDLE = RawAnimation.begin().thenLoop("施法待机");
+//    private static final RawAnimation CAST_WALK = RawAnimation.begin().thenLoop("施法行走循环");
 
     private static final BossbarManager.BossbarSprite BLOOD_BOSSBAR_SPRITE = new BossbarManager.BossbarSprite(
             new ResourceLocation(MODID, "boss_bars/blood_bossbar"),
@@ -300,11 +300,9 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
             this.getBrain().setMemoryWithExpiry(MemoryModuleType.IS_EMERGING, Unit.INSTANCE,
                     BloodBossEmergingBehavior.EMERGE_SPAWN_DURATION);
             this.playSound(SoundEvents.WARDEN_AGITATED, 5.0F, 1.0F);
-        }else{
+        } else {
             this.getBrain().setMemory(ModMemoryModuleType.BOSS_STAGE.get(),1);
         }
-
-
 
         if (!this.level.isClientSide()){
             this.setVisable(this.getBossStage() > 0);
@@ -328,7 +326,6 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
         return super.isInvulnerableTo(source);
     }
 
-
     @Override
     public void setHealth(float health) {
         super.setHealth(health);
@@ -341,7 +338,6 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     }
 
     private void detectAndApplyAbyssalAsylum() {
-
         if (this.abyssalAsylumTriggers >= 5) {
             return;
         }
@@ -1381,8 +1377,6 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     }
 
     private void spawnSphericalTwistParticles(ServerLevel level, BloodBoss boss, double speedFactor, double radius) {
-        double yawRad = Math.toRadians(boss.getYRot());
-
         double cx =  boss.getX();
         double cy = boss.getY()+2.5;
         double cz =  boss.getZ();

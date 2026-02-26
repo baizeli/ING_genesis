@@ -1,5 +1,8 @@
 package miku.united_as_one.genesis;
 
+import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
+import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
+import io.redspace.ironsspellbooks.api.spells.ISpellContainer;
 import io.redspace.ironsspellbooks.entity.spells.void_tentacle.VoidTentacle;
 import miku.united_as_one.genesis.common.data.content.arcaneWorkbench.*;
 import miku.united_as_one.genesis.common.data.content.workbenchs.*;
@@ -30,6 +33,7 @@ import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
@@ -123,6 +127,23 @@ public class Genesis
             e.getEntries().putAfter(ItemRegistry.CHAOS_UPGRADE_ORB.get().getDefaultInstance(),
                     ItemRegistry.CELESTIAL_SOURCE_UPGRADE_ORB.get().getDefaultInstance(),
                     CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+        } else if (e.getTab() == io.redspace.ironsspellbooks.registries.CreativeTabRegistry.SCROLLS_TAB.get()) {
+            // 构造地狱浮现的法术卷轴
+            ItemStack raiseHellMaxStack = new ItemStack(io.redspace.ironsspellbooks.registries.ItemRegistry.SCROLL.get());
+            AbstractSpell raiseHell = SpellRegistry.RAISE_HELL_SPELL.get();
+            ISpellContainer.createScrollContainer(raiseHell, raiseHell.getMaxLevel(), raiseHellMaxStack);
+
+            // 构造七连炽焰飞剑的法术卷轴
+            AbstractSpell spell = CreativeTabRegistry.BLAZING_BLADE_BARRAGE_SPELL.get();
+
+            // 循环插入法术的所有等级
+            for (int i = spell.getMaxLevel(); i >= spell.getMinLevel(); --i) { // 先插入等级高的，这样等级低的就可以在等级高的前面了
+                ItemStack levelStack = new ItemStack(io.redspace.ironsspellbooks.registries.ItemRegistry.SCROLL.get());
+                ISpellContainer.createScrollContainer(spell, i, levelStack);
+                // Raise Hell法术的最高级卷轴后面
+                e.getEntries().putAfter(raiseHellMaxStack, levelStack,
+                        CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+            }
         }
     }
 

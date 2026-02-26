@@ -24,7 +24,6 @@ import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 
 public class BloodBossStunBehavior extends AnimatedActionBehavior<BloodBoss> {
-
     private int currentWave = 0;
     private int waveTimer = 0;
     private int waveRadius = 0;
@@ -41,9 +40,9 @@ public class BloodBossStunBehavior extends AnimatedActionBehavior<BloodBoss> {
     private static final double STUN_DAMAGE_HEIGHT = 3.0;
     int abyssalShroudEffectDuration =0;
 
-    
+
     private static final java.util.List<Vec3> ALL_SPAWNED_TENTACLES = new java.util.ArrayList<>();
-    
+
     public BloodBossStunBehavior() {
         super(ImmutableMap.of(MemoryModuleType.IS_EMERGING, MemoryStatus.VALUE_PRESENT));
     }
@@ -57,7 +56,7 @@ public class BloodBossStunBehavior extends AnimatedActionBehavior<BloodBoss> {
     }
 
     @Override
-    protected void start(ServerLevel level, BloodBoss entity, long gameTime) {
+    protected void start(@NotNull ServerLevel level, @NotNull BloodBoss entity, long gameTime) {
         super.start(level, entity, gameTime);
 
         if (entity.hasEffect(MobEffectRegistry.ABYSSAL_SHROUD.get())) {
@@ -70,7 +69,7 @@ public class BloodBossStunBehavior extends AnimatedActionBehavior<BloodBoss> {
     }
 
     @Override
-    protected void tick(ServerLevel level, BloodBoss owner, long gameTime) {
+    protected void tick(@NotNull ServerLevel level, BloodBoss owner, long gameTime) {
         Brain<BloodBoss> brain = owner.getBrain();
         brain.eraseMemory(MemoryModuleType.WALK_TARGET);
         owner.getNavigation().stop();
@@ -91,7 +90,7 @@ public class BloodBossStunBehavior extends AnimatedActionBehavior<BloodBoss> {
         if (currentWave > 0 && waveTimer < WAVE_DURATION) {
             waveTimer++;
             int[] waveMaxRadii =  {8, 11, 15};
-            waveRadius = (int)((float)waveTimer / WAVE_DURATION * waveMaxRadii[currentWave - 1]);
+            waveRadius = (int) ((float)waveTimer / WAVE_DURATION * waveMaxRadii[currentWave - 1]);
             spawnGroundShakeWave(level, owner, waveRadius, currentWave);
 
             CameraShakeManager.addCameraShake(new CameraShakeData(
@@ -177,29 +176,28 @@ public class BloodBossStunBehavior extends AnimatedActionBehavior<BloodBoss> {
     private void spawnTentacles(ServerLevel level, BloodBoss owner, int count, double range) {
         java.util.List<Vec3> spawnedPositions = new java.util.ArrayList<>();
         int attempts = 0;
-        int maxAttempts = Math.min(count * 15, 150); 
-        
+        int maxAttempts = Math.min(count * 15, 150);
+
         while (spawnedPositions.size() < count && attempts < maxAttempts) {
             attempts++;
             double randomX = owner.getX() + (owner.getRandom().nextDouble() - 0.5) * range * 2;
             double randomZ = owner.getZ() + (owner.getRandom().nextDouble() - 0.5) * range * 2;
             double groundY = findGroundY(owner, level, randomX, randomZ);
-            
+
             if (groundY > level.getMinBuildHeight()) {
                 Vec3 newPos = new Vec3(randomX, groundY, randomZ);
                 boolean validPosition = true;
-                
-                
+
                 synchronized(ALL_SPAWNED_TENTACLES) {
                     for (Vec3 existingPos : ALL_SPAWNED_TENTACLES) {
                         double distanceSq = existingPos.distanceToSqr(newPos);
-                        if (distanceSq < 16.0) { 
+                        if (distanceSq < 16.0) {
                             validPosition = false;
                             break;
                         }
                     }
                 }
-                
+
                 if (validPosition) {
                     spawnedPositions.add(newPos);
                     synchronized(ALL_SPAWNED_TENTACLES) {
@@ -318,11 +316,10 @@ public class BloodBossStunBehavior extends AnimatedActionBehavior<BloodBoss> {
 
     @Override
     protected void stop(@NotNull ServerLevel level, BloodBoss entity, long gameTime) {
-        
         synchronized(ALL_SPAWNED_TENTACLES) {
             ALL_SPAWNED_TENTACLES.clear();
         }
-        
+
         if (abyssalShroudEffectDuration!=0){
             entity.addEffect(new MobEffectInstance(
                     MobEffectRegistry.ABYSSAL_SHROUD.get(), abyssalShroudEffectDuration, 0, false, false, false

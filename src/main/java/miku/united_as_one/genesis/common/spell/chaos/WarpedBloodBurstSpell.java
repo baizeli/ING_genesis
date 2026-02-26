@@ -47,6 +47,7 @@ public class WarpedBloodBurstSpell extends ChaosBaseSpell {
         this.baseManaCost = 50;
     }
 
+    @Override
     public List<MutableComponent> getUniqueInfo(int spellLevel, LivingEntity caster) {
         return List.of(Component.translatable("ui.irons_spellbooks.damage", Utils.stringTruncation(getSpellPower(spellLevel, caster), 1)),
                 Component.translatable("ui.iron_spells_genesis.percent_force_damage", Utils.stringTruncation(getForceDamage(spellLevel, caster), 1)),

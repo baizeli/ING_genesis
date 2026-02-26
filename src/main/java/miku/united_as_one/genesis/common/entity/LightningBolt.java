@@ -73,9 +73,9 @@ public class LightningBolt extends Entity {
         return p_20869_ < d0 * d0;
     }
 
-    protected void readAdditionalSaveData(CompoundTag p_20873_) {
+    protected void readAdditionalSaveData(@NotNull CompoundTag p_20873_) {
     }
 
-    protected void addAdditionalSaveData(CompoundTag p_20877_) {
+    protected void addAdditionalSaveData(@NotNull CompoundTag p_20877_) {
     }
 }

@@ -41,6 +41,7 @@ public class FinalWhisper extends AbstractSpell {
         this.baseManaCost = 2000;
     }
 
+    @Override
     public List<MutableComponent> getUniqueInfo(int spellLevel, LivingEntity caster) {
         return List.of(Component.translatable("ui.irons_spellbooks.cooldown", Utils.timeFromTicks(getCooldownInTicks(CastSource.COMMAND, caster), 1)),
                 Component.translatable("ui.irons_spellbooks.damage", Utils.stringTruncation(getForceDamage(spellLevel, caster), 1)),
