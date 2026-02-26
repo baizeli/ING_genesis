@@ -1,9 +1,10 @@
 package miku.united_as_one.genesis.common.event;
 
 import miku.united_as_one.genesis.Genesis;
+import miku.united_as_one.genesis.common.items.CelestialSourceBase;
+import miku.united_as_one.genesis.common.items.ChaosBase;
 import miku.united_as_one.genesis.common.items.spellbook.CelestialSourceSpellBook;
 import miku.united_as_one.genesis.common.items.spellbook.ChaosSpellBook;
-import miku.united_as_one.genesis.init.registry.ItemRegistry;
 import miku.united_as_one.genesis.common.items.staff.CelestialSourceStaff;
 import miku.united_as_one.genesis.common.items.staff.ChaosStaff;
 import miku.united_as_one.genesis.common.items.armor.CelestialSourceSpellArmor;
@@ -93,7 +94,7 @@ public class EventHandler {
             if (item instanceof CelestialSourceSpellArmor ||
                     item instanceof CelestialSourceStaff ||
                     item instanceof CelestialSourceSpellBook ||
-                    item instanceof ItemRegistry.CelestialSourceBaseItem) {
+                    item instanceof CelestialSourceBase) {
                 ClientLevel clientLevel = Minecraft.instance.level;
                 // 每 150 ticks
                 long gameTime = 0;
@@ -115,7 +116,7 @@ public class EventHandler {
             } else if (item instanceof ChaosSpellArmor ||
                     item instanceof ChaosStaff ||
                     item instanceof ChaosSpellBook ||
-                    item instanceof ItemRegistry.ChaosBaseItem) {
+                    item instanceof ChaosBase) {
                 event.setBorderStart(0xFFFF0000); // 红色
                 event.setBorderEnd(0xFFFF0000);
             }
