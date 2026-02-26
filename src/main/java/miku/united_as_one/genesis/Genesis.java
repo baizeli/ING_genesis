@@ -1,7 +1,6 @@
 package miku.united_as_one.genesis;
 
 import io.redspace.ironsspellbooks.entity.spells.void_tentacle.VoidTentacle;
-import miku.united_as_one.genesis.client.render.entity.ThrowBloodAndWoundsRenderer;
 import miku.united_as_one.genesis.common.data.content.arcaneWorkbench.*;
 import miku.united_as_one.genesis.common.data.content.workbenchs.*;
 import miku.united_as_one.genesis.common.entity.*;
@@ -69,7 +68,7 @@ public class Genesis
     public Genesis(FMLJavaModLoadingContext context) {
         IEventBus modEventBus = context.getModEventBus();
 
-        ItemRegistry.register(modEventBus);
+        ItemRegistry.register();
         CreativeTabRegistry.register(modEventBus);
         EntityRegistry.ENTITY_TYPES.register(modEventBus);
         BlockRegistry.BLOCKS.register(modEventBus);
