@@ -15,6 +15,9 @@ import miku.united_as_one.genesis.common.items.curios.rune_plus.*;
 import miku.united_as_one.genesis.common.items.manuscript.*;
 import miku.united_as_one.genesis.common.items.pickaxe.*;
 import miku.united_as_one.genesis.common.items.sword.*;
+import miku.united_as_one.genesis.common.items.axe.*;
+import miku.united_as_one.genesis.common.items.shovel.*;
+import miku.united_as_one.genesis.common.items.hoe.*;
 import miku.united_as_one.genesis.common.spell.UpgradeOrbTypes;
 import io.redspace.ironsspellbooks.item.UpgradeOrbItem;
 import io.redspace.ironsspellbooks.item.armor.IronsExtendedArmorMaterial;
@@ -138,6 +141,54 @@ public class ItemRegistry {
                 TierRegistry.DIVINE_METAL,
                 15,
                 -2.7f,
+                properties
+            ))
+            .model((ctx, prov) -> prov.handheld(ctx::getEntry))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
+            .register();
+
+    // 神圣金属斧
+    public static final ItemEntry<DivineMetalAxe> DIVINE_METAL_AXE = Genesis.L2_REGISTRATE
+            .item("divine_metal_axe", properties -> new DivineMetalAxe(
+                TierRegistry.DIVINE_METAL,
+                19,
+                -3.3f,
+                properties
+            ))
+            .model((ctx, prov) -> prov.handheld(ctx::getEntry))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
+            .register();
+
+    // 神圣金属镐
+    public static final ItemEntry<DivineMetalPickaxe> DIVINE_METAL_PICKAXE = Genesis.L2_REGISTRATE
+            .item("divine_metal_pickaxe", properties -> new DivineMetalPickaxe(
+                TierRegistry.DIVINE_METAL,
+                4,
+                -1.0f,
+                properties
+            ))
+            .model((ctx, prov) -> prov.handheld(ctx::getEntry))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
+            .register();
+
+    // 神圣金属铲
+    public static final ItemEntry<DivineMetalShovel> DIVINE_METAL_SHOVEL = Genesis.L2_REGISTRATE
+            .item("divine_metal_shovel", properties -> new DivineMetalShovel(
+                TierRegistry.DIVINE_METAL,
+                4,
+                -1.0f,
+                properties
+            ))
+            .model((ctx, prov) -> prov.handheld(ctx::getEntry))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
+            .register();
+
+    // 神圣金属锄
+    public static final ItemEntry<DivineMetalHoe> DIVINE_METAL_HOE = Genesis.L2_REGISTRATE
+            .item("divine_metal_hoe", properties -> new DivineMetalHoe(
+                TierRegistry.DIVINE_METAL,
+                0,
+                96,
                 properties
             ))
             .model((ctx, prov) -> prov.handheld(ctx::getEntry))
