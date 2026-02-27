@@ -127,7 +127,7 @@
   "tooltip.iron_spells_genesis.divine_metal.description_1": "§8特殊效果：击杀凋零骷髅必定掉落头颅",
   "tooltip.iron_spells_genesis.divine_metal.description_2": "特殊效果：自动熔炼",
   "tooltip.iron_spells_genesis.divine_metal.description_3": "按住shift挖掘沙子掉落玻璃",
-  "tooltip.iron_spells_genesis.divine_metal.description_4": "挖掘小麦掉落面包，挖掘马铃薯掉落烤马铃薯",
+  "tooltip.iron_spells_genesis.divine_metal.description_4": "用这玩意打掉小麦改为掉落面包，挖掘马铃薯改为掉落烤的",
 
   "item.iron_spells_genesis.divine_metal_helmet": "神圣金属头冠",
   "item.iron_spells_genesis.divine_metal_chestplate": "神圣金属胸甲",
