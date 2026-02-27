@@ -124,8 +124,8 @@
   "item.iron_spells_genesis.divine_metal_shovel": "神圣金属铲",
   "item.iron_spells_genesis.divine_metal_hoe": "神圣金属锄",
 
-  "tooltip.iron_spells_genesis.divine_metal.description_1": "§8特殊效果：击杀凋零骷髅必定掉落头颅",
-  "tooltip.iron_spells_genesis.divine_metal.description_2": "特殊效果：自动熔炼",
+  "tooltip.iron_spells_genesis.divine_metal.description_1": "§8殴打凋零骷髅掉落他的头",
+  "tooltip.iron_spells_genesis.divine_metal.description_2": "自动帮你烧东西",
   "tooltip.iron_spells_genesis.divine_metal.description_3": "按住shift挖掘沙子掉落玻璃",
   "tooltip.iron_spells_genesis.divine_metal.description_4": "用这玩意打掉小麦改为掉落面包，挖掘马铃薯改为掉落烤的",
 
