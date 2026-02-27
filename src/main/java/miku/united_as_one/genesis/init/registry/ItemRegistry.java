@@ -52,6 +52,12 @@ public class ItemRegistry {
             .item("divine_metal_ingot", properties -> new Item(properties.rarity(Rarity.EPIC)))
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
+
+    // 神圣金属碎片
+    public static final ItemEntry<Item> DIVINE_METAL_FRAGMENT = Genesis.L2_REGISTRATE
+            .item("divine_metal_fragment", properties -> new Item(properties.rarity(Rarity.EPIC)))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
+            .register();
             
     // 扭曲混沌锭
     public static final ItemEntry<? extends Item> TWISTED_CHAOS_INGOT = Genesis.L2_REGISTRATE

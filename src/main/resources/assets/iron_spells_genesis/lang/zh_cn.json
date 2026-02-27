@@ -119,6 +119,7 @@
   "item.iron_spells_genesis.mithril_pickaxe": "秘银镐",
   
   "item.iron_spells_genesis.divine_metal_sword": "神圣金属剑",
+  "tooltip.iron_spells_genesis.divine_metal.description_1": "§8特殊效果：击杀凋零骷髅必定掉落头颅",
   "item.iron_spells_genesis.divine_metal_axe": "神圣金属斧",
   "item.iron_spells_genesis.divine_metal_pickaxe": "神圣金属镐",
   "item.iron_spells_genesis.divine_metal_shovel": "神圣金属铲",
@@ -129,6 +130,7 @@
   "item.iron_spells_genesis.divine_metal_leggings": "神圣金属护腿",
   "item.iron_spells_genesis.divine_metal_boots": "神圣金属靴子",
   "item.iron_spells_genesis.divine_metal_ingot": "神圣金属锭",
+  "item.iron_spells_genesis.divine_metal_fragment": "神圣金属碎片",
   "item.iron_spells_genesis.smithing_template.divine_upgrade.additions_slot_description": "放入神圣金属锭",
   "item.iron_spells_genesis.smithing_template.divine_upgrade.applies_to": "下界合金战法盔甲",
   "item.iron_spells_genesis.smithing_template.divine_upgrade.base_slot_description": "放入下界合金战法盔甲",
@@ -139,12 +141,13 @@
   "item.iron_spells_genesis.violet_pickaxe": "紫极镐",
   "item.iron_spells_genesis.violet_shovel": "紫极铲",
   "item.iron_spells_genesis.violet_hoe": "紫极锄",
-  
+
   "item.iron_spells_genesis.violet_zenith_helmet": "紫极战斗头盔",
   "item.iron_spells_genesis.violet_zenith_chestplate": "紫极战斗胸甲",
   "item.iron_spells_genesis.violet_zenith_leggings": "紫极战斗护腿",
   "item.iron_spells_genesis.violet_zenith_boots": "紫极战斗靴子",
   "item.iron_spells_genesis.violet_galaxy_ingot": "§5紫极锭",
+  "item.iron_spells_genesis.violet_galaxy_fragment": "§5紫极碎片",
   "item.iron_spells_genesis.smithing_template.violet_upgrade.additions_slot_description": "放入§5紫极锭",
   "item.iron_spells_genesis.smithing_template.violet_upgrade.applies_to": "奥术水晶装备",
   "item.iron_spells_genesis.smithing_template.violet_upgrade.base_slot_description": "放入奥术水晶装备",
