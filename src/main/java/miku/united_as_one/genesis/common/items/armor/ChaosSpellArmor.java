@@ -18,7 +18,7 @@ public class ChaosSpellArmor extends ExtendedArmorItem {
     @OnlyIn(Dist.CLIENT)
     public GeoArmorRenderer<?> supplyRenderer() {
         return new ChaosSpellArmorRenderer(
-            new GeoModel<ChaosSpellArmor>() {
+            new GeoModel<>() {
                 @Override
                 public ResourceLocation getModelResource(ChaosSpellArmor object) {
                     return ResourceLocation.fromNamespaceAndPath(
