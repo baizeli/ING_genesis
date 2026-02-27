@@ -434,24 +434,28 @@ public class ItemRegistry {
             .item("violet_zenith_boots", properties -> new VioletZenithArmor(
                 ModArmorMaterials.VIOLET_ZENITH, ArmorItem.Type.BOOTS, properties
             ))
-            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {
-            })
+            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
     // 混沌法术书
     public static final ItemEntry<ChaosSpellBook> CHAOS_SPELL_BOOK = Genesis.L2_REGISTRATE
             .item("chaos_spell_book", properties -> new ChaosSpellBook())
-            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {
-            })
+            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
     // 星源法术书
     public static final ItemEntry<CelestialSourceSpellBook> CELESTIAL_SOURCE_SPELL_BOOK = Genesis.L2_REGISTRATE
             .item("celestial_source_spell_book", properties -> new CelestialSourceSpellBook())
-            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {
-            })
+            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
+            .register();
+
+    // 雷霆法术书
+    public static final ItemEntry<LightningSpellBook> LIGHTNING_SPELL_BOOK = Genesis.L2_REGISTRATE
+            .item("lightning_spell_book", properties -> new LightningSpellBook())
+            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
             

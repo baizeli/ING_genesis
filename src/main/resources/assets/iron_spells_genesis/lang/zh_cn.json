@@ -97,9 +97,12 @@
   "item.iron_spells_genesis.celestial_source_rune": "星源符文",
   "item.iron_spells_genesis.chaos_upgrade_orb": "混沌升级法球",
   "item.iron_spells_genesis.celestial_source_upgrade_orb": "星源升级法球",
+  
   "item.iron_spells_genesis.chaos_spell_book": "混沌法术书",
   "item.iron_spells_genesis.celestial_source_spell_book": "星源法术书",
+  "item.iron_spells_genesis.lightning_spell_book": "雷霆法术书",
   "item.iron_spells_genesis.disk_spell_book": "法术磁盘",
+
   "item.iron_spells_genesis.twisted_chaos": "扭曲之混沌",
   "item.iron_spells_genesis.twisted_chaos_ingot": "扭曲混沌锭",
   "item.iron_spells_genesis.celestial_source_pearl": "星源珍珠",
@@ -128,6 +131,8 @@
   "tooltip.iron_spells_genesis.divine_metal.description_2": "自动帮你烧东西",
   "tooltip.iron_spells_genesis.divine_metal.description_3": "对沙子使用原子操作掉落玻璃",
   "tooltip.iron_spells_genesis.divine_metal.description_4": "用这玩意打掉小麦改为掉落面包，挖掘马铃薯改为掉落烤的",
+  "tooltip.iron_spells_genesis.lightning_spell_book.description_1": "§bwhat can i say?",
+  "tooltip.iron_spells_genesis.lightning_spell_book.description_2": "§blightning out",
 
   "item.iron_spells_genesis.divine_metal_helmet": "神圣金属头冠",
   "item.iron_spells_genesis.divine_metal_chestplate": "神圣金属胸甲",
