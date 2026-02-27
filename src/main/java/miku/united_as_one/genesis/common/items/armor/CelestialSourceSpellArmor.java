@@ -1,9 +1,7 @@
 package miku.united_as_one.genesis.common.items.armor;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.client.tooltipParticleHandler.ITooltipParticleItem;
-import miku.united_as_one.genesis.client.tooltipParticleHandler.PTID;
-import miku.united_as_one.genesis.client.tooltipParticleHandler.TooltipParticleSystem;
+import miku.united_as_one.genesis.client.tooltipParticleHandler.*;
 import miku.united_as_one.genesis.util.ArmorSetUtil;
 import io.redspace.ironsspellbooks.entity.armor.*;
 import io.redspace.ironsspellbooks.item.armor.*;
@@ -23,6 +21,7 @@ import software.bernie.geckolib.renderer.*;
 import software.bernie.geckolib.renderer.layer.*;
 import software.bernie.geckolib.cache.object.*;
 
+@SuppressWarnings("UnstableApiUsage")
 public class CelestialSourceSpellArmor extends ExtendedArmorItem implements ITooltipParticleItem {
     public CelestialSourceSpellArmor(IronsExtendedArmorMaterial material, Type type, Properties properties) {
         super(material, type, properties);
@@ -36,33 +35,33 @@ public class CelestialSourceSpellArmor extends ExtendedArmorItem implements IToo
 
         // 星源法术套
         CelestialSourceSpellArmorRenderer renderer = new CelestialSourceSpellArmorRenderer(
-            new GeoModel<CelestialSourceSpellArmor>() {
-                @Override
-                public ResourceLocation getModelResource(CelestialSourceSpellArmor object) {
-                    return ResourceLocation.fromNamespaceAndPath(
-                        Genesis.MOD_ID, "geo/armor/celestial_source_spell_armor.geo.json"
-                    );
-                }
+                new GeoModel<>() {
+                    @Override
+                    public ResourceLocation getModelResource(CelestialSourceSpellArmor object) {
+                        return ResourceLocation.fromNamespaceAndPath(
+                            Genesis.MOD_ID, "geo/armor/celestial_source_spell_armor.geo.json"
+                        );
+                    }
 
-                @Override
-                public ResourceLocation getTextureResource(CelestialSourceSpellArmor object) {
-                    return ResourceLocation.fromNamespaceAndPath(
-                        Genesis.MOD_ID, "textures/models/armor/celestial_source_spell.png"
-                    );
-                }
+                    @Override
+                    public ResourceLocation getTextureResource(CelestialSourceSpellArmor object) {
+                        return ResourceLocation.fromNamespaceAndPath(
+                            Genesis.MOD_ID, "textures/models/armor/celestial_source_spell.png"
+                        );
+                    }
 
-                @Override
-                public ResourceLocation getAnimationResource(CelestialSourceSpellArmor animatable) {
-                    return ResourceLocation.fromNamespaceAndPath(
-                        Genesis.MOD_ID, "animations/armor/celestial_source_spell_armor.animation.json"
-                    );
+                    @Override
+                    public ResourceLocation getAnimationResource(CelestialSourceSpellArmor animatable) {
+                        return ResourceLocation.fromNamespaceAndPath(
+                            Genesis.MOD_ID, "animations/armor/celestial_source_spell_armor.animation.json"
+                        );
+                    }
                 }
-            }
         );
 
         // 星源法术环[渲染层]
-        renderer.addRenderLayer(new GeoRenderLayer<CelestialSourceSpellArmor>(renderer) {
-            private final GeoModel<CelestialSourceSpellArmor> ringModel = new GeoModel<CelestialSourceSpellArmor>() {
+        renderer.addRenderLayer(new GeoRenderLayer<>(renderer) {
+            private final GeoModel<CelestialSourceSpellArmor> ringModel = new GeoModel<>() {
                 @Override
                 public ResourceLocation getModelResource(CelestialSourceSpellArmor object) {
                     return ResourceLocation.fromNamespaceAndPath(
@@ -90,11 +89,9 @@ public class CelestialSourceSpellArmor extends ExtendedArmorItem implements IToo
                 PoseStack poseStack, CelestialSourceSpellArmor animatable, BakedGeoModel bakedModel, RenderType renderType,
                 MultiBufferSource bufferSource, VertexConsumer buffer, float partialTick, int packedLight, int packedOverlay
             ) {
-                Entity entity = ((GeoArmorRenderer<?>) this.renderer).getCurrentEntity();
-                EquipmentSlot currentSlot = ((GeoArmorRenderer<?>) this.renderer).getCurrentSlot();
-
-                if (entity instanceof LivingEntity livingEntity &&
-                    ArmorSetUtil.hasFullCelestialSourceSet(livingEntity) && currentSlot == EquipmentSlot.CHEST
+                if (((GeoArmorRenderer<?>) this.renderer).getCurrentEntity() instanceof LivingEntity livingEntity &&
+                    ArmorSetUtil.hasFullCelestialSourceSet(livingEntity) && 
+                    ((GeoArmorRenderer<?>) this.renderer).getCurrentSlot() == EquipmentSlot.CHEST
                 ) {
                     AnimationState<CelestialSourceSpellArmor> animationState = new AnimationState<>(
                         animatable, 0, 0, partialTick, false
@@ -118,8 +115,8 @@ public class CelestialSourceSpellArmor extends ExtendedArmorItem implements IToo
         });
 
         // 星源法术披风[渲染层]
-        renderer.addRenderLayer(new GeoRenderLayer<CelestialSourceSpellArmor>(renderer) {
-            private final GeoModel<CelestialSourceSpellArmor> capeModel = new GeoModel<CelestialSourceSpellArmor>() {
+        renderer.addRenderLayer(new GeoRenderLayer<>(renderer) {
+            private final GeoModel<CelestialSourceSpellArmor> capeModel = new GeoModel<>() {
                 @Override
                 public ResourceLocation getModelResource(CelestialSourceSpellArmor object) {
                     return ResourceLocation.fromNamespaceAndPath(
@@ -147,11 +144,9 @@ public class CelestialSourceSpellArmor extends ExtendedArmorItem implements IToo
                 PoseStack poseStack, CelestialSourceSpellArmor animatable, BakedGeoModel bakedModel, RenderType renderType,
                 MultiBufferSource bufferSource, VertexConsumer buffer, float partialTick, int packedLight, int packedOverlay
             ) {
-                Entity entity = ((GeoArmorRenderer<?>) this.renderer).getCurrentEntity();
-                EquipmentSlot currentSlot = ((GeoArmorRenderer<?>) this.renderer).getCurrentSlot();
-
-                if (entity instanceof LivingEntity livingEntity &&
-                    ArmorSetUtil.hasFullCelestialSourceSet(livingEntity) && currentSlot == EquipmentSlot.CHEST
+                if (((GeoArmorRenderer<?>) this.renderer).getCurrentEntity() instanceof LivingEntity livingEntity &&
+                    ArmorSetUtil.hasFullCelestialSourceSet(livingEntity) && 
+                    ((GeoArmorRenderer<?>) this.renderer).getCurrentSlot() == EquipmentSlot.CHEST
                 ) {
                     AnimationState<CelestialSourceSpellArmor> animationState = new AnimationState<>(
                         animatable, 0, 0, partialTick, false
@@ -212,7 +207,7 @@ public class CelestialSourceSpellArmor extends ExtendedArmorItem implements IToo
     }
 
     private PlayState celestial_source_spell_cape_running(AnimationState<CelestialSourceSpellArmor> animationState) {
-        if (mc.player.isSprinting()) {
+        if (mc.player != null && mc.player.isSprinting()) {
             animationState.getController().setAnimation(
                 RawAnimation.begin().thenLoop("celestial_source_spell_cape_running.animation")
             );
@@ -224,7 +219,7 @@ public class CelestialSourceSpellArmor extends ExtendedArmorItem implements IToo
     }
 
     private PlayState celestial_source_spell_cape_shift(AnimationState<CelestialSourceSpellArmor> animationState) {
-        if (mc.player.isShiftKeyDown()) {
+        if (mc.player != null && mc.player.isShiftKeyDown()) {
             /*animationState.getController().forceAnimationReset();*/
             animationState.getController().setAnimation(
                 RawAnimation.begin().thenLoop("celestial_source_spell_cape_shift.animation_3")
@@ -265,78 +260,6 @@ public class CelestialSourceSpellArmor extends ExtendedArmorItem implements IToo
                 partialTick, LightTexture.FULL_BRIGHT, packedOverlay, red, green, blue, alpha
             );
         }*/
-    }
-
-    // 星源法术套相关...
-    public static class CelestialSourceSpellArmorModel extends GeoModel<CelestialSourceSpellArmor> {
-        @Override
-        public ResourceLocation getModelResource(CelestialSourceSpellArmor object) {
-            return ResourceLocation.fromNamespaceAndPath(
-                Genesis.MOD_ID, "geo/celestial_source_spell.geo.json"
-            );
-        }
-
-        @Override
-        public ResourceLocation getTextureResource(CelestialSourceSpellArmor object) {
-            return ResourceLocation.fromNamespaceAndPath(
-                Genesis.MOD_ID, "textures/models/armor/celestial_source_spell.png"
-            );
-        }
-
-        @Override
-        public ResourceLocation getAnimationResource(CelestialSourceSpellArmor animatable) {
-            return ResourceLocation.fromNamespaceAndPath(
-                Genesis.MOD_ID, "animations/celestial_source_spell.animation.json"
-            );
-        }
-    }
-
-    // 星源法术环相关...
-    public static class CelestialSourceSpellRingModel extends GeoModel<CelestialSourceSpellArmor> {
-        @Override
-        public ResourceLocation getModelResource(CelestialSourceSpellArmor object) {
-            return ResourceLocation.fromNamespaceAndPath(
-                Genesis.MOD_ID, "geo/celestial_source_spell_ring.geo.json"
-            );
-        }
-
-        @Override
-        public ResourceLocation getTextureResource(CelestialSourceSpellArmor object) {
-            return ResourceLocation.fromNamespaceAndPath(
-                Genesis.MOD_ID, "textures/models/armor/celestial_source_spell_ring.png"
-            );
-        }
-
-        @Override
-        public ResourceLocation getAnimationResource(CelestialSourceSpellArmor animatable) {
-            return ResourceLocation.fromNamespaceAndPath(
-                Genesis.MOD_ID, "animations/celestial_source_spell.animation.json"
-            );
-        }
-    }
-
-    // 星源法术披风相关...
-    public static class CelestialSourceSpellCapeModel extends GeoModel<CelestialSourceSpellArmor> {
-        @Override
-        public ResourceLocation getModelResource(CelestialSourceSpellArmor object) {
-            return ResourceLocation.fromNamespaceAndPath(
-                Genesis.MOD_ID, "geo/celestial_source_spell_cape.geo.json"
-            );
-        }
-
-        @Override
-        public ResourceLocation getTextureResource(CelestialSourceSpellArmor object) {
-            return ResourceLocation.fromNamespaceAndPath(
-                Genesis.MOD_ID, "textures/models/armor/celestial_source_spell_cape.png"
-            );
-        }
-
-        @Override
-        public ResourceLocation getAnimationResource(CelestialSourceSpellArmor animatable) {
-            return ResourceLocation.fromNamespaceAndPath(
-                Genesis.MOD_ID, "animations/celestial_source_spell.animation.json"
-            );
-        }
     }
 
     @Override

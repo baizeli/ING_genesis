@@ -1,16 +1,6 @@
 {
-  "block.iron_spells_genesis.arcane_crystal_ore": "ǝɹO ןɐʇsʎɹƆ ǝuɐɔɹⱯ",
   "block.iron_spells_genesis.arcane_workbench": "ɥɔuǝqʞɹoM ǝuɐɔɹⱯ",
   "block.iron_spells_genesis.celestial_source_block": "ʞɔoןᗺ ǝɔɹnoS ןɐıʇsǝןǝƆ",
-<<<<<<< HEAD
-  "block.iron_spells_genesis.deepslate_arcane_crystal_ore": "ǝɹO ןɐʇsʎɹƆ ǝuɐɔɹⱯ ǝʇɐןsdǝǝᗡ",
-  "block.iron_spells_genesis.end_arcane_crystal_ore": "ǝɹO ןɐʇsʎɹƆ ǝuɐɔɹⱯ puƎ",
-  "block.iron_spells_genesis.nether_arcane_crystal_ore": "ǝɹO ןɐʇsʎɹƆ ǝuɐɔɹⱯ ɹǝɥʇǝN",
-  "block.iron_spells_genesis.weathered_sandstone": "ǝuoʇspuɐS pǝɹǝɥʇɐǝM",
-  "block.iron_spells_genesis.weathered_sandstone_slab": "qɐןS ǝuoʇspuɐS pǝɹǝɥʇɐǝM",
-  "block.iron_spells_genesis.weathered_sandstone_stairs": "sɹıɐʇS ǝuoʇspuɐS pǝɹǝɥʇɐǝM",
-  "block.iron_spells_genesis.weathered_sandstone_wall": "ןןɐM ǝuoʇspuɐS pǝɹǝɥʇɐǝM",
-=======
   "block.iron_spells_genesis.cracked_deep_fear_stone_bricks": "sʞɔıɹᗺ ǝuoʇS ɹɐǝℲ dǝǝᗡ pǝʞɔɐɹƆ",
   "block.iron_spells_genesis.cracked_deep_fear_stone_bricks_slab": "qɐןS sʞɔıɹᗺ ǝuoʇS ɹɐǝℲ dǝǝᗡ pǝʞɔɐɹƆ",
   "block.iron_spells_genesis.cracked_deep_fear_stone_bricks_stairs": "sɹıɐʇS sʞɔıɹᗺ ǝuoʇS ɹɐǝℲ dǝǝᗡ pǝʞɔɐɹƆ",
@@ -26,9 +16,6 @@
   "block.iron_spells_genesis.deep_fear_stone_stairs": "sɹıɐʇS ǝuoʇS ɹɐǝℲ dǝǝᗡ",
   "block.iron_spells_genesis.deep_fear_stone_vertical_slab": "qɐןS ןɐɔıʇɹǝΛ ǝuoʇS ɹɐǝℲ dǝǝᗡ",
   "block.iron_spells_genesis.deep_fear_stone_wall": "ןןɐM ǝuoʇS ɹɐǝℲ dǝǝᗡ",
-  "block.iron_spells_genesis.deepslate_arcane_crystal_ore": "ǝɹO ןɐʇsʎɹƆ ǝuɐɔɹⱯ ǝʇɐןsdǝǝᗡ",
-  "block.iron_spells_genesis.end_arcane_crystal_ore": "ǝɹO ןɐʇsʎɹƆ ǝuɐɔɹⱯ puƎ",
-  "block.iron_spells_genesis.nether_arcane_crystal_ore": "ǝɹO ןɐʇsʎɹƆ ǝuɐɔɹⱯ ɹǝɥʇǝN",
   "block.iron_spells_genesis.quietness_dirt": "ʇɹıᗡ ssǝuʇǝınὉ",
   "block.iron_spells_genesis.quietness_door": "ɹooᗡ ssǝuʇǝınὉ",
   "block.iron_spells_genesis.quietness_fence": "ǝɔuǝℲ ssǝuʇǝınὉ",
@@ -74,7 +61,6 @@
   "block.iron_spells_genesis.weathered_stone_bricks_stairs": "sɹıɐʇS sʞɔıɹᗺ ǝuoʇS pǝɹǝɥʇɐǝM",
   "block.iron_spells_genesis.weathered_stone_bricks_vertical_slab": "qɐןS ןɐɔıʇɹǝΛ sʞɔıɹᗺ ǝuoʇS pǝɹǝɥʇɐǝM",
   "block.iron_spells_genesis.weathered_stone_bricks_wall": "ןןɐM sʞɔıɹᗺ ǝuoʇS pǝɹǝɥʇɐǝM",
->>>>>>> new
   "item.iron_spells_genesis.arcane_crystal": "ןɐʇsʎɹƆ ǝuɐɔɹⱯ",
   "item.iron_spells_genesis.avaritia_infinity_sword": "pɹoʍS ʎʇıuıɟuI ɐıʇıɹɐʌⱯ",
   "item.iron_spells_genesis.blank_celestial_source_manuscript": "ʇdıɹɔsnuɐW ǝɔɹnoS ןɐıʇsǝןǝƆ ʞuɐןᗺ",
@@ -114,10 +100,8 @@
   "item.iron_spells_genesis.divine_metal_helmet": "ʇǝɯןǝH ןɐʇǝW ǝuıʌıᗡ",
   "item.iron_spells_genesis.divine_metal_ingot": "ʇobuI ןɐʇǝW ǝuıʌıᗡ",
   "item.iron_spells_genesis.divine_metal_leggings": "sbuıbbǝꞀ ןɐʇǝW ǝuıʌıᗡ",
-<<<<<<< HEAD
-=======
+  "item.iron_spells_genesis.divine_metal_sword": "pɹoʍS ןɐʇǝW ǝuıʌıᗡ",
   "item.iron_spells_genesis.divine_upgrade_smithing_template": "ǝʇɐןdɯǝ⟘ buıɥʇıɯS ǝpɐɹbd∩ ǝuıʌıᗡ",
->>>>>>> new
   "item.iron_spells_genesis.eldritch_crystal": "ןɐʇsʎɹƆ ɥɔʇıɹpןƎ",
   "item.iron_spells_genesis.eldritch_orb_pro": "oɹԀ qɹO ɥɔʇıɹpןƎ",
   "item.iron_spells_genesis.eldritch_rune_plus": "snןԀ ǝunᴚ ɥɔʇıɹpןƎ",
@@ -160,30 +144,17 @@
   "item.iron_spells_genesis.twisted_chaos": "soɐɥƆ pǝʇsıʍ⟘",
   "item.iron_spells_genesis.twisted_chaos_ingot": "ʇobuI soɐɥƆ pǝʇsıʍ⟘",
   "item.iron_spells_genesis.upgrade_orb_pro": "oɹԀ qɹO ǝpɐɹbd∩",
-<<<<<<< HEAD
-  "item.iron_spells_genesis.violet_galaxy_ingot": "ʇobuI ʎxɐןɐ⅁ ʇǝןoıΛ",
-=======
   "item.iron_spells_genesis.violet_fragments": "sʇuǝɯbɐɹℲ ʇǝןoıΛ",
   "item.iron_spells_genesis.violet_galaxy_ingot": "ʇobuI ʎxɐןɐ⅁ ʇǝןoıΛ",
   "item.iron_spells_genesis.violet_pickaxe": "ǝxɐʞɔıԀ ʇǝןoıΛ",
   "item.iron_spells_genesis.violet_upgrade_smithing_template": "ǝʇɐןdɯǝ⟘ buıɥʇıɯS ǝpɐɹbd∩ ʇǝןoıΛ",
->>>>>>> new
   "item.iron_spells_genesis.violet_zenith_boots": "sʇooᗺ ɥʇıuǝZ ʇǝןoıΛ",
   "item.iron_spells_genesis.violet_zenith_chestplate": "ǝʇɐןdʇsǝɥƆ ɥʇıuǝZ ʇǝןoıΛ",
   "item.iron_spells_genesis.violet_zenith_helmet": "ʇǝɯןǝH ɥʇıuǝZ ʇǝןoıΛ",
   "item.iron_spells_genesis.violet_zenith_leggings": "sbuıbbǝꞀ ɥʇıuǝZ ʇǝןoıΛ",
   "item.iron_spells_genesis.witchcraft_bow": "ʍoᗺ ʇɟɐɹɔɥɔʇıM",
-<<<<<<< HEAD
-  "item.minecraft.smithing_template": "ǝʇɐןdɯǝ⟘ buıɥʇıɯS ǝpɐɹbd∩ ǝuıʌıᗡ",
-  "itemGroup.iron_spells_genesis.block": "sısǝuǝb‾sןןǝds‾uoɹı˙dnoɹ⅁ɯǝʇı",
-  "itemGroup.iron_spells_genesis.equipment": "sısǝuǝb‾sןןǝds‾uoɹı˙dnoɹ⅁ɯǝʇı",
-  "itemGroup.iron_spells_genesis.material": "sısǝuǝb‾sןןǝds‾uoɹı˙dnoɹ⅁ɯǝʇı",
-  "itemGroup.iron_spells_genesis.spell_scroll": "sısǝuǝb‾sןןǝds‾uoɹı˙dnoɹ⅁ɯǝʇı",
-  "nmsl": "ǝʇɐןdɯǝ⟘ buıɥʇıɯS ǝpɐɹbd∩ ʇǝןoıΛ"
-=======
   "itemGroup.iron_spells_genesis.block": "sısǝuǝb‾sןןǝds‾uoɹı˙dnoɹ⅁ɯǝʇı",
   "itemGroup.iron_spells_genesis.equipment": "sısǝuǝb‾sןןǝds‾uoɹı˙dnoɹ⅁ɯǝʇı",
   "itemGroup.iron_spells_genesis.material": "sısǝuǝb‾sןןǝds‾uoɹı˙dnoɹ⅁ɯǝʇı",
   "itemGroup.iron_spells_genesis.spell_scroll": "sısǝuǝb‾sןןǝds‾uoɹı˙dnoɹ⅁ɯǝʇı"
->>>>>>> new
 }
