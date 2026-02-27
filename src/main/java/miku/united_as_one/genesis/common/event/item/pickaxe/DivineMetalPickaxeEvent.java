@@ -25,7 +25,8 @@ public class DivineMetalPickaxeEvent {
     public static void onBlockBreak(BlockEvent.BreakEvent event) {
         Player player = event.getPlayer();
         ItemStack tool = player.getMainHandItem();
-        
+
+        // 自动熔炼=将破坏的方块掉落物获取熔炉的配方转输出GWGW
         if (tool.getItem() instanceof DivineMetalPickaxe && !player.isCreative()) {
             BlockState state = event.getState();
             Level level = player.level();
@@ -41,14 +42,14 @@ public class DivineMetalPickaxeEvent {
                         ItemStack result = recipe.get().getResultItem(level.registryAccess());
                         if (!result.isEmpty()) {
                             level.addFreshEntity(
-                                new ItemEntity(
-                                    level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
+                                new ItemEntity(level, 
+                                    pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
                                     result.copyWithCount(drop.getCount())
                                 )
                             );
                             level.addFreshEntity(
-                                new ExperienceOrb(
-                                    level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
+                                new ExperienceOrb(level, 
+                                    pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
                                     (int) (recipe.get().getExperience() * drop.getCount())
                                 )
                             );
@@ -61,9 +62,7 @@ public class DivineMetalPickaxeEvent {
                     );
 
                     level.addFreshEntity(
-                        new ExperienceOrb(
-                            level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, drop.getCount()
-                        )
+                        new ExperienceOrb(level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, drop.getCount())
                     );
                 }
                 level.destroyBlock(pos, false);

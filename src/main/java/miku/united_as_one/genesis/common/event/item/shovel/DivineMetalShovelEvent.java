@@ -21,7 +21,8 @@ public class DivineMetalShovelEvent {
         BlockPos pos = event.getPos();
         BlockState state = event.getState();
 
-        if (player.getMainHandItem().getItem() instanceof DivineMetalShovel && player.isShiftKeyDown()) {
+        // 沙子=玻璃
+        if (player.getMainHandItem().getItem() instanceof DivineMetalShovel && player.isShiftKeyDown() && !player.isCreative()) {
             if (state.getBlock() == Blocks.SAND) {
                 level.destroyBlock(pos, false);
                 Block.popResource(level, pos, new ItemStack(Blocks.GLASS));
