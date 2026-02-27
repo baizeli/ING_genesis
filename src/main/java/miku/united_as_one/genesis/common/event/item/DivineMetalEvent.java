@@ -1,5 +1,6 @@
-package miku.united_as_one.genesis.common.event.item.sword;
+package miku.united_as_one.genesis.common.event.item;
 
+import miku.united_as_one.genesis.common.items.axe.DivineMetalAxe;
 import miku.united_as_one.genesis.common.items.sword.DivineMetalSword;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.monster.WitherSkeleton;
@@ -11,7 +12,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber
-public class DivineMetalSwordEvent {
+public class DivineMetalEvent {
 
     @SubscribeEvent
     public static void onLivingDrops(LivingDropsEvent event) {
@@ -21,7 +22,7 @@ public class DivineMetalSwordEvent {
 
                 if (weapon.isEmpty()) weapon = player.getItemBySlot(EquipmentSlot.OFFHAND);
                 
-                if (!weapon.isEmpty() && weapon.getItem() instanceof DivineMetalSword) {
+                if (!weapon.isEmpty() && weapon.getItem() instanceof DivineMetalSword || weapon.getItem() instanceof DivineMetalAxe) {
                     boolean hasSkull = false;
 
                     for (ItemEntity drop : event.getDrops()) {
