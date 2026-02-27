@@ -25,10 +25,12 @@ public class RightSwordAnimation {
 
         if (item.getItem() instanceof DivineMetalSword || item.getItem() instanceof MithrilSword) {
             HumanoidArm humanoidarm = event.getHand() == InteractionHand.MAIN_HAND ? player.getMainArm() : player.getMainArm().getOpposite();
-            if (!player.isUsingItem()) return;
             boolean flag = humanoidarm == HumanoidArm.RIGHT;
             PoseStack poseStack = event.getPoseStack();
             int side = flag ? 1 : -1;
+            
+            if (!player.isUsingItem()) return;
+            poseStack.pushPose();
 
             if (item.getItem() instanceof MithrilSword) poseStack.translate(side * 0.65, -0.45, -0.7);
             if (item.getItem() instanceof DivineMetalSword) poseStack.translate(side * 0.7, -0.5, -0.8);
@@ -41,6 +43,7 @@ public class RightSwordAnimation {
                 !flag, poseStack, event.getMultiBufferSource(), event.getPackedLight()
             );
 
+            poseStack.popPose();
             event.setCanceled(true);
         }
     }
