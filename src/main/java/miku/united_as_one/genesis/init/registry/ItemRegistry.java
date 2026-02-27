@@ -119,7 +119,19 @@ public class ItemRegistry {
             .item("mithril_sword", properties -> new MithrilSword(
                 TierRegistry.MITHRIL,
                 7,
-                -1.7F,
+                -1.7f,
+                properties
+            ))
+            .model((ctx, prov) -> prov.handheld(ctx::getEntry))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
+            .register();
+
+    // 神圣金属剑
+    public static final ItemEntry<DivineMetalSword> DIVINE_METAL_SWORD = Genesis.L2_REGISTRATE
+            .item("divine_metal_sword", properties -> new DivineMetalSword(
+                TierRegistry.DIVINE_METAL,
+                15,
+                -2.7f,
                 properties
             ))
             .model((ctx, prov) -> prov.handheld(ctx::getEntry))
@@ -131,7 +143,7 @@ public class ItemRegistry {
             .item("mithril_pickaxe", properties -> new MithrilPickaxe(
                 TierRegistry.MITHRIL,
                 0,
-                -1.6F,
+                -1.6f,
                 properties
             ))
             .model((ctx, prov) -> prov.handheld(ctx::getEntry))
@@ -143,7 +155,7 @@ public class ItemRegistry {
             .item("violet_pickaxe", properties -> new VioletPickaxe(
                 TierRegistry.VIOLET_GALAXY_INGOT,
                 0,
-                -1.6F,
+                -1.6f,
                 properties
             ))
             .model((ctx, prov) -> prov.handheld(ctx::getEntry))
@@ -552,6 +564,7 @@ public class ItemRegistry {
     // 创世之诅咒
     public static final ItemEntry<GenesisCurseItem> GENESIS_CURSE = Genesis.L2_REGISTRATE
             .item("genesis_curse", properties -> new GenesisCurseItem())
+            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
@@ -855,6 +868,7 @@ public class ItemRegistry {
     // 邪术符文
     public static final ItemEntry<EldritchRunePlus> ELDRITCH_RUNE_PLUS = Genesis.L2_REGISTRATE
             .item("eldritch_rune_plus", properties -> new EldritchRunePlus())
+            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 

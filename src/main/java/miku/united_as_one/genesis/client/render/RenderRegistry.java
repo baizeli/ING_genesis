@@ -7,6 +7,10 @@ import miku.united_as_one.genesis.client.renderer.boss.BloodBossRenderer;
 import miku.united_as_one.genesis.client.render.cosmic.AvaritiaShaders;
 import miku.united_as_one.genesis.client.render.cosmic.CosmicModelLoader;
 import miku.united_as_one.genesis.client.render.entity.*;
+import miku.united_as_one.genesis.client.render.entity.arrow.BloodArrowRenderer;
+import miku.united_as_one.genesis.client.render.entity.arrow.HolyArrowRenderer;
+import miku.united_as_one.genesis.client.render.entity.arrow.StellarArrowRenderer;
+import miku.united_as_one.genesis.client.render.entity.arrow.ThunderArrowRenderer;
 import net.minecraft.client.renderer.entity.NoopRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 import net.minecraft.world.entity.EntityType;
@@ -32,6 +36,12 @@ public class RenderRegistry {
         event.registerEntityRenderer(EntityRegistry.BLOOD_DAGGER_PROJECTILE.get(), BloodDaggerRenderer::new);
         event.registerEntityRenderer(EntityRegistry.BLOOD_FIELD.get(), NoopRenderer::new);
         event.registerEntityRenderer(EntityRegistry.TREMOR_AOE_ENTITY.get(), NoopRenderer::new);
+        
+        // 特效箭矢渲染器注册
+        event.registerEntityRenderer(EntityRegistry.THUNDER_ARROW.get(), ThunderArrowRenderer::new);
+        event.registerEntityRenderer(EntityRegistry.HOLY_ARROW.get(), HolyArrowRenderer::new);
+        event.registerEntityRenderer(EntityRegistry.BLOOD_ARROW.get(), BloodArrowRenderer::new);
+        event.registerEntityRenderer(EntityRegistry.STELLAR_ARROW.get(), StellarArrowRenderer::new);
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
