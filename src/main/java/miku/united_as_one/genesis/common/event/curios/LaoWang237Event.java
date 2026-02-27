@@ -27,26 +27,24 @@ public class LaoWang237Event {
         LivingEntity entity = event.getEntity();
 
         if (entity.getType() == EntityType.PIG && RANDOM.nextFloat() < DROP_CHANCE) {
-            ItemStack charmStack = new ItemStack(ItemRegistry.LAO_WANG_237.get());
             event.getDrops().add(new ItemEntity(
                 entity.level(),
                 entity.getX(),
                 entity.getY(),
                 entity.getZ(),
-                charmStack
+                new ItemStack(ItemRegistry.LAO_WANG_237.get())
             ));
         }
 
         if (event.getSource().getEntity() instanceof Player player) {
             CuriosApi.getCuriosInventory(player).ifPresent(handler -> {
                 handler.findFirstCurio(ItemRegistry.LAO_WANG_237.get()).ifPresent(result -> {
-                    ItemStack porkchopStack = new ItemStack(Items.PORKCHOP, PORKCHOP_COUNT);
                     event.getDrops().add(new ItemEntity(
                         entity.level(),
                         entity.getX(),
                         entity.getY(),
                         entity.getZ(),
-                        porkchopStack
+                        new ItemStack(Items.PORKCHOP, PORKCHOP_COUNT)
                     ));
                 });
             });
