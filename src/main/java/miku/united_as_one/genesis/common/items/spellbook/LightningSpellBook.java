@@ -22,7 +22,6 @@ public class LightningSpellBook extends SpellBook {
         );
     }
 
-    @Override
     public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, @NotNull List<Component> pTooltipComponents, @NotNull TooltipFlag pIsAdvanced) {
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
         pTooltipComponents.add(Component.translatable("tooltip.iron_spells_genesis.lightning_spell_book.description_1"));
