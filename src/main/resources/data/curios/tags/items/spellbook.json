@@ -2,6 +2,7 @@
   "values": [
     "iron_spells_genesis:chaos_spell_book",
     "iron_spells_genesis:celestial_source_spell_book",
+    "iron_spells_genesis:lightning_spell_book",
     "iron_spells_genesis:disk_spell_book"
   ]
 }

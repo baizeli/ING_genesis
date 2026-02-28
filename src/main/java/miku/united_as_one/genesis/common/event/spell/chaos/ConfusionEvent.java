@@ -6,7 +6,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityLeaveLevelEvent;
 import net.minecraftforge.event.entity.living.MobEffectEvent;
@@ -23,7 +22,7 @@ public class ConfusionEvent {
     public static void onEffectExpired(MobEffectEvent.Expired event) {
         if (event.getEffectInstance() != null && event.getEffectInstance().getEffect() instanceof ConfusionEffect) {
             LivingEntity entity = event.getEntity();
-            if (!entity.level().isClientSide && !(entity instanceof Player) && entity instanceof Mob mob) {
+            if (!entity.level().isClientSide && entity instanceof Mob mob) {
                 mob.setNoAi(true);
 
                 aiDisabledEntities.put(entity.getUUID(), System.currentTimeMillis() + 5000);

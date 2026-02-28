@@ -18,7 +18,7 @@ public class DivineMetalArmor extends ExtendedArmorItem {
     @OnlyIn(Dist.CLIENT)
     public GeoArmorRenderer<?> supplyRenderer() {
         return new DivineMetalArmorRenderer(
-            new GeoModel<DivineMetalArmor>() {
+            new GeoModel<>() {
                 @Override
                 public ResourceLocation getModelResource(DivineMetalArmor object) {
                     return ResourceLocation.fromNamespaceAndPath(

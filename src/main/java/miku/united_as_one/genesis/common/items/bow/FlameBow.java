@@ -6,6 +6,7 @@ import io.redspace.ironsspellbooks.api.events.SpellOnCastEvent;
 import io.redspace.ironsspellbooks.api.registry.SchoolRegistry;
 import io.redspace.ironsspellbooks.api.util.*;
 import io.redspace.ironsspellbooks.entity.spells.fiery_dagger.FieryDaggerEntity;
+import io.redspace.ironsspellbooks.entity.spells.fire_arrow.FireArrowProjectile;
 import io.redspace.ironsspellbooks.network.SyncManaPacket;
 import io.redspace.ironsspellbooks.setup.PacketDistributor;
 import net.minecraft.sounds.SoundEvents;
@@ -13,8 +14,9 @@ import net.minecraft.world.*;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.common.MinecraftForge;
 import org.jetbrains.annotations.NotNull;
@@ -38,6 +40,11 @@ public class FlameBow extends BowItem {
     }
 
     @Override
+    public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
+        return enchantment == Enchantments.POWER_ARROWS;
+    }
+
+    @Override
     public void releaseUsing(@NotNull ItemStack stack, @NotNull Level level, @NotNull LivingEntity entityLiving, int timeLeft) {
         if (!(entityLiving instanceof Player player) || level.isClientSide) return;
 
@@ -45,27 +52,31 @@ public class FlameBow extends BowItem {
 
         if (power < 0.5) return;
 
-        /*FireArrowProjectile fireArrow = new FireArrowProjectile(level, player);
+        if (!player.isShiftKeyDown()) {
+            FireArrowProjectile fireArrow = new FireArrowProjectile(level, player);
 
-        fireArrow.setPos(player.position().add(0, player.getEyeHeight(), 0).add(player.getForward()));
-        fireArrow.shoot(player.getLookAngle());
+            fireArrow.setPos(player.position().add(0, player.getEyeHeight(), 0).add(player.getForward()));
+            fireArrow.shoot(player.getLookAngle());
 
-        fireArrow.setDamage(power * 25);
-        fireArrow.setExplosionRadius(5);
+            fireArrow.setDamage(power * 25);
+            fireArrow.setExplosionRadius(5);
 
-        level.addFreshEntity(fireArrow);*/
+            level.addFreshEntity(fireArrow);
+        }
 
-        FieryDaggerEntity fieryDagger = new FieryDaggerEntity(level);
+        if (player.isShiftKeyDown()) {
+            FieryDaggerEntity fieryDagger = new FieryDaggerEntity(level);
 
-        fieryDagger.setOwner(player);
-        fieryDagger.setPos(player.position().add(0, player.getEyeHeight(), 0).add(player.getForward()));
-        fieryDagger.shoot(player.getLookAngle());
-        
-        fieryDagger.setDamage(power * 8);
-        fieryDagger.setExplosionRadius(5);
-        fieryDagger.delay = 20;
+            fieryDagger.setOwner(player);
+            fieryDagger.setPos(player.position().add(0, player.getEyeHeight(), 0).add(player.getForward()));
+            fieryDagger.shoot(player.getLookAngle());
 
-        level.addFreshEntity(fieryDagger);
+            fieryDagger.setDamage(power * 8);
+            fieryDagger.setExplosionRadius(5);
+            fieryDagger.tickCount = 100;
+            fieryDagger.delay = 10;
+            level.addFreshEntity(fieryDagger);
+        }
 
         level.playSound(
             null, player.getX(), player.getY(), player.getZ(),

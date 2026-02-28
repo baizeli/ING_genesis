@@ -2,7 +2,7 @@ package miku.united_as_one.genesis.common.items.sword;
 
 import io.redspace.ironsspellbooks.api.item.weapons.MagicSwordItem;
 import io.redspace.ironsspellbooks.api.registry.*;
-import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.*;
 
 import java.util.Map;
 

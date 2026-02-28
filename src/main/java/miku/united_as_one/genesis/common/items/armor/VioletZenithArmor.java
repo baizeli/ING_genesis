@@ -18,7 +18,7 @@ public class VioletZenithArmor extends ExtendedArmorItem {
     @OnlyIn(Dist.CLIENT)
     public GeoArmorRenderer<?> supplyRenderer() {
         return new VioletZenithArmorRenderer(
-            new GeoModel<VioletZenithArmor>() {
+            new GeoModel<>() {
                 @Override
                 public ResourceLocation getModelResource(VioletZenithArmor object) {
                     return ResourceLocation.fromNamespaceAndPath(

@@ -15,6 +15,9 @@ import miku.united_as_one.genesis.common.items.curios.rune_plus.*;
 import miku.united_as_one.genesis.common.items.manuscript.*;
 import miku.united_as_one.genesis.common.items.pickaxe.*;
 import miku.united_as_one.genesis.common.items.sword.*;
+import miku.united_as_one.genesis.common.items.axe.*;
+import miku.united_as_one.genesis.common.items.shovel.*;
+import miku.united_as_one.genesis.common.items.hoe.*;
 import miku.united_as_one.genesis.common.spell.UpgradeOrbTypes;
 import io.redspace.ironsspellbooks.item.UpgradeOrbItem;
 import io.redspace.ironsspellbooks.item.armor.IronsExtendedArmorMaterial;
@@ -50,6 +53,12 @@ public class ItemRegistry {
     // 神圣金属锭
     public static final ItemEntry<Item> DIVINE_METAL_INGOT = Genesis.L2_REGISTRATE
             .item("divine_metal_ingot", properties -> new Item(properties.rarity(Rarity.EPIC)))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
+            .register();
+
+    // 神圣金属碎片
+    public static final ItemEntry<Item> DIVINE_METAL_FRAGMENT = Genesis.L2_REGISTRATE
+            .item("divine_metal_fragment", properties -> new Item(properties.rarity(Rarity.EPIC)))
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
             
@@ -119,7 +128,67 @@ public class ItemRegistry {
             .item("mithril_sword", properties -> new MithrilSword(
                 TierRegistry.MITHRIL,
                 7,
-                -1.7F,
+                -1.7f,
+                properties
+            ))
+            .model((ctx, prov) -> prov.handheld(ctx::getEntry))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
+            .register();
+
+    // 神圣金属剑
+    public static final ItemEntry<DivineMetalSword> DIVINE_METAL_SWORD = Genesis.L2_REGISTRATE
+            .item("divine_metal_sword", properties -> new DivineMetalSword(
+                TierRegistry.DIVINE_METAL,
+                15,
+                -2.7f,
+                properties
+            ))
+            .model((ctx, prov) -> prov.handheld(ctx::getEntry))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
+            .register();
+
+    // 神圣金属斧
+    public static final ItemEntry<DivineMetalAxe> DIVINE_METAL_AXE = Genesis.L2_REGISTRATE
+            .item("divine_metal_axe", properties -> new DivineMetalAxe(
+                TierRegistry.DIVINE_METAL,
+                19,
+                -3.3f,
+                properties
+            ))
+            .model((ctx, prov) -> prov.handheld(ctx::getEntry))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
+            .register();
+
+    // 神圣金属镐
+    public static final ItemEntry<DivineMetalPickaxe> DIVINE_METAL_PICKAXE = Genesis.L2_REGISTRATE
+            .item("divine_metal_pickaxe", properties -> new DivineMetalPickaxe(
+                TierRegistry.DIVINE_METAL,
+                4,
+                -1.0f,
+                properties
+            ))
+            .model((ctx, prov) -> prov.handheld(ctx::getEntry))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
+            .register();
+
+    // 神圣金属铲
+    public static final ItemEntry<DivineMetalShovel> DIVINE_METAL_SHOVEL = Genesis.L2_REGISTRATE
+            .item("divine_metal_shovel", properties -> new DivineMetalShovel(
+                TierRegistry.DIVINE_METAL,
+                4,
+                -1.0f,
+                properties
+            ))
+            .model((ctx, prov) -> prov.handheld(ctx::getEntry))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
+            .register();
+
+    // 神圣金属锄
+    public static final ItemEntry<DivineMetalHoe> DIVINE_METAL_HOE = Genesis.L2_REGISTRATE
+            .item("divine_metal_hoe", properties -> new DivineMetalHoe(
+                TierRegistry.DIVINE_METAL,
+                0,
+                96,
                 properties
             ))
             .model((ctx, prov) -> prov.handheld(ctx::getEntry))
@@ -131,7 +200,7 @@ public class ItemRegistry {
             .item("mithril_pickaxe", properties -> new MithrilPickaxe(
                 TierRegistry.MITHRIL,
                 0,
-                -1.6F,
+                -1.6f,
                 properties
             ))
             .model((ctx, prov) -> prov.handheld(ctx::getEntry))
@@ -143,7 +212,7 @@ public class ItemRegistry {
             .item("violet_pickaxe", properties -> new VioletPickaxe(
                 TierRegistry.VIOLET_GALAXY_INGOT,
                 0,
-                -1.6F,
+                -1.6f,
                 properties
             ))
             .model((ctx, prov) -> prov.handheld(ctx::getEntry))
@@ -365,24 +434,28 @@ public class ItemRegistry {
             .item("violet_zenith_boots", properties -> new VioletZenithArmor(
                 ModArmorMaterials.VIOLET_ZENITH, ArmorItem.Type.BOOTS, properties
             ))
-            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {
-            })
+            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
     // 混沌法术书
     public static final ItemEntry<ChaosSpellBook> CHAOS_SPELL_BOOK = Genesis.L2_REGISTRATE
             .item("chaos_spell_book", properties -> new ChaosSpellBook())
-            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {
-            })
+            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
     // 星源法术书
     public static final ItemEntry<CelestialSourceSpellBook> CELESTIAL_SOURCE_SPELL_BOOK = Genesis.L2_REGISTRATE
             .item("celestial_source_spell_book", properties -> new CelestialSourceSpellBook())
-            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {
-            })
+            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
+            .register();
+
+    // 雷霆法术书
+    public static final ItemEntry<LightningSpellBook> LIGHTNING_SPELL_BOOK = Genesis.L2_REGISTRATE
+            .item("lightning_spell_book", properties -> new LightningSpellBook())
+            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
             
@@ -552,6 +625,7 @@ public class ItemRegistry {
     // 创世之诅咒
     public static final ItemEntry<GenesisCurseItem> GENESIS_CURSE = Genesis.L2_REGISTRATE
             .item("genesis_curse", properties -> new GenesisCurseItem())
+            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
@@ -738,7 +812,7 @@ public class ItemRegistry {
 
     // 深层奥术水晶矿
     public static final ItemEntry<BlockItem> ARCANE_CRYSTAL_ORE_DEEPSLATE_ITEM = Genesis.L2_REGISTRATE
-            .item("arcane_crystal_ore_deepslate", properties -> new BlockItem(BlockRegistry.ARCANE_CRYSTAL_ORE_DEEPSLATE.get(), properties))
+            .item("deepslate_arcane_crystal_ore", properties -> new BlockItem(BlockRegistry.ARCANE_CRYSTAL_ORE_DEEPSLATE.get(), properties))
             .model((ctx, prov) -> prov.blockItem(ctx::getEntry))
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
             .setData(ProviderType.LANG, NonNullBiConsumer.noop())
@@ -855,6 +929,7 @@ public class ItemRegistry {
     // 邪术符文
     public static final ItemEntry<EldritchRunePlus> ELDRITCH_RUNE_PLUS = Genesis.L2_REGISTRATE
             .item("eldritch_rune_plus", properties -> new EldritchRunePlus())
+            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
