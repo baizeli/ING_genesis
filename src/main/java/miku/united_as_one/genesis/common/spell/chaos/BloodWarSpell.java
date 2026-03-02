@@ -2,7 +2,6 @@ package miku.united_as_one.genesis.common.spell.chaos;
 
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.init.registry.EffectRegistry;
-import miku.united_as_one.genesis.common.event.spell.chaos.BloodWarEvent;
 import miku.united_as_one.genesis.init.registry.spell.SpellSchoolRegistry;
 import miku.united_as_one.genesis.util.spell.SpellUtils;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
@@ -24,18 +23,18 @@ import java.util.List;
 public class BloodWarSpell extends ChaosBaseSpell {
     private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "blood_war");
     private final DefaultConfig defaultConfig = new DefaultConfig()
-        .setMinRarity(SpellRarity.COMMON)
+        .setMinRarity(SpellRarity.LEGENDARY)
         .setSchoolResource(SpellSchoolRegistry.CHAOS_RESOURCE)
         .setMaxLevel(3)
-        .setCooldownSeconds(0F)
+        .setCooldownSeconds(102)
         .build();
 
     public BloodWarSpell() {
-        this.manaCostPerLevel = 50;
+        this.manaCostPerLevel = 20;
         this.baseSpellPower = 60;
         this.spellPowerPerLevel = 60;
         this.castTime = 20;
-        this.baseManaCost = 150;
+        this.baseManaCost = 100;
     }
 
     @Override
@@ -56,30 +55,34 @@ public class BloodWarSpell extends ChaosBaseSpell {
     @Override
     public List<MutableComponent> getUniqueInfo(int spellLevel, LivingEntity caster) {
         int duration = getBuffDuration(spellLevel);
+        double[] spellPowerBonuses = {1.0, 2.0, 3.0}; // 法强
+        double[] damageBonuses = {1.0, 2.0, 3.0}; // 伤害
+        double[] speedBonuses = {3.0, 4.0, 5.0}; // 移速
+        
         return List.of(
             Component.translatable("ui.irons_spellbooks.cooldown",
                 Utils.timeFromTicks(getCooldownInTicks(spellLevel, CastSource.COMMAND, caster), 1)
             ),
             Component.translatable("ui.irons_spellbooks.effect_length",
                 Utils.timeFromTicks(duration, 1)
-            ) ,
+            ),
             Component.translatable(
                 "ui.iron_spells_genesis.spell_power", 
-                Utils.stringTruncation(BloodWarEvent.SPELL_POWER_BONUS_PER_THRESHOLD * 100, 1)
+                Utils.stringTruncation(spellPowerBonuses[spellLevel - 1], 1)
             ),
             Component.translatable(
                 "ui.irons_spellbooks.damage", 
-                Utils.stringTruncation(BloodWarEvent.DAMAGE_BONUS_PER_THRESHOLD * 100, 1)
+                Utils.stringTruncation(damageBonuses[spellLevel - 1], 1)
             ),
             Component.translatable(
                 "ui.iron_spells_genesis.movement_speed", 
-                Utils.stringTruncation(BloodWarEvent.SPEED_BONUS_PER_THRESHOLD * 100, 1)
+                Utils.stringTruncation(speedBonuses[spellLevel - 1], 1)
             )
         );
     }
 
     private int getCooldownInTicks(int spellLevel, CastSource castSource, LivingEntity caster) {
-        int coolDown = 2400 + (spellLevel - 1) * 1200;
+        int coolDown = 2040;
 
         double playerCooldownModifier = 1.0D;
         float itemCoolDownModifer = 1.0F;
@@ -96,7 +99,8 @@ public class BloodWarSpell extends ChaosBaseSpell {
     }
 
     private int getBuffDuration(int spellLevel) {
-        return (60 * spellLevel) * 20;
+        int[] durations = {50, 55, 60};
+        return durations[Math.min(spellLevel - 1, durations.length - 1)] * 20;
     }
 
     @Override
@@ -116,7 +120,7 @@ public class BloodWarSpell extends ChaosBaseSpell {
             player.addEffect(new MobEffectInstance(
                 EffectRegistry.BLOOD_WAR.get(),
                 duration,
-                0,
+                spellLevel - 1,
                 false,
                 false,
                 true
