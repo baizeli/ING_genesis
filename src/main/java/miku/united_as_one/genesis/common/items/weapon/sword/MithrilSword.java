@@ -1,4 +1,4 @@
-package miku.united_as_one.genesis.common.items.sword;
+package miku.united_as_one.genesis.common.items.weapon.sword;
 
 import io.redspace.ironsspellbooks.api.item.weapons.MagicSwordItem;
 import io.redspace.ironsspellbooks.api.registry.*;

@@ -1,4 +1,4 @@
-package miku.united_as_one.genesis.common.items.pickaxe;
+package miku.united_as_one.genesis.common.items.tool.pickaxe;
 
 import net.minecraft.world.item.*;
 import net.minecraft.resources.ResourceLocation;

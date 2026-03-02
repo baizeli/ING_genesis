@@ -1,15 +1,14 @@
-package miku.united_as_one.genesis.common.items.sword;
+package miku.united_as_one.genesis.common.items.tool.axe;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.*;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.*;
 
 import java.util.List;
 
-public class DivineMetalSword extends SwordItem {
-    public DivineMetalSword(Tier tier, int attackDamage, float attackSpeed, Properties properties) {
+public class DivineMetalAxe extends AxeItem {
+    public DivineMetalAxe(Tier tier, int attackDamage, float attackSpeed, Properties properties) {
         super(tier, attackDamage, attackSpeed, properties);
     }
 

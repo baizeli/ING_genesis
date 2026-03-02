@@ -6,18 +6,18 @@ import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.common.entity.boss.BloodBoss;
 import miku.united_as_one.genesis.common.items.*;
-import miku.united_as_one.genesis.common.items.spellbook.*;
-import miku.united_as_one.genesis.common.items.staff.*;
+import miku.united_as_one.genesis.common.items.spell.spellbook.*;
+import miku.united_as_one.genesis.common.items.spell.staff.*;
 import miku.united_as_one.genesis.common.items.armor.*;
-import miku.united_as_one.genesis.common.items.bow.*;
+import miku.united_as_one.genesis.common.items.weapon.bow.*;
+import miku.united_as_one.genesis.common.items.weapon.sword.*;
 import miku.united_as_one.genesis.common.items.curios.*;
 import miku.united_as_one.genesis.common.items.curios.rune_plus.*;
-import miku.united_as_one.genesis.common.items.manuscript.*;
-import miku.united_as_one.genesis.common.items.pickaxe.*;
-import miku.united_as_one.genesis.common.items.sword.*;
-import miku.united_as_one.genesis.common.items.axe.*;
-import miku.united_as_one.genesis.common.items.shovel.*;
-import miku.united_as_one.genesis.common.items.hoe.*;
+import miku.united_as_one.genesis.common.items.spell.manuscript.*;
+import miku.united_as_one.genesis.common.items.tool.pickaxe.*;
+import miku.united_as_one.genesis.common.items.tool.axe.*;
+import miku.united_as_one.genesis.common.items.tool.shovel.*;
+import miku.united_as_one.genesis.common.items.tool.hoe.*;
 import miku.united_as_one.genesis.common.items.tool.*;
 import miku.united_as_one.genesis.common.spell.UpgradeOrbTypes;
 import io.redspace.ironsspellbooks.item.UpgradeOrbItem;
@@ -248,8 +248,8 @@ public class ItemRegistry {
             .register();
 
     // 雷霆长弓
-    public static final ItemEntry<ThunderLongbow> THUNDER_LONGBOW = Genesis.L2_REGISTRATE
-            .item("thunder_longbow", properties -> new ThunderLongbow(properties
+    public static final ItemEntry<ThunderLongBow> THUNDER_LONGBOW = Genesis.L2_REGISTRATE
+            .item("thunder_longbow", properties -> new ThunderLongBow(properties
                 .rarity(Rarity.EPIC)
                 .stacksTo(1)
                 .durability(2009)
@@ -262,8 +262,8 @@ public class ItemRegistry {
             .register();
 
     // 冰霜长弓
-    public static final ItemEntry<FrostLongbow> FROST_LONGBOW = Genesis.L2_REGISTRATE
-            .item("frost_longbow", properties -> new FrostLongbow(properties
+    public static final ItemEntry<FrostLongBow> FROST_LONGBOW = Genesis.L2_REGISTRATE
+            .item("frost_longbow", properties -> new FrostLongBow(properties
                 .rarity(Rarity.EPIC)
                 .stacksTo(1)
                 .durability(2009)
