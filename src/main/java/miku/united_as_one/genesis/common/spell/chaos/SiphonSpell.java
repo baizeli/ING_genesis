@@ -22,15 +22,15 @@ public class SiphonSpell extends ChaosBaseSpell {
         .setMinRarity(SpellRarity.COMMON)
         .setSchoolResource(SpellSchoolRegistry.CHAOS_RESOURCE)
         .setMaxLevel(5)
-        .setCooldownSeconds(180.0F)
+        .setCooldownSeconds(50)
         .build();
 
     public SiphonSpell() {
-        this.manaCostPerLevel = 50;
+        this.manaCostPerLevel = 10;
         this.baseSpellPower = 6;
         this.spellPowerPerLevel = 6;
         this.castTime = 20;
-        this.baseManaCost = 50;
+        this.baseManaCost = 100;
     }
 
     @Override
@@ -67,7 +67,8 @@ public class SiphonSpell extends ChaosBaseSpell {
     }
 
     private int getDuration(int spellLevel) {
-        return 200 + (spellLevel - 1) * 200;
+        int[] durations = {25, 30, 35, 40, 45};
+        return durations[Math.min(spellLevel - 1, durations.length - 1)] * 20;
     }
 
     @Override
