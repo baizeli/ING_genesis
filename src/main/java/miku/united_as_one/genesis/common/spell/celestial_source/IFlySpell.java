@@ -23,15 +23,15 @@ public class IFlySpell extends CelestialSourceBaseSpell {
         .setMinRarity(SpellRarity.COMMON)
         .setSchoolResource(SpellSchoolRegistry.CELESTIAL_SOURCE_RESOURCE)
         .setMaxLevel(3)
-        .setCooldownSeconds(360.0F)
+        .setCooldownSeconds(50)
         .build();
 
     public IFlySpell() {
-        this.manaCostPerLevel = 100;
+        this.manaCostPerLevel = 50;
         this.baseSpellPower = 180;
         this.spellPowerPerLevel = 120;
         this.castTime = 100;
-        this.baseManaCost = 900;
+        this.baseManaCost = 100;
     }
 
     @Override
@@ -61,14 +61,10 @@ public class IFlySpell extends CelestialSourceBaseSpell {
 
     // 持续时间
     private int getDuration(int spellLevel, LivingEntity caster) {
-        int baseDuration = (180 + (spellLevel - 1) * 60) * 20;
-        if (caster == null) {
-            return baseDuration;
-        }
+        int[] durations = {60, 120, 180};
         
-        float spellPower = getSpellPower(spellLevel, caster);
-        int additionalDuration = (int) ((spellPower - 1.0f) * 40); 
-        return baseDuration + additionalDuration;
+        return durations[Math.min(spellLevel - 1, durations.length - 1)] * 20 + 
+            (int) ((getSpellPower(spellLevel, caster) - 1.0f) * 40);
     }
 
     @Override
