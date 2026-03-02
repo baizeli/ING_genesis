@@ -18,7 +18,6 @@ import miku.united_as_one.genesis.common.items.tool.pickaxe.*;
 import miku.united_as_one.genesis.common.items.tool.axe.*;
 import miku.united_as_one.genesis.common.items.tool.shovel.*;
 import miku.united_as_one.genesis.common.items.tool.hoe.*;
-import miku.united_as_one.genesis.common.items.tool.*;
 import miku.united_as_one.genesis.common.spell.UpgradeOrbTypes;
 import io.redspace.ironsspellbooks.item.UpgradeOrbItem;
 import io.redspace.ironsspellbooks.item.armor.IronsExtendedArmorMaterial;
@@ -209,14 +208,14 @@ public class ItemRegistry {
             .register();
 
     // 紫极剑
-    public static final ItemEntry<VioletGalaxyingotTool.Sword> VIOLET_SWORD = Genesis.L2_REGISTRATE
-            .item("violet_sword", VioletGalaxyingotTool.Sword::new)
+    public static final ItemEntry<VioletSword> VIOLET_SWORD = Genesis.L2_REGISTRATE
+            .item("violet_sword", VioletSword::new)
             .model((ctx, prov) -> prov.handheld(ctx::getEntry))
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
     // 紫极斧
-    public static final ItemEntry<VioletGalaxyingotTool.Axe> VIOLET_AXE = Genesis.L2_REGISTRATE
-            .item("violet_axe", VioletGalaxyingotTool.Axe::new)
+    public static final ItemEntry<VioletAxe> VIOLET_AXE = Genesis.L2_REGISTRATE
+            .item("violet_axe", VioletAxe::new)
             .model((ctx, prov) -> prov.handheld(ctx::getEntry))
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
@@ -234,15 +233,15 @@ public class ItemRegistry {
             .register();
 
     // 紫极铲
-    public static final ItemEntry<VioletGalaxyingotTool.Shovel> VIOLET_SHOVEL = Genesis.L2_REGISTRATE
-            .item("violet_shovel", VioletGalaxyingotTool.Shovel::new)
+    public static final ItemEntry<VioletShovel> VIOLET_SHOVEL = Genesis.L2_REGISTRATE
+            .item("violet_shovel", VioletShovel::new)
             .model((ctx, prov) -> prov.handheld(ctx::getEntry))
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
     // 紫极锄
-    public static final ItemEntry<VioletGalaxyingotTool.Hoe> VIOLET_HOE = Genesis.L2_REGISTRATE
-            .item("violet_hoe", VioletGalaxyingotTool.Hoe::new)
+    public static final ItemEntry<VioletHoe> VIOLET_HOE = Genesis.L2_REGISTRATE
+            .item("violet_hoe", VioletHoe::new)
             .model((ctx, prov) -> prov.handheld(ctx::getEntry))
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
