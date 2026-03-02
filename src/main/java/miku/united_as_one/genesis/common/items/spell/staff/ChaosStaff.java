@@ -1,4 +1,4 @@
-package miku.united_as_one.genesis.common.items.staff;
+package miku.united_as_one.genesis.common.items.spell.staff;
 
 import miku.united_as_one.genesis.init.registry.spell.SpellAttributesRegistry;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;

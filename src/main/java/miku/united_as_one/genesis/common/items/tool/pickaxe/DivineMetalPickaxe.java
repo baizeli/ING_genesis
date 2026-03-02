@@ -1,4 +1,4 @@
-package miku.united_as_one.genesis.common.items.shovel;
+package miku.united_as_one.genesis.common.items.tool.pickaxe;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.*;
@@ -7,13 +7,13 @@ import org.jetbrains.annotations.*;
 
 import java.util.List;
 
-public class DivineMetalShovel extends ShovelItem {
-    public DivineMetalShovel(Tier tier, int attackDamage, float attackSpeed, Properties properties) {
+public class DivineMetalPickaxe extends PickaxeItem {
+    public DivineMetalPickaxe(Tier tier, int attackDamage, float attackSpeed, Properties properties) {
         super(tier, attackDamage, attackSpeed, properties);
     }
 
     public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, @NotNull List<Component> pTooltipComponents, @NotNull TooltipFlag pIsAdvanced) {
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
-        pTooltipComponents.add(Component.translatable("tooltip.iron_spells_genesis.divine_metal.description_3"));
+        pTooltipComponents.add(Component.translatable("tooltip.iron_spells_genesis.divine_metal.description_2"));
     }
 }

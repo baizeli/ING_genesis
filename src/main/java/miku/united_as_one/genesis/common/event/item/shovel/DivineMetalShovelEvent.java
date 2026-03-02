@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.common.event.item.shovel;
 
-import miku.united_as_one.genesis.common.items.shovel.DivineMetalShovel;
+import miku.united_as_one.genesis.common.items.tool.shovel.DivineMetalShovel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;

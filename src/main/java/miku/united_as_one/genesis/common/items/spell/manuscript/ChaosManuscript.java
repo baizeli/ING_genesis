@@ -1,4 +1,4 @@
-package miku.united_as_one.genesis.common.items.manuscript;
+package miku.united_as_one.genesis.common.items.spell.manuscript;
 
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.client.gui.manuscript.ChaosSpellLearningScreen;

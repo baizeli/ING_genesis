@@ -1,12 +1,9 @@
-package miku.united_as_one.genesis.common.items.spellbook;
+package miku.united_as_one.genesis.common.items.spell.spellbook;
 
 import miku.united_as_one.genesis.client.fonts.FuckFont1;
-import miku.united_as_one.genesis.init.registry.spell.SpellAttributesRegistry;
-import io.redspace.ironsspellbooks.api.item.curios.AffinityData;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import io.redspace.ironsspellbooks.item.SpellBook;
 import io.redspace.ironsspellbooks.item.weapons.AttributeContainer;
-import io.redspace.ironsspellbooks.util.TooltipsUtils;
 import net.minecraft.client.gui.Font;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
