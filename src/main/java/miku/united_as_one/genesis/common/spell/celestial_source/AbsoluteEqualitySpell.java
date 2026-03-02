@@ -21,7 +21,7 @@ public class AbsoluteEqualitySpell extends CelestialSourceBaseSpell {
         .setMinRarity(SpellRarity.LEGENDARY)
         .setSchoolResource(SpellSchoolRegistry.CELESTIAL_SOURCE_RESOURCE)
         .setMaxLevel(1)
-        .setCooldownSeconds(1200)
+        .setCooldownSeconds(60)
         .build();
 
     public AbsoluteEqualitySpell() {
@@ -29,7 +29,7 @@ public class AbsoluteEqualitySpell extends CelestialSourceBaseSpell {
         this.baseSpellPower = 1;
         this.spellPowerPerLevel = 0;
         this.castTime = 200;
-        this.baseManaCost = 1500;
+        this.baseManaCost = 400;
     }
 
     @Override
@@ -61,13 +61,9 @@ public class AbsoluteEqualitySpell extends CelestialSourceBaseSpell {
                 LivingEntity target = targetData.getTarget((ServerLevel) level);
 
                 if (target != null && !entity.getType().is(Tags.EntityTypes.BOSSES)) {
-                    // 先计算施法者/目标的当前血量%
-                    float playerHealthPercent = player.getHealth() / player.getMaxHealth();
-                    float targetHealthPercent = target.getHealth() / target.getMaxHealth();
-
-                    // 再交换/替换-施法者/目标的血量%
-                    player.setHealth(player.getMaxHealth() * targetHealthPercent);
-                    target.setHealth(target.getMaxHealth() * playerHealthPercent);
+                    // 先计算施法者/目标的当前血量% 再交换/替换-施法者/目标的血量%
+                    player.setHealth(player.getMaxHealth() * target.getHealth() / target.getMaxHealth());
+                    target.setHealth(target.getMaxHealth() * player.getHealth() / player.getMaxHealth());
                 }
             }
         }
