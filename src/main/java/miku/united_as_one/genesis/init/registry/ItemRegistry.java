@@ -248,8 +248,8 @@ public class ItemRegistry {
             .register();
 
     // 雷霆长弓
-    public static final ItemEntry<ThunderLongbow> THUNDER_LONGBOW = Genesis.L2_REGISTRATE
-            .item("thunder_longbow", properties -> new ThunderLongbow(properties
+    public static final ItemEntry<ThunderLongBow> THUNDER_LONGBOW = Genesis.L2_REGISTRATE
+            .item("thunder_longbow", properties -> new ThunderLongBow(properties
                 .rarity(Rarity.EPIC)
                 .stacksTo(1)
                 .durability(2009)
@@ -262,8 +262,8 @@ public class ItemRegistry {
             .register();
 
     // 冰霜长弓
-    public static final ItemEntry<FrostLongbow> FROST_LONGBOW = Genesis.L2_REGISTRATE
-            .item("frost_longbow", properties -> new FrostLongbow(properties
+    public static final ItemEntry<FrostLongBow> FROST_LONGBOW = Genesis.L2_REGISTRATE
+            .item("frost_longbow", properties -> new FrostLongBow(properties
                 .rarity(Rarity.EPIC)
                 .stacksTo(1)
                 .durability(2009)

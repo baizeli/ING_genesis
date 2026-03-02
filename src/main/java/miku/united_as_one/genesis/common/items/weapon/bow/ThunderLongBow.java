@@ -19,8 +19,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Predicate;
 
-public class ThunderLongbow extends BowItem {
-    public ThunderLongbow(Properties properties) {
+public class ThunderLongBow extends BowItem {
+    public ThunderLongBow(Properties properties) {
         super(properties);
     }
 
