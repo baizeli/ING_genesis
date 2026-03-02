@@ -21,7 +21,7 @@ public class AbsoluteEqualitySpell extends CelestialSourceBaseSpell {
         .setMinRarity(SpellRarity.LEGENDARY)
         .setSchoolResource(SpellSchoolRegistry.CELESTIAL_SOURCE_RESOURCE)
         .setMaxLevel(1)
-        .setCooldownSeconds(1200.0F)
+        .setCooldownSeconds(1200)
         .build();
 
     public AbsoluteEqualitySpell() {
@@ -49,9 +49,8 @@ public class AbsoluteEqualitySpell extends CelestialSourceBaseSpell {
 
     @Override
     public boolean checkPreCastConditions(Level level, int spellLevel, LivingEntity entity, MagicData playerMagicData) {
-        return Utils.preCastTargetHelper(
-            level, entity, playerMagicData, this, 800, 0.1f, true,
-            target -> !isBossEntity(target)
+        return Utils.preCastTargetHelper(level, entity, playerMagicData, this, 800, 0.1f, true,
+            target -> !entity.getType().is(Tags.EntityTypes.BOSSES)
         );
     }
 
@@ -61,7 +60,7 @@ public class AbsoluteEqualitySpell extends CelestialSourceBaseSpell {
             if (playerMagicData.getAdditionalCastData() instanceof TargetEntityCastData targetData) {
                 LivingEntity target = targetData.getTarget((ServerLevel) level);
 
-                if (target != null && !isBossEntity(target)) {
+                if (target != null && !entity.getType().is(Tags.EntityTypes.BOSSES)) {
                     // 先计算施法者/目标的当前血量%
                     float playerHealthPercent = player.getHealth() / player.getMaxHealth();
                     float targetHealthPercent = target.getHealth() / target.getMaxHealth();
@@ -74,15 +73,5 @@ public class AbsoluteEqualitySpell extends CelestialSourceBaseSpell {
         }
         
         super.onCast(level, spellLevel, entity, castSource, playerMagicData);
-    }
-
-    private boolean isBossEntity(LivingEntity entity) {
-        // 你是不是boss呀??
-        if (entity.getType().is(Tags.EntityTypes.BOSSES)) {
-            return true;
-        }
-
-        // 不是boss你可以通过了
-        return false;
     }
 }

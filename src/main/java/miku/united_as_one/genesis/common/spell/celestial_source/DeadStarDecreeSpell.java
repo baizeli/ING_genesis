@@ -32,7 +32,7 @@ public class DeadStarDecreeSpell extends AbstractSpell {
         .setMinRarity(SpellRarity.COMMON)
         .setSchoolResource(SpellSchoolRegistry.CELESTIAL_SOURCE_RESOURCE)
         .setMaxLevel(3)
-        .setCooldownSeconds(240.0F)
+        .setCooldownSeconds(240)
         .build();
 
     public DeadStarDecreeSpell() {
@@ -74,26 +74,12 @@ public class DeadStarDecreeSpell extends AbstractSpell {
 
     // 陨石的伤害
     private float getDamage(int spellLevel, LivingEntity caster) {
-        float baseDamage = 10 * spellLevel;
-        if (caster == null) {
-            return baseDamage;
-        }
-        
-        float spellPower = getSpellPower(spellLevel, caster);
-        float additionalDamage = spellPower - 1.0f;
-        return baseDamage + additionalDamage;
+        return 10 * spellLevel + getSpellPower(spellLevel, caster) - 1.0f;
     }
     
     // 大陨石的伤害
     private float getLargeCometDamage(int spellLevel, LivingEntity caster) {
-        float baseDamage = 100 + (spellLevel - 1) * 10;
-        if (caster == null) {
-            return baseDamage;
-        }
-        
-        float spellPower = getSpellPower(spellLevel, caster);
-        float additionalDamage = spellPower - 1.0f;
-        return baseDamage + additionalDamage;
+        return 100 + (spellLevel - 1) * 10 + getSpellPower(spellLevel, caster) - 1;
     }
 
     private float getRadius(int spellLevel, LivingEntity caster) {
@@ -132,10 +118,10 @@ public class DeadStarDecreeSpell extends AbstractSpell {
 
     @Override
     public void onServerCastTick(Level level, int spellLevel, LivingEntity entity, @Nullable MagicData playerMagicData) {
-        if (playerMagicData == null || !(playerMagicData.getAdditionalCastData() instanceof DeadStarDecreeCastData castData)) {
-            return;
-        }
-
+        if (playerMagicData == null || 
+            !(playerMagicData.getAdditionalCastData() instanceof DeadStarDecreeCastData castData)
+        ) return;
+        
         float radius = getRadius(spellLevel, entity);
         int tick = playerMagicData.getCastDurationRemaining() - 1;
 

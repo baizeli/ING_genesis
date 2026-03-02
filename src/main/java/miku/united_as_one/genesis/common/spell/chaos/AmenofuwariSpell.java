@@ -23,7 +23,7 @@ public class AmenofuwariSpell extends ChaosBaseSpell {
         .setMinRarity(SpellRarity.COMMON)
         .setSchoolResource(SpellSchoolRegistry.CHAOS_RESOURCE)
         .setMaxLevel(3)
-        .setCooldownSeconds(15.0F)
+        .setCooldownSeconds(15)
         .build();
 
     public AmenofuwariSpell() {
@@ -78,17 +78,13 @@ public class AmenofuwariSpell extends ChaosBaseSpell {
     public void onCast(Level level, int spellLevel, LivingEntity entity, CastSource castSource, MagicData playerMagicData) {
         if (!level.isClientSide && playerMagicData.getAdditionalCastData() instanceof TargetEntityCastData targetData) {
             LivingEntity targetEntity = targetData.getTarget((ServerLevel) level);
-            if (targetEntity != null) {
-                float maxDistance = getDistance(spellLevel, entity);
-                double distance = entity.distanceTo(targetEntity);
-                
-                if (distance <= maxDistance) {
-                    Vec3 casterPos = entity.position();
-                    Vec3 targetPos = targetEntity.position();
-                    
-                    entity.teleportTo(targetPos.x, targetPos.y, targetPos.z);
-                    targetEntity.teleportTo(casterPos.x, casterPos.y, casterPos.z);
-                }
+
+            if (targetEntity != null && entity.distanceTo(targetEntity) <= getDistance(spellLevel, entity)) {
+                Vec3 casterPos = entity.position();
+                Vec3 targetPos = targetEntity.position();
+
+                entity.teleportTo(targetPos.x, targetPos.y, targetPos.z);
+                targetEntity.teleportTo(casterPos.x, casterPos.y, casterPos.z);
             }
         }
 

@@ -27,15 +27,15 @@ public class FateWedgeSpell extends CelestialSourceBaseSpell {
         .setMinRarity(SpellRarity.LEGENDARY)
         .setSchoolResource(SpellSchoolRegistry.CELESTIAL_SOURCE_RESOURCE)
         .setMaxLevel(1)
-        .setCooldownSeconds(300.0F)
+        .setCooldownSeconds(240)
         .build();
 
     public FateWedgeSpell() {
-        this.manaCostPerLevel = 100;
+        this.manaCostPerLevel = 0;
         this.baseSpellPower = 60;
         this.spellPowerPerLevel = 0;
-        this.castTime = 100;
-        this.baseManaCost = 900;
+        this.castTime = 20;
+        this.baseManaCost = 170;
     }
 
     @Override
@@ -66,14 +66,7 @@ public class FateWedgeSpell extends CelestialSourceBaseSpell {
 
     // 持续时间
     private int getDuration(int spellLevel, LivingEntity caster) {
-        int baseDuration = 1200;
-        if (caster == null) {
-            return baseDuration;
-        }
-        
-        float spellPower = getSpellPower(spellLevel, caster);
-        int additionalDuration = (int) ((spellPower - 1.0f) * 40);
-        return baseDuration + additionalDuration;
+        return 180 * 20 + (int) ((getSpellPower(spellLevel, caster) - 1.0f) * 40);
     }
 
     @Override
