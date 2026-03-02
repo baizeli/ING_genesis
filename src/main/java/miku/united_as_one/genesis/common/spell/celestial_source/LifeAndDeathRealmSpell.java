@@ -23,15 +23,15 @@ public class LifeAndDeathRealmSpell extends CelestialSourceBaseSpell {
         .setMinRarity(SpellRarity.COMMON)
         .setSchoolResource(SpellSchoolRegistry.CELESTIAL_SOURCE_RESOURCE)
         .setMaxLevel(3)
-        .setCooldownSeconds(240)
+        .setCooldownSeconds(84)
         .build();
 
     public LifeAndDeathRealmSpell() {
-        this.manaCostPerLevel = 100;
+        this.manaCostPerLevel = 10;
         this.baseSpellPower = 5;
         this.spellPowerPerLevel = 5;
-        this.castTime = 20;
-        this.baseManaCost = 100;
+        this.castTime = 0;
+        this.baseManaCost = 350;
     }
 
     @Override
@@ -46,7 +46,7 @@ public class LifeAndDeathRealmSpell extends CelestialSourceBaseSpell {
 
     @Override
     public CastType getCastType() {
-        return CastType.LONG;
+        return CastType.INSTANT;
     }
 
     @Override
