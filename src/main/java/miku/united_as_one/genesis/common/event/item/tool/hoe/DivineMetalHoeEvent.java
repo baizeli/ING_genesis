@@ -1,4 +1,4 @@
-package miku.united_as_one.genesis.common.event.item.hoe;
+package miku.united_as_one.genesis.common.event.item.tool.hoe;
 
 import miku.united_as_one.genesis.common.items.tool.hoe.DivineMetalHoe;
 import net.minecraft.core.BlockPos;
