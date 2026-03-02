@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.common.event.item;
 
-import miku.united_as_one.genesis.common.items.axe.DivineMetalAxe;
-import miku.united_as_one.genesis.common.items.sword.DivineMetalSword;
+import miku.united_as_one.genesis.common.items.tool.axe.DivineMetalAxe;
+import miku.united_as_one.genesis.common.items.weapon.sword.DivineMetalSword;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.monster.WitherSkeleton;
 import net.minecraft.world.entity.item.ItemEntity;

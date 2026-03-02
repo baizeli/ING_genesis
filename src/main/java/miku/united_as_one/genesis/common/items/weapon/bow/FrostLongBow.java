@@ -1,4 +1,4 @@
-package miku.united_as_one.genesis.common.items.bow;
+package miku.united_as_one.genesis.common.items.weapon.bow;
 
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.events.SpellOnCastEvent;
@@ -26,8 +26,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Predicate;
 
-public class FrostLongbow extends BowItem {
-    public FrostLongbow(Properties properties) {
+public class FrostLongBow extends BowItem {
+    public FrostLongBow(Properties properties) {
         super(properties);
     }
 

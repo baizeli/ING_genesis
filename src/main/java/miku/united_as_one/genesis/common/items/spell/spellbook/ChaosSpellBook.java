@@ -1,4 +1,4 @@
-package miku.united_as_one.genesis.common.items.spellbook;
+package miku.united_as_one.genesis.common.items.spell.spellbook;
 
 import miku.united_as_one.genesis.client.fonts.FuckFont1;
 import miku.united_as_one.genesis.init.registry.spell.SpellAttributesRegistry;

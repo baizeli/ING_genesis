@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.common.event.item.hoe;
 
-import miku.united_as_one.genesis.common.items.hoe.DivineMetalHoe;
+import miku.united_as_one.genesis.common.items.tool.hoe.DivineMetalHoe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.item.ItemEntity;

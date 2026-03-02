@@ -1,10 +1,9 @@
-package miku.united_as_one.genesis.common.items.bow;
+package miku.united_as_one.genesis.common.items.weapon.bow;
 
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.spells.CastSource;
 import io.redspace.ironsspellbooks.api.events.SpellOnCastEvent;
 import io.redspace.ironsspellbooks.api.registry.SchoolRegistry;
-import io.redspace.ironsspellbooks.api.util.*;
 import io.redspace.ironsspellbooks.entity.spells.fiery_dagger.FieryDaggerEntity;
 import io.redspace.ironsspellbooks.entity.spells.fire_arrow.FireArrowProjectile;
 import io.redspace.ironsspellbooks.network.SyncManaPacket;

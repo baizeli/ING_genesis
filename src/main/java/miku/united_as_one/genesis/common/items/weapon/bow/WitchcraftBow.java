@@ -1,4 +1,4 @@
-package miku.united_as_one.genesis.common.items.bow;
+package miku.united_as_one.genesis.common.items.weapon.bow;
 
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.spells.CastSource;

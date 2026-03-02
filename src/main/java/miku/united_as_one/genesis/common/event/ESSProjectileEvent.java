@@ -4,7 +4,7 @@ import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.common.items.curios.rune_plus.EnderRunePlus;
 import miku.united_as_one.genesis.common.items.curios.rune_plus.LightningRunePlus;
 import miku.united_as_one.genesis.util.ModCurios;
-import miku.united_as_one.genesis.common.items.bow.ThunderLongbow;
+import miku.united_as_one.genesis.common.items.weapon.bow.ThunderLongBow;
 import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
 import io.redspace.ironsspellbooks.api.util.Utils;
 import io.redspace.ironsspellbooks.capabilities.magic.MagicManager;
@@ -24,7 +24,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.Projectile;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
@@ -54,7 +53,7 @@ public class ESSProjectileEvent {
         if(projectile instanceof LightningLanceProjectile lanceProjectile) {
             Entity owner = lanceProjectile.getOwner();
             if(owner instanceof ServerPlayer player) {
-                if(player.getMainHandItem().getItem() instanceof ThunderLongbow || player.getOffhandItem().getItem() instanceof ThunderLongbow) {
+                if(player.getMainHandItem().getItem() instanceof ThunderLongBow || player.getOffhandItem().getItem() instanceof ThunderLongBow) {
                     summonShockwave(projectile.level, 4, lanceProjectile.getDamage(), target, owner, lanceProjectile);
                 }
 

@@ -1,4 +1,4 @@
-package miku.united_as_one.genesis.common.items.bow;
+package miku.united_as_one.genesis.common.items.weapon.bow;
 
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.entity.spells.lightning_lance.LightningLanceProjectile;
@@ -19,8 +19,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Predicate;
 
-public class ThunderLongbow extends BowItem {
-    public ThunderLongbow(Properties properties) {
+public class ThunderLongBow extends BowItem {
+    public ThunderLongBow(Properties properties) {
         super(properties);
     }
 
