@@ -26,8 +26,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Predicate;
 
-public class FrostLongbow extends BowItem {
-    public FrostLongbow(Properties properties) {
+public class FrostLongBow extends BowItem {
+    public FrostLongBow(Properties properties) {
         super(properties);
     }
 
