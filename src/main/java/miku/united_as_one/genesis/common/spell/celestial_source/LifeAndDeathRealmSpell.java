@@ -23,7 +23,7 @@ public class LifeAndDeathRealmSpell extends CelestialSourceBaseSpell {
         .setMinRarity(SpellRarity.COMMON)
         .setSchoolResource(SpellSchoolRegistry.CELESTIAL_SOURCE_RESOURCE)
         .setMaxLevel(3)
-        .setCooldownSeconds(240.0F)
+        .setCooldownSeconds(240)
         .build();
 
     public LifeAndDeathRealmSpell() {
@@ -61,24 +61,15 @@ public class LifeAndDeathRealmSpell extends CelestialSourceBaseSpell {
 
     // 持续时间
     private int getBuffDuration(int spellLevel, LivingEntity caster) {
-        int baseDuration = 100 + (spellLevel - 1) * 100;
-        if (caster == null) {
-            return baseDuration;
-        }
-        
-        float spellPower = getSpellPower(spellLevel, caster);
-        int additionalDuration = (int) ((spellPower - 1.0f) * 4);
-        return baseDuration + additionalDuration;
+        return 100 + (spellLevel - 1) * 100 + (int) ((getSpellPower(spellLevel, caster) - 1) * 4);
     }
 
     @Override
     public void onCast(Level level, int spellLevel, LivingEntity entity, CastSource castSource, MagicData playerMagicData) {
         if (!level.isClientSide && entity instanceof ServerPlayer player) {
-            int duration = getBuffDuration(spellLevel, entity);
-            
             player.addEffect(new MobEffectInstance(
                 EffectRegistry.LIFE_AND_DEATH_REALM.get(),
-                duration,
+                getBuffDuration(spellLevel, entity),
                 0,
                 false,
                 false,

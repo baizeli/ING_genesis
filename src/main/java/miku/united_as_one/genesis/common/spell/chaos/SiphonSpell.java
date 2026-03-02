@@ -53,17 +53,13 @@ public class SiphonSpell extends ChaosBaseSpell {
         return List.of(
             Component.translatable(
                 "ui.iron_spells_genesis.absorption_healing", 
-                Utils.stringTruncation(getHealPercent(spellLevel, caster), 1)
+                Utils.stringTruncation(getSpellPower(spellLevel, caster), 1)
             ),
             Component.translatable(
                 "ui.irons_spellbooks.duration",
                 Utils.timeFromTicks(getDuration(spellLevel), 1)
             )
         );
-    }
-
-    private float getHealPercent(int spellLevel, LivingEntity caster) {
-        return getSpellPower(spellLevel, caster);
     }
 
     private int getDuration(int spellLevel) {

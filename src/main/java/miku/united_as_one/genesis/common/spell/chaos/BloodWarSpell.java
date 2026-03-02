@@ -82,20 +82,13 @@ public class BloodWarSpell extends ChaosBaseSpell {
     }
 
     private int getCooldownInTicks(int spellLevel, CastSource castSource, LivingEntity caster) {
-        int coolDown = 2040;
+        double playerCooldownModifier = 1d;
+        float itemCoolDownModifer = 1f;
 
-        double playerCooldownModifier = 1.0D;
-        float itemCoolDownModifer = 1.0F;
-
-        if (caster != null) {
-            playerCooldownModifier = caster.getAttributeValue(AttributeRegistry.COOLDOWN_REDUCTION.get());
-        }
-
-        if (castSource == CastSource.SWORD) {
-            itemCoolDownModifer = ServerConfigs.SWORDS_CD_MULTIPLIER.get().floatValue();
-        }
-
-        return (int) (coolDown * ((double) 2.0F - Utils.softCapFormula(playerCooldownModifier)) * itemCoolDownModifer);
+        if (caster != null) playerCooldownModifier = caster.getAttributeValue(AttributeRegistry.COOLDOWN_REDUCTION.get());
+        if (castSource == CastSource.SWORD) itemCoolDownModifer = ServerConfigs.SWORDS_CD_MULTIPLIER.get().floatValue();
+        
+        return (int) (2040 * ((double) 2 - Utils.softCapFormula(playerCooldownModifier)) * itemCoolDownModifer);
     }
 
     private int getBuffDuration(int spellLevel) {
@@ -111,15 +104,12 @@ public class BloodWarSpell extends ChaosBaseSpell {
         }
     }
 
-
     @Override
     public void onCast(Level level, int spellLevel, LivingEntity entity, CastSource castSource, MagicData playerMagicData) {
         if (!level.isClientSide && entity instanceof ServerPlayer player) {
-            int duration = getBuffDuration(spellLevel);
-
             player.addEffect(new MobEffectInstance(
                 EffectRegistry.BLOOD_WAR.get(),
-                duration,
+                getBuffDuration(spellLevel),
                 spellLevel - 1,
                 false,
                 false,
