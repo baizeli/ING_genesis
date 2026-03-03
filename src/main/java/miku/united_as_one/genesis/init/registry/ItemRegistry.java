@@ -328,7 +328,7 @@ public class ItemRegistry {
             })
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
-;
+
     public static final ItemEntry<DivineMetalArmor> DIVINE_METAL_CHESTPLATE = Genesis.L2_REGISTRATE
             .item("divine_metal_chestplate", properties -> new DivineMetalArmor(
                 (IronsExtendedArmorMaterial) ModArmorMaterials.DIVINE_METAL, ArmorItem.Type.CHESTPLATE, properties
@@ -822,16 +822,24 @@ public class ItemRegistry {
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
 
-    // 星源块
-    public static final ItemEntry<BlockItem> CELESTIAL_SOURCE_BLOCK_ITEM = Genesis.L2_REGISTRATE
-            .item("celestial_source_block", properties -> new BlockItem(BlockRegistry.CELESTIAL_SOURCE_BLOCK.get(), properties))
+    // 混沌传送门框架
+    public static final ItemEntry<BlockItem> CHAOS_PORTAL_FRAME = Genesis.L2_REGISTRATE
+            .item("chaos_portal_frame", properties -> new BlockItem(BlockRegistry.CHAOS_PORTAL_FRAME.get(), properties))
             .model((ctx, prov) -> prov.blockItem(ctx::getEntry))
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
             .setData(ProviderType.LANG, NonNullBiConsumer.noop())
             .register();
 
+    // 星源块
+    public static final ItemEntry<BlockItem> CELESTIAL_SOURCE_BLOCK = Genesis.L2_REGISTRATE
+            .item("celestial_source_block", properties -> new BlockItem(BlockRegistry.CELESTIAL_SOURCE_BLOCK.get(), properties))
+            .model((ctx, prov) -> prov.blockItem(ctx::getEntry))
+            /*.tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)*/
+            .setData(ProviderType.LANG, NonNullBiConsumer.noop())
+            .register();
+
     // 奥术水晶矿
-    public static final ItemEntry<BlockItem> ARCANE_CRYSTAL_ORE_ITEM = Genesis.L2_REGISTRATE
+    public static final ItemEntry<BlockItem> ARCANE_CRYSTAL_ORE = Genesis.L2_REGISTRATE
             .item("arcane_crystal_ore", properties -> new BlockItem(BlockRegistry.ARCANE_CRYSTAL_ORE.get(), properties))
             .model((ctx, prov) -> prov.blockItem(ctx::getEntry))
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
@@ -839,7 +847,7 @@ public class ItemRegistry {
             .register();
 
     // 深层奥术水晶矿
-    public static final ItemEntry<BlockItem> ARCANE_CRYSTAL_ORE_DEEPSLATE_ITEM = Genesis.L2_REGISTRATE
+    public static final ItemEntry<BlockItem> ARCANE_CRYSTAL_ORE_DEEPSLATE = Genesis.L2_REGISTRATE
             .item("deepslate_arcane_crystal_ore", properties -> new BlockItem(BlockRegistry.ARCANE_CRYSTAL_ORE_DEEPSLATE.get(), properties))
             .model((ctx, prov) -> prov.blockItem(ctx::getEntry))
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
@@ -847,7 +855,7 @@ public class ItemRegistry {
             .register();
 
     // 下界奥术水晶矿
-    public static final ItemEntry<BlockItem> NETHER_ARCANE_CRYSTAL_ORE_ITEM = Genesis.L2_REGISTRATE
+    public static final ItemEntry<BlockItem> NETHER_ARCANE_CRYSTAL_ORE = Genesis.L2_REGISTRATE
             .item("nether_arcane_crystal_ore", properties -> new BlockItem(BlockRegistry.NETHER_ARCANE_CRYSTAL_ORE.get(), properties))
             .model((ctx, prov) -> prov.blockItem(ctx::getEntry))
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
@@ -855,7 +863,7 @@ public class ItemRegistry {
             .register();
 
     // 末地奥术水晶矿
-    public static final ItemEntry<BlockItem> END_ARCANE_CRYSTAL_ORE_ITEM = Genesis.L2_REGISTRATE
+    public static final ItemEntry<BlockItem> END_ARCANE_CRYSTAL_ORE = Genesis.L2_REGISTRATE
             .item("end_arcane_crystal_ore", properties -> new BlockItem(BlockRegistry.END_ARCANE_CRYSTAL_ORE.get(), properties))
             .model((ctx, prov) -> prov.blockItem(ctx::getEntry))
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
