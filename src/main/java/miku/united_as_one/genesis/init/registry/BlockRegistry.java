@@ -38,14 +38,12 @@ public class BlockRegistry {
     public static final BlockEntry<Block> CHAOS_PORTAL_FRAME = Genesis.L2_REGISTRATE
             .block("chaos_portal_frame", Block::new)
             .properties(p -> p.strength(-1, 9999))
-            .simpleItem()
             .register();
 
     // 星源块
     public static final BlockEntry<Block> CELESTIAL_SOURCE_BLOCK = Genesis.L2_REGISTRATE
             .block("celestial_source_block", Block::new)
             .properties(p -> p.requiresCorrectToolForDrops().strength(20, 9999).sound(SoundType.NETHERITE_BLOCK))
-            .simpleItem()
             .register();
 
     public static final RegistryObject<Block> ARCANE_WORKBENCH = BLOCKS.register("arcane_workbench",

@@ -33,31 +33,26 @@ public class ChaosCore extends Item {
         if(Context.getPlayer() != null) {
             ResourceKey<Level> currentDimension = Context.getPlayer().level().dimension();
 
-            if(currentDimension == 
-                ResourceKey.create(Registries.DIMENSION, ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "echo_of_decay")) || 
-                currentDimension == Level.OVERWORLD) {
+            if(currentDimension ==
+                ResourceKey.create(Registries.DIMENSION, ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "echo_of_decay")
+                ) || currentDimension == Level.END) {
 
-                if (!(Context.getPlayer().level() instanceof ServerLevel serverLevel)) return InteractionResult.FAIL;
+                if (!(Context.getPlayer().level() instanceof ServerLevel)) return InteractionResult.FAIL;
 
-                if(serverLevel.structureManager().getStructureWithPieceAt(
-                    Context.getPlayer().blockPosition(), BuiltinStructures.ANCIENT_CITY).isValid()) {
-                    BlockPos clickedPos = Context.getClickedPos().relative(Context.getClickedFace());
+                BlockPos clickedPos = Context.getClickedPos().relative(Context.getClickedFace());
 
-                    if(BlockRegistry.CHAOS_PORTAL.get().spawnPortal(Context.getLevel(), clickedPos)) {
-                        Context.getLevel().playSound(
-                            Context.getPlayer(), 
-                            clickedPos, 
-                            SoundEvents.PORTAL_TRIGGER, 
-                            SoundSource.BLOCKS, 
-                            6f, 
-                            0.8f
-                        );
-                        /*if(!Context.getPlayer().isCreative()) Context.getPlayer().setItemInHand(Context.getHand(), ItemStack.EMPTY);*/
-                        return InteractionResult.SUCCESS;
-                    } else return InteractionResult.FAIL;
-                } else {
-                    return InteractionResult.FAIL;
-                }
+                if(BlockRegistry.CHAOS_PORTAL.get().spawnPortal(Context.getLevel(), clickedPos)) {
+                    Context.getLevel().playSound(
+                        Context.getPlayer(), 
+                        clickedPos, 
+                        SoundEvents.PORTAL_TRIGGER, 
+                        SoundSource.BLOCKS, 
+                        6,
+                        0.8f
+                    );
+                    /*if(!Context.getPlayer().isCreative()) Context.getPlayer().setItemInHand(Context.getHand(), ItemStack.EMPTY);*/
+                    return InteractionResult.SUCCESS;
+                } else return InteractionResult.FAIL;
             }
         }
 
@@ -75,9 +70,9 @@ public class ChaosCore extends Item {
             MinecraftServer server = pLevel.getServer();
 
             if(server != null) {
-                ServerLevel overworld = server.getLevel(Level.OVERWORLD);
-                if(overworld != null) {
-                    Player.changeDimension(overworld, new ITeleporter() {
+                ServerLevel end = server.getLevel(Level.END);
+                if(end != null) {
+                    Player.changeDimension(end, new ITeleporter() {
                         @Override
                         public Entity placeEntity(Entity entity, ServerLevel currentWorld, ServerLevel destWorld, float yaw, Function<Boolean, Entity> repositionEntity) {
                             return repositionEntity.apply(false);
