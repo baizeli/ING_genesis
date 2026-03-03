@@ -834,7 +834,7 @@ public class ItemRegistry {
     public static final ItemEntry<BlockItem> CELESTIAL_SOURCE_BLOCK = Genesis.L2_REGISTRATE
             .item("celestial_source_block", properties -> new BlockItem(BlockRegistry.CELESTIAL_SOURCE_BLOCK.get(), properties))
             .model((ctx, prov) -> prov.blockItem(ctx::getEntry))
-            /*.tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)*/
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
             .setData(ProviderType.LANG, NonNullBiConsumer.noop())
             .register();
 

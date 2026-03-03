@@ -74,9 +74,9 @@ public class ChaosPortalBlock extends Block {
                 if(server == null) return;
                 
                 ResourceKey<Level> echoDecayLevel = ResourceKey.create(Registries.DIMENSION, ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "echo_of_decay"));
-                if(pLevel.dimension() != echoDecayLevel && pLevel.dimension() != Level.OVERWORLD) return;
+                if(pLevel.dimension() != echoDecayLevel && pLevel.dimension() != Level.END) return;
 
-                ResourceKey<Level> destination = pLevel.dimension() == echoDecayLevel ? Level.OVERWORLD : echoDecayLevel;
+                ResourceKey<Level> destination = pLevel.dimension() == echoDecayLevel ? Level.END : echoDecayLevel;
                 ServerLevel destWorld = server.getLevel(destination);
                 if(destWorld != null && !pEntity.isPassenger()) {
                     pLevel.getProfiler().push("portal");
