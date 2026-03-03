@@ -202,10 +202,10 @@ public class ChaosPortalBlock extends Block {
         private int getFrameHeight(BlockPos.MutableBlockPos pos) {
             for(int i = 0; i < MAX_HEIGHT; i++) {
                 pos.set(this.bottomLeft).move(Direction.UP, i).move(this.rightDir, -1);
-                if(!this.level.getBlockState(pos).is(Blocks.REINFORCED_DEEPSLATE)) return i;
+                if(!this.level.getBlockState(pos).is(BlockRegistry.CHAOS_PORTAL_FRAME.get())) return i;
 
                 pos.set(this.bottomLeft).move(Direction.UP, i).move(this.rightDir, this.width);
-                if(!this.level.getBlockState(pos).is(Blocks.REINFORCED_DEEPSLATE)) return i;
+                if(!this.level.getBlockState(pos).is(BlockRegistry.CHAOS_PORTAL_FRAME.get())) return i;
 
                 for(int j = 0; j < this.width; j++) {
                     pos.set(this.bottomLeft).move(Direction.UP, i).move(this.rightDir, j);
@@ -226,12 +226,12 @@ public class ChaosPortalBlock extends Block {
                 blockPos.set(pos).move(direction, i);
                 BlockState blockState = this.level.getBlockState(blockPos);
                 if(!isEmpty(blockState)) {
-                    if(blockState.is(Blocks.REINFORCED_DEEPSLATE)) return i;
+                    if(blockState.is(BlockRegistry.CHAOS_PORTAL_FRAME.get())) return i;
                     break;
                 }
 
                 BlockState blockStateDown = this.level.getBlockState(blockPos.move(Direction.DOWN));
-                if(!blockStateDown.is(Blocks.REINFORCED_DEEPSLATE)) break;
+                if(!blockStateDown.is(BlockRegistry.CHAOS_PORTAL_FRAME.get())) break;
             }
 
             return 0;
@@ -240,7 +240,7 @@ public class ChaosPortalBlock extends Block {
         private boolean hasTopFrame(BlockPos.MutableBlockPos pos, int n) {
             for(int i = 0; i < this.width; i++) {
                 BlockPos.MutableBlockPos blockPos = pos.set(this.bottomLeft).move(Direction.UP, n).move(this.rightDir, i);
-                if(!this.level.getBlockState(blockPos).is(Blocks.REINFORCED_DEEPSLATE)) {
+                if(!this.level.getBlockState(blockPos).is(BlockRegistry.CHAOS_PORTAL_FRAME.get())) {
                     return false;
                 }
             }
