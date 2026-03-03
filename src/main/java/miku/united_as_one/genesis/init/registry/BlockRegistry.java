@@ -10,9 +10,7 @@ import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.minecraftforge.registries.*;
 
 public class BlockRegistry {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Genesis.MOD_ID);
@@ -36,10 +34,17 @@ public class BlockRegistry {
     public static final SimpleBlockSet<Block> QUIETNESS_PLANKS = SimpleBlockSet.buildPlanks("quietness", Blocks.OAK_PLANKS).simplePlank();
     public static final SimpleBlockSet<Block> QUIETNESS_DIRT = SimpleBlockSet.buildDirt("quietness", Blocks.DIRT).addGrass();
 
+    // 混沌传送门框架
+    public static final BlockEntry<Block> CHAOS_PORTAL_FRAME = Genesis.L2_REGISTRATE
+            .block("chaos_portal_frame", Block::new)
+            .properties(p -> p.strength(-1, 9999))
+            .simpleItem()
+            .register();
+
     // 星源块
     public static final BlockEntry<Block> CELESTIAL_SOURCE_BLOCK = Genesis.L2_REGISTRATE
             .block("celestial_source_block", Block::new)
-            .properties(p -> p.requiresCorrectToolForDrops().strength(20.0F, 9999.0F).sound(SoundType.NETHERITE_BLOCK))
+            .properties(p -> p.requiresCorrectToolForDrops().strength(20, 9999).sound(SoundType.NETHERITE_BLOCK))
             .simpleItem()
             .register();
 
@@ -66,8 +71,9 @@ public class BlockRegistry {
                     .lightLevel((state) -> 9).mapColor(DyeColor.GRAY).requiresCorrectToolForDrops()
                     .strength(20.0F, 99999.0F).sound(SoundType.ANCIENT_DEBRIS), UniformInt.of(3, 7)));
 
+    // 混沌传送门方块
     public static final RegistryObject<ChaosPortalBlock> CHAOS_PORTAL = BLOCKS.register("chaos_portal",
             () -> new ChaosPortalBlock(BlockBehaviour.Properties.of()
-                    .noCollission().randomTicks().strength(-1.0F).sound(SoundType.GLASS)
+                    .noCollission().randomTicks().strength(-1).sound(SoundType.GLASS)
                     .lightLevel((state) -> 11).noOcclusion()));
 }
