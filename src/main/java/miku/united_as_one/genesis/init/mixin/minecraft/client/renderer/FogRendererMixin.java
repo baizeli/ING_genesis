@@ -24,9 +24,7 @@ public class FogRendererMixin {
         )
     )
     private static void onSetupColor(Camera activeRenderInfo, float partialTicks, ClientLevel level, int renderDistanceChunks, float bossColorModifier, CallbackInfo ci) {
-        Entity entity = activeRenderInfo.getEntity();
-
-        if (entity instanceof LivingEntity livingEntity) {
+        if (activeRenderInfo.getEntity() instanceof LivingEntity livingEntity) {
             if (SpellEffectUtil.isAffectedByChaosEffect(livingEntity)) {
                 try {
                     Field fogRedField = FogRenderer.class.getDeclaredField("fogRed");
@@ -37,10 +35,10 @@ public class FogRendererMixin {
                     fogGreenField.setAccessible(true);
                     fogBlueField.setAccessible(true);
                     
-                    fogRedField.set(null, 1.0f);
+                    fogRedField.set(null, 1);
                     fogGreenField.set(null, 0.2f);
                     fogBlueField.set(null, 0.2f);
-                } catch (Exception e) {}
+                } catch (Exception ignored) {}
             }
         }
     }
@@ -53,11 +51,9 @@ public class FogRendererMixin {
         )
     )
     private static void redirectClearColor(float red, float green, float blue, float alpha, Camera activeRenderInfo, float partialTicks, ClientLevel level, int renderDistanceChunks, float bossColorModifier) {
-        Entity entity = activeRenderInfo.getEntity();
-
-        if (entity instanceof LivingEntity livingEntity) {
+        if (activeRenderInfo.getEntity() instanceof LivingEntity livingEntity) {
             if (SpellEffectUtil.isAffectedByChaosEffect(livingEntity)) {
-                RenderSystem.clearColor(1.0f, 0.2f, 0.2f, 0.0f);
+                RenderSystem.clearColor(1, 0.2f, 0.2f, 0);
                 return;
             }
         }
