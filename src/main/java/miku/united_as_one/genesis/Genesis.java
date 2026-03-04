@@ -17,7 +17,7 @@ import miku.united_as_one.genesis.common.entity.spells.celestial_source.notuse.*
 import miku.united_as_one.genesis.client.ClientEvent;
 import miku.united_as_one.genesis.init.registry.client.ParticleRegistry;
 import miku.united_as_one.genesis.client.renderer.DistortWorldRender;
-import miku.united_as_one.genesis.client.renderer.spell.celestial_source.DeadStarDecreeCometRenderer;
+import miku.united_as_one.genesis.client.renderer.entity.spell.celestial_source.DeadStarDecreeCometRenderer;
 import miku.united_as_one.genesis.init.config.*;
 import miku.united_as_one.genesis.common.network.*;
 import miku.united_as_one.genesis.init.registry.spell.SpellAttributesRegistry;
