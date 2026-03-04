@@ -3,7 +3,7 @@ package miku.united_as_one.genesis.client.renderer.entity;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Axis;
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.common.entity.EntitySolarBeam;
+import miku.united_as_one.genesis.common.entity.DeathLaserEntity;
 import net.minecraft.client.*;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.entity.*;
@@ -12,25 +12,27 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.*;
+import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 import org.joml.Quaternionf;
 
 @OnlyIn(Dist.CLIENT)
-public class RenderSolarBeam extends EntityRenderer<EntitySolarBeam> {
+public class DeathLaserRenderer extends EntityRenderer<DeathLaserEntity> {
+    @SuppressWarnings("removal")
     private static final ResourceLocation TEXTURE = new ResourceLocation(Genesis.MOD_ID, "textures/entity/laser_beam.png");
 
     private boolean clearerView = false;
 
-    public RenderSolarBeam(EntityRendererProvider.Context mgr) {
+    public DeathLaserRenderer(EntityRendererProvider.Context mgr) {
         super(mgr);
     }
 
-    public ResourceLocation getTextureLocation(EntitySolarBeam entity) {
+    public @NotNull ResourceLocation getTextureLocation(@NotNull DeathLaserEntity entity) {
         return TEXTURE;
     }
 
-    public void render(EntitySolarBeam solarBeam, float entityYaw, float delta, PoseStack matrixStackIn, MultiBufferSource bufferIn, int packedLightIn) {
+    public void render(DeathLaserEntity solarBeam, float entityYaw, float delta, @NotNull PoseStack matrixStackIn, @NotNull MultiBufferSource bufferIn, int packedLightIn) {
         this.clearerView = (solarBeam.caster instanceof net.minecraft.world.entity.player.Player && (Minecraft.getInstance()).player == solarBeam.caster && (Minecraft.getInstance()).options.getCameraType() == CameraType.FIRST_PERSON);
         double collidePosX = solarBeam.prevCollidePosX + (solarBeam.collidePosX - solarBeam.prevCollidePosX) * delta;
         double collidePosY = solarBeam.prevCollidePosY + (solarBeam.collidePosY - solarBeam.prevCollidePosY) * delta;
@@ -40,13 +42,11 @@ public class RenderSolarBeam extends EntityRenderer<EntitySolarBeam> {
         double posZ = solarBeam.zo + (solarBeam.getZ() - solarBeam.zo) * delta;
         float yaw = solarBeam.prevYaw + (solarBeam.renderYaw - solarBeam.prevYaw) * delta;
         float pitch = solarBeam.prevPitch + (solarBeam.renderPitch - solarBeam.prevPitch) * delta;
-        float length = (float)Math.sqrt(Math.pow(collidePosX - posX, 2.0D) + Math.pow(collidePosY - posY, 2.0D) + Math.pow(collidePosZ - posZ, 2.0D));
-        int frame = Mth.floor(((solarBeam.appear.getTimer() - 1) + delta) * 2.0F);
-        if (frame < 0)
-            frame = 6;
-        RenderStateShard.TextureStateShard shard = new RenderStateShard.TextureStateShard(getTextureLocation(solarBeam), false, false);
+        float length = (float)Math.sqrt(Math.pow(collidePosX - posX, 2d) + Math.pow(collidePosY - posY, 2d) + Math.pow(collidePosZ - posZ, 2d));
+        int frame = Mth.floor(((solarBeam.appear.getTimer() - 1) + delta) * 2f);
+        if (frame < 0) frame = 6;
         RenderType.CompositeState rendertype$state = RenderType.CompositeState.builder()
-                .setTextureState(shard)
+                .setTextureState(new RenderStateShard.TextureStateShard(getTextureLocation(solarBeam), false, false))
                 .setShaderState(RenderStateShard.RENDERTYPE_EYES_SHADER)
                 .setTransparencyState(RenderType.TRANSLUCENT_TRANSPARENCY)
                 .setCullState(RenderStateShard.NO_CULL)
@@ -55,7 +55,7 @@ public class RenderSolarBeam extends EntityRenderer<EntitySolarBeam> {
                 .createCompositeState(false);
         VertexConsumer ivertexbuilder = bufferIn.getBuffer(RenderType.create("glow_beam", DefaultVertexFormat.NEW_ENTITY, VertexFormat.Mode.QUADS, 256, true, true, rendertype$state));
         renderStart(frame, matrixStackIn, ivertexbuilder, packedLightIn);
-        renderBeam(length, 57.295776F * yaw, 57.295776F * pitch, frame, matrixStackIn, ivertexbuilder, packedLightIn);
+        renderBeam(length, 57 * yaw, 57 * pitch, frame, matrixStackIn, ivertexbuilder, packedLightIn);
         matrixStackIn.pushPose();
         matrixStackIn.translate(collidePosX - posX, collidePosY - posY, collidePosZ - posZ);
         renderEnd(frame, solarBeam.blockSide, matrixStackIn, ivertexbuilder, packedLightIn);
@@ -77,8 +77,7 @@ public class RenderSolarBeam extends EntityRenderer<EntitySolarBeam> {
     }
 
     private void renderStart(int frame, PoseStack matrixStackIn, VertexConsumer builder, int packedLightIn) {
-        if (this.clearerView)
-            return;
+        if (this.clearerView) return;
         matrixStackIn.pushPose();
         Quaternionf quat = this.entityRenderDispatcher.cameraOrientation();
         matrixStackIn.mulPose(quat);
@@ -92,8 +91,7 @@ public class RenderSolarBeam extends EntityRenderer<EntitySolarBeam> {
         matrixStackIn.mulPose(quat);
         renderFlatQuad(frame, matrixStackIn, builder, packedLightIn);
         matrixStackIn.popPose();
-        if (side == null)
-            return;
+        if (side == null) return;
         matrixStackIn.pushPose();
         Quaternionf sideQuat = side.getRotation();
         sideQuat.mul(Axis.XP.rotationDegrees(90.0F));
