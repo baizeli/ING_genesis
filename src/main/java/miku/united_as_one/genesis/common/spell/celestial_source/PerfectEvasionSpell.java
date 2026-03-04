@@ -23,15 +23,15 @@ public class PerfectEvasionSpell extends CelestialSourceBaseSpell {
         .setMinRarity(SpellRarity.COMMON)
         .setSchoolResource(SpellSchoolRegistry.CELESTIAL_SOURCE_RESOURCE)
         .setMaxLevel(3)
-        .setCooldownSeconds(600.0F)
+        .setCooldownSeconds(180)
         .build();
 
     public PerfectEvasionSpell() {
-        this.manaCostPerLevel = 100;
+        this.manaCostPerLevel = 10;
         this.baseSpellPower = 10;
         this.spellPowerPerLevel = 5;
-        this.castTime = 120;
-        this.baseManaCost = 900;
+        this.castTime = 20;
+        this.baseManaCost = 170;
     }
 
     @Override
@@ -62,19 +62,10 @@ public class PerfectEvasionSpell extends CelestialSourceBaseSpell {
 
     // 持续时间
     private int getDuration(int spellLevel, LivingEntity caster) {
-        int baseDuration = (180 + (spellLevel - 1) * 60) * 20;
-        if (caster == null) {
-            return baseDuration;
-        }
+        int[] durations = {35, 40, 75};
         
-        float spellPower = getSpellPower(spellLevel, caster);
-        int additionalDuration = (int) ((spellPower - 1.0f) * 40);
-        return baseDuration + additionalDuration;
-    }
-
-    @Override
-    public int getCastTime(int spellLevel) {
-        return Math.max(20, 120 - (spellLevel - 1) * 20);
+        return durations[Math.min(spellLevel - 1, durations.length - 1)] * 20 + 
+            (int) ((getSpellPower(spellLevel, caster) - 1) * 40);
     }
 
     @Override

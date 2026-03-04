@@ -29,13 +29,13 @@ public class WarpedBarrierSpell extends ChaosBaseSpell {
                 .setMinRarity(SpellRarity.COMMON)
                 .setSchoolResource(SpellSchoolRegistry.CHAOS_RESOURCE)
                 .setMaxLevel(3)
-                .setCooldownSeconds(120F)
+                .setCooldownSeconds(80)
                 .build();
-        this.manaCostPerLevel = 100;
+        this.manaCostPerLevel = 20;
         this.baseSpellPower = 150;
         this.spellPowerPerLevel = 10;
         this.castTime = 0;
-        this.baseManaCost = 150;
+        this.baseManaCost = 100;
     }
 
     @Override
@@ -66,7 +66,8 @@ public class WarpedBarrierSpell extends ChaosBaseSpell {
     }
 
     private long getEffectDuration(int spellLevel, LivingEntity caster) {
-        int baseDuration = 40 + (spellLevel - 1) * 10;
+        int[] durations = {30, 40, 45};
+        int baseDuration = durations[Math.min(spellLevel - 1, durations.length - 1)];
 
         double entitySpellPowerModifier = 1.0D;
         double entitySchoolPowerModifier= 1.0D;
@@ -77,7 +78,7 @@ public class WarpedBarrierSpell extends ChaosBaseSpell {
             entitySchoolPowerModifier = this.getSchoolType().getPowerFor(caster);
             configPowerModifier = SpellConfigManager.getSpellConfigValue(this, IronConfigParameters.POWER_MULTIPLIER).floatValue();
         }
-        return (baseDuration + Math.round((entitySpellPowerModifier + entitySchoolPowerModifier + configPowerModifier - 3) * 100)) * 20;
+        return (baseDuration + Math.round((entitySpellPowerModifier + entitySchoolPowerModifier + configPowerModifier - 3) * 10)) * 20;
     }
 
 

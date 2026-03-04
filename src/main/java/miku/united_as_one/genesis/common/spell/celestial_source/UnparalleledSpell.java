@@ -24,7 +24,7 @@ public class UnparalleledSpell extends CelestialSourceBaseSpell {
         .setMinRarity(SpellRarity.COMMON)
         .setSchoolResource(SpellSchoolRegistry.CELESTIAL_SOURCE_RESOURCE)
         .setMaxLevel(3)
-        .setCooldownSeconds(600.0F)
+        .setCooldownSeconds(600)
         .build();
 
     public UnparalleledSpell() {
@@ -74,14 +74,7 @@ public class UnparalleledSpell extends CelestialSourceBaseSpell {
 
     // 持续时间
     private int getDuration(int spellLevel, LivingEntity caster) {
-        int baseDuration = (60 + (spellLevel - 1) * 30) * 20;
-        if (caster == null) {
-            return baseDuration;
-        }
-        
-        float spellPower = getSpellPower(spellLevel, caster);
-        int additionalDuration = (int) ((spellPower - 1.0f) * 40);
-        return baseDuration + additionalDuration;
+        return (60 + (spellLevel - 1) * 30) * 20 + (int) ((getSpellPower(spellLevel, caster) - 1) * 40);
     }
 
     @Override

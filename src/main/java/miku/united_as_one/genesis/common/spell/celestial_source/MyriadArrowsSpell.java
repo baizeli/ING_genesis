@@ -16,8 +16,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @AutoSpellConfig
 public class MyriadArrowsSpell extends CelestialSourceBaseSpell {
@@ -26,7 +25,7 @@ public class MyriadArrowsSpell extends CelestialSourceBaseSpell {
         .setMinRarity(SpellRarity.COMMON)
         .setSchoolResource(SpellSchoolRegistry.CELESTIAL_SOURCE_RESOURCE)
         .setMaxLevel(3)
-        .setCooldownSeconds(180.0F)
+        .setCooldownSeconds(180)
         .build();
 
     public MyriadArrowsSpell() {
@@ -72,36 +71,17 @@ public class MyriadArrowsSpell extends CelestialSourceBaseSpell {
 
     // 箭矢发射的数量
     private int getArrowCount(int spellLevel, LivingEntity caster) {
-        int baseCount = 300 + (spellLevel - 1) * 50;
-        if (caster == null) {
-            return baseCount;
-        }
-        
-        float spellPower = getSpellPower(spellLevel, caster);
-        int additionalCount = (int) (spellPower - 1.0f);
-        return baseCount + additionalCount;
+        return 300 + (spellLevel - 1) * 50 + (int) (getSpellPower(spellLevel, caster) - 1);
     }
 
     // 每支箭矢造成的伤害
     private float getDamage(int spellLevel, LivingEntity caster) {
-        if (caster == null) {
-            return 16.0f;
-        }
-        
-        float spellPower = getSpellPower(spellLevel, caster);
-        return 16.0f + (spellPower - 1.0f) * 0.1f;
+        return 16 + (getSpellPower(spellLevel, caster) - 1.0f) * 0.1f;
     }
 
     // 持续发射持续的时间
     private int getDuration(int spellLevel, LivingEntity caster) {
-        int baseDuration = 5 * 20;
-        if (caster == null) {
-            return baseDuration;
-        }
-        
-        float spellPower = getSpellPower(spellLevel, caster);
-        int reduction = (int) ((spellPower - 1.0f) * 100);
-        return Math.max(20, baseDuration - reduction);
+        return Math.max(20, 5 * 20 - (int) ((getSpellPower(spellLevel, caster) - 1) * 100));
     }
 
     @Override
@@ -134,16 +114,9 @@ public class MyriadArrowsSpell extends CelestialSourceBaseSpell {
             }
 
             if (target != null) {
-                CustomArrowEntity arrowsEntity = new CustomArrowEntity(
-                    serverLevel, 
-                    target.getX(), 
-                    target.getY(), 
-                    target.getZ()
-                );
+                CustomArrowEntity arrowsEntity = new CustomArrowEntity(serverLevel, target.getX(), target.getY(), target.getZ());
 
-                arrowsEntity.setMyriadArrows(
-                    true,
-                    target, 
+                arrowsEntity.setMyriadArrows(true, target,
                     getArrowCount(spellLevel, entity),
                     getDuration(spellLevel, entity),
                     getDamage(spellLevel, entity)
