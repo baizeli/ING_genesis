@@ -1,4 +1,4 @@
-package miku.united_as_one.genesis.common.event.item.bow;
+package miku.united_as_one.genesis.common.event.item.weapon.bow;
 
 import io.redspace.ironsspellbooks.api.util.*;
 import io.redspace.ironsspellbooks.entity.spells.FireEruptionAoe;

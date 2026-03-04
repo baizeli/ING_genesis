@@ -22,7 +22,7 @@ public class SummonPigSwarmSpell extends CelestialSourceBaseSpell {
         .setMinRarity(SpellRarity.COMMON)
         .setSchoolResource(SpellSchoolRegistry.CELESTIAL_SOURCE_RESOURCE)
         .setMaxLevel(5)
-        .setCooldownSeconds(60.0F)
+        .setCooldownSeconds(60)
         .build();
 
     public SummonPigSwarmSpell() {
@@ -57,15 +57,11 @@ public class SummonPigSwarmSpell extends CelestialSourceBaseSpell {
 
     // 召唤laowang237的数量
     private int getSummonCount(int spellLevel, LivingEntity caster) {
-        int levelBonus = (spellLevel - 1) * this.spellPowerPerLevel;
-
         int powerBonus = 0;
-        if (caster != null) {
-            float totalSpellPower = getSpellPower(spellLevel, caster);
-            powerBonus = (int) (totalSpellPower / 10);
-        }
-        
-        return this.baseSpellPower + levelBonus + powerBonus;
+
+        if (caster != null) powerBonus = (int) (getSpellPower(spellLevel, caster) / 10);
+
+        return this.baseSpellPower + (spellLevel - 1) * this.spellPowerPerLevel + powerBonus;
     }
 
     @Override
@@ -75,17 +71,15 @@ public class SummonPigSwarmSpell extends CelestialSourceBaseSpell {
 
     @Override
     public void onCast(Level level, int spellLevel, LivingEntity entity, CastSource castSource, MagicData playerMagicData) {
-        int summonCount = getSummonCount(spellLevel, entity);
-
         if (!level.isClientSide && level instanceof ServerLevel serverLevel) {
-            for (int i = 0; i < summonCount; i++) {
+            for (int i = 0; i < getSummonCount(spellLevel, entity); i++) {
                 Pig pig = EntityType.PIG.create(serverLevel);
 
                 if (pig != null) {
                     pig.setPos(
-                        entity.getX() + Utils.random.nextGaussian() * 2.0D,
+                        entity.getX() + Utils.random.nextGaussian() * 2d,
                         entity.getY(),
-                        entity.getZ() + Utils.random.nextGaussian() * 2.0D
+                        entity.getZ() + Utils.random.nextGaussian() * 2d
                     );
 
                     pig.setCustomName(Component.translatable("iron_spells_genesis.summoned_pig_name"));

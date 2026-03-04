@@ -14,10 +14,6 @@ import miku.united_as_one.genesis.common.entity.spells.celestial_source.*;
 import miku.united_as_one.genesis.common.entity.boss.BloodBoss;
 import miku.united_as_one.genesis.common.entity.spells.celestial_source.notuse.*;
 import miku.united_as_one.genesis.client.ClientEvent;
-import miku.united_as_one.genesis.init.registry.BlockRegistry;
-import miku.united_as_one.genesis.init.registry.CreativeTabRegistry;
-import miku.united_as_one.genesis.init.registry.EntityRegistry;
-import miku.united_as_one.genesis.init.registry.ItemRegistry;
 import miku.united_as_one.genesis.init.registry.client.ParticleRegistry;
 import miku.united_as_one.genesis.client.renderer.DistortWorldRender;
 import miku.united_as_one.genesis.client.renderer.spell.celestial_source.DeadStarDecreeCometRenderer;
@@ -28,9 +24,11 @@ import miku.united_as_one.genesis.init.registry.spell.SpellSchoolRegistry;
 import dev.xkmc.l2library.base.L2Registrate;
 import com.mojang.logging.LogUtils;
 import io.redspace.ironsspellbooks.render.SpellBookCurioRenderer;
+import net.mehvahdjukaar.moonlight.api.platform.ClientHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
@@ -70,6 +68,7 @@ public class Genesis
     }
 
     public Genesis(FMLJavaModLoadingContext context) {
+        ClientHelper.registerOptionalTexturePack(Genesis.rl("Genesis_old"), Component.literal("Genesis old"), false);
         IEventBus modEventBus = context.getModEventBus();
 
         ItemRegistry.register();

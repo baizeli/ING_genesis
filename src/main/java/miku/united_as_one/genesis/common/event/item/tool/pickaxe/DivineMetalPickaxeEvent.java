@@ -1,4 +1,4 @@
-package miku.united_as_one.genesis.common.event.item.pickaxe;
+package miku.united_as_one.genesis.common.event.item.tool.pickaxe;
 
 import miku.united_as_one.genesis.common.items.tool.pickaxe.DivineMetalPickaxe;
 import net.minecraft.core.BlockPos;
