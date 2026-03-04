@@ -127,4 +127,11 @@ public class EntityRegistry {
                     .updateInterval(1)
                     .setShouldReceiveVelocityUpdates(false)
                     .build("tremor_aoe_entity"));
+
+    public static final RegistryObject<EntityType<EntitySolarBeam>> SOLAR_BEAM = ENTITY_TYPES.register("solar_beam",
+            () -> EntityType.Builder.of(EntitySolarBeam::new, MobCategory.MISC)
+                    .sized(0.5f, 0.5f)
+                    .clientTrackingRange(64)
+                    .updateInterval(1)
+                    .build("solar_beam"));
 }
