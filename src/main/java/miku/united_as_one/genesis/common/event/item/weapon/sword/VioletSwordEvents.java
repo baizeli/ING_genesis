@@ -1,4 +1,4 @@
-package miku.united_as_one.genesis.common.event.item.sword;
+package miku.united_as_one.genesis.common.event.item.weapon.sword;
 
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.common.items.weapon.sword.VioletSword;

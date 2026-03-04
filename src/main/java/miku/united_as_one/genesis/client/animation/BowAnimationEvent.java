@@ -1,6 +1,5 @@
 package miku.united_as_one.genesis.client.animation;
 
-import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.init.registry.ItemRegistry;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
@@ -12,7 +11,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import java.util.stream.Stream;
 
 @SuppressWarnings("removal")
-@Mod.EventBusSubscriber(modid = Genesis.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class BowAnimationEvent {
 
     @SubscribeEvent
