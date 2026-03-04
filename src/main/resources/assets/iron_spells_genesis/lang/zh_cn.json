@@ -151,6 +151,11 @@
   "item.iron_spells_genesis.violet_pickaxe": "紫极镐",
   "item.iron_spells_genesis.violet_shovel": "紫极铲",
   "item.iron_spells_genesis.violet_hoe": "紫极锄",
+  "tooltip.united_as_one.violet_sword.line1": "格挡50%的伤害",
+  "tooltip.united_as_one.violet_axe.line1": "连锁木头",
+  "tooltip.united_as_one.violet_pickaxe.line1": "连锁矿石",
+  "tooltip.united_as_one.violet_shovel.line1": "按住Shift进行5*5挖掘",
+  "tooltip.united_as_one.violet_hoe.line1":"有点幸运",
 
   "item.iron_spells_genesis.violet_zenith_helmet": "紫极战斗头盔",
   "item.iron_spells_genesis.violet_zenith_chestplate": "紫极战斗胸甲",
