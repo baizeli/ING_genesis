@@ -92,18 +92,22 @@ public class DeathLaserEntity extends Entity {
             this.teleportTo(caster.getX(),caster.getY()+1,caster.getZ());
             this.setDeltaMovement(caster.getDeltaMovement().x,caster.getDeltaMovement().y,caster.getDeltaMovement().z);
         }
-        if (!this.on && this.appear.getTimer() == 0)
-            discard();
+        if (!this.on && this.appear.getTimer() == 0) discard();
         if (this.on && this.tickCount > 20) {
             this.appear.increaseTimer();
         } else {
             this.appear.decreaseTimer();
         }
-        if (this.caster != null && !this.caster.isAlive())
-            discard();
+        if (this.caster != null && !this.caster.isAlive()) discard();
         if (this.level().isClientSide && this.tickCount <= 10 && this.caster != null) {
             int particleCount = 8;
             while (--particleCount != 0) {
+                double radius = (2.0F * this.caster.getBbWidth());
+                double yaw = (this.random.nextFloat() * 2.0F) * Math.PI;
+                double pitch = (this.random.nextFloat() * 2.0F) * Math.PI;
+                double ox = radius * Math.sin(yaw) * Math.sin(pitch);
+                double oy = radius * Math.cos(pitch);
+                double oz = radius * Math.cos(yaw) * Math.sin(pitch);
                 double rootX = this.caster.getX();
                 double rootY = this.caster.getY() + (this.caster.getBbHeight() / 2f) + 0.3d;
                 double rootZ = this.caster.getZ();
@@ -112,29 +116,32 @@ public class DeathLaserEntity extends Entity {
         }
         if (this.tickCount > 20) {
             calculateEndPos();
+            List<LivingEntity> hit = (raytraceEntities(this.level(), new Vec3(getX(), getY(), getZ()), new Vec3(this.endPosX, this.endPosY, this.endPosZ), false, true, true)).entities;
             if (this.blockSide != null)
-                spawnExplosionParticles();
+                spawnExplosionParticles(2);
             if (!this.level().isClientSide)
-                for (LivingEntity target : (raytraceEntities(this.level(), new Vec3(getX(), getY(), getZ()), new Vec3(this.endPosX, this.endPosY, this.endPosZ), true)).entities) {
-                    float damageMob = 3;
+                for (LivingEntity target : hit) {
+                    float damageFire = 1.0F;
+                    float damageMob = 3.0F;
                     target.invulnerableTime = 0;
-                    target.hurt(damageSources().indirectMagic(this, this.caster), damageMob);
+                    target.hurt(damageSources().indirectMagic(this, (Entity)this.caster), damageMob);
                 }
         }
         if (this.tickCount - 20 > getDuration())
             this.on = false;
     }
 
-    private void spawnExplosionParticles() {
+    private void spawnExplosionParticles(int amount) {
         int i;
-        for (i = 0; i < 2; i++) {
+        for (i = 0; i < amount; i++) {
+            float velocity = 0.1F;
             float yaw = (float)((this.random.nextFloat() * 2.0F) * Math.PI);
             float motionY = this.random.nextFloat() * 0.08F;
             float motionX = 0.1F * Mth.cos(yaw);
             float motionZ = 0.1F * Mth.sin(yaw);
             this.level().addParticle(ParticleTypes.FLAME, this.collidePosX, this.collidePosY + 0.1D, this.collidePosZ, motionX, motionY, motionZ);
         }
-        for (i = 0; i < 1; i++)
+        for (i = 0; i < amount / 2; i++)
             this.level().addParticle(ParticleTypes.LAVA, this.collidePosX, this.collidePosY + 0.1D, this.collidePosZ, 0.0D, 0.0D, 0.0D);
     }
 
@@ -199,7 +206,7 @@ public class DeathLaserEntity extends Entity {
         }
     }
 
-    public SolarbeamHitResult raytraceEntities(Level world, Vec3 from, Vec3 to, boolean ignoreBlockWithoutBoundingBox) {
+    public SolarbeamHitResult raytraceEntities(Level world, Vec3 from, Vec3 to, boolean stopOnLiquid, boolean ignoreBlockWithoutBoundingBox, boolean returnLastUncollidableBlock) {
         SolarbeamHitResult result = new SolarbeamHitResult();
         result.setBlockHit(world.clip(new ClipContext(from, to, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this)));
         if (result.blockHit != null) {
@@ -214,15 +221,17 @@ public class DeathLaserEntity extends Entity {
             this.collidePosZ = this.endPosZ;
             this.blockSide = null;
         }
-        for (LivingEntity entity : world.getEntitiesOfClass(LivingEntity.class, (new AABB(Math.min(getX(), this.collidePosX), Math.min(getY(), this.collidePosY), Math.min(getZ(), this.collidePosZ), Math.max(getX(), this.collidePosX), Math.max(getY(), this.collidePosY), Math.max(getZ(), this.collidePosZ))).inflate(1.0D, 1.0D, 1.0D))) {
+        List<LivingEntity> entities = world.getEntitiesOfClass(LivingEntity.class, (new AABB(Math.min(getX(), this.collidePosX), Math.min(getY(), this.collidePosY), Math.min(getZ(), this.collidePosZ), Math.max(getX(), this.collidePosX), Math.max(getY(), this.collidePosY), Math.max(getZ(), this.collidePosZ))).inflate(1.0D, 1.0D, 1.0D));
+        for (LivingEntity entity : entities) {
             if (entity == this.caster) continue;
             float pad = entity.getPickRadius() + 0.5F;
             AABB aabb = entity.getBoundingBox().inflate(pad, pad, pad);
+            Optional<Vec3> hit = aabb.clip(from, to);
             if (aabb.contains(from)) {
                 result.addEntityHit(entity);
                 continue;
             }
-            if (aabb.clip(from, to).isPresent())
+            if (hit.isPresent())
                 result.addEntityHit(entity);
         }
         return result;
