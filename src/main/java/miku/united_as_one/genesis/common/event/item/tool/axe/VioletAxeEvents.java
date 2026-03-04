@@ -1,7 +1,6 @@
-package miku.united_as_one.genesis.common.event.item.axe;
+package miku.united_as_one.genesis.common.event.item.tool.axe;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.common.event.item.VioletParticleEvents;
 import miku.united_as_one.genesis.common.items.tool.axe.VioletAxe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.BlockTags;
