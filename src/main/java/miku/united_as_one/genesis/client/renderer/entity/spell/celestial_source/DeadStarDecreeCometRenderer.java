@@ -1,4 +1,4 @@
-package miku.united_as_one.genesis.client.renderer.spell.celestial_source;
+package miku.united_as_one.genesis.client.renderer.entity.spell.celestial_source;
 
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.client.model.spell.celestial_source.DeadStarDecreeCometModel;
