@@ -102,12 +102,6 @@ public class DeathLaserEntity extends Entity {
         if (this.level().isClientSide && this.tickCount <= 10 && this.caster != null) {
             int particleCount = 8;
             while (--particleCount != 0) {
-                double radius = (2.0F * this.caster.getBbWidth());
-                double yaw = (this.random.nextFloat() * 2.0F) * Math.PI;
-                double pitch = (this.random.nextFloat() * 2.0F) * Math.PI;
-                double ox = radius * Math.sin(yaw) * Math.sin(pitch);
-                double oy = radius * Math.cos(pitch);
-                double oz = radius * Math.cos(yaw) * Math.sin(pitch);
                 double rootX = this.caster.getX();
                 double rootY = this.caster.getY() + (this.caster.getBbHeight() / 2f) + 0.3d;
                 double rootZ = this.caster.getZ();
@@ -116,32 +110,30 @@ public class DeathLaserEntity extends Entity {
         }
         if (this.tickCount > 20) {
             calculateEndPos();
-            List<LivingEntity> hit = (raytraceEntities(this.level(), new Vec3(getX(), getY(), getZ()), new Vec3(this.endPosX, this.endPosY, this.endPosZ), false, true, true)).entities;
+            List<LivingEntity> hit = (raytraceEntities(this.level(), new Vec3(getX(), getY(), getZ()), new Vec3(this.endPosX, this.endPosY, this.endPosZ), true)).entities;
             if (this.blockSide != null)
-                spawnExplosionParticles(2);
+                spawnExplosionParticles();
             if (!this.level().isClientSide)
                 for (LivingEntity target : hit) {
-                    float damageFire = 1.0F;
                     float damageMob = 3.0F;
                     target.invulnerableTime = 0;
-                    target.hurt(damageSources().indirectMagic(this, (Entity)this.caster), damageMob);
+                    target.hurt(damageSources().indirectMagic(this, this.caster), damageMob);
                 }
         }
         if (this.tickCount - 20 > getDuration())
             this.on = false;
     }
 
-    private void spawnExplosionParticles(int amount) {
+    private void spawnExplosionParticles() {
         int i;
-        for (i = 0; i < amount; i++) {
-            float velocity = 0.1F;
+        for (i = 0; i < 2; i++) {
             float yaw = (float)((this.random.nextFloat() * 2.0F) * Math.PI);
             float motionY = this.random.nextFloat() * 0.08F;
             float motionX = 0.1F * Mth.cos(yaw);
             float motionZ = 0.1F * Mth.sin(yaw);
             this.level().addParticle(ParticleTypes.FLAME, this.collidePosX, this.collidePosY + 0.1D, this.collidePosZ, motionX, motionY, motionZ);
         }
-        for (i = 0; i < amount / 2; i++)
+        for (i = 0; i < 1; i++)
             this.level().addParticle(ParticleTypes.LAVA, this.collidePosX, this.collidePosY + 0.1D, this.collidePosZ, 0.0D, 0.0D, 0.0D);
     }
 
@@ -206,7 +198,7 @@ public class DeathLaserEntity extends Entity {
         }
     }
 
-    public SolarbeamHitResult raytraceEntities(Level world, Vec3 from, Vec3 to, boolean stopOnLiquid, boolean ignoreBlockWithoutBoundingBox, boolean returnLastUncollidableBlock) {
+    public SolarbeamHitResult raytraceEntities(Level world, Vec3 from, Vec3 to, boolean ignoreBlockWithoutBoundingBox) {
         SolarbeamHitResult result = new SolarbeamHitResult();
         result.setBlockHit(world.clip(new ClipContext(from, to, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this)));
         if (result.blockHit != null) {
@@ -310,7 +302,7 @@ public class DeathLaserEntity extends Entity {
         }
 
         public void decreaseTimer() {
-            if (this.timer > 0.0d) {
+            if (this.timer > 0d) {
                 this.timer--;
             }
         }
