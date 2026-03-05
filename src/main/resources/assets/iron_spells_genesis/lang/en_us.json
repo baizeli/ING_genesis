@@ -144,6 +144,11 @@
   "item.iron_spells_genesis.smithing_template.violet_upgrade.applies_to": "Arcane Crystal Equipment",
   "item.iron_spells_genesis.smithing_template.violet_upgrade.base_slot_description": "Add arcane crystal armor, weapon, or tool",
   "item.iron_spells_genesis.smithing_template.violet_upgrade.ingredients": "§5Purple Extreme Ingot",
+  "tooltip.united_as_one.violet_sword.line1": "Blocks 50% of incoming damage",
+  "tooltip.united_as_one.violet_axe.line1": "Chains through logs",
+  "tooltip.united_as_one.violet_pickaxe.line1": "Chains through ores",
+  "tooltip.united_as_one.violet_shovel.line1": "Hold Shift for 5x5 excavation",
+  "tooltip.united_as_one.violet_hoe.line1": "Feeling lucky...",
 
   "item.iron_spells_genesis.arcane_crystal": "Arcane Crystal",
   "item.iron_spells_genesis.blood_crystal": "Blood Crystal",
