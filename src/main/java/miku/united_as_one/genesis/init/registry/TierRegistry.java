@@ -17,7 +17,10 @@ public enum TierRegistry implements Tier {
             () -> Ingredient.of(ItemRegistry.VIOLET_FRAGMENTS.get())),
     // 神圣金属
     DIVINE_METAL(4, 5000, 12, 0, 22,
-            () -> Ingredient.of(ItemRegistry.DIVINE_METAL_INGOT.get()));
+            () -> Ingredient.of(ItemRegistry.DIVINE_METAL_INGOT.get())),
+
+    // 匕首
+    DARGGET(4, 8000, 20.0F, 11, 50, Ingredient::of);
 
     private final int level;
     private final int uses;
