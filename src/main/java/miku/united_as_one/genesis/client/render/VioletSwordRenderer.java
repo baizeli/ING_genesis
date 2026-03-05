@@ -38,15 +38,12 @@ public class VioletSwordRenderer {
 
                 PoseStack poseStack = event.getPoseStack();
                 poseStack.pushPose();
-
                 // --- 适配 1.7.10 风格参数 (修正版) ---
-
 // 1. 位移修正：
 // X: side * 0.4F  -> 将剑柄往屏幕边缘推一点，防止剑柄挡住中心
 // Y: -0.2F        -> 降低高度，防止出现在左上角
 // Z: -0.3F        -> 稍微拉远，确保能看清整把剑
                 poseStack.translate(side * 0.24F, -0.35F, -0.4F);
-
 
                 // 2. 核心旋转：
                 poseStack.mulPose(Axis.XP.rotationDegrees(-90.0F));

@@ -30,7 +30,7 @@ public class VioletSword extends SwordItem {
 
     @Override
     public void appendHoverText(@NotNull ItemStack stack, @Nullable Level level, @NotNull List<Component> tooltip, @NotNull TooltipFlag flag) {
-        tooltip.add(Component.literal("§7格挡: §f右键可减免 50% 受到的伤害"));
+        tooltip.add(Component.translatable("tooltip.united_as_one.violet_sword.line1"));
     }
 
     @Override
