@@ -4,6 +4,7 @@ import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import io.redspace.ironsspellbooks.api.spells.ISpellContainer;
 import io.redspace.ironsspellbooks.entity.spells.void_tentacle.VoidTentacle;
+import miku.united_as_one.genesis.client.renderer.entity.*;
 import miku.united_as_one.genesis.common.data.content.arcaneWorkbench.*;
 import miku.united_as_one.genesis.common.data.content.workbenchs.*;
 import miku.united_as_one.genesis.common.entity.*;
@@ -16,7 +17,7 @@ import miku.united_as_one.genesis.common.entity.spells.celestial_source.notuse.*
 import miku.united_as_one.genesis.client.ClientEvent;
 import miku.united_as_one.genesis.init.registry.client.ParticleRegistry;
 import miku.united_as_one.genesis.client.renderer.DistortWorldRender;
-import miku.united_as_one.genesis.client.renderer.spell.celestial_source.DeadStarDecreeCometRenderer;
+import miku.united_as_one.genesis.client.renderer.entity.spell.celestial_source.DeadStarDecreeCometRenderer;
 import miku.united_as_one.genesis.init.config.*;
 import miku.united_as_one.genesis.common.network.*;
 import miku.united_as_one.genesis.init.registry.spell.SpellAttributesRegistry;
@@ -172,6 +173,7 @@ public class Genesis
                 EntityRenderers.register(EntityRegistry.LIGHTNING_BOLT.get(), LightningBoltRenderer::new);
                 EntityRenderers.register(EntityRegistry.SWORD_ENTITY.get(), SwordEntityRenderer::new);
 //                EntityRenderers.register(EntityRegistry.THROW_BLOOD_AND_WOUNDS.get(), ThrowBloodAndWoundsRenderer::new);
+                EntityRenderers.register(EntityRegistry.DEATH_LASER.get(), DeathLaserRenderer::new);
 
                 EntityRenderers.register(EntityRegistry.DEAD_STAR_DECREE_COMET.get(),
                     context -> new DeadStarDecreeCometRenderer(context, 0.25f)

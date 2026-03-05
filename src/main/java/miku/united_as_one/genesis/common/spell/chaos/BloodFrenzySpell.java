@@ -23,7 +23,7 @@ public class BloodFrenzySpell extends ChaosBaseSpell {
         .setMinRarity(SpellRarity.COMMON)
         .setSchoolResource(SpellSchoolRegistry.CHAOS_RESOURCE)
         .setMaxLevel(3)
-        .setCooldownSeconds(420)
+        .setCooldownSeconds(102)
         .build();
 
     public BloodFrenzySpell() {

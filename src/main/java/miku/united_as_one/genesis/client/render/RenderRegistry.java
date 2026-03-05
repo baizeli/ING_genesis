@@ -3,7 +3,7 @@ package miku.united_as_one.genesis.client.render;
 import miku.united_as_one.genesis.common.entity.spells.blood_boss.blood_dagger.BloodDaggerRenderer;
 import miku.united_as_one.genesis.init.registry.EntityRegistry;
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.client.renderer.boss.BloodBossRenderer;
+import miku.united_as_one.genesis.client.renderer.entity.boss.BloodBossRenderer;
 import miku.united_as_one.genesis.client.render.cosmic.AvaritiaShaders;
 import miku.united_as_one.genesis.client.render.cosmic.CosmicModelLoader;
 import miku.united_as_one.genesis.client.render.entity.*;

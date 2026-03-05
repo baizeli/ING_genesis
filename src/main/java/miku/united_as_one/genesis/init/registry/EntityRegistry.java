@@ -1,6 +1,5 @@
 package miku.united_as_one.genesis.init.registry;
 
-import io.redspace.ironsspellbooks.entity.spells.FireEruptionAoe;
 import io.redspace.ironsspellbooks.entity.spells.void_tentacle.VoidTentacle;
 import miku.united_as_one.genesis.common.entity.*;
 import miku.united_as_one.genesis.common.entity.LightningBolt;
@@ -11,7 +10,6 @@ import miku.united_as_one.genesis.common.entity.spells.blood_boss.blood_dagger.B
 import miku.united_as_one.genesis.common.entity.spells.celestial_source.*;
 import miku.united_as_one.genesis.common.entity.spells.celestial_source.notuse.*;
 import miku.united_as_one.genesis.Genesis;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.*;
@@ -127,4 +125,11 @@ public class EntityRegistry {
                     .updateInterval(1)
                     .setShouldReceiveVelocityUpdates(false)
                     .build("tremor_aoe_entity"));
+
+    public static final RegistryObject<EntityType<DeathLaserEntity>> DEATH_LASER = ENTITY_TYPES.register("death_laser",
+            () -> EntityType.Builder.of(DeathLaserEntity::new, MobCategory.MISC)
+                    .sized(0.5f, 0.5f)
+                    .clientTrackingRange(64)
+                    .updateInterval(1)
+                    .build("death_laser"));
 }

@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.common.network;
 
-import miku.united_as_one.genesis.client.renderer.spell.chaos.WireBoxRenderer;
+import miku.united_as_one.genesis.client.renderer.entity.spell.chaos.WireBoxRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.Direction;
