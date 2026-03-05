@@ -1,9 +1,9 @@
-package miku.united_as_one.genesis.client.renderer.entity;
+package miku.united_as_one.genesis.client.renderer.entity.laser;
 
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Axis;
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.common.entity.DeathLaserEntity;
+import miku.united_as_one.genesis.common.entity.laser.DeathLaserEntity;
 import net.minecraft.client.*;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.entity.*;
@@ -35,9 +35,9 @@ public class DeathLaserRenderer extends EntityRenderer<DeathLaserEntity> {
 
     public void render(DeathLaserEntity solarBeam, float entityYaw, float delta, @NotNull PoseStack matrixStackIn, @NotNull MultiBufferSource bufferIn, int packedLightIn) {
         this.clearerView = (solarBeam.caster instanceof Player && (Minecraft.getInstance()).player == solarBeam.caster && (Minecraft.getInstance()).options.getCameraType() == CameraType.FIRST_PERSON);
-        double collidePosX = solarBeam.prevCollidePosX + (solarBeam.collidePosX - solarBeam.prevCollidePosX) * delta;
+        /*double collidePosX = solarBeam.prevCollidePosX + (solarBeam.collidePosX - solarBeam.prevCollidePosX) * delta;
         double collidePosY = solarBeam.prevCollidePosY + (solarBeam.collidePosY - solarBeam.prevCollidePosY) * delta;
-        double collidePosZ = solarBeam.prevCollidePosZ + (solarBeam.collidePosZ - solarBeam.prevCollidePosZ) * delta;
+        double collidePosZ = solarBeam.prevCollidePosZ + (solarBeam.collidePosZ - solarBeam.prevCollidePosZ) * delta;*/
         double posX = solarBeam.xo + (solarBeam.getX() - solarBeam.xo) * delta;
         double posY = solarBeam.yo + (solarBeam.getY() - solarBeam.yo) * delta;
         double posZ = solarBeam.zo + (solarBeam.getZ() - solarBeam.zo) * delta;
@@ -45,7 +45,7 @@ public class DeathLaserRenderer extends EntityRenderer<DeathLaserEntity> {
         float pitch = solarBeam.prevPitch + (solarBeam.renderPitch - solarBeam.prevPitch) * delta;
         
         /*float length = (float)Math.sqrt(Math.pow(collidePosX - posX, 2d) + Math.pow(collidePosY - posY, 2d) + Math.pow(collidePosZ - posZ, 2d));*/
-        int frame = Mth.floor(((solarBeam.appear.getTimer() - 1) + delta) * 2f);
+        int frame = Mth.floor(((solarBeam.appearTimer - 1) + delta) * 2f);
         if (frame < 0) frame = 6;
         RenderType.CompositeState rendertype$state = RenderType.CompositeState.builder()
                 .setTextureState(new RenderStateShard.TextureStateShard(getTextureLocation(solarBeam), false, false))

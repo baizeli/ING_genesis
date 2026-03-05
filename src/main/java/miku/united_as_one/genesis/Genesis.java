@@ -4,7 +4,7 @@ import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import io.redspace.ironsspellbooks.api.spells.ISpellContainer;
 import io.redspace.ironsspellbooks.entity.spells.void_tentacle.VoidTentacle;
-import miku.united_as_one.genesis.client.renderer.entity.*;
+import miku.united_as_one.genesis.client.renderer.entity.laser.DeathLaserRenderer;
 import miku.united_as_one.genesis.common.data.content.arcaneWorkbench.*;
 import miku.united_as_one.genesis.common.data.content.workbenchs.*;
 import miku.united_as_one.genesis.common.entity.*;
