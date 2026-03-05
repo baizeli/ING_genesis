@@ -1,8 +1,6 @@
-package miku.united_as_one.genesis.client.renderer.boss;
+package miku.united_as_one.genesis.client.renderer.entity.boss;
 
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import io.redspace.ironsspellbooks.entity.mobs.abstract_spell_casting_mob.AbstractSpellCastingMob;
-import io.redspace.ironsspellbooks.entity.mobs.abstract_spell_casting_mob.AbstractSpellCastingMobRenderer;
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.client.model.boss.BloodBossModel;
 import miku.united_as_one.genesis.client.render.FFRenderTypes;
