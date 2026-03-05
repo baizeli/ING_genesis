@@ -7,7 +7,10 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.*;
 import net.minecraft.util.Mth;
-import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.*;
+import net.minecraft.world.damagesource.*;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.animal.Salmon;
 import net.minecraft.world.level.*;
@@ -118,17 +121,20 @@ public class DeathLaserEntity extends Entity {
         }
         if (this.tickCount > 20) {
             calculateEndPos();
-            List<LivingEntity> hit = (raytraceEntities(this.level(), new Vec3(getX(), getY(), getZ()), new Vec3(this.endPosX, this.endPosY, this.endPosZ), true)).entities;
-            if (this.blockSide != null)
-                spawnExplosionParticles();
-            if (!this.level().isClientSide)
-                for (LivingEntity target : hit) {
+            if (this.blockSide != null) spawnExplosionParticles();
+            if (!this.level().isClientSide) {
+                for (LivingEntity target : (
+                    raytraceEntities(this.level(), new Vec3(getX(), getY(), getZ()),
+                        new Vec3(this.endPosX, this.endPosY, this.endPosZ), true
+                    )).entities) {
                     target.invulnerableTime = 0;
-                    target.hurt(damageSources().indirectMagic(this, this.caster), this.customDamage);
+                    target.hurt(new DamageSource(this.level().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(ResourceKey.create(
+                        Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath("irons_spellbooks", "holy_magic")
+                    )), this.caster, this), this.customDamage);
                 }
+            }
         }
-        if (this.tickCount - 20 > getDuration())
-            this.on = false;
+        if (this.tickCount - 20 > getDuration()) this.on = false;
     }
 
     private void spawnExplosionParticles() {
