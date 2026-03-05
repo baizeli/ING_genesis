@@ -19,8 +19,7 @@ public class UnparalleledEffect extends MobEffect {
     @Override
     public void applyEffectTick(LivingEntity entity, int amplifier) {
         super.applyEffectTick(entity, amplifier);
-        if (entity instanceof Player) {
-            Player player = (Player) entity;
+        if (entity instanceof Player player) {
             player.getPersistentData().putBoolean("isUnparalleledActive", true);
         }
     }
@@ -33,8 +32,7 @@ public class UnparalleledEffect extends MobEffect {
     @Override
     public void removeAttributeModifiers(LivingEntity entity, AttributeMap attributeMap, int amplifier) {
         super.removeAttributeModifiers(entity, attributeMap, amplifier);
-        if (entity instanceof Player) {
-            Player player = (Player) entity;
+        if (entity instanceof Player player) {
             player.getPersistentData().putBoolean("isUnparalleledActive", false);
         }
     }

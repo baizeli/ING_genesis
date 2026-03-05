@@ -57,6 +57,8 @@
 
   "spell.iron_spells_genesis.blazing_blade_barrage": "Blazing Blade Barrage",
 
+  "spell.iron_spells_genesis.death_laser": "Death Laser",
+
   "spell.iron_spells_genesis.warped_blood_burst.guide": "Consume 50% of your own HP to deal damage to all enemies in an area and inflict a healing-negation effect.",
   "spell.iron_spells_genesis.warped_barrier.guide": "Convert 90% of health into Absorption.",
   "spell.iron_spells_genesis.reverse_plague.guide": "Exchange the target's positive effects with your own negative effects, temporarily preventing the target from gaining positive effects, halting your own effect acquisition, and transferring the negative effects.",
@@ -146,6 +148,11 @@
   "item.iron_spells_genesis.smithing_template.violet_upgrade.applies_to": "Arcane Crystal Equipment",
   "item.iron_spells_genesis.smithing_template.violet_upgrade.base_slot_description": "Add arcane crystal armor, weapon, or tool",
   "item.iron_spells_genesis.smithing_template.violet_upgrade.ingredients": "§5Purple Extreme Ingot",
+  "tooltip.united_as_one.violet_sword.line1": "Blocks 50% of incoming damage",
+  "tooltip.united_as_one.violet_axe.line1": "Chains through logs",
+  "tooltip.united_as_one.violet_pickaxe.line1": "Chains through ores",
+  "tooltip.united_as_one.violet_shovel.line1": "Hold Shift for 5x5 excavation",
+  "tooltip.united_as_one.violet_hoe.line1": "Feeling lucky...",
 
   "item.iron_spells_genesis.arcane_crystal": "Arcane Crystal",
   "item.iron_spells_genesis.blood_crystal": "Blood Crystal",
@@ -252,6 +259,7 @@
   "entity.iron_spells_genesis.blood_boss": "§4Chaos Sequence·Blood Boss",
   "entity.iron_spells_genesis.blood_dagger": "Blood Dagger",
   "entity.iron_spells_genesis.blood_field": "Blood Field",
+  "entity.iron_spells_genesis.death_laser": "Death Laser",
 
   "damage_type.iron_spells_genesis.celestial_source_magic": "Celestial Source Magic Damage",
   "damage_type.iron_spells_genesis.chaos_magic": "Chaos Magic Damage",

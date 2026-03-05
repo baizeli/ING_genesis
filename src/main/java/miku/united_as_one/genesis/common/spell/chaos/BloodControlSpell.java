@@ -23,7 +23,7 @@ public class BloodControlSpell extends ChaosBaseSpell {
         .setMinRarity(SpellRarity.COMMON)
         .setSchoolResource(SpellSchoolRegistry.CHAOS_RESOURCE)
         .setMaxLevel(3)
-        .setCooldownSeconds(10.0F)
+        .setCooldownSeconds(10)
         .build();
 
     public BloodControlSpell() {
@@ -81,19 +81,14 @@ public class BloodControlSpell extends ChaosBaseSpell {
         if (!level.isClientSide && playerMagicData.getAdditionalCastData() instanceof TargetEntityCastData targetData) {
             LivingEntity targetEntity = targetData.getTarget((ServerLevel) level);
             if (targetEntity != null) {
-                // 计算消耗的血量
-                float healthCostPercentage = getHealthCostPercentage(spellLevel);
-                float maxHealth = entity.getMaxHealth();
-                float healthToConsume = maxHealth * healthCostPercentage;
-                
+                float healthToConsume = entity.getMaxHealth() * getHealthCostPercentage(spellLevel);
+
                 entity.hurt(entity.damageSources().genericKill(), healthToConsume);
-                
-                // 计算伤害[消耗的血量和法术强度]
-                float damageMultiplier = getDamageMultiplier(spellLevel, entity);
-                float damage = healthToConsume * damageMultiplier;
-                
-                // 对目标造成伤害
-                DamageSources.applyDamage(targetEntity, damage, this.getDamageSource(entity));
+                DamageSources.applyDamage(
+                    targetEntity, 
+                    healthToConsume * getDamageMultiplier(spellLevel, entity), 
+                    this.getDamageSource(entity)
+                );
             }
         }
 

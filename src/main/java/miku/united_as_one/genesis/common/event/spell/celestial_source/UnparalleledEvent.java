@@ -1,6 +1,5 @@
 package miku.united_as_one.genesis.common.event.spell.celestial_source;
 
-import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.client.renderer.AfterImageManager;
 import miku.united_as_one.genesis.init.registry.EffectRegistry;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
@@ -16,7 +15,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import java.util.*;
 
-@Mod.EventBusSubscriber(modid = Genesis.MODID)
+@Mod.EventBusSubscriber
 public class UnparalleledEvent {
     public static final double SPEED_BONUS = 1.0; // 移动速度
     public static final double DAMAGE_BONUS = 1.0; // 伤害

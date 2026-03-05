@@ -23,7 +23,7 @@ public class GlazedFlowerRainSpell extends CelestialSourceBaseSpell {
         .setMinRarity(SpellRarity.LEGENDARY)
         .setSchoolResource(SpellSchoolRegistry.CELESTIAL_SOURCE_RESOURCE)
         .setMaxLevel(1)
-        .setCooldownSeconds(600.0F)
+        .setCooldownSeconds(600)
         .build();
 
     public GlazedFlowerRainSpell() {
@@ -62,14 +62,7 @@ public class GlazedFlowerRainSpell extends CelestialSourceBaseSpell {
 
     // 持续时间
     private int getDurationTicks(int spellLevel, LivingEntity caster) {
-        int baseDuration = (180 + (spellLevel - 1) * 60) * 20;
-        if (caster == null) {
-            return baseDuration;
-        }
-        
-        float spellPower = getSpellPower(spellLevel, caster);
-        int additionalDuration = (int) ((spellPower - 1.0f) * 40);
-        return baseDuration + additionalDuration;
+        return (180 + (spellLevel - 1) * 60) * 20 + (int) ((getSpellPower(spellLevel, caster) - 1) * 40);
     }
 
     @Override

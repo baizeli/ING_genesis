@@ -32,15 +32,15 @@ public class DeadStarDecreeSpell extends AbstractSpell {
         .setMinRarity(SpellRarity.COMMON)
         .setSchoolResource(SpellSchoolRegistry.CELESTIAL_SOURCE_RESOURCE)
         .setMaxLevel(3)
-        .setCooldownSeconds(240.0F)
+        .setCooldownSeconds(50)
         .build();
 
     public DeadStarDecreeSpell() {
-        this.manaCostPerLevel = 50;
+        this.manaCostPerLevel = 100;
         this.baseSpellPower = 25;
         this.spellPowerPerLevel = 25;
         this.castTime = 60;
-        this.baseManaCost = 500;
+        this.baseManaCost = 100;
     }
 
     @Override
@@ -74,30 +74,19 @@ public class DeadStarDecreeSpell extends AbstractSpell {
 
     // 陨石的伤害
     private float getDamage(int spellLevel, LivingEntity caster) {
-        float baseDamage = 10 * spellLevel;
-        if (caster == null) {
-            return baseDamage;
-        }
-        
-        float spellPower = getSpellPower(spellLevel, caster);
-        float additionalDamage = spellPower - 1.0f;
-        return baseDamage + additionalDamage;
+        float originalDamage = 10 * spellLevel + getSpellPower(spellLevel, caster) - 1;
+        return originalDamage * 0.25f;
     }
     
     // 大陨石的伤害
     private float getLargeCometDamage(int spellLevel, LivingEntity caster) {
-        float baseDamage = 100 + (spellLevel - 1) * 10;
-        if (caster == null) {
-            return baseDamage;
-        }
-        
-        float spellPower = getSpellPower(spellLevel, caster);
-        float additionalDamage = spellPower - 1.0f;
-        return baseDamage + additionalDamage;
+        float originalDamage = 100 + (spellLevel - 1) * 10 + getSpellPower(spellLevel, caster) - 1;
+        return originalDamage * 0.25f;
     }
 
     private float getRadius(int spellLevel, LivingEntity caster) {
-        return 15;
+        float[] radii = {10.0f, 11.0f, 12.0f};
+        return radii[Math.min(spellLevel - 1, radii.length - 1)];
     }
 
     @Override
@@ -107,7 +96,8 @@ public class DeadStarDecreeSpell extends AbstractSpell {
 
     @Override
     public int getManaCost(int spellLevel) {
-        return 500 + (spellLevel - 1) * 50;
+        int[] manaCosts = {100, 200, 300};
+        return manaCosts[Math.min(spellLevel - 1, manaCosts.length - 1)];
     }
 
     @Override
@@ -132,10 +122,10 @@ public class DeadStarDecreeSpell extends AbstractSpell {
 
     @Override
     public void onServerCastTick(Level level, int spellLevel, LivingEntity entity, @Nullable MagicData playerMagicData) {
-        if (playerMagicData == null || !(playerMagicData.getAdditionalCastData() instanceof DeadStarDecreeCastData castData)) {
-            return;
-        }
-
+        if (playerMagicData == null || 
+            !(playerMagicData.getAdditionalCastData() instanceof DeadStarDecreeCastData castData)
+        ) return;
+        
         float radius = getRadius(spellLevel, entity);
         int tick = playerMagicData.getCastDurationRemaining() - 1;
 

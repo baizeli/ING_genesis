@@ -23,15 +23,15 @@ public class LifeAndDeathRealmSpell extends CelestialSourceBaseSpell {
         .setMinRarity(SpellRarity.COMMON)
         .setSchoolResource(SpellSchoolRegistry.CELESTIAL_SOURCE_RESOURCE)
         .setMaxLevel(3)
-        .setCooldownSeconds(240.0F)
+        .setCooldownSeconds(84)
         .build();
 
     public LifeAndDeathRealmSpell() {
-        this.manaCostPerLevel = 100;
+        this.manaCostPerLevel = 10;
         this.baseSpellPower = 5;
         this.spellPowerPerLevel = 5;
-        this.castTime = 20;
-        this.baseManaCost = 100;
+        this.castTime = 0;
+        this.baseManaCost = 350;
     }
 
     @Override
@@ -46,7 +46,7 @@ public class LifeAndDeathRealmSpell extends CelestialSourceBaseSpell {
 
     @Override
     public CastType getCastType() {
-        return CastType.LONG;
+        return CastType.INSTANT;
     }
 
     @Override
@@ -61,24 +61,15 @@ public class LifeAndDeathRealmSpell extends CelestialSourceBaseSpell {
 
     // 持续时间
     private int getBuffDuration(int spellLevel, LivingEntity caster) {
-        int baseDuration = 100 + (spellLevel - 1) * 100;
-        if (caster == null) {
-            return baseDuration;
-        }
-        
-        float spellPower = getSpellPower(spellLevel, caster);
-        int additionalDuration = (int) ((spellPower - 1.0f) * 4);
-        return baseDuration + additionalDuration;
+        return 100 + (spellLevel - 1) * 100 + (int) ((getSpellPower(spellLevel, caster) - 1) * 4);
     }
 
     @Override
     public void onCast(Level level, int spellLevel, LivingEntity entity, CastSource castSource, MagicData playerMagicData) {
         if (!level.isClientSide && entity instanceof ServerPlayer player) {
-            int duration = getBuffDuration(spellLevel, entity);
-            
             player.addEffect(new MobEffectInstance(
                 EffectRegistry.LIFE_AND_DEATH_REALM.get(),
-                duration,
+                getBuffDuration(spellLevel, entity),
                 0,
                 false,
                 false,

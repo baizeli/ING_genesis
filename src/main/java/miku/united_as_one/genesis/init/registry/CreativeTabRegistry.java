@@ -5,7 +5,8 @@ import io.redspace.ironsspellbooks.api.spells.*;
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.common.spell.celestial_source.*;
 import miku.united_as_one.genesis.common.spell.chaos.*;
-import miku.united_as_one.genesis.common.spell.fire.BlazingBladeBarrageSpell;
+import miku.united_as_one.genesis.common.spell.fire.*;
+import miku.united_as_one.genesis.common.spell.holy.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.*;
 import net.minecraft.world.item.*;
@@ -63,6 +64,9 @@ public class CreativeTabRegistry {
     // 炽焰法术卷轴
     public static final RegistryObject<AbstractSpell> BLAZING_BLADE_BARRAGE_SPELL;
 
+    // 神圣法术卷轴
+    public static final RegistryObject<AbstractSpell> HOLY_LASER_SPELL;
+
     static {
         // 混沌法术卷轴
         WARPED_BLOOD_BURST_SPELL = registerSpell(new WarpedBloodBurstSpell());
@@ -95,12 +99,13 @@ public class CreativeTabRegistry {
 
         BLAZING_BLADE_BARRAGE_SPELL = registerSpell(new BlazingBladeBarrageSpell());
 
+        // 神圣法术卷轴
+        HOLY_LASER_SPELL = registerSpell(new DeathLaserSpell());
+
         // iron的法术创世纪：方块
         Genesis.L2_REGISTRATE
             .buildModCreativeTab("block", "itemGroup." + Genesis.MOD_ID, builder -> builder
-                    .icon(() -> ItemRegistry.CELESTIAL_SOURCE_BLOCK_ITEM.get().getDefaultInstance())
-                    .displayItems(((parameters, output) -> {
-                    }))
+                .icon(() -> ItemRegistry.CELESTIAL_SOURCE_BLOCK.get().getDefaultInstance())
             );
             
         // iron的法术创世纪：材料
@@ -153,6 +158,16 @@ public class CreativeTabRegistry {
                                     NYAN_CAT_JET_SPELL.get()
                             };
 
+                            // 炽焰法术卷轴
+                            AbstractSpell[] fireSpells = {
+                                BLAZING_BLADE_BARRAGE_SPELL.get()
+                            };
+
+                            // 神圣法术卷轴
+                            AbstractSpell[] holySpells = {
+                                HOLY_LASER_SPELL.get()
+                            };
+
                             // 混沌法术卷轴
                             for (AbstractSpell spell : chaosSpells) {
                                 for (int level = spell.getMinLevel(); level <= spell.getMaxLevel(); level++) {
@@ -162,6 +177,20 @@ public class CreativeTabRegistry {
 
                             // 星源法术卷轴
                             for (AbstractSpell spell : celestialSpells) {
+                                for (int level = spell.getMinLevel(); level <= spell.getMaxLevel(); level++) {
+                                    output.accept(createScrollWithSpell(spell, level));
+                                }
+                            }
+
+                            // 炽焰法术卷轴
+                            for (AbstractSpell spell : fireSpells) {
+                                for (int level = spell.getMinLevel(); level <= spell.getMaxLevel(); level++) {
+                                    output.accept(createScrollWithSpell(spell, level));
+                                }
+                            }
+
+                            // 神圣法术卷轴
+                            for (AbstractSpell spell : holySpells) {
                                 for (int level = spell.getMinLevel(); level <= spell.getMaxLevel(); level++) {
                                     output.accept(createScrollWithSpell(spell, level));
                                 }

@@ -1,6 +1,5 @@
 package miku.united_as_one.genesis.common.event.armor;
 
-import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.util.ArmorSetUtil;
 import net.minecraft.world.effect.*;
 import net.minecraft.world.entity.player.Player;
@@ -8,20 +7,15 @@ import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(modid = Genesis.MOD_ID)
+@Mod.EventBusSubscriber
 public class VioletZenithArmorEvent {
 
     @SubscribeEvent
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
-        if (event.phase == TickEvent.Phase.END) {
-            return;
-        }
-        
         Player player = event.player;
 
-        if (player.level().isClientSide) {
-            return;
-        }
+        if (event.phase == TickEvent.Phase.END) return;
+        if (player.level().isClientSide) return;
 
         if (ArmorSetUtil.isWearingVioletZenithHelmet(player)) {
             // 夜视
