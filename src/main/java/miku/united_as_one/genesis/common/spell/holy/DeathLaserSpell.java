@@ -6,7 +6,7 @@ import io.redspace.ironsspellbooks.api.config.DefaultConfig;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.registry.SchoolRegistry;
 import io.redspace.ironsspellbooks.api.spells.*;
-import io.redspace.ironsspellbooks.api.util.Utils;
+import io.redspace.ironsspellbooks.api.util.*;
 import net.minecraft.network.chat.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
@@ -28,7 +28,7 @@ public class DeathLaserSpell extends AbstractSpell {
         this.manaCostPerLevel = 25;
         this.baseSpellPower = 5;
         this.spellPowerPerLevel = 2;
-        this.castTime = 0;
+        this.castTime = 20 * 4;
         this.baseManaCost = 50;
     }
 
@@ -56,7 +56,17 @@ public class DeathLaserSpell extends AbstractSpell {
 
     @Override
     public CastType getCastType() {
-        return CastType.INSTANT;
+        return CastType.LONG;
+    }
+
+    @Override
+    public AnimationHolder getCastStartAnimation() {
+        return SpellAnimations.CHARGE_ANIMATION;
+    }
+
+    @Override
+    public AnimationHolder getCastFinishAnimation() {
+        return SpellAnimations.FINISH_ANIMATION;
     }
 
     private float getDamage(int spellLevel, LivingEntity caster) {
