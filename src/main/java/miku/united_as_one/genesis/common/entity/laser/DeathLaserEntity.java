@@ -1,4 +1,4 @@
-package miku.united_as_one.genesis.common.entity;
+package miku.united_as_one.genesis.common.entity.laser;
 
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -42,7 +42,8 @@ public class DeathLaserEntity extends Entity {
     public float renderYaw;
     public float renderPitch;
 
-    public ControlledAnimation appear = new ControlledAnimation(3);
+    public int appearTimer = 0;
+    private final int APPEAR_DURATION = 3;
 
     public boolean on = true;
     public Direction blockSide = null;
@@ -106,11 +107,11 @@ public class DeathLaserEntity extends Entity {
         }
         this.prevYaw = this.renderYaw;
         this.prevPitch = this.renderPitch;
-        if (!this.on && this.appear.getTimer() == 0) discard();
+        if (!this.on && this.appearTimer == 0) discard();
         if (this.on && this.tickCount > 20) {
-            this.appear.increaseTimer();
+            if (this.appearTimer < this.APPEAR_DURATION) this.appearTimer++;
         } else {
-            this.appear.decreaseTimer();
+            if (this.appearTimer > 0) this.appearTimer--;
         }
         if (this.caster != null && !this.caster.isAlive()) discard();
         if (this.level().isClientSide && this.tickCount <= 10 && this.caster != null) {
@@ -332,38 +333,6 @@ public class DeathLaserEntity extends Entity {
 
         public void addEntityHit(LivingEntity entity) {
             this.entities.add(entity);
-        }
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    public static class ControlledAnimation {
-        private int timer;
-        private int duration;
-
-        public ControlledAnimation(int d) {
-            this.timer = 0;
-            this.duration = d;
-        }
-
-        public void setDuration(int d) {
-            this.timer = 0;
-            this.duration = d;
-        }
-
-        public int getTimer() {
-            return this.timer;
-        }
-
-        public void increaseTimer() {
-            if (this.timer < this.duration) {
-                this.timer++;
-            }
-        }
-
-        public void decreaseTimer() {
-            if (this.timer > 0d) {
-                this.timer--;
-            }
         }
     }
 }

@@ -4,6 +4,7 @@ import io.redspace.ironsspellbooks.entity.spells.void_tentacle.VoidTentacle;
 import miku.united_as_one.genesis.common.entity.*;
 import miku.united_as_one.genesis.common.entity.LightningBolt;
 import miku.united_as_one.genesis.common.entity.boss.BloodBoss;
+import miku.united_as_one.genesis.common.entity.laser.DeathLaserEntity;
 import miku.united_as_one.genesis.common.entity.spells.blood_boss.BloodBossFireEruptionAoe;
 import miku.united_as_one.genesis.common.entity.spells.blood_boss.blood_dagger.BloodDaggerEntity;
 import miku.united_as_one.genesis.common.entity.spells.blood_boss.blood_dagger.BloodField;
