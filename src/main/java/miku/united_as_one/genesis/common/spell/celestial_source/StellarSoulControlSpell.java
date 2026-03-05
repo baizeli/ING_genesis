@@ -23,15 +23,15 @@ public class StellarSoulControlSpell extends CelestialSourceBaseSpell {
         .setMinRarity(SpellRarity.COMMON)
         .setSchoolResource(SpellSchoolRegistry.CELESTIAL_SOURCE_RESOURCE)
         .setMaxLevel(3)
-        .setCooldownSeconds(180.0F)
+        .setCooldownSeconds(90)
         .build();
 
     public StellarSoulControlSpell() {
-        this.manaCostPerLevel = 100;
+        this.manaCostPerLevel = 50;
         this.baseSpellPower = 60;
         this.spellPowerPerLevel = 5;
         this.castTime = 20;
-        this.baseManaCost = 400;
+        this.baseManaCost = 200;
     }
 
     @Override
@@ -61,14 +61,10 @@ public class StellarSoulControlSpell extends CelestialSourceBaseSpell {
 
     // 持续时间
     private int getBuffDuration(int spellLevel, LivingEntity caster) {
-        int baseDuration = 1200 + (spellLevel - 1) * 100;
-        if (caster == null) {
-            return baseDuration;
-        }
+        int[] durations = {15, 20, 25};
         
-        float spellPower = getSpellPower(spellLevel, caster);
-        int additionalDuration = (int) ((spellPower - 1.0f) * 20);
-        return baseDuration + additionalDuration;
+        return durations[Math.min(spellLevel - 1, durations.length - 1)] * 20 + 
+            (int) ((getSpellPower(spellLevel, caster) - 1) * 20);
     }
 
     @Override
