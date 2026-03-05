@@ -60,9 +60,9 @@ public class DeathLaserRenderer extends EntityRenderer<DeathLaserEntity> {
         renderBeam(solarBeam.getLaserLength(), 57 * yaw, 57 * pitch, frame, matrixStackIn, ivertexbuilder, packedLightIn);
         if (solarBeam.getRenderEnd()) {
             matrixStackIn.pushPose();
-            double endX = posX + solarBeam.getLaserLength() * Math.cos(yaw) * Math.cos(pitch);
-            double endZ = posZ + solarBeam.getLaserLength() * Math.sin(yaw) * Math.cos(pitch);
-            double endY = posY + solarBeam.getLaserLength() * Math.sin(pitch);
+            double endX = posX + solarBeam.getLaserLength() * Math.cos(Math.toRadians(57 * yaw)) * Math.cos(Math.toRadians(57 * pitch));
+            double endZ = posZ + solarBeam.getLaserLength() * Math.sin(Math.toRadians(57 * yaw)) * Math.cos(Math.toRadians(57 * pitch));
+            double endY = posY + solarBeam.getLaserLength() * Math.sin(Math.toRadians(57 * pitch));
             matrixStackIn.translate(endX - posX, endY - posY, endZ - posZ);
             renderEnd(frame, solarBeam.blockSide, matrixStackIn, ivertexbuilder, packedLightIn);
             matrixStackIn.popPose();
