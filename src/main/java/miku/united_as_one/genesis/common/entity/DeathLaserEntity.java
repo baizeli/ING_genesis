@@ -7,7 +7,6 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.syncher.*;
 import net.minecraft.util.Mth;
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.*;
 import net.minecraft.world.damagesource.*;
@@ -26,6 +25,7 @@ public class DeathLaserEntity extends Entity {
     public LivingEntity caster;
 
     public float customDamage = 3;
+    public float laserLength = 20;
 
     public double endPosX;
     public double endPosY;
@@ -52,6 +52,9 @@ public class DeathLaserEntity extends Entity {
     private static final EntityDataAccessor<Integer> DURATION = SynchedEntityData.defineId(DeathLaserEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> HAS_PLAYER = SynchedEntityData.defineId(DeathLaserEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> CASTER = SynchedEntityData.defineId(DeathLaserEntity.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Float> LASER_LENGTH = SynchedEntityData.defineId(DeathLaserEntity.class, EntityDataSerializers.FLOAT);
+    private static final EntityDataAccessor<Boolean> RENDER_START = SynchedEntityData.defineId(DeathLaserEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> RENDER_END = SynchedEntityData.defineId(DeathLaserEntity.class, EntityDataSerializers.BOOLEAN);
 
     public float prevYaw;
     public float prevPitch;
@@ -156,6 +159,9 @@ public class DeathLaserEntity extends Entity {
         getEntityData().define(DURATION, 0);
         getEntityData().define(HAS_PLAYER, Boolean.FALSE);
         getEntityData().define(CASTER, -1);
+        getEntityData().define(LASER_LENGTH, 20f);
+        getEntityData().define(RENDER_START, false);
+        getEntityData().define(RENDER_END, true);
     }
 
     public float getYaw() {
@@ -204,6 +210,31 @@ public class DeathLaserEntity extends Entity {
     public void setCustomDamage(float damage) {
         this.customDamage = damage;
     }
+    
+    public void setLaserLength(float length) {
+        this.laserLength = length;
+        getEntityData().set(LASER_LENGTH, length);
+    }
+    
+    public float getLaserLength() {
+        return getEntityData().get(LASER_LENGTH);
+    }
+    
+    public void setRenderStart(boolean render) {
+        getEntityData().set(RENDER_START, render);
+    }
+    
+    public boolean getRenderStart() {
+        return getEntityData().get(RENDER_START);
+    }
+    
+    public void setRenderEnd(boolean render) {
+        getEntityData().set(RENDER_END, render);
+    }
+    
+    public boolean getRenderEnd() {
+        return getEntityData().get(RENDER_END);
+    }
 
     protected void readAdditionalSaveData(@NotNull CompoundTag nbt) {}
 
@@ -214,7 +245,7 @@ public class DeathLaserEntity extends Entity {
     }
 
     private void calculateEndPos() {
-        double radius = (this.caster instanceof Salmon) ? 30d : 20d;
+        double radius = (this.caster instanceof Salmon) ? 30d : getLaserLength();
         if (this.level().isClientSide()) {
             this.endPosX = getX() + radius * Math.cos(this.renderYaw) * Math.cos(this.renderPitch);
             this.endPosZ = getZ() + radius * Math.sin(this.renderYaw) * Math.cos(this.renderPitch);
