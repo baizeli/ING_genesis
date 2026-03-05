@@ -2,6 +2,7 @@ package miku.united_as_one.genesis.common.event.item.tool.pickaxe;
 
 import miku.united_as_one.genesis.common.items.tool.pickaxe.DivineMetalPickaxe;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.ExperienceOrb;
@@ -52,6 +53,10 @@ public class DivineMetalPickaxeEvent {
                                     pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
                                     (int) (recipe.get().getExperience() * drop.getCount())
                                 )
+                            );
+                            ((ServerLevel) level).sendParticles(ParticleTypes.FLAME,
+                                pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
+                                10, 0.5, 0.5, 0.5, 0.01
                             );
                             continue;
                         }
