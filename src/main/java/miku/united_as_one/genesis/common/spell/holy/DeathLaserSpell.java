@@ -87,6 +87,9 @@ public class DeathLaserSpell extends AbstractSpell {
                 deathLaser.setDuration(getDurationTicks());
                 deathLaser.setFollowPlayer(true);
                 deathLaser.setCustomDamage(getDamage(spellLevel, entity));
+                deathLaser.setLaserLength(5);
+                deathLaser.setRenderStart(true);
+                deathLaser.setRenderEnd(true);
                 level.addFreshEntity(deathLaser);
             }
         }

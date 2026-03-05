@@ -44,7 +44,7 @@ public class DeathLaserRenderer extends EntityRenderer<DeathLaserEntity> {
         float yaw = solarBeam.prevYaw + (solarBeam.renderYaw - solarBeam.prevYaw) * delta;
         float pitch = solarBeam.prevPitch + (solarBeam.renderPitch - solarBeam.prevPitch) * delta;
         
-        float length = (float)Math.sqrt(Math.pow(collidePosX - posX, 2d) + Math.pow(collidePosY - posY, 2d) + Math.pow(collidePosZ - posZ, 2d));
+        /*float length = (float)Math.sqrt(Math.pow(collidePosX - posX, 2d) + Math.pow(collidePosY - posY, 2d) + Math.pow(collidePosZ - posZ, 2d));*/
         int frame = Mth.floor(((solarBeam.appear.getTimer() - 1) + delta) * 2f);
         if (frame < 0) frame = 6;
         RenderType.CompositeState rendertype$state = RenderType.CompositeState.builder()
@@ -56,12 +56,14 @@ public class DeathLaserRenderer extends EntityRenderer<DeathLaserEntity> {
                 .setWriteMaskState(RenderStateShard.COLOR_WRITE)
                 .createCompositeState(false);
         VertexConsumer ivertexbuilder = bufferIn.getBuffer(RenderType.create("glow_beam", DefaultVertexFormat.NEW_ENTITY, VertexFormat.Mode.QUADS, 256, true, true, rendertype$state));
-        renderStart(frame, matrixStackIn, ivertexbuilder, packedLightIn);
-        renderBeam(length, 57 * yaw, 57 * pitch, frame, matrixStackIn, ivertexbuilder, packedLightIn);
-        matrixStackIn.pushPose();
-        matrixStackIn.translate(collidePosX - posX, collidePosY - posY, collidePosZ - posZ);
-        renderEnd(frame, solarBeam.blockSide, matrixStackIn, ivertexbuilder, packedLightIn);
-        matrixStackIn.popPose();
+        if (solarBeam.getRenderStart()) renderStart(frame, matrixStackIn, ivertexbuilder, packedLightIn);
+        renderBeam(solarBeam.getLaserLength(), 57 * yaw, 57 * pitch, frame, matrixStackIn, ivertexbuilder, packedLightIn);
+        if (solarBeam.getRenderEnd()) {
+            matrixStackIn.pushPose();
+            matrixStackIn.translate(collidePosX - posX, collidePosY - posY, collidePosZ - posZ);
+            renderEnd(frame, solarBeam.blockSide, matrixStackIn, ivertexbuilder, packedLightIn);
+            matrixStackIn.popPose();
+        }
     }
 
     private void renderFlatQuad(int frame, PoseStack matrixStackIn, VertexConsumer builder, int packedLightIn) {
