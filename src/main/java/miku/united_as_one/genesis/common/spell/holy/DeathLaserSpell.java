@@ -38,9 +38,10 @@ public class DeathLaserSpell extends AbstractSpell {
             Component.translatable(
                 "ui.irons_spellbooks.damage", Utils.stringTruncation(getDamage(spellLevel, caster), 1)
             ),
-            Component.translatable(
+            /*Component.translatable(
                 "ui.irons_spellbooks.duration", Utils.timeFromTicks(getDurationTicks(), 1)
-            )
+            ),*/
+            Component.translatable("ui.irons_spellbooks.radius", getLaserRadius())
         );
     }
 
@@ -77,6 +78,10 @@ public class DeathLaserSpell extends AbstractSpell {
         return 20 * 4;
     }
 
+    private int getLaserRadius() {
+        return 20;
+    }
+
     @Override
     public void onCast(Level level, int spellLevel, LivingEntity entity, CastSource castSource, MagicData playerMagicData) {
         if (!level.isClientSide()) {
@@ -87,7 +92,7 @@ public class DeathLaserSpell extends AbstractSpell {
                 deathLaser.setDuration(getDurationTicks());
                 deathLaser.setFollowPlayer(true);
                 deathLaser.setCustomDamage(getDamage(spellLevel, entity));
-                deathLaser.setLaserLength(20);
+                deathLaser.setLaserLength(getLaserRadius());
                 deathLaser.setRenderStart(true);
                 deathLaser.setRenderEnd(true);
                 level.addFreshEntity(deathLaser);
