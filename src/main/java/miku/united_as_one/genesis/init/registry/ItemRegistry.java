@@ -227,6 +227,10 @@ public class ItemRegistry {
     public static final ItemEntry<ModSmithingTemplateItem> DIVINE_UPGRADE_SMITHING_TEMPLATE;
     //紫极稿
     public static final ItemEntry<VioletPickaxe> VIOLET_PICKAXE;
+    // 受火者的匕首
+    public static final ItemEntry<FireBossDagger> FIRE_BOSS_DAGGER;
+    // 受血者的匕首
+    public static final ItemEntry<BloodBossDagger> BLOOD_BOSS_DAGGER;
 
     //初始化
     static {
@@ -997,6 +1001,17 @@ public class ItemRegistry {
                 .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
                 .register();
 
+        FIRE_BOSS_DAGGER = Genesis.L2_REGISTRATE
+                .item("fire_boss_dagger", properties -> new FireBossDagger(TierRegistry.DARGGET, 0, -2.4F, properties.rarity(Rarity.EPIC)))
+                .model((ctx, prov) -> prov.handheld(ctx::getEntry))
+                .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
+                .register();
+
+        BLOOD_BOSS_DAGGER = Genesis.L2_REGISTRATE
+                .item("blood_boss_dagger", properties -> new BloodBossDagger(TierRegistry.DARGGET, 2, -2.2F, properties.rarity(Rarity.EPIC)))
+                .model((ctx, prov) -> prov.handheld(ctx::getEntry))
+                .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
+                .register();
     }
 
     public static void register(IEventBus modEventBus) {
