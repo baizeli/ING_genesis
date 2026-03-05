@@ -14,7 +14,10 @@ public enum TierRegistry implements Tier {
             () -> Ingredient.of(ItemRegistry.ARCANE_CRYSTAL.get())),
     //紫极
     VIOLET_GALAXY_INGOT(4, 8000, 20.0F, 0.0F, 40,
-            () -> Ingredient.of(ItemRegistry.VIOLET_FRAGMENTS.get()));
+            () -> Ingredient.of(ItemRegistry.VIOLET_FRAGMENTS.get())),
+
+    DARGGET(4, 8000, 20.0F, 11, 50,
+            Ingredient::of);
 
     private final int level;
     private final int uses;

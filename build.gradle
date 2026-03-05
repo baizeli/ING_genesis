@@ -219,7 +219,7 @@ dependencies {
     modImplementation "curse.maven:freecam-by-zergatul-618947:5402097"
 
     // Better Combat
-    modImplementation "curse.maven:better-combat-by-daedelus-639842:7287334"
+    //modImplementation "curse.maven:better-combat-by-daedelus-639842:7287334"
 
     // playerAnimator
     modImplementation "curse.maven:playeranimator-658587:4587214"
