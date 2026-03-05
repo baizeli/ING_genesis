@@ -122,7 +122,7 @@ public class DeathLaserEntity extends Entity {
         if (this.tickCount > 20) {
             calculateEndPos();
             if (this.blockSide != null) spawnExplosionParticles();
-            if (!this.level().isClientSide) {
+            if (!this.level().isClientSide && (this.tickCount - 20) % 10 == 0) {
                 for (LivingEntity target : (
                     raytraceEntities(this.level(), new Vec3(getX(), getY(), getZ()),
                         new Vec3(this.endPosX, this.endPosY, this.endPosZ), true
