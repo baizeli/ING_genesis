@@ -22,6 +22,8 @@ import java.util.*;
 public class DeathLaserEntity extends Entity {
     public LivingEntity caster;
 
+    public float customDamage = 3;
+
     public double endPosX;
     public double endPosY;
     public double endPosZ;
@@ -72,26 +74,32 @@ public class DeathLaserEntity extends Entity {
         this.prevCollidePosX = this.collidePosX;
         this.prevCollidePosY = this.collidePosY;
         this.prevCollidePosZ = this.collidePosZ;
-        this.prevYaw = this.renderYaw;
-        this.prevPitch = this.renderPitch;
         this.xo = getX();
         this.yo = getY();
         this.zo = getZ();
         if (this.tickCount == 1 && this.level().isClientSide)
             this.caster = (LivingEntity)this.level().getEntity(getCasterID());
-        if (!this.level().isClientSide)
-            if (getHasPlayer()) {
-                updateWithPlayer();
-            } else if (this.caster instanceof Salmon) {
-                updateWithBarako();
-            }
+        
         if (this.caster != null) {
-            this.renderYaw = (float)((this.caster.yHeadRot + 90.0D) * Math.PI / 180.0D);
-            this.renderPitch = (float)(-this.caster.getXRot() * Math.PI / 180.0D);
+            if (!this.level().isClientSide) {
+                setYaw(this.caster.yHeadRot);
+                setPitch(-this.caster.getXRot());
+                
+                if (getHasPlayer()) {
+                    updateWithPlayer();
+                } else if (this.caster instanceof Salmon) {
+                    updateWithBarako();
+                }
+            }
+            this.renderYaw = getYaw();
+            this.renderPitch = getPitch();
+            
             this.setPos(caster.getX(),caster.getY()+1,caster.getZ());
             this.teleportTo(caster.getX(),caster.getY()+1,caster.getZ());
             this.setDeltaMovement(caster.getDeltaMovement().x,caster.getDeltaMovement().y,caster.getDeltaMovement().z);
         }
+        this.prevYaw = this.renderYaw;
+        this.prevPitch = this.renderPitch;
         if (!this.on && this.appear.getTimer() == 0) discard();
         if (this.on && this.tickCount > 20) {
             this.appear.increaseTimer();
@@ -115,9 +123,8 @@ public class DeathLaserEntity extends Entity {
                 spawnExplosionParticles();
             if (!this.level().isClientSide)
                 for (LivingEntity target : hit) {
-                    float damageMob = 3.0F;
                     target.invulnerableTime = 0;
-                    target.hurt(damageSources().indirectMagic(this, this.caster), damageMob);
+                    target.hurt(damageSources().indirectMagic(this, this.caster), this.customDamage);
                 }
         }
         if (this.tickCount - 20 > getDuration())
@@ -175,6 +182,21 @@ public class DeathLaserEntity extends Entity {
 
     public int getCasterID() {
         return getEntityData().get(CASTER);
+    }
+    
+    public void setFollowPlayer(boolean follow) {
+        getEntityData().set(HAS_PLAYER, follow);
+    }
+    
+    public void setCaster(LivingEntity caster) {
+        if (caster != null) {
+            this.caster = caster;
+            getEntityData().set(CASTER, caster.getId());
+        }
+    }
+    
+    public void setCustomDamage(float damage) {
+        this.customDamage = damage;
     }
 
     protected void readAdditionalSaveData(@NotNull CompoundTag nbt) {}

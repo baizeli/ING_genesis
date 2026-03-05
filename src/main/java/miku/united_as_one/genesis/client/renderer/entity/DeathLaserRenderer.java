@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.*;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix3f;
@@ -33,7 +34,7 @@ public class DeathLaserRenderer extends EntityRenderer<DeathLaserEntity> {
     }
 
     public void render(DeathLaserEntity solarBeam, float entityYaw, float delta, @NotNull PoseStack matrixStackIn, @NotNull MultiBufferSource bufferIn, int packedLightIn) {
-        this.clearerView = (solarBeam.caster instanceof net.minecraft.world.entity.player.Player && (Minecraft.getInstance()).player == solarBeam.caster && (Minecraft.getInstance()).options.getCameraType() == CameraType.FIRST_PERSON);
+        this.clearerView = (solarBeam.caster instanceof Player && (Minecraft.getInstance()).player == solarBeam.caster && (Minecraft.getInstance()).options.getCameraType() == CameraType.FIRST_PERSON);
         double collidePosX = solarBeam.prevCollidePosX + (solarBeam.collidePosX - solarBeam.prevCollidePosX) * delta;
         double collidePosY = solarBeam.prevCollidePosY + (solarBeam.collidePosY - solarBeam.prevCollidePosY) * delta;
         double collidePosZ = solarBeam.prevCollidePosZ + (solarBeam.collidePosZ - solarBeam.prevCollidePosZ) * delta;
@@ -42,6 +43,7 @@ public class DeathLaserRenderer extends EntityRenderer<DeathLaserEntity> {
         double posZ = solarBeam.zo + (solarBeam.getZ() - solarBeam.zo) * delta;
         float yaw = solarBeam.prevYaw + (solarBeam.renderYaw - solarBeam.prevYaw) * delta;
         float pitch = solarBeam.prevPitch + (solarBeam.renderPitch - solarBeam.prevPitch) * delta;
+        
         float length = (float)Math.sqrt(Math.pow(collidePosX - posX, 2d) + Math.pow(collidePosY - posY, 2d) + Math.pow(collidePosZ - posZ, 2d));
         int frame = Mth.floor(((solarBeam.appear.getTimer() - 1) + delta) * 2f);
         if (frame < 0) frame = 6;

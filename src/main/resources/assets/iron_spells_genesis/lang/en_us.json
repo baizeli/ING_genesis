@@ -57,6 +57,8 @@
 
   "spell.iron_spells_genesis.blazing_blade_barrage": "Blazing Blade Barrage",
 
+  "spell.iron_spells_genesis.death_laser": "Death Laser",
+
   "spell.iron_spells_genesis.warped_blood_burst.guide": "Consume 50% of your own HP to deal damage to all enemies in an area and inflict a healing-negation effect.",
   "spell.iron_spells_genesis.warped_barrier.guide": "Convert 90% of health into Absorption.",
   "spell.iron_spells_genesis.reverse_plague.guide": "Exchange the target's positive effects with your own negative effects, temporarily preventing the target from gaining positive effects, halting your own effect acquisition, and transferring the negative effects.",
