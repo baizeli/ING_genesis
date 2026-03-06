@@ -1,7 +1,6 @@
 package miku.united_as_one.genesis.common.entity.laser;
 
-import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.util.Mth;
+import io.redspace.ironsspellbooks.util.ParticleHelper;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.*;
 import net.minecraft.world.damagesource.*;
@@ -18,22 +17,48 @@ public class DeathLaserEntity extends AbstractLaserEntity {
     @Override
     protected DamageSource createDamageSource() {
         return new DamageSource(this.level().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(ResourceKey.create(
-            Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath("irons_spellbooks", "holy_magic")
+            Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath("irons_spellbooks", "lightning_magic")
         )), this.caster, this);
     }
 
     @Override
-    protected void spawnExplosionParticles() {
-        int i;
-        for (i = 0; i < 2; i++) {
-            float yaw = (float)((this.random.nextFloat() * 2f) * Math.PI);
-            float motionY = this.random.nextFloat() * 0.08f;
-            float motionX = 0.1f * Mth.cos(yaw);
-            float motionZ = 0.1f * Mth.sin(yaw);
-            this.level().addParticle(ParticleTypes.FLAME, this.collidePosX, this.collidePosY + 0.1d, this.collidePosZ, motionX, motionY, motionZ);
+    protected void spawnCollisionParticles() {
+        for (int i = 0; i < 30; i++) {
+            this.level().addParticle(ParticleHelper.ELECTRICITY,
+                this.collidePosX + this.random.nextDouble() * 0.4 - 0.2,
+                this.collidePosY + 0.1d + this.random.nextDouble() * 0.4 - 0.2,
+                this.collidePosZ + this.random.nextDouble() * 0.4 - 0.2,
+                (this.random.nextDouble() - 0.5) * 0.3,
+                (this.random.nextDouble() - 0.5) * 0.3,
+                (this.random.nextDouble() - 0.5) * 0.3
+            );
         }
-        for (i = 0; i < 1; i++)
-            this.level().addParticle(ParticleTypes.LAVA, this.collidePosX, this.collidePosY + 0.1d, this.collidePosZ, 0d, 0d, 0d);
+    }
+
+    @Override
+    protected void spawnBeamParticles() {
+        /*double steps = this.getLaserLength() / 1.5;
+        for (int i = 0; i < steps; i++) {
+            double ratio = i / steps;
+            double particleX = this.getX() + (this.endPosX - this.getX()) * ratio;
+            double particleY = this.getY() + (this.endPosY - this.getY()) * ratio;
+            double particleZ = this.getZ() + (this.endPosZ - this.getZ()) * ratio;
+
+            double angle = this.random.nextDouble() * Math.PI * 2;
+            double radius = this.random.nextDouble() * 0.3;
+            double offsetX = Math.cos(angle) * radius;
+            double offsetZ = Math.sin(angle) * radius;
+            double offsetY = (this.random.nextDouble() - 0.5) * 0.3;
+            
+            this.level().addParticle(ParticleHelper.ELECTRICITY,
+                particleX + offsetX,
+                particleY + offsetY,
+                particleZ + offsetZ,
+                (this.random.nextDouble() - 0.5) * 0.2,
+                (this.random.nextDouble() - 0.5) * 0.2,
+                (this.random.nextDouble() - 0.5) * 0.2
+            );
+        }*/
     }
 
     @Override

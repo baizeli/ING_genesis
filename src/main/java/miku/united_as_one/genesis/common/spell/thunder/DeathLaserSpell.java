@@ -1,4 +1,4 @@
-package miku.united_as_one.genesis.common.spell.holy;
+package miku.united_as_one.genesis.common.spell.thunder;
 
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.init.registry.EntityRegistry;
@@ -19,7 +19,7 @@ public class DeathLaserSpell extends AbstractSpell {
     private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "death_laser");
     private final DefaultConfig defaultConfig = new DefaultConfig()
         .setMinRarity(SpellRarity.RARE)
-        .setSchoolResource(SchoolRegistry.HOLY_RESOURCE)
+        .setSchoolResource(SchoolRegistry.LIGHTNING_RESOURCE)
         .setMaxLevel(3)
         .setCooldownSeconds(16)
         .build();
