@@ -121,12 +121,15 @@ public abstract class AbstractLaserEntity extends Entity {
                 this.endPosX = getX() + radius * Math.cos(this.renderYaw) * Math.cos(this.renderPitch);
                 this.endPosZ = getZ() + radius * Math.sin(this.renderYaw) * Math.cos(this.renderPitch);
                 this.endPosY = getY() + radius * Math.sin(this.renderPitch);
+                raytraceEntities(this.level(), new Vec3(getX(), getY(), getZ()),
+                    new Vec3(this.endPosX, this.endPosY, this.endPosZ), true
+                );
             } else {
                 this.endPosX = getX() + radius * Math.cos(getYaw()) * Math.cos(getPitch());
                 this.endPosZ = getZ() + radius * Math.sin(getYaw()) * Math.cos(getPitch());
                 this.endPosY = getY() + radius * Math.sin(getPitch());
             }
-            if (this.blockSide != null) spawnExplosionParticles();
+            if (this.blockSide != null && this.level().isClientSide()) spawnCollisionParticles(); spawnBeamParticles();
             if (!this.level().isClientSide && (this.tickCount - 20) % 10 == 0) {
                 dealDamageToEntities();
             }
@@ -158,7 +161,8 @@ public abstract class AbstractLaserEntity extends Entity {
 
     protected abstract DamageSource createDamageSource();
 
-    protected abstract void spawnExplosionParticles();
+    protected abstract void spawnCollisionParticles();
+    @OnlyIn(Dist.CLIENT) protected abstract void spawnBeamParticles();
 
     protected void defineSynchedData() {
         getEntityData().define(YAW, 0f);

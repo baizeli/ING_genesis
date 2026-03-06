@@ -6,7 +6,7 @@ import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.common.spell.celestial_source.*;
 import miku.united_as_one.genesis.common.spell.chaos.*;
 import miku.united_as_one.genesis.common.spell.fire.*;
-import miku.united_as_one.genesis.common.spell.holy.*;
+import miku.united_as_one.genesis.common.spell.thunder.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.*;
 import net.minecraft.world.item.*;
@@ -64,8 +64,8 @@ public class CreativeTabRegistry {
     // 炽焰法术卷轴
     public static final RegistryObject<AbstractSpell> BLAZING_BLADE_BARRAGE_SPELL;
 
-    // 神圣法术卷轴
-    public static final RegistryObject<AbstractSpell> HOLY_LASER_SPELL;
+    // 雷霆法术卷轴
+    public static final RegistryObject<AbstractSpell> THUNDER_LASER_SPELL;
 
     static {
         // 混沌法术卷轴
@@ -99,8 +99,8 @@ public class CreativeTabRegistry {
 
         BLAZING_BLADE_BARRAGE_SPELL = registerSpell(new BlazingBladeBarrageSpell());
 
-        // 神圣法术卷轴
-        HOLY_LASER_SPELL = registerSpell(new DeathLaserSpell());
+        // 雷霆法术卷轴
+        THUNDER_LASER_SPELL = registerSpell(new DeathLaserSpell());
 
         // iron的法术创世纪：方块
         Genesis.L2_REGISTRATE
@@ -163,9 +163,9 @@ public class CreativeTabRegistry {
                                 BLAZING_BLADE_BARRAGE_SPELL.get()
                             };
 
-                            // 神圣法术卷轴
-                            AbstractSpell[] holySpells = {
-                                HOLY_LASER_SPELL.get()
+                            // 雷霆法术卷轴
+                            AbstractSpell[] thunderSpells = {
+                                THUNDER_LASER_SPELL.get()
                             };
 
                             // 混沌法术卷轴
@@ -189,8 +189,8 @@ public class CreativeTabRegistry {
                                 }
                             }
 
-                            // 神圣法术卷轴
-                            for (AbstractSpell spell : holySpells) {
+                            // 雷霆法术卷轴
+                            for (AbstractSpell spell : thunderSpells) {
                                 for (int level = spell.getMinLevel(); level <= spell.getMaxLevel(); level++) {
                                     output.accept(createScrollWithSpell(spell, level));
                                 }

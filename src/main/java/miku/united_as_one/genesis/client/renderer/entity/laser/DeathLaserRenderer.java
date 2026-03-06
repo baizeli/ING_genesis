@@ -8,15 +8,13 @@ import net.minecraftforge.api.distmarker.*;
 
 @OnlyIn(Dist.CLIENT)
 public class DeathLaserRenderer extends AbstractLaserRenderer<DeathLaserEntity> {
-    @SuppressWarnings("removal")
-    private static final ResourceLocation TEXTURE = new ResourceLocation(Genesis.MOD_ID, "textures/entity/laser_beam.png");
-
     public DeathLaserRenderer(EntityRendererProvider.Context mgr) {
         super(mgr);
     }
 
+    @SuppressWarnings("removal")
     @Override
     protected ResourceLocation getLaserTexture() {
-        return TEXTURE;
+        return new ResourceLocation(Genesis.MOD_ID, "textures/entity/laser/death_beam.png");
     }
 }
