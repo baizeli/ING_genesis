@@ -38,10 +38,10 @@ public class DeathLaserSpell extends AbstractSpell {
             Component.translatable(
                 "ui.irons_spellbooks.damage", Utils.stringTruncation(getDamage(spellLevel, caster), 1)
             ),
-            /*Component.translatable(
+            Component.translatable("ui.irons_spellbooks.radius", getLaserRadius()),
+            Component.translatable(
                 "ui.irons_spellbooks.duration", Utils.timeFromTicks(getDurationTicks(), 1)
-            ),*/
-            Component.translatable("ui.irons_spellbooks.radius", getLaserRadius())
+            )
         );
     }
 
@@ -93,6 +93,7 @@ public class DeathLaserSpell extends AbstractSpell {
                 deathLaser.setFollowPlayer(true);
                 deathLaser.setCustomDamage(getDamage(spellLevel, entity));
                 deathLaser.setLaserLength(getLaserRadius());
+                /*deathLaser.setLaserRadius(20);*/
                 deathLaser.setRenderStart(true);
                 deathLaser.setRenderEnd(true);
                 level.addFreshEntity(deathLaser);

@@ -48,6 +48,7 @@ public abstract class AbstractLaserEntity extends Entity {
     private static final EntityDataAccessor<Boolean> HAS_PLAYER = SynchedEntityData.defineId(AbstractLaserEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> CASTER = SynchedEntityData.defineId(AbstractLaserEntity.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Float> LASER_LENGTH = SynchedEntityData.defineId(AbstractLaserEntity.class, EntityDataSerializers.FLOAT);
+    private static final EntityDataAccessor<Float> LASER_RADIUS = SynchedEntityData.defineId(AbstractLaserEntity.class, EntityDataSerializers.FLOAT);
     private static final EntityDataAccessor<Boolean> RENDER_START = SynchedEntityData.defineId(AbstractLaserEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> RENDER_END = SynchedEntityData.defineId(AbstractLaserEntity.class, EntityDataSerializers.BOOLEAN);
 
@@ -171,6 +172,7 @@ public abstract class AbstractLaserEntity extends Entity {
         getEntityData().define(HAS_PLAYER, Boolean.FALSE);
         getEntityData().define(CASTER, -1);
         getEntityData().define(LASER_LENGTH, 20f);
+        getEntityData().define(LASER_RADIUS, 1f);
         getEntityData().define(RENDER_START, false);
         getEntityData().define(RENDER_END, true);
     }
@@ -228,6 +230,14 @@ public abstract class AbstractLaserEntity extends Entity {
     
     public float getLaserLength() {
         return getEntityData().get(LASER_LENGTH);
+    }
+    
+    public void setLaserRadius(float radius) {
+        getEntityData().set(LASER_RADIUS, radius);
+    }
+    
+    public float getLaserRadius() {
+        return getEntityData().get(LASER_RADIUS);
     }
     
     public void setRenderStart(boolean render) {

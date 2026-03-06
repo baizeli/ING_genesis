@@ -57,7 +57,7 @@ public abstract class AbstractLaserRenderer<T extends AbstractLaserEntity> exten
         VertexConsumer ivertexbuilder = bufferIn.getBuffer(RenderType.create("glow_beam", DefaultVertexFormat.NEW_ENTITY, VertexFormat.Mode.QUADS, 256, true, true, rendertype$state));
         
         if (laser.getRenderStart()) renderStart(frame, matrixStackIn, ivertexbuilder, packedLightIn);
-        renderBeam(laser.getLaserLength(), 57 * yaw, 57 * pitch, frame, matrixStackIn, ivertexbuilder, packedLightIn);
+        renderBeam(laser.getLaserLength(), laser.getLaserRadius(), 57 * yaw, 57 * pitch, frame, matrixStackIn, ivertexbuilder, packedLightIn);
         if (laser.getRenderEnd()) {
             matrixStackIn.pushPose();
             double endX = posX + laser.getLaserLength() * Math.cos(Math.toRadians(57 * yaw)) * Math.cos(Math.toRadians(57 * pitch));
@@ -108,7 +108,7 @@ public abstract class AbstractLaserRenderer<T extends AbstractLaserEntity> exten
         matrixStackIn.popPose();
     }
 
-    protected void drawBeam(float length, int frame, PoseStack matrixStackIn, VertexConsumer builder, int packedLightIn) {
+    protected void drawBeam(float length, float radius, int frame, PoseStack matrixStackIn, VertexConsumer builder, int packedLightIn) {
         float minU = 0f;
         float minV = 0.5f + 0.03125f * frame;
         float maxU = minU + 0.078125f;
@@ -117,25 +117,25 @@ public abstract class AbstractLaserRenderer<T extends AbstractLaserEntity> exten
         Matrix4f matrix4f = matrixstack$entry.pose();
         Matrix3f matrix3f = matrixstack$entry.normal();
         float offset = this.clearerView ? -1 : 0;
-        drawVertex(matrix4f, matrix3f, builder, -1, offset, 0.0F, minU, minV, 1.0F, packedLightIn);
-        drawVertex(matrix4f, matrix3f, builder, -1, length, 0.0F, minU, maxV, 1.0F, packedLightIn);
-        drawVertex(matrix4f, matrix3f, builder, 1, length, 0.0F, maxU, maxV, 1.0F, packedLightIn);
-        drawVertex(matrix4f, matrix3f, builder, 1, offset, 0.0F, maxU, minV, 1.0F, packedLightIn);
+        drawVertex(matrix4f, matrix3f, builder, -radius, offset, 0.0F, minU, minV, 1.0F, packedLightIn);
+        drawVertex(matrix4f, matrix3f, builder, -radius, length, 0.0F, minU, maxV, 1.0F, packedLightIn);
+        drawVertex(matrix4f, matrix3f, builder, radius, length, 0.0F, maxU, maxV, 1.0F, packedLightIn);
+        drawVertex(matrix4f, matrix3f, builder, radius, offset, 0.0F, maxU, minV, 1.0F, packedLightIn);
     }
 
-    protected void renderBeam(float length, float yaw, float pitch, int frame, PoseStack matrixStackIn, VertexConsumer builder, int packedLightIn) {
+    protected void renderBeam(float length, float radius, float yaw, float pitch, int frame, PoseStack matrixStackIn, VertexConsumer builder, int packedLightIn) {
         matrixStackIn.pushPose();
         matrixStackIn.mulPose(Axis.XP.rotationDegrees(90));
         matrixStackIn.mulPose(Axis.ZP.rotationDegrees(yaw - 90));
         matrixStackIn.mulPose(Axis.XP.rotationDegrees(-pitch));
         matrixStackIn.pushPose();
         if (!this.clearerView) matrixStackIn.mulPose(Axis.YP.rotationDegrees((Minecraft.getInstance()).gameRenderer.getMainCamera().getXRot() + 90));
-        drawBeam(length, frame, matrixStackIn, builder, packedLightIn);
+        drawBeam(length, radius, frame, matrixStackIn, builder, packedLightIn);
         matrixStackIn.popPose();
         if (!this.clearerView) {
             matrixStackIn.pushPose();
             matrixStackIn.mulPose(Axis.YP.rotationDegrees(-(Minecraft.getInstance()).gameRenderer.getMainCamera().getXRot() - 90));
-            drawBeam(length, frame, matrixStackIn, builder, packedLightIn);
+            drawBeam(length, radius, frame, matrixStackIn, builder, packedLightIn);
             matrixStackIn.popPose();
         }
         matrixStackIn.popPose();
