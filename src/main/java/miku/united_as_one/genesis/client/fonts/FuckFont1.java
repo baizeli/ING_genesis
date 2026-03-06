@@ -12,7 +12,6 @@ import net.minecraft.client.gui.font.glyphs.EmptyGlyph;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TextColor;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.FormattedCharSink;
@@ -54,99 +53,19 @@ public class FuckFont1 extends Font {
     }
 
     public int renderFont(FormattedCharSequence seq, float x, float y, int baseRgb, boolean dropShadow, Matrix4f matrix, MultiBufferSource buffers, DisplayMode mode, int light, int overlay, boolean ignoredIsText) {
-        final int NORMAL = 0, AFTER_HASH = 1, AFTER_HASH_EXIT = 2, CHAOS = 3, CELESTIAL = 4;
-
-        final int[] state = {NORMAL};
-        final Style[] hashStyle = {null};
         final float[] currentX = {x};
-        final long time = net.minecraft.Util.getMillis();
         final int[] charIndex = {0};
 
         seq.accept((index, style, codePoint) -> {
             char ch = (char) codePoint;
-            boolean shouldRender = true;
-            Style outStyle = style;
-            int color = baseRgb;
             float dx = 0, dy = 0;
-            boolean isSpecial = false;
+            boolean isSpecial = true;
 
-            if (state[0] == AFTER_HASH || state[0] == AFTER_HASH_EXIT) {
-                if (ch == '1') {
-                    state[0] = CHAOS;
-                    shouldRender = false;
-                } else if (ch == '2') {
-                    state[0] = CELESTIAL;
-                    shouldRender = false;
-                } else if (ch == '#') {
-                    if (state[0] == AFTER_HASH) {
-                        renderChar('#', hashStyle[0], currentX[0], y, baseRgb, dropShadow, matrix, buffers, mode, light, overlay, charIndex[0], false);
-                        currentX[0] += width("#");
-                        charIndex[0]++;
-                        shouldRender = false;
-                    }
-                    else {
-                        state[0] = AFTER_HASH;
-                        hashStyle[0] = style;
-                        shouldRender = false;
-                    }
-                } else {
-                    if (state[0] == AFTER_HASH) {
-                        renderChar('#', hashStyle[0], currentX[0], y, baseRgb, dropShadow, matrix, buffers, mode, light, overlay, charIndex[0], false);
-                        currentX[0] += width("#");
-                        charIndex[0]++;
-                    }
-
-                    color = (style.getColor() != null) ? style.getColor().getValue() | 0xFF000000 : baseRgb;
-                    renderChar(ch, style, currentX[0], y, color, dropShadow, matrix, buffers, mode, light, overlay, charIndex[0], false);
-                    currentX[0] += width(String.valueOf(ch));
-                    charIndex[0]++;
-
-                    state[0] = NORMAL;
-                    shouldRender = false;
-                }
-            } else if (state[0] == CHAOS) {
-                if (ch == '#') {
-                    state[0] = AFTER_HASH_EXIT;
-                    hashStyle[0] = style;
-                    shouldRender = false;
-                } else {
-                    isSpecial = true;
-                    color = 1;
-                    dx = (float) Math.cos(time * 0.045 + charIndex[0] * 3.7f) * 0.35f;
-                    dy = (float) Math.sin(time * 0.045 + charIndex[0] * 2.9f) * 0.35f;
-                    outStyle = style.withColor((TextColor) null).withUnderlined(false);
-                }
-            } else if (state[0] == CELESTIAL) {
-                if (ch == '#') {
-                    state[0] = AFTER_HASH_EXIT;
-                    hashStyle[0] = style;
-                    shouldRender = false;
-                } else {
-                    isSpecial = true;
-                    color = 2;
-                    dy = (float) Math.cos(time / 200F + charIndex[0]);
-                    outStyle = style.withColor((TextColor) null).withUnderlined(false);
-                }
-            } else if (ch == '#') {
-                state[0] = AFTER_HASH;
-                hashStyle[0] = style;
-                shouldRender = false;
-            } else {
-                color = (style.getColor() != null) ? style.getColor().getValue() | 0xFF000000 : baseRgb;
-            }
-
-            if (shouldRender) {
-                renderChar(ch, outStyle, currentX[0] + dx, y + dy, color, dropShadow, matrix, buffers, mode, light, overlay, charIndex[0], isSpecial);
-                currentX[0] += width(String.valueOf(ch));
-                charIndex[0]++;
-            }
+            renderChar(ch, style, currentX[0] + dx, y + dy, baseRgb, dropShadow, matrix, buffers, mode, light, overlay, charIndex[0], isSpecial);
+            currentX[0] += width(String.valueOf(ch));
+            charIndex[0]++;
             return true;
         });
-
-        if (state[0] == AFTER_HASH) {
-            renderChar('#', hashStyle[0], currentX[0], y, baseRgb, dropShadow, matrix, buffers, mode, light, overlay, charIndex[0], false);
-            currentX[0] += width("#");
-        }
 
         return (int) currentX[0];
     }
@@ -216,16 +135,17 @@ public class FuckFont1 extends Font {
 
         private int calcColor(float localPhase, int color) {
             long time = Util.getMillis();
-            if (color == 1) {
-                float progress = (time * 0.0009f + (index + localPhase) * 0.05f) % 1.0f; // 0~1
-                float hue = 0.00f;          // 固定红色
-                float sat = 1.0f - progress; // 1→0  深红→灰
-                float bri = 1.0f - progress; // 1→0  灰→黑
-                return Mth.hsvToRgb(hue, sat, bri) | 0xFF_000000; // 强制不透明
-            } else {
-                float hue = (time * 0.0012f + (index + localPhase) * 0.03f) % 1.0f;            // 全色域循环
-                return Mth.hsvToRgb(hue, 1, 1) | 0xFF_000000;
-            }
+            float t = time * 0.001f; // 基础时间系数标准化
+
+            // 色相：主循环 + 相位偏移
+            float hue = (t * 0.12f + (index + localPhase) * 0.03f) % 1.0f;
+
+            // 呼吸效果：饱和度 0.7-1.0，明度 0.8-1.0 之间脉动
+            float breathe = Mth.sin(t * 2.0f + localPhase) * 0.5f + 0.5f; // 0~1
+            float saturation = 0.7f + breathe * 0.3f;
+            float brightness = 0.8f + breathe * 0.2f;
+
+            return Mth.hsvToRgb(hue, saturation, brightness) | 0xFF_000000;
         }
 
         @Override

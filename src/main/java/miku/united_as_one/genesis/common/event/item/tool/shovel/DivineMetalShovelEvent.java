@@ -2,6 +2,8 @@ package miku.united_as_one.genesis.common.event.item.tool.shovel;
 
 import miku.united_as_one.genesis.common.items.tool.shovel.DivineMetalShovel;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -26,6 +28,10 @@ public class DivineMetalShovelEvent {
             if (state.getBlock() == Blocks.SAND) {
                 level.destroyBlock(pos, false);
                 Block.popResource(level, pos, new ItemStack(Blocks.GLASS));
+                if (level instanceof ServerLevel serverLevel) serverLevel.sendParticles(ParticleTypes.FLAME,
+                    pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
+                    10, 0.5,  0.5, 0.5, 0.01
+                );
             }
         }
     }

@@ -61,7 +61,7 @@ public class ItemRegistry {
             .item("divine_metal_fragment", properties -> new Item(properties.rarity(Rarity.EPIC)))
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
-            
+
     // 扭曲混沌锭
     public static final ItemEntry<? extends Item> TWISTED_CHAOS_INGOT = Genesis.L2_REGISTRATE
             .item("twisted_chaos_ingot", properties -> new ChaosBase(properties.rarity(Rarity.EPIC)))
@@ -456,7 +456,7 @@ public class ItemRegistry {
             })
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
-            
+
     public static final ItemEntry<VioletZenithArmor> VIOLET_ZENITH_BOOTS = Genesis.L2_REGISTRATE
             .item("violet_zenith_boots", properties -> new VioletZenithArmor(
                 ModArmorMaterials.VIOLET_ZENITH, ArmorItem.Type.BOOTS, properties
@@ -485,7 +485,7 @@ public class ItemRegistry {
             .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
-            
+
     //法术磁盘
     public static final ItemEntry<AEprospellbook> DISK_SPELL_BOOK = Genesis.L2_REGISTRATE
             .item("disk_spell_book", properties -> new AEprospellbook())
@@ -867,6 +867,20 @@ public class ItemRegistry {
             .model((ctx, prov) -> prov.blockItem(ctx::getEntry))
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
             .setData(ProviderType.LANG, NonNullBiConsumer.noop())
+            .register();
+
+    // 受火者的匕首
+    public static final ItemEntry<FireBossDagger> FIRE_BOSS_DAGGER = Genesis.L2_REGISTRATE
+            .item("fire_boss_dagger", properties -> new FireBossDagger(TierRegistry.DARGGET, 0, -2.4F, properties.rarity(Rarity.EPIC)))
+            .model((ctx, prov) -> prov.handheld(ctx::getEntry))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
+            .register();
+
+    // 受血者的匕首
+    public static final ItemEntry<BloodBossDagger> BLOOD_BOSS_DAGGER = Genesis.L2_REGISTRATE
+            .item("blood_boss_dagger", properties -> new BloodBossDagger(TierRegistry.DARGGET, 2, -2.2F, properties.rarity(Rarity.EPIC)))
+            .model((ctx, prov) -> prov.handheld(ctx::getEntry))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
     // 血肉魂铃
