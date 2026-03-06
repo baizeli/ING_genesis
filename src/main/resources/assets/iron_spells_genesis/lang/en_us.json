@@ -57,6 +57,8 @@
 
   "spell.iron_spells_genesis.blazing_blade_barrage": "Blazing Blade Barrage",
 
+  "spell.iron_spells_genesis.death_laser": "Death Laser",
+
   "spell.iron_spells_genesis.warped_blood_burst.guide": "Consume 50% of your own HP to deal damage to all enemies in an area and inflict a healing-negation effect.",
   "spell.iron_spells_genesis.warped_barrier.guide": "Convert 90% of health into Absorption.",
   "spell.iron_spells_genesis.reverse_plague.guide": "Exchange the target's positive effects with your own negative effects, temporarily preventing the target from gaining positive effects, halting your own effect acquisition, and transferring the negative effects.",
@@ -107,6 +109,8 @@
   "item.iron_spells_genesis.lao_wang_237": "Lao Wang 237",
   "item.iron_spells_genesis.genesis_curse": "Genesis Curse",
   "item.iron_spells_genesis.infinite_shriving_stone": "Infinite Shriving Stone",
+  "item.iron_spells_genesis.fire_boss_dagger": "Fire Boss's Dagger",
+  "item.iron_spells_genesis.blood_boss_dagger": "Blood Boss's Dagger",
 
   "item.iron_spells_genesis.flying_swallow_through_willow": "Flying Swallow Through Willow",
   "item.iron_spells_genesis.mithril_sword": "Mithril Sword",

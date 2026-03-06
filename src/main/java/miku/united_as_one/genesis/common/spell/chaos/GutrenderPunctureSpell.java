@@ -65,7 +65,7 @@ public class GutrenderPunctureSpell extends ChaosBaseSpell {
 
     @Override
     public boolean checkPreCastConditions(Level level, int spellLevel, LivingEntity entity, MagicData playerMagicData) {
-        return Utils.preCastTargetHelper(level, entity, playerMagicData, this, 1000000, 0.1f);
+        return Utils.preCastTargetHelper(level, entity, playerMagicData, this, 50, 0.1f);
     }
 
     @Override

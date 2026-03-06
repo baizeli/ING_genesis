@@ -46,7 +46,6 @@ public class ReversePlagueSpell extends ChaosBaseSpell {
         return List.of();
     }
 
-
     @Override
     public ResourceLocation getSpellResource() {
         return spellId;
