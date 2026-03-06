@@ -18,8 +18,8 @@ public class DeathLaserEntity extends AbstractLaserEntity {
     protected DamageSource createDamageSource() {
         return new DamageSource(this.level().registryAccess()
             .registryOrThrow(Registries.DAMAGE_TYPE)
-            .getHolderOrThrow(ResourceKey.create(
-                Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath("irons_spellbooks", "lightning_magic")
+            .getHolderOrThrow(ResourceKey.create(Registries.DAMAGE_TYPE, 
+                ResourceLocation.fromNamespaceAndPath("irons_spellbooks", "lightning_magic")
             )), this, this.caster
         );
     }
