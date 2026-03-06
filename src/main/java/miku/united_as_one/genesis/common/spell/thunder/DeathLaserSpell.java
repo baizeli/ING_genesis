@@ -18,7 +18,7 @@ import java.util.List;
 public class DeathLaserSpell extends AbstractSpell {
     private final ResourceLocation spellId = ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "death_laser");
     private final DefaultConfig defaultConfig = new DefaultConfig()
-        .setMinRarity(SpellRarity.RARE)
+        .setMinRarity(SpellRarity.LEGENDARY)
         .setSchoolResource(SchoolRegistry.LIGHTNING_RESOURCE)
         .setMaxLevel(3)
         .setCooldownSeconds(16)

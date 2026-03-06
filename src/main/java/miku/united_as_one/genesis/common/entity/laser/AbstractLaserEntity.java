@@ -51,6 +51,9 @@ public abstract class AbstractLaserEntity extends Entity {
     private static final EntityDataAccessor<Float> LASER_RADIUS = SynchedEntityData.defineId(AbstractLaserEntity.class, EntityDataSerializers.FLOAT);
     private static final EntityDataAccessor<Boolean> RENDER_START = SynchedEntityData.defineId(AbstractLaserEntity.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> RENDER_END = SynchedEntityData.defineId(AbstractLaserEntity.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Float> OFFSET_X = SynchedEntityData.defineId(AbstractLaserEntity.class, EntityDataSerializers.FLOAT);
+    private static final EntityDataAccessor<Float> OFFSET_Y = SynchedEntityData.defineId(AbstractLaserEntity.class, EntityDataSerializers.FLOAT);
+    private static final EntityDataAccessor<Float> OFFSET_Z = SynchedEntityData.defineId(AbstractLaserEntity.class, EntityDataSerializers.FLOAT);
 
     public float prevYaw;
     public float prevPitch;
@@ -93,12 +96,14 @@ public abstract class AbstractLaserEntity extends Entity {
                 } else if (this.caster instanceof Salmon) {
                     updateWithBarako();
                 }
+            } else {
+                if (getHasPlayer()) {
+                    updateWithPlayer();
+                }
             }
             this.renderYaw = getYaw();
             this.renderPitch = getPitch();
 
-            this.setPos(caster.getX(), caster.getY() + 1, caster.getZ());
-            this.teleportTo(caster.getX(), caster.getY() + 1, caster.getZ());
             this.setDeltaMovement(caster.getDeltaMovement().x, caster.getDeltaMovement().y, caster.getDeltaMovement().z);
         }
         
@@ -118,19 +123,31 @@ public abstract class AbstractLaserEntity extends Entity {
         
         if (this.tickCount > 20) {
             double radius = (this.caster instanceof Salmon) ? 30d : getLaserLength();
-            if (this.level().isClientSide()) {
-                this.endPosX = getX() + radius * Math.cos(this.renderYaw) * Math.cos(this.renderPitch);
-                this.endPosZ = getZ() + radius * Math.sin(this.renderYaw) * Math.cos(this.renderPitch);
-                this.endPosY = getY() + radius * Math.sin(this.renderPitch);
-                raytraceEntities(this.level(), new Vec3(getX(), getY(), getZ()),
-                    new Vec3(this.endPosX, this.endPosY, this.endPosZ), true
-                );
-            } else {
+            // 服务端执行射线检测
+            if (!this.level().isClientSide()) {
                 this.endPosX = getX() + radius * Math.cos(getYaw()) * Math.cos(getPitch());
                 this.endPosZ = getZ() + radius * Math.sin(getYaw()) * Math.cos(getPitch());
                 this.endPosY = getY() + radius * Math.sin(getPitch());
+                raytraceEntities(this.level(), new Vec3(getX(), getY(), getZ()),
+                    new Vec3(this.endPosX, this.endPosY, this.endPosZ), true
+                );
             }
-            if (this.blockSide != null && this.level().isClientSide()) spawnCollisionParticles(); spawnBeamParticles();
+            // 客户端渲染时使用服务端计算的碰撞点
+            if (this.level().isClientSide()) {
+                if (this.blockSide != null) {
+                    // 有碰撞时，激光在碰撞点中断
+                    this.endPosX = this.collidePosX;
+                    this.endPosY = this.collidePosY;
+                    this.endPosZ = this.collidePosZ;
+                    spawnCollisionParticles();
+                } else {
+                    // 无碰撞时，使用理论最大长度
+                    this.endPosX = getX() + radius * Math.cos(this.renderYaw) * Math.cos(this.renderPitch);
+                    this.endPosZ = getZ() + radius * Math.sin(this.renderYaw) * Math.cos(this.renderPitch);
+                    this.endPosY = getY() + radius * Math.sin(this.renderPitch);
+                }
+                spawnBeamParticles();
+            }
             if (!this.level().isClientSide && (this.tickCount - 20) % 10 == 0) {
                 dealDamageToEntities();
             }
@@ -175,6 +192,9 @@ public abstract class AbstractLaserEntity extends Entity {
         getEntityData().define(LASER_RADIUS, 1f);
         getEntityData().define(RENDER_START, false);
         getEntityData().define(RENDER_END, true);
+        getEntityData().define(OFFSET_X, 0f);
+        getEntityData().define(OFFSET_Y, 0f);
+        getEntityData().define(OFFSET_Z, 0f);
     }
 
     public float getYaw() {
@@ -208,9 +228,16 @@ public abstract class AbstractLaserEntity extends Entity {
     public int getCasterID() {
         return getEntityData().get(CASTER);
     }
-    
-    public void setFollowPlayer(boolean follow) {
+
+    public void setFollowPlayer(boolean follow, float offsetX, float offsetY, float offsetZ) {
         getEntityData().set(HAS_PLAYER, follow);
+        getEntityData().set(OFFSET_X, offsetX);
+        getEntityData().set(OFFSET_Y, offsetY);
+        getEntityData().set(OFFSET_Z, offsetZ);
+    }
+
+    public void setFollowPlayer(boolean follow) {
+        setFollowPlayer(follow, 0f, 0f, 0f);
     }
     
     public void setCaster(LivingEntity caster) {
@@ -230,10 +257,6 @@ public abstract class AbstractLaserEntity extends Entity {
     
     public float getLaserLength() {
         return getEntityData().get(LASER_LENGTH);
-    }
-    
-    public void setLaserRadius(float radius) {
-        getEntityData().set(LASER_RADIUS, radius);
     }
     
     public float getLaserRadius() {
@@ -314,7 +337,10 @@ public abstract class AbstractLaserEntity extends Entity {
         setYaw((float)((this.caster.yHeadRot + 90d) * Math.PI / 180d));
         setPitch((float)(-this.caster.getXRot() * Math.PI / 180d));
         Vec3 vecOffset = this.caster.getLookAngle().normalize().scale(1d);
-        setPos(this.caster.getX() + vecOffset.x(), this.caster.getY() + 1.2d + vecOffset.y(), this.caster.getZ() + vecOffset.z());
+        setPos(this.caster.getX() + vecOffset.x() + getEntityData().get(OFFSET_X), 
+            this.caster.getY() + 1.2d + vecOffset.y() + getEntityData().get(OFFSET_Y), 
+            this.caster.getZ() + vecOffset.z() + getEntityData().get(OFFSET_Z)
+        );
     }
 
     private void updateWithBarako() {
@@ -322,7 +348,10 @@ public abstract class AbstractLaserEntity extends Entity {
         setPitch((float)(-this.caster.getXRot() * Math.PI / 180d));
         Vec3 vecOffset1 = (new Vec3(0d, 0d, 0.6d)).yRot((float)Math.toRadians(-this.caster.getYRot()));
         Vec3 vecOffset2 = (new Vec3(1.2d, 0d, 0d)).yRot(-getYaw()).xRot(getPitch());
-        setPos(this.caster.getX() + vecOffset1.x() + vecOffset2.x(), this.caster.getY() + 1.4d + vecOffset1.y() + vecOffset2.y(), this.caster.getZ() + vecOffset1.z() + vecOffset2.z());
+        setPos(this.caster.getX() + vecOffset1.x() + vecOffset2.x(), 
+            this.caster.getY() + 1.4d + vecOffset1.y() + vecOffset2.y(), 
+            this.caster.getZ() + vecOffset1.z() + vecOffset2.z()
+        );
     }
 
     public void remove(Entity.@NotNull RemovalReason reason) {
