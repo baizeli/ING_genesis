@@ -123,31 +123,19 @@ public abstract class AbstractLaserEntity extends Entity {
         
         if (this.tickCount > 20) {
             double radius = (this.caster instanceof Salmon) ? 30d : getLaserLength();
-            // 服务端执行射线检测
-            if (!this.level().isClientSide()) {
-                this.endPosX = getX() + radius * Math.cos(getYaw()) * Math.cos(getPitch());
-                this.endPosZ = getZ() + radius * Math.sin(getYaw()) * Math.cos(getPitch());
-                this.endPosY = getY() + radius * Math.sin(getPitch());
+            if (this.level().isClientSide()) {
+                this.endPosX = getX() + radius * Math.cos(this.renderYaw) * Math.cos(this.renderPitch);
+                this.endPosZ = getZ() + radius * Math.sin(this.renderYaw) * Math.cos(this.renderPitch);
+                this.endPosY = getY() + radius * Math.sin(this.renderPitch);
                 raytraceEntities(this.level(), new Vec3(getX(), getY(), getZ()),
                     new Vec3(this.endPosX, this.endPosY, this.endPosZ), true
                 );
+            } else {
+                this.endPosX = getX() + radius * Math.cos(getYaw()) * Math.cos(getPitch());
+                this.endPosZ = getZ() + radius * Math.sin(getYaw()) * Math.cos(getPitch());
+                this.endPosY = getY() + radius * Math.sin(getPitch());
             }
-            // 客户端渲染时使用服务端计算的碰撞点
-            if (this.level().isClientSide()) {
-                if (this.blockSide != null) {
-                    // 有碰撞时，激光在碰撞点中断
-                    this.endPosX = this.collidePosX;
-                    this.endPosY = this.collidePosY;
-                    this.endPosZ = this.collidePosZ;
-                    spawnCollisionParticles();
-                } else {
-                    // 无碰撞时，使用理论最大长度
-                    this.endPosX = getX() + radius * Math.cos(this.renderYaw) * Math.cos(this.renderPitch);
-                    this.endPosZ = getZ() + radius * Math.sin(this.renderYaw) * Math.cos(this.renderPitch);
-                    this.endPosY = getY() + radius * Math.sin(this.renderPitch);
-                }
-                spawnBeamParticles();
-            }
+            if (this.blockSide != null && this.level().isClientSide()) spawnCollisionParticles(); spawnBeamParticles();
             if (!this.level().isClientSide && (this.tickCount - 20) % 10 == 0) {
                 dealDamageToEntities();
             }
