@@ -57,33 +57,3 @@ public class ClientEvent {
         }
     }
 }
-
-@SuppressWarnings("removal")
-@Mod.EventBusSubscriber(modid = Genesis.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-class BowAnimationEvent {
-    @SubscribeEvent
-    public static void BowAnimation(FMLClientSetupEvent event) {
-        event.enqueueWork(() -> {
-            Stream.of(
-                ItemRegistry.THUNDER_LONGBOW.get(),
-                ItemRegistry.FROST_LONGBOW.get(),
-                ItemRegistry.WITCHCRAFT_BOW.get(),
-                ItemRegistry.FLAME_BOW.get()
-            ).forEach(bow -> {
-                ItemProperties.register(bow, new ResourceLocation("pull"), (stack, level, livingEntity, i) -> {
-                    if (livingEntity == null) {
-                        return 0;
-                    } else {
-                        return livingEntity.getUseItem() != stack ? 0 : (float)
-                        (stack.getUseDuration() - livingEntity.getUseItemRemainingTicks()) / 20;
-                    }
-                });
-
-                ItemProperties.register(bow, new ResourceLocation("pulling"),
-                    (stack, level, livingEntity, i) -> livingEntity != null &&
-                    livingEntity.isUsingItem() && livingEntity.getUseItem() == stack ? 1 : 0
-                );
-            });
-        });
-    }
-}

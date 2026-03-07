@@ -27,6 +27,7 @@ import java.util.function.Consumer;
 import static java.lang.Math.sqrt;
 import static net.minecraft.util.Mth.square;
 
+@SuppressWarnings("removal")
 public class FlyingSwallowThroughWillow extends SwordItem implements GeoItem {
     public FlyingSwallowThroughWillow() {
         super(
@@ -85,7 +86,7 @@ public class FlyingSwallowThroughWillow extends SwordItem implements GeoItem {
             @Override
             public BlockEntityWithoutLevelRenderer getCustomRenderer() {
                 if (this.renderer == null)
-                    this.renderer = new GeoItemRenderer<>(new GeoModel<FlyingSwallowThroughWillow>() {
+                    this.renderer = new GeoItemRenderer<>(new GeoModel<>() {
                         @Override
                         public ResourceLocation getModelResource(FlyingSwallowThroughWillow object) {
                             return new ResourceLocation(Genesis.MOD_ID, "geo/item/flying_swallow_through_willow.geo.json");

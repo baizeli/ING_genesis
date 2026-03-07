@@ -1,18 +1,16 @@
 package miku.united_as_one.genesis.common.event.spell.chaos;
 
-import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.init.registry.EffectRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.phys.AABB;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.List;
 
-@Mod.EventBusSubscriber(modid = Genesis.MOD_ID)
+@Mod.EventBusSubscriber
 public class BloodFrenzyEvent {
 
     @SubscribeEvent
@@ -23,8 +21,7 @@ public class BloodFrenzyEvent {
             if (entity instanceof Player player) {
                 // 获取施法者攻击范围
                 List<LivingEntity> nearbyEntities = player.level().getEntitiesOfClass(
-                    LivingEntity.class,
-                    player.getBoundingBox().inflate(player.getEntityReach()),
+                    LivingEntity.class, player.getBoundingBox().inflate(player.getEntityReach()),
                     e -> e != player && e.isAlive() && player.canReach(e, 0)
                 );
 
@@ -57,7 +54,7 @@ public class BloodFrenzyEvent {
                     if (player.level().isClientSide) {
                         Minecraft mc = Minecraft.getInstance();
 
-                        if (player.getAttackStrengthScale(0.0F) >= 1.0F) {
+                        if (player.getAttackStrengthScale(0) >= 1) {
                             for (LivingEntity target : nearbyEntities) {
                                 if (player.canReach(target, 0)) {
                                     if (mc.gameMode != null) {
@@ -77,7 +74,7 @@ public class BloodFrenzyEvent {
         // 攻击的伤害增加
         if (event.getSource().getEntity() instanceof LivingEntity attacker) {
             if (attacker.hasEffect(EffectRegistry.BLOOD_FRENZY.get())) {
-                event.setAmount(event.getAmount() * 2.0f);
+                event.setAmount(event.getAmount() * 2);
             }
         }
 

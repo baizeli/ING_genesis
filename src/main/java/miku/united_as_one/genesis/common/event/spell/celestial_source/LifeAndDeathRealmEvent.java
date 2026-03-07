@@ -1,6 +1,5 @@
 package miku.united_as_one.genesis.common.event.spell.celestial_source;
 
-import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.init.registry.EffectRegistry;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.*;
@@ -10,15 +9,15 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.common.Tags;
 
-@Mod.EventBusSubscriber(modid = Genesis.MODID)
+@Mod.EventBusSubscriber
 public class LifeAndDeathRealmEvent {
     private static boolean playerHasBeenSacrificed = false;
     private static long sacrificeImmunityEndTime = 0;
 
     @SubscribeEvent
     public static void onEffectAdded(MobEffectEvent.Added event) {
-        if (event.getEffectInstance() != null && 
-            event.getEffectInstance().getEffect() == EffectRegistry.LIFE_AND_DEATH_REALM.get() &&
+        event.getEffectInstance();
+        if (event.getEffectInstance().getEffect() == EffectRegistry.LIFE_AND_DEATH_REALM.get() && 
             event.getEntity() instanceof ServerPlayer
         ) {
             playerHasBeenSacrificed = false;

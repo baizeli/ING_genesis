@@ -1,15 +1,13 @@
 package miku.united_as_one.genesis.common.spell.chaos;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.client.renderer.spell.chaos.WireBoxRenderer;
+import miku.united_as_one.genesis.client.renderer.entity.spell.chaos.WireBoxRenderer;
 import miku.united_as_one.genesis.common.network.WireBoxSyncPacket;
 import miku.united_as_one.genesis.init.registry.spell.SpellSchoolRegistry;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
-import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import io.redspace.ironsspellbooks.api.spells.*;
 import io.redspace.ironsspellbooks.api.util.Utils;
-import io.redspace.ironsspellbooks.config.ServerConfigs;
 import io.redspace.ironsspellbooks.util.ParticleHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -50,7 +48,7 @@ public class WarpedBloodBurstSpell extends ChaosBaseSpell {
     @Override
     public List<MutableComponent> getUniqueInfo(int spellLevel, LivingEntity caster) {
         return List.of(Component.translatable("ui.irons_spellbooks.damage", Utils.stringTruncation(getSpellPower(spellLevel, caster), 1)),
-                Component.translatable("ui.iron_spells_genesis.percent_force_damage", Utils.stringTruncation(getForceDamage(spellLevel, caster), 1)),
+                /*Component.translatable("ui.iron_spells_genesis.percent_force_damage", Utils.stringTruncation(getForceDamage(spellLevel, caster), 1)),*/
                 Component.translatable("ui.irons_spellbooks.radius", Utils.stringTruncation(10, 1))
         );
     }
@@ -70,7 +68,7 @@ public class WarpedBloodBurstSpell extends ChaosBaseSpell {
         return CastType.LONG;
     }
 
-    private double getForceDamage(int spellLevel, LivingEntity caster) {
+    /*private double getForceDamage(int spellLevel, LivingEntity caster) {
         double entitySpellPowerModifier = 1.0F;
         double entitySchoolPowerModifier = 1.0F;
         float configPowerModifier = (float)ServerConfigs.getSpellConfig(this).powerMultiplier();
@@ -79,7 +77,7 @@ public class WarpedBloodBurstSpell extends ChaosBaseSpell {
             entitySchoolPowerModifier = this.getSchoolType().getPowerFor(caster);
         }
         return spellLevel * entitySpellPowerModifier * entitySchoolPowerModifier * configPowerModifier * 0.5;
-    }
+    }*/
 
     @Override
     public void castSpell(Level world, int spellLevel, ServerPlayer serverPlayer, CastSource castSource, boolean triggerCooldown) {
@@ -95,10 +93,10 @@ public class WarpedBloodBurstSpell extends ChaosBaseSpell {
             for (Entity e : serverLevel.getEntities(entity, box, e -> e instanceof LivingEntity && e != entity)) {
                 if (e.isAlive()) {
                     e.hurt(getDamageSource(entity), getSpellPower(spellLevel, entity));
-                    if (e instanceof LivingEntity living) {
+                    /*if (e instanceof LivingEntity living) {
                         // 强制伤害
                         living.setHealth((float) (living.getHealth() - living.getMaxHealth() * getForceDamage(spellLevel, entity) * 0.01));
-                    }
+                    }*/
                     ((ServerLevel) serverLevel).sendParticles(ParticleHelper.BLOOD,
                             e.getX(), e.getY() + e.getBbHeight() * 0.5, e.getZ(),
                             250,// 数量

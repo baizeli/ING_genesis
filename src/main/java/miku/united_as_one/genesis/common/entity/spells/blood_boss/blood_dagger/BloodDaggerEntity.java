@@ -34,6 +34,7 @@ public class BloodDaggerEntity extends FieryDaggerEntity {
     private static final Field ISGROUNDED;
     public boolean isZone;
     public boolean isSpell;
+    public boolean isSword;
 
     static {
         try {
@@ -71,14 +72,14 @@ public class BloodDaggerEntity extends FieryDaggerEntity {
         }
         entityHitResult.getEntity().hurt(new DamageSource(DamageSources.getHolderFromResource(this, ISSDamageTypes.BLOOD_MAGIC), this, this.getOwner()), this.getDamage());
         entityHitResult.getEntity().invulnerableTime = 0;
-        if (this.getOwner() instanceof LivingEntity livingEntity)
+        if (this.getOwner() instanceof LivingEntity livingEntity && !isSword)
             livingEntity.heal(isZone ? this.damage * 0.5F : this.damage);
     }
 
     @Override
     protected void onHit(HitResult hitresult) {
         super.onHit(hitresult);
-        if (!isZone) {
+        if (!isZone && !isSword) {
             BloodBossFireEruptionAoe aoe = new BloodBossFireEruptionAoe(level, isSpell ? 5.0F : 8.0F);
             aoe.setOwner(this.getOwner());
             aoe.setDamage(isSpell ? this.damage * 0.5F : SpellRegistry.RAISE_HELL_SPELL.get().getSpellPower(1, this.getOwner()) + Utils.getWeaponDamage((LivingEntity) this.getOwner(), MobType.UNDEFINED));

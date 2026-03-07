@@ -1,6 +1,5 @@
 package miku.united_as_one.genesis.common.event.spell.celestial_source;
 
-import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.init.registry.EffectRegistry;
 import io.redspace.ironsspellbooks.registries.MobEffectRegistry;
 import net.minecraft.world.effect.*;
@@ -9,7 +8,7 @@ import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(modid = Genesis.MODID)
+@Mod.EventBusSubscriber
 public class StellarSoulControlEvent {
 
     @SubscribeEvent

@@ -18,13 +18,8 @@ public class SiphonEffect extends MobEffect {
     
     @Override
     public void applyEffectTick(LivingEntity entity, int amplifier) {
-        // 每秒扣除施法者血量
         if (entity.level().getGameTime() % 20 == 0) {
-            float maxHealth = entity.getMaxHealth();
-            float damage = maxHealth * 0.02f;
-
-            // 虚空伤害
-            entity.hurt(entity.damageSources().genericKill(), damage);
+            entity.hurt(entity.damageSources().genericKill(), entity.getMaxHealth() * 0.02f);
         }
     }
     

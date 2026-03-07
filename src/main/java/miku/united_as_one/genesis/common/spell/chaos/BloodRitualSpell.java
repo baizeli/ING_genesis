@@ -16,7 +16,7 @@ public class BloodRitualSpell extends ChaosBaseSpell {
         .setMinRarity(SpellRarity.LEGENDARY)
         .setSchoolResource(SpellSchoolRegistry.CHAOS_RESOURCE)
         .setMaxLevel(1)
-        .setCooldownSeconds(120.0F)
+        .setCooldownSeconds(120)
         .build();
 
     public BloodRitualSpell() {
@@ -45,19 +45,11 @@ public class BloodRitualSpell extends ChaosBaseSpell {
     @Override
     public void onCast(Level level, int spellLevel, LivingEntity entity, CastSource castSource, MagicData playerMagicData) {
         if (!level.isClientSide) {
-            float currentHealth = entity.getHealth();
-
-            entity.setHealth(1.0f);
-
-            float healthDiff = currentHealth - 1.0f;
+            entity.setHealth(1);
 
             // 1混沌/通用法术强度=(+)1点法力值+0.5倍转化
-            float spellPower = getSpellPower(spellLevel, entity);
-            float conversionRate = 10.0f + (spellPower - 1.0f) * 0.5f;
-            float manaToAdd = healthDiff * conversionRate;
-
-            playerMagicData.addMana(manaToAdd);
-
+            playerMagicData.addMana(entity.getHealth() - 1 * 10 + (getSpellPower(spellLevel, entity) - 1) * 0.5f);
+            
             entity.removeAllEffects();
         }
 

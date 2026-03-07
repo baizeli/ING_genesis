@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.common.event;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.client.renderer.spell.chaos.WireBoxRenderer;
+import miku.united_as_one.genesis.client.renderer.entity.spell.chaos.WireBoxRenderer;
 import miku.united_as_one.genesis.common.items.curios.EternalRing;
 import miku.united_as_one.genesis.common.items.curios.rune_plus.BloodRunePlus;
 import miku.united_as_one.genesis.init.registry.spell.SpellAttributesRegistry;
