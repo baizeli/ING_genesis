@@ -16,14 +16,17 @@ public class DeathLaserEntity extends AbstractLaserEntity {
 
     @Override
     protected DamageSource createDamageSource() {
-        return new DamageSource(this.level().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(ResourceKey.create(
-            Registries.DAMAGE_TYPE, ResourceLocation.fromNamespaceAndPath("irons_spellbooks", "lightning_magic")
-        )), this.caster, this);
+        return new DamageSource(this.level().registryAccess()
+            .registryOrThrow(Registries.DAMAGE_TYPE)
+            .getHolderOrThrow(ResourceKey.create(Registries.DAMAGE_TYPE, 
+                ResourceLocation.fromNamespaceAndPath("irons_spellbooks", "lightning_magic")
+            )), this, this.caster
+        );
     }
 
     @Override
     protected void spawnCollisionParticles() {
-        for (int i = 0; i < 30; i++) {
+        for (int i = 0; i < 20; i++) {
             this.level().addParticle(ParticleHelper.ELECTRICITY,
                 this.collidePosX + this.random.nextDouble() * 0.4 - 0.2,
                 this.collidePosY + 0.1d + this.random.nextDouble() * 0.4 - 0.2,

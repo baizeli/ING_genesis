@@ -64,8 +64,7 @@ public abstract class AbstractLaserEntity extends Entity {
     public AbstractLaserEntity(EntityType<? extends AbstractLaserEntity> type, Level world) {
         super(type, world);
         this.noCulling = true;
-        if (world.isClientSide)
-            this.attractorPos = new Vec3[]{new Vec3(0d, 0d, 0d)};
+        if (world.isClientSide) this.attractorPos = new Vec3[]{new Vec3(0d, 0d, 0d)};
     }
 
     public @NotNull PushReaction getPistonPushReaction() {

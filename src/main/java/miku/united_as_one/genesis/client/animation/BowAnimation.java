@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 
 @SuppressWarnings("removal")
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-public class BowAnimationEvent {
+public class BowAnimation {
 
     @SubscribeEvent
     public static void BowAnimation(FMLClientSetupEvent event) {
