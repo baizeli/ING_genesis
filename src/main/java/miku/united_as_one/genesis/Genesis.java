@@ -4,6 +4,7 @@ import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import io.redspace.ironsspellbooks.api.spells.ISpellContainer;
 import io.redspace.ironsspellbooks.entity.spells.void_tentacle.VoidTentacle;
+import miku.united_as_one.genesis.client.renderer.entity.laser.DeathLaserRenderer;
 import miku.united_as_one.genesis.common.data.content.arcaneWorkbench.*;
 import miku.united_as_one.genesis.common.data.content.workbenchs.*;
 import miku.united_as_one.genesis.common.entity.*;
@@ -14,13 +15,9 @@ import miku.united_as_one.genesis.common.entity.spells.celestial_source.*;
 import miku.united_as_one.genesis.common.entity.boss.BloodBoss;
 import miku.united_as_one.genesis.common.entity.spells.celestial_source.notuse.*;
 import miku.united_as_one.genesis.client.ClientEvent;
-import miku.united_as_one.genesis.init.registry.BlockRegistry;
-import miku.united_as_one.genesis.init.registry.CreativeTabRegistry;
-import miku.united_as_one.genesis.init.registry.EntityRegistry;
-import miku.united_as_one.genesis.init.registry.ItemRegistry;
 import miku.united_as_one.genesis.init.registry.client.ParticleRegistry;
 import miku.united_as_one.genesis.client.renderer.DistortWorldRender;
-import miku.united_as_one.genesis.client.renderer.spell.celestial_source.DeadStarDecreeCometRenderer;
+import miku.united_as_one.genesis.client.renderer.entity.spell.celestial_source.DeadStarDecreeCometRenderer;
 import miku.united_as_one.genesis.init.config.*;
 import miku.united_as_one.genesis.common.network.*;
 import miku.united_as_one.genesis.init.registry.spell.SpellAttributesRegistry;
@@ -28,9 +25,11 @@ import miku.united_as_one.genesis.init.registry.spell.SpellSchoolRegistry;
 import dev.xkmc.l2library.base.L2Registrate;
 import com.mojang.logging.LogUtils;
 import io.redspace.ironsspellbooks.render.SpellBookCurioRenderer;
+import net.mehvahdjukaar.moonlight.api.platform.ClientHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
@@ -70,9 +69,10 @@ public class Genesis
     }
 
     public Genesis(FMLJavaModLoadingContext context) {
+        ClientHelper.registerOptionalTexturePack(Genesis.rl("Genesis_old"), Component.literal("Genesis old"), false);
         IEventBus modEventBus = context.getModEventBus();
 
-        ItemRegistry.register(modEventBus);
+        ItemRegistry.register();
         CreativeTabRegistry.register(modEventBus);
         EntityRegistry.ENTITY_TYPES.register(modEventBus);
         BlockRegistry.BLOCKS.register(modEventBus);
@@ -173,6 +173,7 @@ public class Genesis
                 EntityRenderers.register(EntityRegistry.LIGHTNING_BOLT.get(), LightningBoltRenderer::new);
                 EntityRenderers.register(EntityRegistry.SWORD_ENTITY.get(), SwordEntityRenderer::new);
 //                EntityRenderers.register(EntityRegistry.THROW_BLOOD_AND_WOUNDS.get(), ThrowBloodAndWoundsRenderer::new);
+                EntityRenderers.register(EntityRegistry.DEATH_LASER.get(), DeathLaserRenderer::new);
 
                 EntityRenderers.register(EntityRegistry.DEAD_STAR_DECREE_COMET.get(),
                     context -> new DeadStarDecreeCometRenderer(context, 0.25f)

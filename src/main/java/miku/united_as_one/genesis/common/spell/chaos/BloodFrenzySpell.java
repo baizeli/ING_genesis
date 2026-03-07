@@ -23,7 +23,7 @@ public class BloodFrenzySpell extends ChaosBaseSpell {
         .setMinRarity(SpellRarity.COMMON)
         .setSchoolResource(SpellSchoolRegistry.CHAOS_RESOURCE)
         .setMaxLevel(3)
-        .setCooldownSeconds(420.0F)
+        .setCooldownSeconds(102)
         .build();
 
     public BloodFrenzySpell() {
@@ -65,16 +65,12 @@ public class BloodFrenzySpell extends ChaosBaseSpell {
 
     // 伤害倍数
     private float getDamageMultiplier(int spellLevel, LivingEntity caster) {
-        float spellPower = getSpellPower(spellLevel, caster);
-        return 200.0f + (spellPower - 1.0f) * 1.0f;
+        return 200 + (getSpellPower(spellLevel, caster) - 1) * 1;
     }
 
     // 持续时间
     private int getDuration(int spellLevel, LivingEntity caster) {
-        int baseDuration = 600 * spellLevel;
-        float spellPower = getSpellPower(spellLevel, caster);
-        int additionalDuration = (int) ((spellPower - 1.0f) * 10.0f);
-        return baseDuration + additionalDuration;
+        return 600 * spellLevel + (int) ((getSpellPower(spellLevel, caster) - 1) * 10);
     }
 
     @Override

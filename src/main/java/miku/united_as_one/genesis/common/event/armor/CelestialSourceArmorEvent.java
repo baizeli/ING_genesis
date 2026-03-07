@@ -1,22 +1,19 @@
 package miku.united_as_one.genesis.common.event.armor;
 
-import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.util.ArmorSetUtil;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.eventbus.api.*;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(modid = Genesis.MOD_ID)
+@Mod.EventBusSubscriber
 public class CelestialSourceArmorEvent {
 
     @SubscribeEvent
     public static void onLivingHurt(LivingHurtEvent event) {
         LivingEntity entity = event.getEntity();
 
-        if (!ArmorSetUtil.hasFullCelestialSourceSet(entity)) {
-            return;
-        }
+        if (!ArmorSetUtil.hasFullCelestialSourceSet(entity)) return;
 
         // 单次伤害不超过70%最大生命值
         float maxHealth = entity.getMaxHealth();
@@ -27,19 +24,15 @@ public class CelestialSourceArmorEvent {
             event.setAmount(maxDamage);
         }
     }
-/*
-    @SubscribeEvent
+
+    /*@SubscribeEvent
     public static void onMobEffectApplicable(MobEffectEvent.Applicable event) {
         LivingEntity entity = event.getEntity();
 
-        if (!ArmorSetUtil.hasFullCelestialSourceSet(entity)) {
-            return;
-        }
-
-        MobEffect effect = event.getEffectInstance().getEffect();
+        if (!ArmorSetUtil.hasFullCelestialSourceSet(entity)) return;
 
         // 免疫负面
-        if (!effect.isBeneficial()) {
+        if (!event.getEffectInstance().getEffect().isBeneficial()) {
             event.setResult(Event.Result.DENY);
         }
     }*/

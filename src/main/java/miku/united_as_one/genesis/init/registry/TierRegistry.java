@@ -9,12 +9,18 @@ import java.util.function.Supplier;
 
 @SuppressWarnings("deprecation")
 public enum TierRegistry implements Tier {
-    //秘银
+    // 秘银
     MITHRIL(4, 4062, 18, 0, 30,
             () -> Ingredient.of(ItemRegistry.ARCANE_CRYSTAL.get())),
-    //紫极
-    VIOLET_GALAXY_INGOT(4, 8000, 20.0F, 0.0F, 40,
-            () -> Ingredient.of(ItemRegistry.VIOLET_FRAGMENTS.get()));
+    // 紫极
+    VIOLET_GALAXY_INGOT(4, 8000, 20, 0, 40,
+            () -> Ingredient.of(ItemRegistry.VIOLET_FRAGMENTS.get())),
+    // 神圣金属
+    DIVINE_METAL(4, 5000, 12, 0, 22,
+            () -> Ingredient.of(ItemRegistry.DIVINE_METAL_INGOT.get())),
+
+    // 匕首
+    DARGGET(4, 8000, 20.0F, 11, 50, Ingredient::of);
 
     private final int level;
     private final int uses;

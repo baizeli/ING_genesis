@@ -2,8 +2,7 @@ package miku.united_as_one.genesis.common.effect.spell.chaos;
 
 import miku.united_as_one.genesis.Genesis;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.effect.*;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.fml.common.Mod;
 
@@ -22,12 +21,11 @@ public class ConfusionEffect extends MobEffect {
     public void applyEffectTick(LivingEntity entity, int amplifier) {
         if (!entity.level().isClientSide) {
             RandomSource random = entity.level().random;
-
-            double motionX = (random.nextDouble() - 0.5) * 0.5;
-            double motionY = entity.getDeltaMovement().y;
-            double motionZ = (random.nextDouble() - 0.5) * 0.5;
-            
-            entity.setDeltaMovement(motionX, motionY, motionZ);
+            entity.setDeltaMovement(
+                (random.nextDouble() - 0.5) * 0.5, 
+                entity.getDeltaMovement().y, 
+                (random.nextDouble() - 0.5) * 0.5
+            );
         }
         
         super.applyEffectTick(entity, amplifier);
