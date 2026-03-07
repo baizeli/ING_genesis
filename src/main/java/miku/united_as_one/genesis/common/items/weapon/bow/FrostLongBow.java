@@ -65,28 +65,24 @@ public class FrostLongBow extends BowItem {
         iceBlock.setAirTime(10);
 
         if (hitResult.getType() == HitResult.Type.ENTITY) {
-            DamageSources.applyDamage(
-                ((EntityHitResult) hitResult).getEntity(), power * 15, SpellDamageSource.source(player, 
-                    SpellRegistry.RAY_OF_FROST_SPELL.get()
+            DamageSources.applyDamage(((EntityHitResult) hitResult).getEntity(), power * 15, 
+                    SpellDamageSource.source(player,SpellRegistry.RAY_OF_FROST_SPELL.get()
                 ).setFreezeTicks((int)(power * 5 * 20))
             );
             level.addFreshEntity(iceBlock);
         } else if (hitResult.getType() == HitResult.Type.BLOCK) {
-            MagicManager.spawnParticles(
-                level, ParticleHelper.ICY_FOG, 
+            MagicManager.spawnParticles(level, ParticleHelper.ICY_FOG,
                 hitResult.getLocation().x, hitResult.getLocation().y, hitResult.getLocation().z, 
                 4, 0, 0, 0, .3, true
             );
             /*level.addFreshEntity(iceBlock);*/
         }
-        MagicManager.spawnParticles(
-            level, ParticleHelper.SNOWFLAKE, 
+        MagicManager.spawnParticles(level, ParticleHelper.SNOWFLAKE,
             hitResult.getLocation().x, hitResult.getLocation().y, hitResult.getLocation().z, 
             50, 0, 0, 0, .3, false
         );
 
-        level.playSound(
-            null, player.getX(), player.getY(), player.getZ(),
+        level.playSound(null, player.getX(), player.getY(), player.getZ(),
             SoundRegistry.RAY_OF_FROST.get(), player.getSoundSource(),
             1, level.random.nextFloat() + 0.3F + 1
         );
