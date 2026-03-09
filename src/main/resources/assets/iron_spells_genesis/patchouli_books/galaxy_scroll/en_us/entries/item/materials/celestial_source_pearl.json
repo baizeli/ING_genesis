@@ -1,0 +1,19 @@
+{
+    "name": "星源珍珠",
+    "icon": "iron_spells_genesis:celestial_source_pearl",
+    "category": "iron_spells_genesis:item/materials",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "它是一团被你拼凑出的可能性，流溢着辉光，包罗有万象。$(br)其原自混沌的一，是万物起始后崭新的可能，是命运尽头里萌发的生机。$(br)生命有限，寰宇有限，群星有限。$(br)而自有限中苏生的源头，那个追寻着未来的意志，便是无限。"
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "iron_spells_genesis:item/items/celestial_source_pearl"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "它来自世间，却又高于世界。$(br)你把它双手捧起，望向其晶莹剔透的球面。$(br)他正与你隔着珍珠相望。$(br)你知道他会做什么，他也知道你会做什么。$(br)一切动机、一切梦想、一切如星般美好的源头。$(br)既是他，也是你。$(br)心中的力量与意志，触手可及。$(br)你会在自己的新世界中把他找回来，然后一并走上更远的旅途。"
+        }
+    ]
+}

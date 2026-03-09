@@ -1,0 +1,48 @@
+{
+    "name": "奥术水晶",
+    "icon": "iron_spells_genesis:arcane_crystal",
+    "category": "iron_spells_genesis:item/materials",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "一种尚未被定义的材料。$(br)你很好奇为何它如此常见，但又在别人眼中视若无物。$(br)现在想来，许是它们只承认着你，才会在你眼前出现吧。$(br)可在地下找到对应的矿物。"
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "iron_spells_genesis:arcane_crystal"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "纯净的魔力在其中微微悸动$(br)等待着你赋予它们的意义$(br)是充斥着刺骨的寒意，还是灼热如燎原的烈火$(br)是成为漂亮的装饰，还是化身为你力量的一部分$(br)这些都取决于你。$(br)毕竟匠人确实有权塑造他的作品。"
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "iron_spells_genesis:crystal/lightning_crystal"
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "iron_spells_genesis:crystal/blood_crystal",
+            "recipe2": "iron_spells_genesis:crystal/eldritch_crystal"
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "iron_spells_genesis:crystal/evocation_crystal",
+            "recipe2": "iron_spells_genesis:crystal/holy_crystal"
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "iron_spells_genesis:crystal/ender_crystal",
+            "recipe2": "iron_spells_genesis:crystal/fire_crystal"
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "iron_spells_genesis:crystal/ice_crystal",
+            "recipe2": "iron_spells_genesis:crystal/nature_crystal"
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "iron_spells_genesis:crystal/chaos_crystal",
+            "recipe2": "iron_spells_genesis:crystal/celestial_crystal"
+        }
+    ]
+}
