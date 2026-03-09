@@ -1,10 +1,12 @@
 package miku.united_as_one.genesis.common.spell.evocation;
 
 import miku.united_as_one.genesis.Genesis;
+import miku.united_as_one.genesis.common.entity.projectile.ThrownIron;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.registry.SchoolRegistry;
 import io.redspace.ironsspellbooks.api.spells.*;
+import io.redspace.ironsspellbooks.api.util.Utils;
 import net.minecraft.network.chat.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
@@ -32,7 +34,11 @@ public class IronSpellSpell extends AbstractSpell {
 
     @Override
     public List<MutableComponent> getUniqueInfo(int spellLevel, LivingEntity caster) {
-        return List.of();
+        return List.of(
+            Component.translatable(
+                "ui.irons_spellbooks.damage", Utils.stringTruncation(getDamage(spellLevel), 1)
+            )
+        );
     }
 
     @Override
@@ -50,8 +56,22 @@ public class IronSpellSpell extends AbstractSpell {
         return CastType.INSTANT;
     }
 
+    private float getDamage(int spellLevel) {
+        return 6 + (spellLevel - 1) * 0.5f;
+    }
+
     @Override
     public void onCast(Level level, int spellLevel, LivingEntity entity, CastSource castSource, MagicData playerMagicData) {
+        if (!level.isClientSide()) {
+            ThrownIron thrownIron = new ThrownIron(level, entity);
+
+            thrownIron.setDamage(getDamage(spellLevel));
+            thrownIron.setLifeTime(10*20);
+            thrownIron.shootFromRotation(entity, entity.getXRot(), entity.getYRot(), 0, 0.5f, 0);
+
+            level.addFreshEntity(thrownIron);
+        }
+        
         super.onCast(level, spellLevel, entity, castSource, playerMagicData);
     }
 }
