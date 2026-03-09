@@ -9,6 +9,7 @@ import io.redspace.ironsspellbooks.api.util.*;
 import io.redspace.ironsspellbooks.damage.DamageSources;
 import io.redspace.ironsspellbooks.entity.spells.ice_spike.IceSpikeEntity;
 import io.redspace.ironsspellbooks.entity.spells.ray_of_frost.RayOfFrostVisualEntity;
+import io.redspace.ironsspellbooks.entity.spells.target_area.TargetedAreaEntity;
 import io.redspace.ironsspellbooks.registries.SoundRegistry;
 import net.minecraft.network.chat.*;
 import net.minecraft.resources.ResourceLocation;
@@ -16,7 +17,7 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.*;
 
-import java.util.List;
+import java.util.*;
 
 @AutoSpellConfig
 public class FrostThrustArraySpell extends AbstractSpell {
@@ -32,7 +33,7 @@ public class FrostThrustArraySpell extends AbstractSpell {
         this.manaCostPerLevel = 25;
         this.baseSpellPower = 6;
         this.spellPowerPerLevel = 2;
-        this.castTime = 20 * 3;
+        this.castTime = 20*3;
         this.baseManaCost = 125;
     }
 
@@ -70,7 +71,7 @@ public class FrostThrustArraySpell extends AbstractSpell {
 
     @Override
     public AnimationHolder getCastFinishAnimation() {
-        return SpellAnimations.FINISH_ANIMATION;
+        return SpellAnimations.OVERHEAD_MELEE_SWING_ANIMATION;
     }
 
     private float getDamage(int spellLevel, LivingEntity caster) {
@@ -92,9 +93,13 @@ public class FrostThrustArraySpell extends AbstractSpell {
                 entity.getX() + radius, entity.getY() + 10, entity.getZ() + radius
             );
 
+            TargetedAreaEntity targetArea = TargetedAreaEntity.createTargetAreaEntity(level, entity.position(), radius, 0x0000ff);
+            targetArea.setDuration(20*3);
+            /*targetArea.setOwner(entity);*/
+
             for (Entity targetEntity : level.getEntities(entity, searchArea)) {
-                if (targetEntity instanceof LivingEntity livingTarget && 
-                    targetEntity.isAlive() && !targetEntity.isSpectator()) {
+                if (targetEntity instanceof LivingEntity livingTarget &&
+                   targetEntity.isAlive() && !targetEntity.isSpectator()) {
                     if (targetEntity.distanceToSqr(entity.position()) <= radius * radius) {
                         IceSpikeEntity iceSpike = new IceSpikeEntity(level, entity);
                         
@@ -110,7 +115,6 @@ public class FrostThrustArraySpell extends AbstractSpell {
                         Vec3 endPos = startPos.add(0, -10, 0).add(targetEntity.getLookAngle().scale(3));
 
                         RayOfFrostVisualEntity ray = new RayOfFrostVisualEntity(level, startPos, endPos, livingTarget);
-
                         level.addFreshEntity(ray);
 
                         DamageSources.applyDamage(livingTarget, getSpellPower(spellLevel, entity) * 0.8f,
