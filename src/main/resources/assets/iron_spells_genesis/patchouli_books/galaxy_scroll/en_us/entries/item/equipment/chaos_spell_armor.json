@@ -1,0 +1,20 @@
+{
+    "name": "混沌法术套装",
+    "icon": "iron_spells_genesis:chaos_spell_helmet",
+    "category": "iron_spells_genesis:item/equipment",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "一套由混沌之力所铸而成的法术套装。"
+        },
+        {
+            "type": "patchouli:entity",
+            "name": "混沌法术套装",
+            "entity": "minecraft:armor_stand{ArmorItems:[{id:'iron_spells_genesis:chaos_spell_boots',Count:1b},{id:'iron_spells_genesis:chaos_spell_leggings',Count:1b},{id:'iron_spells_genesis:chaos_spell_chestplate',Count:1b},{id:'iron_spells_genesis:chaos_spell_helmet',Count:1b}],NoBasePlate:1b}"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "它为了你在背上长出了一只眼眸。$(br)因诸神自有全知的诉求。$(br)被创造出的贫弱人形只有向前的注目。$(br)唯有这件衣袍能将其补足。$(br2)$(br)不染鲜血而其径自猩红，$(br)蒙昧的原罪如本我绽放其中。$(br)焦躁的力量和奥术共同鼓动，$(br)世界注定的先兆于此展露。"
+        }
+    ]
+}

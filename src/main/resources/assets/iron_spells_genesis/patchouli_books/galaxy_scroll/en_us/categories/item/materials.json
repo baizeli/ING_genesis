@@ -1,0 +1,7 @@
+{
+    "name": "材料",
+    "description": "一些神圣亦或者亵渎、疯狂的材料",
+    "icon": "iron_spells_genesis:celestial_source_crystal",
+    "sortnum": 1,
+    "parent": "iron_spells_genesis:item"
+}
