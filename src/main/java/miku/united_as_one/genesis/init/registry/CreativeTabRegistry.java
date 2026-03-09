@@ -5,6 +5,7 @@ import io.redspace.ironsspellbooks.api.spells.*;
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.common.spell.celestial_source.*;
 import miku.united_as_one.genesis.common.spell.chaos.*;
+import miku.united_as_one.genesis.common.spell.evocation.*;
 import miku.united_as_one.genesis.common.spell.fire.*;
 import miku.united_as_one.genesis.common.spell.thunder.*;
 import miku.united_as_one.genesis.common.spell.ice.*;
@@ -71,6 +72,9 @@ public class CreativeTabRegistry {
     // 冰霜法术卷轴
     public static final RegistryObject<AbstractSpell> FROST_THRUST_ARRAY_SPELL;
 
+    // 唤魔法术卷轴
+    public static final RegistryObject<AbstractSpell> IRON_SPELL_SPELL;
+
     static {
         // 混沌法术卷轴
         WARPED_BLOOD_BURST_SPELL = registerSpell(new WarpedBloodBurstSpell());
@@ -108,6 +112,9 @@ public class CreativeTabRegistry {
 
         // 冰霜法术卷轴
         FROST_THRUST_ARRAY_SPELL = registerSpell(new FrostThrustArraySpell());
+
+        // 唤魔法术卷轴
+        IRON_SPELL_SPELL = registerSpell(new IronSpellSpell());
 
         // iron的法术创世纪：方块
         Genesis.L2_REGISTRATE
@@ -180,6 +187,11 @@ public class CreativeTabRegistry {
                                 FROST_THRUST_ARRAY_SPELL.get()
                             };
 
+                            // 唤魔法术卷轴
+                            AbstractSpell[] evocationSpells = {
+                                IRON_SPELL_SPELL.get()
+                            };
+
                             // 混沌法术卷轴
                             for (AbstractSpell spell : chaosSpells) {
                                 for (int level = spell.getMinLevel(); level <= spell.getMaxLevel(); level++) {
@@ -210,6 +222,13 @@ public class CreativeTabRegistry {
 
                             // 冰霜法术卷轴
                             for (AbstractSpell spell : iceSpells) {
+                                for (int level = spell.getMinLevel(); level <= spell.getMaxLevel(); level++) {
+                                    output.accept(createScrollWithSpell(spell, level));
+                                }
+                            }
+
+                            // 唤魔法术卷轴
+                            for (AbstractSpell spell : evocationSpells) {
                                 for (int level = spell.getMinLevel(); level <= spell.getMaxLevel(); level++) {
                                     output.accept(createScrollWithSpell(spell, level));
                                 }

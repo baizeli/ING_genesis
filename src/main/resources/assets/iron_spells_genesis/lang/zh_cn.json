@@ -61,6 +61,8 @@
 
   "spell.iron_spells_genesis.frost_thrust_array": "冰霜突刺阵",
 
+  "spell.iron_spells_genesis.iron_spell": "铁魔法",
+
   "spell.iron_spells_genesis.warped_blood_burst.guide": "消耗自身50%的血量，对一定范围内的生物造成伤害并附带禁疗效果。",
   "spell.iron_spells_genesis.warped_barrier.guide": "将90%的生命值转化成伤害吸收。",
   "spell.iron_spells_genesis.reverse_plague.guide": "将目标正面效果与自身负面效果进行交换，短时间禁止目标获得正面效果，阻止自身获得效果并转嫁负面效果。",
