@@ -7,6 +7,7 @@ import miku.united_as_one.genesis.common.spell.celestial_source.*;
 import miku.united_as_one.genesis.common.spell.chaos.*;
 import miku.united_as_one.genesis.common.spell.fire.*;
 import miku.united_as_one.genesis.common.spell.thunder.*;
+import miku.united_as_one.genesis.common.spell.ice.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.*;
 import net.minecraft.world.item.*;
@@ -67,6 +68,9 @@ public class CreativeTabRegistry {
     // 雷霆法术卷轴
     public static final RegistryObject<AbstractSpell> THUNDER_LASER_SPELL;
 
+    // 冰霜法术卷轴
+    public static final RegistryObject<AbstractSpell> FROST_THRUST_ARRAY_SPELL;
+
     static {
         // 混沌法术卷轴
         WARPED_BLOOD_BURST_SPELL = registerSpell(new WarpedBloodBurstSpell());
@@ -101,6 +105,9 @@ public class CreativeTabRegistry {
 
         // 雷霆法术卷轴
         THUNDER_LASER_SPELL = registerSpell(new DeathLaserSpell());
+
+        // 冰霜法术卷轴
+        FROST_THRUST_ARRAY_SPELL = registerSpell(new FrostThrustArraySpell());
 
         // iron的法术创世纪：方块
         Genesis.L2_REGISTRATE
@@ -168,6 +175,11 @@ public class CreativeTabRegistry {
                                 THUNDER_LASER_SPELL.get()
                             };
 
+                            // 冰霜法术卷轴
+                            AbstractSpell[] iceSpells = {
+                                FROST_THRUST_ARRAY_SPELL.get()
+                            };
+
                             // 混沌法术卷轴
                             for (AbstractSpell spell : chaosSpells) {
                                 for (int level = spell.getMinLevel(); level <= spell.getMaxLevel(); level++) {
@@ -191,6 +203,13 @@ public class CreativeTabRegistry {
 
                             // 雷霆法术卷轴
                             for (AbstractSpell spell : thunderSpells) {
+                                for (int level = spell.getMinLevel(); level <= spell.getMaxLevel(); level++) {
+                                    output.accept(createScrollWithSpell(spell, level));
+                                }
+                            }
+
+                            // 冰霜法术卷轴
+                            for (AbstractSpell spell : iceSpells) {
                                 for (int level = spell.getMinLevel(); level <= spell.getMaxLevel(); level++) {
                                     output.accept(createScrollWithSpell(spell, level));
                                 }
