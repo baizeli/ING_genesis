@@ -74,6 +74,7 @@ public class CreativeTabRegistry {
 
     // 唤魔法术卷轴
     public static final RegistryObject<AbstractSpell> IRON_SPELL_SPELL;
+    public static final RegistryObject<AbstractSpell> MULTI_IRON_SPELL;
 
     static {
         // 混沌法术卷轴
@@ -115,6 +116,7 @@ public class CreativeTabRegistry {
 
         // 唤魔法术卷轴
         IRON_SPELL_SPELL = registerSpell(new IronSpellSpell());
+        MULTI_IRON_SPELL = registerSpell(new MultiIronSpellSpell());
 
         // iron的法术创世纪：方块
         Genesis.L2_REGISTRATE
@@ -141,35 +143,35 @@ public class CreativeTabRegistry {
                         .displayItems((params, output) -> {
                             // 混沌法术卷轴
                             AbstractSpell[] chaosSpells = {
-                                    WARPED_BLOOD_BURST_SPELL.get(),
-                                    WARPED_BARRIER_SPELL.get(),
-                                    AMENOFUWARI_SPELL.get(),
-                                    REVERSE_PLAGUE_SPELL.get(),
-                                    BLOOD_WAR_SPELL.get(),
-                                    SIPHON_SPELL.get(),
-                                    BLOOD_RITUAL_SPELL.get(),
-                                    BLOOD_CONTROL_SPELL.get(),
-                                    BLOOD_FRENZY_SPELL.get(),
-                                    CONFUSION_SPELL.get(),
-                                    GUTERNDER_PUNCTURE_SPELL.get()
+                                WARPED_BLOOD_BURST_SPELL.get(),
+                                WARPED_BARRIER_SPELL.get(),
+                                AMENOFUWARI_SPELL.get(),
+                                REVERSE_PLAGUE_SPELL.get(),
+                                BLOOD_WAR_SPELL.get(),
+                                SIPHON_SPELL.get(),
+                                BLOOD_RITUAL_SPELL.get(),
+                                BLOOD_CONTROL_SPELL.get(),
+                                BLOOD_FRENZY_SPELL.get(),
+                                CONFUSION_SPELL.get(),
+                                GUTERNDER_PUNCTURE_SPELL.get()
                             };
 
                             // 星源法术卷轴
                             AbstractSpell[] celestialSpells = {
-                                    I_FLY_SPELL.get(),
-                                    FATE_WEDGE_SPELL.get(),
-                                    PERFECT_EVASION_SPELL.get(),
-                                    ABSOLUTE_EQUALITY_SPELL.get(),
-                                    MYRIAD_ARROWS_SPELL.get(),
-                                    LIFE_AND_DEATH_REALM_SPELL.get(),
-                                    STELLAR_SOUL_CONTROL_SPELL.get(),
-                                    UNLIMITED_BLADE_WORKS_SPELL.get(),
-                                    UNPARALLELED_SPELL.get(),
-                                    GLAZED_FLOWER_RAIN_SPELL.get(),
-                                    DEAD_STAR_DECREE_SPELL.get(),
-                                    SUMMON_PIG_SWARM_SPELL.get(),
-                                    FINAL_WHISPER_SPELL.get(),
-                                    NYAN_CAT_JET_SPELL.get()
+                                I_FLY_SPELL.get(),
+                                FATE_WEDGE_SPELL.get(),
+                                PERFECT_EVASION_SPELL.get(),
+                                ABSOLUTE_EQUALITY_SPELL.get(),
+                                MYRIAD_ARROWS_SPELL.get(),
+                                LIFE_AND_DEATH_REALM_SPELL.get(),
+                                STELLAR_SOUL_CONTROL_SPELL.get(),
+                                UNLIMITED_BLADE_WORKS_SPELL.get(),
+                                UNPARALLELED_SPELL.get(),
+                                GLAZED_FLOWER_RAIN_SPELL.get(),
+                                DEAD_STAR_DECREE_SPELL.get(),
+                                SUMMON_PIG_SWARM_SPELL.get(),
+                                FINAL_WHISPER_SPELL.get(),
+                                NYAN_CAT_JET_SPELL.get()
                             };
 
                             // 炽焰法术卷轴
@@ -189,7 +191,8 @@ public class CreativeTabRegistry {
 
                             // 唤魔法术卷轴
                             AbstractSpell[] evocationSpells = {
-                                IRON_SPELL_SPELL.get()
+                                IRON_SPELL_SPELL.get(),
+                                MULTI_IRON_SPELL.get()
                             };
 
                             // 混沌法术卷轴
