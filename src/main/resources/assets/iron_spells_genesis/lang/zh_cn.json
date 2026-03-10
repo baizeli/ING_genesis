@@ -60,6 +60,7 @@
   "spell.iron_spells_genesis.death_laser": "死亡激光",
 
   "spell.iron_spells_genesis.frost_thrust_array": "冰霜突刺阵",
+  "spell.iron_spells_genesis.snow_burial": "雪葬",
 
   "spell.iron_spells_genesis.iron_spell": "铁魔法",
   "spell.iron_spells_genesis.multi_iron_spell": "多重铁魔法",
@@ -341,6 +342,7 @@
   "entity.iron_spells_genesis.blood_dagger": "猩红匕首",
   "entity.iron_spells_genesis.blood_field": "猩红场域",
   "entity.iron_spells_genesis.death_laser": "死亡激光",
+  "entity.iron_spells_genesis.iron": "铁锭",
 
   "item.iron_spells_genesis.infinity_eternal_helmet": "Purpleite Galaxy Helmet",
   "damage_type.iron_spells_genesis.celestial_source_magic": "Celestial Source Magic Damage",
