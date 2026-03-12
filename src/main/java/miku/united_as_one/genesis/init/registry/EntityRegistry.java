@@ -3,6 +3,10 @@ package miku.united_as_one.genesis.init.registry;
 import io.redspace.ironsspellbooks.entity.spells.void_tentacle.VoidTentacle;
 import miku.united_as_one.genesis.common.entity.*;
 import miku.united_as_one.genesis.common.entity.LightningBolt;
+import miku.united_as_one.genesis.common.entity.arrow.BloodArrowEntity;
+import miku.united_as_one.genesis.common.entity.arrow.HolyArrowEntity;
+import miku.united_as_one.genesis.common.entity.arrow.StellarArrowEntity;
+import miku.united_as_one.genesis.common.entity.arrow.ThunderArrowEntity;
 import miku.united_as_one.genesis.common.entity.boss.BloodBoss;
 import miku.united_as_one.genesis.common.entity.laser.DeathLaserEntity;
 import miku.united_as_one.genesis.common.entity.projectile.ThrownIron;
@@ -141,4 +145,33 @@ public class EntityRegistry {
                     .clientTrackingRange(64)
                     .updateInterval(1)
                     .build("iron"));
+
+    // 特效箭矢实体注册
+    public static final RegistryObject<EntityType<ThunderArrowEntity>> THUNDER_ARROW = ENTITY_TYPES.register("thunder_arrow",
+            () -> EntityType.Builder.<ThunderArrowEntity>of(ThunderArrowEntity::new, MobCategory.MISC)
+                    .sized(0.5F, 0.5F)
+                    .clientTrackingRange(4)
+                    .updateInterval(20)
+                    .build("thunder_arrow"));
+
+    public static final RegistryObject<EntityType<HolyArrowEntity>> HOLY_ARROW = ENTITY_TYPES.register("holy_arrow",
+            () -> EntityType.Builder.<HolyArrowEntity>of(HolyArrowEntity::new, MobCategory.MISC)
+                    .sized(0.5F, 0.5F)
+                    .clientTrackingRange(4)
+                    .updateInterval(20)
+                    .build("holy_arrow"));
+
+    public static final RegistryObject<EntityType<BloodArrowEntity>> BLOOD_ARROW = ENTITY_TYPES.register("blood_arrow",
+            () -> EntityType.Builder.<BloodArrowEntity>of(BloodArrowEntity::new, MobCategory.MISC)
+                    .sized(0.5F, 0.5F)
+                    .clientTrackingRange(4)
+                    .updateInterval(20)
+                    .build("blood_arrow"));
+
+    public static final RegistryObject<EntityType<StellarArrowEntity>> STELLAR_ARROW = ENTITY_TYPES.register("stellar_arrow",
+            () -> EntityType.Builder.<StellarArrowEntity>of(StellarArrowEntity::new, MobCategory.MISC)
+                    .sized(0.5F, 0.5F)
+                    .clientTrackingRange(4)
+                    .updateInterval(20)
+                    .build("stellar_arrow"));
 }
