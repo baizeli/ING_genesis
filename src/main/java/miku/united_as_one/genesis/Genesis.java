@@ -26,7 +26,6 @@ import miku.united_as_one.genesis.init.registry.spell.SpellSchoolRegistry;
 import dev.xkmc.l2library.base.L2Registrate;
 import com.mojang.logging.LogUtils;
 import io.redspace.ironsspellbooks.render.SpellBookCurioRenderer;
-import net.mehvahdjukaar.moonlight.api.platform.ClientHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.EntityRenderers;
@@ -70,7 +69,6 @@ public class Genesis
     }
 
     public Genesis(FMLJavaModLoadingContext context) {
-        ClientHelper.registerOptionalTexturePack(Genesis.rl("Genesis_old"), Component.literal("Genesis old"), false);
         IEventBus modEventBus = context.getModEventBus();
 
         ItemRegistry.register();
