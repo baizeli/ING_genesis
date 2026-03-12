@@ -62,6 +62,7 @@
   "spell.iron_spells_genesis.death_laser": "Death Laser",
 
   "spell.iron_spells_genesis.frost_thrust_array": "Frost Thrust Array",
+  "spell.iron_spells_genesis.snow_burial": "Snow Burial",
 
   "spell.iron_spells_genesis.iron_spell": "Iron Spell",
   "spell.iron_spells_genesis.multi_iron_spell": "Multi Iron Spell",
@@ -267,6 +268,7 @@
   "entity.iron_spells_genesis.blood_dagger": "Blood Dagger",
   "entity.iron_spells_genesis.blood_field": "Blood Field",
   "entity.iron_spells_genesis.death_laser": "Death Laser",
+  "entity.iron_spells_genesis.iron": "Iron Ingot",
 
   "damage_type.iron_spells_genesis.celestial_source_magic": "Celestial Source Magic Damage",
   "damage_type.iron_spells_genesis.chaos_magic": "Chaos Magic Damage",

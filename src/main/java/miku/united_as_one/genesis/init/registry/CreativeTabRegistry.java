@@ -71,6 +71,7 @@ public class CreativeTabRegistry {
 
     // 冰霜法术卷轴
     public static final RegistryObject<AbstractSpell> FROST_THRUST_ARRAY_SPELL;
+    public static final RegistryObject<AbstractSpell> SNOW_BURIAL_SPELL;
 
     // 唤魔法术卷轴
     public static final RegistryObject<AbstractSpell> IRON_SPELL_SPELL;
@@ -113,6 +114,7 @@ public class CreativeTabRegistry {
 
         // 冰霜法术卷轴
         FROST_THRUST_ARRAY_SPELL = registerSpell(new FrostThrustArraySpell());
+        SNOW_BURIAL_SPELL = registerSpell(new SnowBurialSpell());
 
         // 唤魔法术卷轴
         IRON_SPELL_SPELL = registerSpell(new IronSpellSpell());
@@ -186,7 +188,8 @@ public class CreativeTabRegistry {
 
                             // 冰霜法术卷轴
                             AbstractSpell[] iceSpells = {
-                                FROST_THRUST_ARRAY_SPELL.get()
+                                FROST_THRUST_ARRAY_SPELL.get(),
+                                SNOW_BURIAL_SPELL.get()
                             };
 
                             // 唤魔法术卷轴

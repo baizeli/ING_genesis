@@ -22,7 +22,7 @@ public class ResourcePackEvent {
             if (modFileInfo == null) return;
        
             var builtinPack = List.of(
-                new ResourcePackInfo("Genesis_old", "Genesis Old", false)
+                new ResourcePackInfo("genesis_old", "Genesis Old", false)
             );
             
             for (var packInfo : builtinPack) {
