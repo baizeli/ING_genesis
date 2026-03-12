@@ -1,0 +1,19 @@
+{
+    "name": "混沌扭曲之旨",
+    "icon": "iron_spells_genesis:twisted_chaos",
+    "category": "iron_spells_genesis:item/materials",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "古书中存留着扭曲而磅礴的力量，你决定让它们敬服你的旨意。"
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "iron_spells_genesis:item/items/twisted_chaos"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "此界的宝物，遇上了你超凡脱俗的思想和前人的伟大知识。$(br)它们纠缠扭结，最终合而为一，成了力量的源泉、真理的注脚。 内里的一切，既是一，也是万，既是万物的起始，也是命运的尽头。你未来的道路，注定与其密不可分。因为在这片低矮的天空下，也只有它能和你相互理解了。将你的视线注入其中吧，将你的愿景投射其上吧。$(br)$(6)天帷终会被撕破。$()$(br)而它会和你一起，实现注定伟大的创世奇迹。"
+        }
+    ]
+}

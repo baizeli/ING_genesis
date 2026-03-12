@@ -1,11 +1,11 @@
 package miku.united_as_one.genesis.common.entity.spells.celestial_source;
 
-import miku.united_as_one.genesis.common.data.damage.DamageTypes;
 import io.redspace.ironsspellbooks.api.util.Utils;
 import io.redspace.ironsspellbooks.capabilities.magic.MagicManager;
 import io.redspace.ironsspellbooks.damage.DamageSources;
 import io.redspace.ironsspellbooks.entity.spells.AbstractMagicProjectile;
 import io.redspace.ironsspellbooks.particle.BlastwaveParticleOptions;
+import miku.united_as_one.genesis.init.registry.CreativeTabRegistry;
 import net.minecraft.sounds.*;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.projectile.Projectile;
@@ -104,8 +104,8 @@ public class DeadStarDecreeComet extends AbstractMagicProjectile {
                 if (distanceSqr < explosionRadiusSqr && canHitEntity(entity)) {
                     double damageFactor = (1 - distanceSqr / explosionRadiusSqr);
                     float actualDamage = (float) (getDamage() * damageFactor);
-                    
-                    DamageSources.applyDamage(entity, actualDamage, DamageSources.get(level(), DamageTypes.CELESTIAL_SOURCE_MAGIC));
+
+                    DamageSources.applyDamage(entity, actualDamage, CreativeTabRegistry.DEAD_STAR_DECREE_SPELL.get().getDamageSource(this, getOwner()));
                 }
             }
             

@@ -59,6 +59,7 @@ public class FlameBow extends BowItem {
 
             fireArrow.setDamage(power * 25);
             fireArrow.setExplosionRadius(5);
+            fireArrow.getPersistentData().putBoolean("FlameBow_Arrow", true);
 
             level.addFreshEntity(fireArrow);
         }
