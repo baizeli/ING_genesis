@@ -1,6 +1,8 @@
 {
   "curios.identifier.crown": "Crown",
   "curios.modifiers.crown": "When worn as crown:",
+  "curios.identifier.magic_guide": "Magic Guide",
+  "curios.modifiers.magic_guide": "When on magic guide:",
 
   "itemGroup.iron_spells_genesis.iron_spells_genesis_tab": "Iron's Spells genesis",
   "itemGroup.iron_spells_genesis.block": "iron's Spells: Genesis: Block",
