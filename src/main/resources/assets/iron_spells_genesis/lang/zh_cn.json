@@ -1,6 +1,8 @@
 {
   "curios.identifier.crown": "冠冕",
   "curios.modifiers.crown": "作为冠冕佩戴时：",
+  "curios.identifier.magic_guide": "魔导",
+  "curios.modifiers.magic_guide": "魔导佩戴时：",
 
   "itemGroup.iron_spells_genesis.iron_spells_genesis_tab": "铁之魔法书：创世纪",
   "itemGroup.iron_spells_genesis.block": "iron的法术创世纪：方块",
