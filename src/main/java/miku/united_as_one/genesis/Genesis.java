@@ -31,21 +31,36 @@ import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.EntityRenderers;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.PackType;
+import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
+import net.minecraft.server.packs.repository.Pack;
+import net.minecraft.server.packs.repository.PackSource;
+import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.data.loading.DatagenModLoader;
+import net.minecraftforge.event.AddPackFindersEvent;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.*;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.*;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.forgespi.locating.IModFile;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
+import net.minecraftforge.resource.PathPackResources;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
+
+import java.util.Objects;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 @SuppressWarnings("removal")
 @Mod(Genesis.MOD_ID)
@@ -69,6 +84,7 @@ public class Genesis
     }
 
     public Genesis(FMLJavaModLoadingContext context) {
+        registerOptionalTexturePack(Genesis.rl("genesis_old"), Component.literal("Genesis old"), false);
         IEventBus modEventBus = context.getModEventBus();
 
         ItemRegistry.register();
@@ -99,6 +115,39 @@ public class Genesis
         MinecraftForge.EVENT_BUS.register(ClientEvent.class);
 
         context.registerConfig(ModConfig.Type.COMMON, Configuration.SPECIFICATION);
+    }
+
+    public static void registerOptionalTexturePack(ResourceLocation folderName, Component displayName, boolean defaultEnabled) {
+        registerResourcePack(PackType.CLIENT_RESOURCES, () -> {
+            IModFile file = ModList.get().getModFileById(folderName.getNamespace()).getFile();
+
+            try (PathPackResources pack = new PathPackResources(folderName.toString(), true, file.findResource("resourcepacks/" + folderName.getPath()))) {
+                PackMetadataSection metadata = Objects.requireNonNull(pack.getMetadataSection(PackMetadataSection.TYPE), "Missing pack.mcmeta for pack " + folderName);
+                return Pack.create(folderName.toString(), displayName, defaultEnabled, (s) -> pack, new Pack.Info(metadata.getDescription(), metadata.getPackFormat(), FeatureFlagSet.of()), PackType.CLIENT_RESOURCES, Pack.Position.TOP, false, PackSource.BUILT_IN);
+            } catch (Exception ee) {
+                if (!DatagenModLoader.isRunningDataGen()) {
+                    ee.printStackTrace();
+                }
+
+                return null;
+            }
+        });
+    }
+
+    public static void registerResourcePack(PackType packType, @Nullable Supplier<Pack> packSupplier) {
+        if (packSupplier != null) {
+            IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+            Consumer<AddPackFindersEvent> consumer = (event) -> {
+                if (event.getPackType() == packType) {
+                    Pack p = packSupplier.get();
+                    if (p != null) {
+                        event.addRepositorySource((infoConsumer) -> infoConsumer.accept(packSupplier.get()));
+                    }
+                }
+
+            };
+            bus.addListener(consumer);
+        }
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
