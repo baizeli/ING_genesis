@@ -61,7 +61,7 @@ public class BloodWarSpell extends ChaosBaseSpell {
         
         return List.of(
             Component.translatable("ui.irons_spellbooks.cooldown",
-                Utils.timeFromTicks(getCooldownInTicks(spellLevel, CastSource.COMMAND, caster), 1)
+                Utils.timeFromTicks(getCooldownInTicks(CastSource.COMMAND, caster), 1)
             ),
             Component.translatable("ui.irons_spellbooks.effect_length",
                 Utils.timeFromTicks(duration, 1)
@@ -81,7 +81,7 @@ public class BloodWarSpell extends ChaosBaseSpell {
         );
     }
 
-    private int getCooldownInTicks(int spellLevel, CastSource castSource, LivingEntity caster) {
+    private int getCooldownInTicks(CastSource castSource, LivingEntity caster) {
         double playerCooldownModifier = 1d;
         float itemCoolDownModifer = 1f;
 
@@ -100,7 +100,7 @@ public class BloodWarSpell extends ChaosBaseSpell {
     public void castSpell(Level world, int spellLevel, ServerPlayer serverPlayer, CastSource castSource, boolean triggerCooldown) {
         super.castSpell(world, spellLevel, serverPlayer, castSource, triggerCooldown);
         if (!MagicData.getPlayerMagicData(serverPlayer).getPlayerRecasts().hasRecastForSpell(this.getSpellId()) && triggerCooldown && (!serverPlayer.isCreative() || ServerConfigs.CREATIVE_COOLDOWN.get())) {
-            SpellUtils.addCooldown(serverPlayer, this, castSource, getCooldownInTicks(spellLevel, castSource, serverPlayer));
+            SpellUtils.addCooldown(serverPlayer, this, castSource, getCooldownInTicks(castSource, serverPlayer));
         }
     }
 
