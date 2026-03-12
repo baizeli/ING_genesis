@@ -16,7 +16,6 @@ import org.joml.Vector3f;
 public class ThrownIron extends ThrowableItemProjectile {
     private float damage = 6;
     private int lifeTime = 60;
-    private int delay = 0;
 
     public ThrownIron(EntityType<? extends ThrownIron> entityType, Level level) {
         super(entityType, level);
@@ -25,10 +24,6 @@ public class ThrownIron extends ThrowableItemProjectile {
 
     public ThrownIron(Level level, LivingEntity shooter) {
         super(EntityRegistry.THROWN_IRON.get(), shooter, level);
-    }
-
-    public void setDelay(int delay) {
-        this.delay = delay;
     }
 
     @Override
@@ -75,14 +70,6 @@ public class ThrownIron extends ThrowableItemProjectile {
 
     @Override
     public void tick() {
-        if (this.delay > 0) {
-            this.setInvisible(true);
-            this.delay--;
-            return;
-        } else {
-            this.setInvisible(false);
-        }
-
         HitResult hitresult = ProjectileUtil.getHitResultOnMoveVector(this, this::canHitEntity);
         if (hitresult.getType() != HitResult.Type.MISS) this.onHit(hitresult);
 
