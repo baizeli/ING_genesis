@@ -70,8 +70,7 @@ public class AmenofuwariSpell extends ChaosBaseSpell {
 
     @Override
     public boolean checkPreCastConditions(Level level, int spellLevel, LivingEntity entity, MagicData playerMagicData) {
-        float maxDistance = getDistance(spellLevel, entity);
-        return Utils.preCastTargetHelper(level, entity, playerMagicData, this, (int) Math.ceil(maxDistance), 0.1f);
+        return Utils.preCastTargetHelper(level, entity, playerMagicData, this, (int) Math.ceil(getDistance(spellLevel, entity)), 0.1f);
     }
 
     @Override

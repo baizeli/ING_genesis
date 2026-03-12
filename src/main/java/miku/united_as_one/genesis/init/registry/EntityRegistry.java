@@ -5,6 +5,7 @@ import miku.united_as_one.genesis.common.entity.*;
 import miku.united_as_one.genesis.common.entity.LightningBolt;
 import miku.united_as_one.genesis.common.entity.boss.BloodBoss;
 import miku.united_as_one.genesis.common.entity.laser.DeathLaserEntity;
+import miku.united_as_one.genesis.common.entity.projectile.ThrownIron;
 import miku.united_as_one.genesis.common.entity.spells.blood_boss.BloodBossFireEruptionAoe;
 import miku.united_as_one.genesis.common.entity.spells.blood_boss.blood_dagger.BloodDaggerEntity;
 import miku.united_as_one.genesis.common.entity.spells.blood_boss.blood_dagger.BloodField;
@@ -133,4 +134,11 @@ public class EntityRegistry {
                     .clientTrackingRange(64)
                     .updateInterval(1)
                     .build("death_laser"));
+
+    public static final RegistryObject<EntityType<ThrownIron>> THROWN_IRON = ENTITY_TYPES.register("iron",
+            () -> EntityType.Builder.<ThrownIron>of(ThrownIron::new, MobCategory.MISC)
+                    .sized(0.5f, 0.5f)
+                    .clientTrackingRange(64)
+                    .updateInterval(1)
+                    .build("iron"));
 }

@@ -1,6 +1,8 @@
 {
   "curios.identifier.crown": "Crown",
   "curios.modifiers.crown": "When worn as crown:",
+  "curios.identifier.magic_guide": "Magic Guide",
+  "curios.modifiers.magic_guide": "When on magic guide:",
 
   "itemGroup.iron_spells_genesis.iron_spells_genesis_tab": "Iron's Spells genesis",
   "itemGroup.iron_spells_genesis.block": "iron's Spells: Genesis: Block",
@@ -58,6 +60,12 @@
   "spell.iron_spells_genesis.blazing_blade_barrage": "Blazing Blade Barrage",
 
   "spell.iron_spells_genesis.death_laser": "Death Laser",
+
+  "spell.iron_spells_genesis.frost_thrust_array": "Frost Thrust Array",
+  "spell.iron_spells_genesis.snow_burial": "Snow Burial",
+
+  "spell.iron_spells_genesis.iron_spell": "Iron Spell",
+  "spell.iron_spells_genesis.multi_iron_spell": "Multi Iron Spell",
 
   "spell.iron_spells_genesis.warped_blood_burst.guide": "Consume 50% of your own HP to deal damage to all enemies in an area and inflict a healing-negation effect.",
   "spell.iron_spells_genesis.warped_barrier.guide": "Convert 90% of health into Absorption.",
@@ -260,6 +268,7 @@
   "entity.iron_spells_genesis.blood_dagger": "Blood Dagger",
   "entity.iron_spells_genesis.blood_field": "Blood Field",
   "entity.iron_spells_genesis.death_laser": "Death Laser",
+  "entity.iron_spells_genesis.iron": "Iron Ingot",
 
   "damage_type.iron_spells_genesis.celestial_source_magic": "Celestial Source Magic Damage",
   "damage_type.iron_spells_genesis.chaos_magic": "Chaos Magic Damage",

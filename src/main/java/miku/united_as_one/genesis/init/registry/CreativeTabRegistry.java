@@ -5,8 +5,10 @@ import io.redspace.ironsspellbooks.api.spells.*;
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.common.spell.celestial_source.*;
 import miku.united_as_one.genesis.common.spell.chaos.*;
+import miku.united_as_one.genesis.common.spell.evocation.*;
 import miku.united_as_one.genesis.common.spell.fire.*;
 import miku.united_as_one.genesis.common.spell.thunder.*;
+import miku.united_as_one.genesis.common.spell.ice.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.*;
 import net.minecraft.world.item.*;
@@ -67,6 +69,14 @@ public class CreativeTabRegistry {
     // 雷霆法术卷轴
     public static final RegistryObject<AbstractSpell> THUNDER_LASER_SPELL;
 
+    // 冰霜法术卷轴
+    public static final RegistryObject<AbstractSpell> FROST_THRUST_ARRAY_SPELL;
+    public static final RegistryObject<AbstractSpell> SNOW_BURIAL_SPELL;
+
+    // 唤魔法术卷轴
+    public static final RegistryObject<AbstractSpell> IRON_SPELL_SPELL;
+    public static final RegistryObject<AbstractSpell> MULTI_IRON_SPELL;
+
     static {
         // 混沌法术卷轴
         WARPED_BLOOD_BURST_SPELL = registerSpell(new WarpedBloodBurstSpell());
@@ -102,6 +112,14 @@ public class CreativeTabRegistry {
         // 雷霆法术卷轴
         THUNDER_LASER_SPELL = registerSpell(new DeathLaserSpell());
 
+        // 冰霜法术卷轴
+        FROST_THRUST_ARRAY_SPELL = registerSpell(new FrostThrustArraySpell());
+        SNOW_BURIAL_SPELL = registerSpell(new SnowBurialSpell());
+
+        // 唤魔法术卷轴
+        IRON_SPELL_SPELL = registerSpell(new IronSpellSpell());
+        MULTI_IRON_SPELL = registerSpell(new MultiIronSpellSpell());
+
         // iron的法术创世纪：方块
         Genesis.L2_REGISTRATE
             .buildModCreativeTab("block", "itemGroup." + Genesis.MOD_ID, builder -> builder
@@ -127,35 +145,35 @@ public class CreativeTabRegistry {
                         .displayItems((params, output) -> {
                             // 混沌法术卷轴
                             AbstractSpell[] chaosSpells = {
-                                    WARPED_BLOOD_BURST_SPELL.get(),
-                                    WARPED_BARRIER_SPELL.get(),
-                                    AMENOFUWARI_SPELL.get(),
-                                    REVERSE_PLAGUE_SPELL.get(),
-                                    BLOOD_WAR_SPELL.get(),
-                                    SIPHON_SPELL.get(),
-                                    BLOOD_RITUAL_SPELL.get(),
-                                    BLOOD_CONTROL_SPELL.get(),
-                                    BLOOD_FRENZY_SPELL.get(),
-                                    CONFUSION_SPELL.get(),
-                                    GUTERNDER_PUNCTURE_SPELL.get()
+                                WARPED_BLOOD_BURST_SPELL.get(),
+                                WARPED_BARRIER_SPELL.get(),
+                                AMENOFUWARI_SPELL.get(),
+                                REVERSE_PLAGUE_SPELL.get(),
+                                BLOOD_WAR_SPELL.get(),
+                                SIPHON_SPELL.get(),
+                                BLOOD_RITUAL_SPELL.get(),
+                                BLOOD_CONTROL_SPELL.get(),
+                                BLOOD_FRENZY_SPELL.get(),
+                                CONFUSION_SPELL.get(),
+                                GUTERNDER_PUNCTURE_SPELL.get()
                             };
 
                             // 星源法术卷轴
                             AbstractSpell[] celestialSpells = {
-                                    I_FLY_SPELL.get(),
-                                    FATE_WEDGE_SPELL.get(),
-                                    PERFECT_EVASION_SPELL.get(),
-                                    ABSOLUTE_EQUALITY_SPELL.get(),
-                                    MYRIAD_ARROWS_SPELL.get(),
-                                    LIFE_AND_DEATH_REALM_SPELL.get(),
-                                    STELLAR_SOUL_CONTROL_SPELL.get(),
-                                    UNLIMITED_BLADE_WORKS_SPELL.get(),
-                                    UNPARALLELED_SPELL.get(),
-                                    GLAZED_FLOWER_RAIN_SPELL.get(),
-                                    DEAD_STAR_DECREE_SPELL.get(),
-                                    SUMMON_PIG_SWARM_SPELL.get(),
-                                    FINAL_WHISPER_SPELL.get(),
-                                    NYAN_CAT_JET_SPELL.get()
+                                I_FLY_SPELL.get(),
+                                FATE_WEDGE_SPELL.get(),
+                                PERFECT_EVASION_SPELL.get(),
+                                ABSOLUTE_EQUALITY_SPELL.get(),
+                                MYRIAD_ARROWS_SPELL.get(),
+                                LIFE_AND_DEATH_REALM_SPELL.get(),
+                                STELLAR_SOUL_CONTROL_SPELL.get(),
+                                UNLIMITED_BLADE_WORKS_SPELL.get(),
+                                UNPARALLELED_SPELL.get(),
+                                GLAZED_FLOWER_RAIN_SPELL.get(),
+                                DEAD_STAR_DECREE_SPELL.get(),
+                                SUMMON_PIG_SWARM_SPELL.get(),
+                                FINAL_WHISPER_SPELL.get(),
+                                NYAN_CAT_JET_SPELL.get()
                             };
 
                             // 炽焰法术卷轴
@@ -166,6 +184,18 @@ public class CreativeTabRegistry {
                             // 雷霆法术卷轴
                             AbstractSpell[] thunderSpells = {
                                 THUNDER_LASER_SPELL.get()
+                            };
+
+                            // 冰霜法术卷轴
+                            AbstractSpell[] iceSpells = {
+                                FROST_THRUST_ARRAY_SPELL.get(),
+                                SNOW_BURIAL_SPELL.get()
+                            };
+
+                            // 唤魔法术卷轴
+                            AbstractSpell[] evocationSpells = {
+                                IRON_SPELL_SPELL.get(),
+                                MULTI_IRON_SPELL.get()
                             };
 
                             // 混沌法术卷轴
@@ -191,6 +221,20 @@ public class CreativeTabRegistry {
 
                             // 雷霆法术卷轴
                             for (AbstractSpell spell : thunderSpells) {
+                                for (int level = spell.getMinLevel(); level <= spell.getMaxLevel(); level++) {
+                                    output.accept(createScrollWithSpell(spell, level));
+                                }
+                            }
+
+                            // 冰霜法术卷轴
+                            for (AbstractSpell spell : iceSpells) {
+                                for (int level = spell.getMinLevel(); level <= spell.getMaxLevel(); level++) {
+                                    output.accept(createScrollWithSpell(spell, level));
+                                }
+                            }
+
+                            // 唤魔法术卷轴
+                            for (AbstractSpell spell : evocationSpells) {
                                 for (int level = spell.getMinLevel(); level <= spell.getMaxLevel(); level++) {
                                     output.accept(createScrollWithSpell(spell, level));
                                 }

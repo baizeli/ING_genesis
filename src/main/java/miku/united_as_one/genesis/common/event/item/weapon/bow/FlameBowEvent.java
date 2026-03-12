@@ -16,6 +16,8 @@ public class FlameBowEvent {
     @SubscribeEvent
     public static void onFlameArrowImpact(ProjectileImpactEvent event) {
         if (event.getProjectile() instanceof FireArrowProjectile fireArrow) {
+            if (!fireArrow.getPersistentData().getBoolean("FlameBow_Arrow")) return;
+            
             if (fireArrow.getOwner() instanceof LivingEntity owner && !fireArrow.level.isClientSide) {
                 Vec3 impactLocation = event.getRayTraceResult().getLocation();
 

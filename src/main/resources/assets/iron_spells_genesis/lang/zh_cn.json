@@ -1,6 +1,8 @@
 {
   "curios.identifier.crown": "冠冕",
   "curios.modifiers.crown": "作为冠冕佩戴时：",
+  "curios.identifier.magic_guide": "魔导",
+  "curios.modifiers.magic_guide": "魔导佩戴时：",
 
   "itemGroup.iron_spells_genesis.iron_spells_genesis_tab": "铁之魔法书：创世纪",
   "itemGroup.iron_spells_genesis.block": "iron的法术创世纪：方块",
@@ -59,6 +61,12 @@
 
   "spell.iron_spells_genesis.death_laser": "死亡激光",
 
+  "spell.iron_spells_genesis.frost_thrust_array": "冰霜突刺阵",
+  "spell.iron_spells_genesis.snow_burial": "雪葬",
+
+  "spell.iron_spells_genesis.iron_spell": "铁魔法",
+  "spell.iron_spells_genesis.multi_iron_spell": "多重铁魔法",
+
   "spell.iron_spells_genesis.warped_blood_burst.guide": "消耗自身50%的血量，对一定范围内的生物造成伤害并附带禁疗效果。",
   "spell.iron_spells_genesis.warped_barrier.guide": "将90%的生命值转化成伤害吸收。",
   "spell.iron_spells_genesis.reverse_plague.guide": "将目标正面效果与自身负面效果进行交换，短时间禁止目标获得正面效果，阻止自身获得效果并转嫁负面效果。",
@@ -114,7 +122,6 @@
   "item.iron_spells_genesis.infinite_shriving_stone": "无限忏悔石",
   "item.iron_spells_genesis.fire_boss_dagger": "受火者的匕首",
   "item.iron_spells_genesis.blood_boss_dagger": "受血者的匕首",
-
 
   "item.iron_spells_genesis.flying_swallow_through_willow": "飞燕穿柳",
 
@@ -349,6 +356,7 @@
   "entity.iron_spells_genesis.blood_dagger": "猩红匕首",
   "entity.iron_spells_genesis.blood_field": "猩红场域",
   "entity.iron_spells_genesis.death_laser": "死亡激光",
+  "entity.iron_spells_genesis.iron": "铁锭",
 
   "item.iron_spells_genesis.infinity_eternal_helmet": "Purpleite Galaxy Helmet",
   "damage_type.iron_spells_genesis.celestial_source_magic": "Celestial Source Magic Damage",

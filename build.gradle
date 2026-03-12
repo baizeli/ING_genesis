@@ -123,7 +123,6 @@ repositories {
     maven {
         url "https://maven.tterrag.com/"
     }
-
 }
 
 configurations {
