@@ -1,17 +1,4 @@
 {
-  "entities": [
-    "minecraft:player"
-  ],
-  "slots": [
-    "head",
-    "hands",
-    "charm",
-    "ring",
-    "belt",
-    "back",
-    "bracelet",
-    "body",
-    "crown",
-    "magic_guide"
-  ]
+  "entities": ["player"],
+  "slots": ["spellbook", "ring", "necklace","magic_guide","crown"]
 }
