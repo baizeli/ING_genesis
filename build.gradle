@@ -125,7 +125,6 @@ repositories {
     }
 }
 
-
 configurations {
     runtimeClasspath.extendsFrom localRuntime
 }
