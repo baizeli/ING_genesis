@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 1,
+  "ingredient": {
+    "item": "iron_spells_genesis:weathered_stone_bricks"
+  },
+  "result": "iron_spells_genesis:weathered_stone_bricks_wall"
+}
