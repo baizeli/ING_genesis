@@ -63,7 +63,7 @@ public class MultiIronSpellSpell extends AbstractSpell {
 
     @Override
     public int getRecastCount(int spellLevel, LivingEntity entity) {
-        return 10;
+        return 6;
     }
 
     private float getDamage(int spellLevel) {
@@ -89,11 +89,11 @@ public class MultiIronSpellSpell extends AbstractSpell {
 
             if (!recasts.hasRecastForSpell(getSpellId())) {
                 recasts.addRecast(new RecastInstance(
-                    getSpellId(), 
-                    spellLevel, 
-                    getRecastCount(spellLevel, entity), 
-                    getManaCost(spellLevel), 
-                    castSource, 
+                    getSpellId(),
+                    spellLevel,
+                    getRecastCount(spellLevel, entity),
+                    3 * 20,
+                    castSource,
                     new MultiTargetEntityCastData(targetEntityCastData.getTarget((ServerLevel) level))
                 ), playerMagicData);
             } else {
@@ -102,7 +102,7 @@ public class MultiIronSpellSpell extends AbstractSpell {
                     targetingData.addTarget(targetEntityCastData.getTargetUUID());
             }
         }
-        
+
         super.onCast(level, spellLevel, entity, castSource, playerMagicData);
     }
 

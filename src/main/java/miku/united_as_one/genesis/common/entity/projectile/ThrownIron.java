@@ -1,5 +1,7 @@
 package miku.united_as_one.genesis.common.entity.projectile;
 
+import io.redspace.ironsspellbooks.capabilities.magic.MagicManager;
+import io.redspace.ironsspellbooks.particle.BlastwaveParticleOptions;
 import miku.united_as_one.genesis.init.registry.EntityRegistry;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.*;
@@ -9,11 +11,12 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.*;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Vector3f;
 
 public class ThrownIron extends ThrowableItemProjectile {
     private float damage = 6;
     private int lifeTime = 60;
-    
+
     public ThrownIron(EntityType<? extends ThrownIron> entityType, Level level) {
         super(entityType, level);
         this.setNoGravity(true);
@@ -30,12 +33,20 @@ public class ThrownIron extends ThrowableItemProjectile {
 
     @Override
     protected void onHitEntity(@NotNull EntityHitResult result) {
-        result.getEntity().hurt(this.damageSources().thrown(this, this.getOwner()), this.damage);
+        if (result.getEntity().hurt(this.damageSources().thrown(this, this.getOwner()), this.damage)) {
+            result.getEntity().invulnerableTime = 0;
+        }
+
+        Vec3 center = result.getEntity().getBoundingBox().getCenter();
+        if (!this.level().isClientSide())
+            MagicManager.spawnParticles(this.level, new BlastwaveParticleOptions(new Vector3f(1, 1, 1),
+                            result.getEntity().getBbWidth() * 1.5F + 1.5F),
+                    center.x, center.y - result.getEntity().getBbHeight() * 0.5F, center.z, 1, 0.0, 0.F, 0.0, 0.0, true);
         if (!this.level().isClientSide()) this.level().playSound(null, this.getX(), this.getY(), this.getZ(),
-            SoundEvents.ANVIL_LAND, this.getSoundSource(), 1, 1
+                SoundEvents.ANVIL_LAND, this.getSoundSource(), 1, 1
         );
 
-        if (result.getEntity() instanceof LivingEntity livingEntity) 
+        if (result.getEntity() instanceof LivingEntity livingEntity)
             livingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 20, 2));
     }
 
