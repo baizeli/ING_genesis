@@ -10,7 +10,7 @@ import io.redspace.ironsspellbooks.api.util.Utils;
 import io.redspace.ironsspellbooks.capabilities.magic.TargetEntityCastData;
 import io.redspace.ironsspellbooks.registries.SoundRegistry;
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.common.entity.spells.blood_boss.blood_dagger.BloodDaggerEntity;
+import miku.united_as_one.genesis.common.entity.spell.blood_boss.blood_dagger.BloodDaggerEntity;
 import miku.united_as_one.genesis.init.registry.spell.SpellSchoolRegistry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;

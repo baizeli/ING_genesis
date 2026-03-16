@@ -5,7 +5,7 @@ import io.redspace.ironsspellbooks.registries.SoundRegistry;
 import miku.united_as_one.genesis.common.entity.ai.ModMemoryModuleType;
 import miku.united_as_one.genesis.common.entity.boss.BloodBoss;
 import miku.united_as_one.genesis.common.entity.boss.behavior.AnimatedActionBehavior;
-import miku.united_as_one.genesis.common.entity.spells.blood_boss.blood_dagger.BloodDaggerEntity;
+import miku.united_as_one.genesis.common.entity.spell.blood_boss.blood_dagger.BloodDaggerEntity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;

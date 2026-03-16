@@ -1,4 +1,4 @@
-package miku.united_as_one.genesis.common.entity.spells.blood_boss.blood_dagger;
+package miku.united_as_one.genesis.common.entity.spell.blood_boss.blood_dagger;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
