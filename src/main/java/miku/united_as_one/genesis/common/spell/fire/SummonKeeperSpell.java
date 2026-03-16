@@ -122,13 +122,12 @@ public class SummonKeeperSpell extends AbstractSpell {
                 Objects.requireNonNull(keeper.getAttributes().getInstance(Attributes.MAX_HEALTH)).setBaseValue(getSummonHealth(spellLevel));
                 keeper.setHealth(keeper.getMaxHealth());
 
+                keeper.triggerRise();
                 keeper.setSummoner(entity);
                 keeper.setIsSummoned();
 
                 level.addFreshEntity(keeper);
                 SummonManager.initSummon(entity, keeper, ST, SD);
-
-                keeper.triggerRise();
 
                 level.playSound(null, entity.getX(), entity.getY(), entity.getZ(),
                     SoundRegistry.SOULCALLER_TOLL_SUCCESS.get(), SoundSource.PLAYERS, 6, 1
