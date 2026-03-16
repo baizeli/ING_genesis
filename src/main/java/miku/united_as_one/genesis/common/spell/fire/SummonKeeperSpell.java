@@ -8,7 +8,6 @@ import io.redspace.ironsspellbooks.api.registry.SchoolRegistry;
 import io.redspace.ironsspellbooks.api.spells.*;
 import io.redspace.ironsspellbooks.api.util.Utils;
 import io.redspace.ironsspellbooks.capabilities.magic.*;
-import io.redspace.ironsspellbooks.entity.mobs.keeper.KeeperEntity;
 import io.redspace.ironsspellbooks.registries.*;
 import net.minecraft.network.chat.*;
 import net.minecraft.resources.ResourceLocation;
@@ -21,6 +20,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
 import java.util.*;
+import javax.annotation.Nullable;
 
 @AutoSpellConfig
 public class SummonKeeperSpell extends AbstractSpell {
@@ -44,16 +44,13 @@ public class SummonKeeperSpell extends AbstractSpell {
     public List<MutableComponent> getUniqueInfo(int spellLevel, LivingEntity caster) {
         return List.of(
             Component.translatable(
-                "ui.irons_spellbooks.summon_count", getSummonCount()
+                "ui.irons_spellbooks.summon_count", getRecastCount(spellLevel, caster)
             ),
             Component.translatable(
-                "ui.irons_spellbooks.hp", Utils.stringTruncation(getSummonHealth(spellLevel, (float) caster.getAttributeValue(Attributes.ATTACK_DAMAGE)), 1)
+                "ui.irons_spellbooks.hp", Utils.stringTruncation(getSummonHealth(spellLevel), 1)
             ),
             Component.translatable(
                 "ui.irons_spellbooks.damage", Utils.stringTruncation(getSummonDamage(spellLevel), 1)
-            ),
-            Component.translatable(
-                "ui.iron_spells_genesis.exist_time", getLifetime((float) caster.getAttributeValue(Attributes.ATTACK_DAMAGE)) / 20
             )
         );
     }
@@ -73,71 +70,84 @@ public class SummonKeeperSpell extends AbstractSpell {
         return CastType.LONG;
     }
 
-    private int getSummonCount() {
+    @Override
+    public int getRecastCount(int spellLevel, @Nullable LivingEntity entity) {
         return 2;
     }
 
-    private float getSummonHealth(int spellLevel, float spellPower) {
-        return 10 + (spellLevel - 1) * 10 * (1 + spellPower / 100);
+    @Override
+    public void onRecastFinished(ServerPlayer serverPlayer, RecastInstance recastInstance, RecastResult recastResult, ICastDataSerializable castDataSerializable) {
+        if (SummonManager.recastFinishedHelper(serverPlayer, recastInstance, recastResult, castDataSerializable)) {
+            super.onRecastFinished(serverPlayer, recastInstance, recastResult, castDataSerializable);
+        }
+    }
+
+    @Override
+    public ICastDataSerializable getEmptyCastData() {
+        return new SummonedEntitiesCastData();
+    }
+
+    private float getSummonHealth(int spellLevel) {
+        return 10 + (spellLevel - 1) * 10;
     }
 
     private float getSummonDamage(int spellLevel) {
         return 5 + (spellLevel - 1) * 5;
     }
 
-    private int getLifetime(float spellPower) {
-        return (int) ((20 * 90) * (1 + spellPower / 100));
-    }
-
     @Override
     public void onCast(Level level, int spellLevel, LivingEntity entity, CastSource castSource, MagicData playerMagicData) {
-        ServerLevel serverLevel = (ServerLevel) level;
+        PlayerRecasts rs = playerMagicData.getPlayerRecasts();
+        if (!rs.hasRecastForSpell(this)) {
+            SummonedEntitiesCastData SD = new SummonedEntitiesCastData();
+            int ST = 20 * 90;
 
-        for (int i = 0; i < getSummonCount(); i++) {
-            SummonedKeeperEntity keeper = new SummonedKeeperEntity(level);
+            for (int i = 0; i < getRecastCount(spellLevel, entity); i++) {
+                SummonedKeeperEntity keeper = new SummonedKeeperEntity(level);
 
-            double oX = -entity.getLookAngle().z * 2 * (i == 0 ? 1 : -1);
-            double oZ = entity.getLookAngle().x * 2 * (i == 0 ? 1 : -1);
-            
-            keeper.setPos(entity.getX() + oX, entity.getY(), entity.getZ() + oZ);
+                double oX = -entity.getLookAngle().z * 2 * (i == 0 ? 1 : -1);
+                double oZ = entity.getLookAngle().x * 2 * (i == 0 ? 1 : -1);
+                
+                keeper.setPos(entity.getX() + oX, entity.getY(), entity.getZ() + oZ);
 
-            keeper.setYRot(entity.getYRot());
-            keeper.setXRot(entity.getXRot());
+                keeper.setYRot(entity.getYRot());
+                keeper.setXRot(entity.getXRot());
 
-            if (spellLevel >= 7) {
-                keeper.setIsRestored();
-                keeper.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(ItemRegistry.LEGIONNAIRE_FLAMBERGE.get()));
-            } else keeper.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(ItemRegistry.KEEPER_FLAMBERGE.get()));
+                if (spellLevel >= 7) {
+                    keeper.setIsRestored();
+                    keeper.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(ItemRegistry.LEGIONNAIRE_FLAMBERGE.get()));
+                } else keeper.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(ItemRegistry.KEEPER_FLAMBERGE.get()));
 
-            float nh = getSummonHealth(spellLevel, (float) entity.getAttributeValue(Attributes.ATTACK_DAMAGE));
-            keeper.getAttributes().getInstance(Attributes.MAX_HEALTH).setBaseValue(nh);
-            keeper.setHealth(nh);
-            keeper.getAttributes().getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(getSummonDamage(spellLevel));
+                Objects.requireNonNull(keeper.getAttributes().getInstance(Attributes.ATTACK_DAMAGE)).setBaseValue(getSummonDamage(spellLevel));
+                Objects.requireNonNull(keeper.getAttributes().getInstance(Attributes.MAX_HEALTH)).setBaseValue(getSummonHealth(spellLevel));
+                keeper.setHealth(keeper.getMaxHealth());
 
-            keeper.setSummoner(entity);
-            keeper.setIsSummoned();
+                keeper.setSummoner(entity);
+                keeper.setIsSummoned();
 
-            level.addFreshEntity(keeper);
+                level.addFreshEntity(keeper);
+                SummonManager.initSummon(entity, keeper, ST, SD);
 
-            SummonManager.initSummon(
-                entity,
-                keeper,
-                getLifetime((float) entity.getAttributeValue(Attributes.ATTACK_DAMAGE)), 
-                new SummonedEntitiesCastData()
-            );
+                keeper.triggerRise();
 
-            keeper.triggerRise();
-            /*keeper.riseAnimTick = 50;*/
+                level.playSound(null, entity.getX(), entity.getY(), entity.getZ(),
+                    SoundRegistry.SOULCALLER_TOLL_SUCCESS.get(), SoundSource.PLAYERS, 6, 1
+                );
 
-            MagicManager.spawnParticles(serverLevel, ParticleRegistry.EMBEROUS_ASH_PARTICLE.get(),
-                entity.getX() + oX, entity.getY(), entity.getZ() + oZ, 30, 0.3, 0.3, 0.3, 0.05, false
-            );
+                MagicManager.spawnParticles(level, ParticleRegistry.EMBEROUS_ASH_PARTICLE.get(),
+                    entity.getX() + oX, entity.getY(), entity.getZ() + oZ, 30, 0.3, 0.3, 0.3, 0.05, false
+                );
+            }
+
+            rs.addRecast(new RecastInstance(this.getSpellId(),
+                spellLevel, 
+                getRecastCount(spellLevel, entity), 
+                ST,
+                castSource, 
+                SD
+            ), playerMagicData);
         }
 
-        serverLevel.playSound(null, entity.getX(), entity.getY(), entity.getZ(),
-            SoundRegistry.SOULCALLER_TOLL_SUCCESS.get(), SoundSource.PLAYERS, 6, 1
-        );
-        
         super.onCast(level, spellLevel, entity, castSource, playerMagicData);
     }
 }
