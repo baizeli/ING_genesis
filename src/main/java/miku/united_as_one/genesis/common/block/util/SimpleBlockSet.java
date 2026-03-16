@@ -1,17 +1,18 @@
 package miku.united_as_one.genesis.common.block.util;
 
+import com.tterrag.registrate.util.DataIngredient;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.common.block.VerticalSlabBlock;
 import miku.united_as_one.genesis.init.registry.CreativeTabRegistry;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraftforge.common.Tags;
 
@@ -24,50 +25,28 @@ public class SimpleBlockSet<T extends Block> {
     protected BlockEntry<T> base;
     protected ResourceLocation texture;
 
-    @Nullable
-    private BlockEntry<StairBlock> stairs;
-    @Nullable
-    private BlockEntry<SlabBlock> slab;
-    @Nullable
-    private BlockEntry<VerticalSlabBlock> verticalSlab;
-    @Nullable
-    private BlockEntry<TrapDoorBlock> trapDoor;
-    @Nullable
-    private BlockEntry<WallBlock> wall;
-    @Nullable
-    private BlockEntry<FenceBlock> fence;
-    @Nullable
-    private BlockEntry<RotatedPillarBlock> strippedLog;
-    @Nullable
-    private BlockEntry<LeavesBlock> leaves;
-    @Nullable
-    private BlockEntry<GrassBlock> grass;
-    @Nullable
-    private BlockEntry<DoorBlock> door;
+    @Nullable private BlockEntry<StairBlock> stairs;
+    @Nullable private BlockEntry<SlabBlock> slab;
+    @Nullable private BlockEntry<VerticalSlabBlock> verticalSlab;
+    @Nullable private BlockEntry<TrapDoorBlock> trapDoor;
+    @Nullable private BlockEntry<WallBlock> wall;
+    @Nullable private BlockEntry<FenceBlock> fence;
+    @Nullable private BlockEntry<RotatedPillarBlock> strippedLog;
+    @Nullable private BlockEntry<LeavesBlock> leaves;
+    @Nullable private BlockEntry<GrassBlock> grass;
+    @Nullable private BlockEntry<DoorBlock> door;
 
     SimpleBlockSet(String name) {
         this.name = name;
         this.texture = ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "block/" + name);
     }
 
+    // --- 基础构建方法 (保持不变) ---
+
     public static SimpleBlockSet<Block> buildSimple(String name, Block vanillaCopy, TagKey<Block> blockTag, TagKey<Item> itemTag, TagKey<Block> minable) {
         SimpleBlockSet<Block> simpleBlockSet = new SimpleBlockSet<>(name);
         simpleBlockSet.base = Genesis.L2_REGISTRATE.block(name, Block::new)
                 .initialProperties(() -> vanillaCopy)
-                .blockstate((ctx, pvd) -> pvd.simpleBlock(ctx.get()))
-                .tag(minable, blockTag)
-                .item()
-                .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
-                .tag(itemTag)
-                .build()
-                .register();
-        return simpleBlockSet;
-    }
-
-    public static SimpleBlockSet<Block> buildSimple(String name, BlockBehaviour behaviour, TagKey<Block> blockTag, TagKey<Item> itemTag, TagKey<Block> minable) {
-        SimpleBlockSet<Block> simpleBlockSet = new SimpleBlockSet<>(name);
-        simpleBlockSet.base = Genesis.L2_REGISTRATE.block(name, Block::new)
-                .properties(properties -> BlockBehaviour.Properties.copy(behaviour))
                 .blockstate((ctx, pvd) -> pvd.simpleBlock(ctx.get()))
                 .tag(minable, blockTag)
                 .item()
@@ -119,6 +98,8 @@ public class SimpleBlockSet<T extends Block> {
         return simpleBlockSet;
     }
 
+    // --- 快捷组合方法 ---
+
     public SimpleBlockSet<T> simpleBase(TagKey<Block> minable) {
         addStairs(minable).addSlab(minable).addVerticalSlab(minable);
         return this;
@@ -139,6 +120,8 @@ public class SimpleBlockSet<T extends Block> {
         return this;
     }
 
+    // --- 变体添加 (含配方生成) ---
+
     public SimpleBlockSet<T> addStairs(TagKey<Block> minable) {
         return addStairs(texture, minable);
     }
@@ -151,8 +134,9 @@ public class SimpleBlockSet<T extends Block> {
                 .item()
                 .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
                 .tag(ItemTags.STAIRS)
-                .model((ctx, pvd) -> pvd.stairs(ctx.getName(), side, side, side)) // 修复物品模型
+                .model((ctx, pvd) -> pvd.stairs(ctx.getName(), side, side, side))
                 .build()
+                .recipe((ctx, prov) -> prov.stairs(DataIngredient.items(base.get()), RecipeCategory.BUILDING_BLOCKS, ctx::get, null, minable.equals(BlockTags.MINEABLE_WITH_PICKAXE)))
                 .register();
         return this;
     }
@@ -162,16 +146,16 @@ public class SimpleBlockSet<T extends Block> {
     }
 
     public SimpleBlockSet<T> addSlab(ResourceLocation side, TagKey<Block> minable) {
-        // 半砖 (修复报错的核心点)
         slab = Genesis.L2_REGISTRATE.block(name + "_slab", SlabBlock::new)
                 .initialProperties(base)
                 .blockstate((ctx, pvd) -> pvd.slabBlock(ctx.get(), base.getId(), side))
-                .tag(minable, BlockTags.WOODEN_TRAPDOORS)
+                .tag(minable, BlockTags.SLABS) // 修正了原本代码中的标签错误
                 .item()
                 .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
                 .tag(ItemTags.SLABS)
                 .model((ctx, pvd) -> pvd.slab(ctx.getName(), side, side, side))
                 .build()
+                .recipe((ctx, prov) -> prov.slab(DataIngredient.items(base.get()), RecipeCategory.BUILDING_BLOCKS, ctx::get, null, minable.equals(BlockTags.MINEABLE_WITH_PICKAXE)))
                 .register();
         return this;
     }
@@ -183,35 +167,27 @@ public class SimpleBlockSet<T extends Block> {
     public SimpleBlockSet<T> addVerticalSlab(ResourceLocation side, TagKey<Block> minable) {
         verticalSlab = Genesis.L2_REGISTRATE.block(name + "_vertical_slab", VerticalSlabBlock::new)
                 .initialProperties(base)
-                .blockstate((ctx, pvd) -> pvd.horizontalBlock(
-                        ctx.get(),
-                        VerticalSlabBlock.buildModel(ctx, pvd)
-                                .texture("side", side)
-                                .texture("bottom", side)
-                                .texture("top", side)
-                ))
+                .blockstate((ctx, pvd) -> pvd.horizontalBlock(ctx.get(), VerticalSlabBlock.buildModel(ctx, pvd).texture("side", side).texture("bottom", side).texture("top", side)))
                 .tag(minable)
                 .item()
                 .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
                 .build()
+                .recipe((ctx, prov) -> prov.singleItem(DataIngredient.items(base.get()), RecipeCategory.BUILDING_BLOCKS, ctx::get, 1, 2))
                 .register();
         return this;
     }
 
     public SimpleBlockSet<T> addTrapDoor(BlockSetType type) {
-        trapDoor = Genesis.L2_REGISTRATE.block(name + "_trap_door", p -> new TrapDoorBlock(p, type))
+        trapDoor = Genesis.L2_REGISTRATE.block(name + "_trapdoor", p -> new TrapDoorBlock(p, type))
                 .initialProperties(base)
-                .blockstate((ctx, pvd) -> pvd.trapdoorBlockWithRenderType(
-                        ctx.get(), pvd.modLoc("block/" + ctx.getName()), true, RenderType.cutoutMipped().name
-                ))
+                .blockstate((ctx, pvd) -> pvd.trapdoorBlockWithRenderType(ctx.get(), pvd.modLoc("block/" + ctx.getName()), true, RenderType.cutoutMipped().name))
                 .tag(BlockTags.MINEABLE_WITH_AXE, BlockTags.WOODEN_TRAPDOORS)
                 .item()
                 .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
-                .model((ctx, pvd) -> pvd.trapdoorBottom(
-                        ctx.getName(), pvd.modLoc("block/" + ctx.getName()))
-                )
+                .model((ctx, pvd) -> pvd.trapdoorBottom(ctx.getName(), pvd.modLoc("block/" + ctx.getName())))
                 .tag(ItemTags.WOODEN_TRAPDOORS)
                 .build()
+                .recipe((ctx, prov) -> prov.trapDoor(DataIngredient.items(base.get()), RecipeCategory.REDSTONE, ctx::get, null))
                 .register();
         return this;
     }
@@ -219,18 +195,15 @@ public class SimpleBlockSet<T extends Block> {
     public SimpleBlockSet<T> addDoor(BlockSetType type) {
         door = Genesis.L2_REGISTRATE.block(name + "_door", properties -> new DoorBlock(properties, type))
                 .initialProperties(base)
-                .blockstate((ctx, pvd) -> pvd.doorBlock(
-                        ctx.get(),
-                        pvd.modLoc("block/" + ctx.getName() + "_bottom"),
-                        pvd.modLoc("block/" + ctx.getName() + "_top")
-
-                ))
+                .blockstate((ctx, pvd) -> pvd.doorBlock(ctx.get(), pvd.modLoc("block/" + ctx.getName() + "_bottom"), pvd.modLoc("block/" + ctx.getName() + "_top")))
                 .tag(BlockTags.MINEABLE_WITH_AXE, BlockTags.WOODEN_DOORS)
                 .item()
                 .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
-                .model((ctx, pvd) -> pvd.trapdoorBottom(ctx.getName(), texture))
+                // 修正点：使用 blockItem 方法来生成门的物品模型
+                .model((ctx, pvd) -> pvd.blockItem(ctx::getEntry))
                 .tag(ItemTags.WOODEN_DOORS)
                 .build()
+                .recipe((ctx, prov) -> prov.door(DataIngredient.items(base.get()), RecipeCategory.REDSTONE, ctx::get, null))
                 .register();
         return this;
     }
@@ -249,6 +222,7 @@ public class SimpleBlockSet<T extends Block> {
                 .model((ctx, pvd) -> pvd.fenceInventory(ctx.getName(), side))
                 .tag(ItemTags.WOODEN_FENCES)
                 .build()
+                .recipe((ctx, prov) -> prov.fence(DataIngredient.items(base.get()), RecipeCategory.DECORATIONS, ctx::get, null))
                 .register();
         return this;
     }
@@ -265,11 +239,14 @@ public class SimpleBlockSet<T extends Block> {
                 .item()
                 .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
                 .tag(ItemTags.WALLS)
-                .model((ctx, pvd) -> pvd.wallInventory(ctx.getName(), side)) // 围墙专用物品模型
+                .model((ctx, pvd) -> pvd.wallInventory(ctx.getName(), side))
                 .build()
+                .recipe((ctx, prov) -> prov.wall(DataIngredient.items(base.get()), RecipeCategory.BUILDING_BLOCKS, ctx::get))
                 .register();
         return this;
     }
+
+    // --- 其他装饰方块逻辑 ---
 
     public SimpleBlockSet<T> addStrippedLog() {
         strippedLog = Genesis.L2_REGISTRATE.block("stripped_" + name, RotatedPillarBlock::new)
@@ -287,11 +264,7 @@ public class SimpleBlockSet<T extends Block> {
     public SimpleBlockSet<T> addLeaves() {
         leaves = Genesis.L2_REGISTRATE.block(name + "_leaves", LeavesBlock::new)
                 .initialProperties(() -> Blocks.OAK_LEAVES)
-                .blockstate((ctx, pvd) -> pvd.simpleBlock(
-                                ctx.get(),
-                                pvd.models().leaves(ctx.getName(), pvd.modLoc("block/" + name + "_leaves"))
-                        )
-                )
+                .blockstate((ctx, pvd) -> pvd.simpleBlock(ctx.get(), pvd.models().leaves(ctx.getName(), pvd.modLoc("block/" + name + "_leaves"))))
                 .tag(BlockTags.LEAVES)
                 .item()
                 .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
@@ -320,47 +293,16 @@ public class SimpleBlockSet<T extends Block> {
         return this;
     }
 
-    public BlockEntry<T> getBase() {
-        return base;
-    }
-
-    public Optional<BlockEntry<StairBlock>> getStairs() {
-        return Optional.ofNullable(stairs);
-    }
-
-    public Optional<BlockEntry<SlabBlock>> getSlab() {
-        return Optional.ofNullable(slab);
-    }
-
-    public Optional<BlockEntry<VerticalSlabBlock>> getVerticalSlab() {
-        return Optional.ofNullable(verticalSlab);
-    }
-
-    public Optional<BlockEntry<TrapDoorBlock>> getTrapDoor() {
-        return Optional.ofNullable(trapDoor);
-    }
-
-    public Optional<BlockEntry<DoorBlock>> getDoor() {
-        return Optional.ofNullable(door);
-    }
-
-    public Optional<BlockEntry<WallBlock>> getWall() {
-        return Optional.ofNullable(wall);
-    }
-
-    public Optional<BlockEntry<FenceBlock>> getFence() {
-        return Optional.ofNullable(fence);
-    }
-
-    public Optional<BlockEntry<RotatedPillarBlock>> getStrippedLog() {
-        return Optional.ofNullable(strippedLog);
-    }
-
-    public Optional<BlockEntry<LeavesBlock>> getLeaves() {
-        return Optional.ofNullable(leaves);
-    }
-
-    public Optional<BlockEntry<GrassBlock>> getGrass() {
-        return Optional.ofNullable(grass);
-    }
+    // --- Getters (保持不变) ---
+    public BlockEntry<T> getBase() { return base; }
+    public Optional<BlockEntry<StairBlock>> getStairs() { return Optional.ofNullable(stairs); }
+    public Optional<BlockEntry<SlabBlock>> getSlab() { return Optional.ofNullable(slab); }
+    public Optional<BlockEntry<VerticalSlabBlock>> getVerticalSlab() { return Optional.ofNullable(verticalSlab); }
+    public Optional<BlockEntry<TrapDoorBlock>> getTrapDoor() { return Optional.ofNullable(trapDoor); }
+    public Optional<BlockEntry<DoorBlock>> getDoor() { return Optional.ofNullable(door); }
+    public Optional<BlockEntry<WallBlock>> getWall() { return Optional.ofNullable(wall); }
+    public Optional<BlockEntry<FenceBlock>> getFence() { return Optional.ofNullable(fence); }
+    public Optional<BlockEntry<RotatedPillarBlock>> getStrippedLog() { return Optional.ofNullable(strippedLog); }
+    public Optional<BlockEntry<LeavesBlock>> getLeaves() { return Optional.ofNullable(leaves); }
+    public Optional<BlockEntry<GrassBlock>> getGrass() { return Optional.ofNullable(grass); }
 }

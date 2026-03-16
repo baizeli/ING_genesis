@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "iron_spells_genesis:sway_planks"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "item": "iron_spells_genesis:sway_vertical_slab"
+  }
+}
