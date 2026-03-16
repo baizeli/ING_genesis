@@ -331,7 +331,6 @@
   "ui.iron_spells_genesis.damage_multiplier": "伤害倍数：%d%%",
   "ui.iron_spells_genesis.health_cost": "血量消耗：%d%%",
   "ui.iron_spells_genesis.number_of_swords": "剑的数量：%d",
-  "ui.iron_spells_genesis.exist_time": "存在时间：%d",
 
   "subtitles.iron_spells_genesis.evasion": "完美闪避",
 
