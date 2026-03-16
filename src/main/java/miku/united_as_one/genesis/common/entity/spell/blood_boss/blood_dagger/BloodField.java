@@ -1,4 +1,4 @@
-package miku.united_as_one.genesis.common.entity.spells.blood_boss.blood_dagger;
+package miku.united_as_one.genesis.common.entity.spell.blood_boss.blood_dagger;
 
 import io.redspace.ironsspellbooks.damage.DamageSources;
 import io.redspace.ironsspellbooks.entity.spells.magma_ball.FireField;
