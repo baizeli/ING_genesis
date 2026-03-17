@@ -3,6 +3,7 @@ plugins {
     id 'java-library'
     id 'maven-publish'
     id 'net.neoforged.moddev.legacyforge' version '2.0.115'
+    id 'org.jetbrains.kotlin.jvm'
 }
 
 tasks.named('wrapper', Wrapper).configure {
@@ -123,6 +124,7 @@ repositories {
     maven {
         url "https://maven.tterrag.com/"
     }
+    mavenCentral()
 }
 
 configurations {
@@ -245,6 +247,7 @@ dependencies {
 
     //nbt编辑器
     modRuntimeOnly "curse.maven:nbtedit-reborn-678133:5984630"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 }
 
 
@@ -292,4 +295,7 @@ tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
     options.compilerArgs.add('-Xlint:-deprecation')
     options.compilerArgs.add('-Xlint:-removal')
+}
+kotlin {
+    jvmToolchain(17)
 }
