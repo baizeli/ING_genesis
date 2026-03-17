@@ -9,6 +9,7 @@ import miku.united_as_one.genesis.common.spell.evocation.*;
 import miku.united_as_one.genesis.common.spell.fire.*;
 import miku.united_as_one.genesis.common.spell.thunder.*;
 import miku.united_as_one.genesis.common.spell.ice.*;
+import miku.united_as_one.genesis.common.spell.abyssal.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.*;
 import net.minecraft.world.item.*;
@@ -78,6 +79,9 @@ public class CreativeTabRegistry {
     public static final RegistryObject<AbstractSpell> IRON_SPELL_SPELL;
     public static final RegistryObject<AbstractSpell> MULTI_IRON_SPELL;
 
+    // 邪术卷轴
+    public static final RegistryObject<AbstractSpell> SUMMON_WARDEN_SPELL;
+
     static {
         // 混沌法术卷轴
         WARPED_BLOOD_BURST_SPELL = registerSpell(new WarpedBloodBurstSpell());
@@ -121,6 +125,9 @@ public class CreativeTabRegistry {
         // 唤魔法术卷轴
         IRON_SPELL_SPELL = registerSpell(new IronSpellSpell());
         MULTI_IRON_SPELL = registerSpell(new MultiIronSpellSpell());
+
+        // 邪术卷轴
+        SUMMON_WARDEN_SPELL = registerSpell(new SummonWardenSpell());
 
         // iron的法术创世纪：方块
         Genesis.L2_REGISTRATE
@@ -201,6 +208,11 @@ public class CreativeTabRegistry {
                                 MULTI_IRON_SPELL.get()
                             };
 
+                            // 邪术卷轴
+                            AbstractSpell[] abyssalSpells = {
+                                SUMMON_WARDEN_SPELL.get()
+                            };
+
                             // 混沌法术卷轴
                             for (AbstractSpell spell : chaosSpells) {
                                 for (int level = spell.getMinLevel(); level <= spell.getMaxLevel(); level++) {
@@ -238,6 +250,13 @@ public class CreativeTabRegistry {
 
                             // 唤魔法术卷轴
                             for (AbstractSpell spell : evocationSpells) {
+                                for (int level = spell.getMinLevel(); level <= spell.getMaxLevel(); level++) {
+                                    output.accept(createScrollWithSpell(spell, level));
+                                }
+                            }
+
+                            // 邪术卷轴
+                            for (AbstractSpell spell : abyssalSpells) {
                                 for (int level = spell.getMinLevel(); level <= spell.getMaxLevel(); level++) {
                                     output.accept(createScrollWithSpell(spell, level));
                                 }
