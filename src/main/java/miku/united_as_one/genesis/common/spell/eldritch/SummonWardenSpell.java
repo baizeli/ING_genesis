@@ -1,7 +1,7 @@
-package miku.united_as_one.genesis.common.spell.abyssal;
+package miku.united_as_one.genesis.common.spell.eldritch;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.common.entity.spell.abyssal.SummonedWardenEntity;
+import miku.united_as_one.genesis.common.entity.spell.eldritch.SummonedWardenEntity;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.registry.SchoolRegistry;
@@ -39,6 +39,7 @@ public class SummonWardenSpell extends AbstractSpell {
     @Override
     public List<MutableComponent> getUniqueInfo(int spellLevel, LivingEntity caster) {
         return List.of(
+            Component.translatable("ui.irons_spellbooks.summon_count", getRecastCount(spellLevel, caster)),
             Component.translatable("ui.irons_spellbooks.hp", Utils.stringTruncation(getSummonHealth(spellLevel), 1)),
             Component.translatable("ui.irons_spellbooks.damage", Utils.stringTruncation(getSummonDamage(spellLevel), 1)),
             Component.translatable("ui.irons_spellbooks.duration", Utils.timeFromTicks(getSummonDuration(), 1))
@@ -62,7 +63,7 @@ public class SummonWardenSpell extends AbstractSpell {
 
     @Override
     public int getRecastCount(int spellLevel, @Nullable LivingEntity entity) {
-        return 1;
+        return 2;
     }
 
     @Override
@@ -95,25 +96,27 @@ public class SummonWardenSpell extends AbstractSpell {
             SummonedEntitiesCastData SD = new SummonedEntitiesCastData();
             int ST = getSummonDuration();
 
-            SummonedWardenEntity warden = new SummonedWardenEntity(level);
+            for (int i = 0; i < getRecastCount(spellLevel, entity); i++) {
+                SummonedWardenEntity warden = new SummonedWardenEntity(level);
 
-            double oX = -entity.getLookAngle().z * 2;
-            double oZ = entity.getLookAngle().x * 2;
+                double oX = -entity.getLookAngle().z * 2 * (i == 0 ? 1 : -1);
+                double oZ = entity.getLookAngle().x * 2 * (i == 0 ? 1 : -1);
 
-            warden.setPos(entity.getX() + oX, entity.getY(), entity.getZ() + oZ);
-            warden.setYRot(entity.getYRot());
-            warden.setXRot(entity.getXRot());
+                warden.setPos(entity.getX() + oX, entity.getY(), entity.getZ() + oZ);
+                warden.setYRot(entity.getYRot());
+                warden.setXRot(entity.getXRot());
 
-            Objects.requireNonNull(warden.getAttributes().getInstance(Attributes.ATTACK_DAMAGE)).setBaseValue(getSummonDamage(spellLevel));
-            Objects.requireNonNull(warden.getAttributes().getInstance(Attributes.MAX_HEALTH)).setBaseValue(getSummonHealth(spellLevel));
-            warden.setHealth(warden.getMaxHealth());
+                Objects.requireNonNull(warden.getAttributes().getInstance(Attributes.ATTACK_DAMAGE)).setBaseValue(getSummonDamage(spellLevel));
+                Objects.requireNonNull(warden.getAttributes().getInstance(Attributes.MAX_HEALTH)).setBaseValue(getSummonHealth(spellLevel));
+                warden.setHealth(warden.getMaxHealth());
 
-            warden.setPose(Pose.EMERGING);
-            warden.setSummoner(entity);
-            warden.setIsSummoned();
+                warden.setPose(Pose.EMERGING);
+                warden.setSummoner(entity);
+                warden.setIsSummoned();
 
-            level.addFreshEntity(warden);
-            SummonManager.initSummon(entity, warden, ST, SD);
+                level.addFreshEntity(warden);
+                SummonManager.initSummon(entity, warden, ST, SD);
+            }
 
             rs.addRecast(new RecastInstance(this.getSpellId(),
                 spellLevel,

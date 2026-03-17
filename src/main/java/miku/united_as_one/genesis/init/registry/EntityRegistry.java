@@ -10,7 +10,7 @@ import miku.united_as_one.genesis.common.entity.arrow.ThunderArrowEntity;
 import miku.united_as_one.genesis.common.entity.boss.BloodBoss;
 import miku.united_as_one.genesis.common.entity.laser.DeathLaserEntity;
 import miku.united_as_one.genesis.common.entity.projectile.ThrownIron;
-import miku.united_as_one.genesis.common.entity.spell.abyssal.*;
+import miku.united_as_one.genesis.common.entity.spell.eldritch.*;
 import miku.united_as_one.genesis.common.entity.spell.blood_boss.BloodBossFireEruptionAoe;
 import miku.united_as_one.genesis.common.entity.spell.blood_boss.blood_dagger.BloodDaggerEntity;
 import miku.united_as_one.genesis.common.entity.spell.blood_boss.blood_dagger.BloodField;
