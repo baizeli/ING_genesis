@@ -120,6 +120,7 @@ public class MultiIronSpellSpell extends AbstractSpell {
                 ThrownIron thrownIron = new ThrownIron(level, serverPlayer);
                 thrownIron.setDamage(getDamage(recastInstance.getSpellLevel()));
                 thrownIron.setLifeTime(10 * 20);
+                thrownIron.setTarget(target);
 
                 var vec = target.getBoundingBox().getCenter().subtract(serverPlayer.getEyePosition()).normalize();
                 thrownIron.shoot(vec.x, vec.y, vec.z, 0.5f, 0);
