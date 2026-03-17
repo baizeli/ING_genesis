@@ -9,7 +9,7 @@ import miku.united_as_one.genesis.common.spell.evocation.*;
 import miku.united_as_one.genesis.common.spell.fire.*;
 import miku.united_as_one.genesis.common.spell.thunder.*;
 import miku.united_as_one.genesis.common.spell.ice.*;
-import miku.united_as_one.genesis.common.spell.abyssal.*;
+import miku.united_as_one.genesis.common.spell.eldritch.*;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.*;
 import net.minecraft.world.item.*;
@@ -209,7 +209,7 @@ public class CreativeTabRegistry {
                             };
 
                             // 邪术卷轴
-                            AbstractSpell[] abyssalSpells = {
+                            AbstractSpell[] eldritchSpells = {
                                 SUMMON_WARDEN_SPELL.get()
                             };
 
@@ -256,7 +256,7 @@ public class CreativeTabRegistry {
                             }
 
                             // 邪术卷轴
-                            for (AbstractSpell spell : abyssalSpells) {
+                            for (AbstractSpell spell : eldritchSpells) {
                                 for (int level = spell.getMinLevel(); level <= spell.getMaxLevel(); level++) {
                                     output.accept(createScrollWithSpell(spell, level));
                                 }

@@ -1,4 +1,4 @@
-package miku.united_as_one.genesis.common.entity.spell.abyssal;
+package miku.united_as_one.genesis.common.entity.spell.eldritch;
 
 import io.redspace.ironsspellbooks.capabilities.magic.SummonManager;
 import io.redspace.ironsspellbooks.entity.mobs.IMagicSummon;
@@ -37,6 +37,10 @@ public class SummonedWardenEntity extends Warden implements IMagicSummon, Ownabl
     }
     
     public void setIsSummoned() {}
+
+    protected boolean shouldDespawnInPeaceful() {
+        return false;
+    }
 
     protected void customServerAiStep() {
         if (this.hasPose(Pose.EMERGING)) this.getNavigation().stop();

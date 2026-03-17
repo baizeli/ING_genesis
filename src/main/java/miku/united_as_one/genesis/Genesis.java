@@ -9,7 +9,7 @@ import miku.united_as_one.genesis.client.renderer.entity.laser.DeathLaserRendere
 import miku.united_as_one.genesis.common.data.content.arcaneWorkbench.*;
 import miku.united_as_one.genesis.common.data.content.workbenchs.*;
 import miku.united_as_one.genesis.common.entity.*;
-import miku.united_as_one.genesis.common.entity.spell.abyssal.SummonedWardenEntity;
+import miku.united_as_one.genesis.common.entity.spell.eldritch.*;
 import miku.united_as_one.genesis.common.entity.spell.fire.SummonedKeeperEntity;
 import miku.united_as_one.genesis.init.registry.*;
 import miku.united_as_one.genesis.common.entity.ai.ModActivity;
