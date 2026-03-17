@@ -1,12 +1,7 @@
-package miku.united_as_one.genesis.common.entity.spells.celestial_source.notuse;
+package miku.united_as_one.genesis.common.entity.spell.celestial_source.notuse;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.protocol.Packet;
-import net.minecraft.network.protocol.game.ClientGamePacketListener;
-import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -18,77 +13,32 @@ import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
-import net.minecraftforge.fluids.FluidType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.UUID;
 
-public class SwordEntity extends LivingEntity {
-    @Nullable
-    private ItemStack storedSword = ItemStack.EMPTY;
-    @Nullable
-    private LivingEntity maker;
+public class MagicCircle extends LivingEntity {
     private int age = 0;
+    private static final AABB DEFAULT_AABB = new AABB(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
 
-    public SwordEntity(EntityType<SwordEntity> entityType, Level level) {
+    public MagicCircle(EntityType<MagicCircle> entityType, Level level) {
         super(entityType, level);
-        init(null);
+        init();
     }
 
-    public SwordEntity(EntityType<SwordEntity> entityType, Level level, double x, double y, double z, LivingEntity maker) {
+    public MagicCircle(EntityType<MagicCircle> entityType, Level level, double x, double y, double z) {
         super(entityType, level);
-        setPos(x, y, z);
-        init(maker);
+        this.setPos(x, y, z);
+        init();
     }
 
-    private void init(LivingEntity maker) {
+    private void init() {
         this.noPhysics = true;
-        if (maker != null) {
-            ItemStack sword = maker.getMainHandItem().copy();
-            setStoredSword(sword);
-        }
-        this.maker = maker;
-    }
-
-    @Nullable
-    public ItemStack getStoredSword() {
-        return storedSword;
-    }
-
-    public void setStoredSword(ItemStack sword) {
-        this.storedSword = sword == null ? ItemStack.EMPTY : sword.copy();
-    }
-
-    public void addAdditionalSaveData(@NotNull CompoundTag compound) {
-        if (this.storedSword != null) {
-            CompoundTag swordTag = new CompoundTag();
-            this.storedSword.save(swordTag);
-            compound.put("StoredSword", swordTag);
-        }
-    }
-
-    public void readAdditionalSaveData(CompoundTag compound) {
-        if (compound.contains("StoredSword", 10)) { // 10 = CompoundTag
-            this.storedSword = ItemStack.of(compound.getCompound("StoredSword"));
-        }
-    }
-
-    @Override
-    public @NotNull Packet<ClientGamePacketListener> getAddEntityPacket() {
-        return ClientboundAddSwordEntityPacket.create(this);
-    }
-
-    @Override
-    public void recreateFromPacket(@NotNull ClientboundAddEntityPacket packet) {
-        super.recreateFromPacket(packet);
-        if (packet instanceof ClientboundAddSwordEntityPacket ext) {
-            this.readAdditionalSaveData(ext.extra);
-        }
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -113,28 +63,7 @@ public class SwordEntity extends LivingEntity {
 
         if (this.age > 600) {
             this.stopRiding();
-            this.levelCallback.onRemove(Entity.RemovalReason.DISCARDED);
-        }
-
-        List<LivingEntity> nearby = this.level().getEntitiesOfClass(
-                LivingEntity.class,
-                this.getBoundingBox().inflate(15.0D),
-                e -> e != this && e.isAlive() && !(e instanceof SwordEntity) && !(e instanceof MagicCircle) && e != this.maker
-        );
-
-        LivingEntity target = this.level().getNearestEntity(
-                nearby,
-                TargetingConditions.forNonCombat()
-                        .range(15.0D)
-                        .selector(e -> e.isAlive() && !(e instanceof SwordEntity) && !(e instanceof MagicCircle) && e != this.maker),
-                this,
-                this.getX(),
-                this.getY(),
-                this.getZ()
-        );
-
-        if (target != null) {
-            this.setPos(target.position());
+            this.levelCallback.onRemove(RemovalReason.DISCARDED);
         }
     }
 
@@ -176,6 +105,7 @@ public class SwordEntity extends LivingEntity {
 
     @Override
     public void setItemSlot(@NotNull EquipmentSlot equipmentSlot, @NotNull ItemStack itemStack) {
+
     }
 
     @Override
@@ -245,7 +175,7 @@ public class SwordEntity extends LivingEntity {
 
     @Override
     public boolean isInvisible() {
-        return false;//
+        return true;
     }
 
     @Override
@@ -508,11 +438,16 @@ public class SwordEntity extends LivingEntity {
     }
 
     @Override
-    public void remove(@NotNull Entity.RemovalReason reason) {
+    public void remove(@NotNull RemovalReason reason) {
     }
 
     @Override
-    public void setRemoved(@NotNull Entity.RemovalReason reason) {
+    public void setRemoved(@NotNull RemovalReason reason) {
+    }
+
+    @Override
+    public @NotNull EntityDimensions getDimensions(@NotNull Pose pose) {
+        return EntityDimensions.scalable(0, 0);
     }
 
     @Override
@@ -530,25 +465,25 @@ public class SwordEntity extends LivingEntity {
         return Component.empty();
     }
 
-//    @Override
-//    public @NotNull AABB getBoundingBoxForCulling() {
-//        return DEFAULT_AABB;
-//    }
-//
-//    @Override
-//    public @NotNull AABB getBoundingBoxForPose(@NotNull Pose pose) {
-//        return DEFAULT_AABB;
-//    }
-//
-//    @Override
-//    public @NotNull AABB getLocalBoundsForPose(@NotNull Pose pose) {
-//        return DEFAULT_AABB;
-//    }
-//
-//    @Override
-//    public @NotNull AABB getBoundingBox() {
-//        return DEFAULT_AABB;
-//    }
+    @Override
+    public @NotNull AABB getBoundingBoxForCulling() {
+        return DEFAULT_AABB;
+    }
+
+    @Override
+    public @NotNull AABB getBoundingBoxForPose(@NotNull Pose pose) {
+        return DEFAULT_AABB;
+    }
+
+    @Override
+    public @NotNull AABB getLocalBoundsForPose(@NotNull Pose pose) {
+        return DEFAULT_AABB;
+    }
+
+    @Override
+    public @NotNull AABB getBoundingBox() {
+        return DEFAULT_AABB;
+    }
 
     @Override
     public float getEyeHeight(@NotNull Pose pose) {
@@ -606,35 +541,5 @@ public class SwordEntity extends LivingEntity {
     @Override
     public @NotNull InteractionResult interactAt(@NotNull Player player, @NotNull Vec3 vec, @NotNull InteractionHand hand) {
         return InteractionResult.PASS;
-    }
-
-    @Override
-    public boolean isEyeInFluidType(FluidType type) {
-        return false;
-    }
-
-    public static class ClientboundAddSwordEntityPacket extends ClientboundAddEntityPacket {
-        private final CompoundTag extra;
-
-        public ClientboundAddSwordEntityPacket(SwordEntity e) {
-            super(e);
-            this.extra = new CompoundTag();
-            e.addAdditionalSaveData(extra);
-        }
-
-        public ClientboundAddSwordEntityPacket(FriendlyByteBuf buf) {
-            super(buf);
-            this.extra = buf.readNbt();
-        }
-
-        @Override
-        public void write(@NotNull FriendlyByteBuf buf) {
-            super.write(buf);
-            buf.writeNbt(extra);
-        }
-
-        public static Packet<ClientGamePacketListener> create(SwordEntity e) {
-            return new ClientboundAddSwordEntityPacket(e);
-        }
     }
 }

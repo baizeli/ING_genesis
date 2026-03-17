@@ -10,11 +10,12 @@ import miku.united_as_one.genesis.common.entity.arrow.ThunderArrowEntity;
 import miku.united_as_one.genesis.common.entity.boss.BloodBoss;
 import miku.united_as_one.genesis.common.entity.laser.DeathLaserEntity;
 import miku.united_as_one.genesis.common.entity.projectile.ThrownIron;
-import miku.united_as_one.genesis.common.entity.spells.blood_boss.BloodBossFireEruptionAoe;
-import miku.united_as_one.genesis.common.entity.spells.blood_boss.blood_dagger.BloodDaggerEntity;
-import miku.united_as_one.genesis.common.entity.spells.blood_boss.blood_dagger.BloodField;
-import miku.united_as_one.genesis.common.entity.spells.celestial_source.*;
-import miku.united_as_one.genesis.common.entity.spells.celestial_source.notuse.*;
+import miku.united_as_one.genesis.common.entity.spell.blood_boss.BloodBossFireEruptionAoe;
+import miku.united_as_one.genesis.common.entity.spell.blood_boss.blood_dagger.BloodDaggerEntity;
+import miku.united_as_one.genesis.common.entity.spell.blood_boss.blood_dagger.BloodField;
+import miku.united_as_one.genesis.common.entity.spell.celestial_source.*;
+import miku.united_as_one.genesis.common.entity.spell.celestial_source.notuse.*;
+import miku.united_as_one.genesis.common.entity.spell.fire.*;
 import miku.united_as_one.genesis.Genesis;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.level.Level;
@@ -174,4 +175,10 @@ public class EntityRegistry {
                     .clientTrackingRange(4)
                     .updateInterval(20)
                     .build("stellar_arrow"));
+
+    public static final RegistryObject<EntityType<SummonedKeeperEntity>> SUMMONED_KEEPER = ENTITY_TYPES.register("summoned_keeper",
+            () -> EntityType.Builder.<SummonedKeeperEntity>of(SummonedKeeperEntity::new, MobCategory.MONSTER)
+                    .sized(0.85f, 2.3f)
+                    .clientTrackingRange(64)
+                    .build("summoned_keeper"));
 }

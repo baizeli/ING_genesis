@@ -58,6 +58,7 @@
   "spell.iron_spells_genesis.final_whisper": "Final Whisper",
 
   "spell.iron_spells_genesis.blazing_blade_barrage": "Blazing Blade Barrage",
+  "spell.iron_spells_genesis.summon_keeper": "Summon Keeper",
 
   "spell.iron_spells_genesis.death_laser": "Death Laser",
 
@@ -269,6 +270,7 @@
   "entity.iron_spells_genesis.blood_field": "Blood Field",
   "entity.iron_spells_genesis.death_laser": "Death Laser",
   "entity.iron_spells_genesis.iron": "Iron Ingot",
+  "entity.iron_spells_genesis.summoned_keeper": "The Summoned Keeper",
 
   "damage_type.iron_spells_genesis.celestial_source_magic": "Celestial Source Magic Damage",
   "damage_type.iron_spells_genesis.chaos_magic": "Chaos Magic Damage",

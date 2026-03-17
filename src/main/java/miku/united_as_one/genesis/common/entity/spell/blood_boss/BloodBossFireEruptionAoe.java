@@ -1,4 +1,4 @@
-package miku.united_as_one.genesis.common.entity.spells.blood_boss;
+package miku.united_as_one.genesis.common.entity.spell.blood_boss;
 
 import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
 import io.redspace.ironsspellbooks.api.util.Utils;

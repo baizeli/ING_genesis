@@ -1,4 +1,4 @@
-package miku.united_as_one.genesis.common.entity.spells.celestial_source.notuse;
+package miku.united_as_one.genesis.common.entity.spell.celestial_source;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
@@ -22,16 +22,17 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Collections;
 import java.util.UUID;
 
-public class MagicCircle extends LivingEntity {
+public class BoxEntity extends LivingEntity {
     private int age = 0;
+    public float halfSize = 2.5F;
     private static final AABB DEFAULT_AABB = new AABB(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
 
-    public MagicCircle(EntityType<MagicCircle> entityType, Level level) {
+    public BoxEntity(EntityType<BoxEntity> entityType, Level level) {
         super(entityType, level);
         init();
     }
 
-    public MagicCircle(EntityType<MagicCircle> entityType, Level level, double x, double y, double z) {
+    public BoxEntity(EntityType<BoxEntity> entityType, Level level, double x, double y, double z) {
         super(entityType, level);
         this.setPos(x, y, z);
         init();
@@ -60,8 +61,9 @@ public class MagicCircle extends LivingEntity {
     public void tick() {
         super.tick();
         ++age;
+        halfSize -= 0.025F;
 
-        if (this.age > 600) {
+        if (this.age > 100) {
             this.stopRiding();
             this.levelCallback.onRemove(RemovalReason.DISCARDED);
         }

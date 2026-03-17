@@ -65,6 +65,7 @@ public class CreativeTabRegistry {
 
     // 炽焰法术卷轴
     public static final RegistryObject<AbstractSpell> BLAZING_BLADE_BARRAGE_SPELL;
+    public static final RegistryObject<AbstractSpell> SUMMON_KEEPER_SPELL;
 
     // 雷霆法术卷轴
     public static final RegistryObject<AbstractSpell> THUNDER_LASER_SPELL;
@@ -108,6 +109,7 @@ public class CreativeTabRegistry {
         NYAN_CAT_JET_SPELL = registerSpell(new NyanCatJetSpell());
 
         BLAZING_BLADE_BARRAGE_SPELL = registerSpell(new BlazingBladeBarrageSpell());
+        SUMMON_KEEPER_SPELL = registerSpell(new SummonKeeperSpell());
 
         // 雷霆法术卷轴
         THUNDER_LASER_SPELL = registerSpell(new DeathLaserSpell());
@@ -178,7 +180,8 @@ public class CreativeTabRegistry {
 
                             // 炽焰法术卷轴
                             AbstractSpell[] fireSpells = {
-                                BLAZING_BLADE_BARRAGE_SPELL.get()
+                                BLAZING_BLADE_BARRAGE_SPELL.get(),
+                                SUMMON_KEEPER_SPELL.get()
                             };
 
                             // 雷霆法术卷轴
