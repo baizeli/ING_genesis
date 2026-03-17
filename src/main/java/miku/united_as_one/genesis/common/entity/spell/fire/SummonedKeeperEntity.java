@@ -1,6 +1,8 @@
 package miku.united_as_one.genesis.common.entity.spell.fire;
 
+import io.redspace.ironsspellbooks.capabilities.magic.MagicManager;
 import io.redspace.ironsspellbooks.capabilities.magic.SummonManager;
+import io.redspace.ironsspellbooks.registries.ParticleRegistry;
 import io.redspace.ironsspellbooks.entity.mobs.IMagicSummon;
 import io.redspace.ironsspellbooks.entity.mobs.goals.GenericCopyOwnerTargetGoal;
 import io.redspace.ironsspellbooks.entity.mobs.goals.GenericFollowOwnerGoal;
@@ -16,6 +18,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.OwnableEntity;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -25,14 +28,15 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.common.ForgeMod;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.UUID;
 import javax.annotation.Nullable;
 
-public class SummonedKeeperEntity extends KeeperEntity implements IMagicSummon {
+public class SummonedKeeperEntity extends KeeperEntity implements IMagicSummon, OwnableEntity {
     public SummonedKeeperEntity(EntityType<? extends KeeperEntity> entityType, Level level) {
         super(entityType, level);
     }
 
-    public static AttributeSupplier.Builder createAttributes() {
+    public static AttributeSupplier.@NotNull Builder createAttributes() {
         return Monster.createMonsterAttributes()
             .add(Attributes.ATTACK_DAMAGE, 10)
             .add(Attributes.MAX_HEALTH, 60)
@@ -61,10 +65,9 @@ public class SummonedKeeperEntity extends KeeperEntity implements IMagicSummon {
 
     @Override
     public void die(@NotNull DamageSource pDamageSource) {
-        this.onDeathHelper();
         super.die(pDamageSource);
     }
-
+    
     @Override
     public void onRemovedFromWorld() {
         this.onRemovedHelper(this);
@@ -75,6 +78,17 @@ public class SummonedKeeperEntity extends KeeperEntity implements IMagicSummon {
     public boolean hurt(DamageSource pSource, float pAmount) {
         if (pSource.getEntity() == getSummoner()) return false;
         return super.hurt(pSource, pAmount);
+    }
+
+    @Override
+    public LivingEntity getOwner() {
+        return (LivingEntity) getSummoner();
+    }
+
+    @Override
+    public UUID getOwnerUUID() {
+        if (getSummoner() != null) return getSummoner().getUUID();
+        return null;
     }
 
     @Override
