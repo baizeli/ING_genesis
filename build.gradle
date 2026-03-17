@@ -160,18 +160,20 @@ tasks.withType(JavaCompile).configureEach {
 dependencies {
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
-    modImplementation "com.tterrag.registrate:Registrate:${registrate_version}"
-    if (rootMod.toBoolean()) {
-        jarJar(group: 'com.tterrag.registrate', name: 'Registrate', version: "[MC1.20,MC1.21)")
+    if (jarJar.toBoolean()) {
+        jarJar(modImplementation "com.tterrag.registrate:Registrate:${registrate_version}")
+
+        // 动画库
+        jarJar(modImplementation "curse.maven:vzlinglib-1316184:7482798")
+
+        // L2
+        modImplementation(jarJar("dev.xkmc.l2library:l2library:${l2library_version}-slim"))
+        modImplementation(jarJar("dev.xkmc.l2serial:l2serial:1.2.2"))
+        modImplementation(jarJar("dev.xkmc.l2tabs:l2tabs:0.3.3"))
     }
 
     // MixinExtras
     modImplementation(jarJar("io.github.llamalad7:mixinextras-forge:0.5.3"))
-
-    // L2
-    modImplementation(jarJar("dev.xkmc.l2library:l2library:${l2library_version}-slim"))
-    modImplementation(jarJar("dev.xkmc.l2serial:l2serial:1.2.2"))
-    modImplementation(jarJar("dev.xkmc.l2tabs:l2tabs:0.3.3"))
 
     // Cloth Config API
     modImplementation "curse.maven:cloth-config-348521:5729105"

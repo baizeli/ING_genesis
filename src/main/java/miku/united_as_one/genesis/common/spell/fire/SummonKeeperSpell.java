@@ -77,9 +77,8 @@ public class SummonKeeperSpell extends AbstractSpell {
 
     @Override
     public void onRecastFinished(ServerPlayer serverPlayer, RecastInstance recastInstance, RecastResult recastResult, ICastDataSerializable castDataSerializable) {
-        if (SummonManager.recastFinishedHelper(serverPlayer, recastInstance, recastResult, castDataSerializable)) {
+        if (SummonManager.recastFinishedHelper(serverPlayer, recastInstance, recastResult, castDataSerializable))
             super.onRecastFinished(serverPlayer, recastInstance, recastResult, castDataSerializable);
-        }
     }
 
     @Override
@@ -107,7 +106,7 @@ public class SummonKeeperSpell extends AbstractSpell {
 
                 double oX = -entity.getLookAngle().z * 2 * (i == 0 ? 1 : -1);
                 double oZ = entity.getLookAngle().x * 2 * (i == 0 ? 1 : -1);
-                
+
                 keeper.setPos(entity.getX() + oX, entity.getY(), entity.getZ() + oZ);
 
                 keeper.setYRot(entity.getYRot());
@@ -139,10 +138,10 @@ public class SummonKeeperSpell extends AbstractSpell {
             }
 
             rs.addRecast(new RecastInstance(this.getSpellId(),
-                spellLevel, 
-                getRecastCount(spellLevel, entity), 
+                spellLevel,
+                getRecastCount(spellLevel, entity),
                 ST,
-                castSource, 
+                castSource,
                 SD
             ), playerMagicData);
         }
