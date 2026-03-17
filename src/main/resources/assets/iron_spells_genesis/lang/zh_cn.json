@@ -58,6 +58,7 @@
   "spell.iron_spells_genesis.final_whisper": "最后的轻语",
 
   "spell.iron_spells_genesis.blazing_blade_barrage": "七连炽焰飞剑",
+  "spell.iron_spells_genesis.summon_keeper": "召唤远古骑士",
 
   "spell.iron_spells_genesis.death_laser": "死亡激光",
 
@@ -357,6 +358,7 @@
   "entity.iron_spells_genesis.blood_field": "猩红场域",
   "entity.iron_spells_genesis.death_laser": "死亡激光",
   "entity.iron_spells_genesis.iron": "铁锭",
+  "entity.iron_spells_genesis.summoned_keeper": "被召唤的远古骑士",
 
   "item.iron_spells_genesis.infinity_eternal_helmet": "Purpleite Galaxy Helmet",
   "damage_type.iron_spells_genesis.celestial_source_magic": "Celestial Source Magic Damage",

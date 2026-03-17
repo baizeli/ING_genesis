@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.client.render;
 
-import miku.united_as_one.genesis.common.entity.spells.blood_boss.blood_dagger.BloodDaggerRenderer;
+import miku.united_as_one.genesis.common.entity.spell.blood_boss.blood_dagger.BloodDaggerRenderer;
 import miku.united_as_one.genesis.init.registry.EntityRegistry;
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.client.renderer.entity.boss.BloodBossRenderer;

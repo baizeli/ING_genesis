@@ -1,4 +1,4 @@
-package miku.united_as_one.genesis.common.entity.spells.blood_boss.blood_dagger;
+package miku.united_as_one.genesis.common.entity.spell.blood_boss.blood_dagger;
 
 import io.redspace.ironsspellbooks.entity.mobs.abstract_spell_casting_mob.AbstractSpellCastingMob;
 import io.redspace.ironsspellbooks.render.RenderHelper;

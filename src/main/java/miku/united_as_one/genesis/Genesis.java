@@ -3,17 +3,19 @@ package miku.united_as_one.genesis;
 import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import io.redspace.ironsspellbooks.api.spells.ISpellContainer;
+import io.redspace.ironsspellbooks.entity.mobs.keeper.KeeperRenderer;
 import io.redspace.ironsspellbooks.entity.spells.void_tentacle.VoidTentacle;
 import miku.united_as_one.genesis.client.renderer.entity.laser.DeathLaserRenderer;
 import miku.united_as_one.genesis.common.data.content.arcaneWorkbench.*;
 import miku.united_as_one.genesis.common.data.content.workbenchs.*;
 import miku.united_as_one.genesis.common.entity.*;
+import miku.united_as_one.genesis.common.entity.spell.fire.SummonedKeeperEntity;
 import miku.united_as_one.genesis.init.registry.*;
 import miku.united_as_one.genesis.common.entity.ai.ModActivity;
 import miku.united_as_one.genesis.common.entity.ai.ModMemoryModuleType;
-import miku.united_as_one.genesis.common.entity.spells.celestial_source.*;
+import miku.united_as_one.genesis.common.entity.spell.celestial_source.*;
 import miku.united_as_one.genesis.common.entity.boss.BloodBoss;
-import miku.united_as_one.genesis.common.entity.spells.celestial_source.notuse.*;
+import miku.united_as_one.genesis.common.entity.spell.celestial_source.notuse.*;
 import miku.united_as_one.genesis.client.ClientEvent;
 import miku.united_as_one.genesis.init.registry.client.ParticleRegistry;
 import miku.united_as_one.genesis.client.renderer.DistortWorldRender;
@@ -201,6 +203,7 @@ public class Genesis
         event.put(EntityRegistry.SWORD_ENTITY.get(), SwordEntity.createAttributes().build());
         event.put(EntityRegistry.BLOOD_BOSS.get(), BloodBoss.setAttributes().build());
         event.put(EntityRegistry.BLOOD_TENTACLE.get(), VoidTentacle.createLivingAttributes().build());
+        event.put(EntityRegistry.SUMMONED_KEEPER.get(), SummonedKeeperEntity.createAttributes().build());
     }
 
     public static String resource(String location)
@@ -231,6 +234,8 @@ public class Genesis
                 EntityRenderers.register(EntityRegistry.DEAD_STAR_DECREE_LARGE_COMET.get(),
                     context -> new DeadStarDecreeCometRenderer(context, 6.0f)
                 );
+
+                EntityRenderers.register(EntityRegistry.SUMMONED_KEEPER.get(), KeeperRenderer::new);
 
                 CuriosRendererRegistry.register(ItemRegistry.CHAOS_SPELL_BOOK.get(), SpellBookCurioRenderer::new);
                 CuriosRendererRegistry.register(ItemRegistry.CELESTIAL_SOURCE_SPELL_BOOK.get(), SpellBookCurioRenderer::new);

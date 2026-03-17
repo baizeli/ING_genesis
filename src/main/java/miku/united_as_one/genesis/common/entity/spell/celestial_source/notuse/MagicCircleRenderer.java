@@ -1,4 +1,4 @@
-package miku.united_as_one.genesis.common.entity.spells.celestial_source.notuse;
+package miku.united_as_one.genesis.common.entity.spell.celestial_source.notuse;
 
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.util.RenderUtils;

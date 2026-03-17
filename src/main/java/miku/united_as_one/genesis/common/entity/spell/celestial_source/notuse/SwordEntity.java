@@ -1,7 +1,12 @@
-package miku.united_as_one.genesis.common.entity.spells.celestial_source;
+package miku.united_as_one.genesis.common.entity.spell.celestial_source.notuse;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -13,33 +18,77 @@ import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeMod;
+import net.minecraftforge.fluids.FluidType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 
-public class BoxEntity extends LivingEntity {
+public class SwordEntity extends LivingEntity {
+    @Nullable
+    private ItemStack storedSword = ItemStack.EMPTY;
+    @Nullable
+    private LivingEntity maker;
     private int age = 0;
-    public float halfSize = 2.5F;
-    private static final AABB DEFAULT_AABB = new AABB(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
 
-    public BoxEntity(EntityType<BoxEntity> entityType, Level level) {
+    public SwordEntity(EntityType<SwordEntity> entityType, Level level) {
         super(entityType, level);
-        init();
+        init(null);
     }
 
-    public BoxEntity(EntityType<BoxEntity> entityType, Level level, double x, double y, double z) {
+    public SwordEntity(EntityType<SwordEntity> entityType, Level level, double x, double y, double z, LivingEntity maker) {
         super(entityType, level);
-        this.setPos(x, y, z);
-        init();
+        setPos(x, y, z);
+        init(maker);
     }
 
-    private void init() {
+    private void init(LivingEntity maker) {
         this.noPhysics = true;
+        if (maker != null) {
+            ItemStack sword = maker.getMainHandItem().copy();
+            setStoredSword(sword);
+        }
+        this.maker = maker;
+    }
+
+    @Nullable
+    public ItemStack getStoredSword() {
+        return storedSword;
+    }
+
+    public void setStoredSword(ItemStack sword) {
+        this.storedSword = sword == null ? ItemStack.EMPTY : sword.copy();
+    }
+
+    public void addAdditionalSaveData(@NotNull CompoundTag compound) {
+        if (this.storedSword != null) {
+            CompoundTag swordTag = new CompoundTag();
+            this.storedSword.save(swordTag);
+            compound.put("StoredSword", swordTag);
+        }
+    }
+
+    public void readAdditionalSaveData(CompoundTag compound) {
+        if (compound.contains("StoredSword", 10)) { // 10 = CompoundTag
+            this.storedSword = ItemStack.of(compound.getCompound("StoredSword"));
+        }
+    }
+
+    @Override
+    public @NotNull Packet<ClientGamePacketListener> getAddEntityPacket() {
+        return ClientboundAddSwordEntityPacket.create(this);
+    }
+
+    @Override
+    public void recreateFromPacket(@NotNull ClientboundAddEntityPacket packet) {
+        super.recreateFromPacket(packet);
+        if (packet instanceof ClientboundAddSwordEntityPacket ext) {
+            this.readAdditionalSaveData(ext.extra);
+        }
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -61,11 +110,31 @@ public class BoxEntity extends LivingEntity {
     public void tick() {
         super.tick();
         ++age;
-        halfSize -= 0.025F;
 
-        if (this.age > 100) {
+        if (this.age > 600) {
             this.stopRiding();
-            this.levelCallback.onRemove(RemovalReason.DISCARDED);
+            this.levelCallback.onRemove(Entity.RemovalReason.DISCARDED);
+        }
+
+        List<LivingEntity> nearby = this.level().getEntitiesOfClass(
+                LivingEntity.class,
+                this.getBoundingBox().inflate(15.0D),
+                e -> e != this && e.isAlive() && !(e instanceof SwordEntity) && !(e instanceof MagicCircle) && e != this.maker
+        );
+
+        LivingEntity target = this.level().getNearestEntity(
+                nearby,
+                TargetingConditions.forNonCombat()
+                        .range(15.0D)
+                        .selector(e -> e.isAlive() && !(e instanceof SwordEntity) && !(e instanceof MagicCircle) && e != this.maker),
+                this,
+                this.getX(),
+                this.getY(),
+                this.getZ()
+        );
+
+        if (target != null) {
+            this.setPos(target.position());
         }
     }
 
@@ -107,7 +176,6 @@ public class BoxEntity extends LivingEntity {
 
     @Override
     public void setItemSlot(@NotNull EquipmentSlot equipmentSlot, @NotNull ItemStack itemStack) {
-
     }
 
     @Override
@@ -177,7 +245,7 @@ public class BoxEntity extends LivingEntity {
 
     @Override
     public boolean isInvisible() {
-        return true;
+        return false;//
     }
 
     @Override
@@ -440,16 +508,11 @@ public class BoxEntity extends LivingEntity {
     }
 
     @Override
-    public void remove(@NotNull RemovalReason reason) {
+    public void remove(@NotNull Entity.RemovalReason reason) {
     }
 
     @Override
-    public void setRemoved(@NotNull RemovalReason reason) {
-    }
-
-    @Override
-    public @NotNull EntityDimensions getDimensions(@NotNull Pose pose) {
-        return EntityDimensions.scalable(0, 0);
+    public void setRemoved(@NotNull Entity.RemovalReason reason) {
     }
 
     @Override
@@ -467,25 +530,25 @@ public class BoxEntity extends LivingEntity {
         return Component.empty();
     }
 
-    @Override
-    public @NotNull AABB getBoundingBoxForCulling() {
-        return DEFAULT_AABB;
-    }
-
-    @Override
-    public @NotNull AABB getBoundingBoxForPose(@NotNull Pose pose) {
-        return DEFAULT_AABB;
-    }
-
-    @Override
-    public @NotNull AABB getLocalBoundsForPose(@NotNull Pose pose) {
-        return DEFAULT_AABB;
-    }
-
-    @Override
-    public @NotNull AABB getBoundingBox() {
-        return DEFAULT_AABB;
-    }
+//    @Override
+//    public @NotNull AABB getBoundingBoxForCulling() {
+//        return DEFAULT_AABB;
+//    }
+//
+//    @Override
+//    public @NotNull AABB getBoundingBoxForPose(@NotNull Pose pose) {
+//        return DEFAULT_AABB;
+//    }
+//
+//    @Override
+//    public @NotNull AABB getLocalBoundsForPose(@NotNull Pose pose) {
+//        return DEFAULT_AABB;
+//    }
+//
+//    @Override
+//    public @NotNull AABB getBoundingBox() {
+//        return DEFAULT_AABB;
+//    }
 
     @Override
     public float getEyeHeight(@NotNull Pose pose) {
@@ -543,5 +606,35 @@ public class BoxEntity extends LivingEntity {
     @Override
     public @NotNull InteractionResult interactAt(@NotNull Player player, @NotNull Vec3 vec, @NotNull InteractionHand hand) {
         return InteractionResult.PASS;
+    }
+
+    @Override
+    public boolean isEyeInFluidType(FluidType type) {
+        return false;
+    }
+
+    public static class ClientboundAddSwordEntityPacket extends ClientboundAddEntityPacket {
+        private final CompoundTag extra;
+
+        public ClientboundAddSwordEntityPacket(SwordEntity e) {
+            super(e);
+            this.extra = new CompoundTag();
+            e.addAdditionalSaveData(extra);
+        }
+
+        public ClientboundAddSwordEntityPacket(FriendlyByteBuf buf) {
+            super(buf);
+            this.extra = buf.readNbt();
+        }
+
+        @Override
+        public void write(@NotNull FriendlyByteBuf buf) {
+            super.write(buf);
+            buf.writeNbt(extra);
+        }
+
+        public static Packet<ClientGamePacketListener> create(SwordEntity e) {
+            return new ClientboundAddSwordEntityPacket(e);
+        }
     }
 }

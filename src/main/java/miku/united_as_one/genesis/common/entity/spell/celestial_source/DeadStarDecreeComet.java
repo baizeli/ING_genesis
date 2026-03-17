@@ -1,4 +1,4 @@
-package miku.united_as_one.genesis.common.entity.spells.celestial_source;
+package miku.united_as_one.genesis.common.entity.spell.celestial_source;
 
 import io.redspace.ironsspellbooks.api.util.Utils;
 import io.redspace.ironsspellbooks.capabilities.magic.MagicManager;
