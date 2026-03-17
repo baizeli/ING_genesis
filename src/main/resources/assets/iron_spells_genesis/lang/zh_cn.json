@@ -68,6 +68,8 @@
   "spell.iron_spells_genesis.iron_spell": "铁魔法",
   "spell.iron_spells_genesis.multi_iron_spell": "多重铁魔法",
 
+  "spell.iron_spells_genesis.summon_warden": "召唤坚守者",
+
   "spell.iron_spells_genesis.warped_blood_burst.guide": "消耗自身50%的血量，对一定范围内的生物造成伤害并附带禁疗效果。",
   "spell.iron_spells_genesis.warped_barrier.guide": "将90%的生命值转化成伤害吸收。",
   "spell.iron_spells_genesis.reverse_plague.guide": "将目标正面效果与自身负面效果进行交换，短时间禁止目标获得正面效果，阻止自身获得效果并转嫁负面效果。",
@@ -359,6 +361,7 @@
   "entity.iron_spells_genesis.death_laser": "死亡激光",
   "entity.iron_spells_genesis.iron": "铁锭",
   "entity.iron_spells_genesis.summoned_keeper": "被召唤的远古骑士",
+  "entity.iron_spells_genesis.summoned_warden": "被召唤的坚守者",
 
   "item.iron_spells_genesis.infinity_eternal_helmet": "Purpleite Galaxy Helmet",
   "damage_type.iron_spells_genesis.celestial_source_magic": "Celestial Source Magic Damage",
