@@ -7,6 +7,9 @@ pluginManagement {
         maven { url 'https://mirrors.cloud.tencent.com/nexus/repository/maven-public' }
         gradlePluginPortal()
     }
+    plugins {
+        id 'org.jetbrains.kotlin.jvm' version '2.3.0'
+    }
 }
 
 plugins {
