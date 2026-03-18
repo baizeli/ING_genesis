@@ -6,7 +6,6 @@ import miku.united_as_one.genesis.common.items.curios.rune_plus.NatureRunePlus;
 import miku.united_as_one.genesis.init.mixin.minecraft.world.effect.MobEffectInstanceAccessor;
 import miku.united_as_one.genesis.init.registry.EffectRegistry;
 import miku.united_as_one.genesis.init.registry.SoundRegister;
-import miku.united_as_one.genesis.client.renderer.EvasionAnimationRenderer;
 import miku.united_as_one.genesis.common.spell.chaos.ReversePlagueSpell;
 import miku.united_as_one.genesis.common.event.spell.celestial_source.LifeAndDeathRealmEvent;
 import miku.united_as_one.genesis.util.ModCurios;
@@ -26,11 +25,24 @@ import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.*;
 
+import java.lang.reflect.Method;
 import java.util.*;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin {
-	
+	private static final Method method;
+
+    static {
+        Method m = null;
+        if (FMLEnvironment.dist == Dist.CLIENT) {
+            try {
+                m = Class.forName("miku.united_as_one.genesis.client.renderer.EvasionAnimationRenderer").getDeclaredMethod("triggerEvasionAnimation", LivingEntity.class);
+            } catch (Throwable ignored) {
+            }
+        }
+        method = m;
+    }
+
 	@Shadow public int deathTime;
 
 	@Shadow public abstract void remove(Entity.RemovalReason p_276115_);
@@ -82,7 +94,10 @@ public abstract class LivingEntityMixin {
 				);
 					
 				if (FMLEnvironment.dist == Dist.CLIENT) {
-					EvasionAnimationRenderer.triggerEvasionAnimation(entity);
+                    try {
+                        method.invoke(null, entity);
+                    } catch (Throwable ignored) {
+                    }
 				}
 
 				cir.cancel();
