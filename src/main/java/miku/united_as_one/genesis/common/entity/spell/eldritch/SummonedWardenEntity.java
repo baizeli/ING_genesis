@@ -10,6 +10,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.monster.warden.Warden;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.common.Tags;
 import org.jetbrains.annotations.*;
 
 import java.util.UUID;
@@ -100,6 +101,7 @@ public class SummonedWardenEntity extends Warden implements IMagicSummon, Ownabl
         if (pEntity == getSummoner()) return true;
         if (pEntity.getType() == EntityType.WARDEN) return false;
         if (pEntity.getType() == EntityType.SLIME || pEntity.getType() == EntityType.MAGMA_CUBE) return false;
+        if (pEntity.getType().is(Tags.EntityTypes.BOSSES)) return false;
         if (pEntity instanceof IMagicSummon summon)
             return summon.getSummoner() != null && getSummoner() != null && getSummoner() == summon.getSummoner();
         if (getSummoner() != null && pEntity.isAlliedTo(getSummoner())) 
