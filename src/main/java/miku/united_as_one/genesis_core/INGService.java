@@ -1,12 +1,8 @@
 package miku.united_as_one.genesis_core;
 
-import miku.united_as_one.genesis_core.utils.Helper;
-import cpw.mods.modlauncher.LaunchPluginHandler;
-import cpw.mods.modlauncher.Launcher;
 import cpw.mods.modlauncher.api.IEnvironment;
 import cpw.mods.modlauncher.api.ITransformationService;
 import cpw.mods.modlauncher.api.ITransformer;
-import cpw.mods.modlauncher.serviceapi.ILaunchPluginService;
 import org.jetbrains.annotations.NotNull;
 import sun.misc.Unsafe;
 
@@ -16,18 +12,17 @@ import java.lang.module.Configuration;
 import java.lang.reflect.Field;
 import java.nio.file.Path;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class INGService implements ITransformationService {
     static {
-        LaunchPluginHandler handler = Helper.getFieldValue(Launcher.INSTANCE, "launchPlugins", LaunchPluginHandler.class);
-        Map<String, ILaunchPluginService> plugins = (Map<String, ILaunchPluginService>) Helper.getFieldValue(handler, "plugins", Map.class);
-        Map<String, ILaunchPluginService> newMap = new ConcurrentHashMap<>();
-        newMap.put("LNGPlugin", new INGLaunchPluginService());
-        if (plugins != null)
-            for (String name : plugins.keySet())
-                newMap.put(name, plugins.get(name));
-        Helper.setFieldValue(handler, "plugins", newMap);
+//        LaunchPluginHandler handler = Helper.getFieldValue(Launcher.INSTANCE, "launchPlugins", LaunchPluginHandler.class);
+//        Map<String, ILaunchPluginService> plugins = (Map<String, ILaunchPluginService>) Helper.getFieldValue(handler, "plugins", Map.class);
+//        Map<String, ILaunchPluginService> newMap = new ConcurrentHashMap<>();
+//        newMap.put("LNGPlugin", new INGLaunchPluginService());
+//        if (plugins != null)
+//            for (String name : plugins.keySet())
+//                newMap.put(name, plugins.get(name));
+//        Helper.setFieldValue(handler, "plugins", newMap);
         makeMyModLoadable();
     }
 

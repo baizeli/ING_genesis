@@ -2,23 +2,19 @@ package miku.united_as_one.genesis.client;
 
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.client.renderer.*;
-import miku.united_as_one.genesis.init.registry.ItemRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.item.ItemProperties;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderLevelStageEvent;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.level.LevelEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 
-import java.util.stream.Stream;
-
+@OnlyIn(Dist.CLIENT)
 @Mod.EventBusSubscriber(modid = Genesis.MODID)
 public class ClientEvent {
 
