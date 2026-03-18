@@ -10,6 +10,7 @@ import miku.united_as_one.genesis.common.entity.arrow.ThunderArrowEntity;
 import miku.united_as_one.genesis.common.entity.boss.BloodBoss;
 import miku.united_as_one.genesis.common.entity.laser.DeathLaserEntity;
 import miku.united_as_one.genesis.common.entity.projectile.ThrownIron;
+import miku.united_as_one.genesis.common.entity.spell.eldritch.*;
 import miku.united_as_one.genesis.common.entity.spell.blood_boss.BloodBossFireEruptionAoe;
 import miku.united_as_one.genesis.common.entity.spell.blood_boss.blood_dagger.BloodDaggerEntity;
 import miku.united_as_one.genesis.common.entity.spell.blood_boss.blood_dagger.BloodField;
@@ -181,4 +182,11 @@ public class EntityRegistry {
                     .sized(0.85f, 2.3f)
                     .clientTrackingRange(64)
                     .build("summoned_keeper"));
+
+    public static final RegistryObject<EntityType<SummonedWardenEntity>> SUMMONED_WARDEN = ENTITY_TYPES.register("summoned_warden",
+            () -> EntityType.Builder.<SummonedWardenEntity>of(SummonedWardenEntity::new, MobCategory.MONSTER)
+                    .sized(0.9f, 2.9f)
+                    .clientTrackingRange(16)
+                    .fireImmune()
+                    .build("summoned_warden"));
 }
