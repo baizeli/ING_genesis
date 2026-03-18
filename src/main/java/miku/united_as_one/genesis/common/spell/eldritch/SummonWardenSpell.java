@@ -11,8 +11,10 @@ import io.redspace.ironsspellbooks.capabilities.magic.*;
 import net.minecraft.network.chat.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.*;
+import net.minecraft.util.Unit;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.level.Level;
 
 import java.util.*;
@@ -86,7 +88,7 @@ public class SummonWardenSpell extends AbstractSpell {
     }
 
     private int getSummonDuration() {
-        return 20 * 60;
+        return 20 * 60 * 2;
     }
 
     @Override
@@ -110,7 +112,8 @@ public class SummonWardenSpell extends AbstractSpell {
                 Objects.requireNonNull(warden.getAttributes().getInstance(Attributes.MAX_HEALTH)).setBaseValue(getSummonHealth(spellLevel));
                 warden.setHealth(warden.getMaxHealth());
 
-                warden.setPose(Pose.EMERGING);
+                warden.getBrain().setMemoryWithExpiry(MemoryModuleType.IS_EMERGING, Unit.INSTANCE, 134);
+                warden.getBrain().setMemoryWithExpiry(MemoryModuleType.DIG_COOLDOWN, Unit.INSTANCE, Long.MAX_VALUE);
                 warden.setSummoner(entity);
                 warden.setIsSummoned();
 

@@ -74,6 +74,7 @@ public class SummonedKeeperEntity extends KeeperEntity implements IMagicSummon, 
 
     public boolean isAlliedTo(Entity pEntity) {
         if (pEntity == getSummoner()) return true;
+        if (pEntity.getType() == EntityType.SLIME || pEntity.getType() == EntityType.MAGMA_CUBE) return false;
         if (pEntity instanceof IMagicSummon summon)
             return summon.getSummoner() != null && getSummoner() != null && getSummoner() == summon.getSummoner();
         if (getSummoner() != null && pEntity.isAlliedTo(getSummoner()))
