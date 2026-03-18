@@ -4,17 +4,13 @@ import io.redspace.ironsspellbooks.capabilities.magic.SummonManager;
 import io.redspace.ironsspellbooks.entity.mobs.IMagicSummon;
 import io.redspace.ironsspellbooks.entity.mobs.goals.*;
 import miku.united_as_one.genesis.init.registry.EntityRegistry;
-import net.minecraft.util.Unit;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.ai.goal.FloatGoal;
-import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
 import net.minecraft.world.entity.monster.warden.Warden;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.*;
 
 import java.util.UUID;
 
@@ -26,7 +22,7 @@ public class SummonedWardenEntity extends Warden implements IMagicSummon, Ownabl
     public static AttributeSupplier.@NotNull Builder createAttributes() {
         return Warden.createAttributes();
     }
-    
+
     public SummonedWardenEntity(Level level) {
         this(EntityRegistry.SUMMONED_WARDEN.get(), level);
     }
@@ -44,7 +40,18 @@ public class SummonedWardenEntity extends Warden implements IMagicSummon, Ownabl
 
     protected void customServerAiStep() {
         if (this.hasPose(Pose.EMERGING)) this.getNavigation().stop();
-        this.getBrain().setMemoryWithExpiry(MemoryModuleType.DIG_COOLDOWN, Unit.INSTANCE, Long.MAX_VALUE);
+        if (getSummoner() instanceof LivingEntity livingSummoner) {
+            LivingEntity t = livingSummoner.getLastHurtByMob();
+            if (t != null && !this.isAlliedTo(t) && this.canTargetEntity(t)) {
+                this.getBrain().setMemory(MemoryModuleType.ATTACK_TARGET, t);
+                this.increaseAngerAt(t, 150, false);
+            }
+            LivingEntity t2 = livingSummoner.getLastHurtMob();
+            if (t2 != null && !this.isAlliedTo(t2) && this.canTargetEntity(t2)) {
+                this.getBrain().setMemory(MemoryModuleType.ATTACK_TARGET, t2);
+                this.increaseAngerAt(t2, 150, false);
+            }
+        }
         super.customServerAiStep();
     }
 
@@ -60,6 +67,19 @@ public class SummonedWardenEntity extends Warden implements IMagicSummon, Ownabl
     public void onRemovedFromWorld() {
         this.onRemovedHelper(this);
         super.onRemovedFromWorld();
+    }
+
+    public boolean canTargetEntity(@Nullable Entity pEntity) {
+        if (pEntity instanceof LivingEntity livingentity) {
+            return this.level() == pEntity.level() &&
+                    EntitySelector.NO_CREATIVE_OR_SPECTATOR.test(pEntity) &&
+                    !this.isAlliedTo(pEntity) &&
+                    livingentity.getType() != EntityType.ARMOR_STAND &&
+                    !livingentity.isInvulnerable() &&
+                    !livingentity.isDeadOrDying() &&
+                    this.level().getWorldBorder().isWithinBounds(livingentity.getBoundingBox());
+        }
+        return false;
     }
 
     public boolean hurt(DamageSource pSource, float pAmount) {
@@ -78,6 +98,8 @@ public class SummonedWardenEntity extends Warden implements IMagicSummon, Ownabl
 
     public boolean isAlliedTo(@NotNull Entity pEntity) {
         if (pEntity == getSummoner()) return true;
+        if (pEntity.getType() == EntityType.WARDEN) return false;
+        if (pEntity.getType() == EntityType.SLIME || pEntity.getType() == EntityType.MAGMA_CUBE) return false;
         if (pEntity instanceof IMagicSummon summon)
             return summon.getSummoner() != null && getSummoner() != null && getSummoner() == summon.getSummoner();
         if (getSummoner() != null && pEntity.isAlliedTo(getSummoner())) 
@@ -88,8 +110,6 @@ public class SummonedWardenEntity extends Warden implements IMagicSummon, Ownabl
     }
 
     protected void registerGoals() {
-        this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new WaterAvoidingRandomStrollGoal(this, 1d));
-        this.goalSelector.addGoal(2, new GenericFollowOwnerGoal(this, this::getSummoner, 0.9f, 15, 5, false, 25));
+        this.goalSelector.addGoal(1, new GenericFollowOwnerGoal(this, this::getSummoner, 0.9f, 15, 5, false, 25));
     }
 }
