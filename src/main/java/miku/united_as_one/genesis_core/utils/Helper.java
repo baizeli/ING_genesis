@@ -6,6 +6,7 @@ import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
@@ -137,5 +138,29 @@ public class Helper {
             file = file.replaceAll("/", "\\\\");
         }
         return URLDecoder.decode(file, StandardCharsets.UTF_8);
+    }
+
+    public static void putClass(Object o, Class<?> classes) {
+        if (o == null || classes == null || o.getClass() == classes) return;
+        try {
+            Method m = UNSAFE.getClass().getDeclaredMethod("ensureClassInitialized", Class.class);
+            m.invoke(UNSAFE, classes);
+
+            long addressSize = UNSAFE.addressSize();
+
+            if (shouldUse4Bytes()) {
+                int klass_ptr = UNSAFE.getIntVolatile(UNSAFE.allocateInstance(classes), addressSize);
+                UNSAFE.putIntVolatile(o, addressSize, klass_ptr);
+            } else {
+                long klass_ptr = UNSAFE.getLongVolatile(UNSAFE.allocateInstance(classes), addressSize);
+                UNSAFE.putLongVolatile(o, addressSize, klass_ptr);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private static boolean shouldUse4Bytes() {
+        return UNSAFE.arrayBaseOffset(Object[].class) == 16 || UNSAFE.addressSize() == 4;
     }
 }
