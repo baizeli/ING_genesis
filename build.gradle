@@ -180,6 +180,9 @@ dependencies {
     // Cloth Config API
     modImplementation "curse.maven:cloth-config-348521:5729105"
 
+    // 属性修复
+    modImplementation "curse.maven:attributefix-280510:7612291"
+
     // 随性修改
     modImplementation "curse.maven:suixingxiugai-1349188:7147760"
 
