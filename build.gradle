@@ -127,7 +127,6 @@ repositories {
     mavenCentral()
 }
 
-
 configurations {
     runtimeClasspath.extendsFrom localRuntime
 }
