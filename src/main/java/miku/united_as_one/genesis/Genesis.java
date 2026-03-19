@@ -10,6 +10,7 @@ import miku.united_as_one.genesis.common.data.content.arcaneWorkbench.*;
 import miku.united_as_one.genesis.common.data.content.workbenchs.*;
 import miku.united_as_one.genesis.common.entity.*;
 import miku.united_as_one.genesis.common.entity.spell.eldritch.*;
+import miku.united_as_one.genesis.common.entity.warlock.WardenMageEntity;
 import miku.united_as_one.genesis.common.entity.spell.fire.SummonedKeeperEntity;
 import miku.united_as_one.genesis.init.registry.*;
 import miku.united_as_one.genesis.common.entity.ai.ModActivity;
@@ -210,6 +211,7 @@ public class Genesis
         event.put(EntityRegistry.BLOOD_TENTACLE.get(), VoidTentacle.createLivingAttributes().build());
         event.put(EntityRegistry.SUMMONED_KEEPER.get(), SummonedKeeperEntity.createAttributes().build());
         event.put(EntityRegistry.SUMMONED_WARDEN.get(), SummonedWardenEntity.createAttributes().build());
+        event.put(EntityRegistry.WARDEN_MANCER.get(), WardenMageEntity.setAttributes().build());
     }
 
     public static String resource(String location)

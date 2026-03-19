@@ -1,6 +1,7 @@
 package miku.united_as_one.genesis.client.model;
 
 import miku.united_as_one.genesis.Genesis;
+import miku.united_as_one.genesis.client.model.warlock.WardenMageModel;
 import miku.united_as_one.genesis.client.model.spell.celestial_source.DeadStarDecreeCometModel;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -13,5 +14,6 @@ public class ModModel {
     public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(DeadStarDecreeCometModel.LAYER_LOCATION, DeadStarDecreeCometModel::createBodyLayer);
         event.registerLayerDefinition(ThrowBloodAndWoundsModel.LAYER_LOCATION, ThrowBloodAndWoundsModel::createBodyLayer);
+        event.registerLayerDefinition(WardenMageModel.LAYER_LOCATION, WardenMageModel::createBodyLayer);
     }
 }

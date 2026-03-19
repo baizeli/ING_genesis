@@ -9,6 +9,7 @@ import miku.united_as_one.genesis.common.entity.arrow.StellarArrowEntity;
 import miku.united_as_one.genesis.common.entity.arrow.ThunderArrowEntity;
 import miku.united_as_one.genesis.common.entity.boss.BloodBoss;
 import miku.united_as_one.genesis.common.entity.laser.DeathLaserEntity;
+import miku.united_as_one.genesis.common.entity.warlock.WardenMageEntity;
 import miku.united_as_one.genesis.common.entity.projectile.ThrownIron;
 import miku.united_as_one.genesis.common.entity.spell.eldritch.*;
 import miku.united_as_one.genesis.common.entity.spell.blood_boss.BloodBossFireEruptionAoe;
@@ -85,6 +86,13 @@ public class EntityRegistry {
                     .sized(1.4875001F, 3.6749997F)
                     .clientTrackingRange(128)
                     .build("blood_boss"));
+
+    public static final RegistryObject<EntityType<WardenMageEntity>> WARDEN_MANCER = ENTITY_TYPES.register("warden_mancer",
+            () -> EntityType.Builder.of(WardenMageEntity::new, MobCategory.MONSTER)
+                    // 根据 Warden 模型调整碰撞箱：宽 1.5格，高 3.5格（略高于普通玩家）
+                    .sized(1.5F, 3.5F)
+                    .clientTrackingRange(128)
+                    .build("warden_mancer"));
 
     public static final RegistryObject<EntityType<VoidTentacle>> BLOOD_TENTACLE = ENTITY_TYPES.register("blood_tentacle",
             () -> EntityType.Builder.of(
