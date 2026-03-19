@@ -9,6 +9,7 @@ import miku.united_as_one.genesis.client.renderer.entity.laser.DeathLaserRendere
 import miku.united_as_one.genesis.common.data.content.arcaneWorkbench.*;
 import miku.united_as_one.genesis.common.data.content.workbenchs.*;
 import miku.united_as_one.genesis.common.entity.*;
+import miku.united_as_one.genesis.common.entity.spell.eldritch.*;
 import miku.united_as_one.genesis.common.entity.warlock.WardenMageEntity;
 import miku.united_as_one.genesis.common.entity.spell.fire.SummonedKeeperEntity;
 import miku.united_as_one.genesis.init.registry.*;
@@ -32,6 +33,7 @@ import io.redspace.ironsspellbooks.render.SpellBookCurioRenderer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.entity.EntityRenderers;
+import net.minecraft.client.renderer.entity.WardenRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
@@ -53,6 +55,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.*;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.forgespi.locating.IModFile;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
@@ -115,7 +118,9 @@ public class Genesis
 
         MinecraftForge.EVENT_BUS.register(this);
 
-        MinecraftForge.EVENT_BUS.register(ClientEvent.class);
+        if (FMLEnvironment.dist == Dist.CLIENT) {
+            MinecraftForge.EVENT_BUS.register(ClientEvent.class);
+        }
 
         context.registerConfig(ModConfig.Type.COMMON, Configuration.SPECIFICATION);
     }
@@ -205,6 +210,7 @@ public class Genesis
         event.put(EntityRegistry.BLOOD_BOSS.get(), BloodBoss.setAttributes().build());
         event.put(EntityRegistry.BLOOD_TENTACLE.get(), VoidTentacle.createLivingAttributes().build());
         event.put(EntityRegistry.SUMMONED_KEEPER.get(), SummonedKeeperEntity.createAttributes().build());
+        event.put(EntityRegistry.SUMMONED_WARDEN.get(), SummonedWardenEntity.createAttributes().build());
         event.put(EntityRegistry.WARDEN_MANCER.get(), WardenMageEntity.setAttributes().build());
     }
 
@@ -238,6 +244,7 @@ public class Genesis
                 );
 
                 EntityRenderers.register(EntityRegistry.SUMMONED_KEEPER.get(), KeeperRenderer::new);
+                EntityRenderers.register(EntityRegistry.SUMMONED_WARDEN.get(), WardenRenderer::new);
 
                 CuriosRendererRegistry.register(ItemRegistry.CHAOS_SPELL_BOOK.get(), SpellBookCurioRenderer::new);
                 CuriosRendererRegistry.register(ItemRegistry.CELESTIAL_SOURCE_SPELL_BOOK.get(), SpellBookCurioRenderer::new);

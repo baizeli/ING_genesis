@@ -4,6 +4,8 @@ import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.client.particles.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.*;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RegisterParticleProvidersEvent;
 import net.minecraftforge.eventbus.api.*;
 import net.minecraftforge.fml.common.Mod;
@@ -52,7 +54,8 @@ public class ParticleRegistry {
         PARTICLE_TYPES.register(eventBus);
     }
 
-    @Mod.EventBusSubscriber(modid = Genesis.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+    @OnlyIn(Dist.CLIENT)
+    @Mod.EventBusSubscriber(modid = Genesis.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientSetup {
         @SubscribeEvent
         public static void registerParticleFactories(RegisterParticleProvidersEvent event) {
