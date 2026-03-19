@@ -85,7 +85,6 @@ public class SummonedKeeperEntity extends KeeperEntity implements IMagicSummon, 
     }
 
     protected void registerGoals() {
-        // 傻逼子类继承fwllllllll
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new KeeperAnimatedWarlockAttackGoal(this, 1f, 10, 30));
         this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 1d));
