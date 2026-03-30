@@ -96,7 +96,7 @@ public class Genesis
         ItemRegistry.register();
         CreativeTabRegistry.register(modEventBus);
         EntityRegistry.ENTITY_TYPES.register(modEventBus);
-        BlockRegistry.BLOCKS.register(modEventBus);
+        BlockRegistry.register();
         SoundRegister.SOUND_EVENTS.register(modEventBus);
 
         SpellSchoolRegistry.register(modEventBus);

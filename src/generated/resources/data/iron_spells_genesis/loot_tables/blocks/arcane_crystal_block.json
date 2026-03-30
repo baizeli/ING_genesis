@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "iron_spells_genesis:quietness_trap_door"
+          "name": "iron_spells_genesis:arcane_crystal_block"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "iron_spells_genesis:blocks/quietness_trap_door"
+  "random_sequence": "iron_spells_genesis:blocks/arcane_crystal_block"
 }
