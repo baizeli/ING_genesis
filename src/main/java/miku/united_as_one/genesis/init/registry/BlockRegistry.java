@@ -5,7 +5,6 @@ import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.common.block.ChaosPortalBlock;
 import miku.united_as_one.genesis.common.block.util.SimpleBlockSet;
 import miku.united_as_one.genesis.common.data.content.arcaneWorkbench.ArcaneWorkbenchBlock;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.block.*;
@@ -19,6 +18,11 @@ public class BlockRegistry {
     public static final SimpleBlockSet<Block> WEATHERED_SANDSTONE = SimpleBlockSet.buildStone("weathered_sandstone", Blocks.SANDSTONE).simpleStone();
     public static final SimpleBlockSet<Block> WEATHERED_STONE_BRICKS = SimpleBlockSet.buildStone("weathered_stone_bricks", Blocks.STONE_BRICKS).simpleStone();
     public static final SimpleBlockSet<Block> WEATHERED_SAND = SimpleBlockSet.buildStone("weathered_sand", Blocks.SAND);
+    //杂项
+    public static final SimpleBlockSet<Block> BLOOD_SAND = SimpleBlockSet.buildStone("blood_sand", Blocks.SAND);
+    public static final SimpleBlockSet<Block> FIRE_SAND = SimpleBlockSet.buildStone("fire_sand", Blocks.SAND);
+    public static final SimpleBlockSet<Block> HEART_SCULPTING = SimpleBlockSet.buildStone("heart_sculpting", Blocks.STONE).simpleStone();
+
     // 深怖材质方块
     public static final SimpleBlockSet<Block> DEEP_FEAR_STONE = SimpleBlockSet.buildStone("deep_fear_stone", Blocks.STONE).simpleStone();
     public static final SimpleBlockSet<Block> SMOOTH_DEEP_FEAR_STONE = SimpleBlockSet.buildStone("smooth_deep_fear_stone", Blocks.SMOOTH_STONE).simpleStone();
@@ -36,7 +40,17 @@ public class BlockRegistry {
 
     public static final BlockEntry<Block> ARCANE_CRYSTAL_BLOCK = Genesis.L2_REGISTRATE
             .block("arcane_crystal_block", Block::new)
-            .initialProperties(() -> Blocks.AMETHYST_BLOCK) // 继承紫水晶音效
+            .initialProperties(() -> Blocks.AMETHYST_BLOCK)
+            .properties(p -> p.strength(5.0F, 6.0F).requiresCorrectToolForDrops())
+            .tag(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.NEEDS_DIAMOND_TOOL)
+            .item()
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
+            .build()
+            .register();
+
+    public static final BlockEntry<Block> FEAR_CRYSTALS = Genesis.L2_REGISTRATE
+            .block("fear_crystals", Block::new)
+            .initialProperties(() -> Blocks.AMETHYST_BLOCK)
             .properties(p -> p.strength(5.0F, 6.0F).requiresCorrectToolForDrops())
             .tag(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.NEEDS_DIAMOND_TOOL)
             .item()
@@ -84,15 +98,9 @@ public class BlockRegistry {
             .build()
             .register();
 
-
-    // 奥术工作台
     public static final BlockEntry<ArcaneWorkbenchBlock> ARCANE_WORKBENCH = Genesis.L2_REGISTRATE
             .block("arcane_workbench", ArcaneWorkbenchBlock::new)
-            .initialProperties(() -> Blocks.CRAFTING_TABLE)
-            .tag(BlockTags.MINEABLE_WITH_AXE)
-            .item()
-            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
-            .build()
+            .properties(p -> p.lightLevel(s -> 9).strength(3.0f, 9.0f).requiresCorrectToolForDrops().sound(SoundType.STONE))
             .register();
 
     // 混沌传送门框架
@@ -101,7 +109,7 @@ public class BlockRegistry {
             .properties(p -> p.strength(-1, 9999).noOcclusion())
             .register();
 
-    // 混沌传送门方块 (带半透明渲染)
+    // 混沌传送门方块
     public static final BlockEntry<ChaosPortalBlock> CHAOS_PORTAL = Genesis.L2_REGISTRATE
             .block("chaos_portal", ChaosPortalBlock::new)
             .properties(p -> p.noCollission().randomTicks().strength(-1).sound(SoundType.GLASS).lightLevel(s -> 11).noOcclusion())
@@ -111,7 +119,6 @@ public class BlockRegistry {
             .block("celestial_source_block", Block::new)
             .properties(p -> p.requiresCorrectToolForDrops().strength(20, 9999).sound(SoundType.NETHERITE_BLOCK))
             .tag(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.NEEDS_DIAMOND_TOOL)
-            .item().tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK).build()
             .register();
     public static void register() {}
 }
