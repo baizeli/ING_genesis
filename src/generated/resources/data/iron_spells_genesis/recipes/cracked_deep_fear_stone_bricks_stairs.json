@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "X": {
+      "item": "iron_spells_genesis:cracked_deep_fear_stone_bricks"
+    }
+  },
+  "pattern": [
+    "X  ",
+    "XX ",
+    "XXX"
+  ],
+  "result": {
+    "count": 4,
+    "item": "iron_spells_genesis:cracked_deep_fear_stone_bricks_stairs"
+  },
+  "show_notification": true
+}
