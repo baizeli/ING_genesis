@@ -1,6 +1,6 @@
 {
-  "parent": "minecraft:block/template_trapdoor_bottom",
+  "parent": "minecraft:item/generated",
   "textures": {
-    "texture": "iron_spells_genesis:block/quietness_planks"
+    "layer0": "iron_spells_genesis:item/quietness_door"
   }
 }

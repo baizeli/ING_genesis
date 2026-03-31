@@ -127,7 +127,6 @@ repositories {
     mavenCentral()
 }
 
-
 configurations {
     runtimeClasspath.extendsFrom localRuntime
 }
@@ -223,7 +222,7 @@ dependencies {
     modImplementation "curse.maven:jade-324717:6855440"
 
     // FreeCam by Zergatul
-    //modImplementation "curse.maven:freecam-by-zergatul-618947:5402097"
+    modImplementation "curse.maven:freecam-by-zergatul-618947:5402097"
 
     // Better Combat
     /*modImplementation "curse.maven:better-combat-by-daedelus-639842:7287334"*/

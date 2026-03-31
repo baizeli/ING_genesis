@@ -35,6 +35,12 @@
     "iron_spells_genesis:sway_stone_stairs",
     "iron_spells_genesis:sway_stone_slab",
     "iron_spells_genesis:sway_stone_vertical_slab",
-    "iron_spells_genesis:sway_stone_wall"
+    "iron_spells_genesis:sway_stone_wall",
+    "iron_spells_genesis:arcane_crystal_block",
+    "iron_spells_genesis:arcane_crystal_ore",
+    "iron_spells_genesis:deepslate_arcane_crystal_ore",
+    "iron_spells_genesis:nether_arcane_crystal_ore",
+    "iron_spells_genesis:end_arcane_crystal_ore",
+    "iron_spells_genesis:celestial_source_block"
   ]
 }

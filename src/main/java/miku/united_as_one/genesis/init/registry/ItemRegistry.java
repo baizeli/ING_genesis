@@ -526,6 +526,18 @@ public class ItemRegistry {
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
 
+    // 邪术符文
+    public static final ItemEntry<Item> ELDRITCH_RUNE = Genesis.L2_REGISTRATE
+            .item("eldritch_rune", properties -> new Item(ItemPropertiesHelper.material()))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
+            .register();
+
+    //亵渎钥匙
+    public static final ItemEntry<Item> BLASPHHEMY_KEY = Genesis.L2_REGISTRATE
+            .item("blasphemy_key", properties -> new Item(ItemPropertiesHelper.material()))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
+            .register();
+
     // 混沌升级法球
     public static final ItemEntry<UpgradeOrbItem> CHAOS_UPGRADE_ORB = Genesis.L2_REGISTRATE
             .item("chaos_upgrade_orb", properties -> new UpgradeOrbItem(
@@ -560,7 +572,7 @@ public class ItemRegistry {
                 UpgradeOrbTypes.FIRE_SPELL_PENETRATION
             ))
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
-            .register();;
+            .register();
 
     // 神圣穿透升级法球
     public static final ItemEntry<UpgradeOrbItem> HOLY_ORB_PRO = Genesis.L2_REGISTRATE
@@ -879,16 +891,6 @@ public class ItemRegistry {
     // 受血者的匕首
     public static final ItemEntry<BloodBossDagger> BLOOD_BOSS_DAGGER = Genesis.L2_REGISTRATE
             .item("blood_boss_dagger", properties -> new BloodBossDagger(TierRegistry.DARGGET, 2, -2.2F, properties.rarity(Rarity.EPIC)))
-            .model((ctx, prov) -> prov.handheld(ctx::getEntry))
-            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
-            .register();
-
-    public static final ItemEntry<Gungnir> GUNGNIR = Genesis.L2_REGISTRATE
-            .item("gungnir", properties -> new Gungnir(TierRegistry.LEGENDARY, 2, -1.9F, properties.rarity(Rarity.create("Frustration", style ->
-                    style.withColor(0x660000)
-                            .withItalic(true)
-                            .withStrikethrough(true)
-            ))))
             .model((ctx, prov) -> prov.handheld(ctx::getEntry))
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();

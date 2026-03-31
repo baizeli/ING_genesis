@@ -1,5 +1,6 @@
 package miku.united_as_one.genesis.client.render;
 
+import miku.united_as_one.genesis.client.renderer.entity.warlock.WardenMageRenderer;
 import miku.united_as_one.genesis.common.entity.spell.blood_boss.blood_dagger.BloodDaggerRenderer;
 import miku.united_as_one.genesis.init.registry.EntityRegistry;
 import miku.united_as_one.genesis.Genesis;
@@ -36,6 +37,7 @@ public class RenderRegistry {
         event.registerEntityRenderer(EntityRegistry.BLOOD_DAGGER_PROJECTILE.get(), BloodDaggerRenderer::new);
         event.registerEntityRenderer(EntityRegistry.BLOOD_FIELD.get(), NoopRenderer::new);
         event.registerEntityRenderer(EntityRegistry.TREMOR_AOE_ENTITY.get(), NoopRenderer::new);
+        event.registerEntityRenderer(EntityRegistry.WARDEN_MANCER.get(), WardenMageRenderer::new);
         
         // 特效箭矢渲染器注册
         event.registerEntityRenderer(EntityRegistry.THUNDER_ARROW.get(), ThunderArrowRenderer::new);

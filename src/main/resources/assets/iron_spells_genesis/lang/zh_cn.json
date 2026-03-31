@@ -5,7 +5,7 @@
   "curios.modifiers.magic_guide": "魔导佩戴时：",
 
   "itemGroup.iron_spells_genesis.iron_spells_genesis_tab": "铁之魔法书：创世纪",
-  "itemGroup.iron_spells_genesis.block": "iron的法术创世纪：方块",
+  "itemGroup.iron_spells_genesis.block": "iron的法术创世纪：gay",
   "itemGroup.iron_spells_genesis.material": "iron的法术创世纪：材料",
   "itemGroup.iron_spells_genesis.equipment": "iron的法术创世纪：装备",
   "itemGroup.iron_spells_genesis.spell_scroll": "iron的法术创世纪：法术卷轴",
@@ -142,8 +142,6 @@
   "item.iron_spells_genesis.divine_metal_shovel": "神圣金属铲",
   "item.iron_spells_genesis.divine_metal_hoe": "神圣金属锄",
 
-  "item.iron_spells_genesis.gungnir": "冈格尼尔",
-
   "tooltip.iron_spells_genesis.divine_metal.description_1": "§8殴打凋零骷髅掉落他的头",
   "tooltip.iron_spells_genesis.divine_metal.description_2": "自动帮你烧东西",
   "tooltip.iron_spells_genesis.divine_metal.description_3": "对沙子使用原子操作掉落玻璃",
@@ -224,7 +222,7 @@
   "item.iron_spells_genesis.chaos_manuscript.hover": "（右键学习混沌法术）",
   "item.iron_spells_genesis.celestial_source_manuscript.hover": "（右键学习星源法术）",
 
-  "item.iron_spells_genesis.chaos_manuscript_fragment": "混沌1手稿碎片",
+  "item.iron_spells_genesis.chaos_manuscript_fragment": "混沌手稿碎片",
   "item.iron_spells_genesis.blank_celestial_source_manuscript": "空白星源手稿",
   "item.iron_spells_genesis.chaos_manuscript_fragment.hover": "（蕴含着混沌法术的学习方法）",
   "item.iron_spells_genesis.blank_celestial_source_manuscript.hover": "（蕴含着星源法术的学习方法）",
