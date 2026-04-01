@@ -22,6 +22,8 @@ public class BlockRegistry {
     public static final SimpleBlockSet<Block> BLOOD_SAND = SimpleBlockSet.buildStone("blood_sand", Blocks.SAND);
     public static final SimpleBlockSet<Block> FIRE_SAND = SimpleBlockSet.buildStone("fire_sand", Blocks.SAND);
     public static final SimpleBlockSet<Block> HEART_SCULPTING = SimpleBlockSet.buildStone("heart_sculpting", Blocks.STONE).simpleStone();
+    //火
+    public static final SimpleBlockSet<Block> FIRE_STONE = SimpleBlockSet.buildStone("fire_stone", Blocks.STONE).simpleStone();
 
     // 深怖材质方块
     public static final SimpleBlockSet<Block> DEEP_FEAR_STONE = SimpleBlockSet.buildStone("deep_fear_stone", Blocks.STONE).simpleStone();
