@@ -27,6 +27,7 @@ import net.minecraft.util.*;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.phys.Vec2;
 import net.minecraftforge.api.distmarker.*;
+import org.jetbrains.annotations.NotNull;
 import org.joml.Vector4f;
 
 import java.util.*;
@@ -112,7 +113,7 @@ public abstract class AbstractSpellLearningScreen extends Screen {
     }
 
     @Override
-    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
+    public void render(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         super.render(guiGraphics, mouseX, mouseY, partialTick);
         guiGraphics.fillGradient(0, 0, this.width, this.height, -1072689136, -804253680);
         drawBackdrop(guiGraphics, leftPos + WINDOW_INSIDE_X, topPos + WINDOW_INSIDE_Y);

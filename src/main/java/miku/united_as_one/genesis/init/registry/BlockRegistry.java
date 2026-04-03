@@ -5,7 +5,6 @@ import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.common.block.ChaosPortalBlock;
 import miku.united_as_one.genesis.common.block.util.SimpleBlockSet;
 import miku.united_as_one.genesis.common.data.content.arcaneWorkbench.ArcaneWorkbenchBlock;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.block.*;

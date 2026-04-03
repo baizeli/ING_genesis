@@ -8,7 +8,6 @@ import miku.united_as_one.genesis.common.entity.boss.behavior.AnimatedActionBeha
 import miku.united_as_one.genesis.init.registry.SoundRegister;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.memory.MemoryModuleType;
