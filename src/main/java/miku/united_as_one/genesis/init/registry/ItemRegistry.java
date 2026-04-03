@@ -895,6 +895,16 @@ public class ItemRegistry {
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
+    public static final ItemEntry<Gungnir> GUNGNIR = Genesis.L2_REGISTRATE
+            .item("gungnir", properties -> new Gungnir(TierRegistry.LEGENDARY, 2, -1.9F, properties.rarity(Rarity.create("Frustration", style ->
+                    style.withColor(0x660000)
+                            .withItalic(true)
+                            .withStrikethrough(true)
+            ))))
+            .model((ctx, prov) -> prov.handheld(ctx::getEntry))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
+            .register();
+
     // 血肉魂铃
     public static final ItemEntry<?> FLESH_SOUL_BELL = Genesis.L2_REGISTRATE
             .item("flesh_soul_bell", properties -> new Item(properties

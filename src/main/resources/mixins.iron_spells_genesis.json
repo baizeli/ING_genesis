@@ -24,6 +24,7 @@
     "ironsspellbooks.spells.nature.MixinPoisonArrow",
     "ironsspellbooks.spells.nature.MixinPoisonArrowSpell",
     "ironsspellbooks.spells.nature.MixinPoisonSplash",
+    "minecraft.client.renderer.ChatFormattingMixin",
     "minecraft.world.effect.MobEffectInstanceAccessor",
     "minecraft.world.effect.MobEffectMixin",
     "minecraft.world.entity.EntityMixin",
@@ -36,15 +37,16 @@
     "ironsspellbooks.render.MixinSpellTargetingLayer",
     "minecraft.client.multiplayer.ClientLevelMixin",
     "minecraft.client.renderer.FogRendererMixin",
+    "minecraft.client.renderer.FontMixin",
     "minecraft.client.renderer.GameRendererAccessor",
     "minecraft.client.renderer.GameRendererMixin",
     "minecraft.client.renderer.GuiGraphicsMixin",
     "minecraft.client.renderer.ItemInHandRendererMixin",
     "minecraft.client.renderer.LevelRendererMixin",
-    "minecraft.client.renderer.entity.ItemRendererMixin",
     "minecraft.client.renderer.ParticleAccessor",
     "minecraft.client.renderer.ParticleEngineAccessor",
-    "minecraft.client.renderer.PostChainAccessor"
+    "minecraft.client.renderer.PostChainAccessor",
+    "minecraft.client.renderer.entity.ItemRendererMixin"
   ],
   "injectors": {
     "defaultRequire": 1
