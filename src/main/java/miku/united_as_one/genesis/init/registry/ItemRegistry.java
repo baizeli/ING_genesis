@@ -49,7 +49,16 @@ public class ItemRegistry {
             .item("violet_fragments", properties -> new Item(properties.rarity(Rarity.EPIC)))
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
-
+    //破灭神格
+    public static final ItemEntry<Item> DESTROY_GODHEAD = Genesis.L2_REGISTRATE
+            .item("destroy_godhead", properties -> new Item(properties.rarity(Rarity.EPIC)))
+            .model((ctx, prov) -> {
+                prov.withExistingParent(ctx.getName(), "item/generated")
+                        .texture("layer0", prov.modLoc("item/" + ctx.getName()))
+                        .texture("layer1", prov.modLoc("item/misc/red_lightning"));
+            })
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
+            .register();
     // 神圣金属锭
     public static final ItemEntry<Item> DIVINE_METAL_INGOT = Genesis.L2_REGISTRATE
             .item("divine_metal_ingot", properties -> new Item(properties.rarity(Rarity.EPIC)))
