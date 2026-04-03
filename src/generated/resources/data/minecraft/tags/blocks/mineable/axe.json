@@ -17,7 +17,6 @@
     "iron_spells_genesis:quietness_vertical_slab",
     "iron_spells_genesis:quietness_trapdoor",
     "iron_spells_genesis:quietness_door",
-    "iron_spells_genesis:quietness_fence",
-    "iron_spells_genesis:arcane_workbench"
+    "iron_spells_genesis:quietness_fence"
   ]
 }
