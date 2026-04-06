@@ -1,10 +1,7 @@
 package miku.united_as_one.genesis.common.data.datagen.provider;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.init.registry.BlockRegistry;
-import miku.united_as_one.genesis.init.registry.ItemRegistry;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
 

@@ -3,7 +3,6 @@ package miku.united_as_one.genesis.client.render.entity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
-import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.client.model.ThrowBloodAndWoundsModel;
 import miku.united_as_one.genesis.common.entity.ThrowBloodAndWounds; 
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -14,8 +13,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-
-import java.io.PipedOutputStream;
 
 @OnlyIn(Dist.CLIENT)
 public class ThrowBloodAndWoundsRenderer extends EntityRenderer<ThrowBloodAndWounds> {

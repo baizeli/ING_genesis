@@ -10,108 +10,56 @@ import net.minecraft.client.gui.font.FontSet;
 import net.minecraft.client.gui.font.glyphs.BakedGlyph;
 import net.minecraft.client.gui.font.glyphs.EmptyGlyph;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.FormattedCharSink;
 import net.minecraft.util.Mth;
 import net.minecraft.util.StringDecomposer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 
 import javax.annotation.Nullable;
 import java.util.List;
-import java.util.function.Function;
 
-public class FuckFont1 extends Font {
-    public static Font font = new FuckFont1(Minecraft.getInstance().font.fonts, false);
+public class FontUtil {
+    private static final Font font = Minecraft.getInstance().font;
 
-    public FuckFont1(Function<ResourceLocation, FontSet> fonts, boolean filterFishyGlyphs) {
-        super(fonts, filterFishyGlyphs);
-    }
-
-    public static FuckFont1 getFont() {
-        return new FuckFont1(Minecraft.getInstance().font.fonts, false);
-    }
-
-    @Override
-    public int drawInBatch(@NotNull FormattedCharSequence formattedCharSequence, float x, float y, int rgb, boolean b1, @NotNull Matrix4f matrix4f, @NotNull MultiBufferSource multiBufferSource, @NotNull DisplayMode mode, int i, int i1) {
-        return renderFont(formattedCharSequence, x, y, rgb, b1, matrix4f, multiBufferSource, mode, i, i1, this.isBidirectional());
-    }
-
-    @Override
-    public int drawInBatch(@NotNull String text, float x, float y, int rgb, boolean b, @NotNull Matrix4f matrix4f, @NotNull MultiBufferSource source, @NotNull DisplayMode mode, int i, int i1, boolean isText) {
-        return renderFont(FormattedCharSequence.forward(text, Style.EMPTY), x, y, rgb, b, matrix4f, source, mode, i, i1, isText);
-    }
-
-    @Override
-    public int drawInBatch(@NotNull Component component, float x, float y, int rgb, boolean b, @NotNull Matrix4f matrix4f, @NotNull MultiBufferSource source, @NotNull DisplayMode mode, int i, int i1) {
-        return renderFont(FormattedCharSequence.forward(component.getString(), Style.EMPTY), x, y, rgb, b, matrix4f, source, mode, i, i1, this.isBidirectional());
-    }
-
-    public int renderFont(FormattedCharSequence seq, float x, float y, int baseRgb, boolean dropShadow, Matrix4f matrix, MultiBufferSource buffers, DisplayMode mode, int light, int overlay, boolean ignoredIsText) {
-        final float[] currentX = {x};
-        final int[] charIndex = {0};
-
-        seq.accept((index, style, codePoint) -> {
-            char ch = (char) codePoint;
-            float dx = 0, dy = 0;
-            boolean isSpecial = true;
-
-            renderChar(ch, style, currentX[0] + dx, y + dy, baseRgb, dropShadow, matrix, buffers, mode, light, overlay, charIndex[0], isSpecial);
-            currentX[0] += width(String.valueOf(ch));
-            charIndex[0]++;
-            return true;
-        });
-
-        return (int) currentX[0];
-    }
-
-    private void renderChar(char ch, Style style, float x, float y, int color, boolean dropShadow, Matrix4f matrix, MultiBufferSource buffers, DisplayMode mode, int light, int overlay, int index, boolean isSpecial) {
-        FormattedCharSequence seq = FormattedCharSequence.forward(String.valueOf(ch), style);
-        if (isSpecial) {
-            drawInternal(seq, x, y, color, dropShadow, matrix, buffers, mode, light, overlay, index);
-            super.drawInternal(seq, x + 0.2F, y + 0.2F, (color & 0x00FFFFFF) | 0x33000000, dropShadow, matrix, buffers, mode, light, overlay);
-        } else {
-            super.drawInternal(seq, x, y, color, dropShadow, matrix, buffers, mode, light, overlay);
-        }
-    }
-
-    public void drawInternal(FormattedCharSequence text, float x, float y, int color, boolean dropShadow, Matrix4f matrix, MultiBufferSource buffer, DisplayMode displayMode, int backgroundColor, int packedLightCoords, int index) {
+    public static int drawInternal(FormattedCharSequence text, float x, float y, int color, boolean dropShadow, Matrix4f matrix, MultiBufferSource buffer, Font.DisplayMode displayMode, int backgroundColor, int packedLightCoords, int index, int type) {
+        color = Font.adjustColor(color);
         Matrix4f matrix4f = new Matrix4f(matrix);
         if (dropShadow) {
-            this.renderText(text, x, y, color, true, matrix, buffer, displayMode, backgroundColor, packedLightCoords, index);
-            matrix4f.translate(SHADOW_OFFSET);
+            renderText(text, x, y, color, true, matrix, buffer, displayMode, backgroundColor, packedLightCoords, index, type);
+            matrix4f.translate(Font.SHADOW_OFFSET);
         }
 
-        this.renderText(text, x, y, color, false, matrix4f, buffer, displayMode, backgroundColor, packedLightCoords, index);
+        x = renderText(text, x, y, color, false, matrix4f, buffer, displayMode, backgroundColor, packedLightCoords, index, type);
+        return (int)x + (dropShadow ? 1 : 0);
     }
 
-    public float renderText(String text, float x, float y, int color, boolean dropShadow, Matrix4f matrix, MultiBufferSource buffer, DisplayMode displayMode, int backgroundColor, int packedLightCoords, int index) {
-        MyStringRenderOutput font$stringrenderoutput = new MyStringRenderOutput(buffer, x, y, color, dropShadow, matrix, displayMode, packedLightCoords, index);
+    public static float renderText(String text, float x, float y, int color, boolean dropShadow, Matrix4f matrix, MultiBufferSource buffer, Font.DisplayMode displayMode, int backgroundColor, int packedLightCoords, int index, int type) {
+        MyStringRenderOutput font$stringrenderoutput = new MyStringRenderOutput(buffer, x, y, color, dropShadow, matrix, displayMode, packedLightCoords, index, type);
         StringDecomposer.iterateFormatted(text, Style.EMPTY, font$stringrenderoutput);
         return font$stringrenderoutput.finish(backgroundColor, x);
     }
 
-    public void renderText(FormattedCharSequence text, float x, float y, int color, boolean dropShadow, Matrix4f matrix, MultiBufferSource buffer, DisplayMode displayMode, int backgroundColor, int packedLightCoords, int index) {
-        MyStringRenderOutput font$stringrenderoutput = new MyStringRenderOutput(buffer, x, y, color, dropShadow, matrix, displayMode, packedLightCoords, index);
+    public static float renderText(FormattedCharSequence text, float x, float y, int color, boolean dropShadow, Matrix4f matrix, MultiBufferSource buffer, Font.DisplayMode displayMode, int backgroundColor, int packedLightCoords, int index, int type) {
+        MyStringRenderOutput font$stringrenderoutput = new MyStringRenderOutput(buffer, x, y, color, dropShadow, matrix, displayMode, packedLightCoords, index, type);
         text.accept(font$stringrenderoutput);
-        font$stringrenderoutput.finish(backgroundColor, x);
+        return font$stringrenderoutput.finish(backgroundColor, x);
     }
 
     @OnlyIn(Dist.CLIENT)
-    public final class MyStringRenderOutput implements FormattedCharSink {
+    public static final class MyStringRenderOutput implements FormattedCharSink {
         public final MultiBufferSource bufferSource;
         public final boolean dropShadow;
         public final float dimFactor;
         public final Matrix4f pose;
-        public final DisplayMode mode;
+        public final Font.DisplayMode mode;
         public final int packedLightCoords;
         public float x, y;
         public int color;
+        public int type;
         @Nullable public List<BakedGlyph.Effect> effects;
 
         private final int index; // 第几个字（用于相位偏移）
@@ -120,7 +68,7 @@ public class FuckFont1 extends Font {
 
         public MyStringRenderOutput(MultiBufferSource bufferSource, float x, float y,
                                     int color, boolean dropShadow, Matrix4f pose,
-                                    DisplayMode mode, int packedLightCoords, int index) {
+                                    Font.DisplayMode mode, int packedLightCoords, int index, int type) {
             this.bufferSource = bufferSource;
             this.x = x;
             this.y = y;
@@ -131,60 +79,60 @@ public class FuckFont1 extends Font {
             this.mode = mode;
             this.packedLightCoords = packedLightCoords;
             this.index = index;
+            this.type = type;
         }
 
-        private int calcColor(float localPhase, int color) {
+        private int calcColor(float localPhase) {
             long time = Util.getMillis();
-            float t = time * 0.001f; // 基础时间系数标准化
-
-            // 色相：主循环 + 相位偏移
-            float hue = (t * 0.12f + (index + localPhase) * 0.03f) % 1.0f;
-
-            // 呼吸效果：饱和度 0.7-1.0，明度 0.8-1.0 之间脉动
-            float breathe = Mth.sin(t * 2.0f + localPhase) * 0.5f + 0.5f; // 0~1
-            float saturation = 0.7f + breathe * 0.3f;
-            float brightness = 0.8f + breathe * 0.2f;
-
-            return Mth.hsvToRgb(hue, saturation, brightness) | 0xFF_000000;
+            if (this.type == 1) {
+                float progress = (time * 0.0009f + (index + localPhase) * 0.05f) % 1.0f; // 0~1
+                float hue = 0.00f;          // 固定红色
+                float sat = 1.0f - progress; // 1→0  深红→灰
+                float bri = 1.0f - progress; // 1→0  灰→黑
+                return Mth.hsvToRgb(hue, sat, bri) | 0xFF_000000; // 强制不透明
+            } else if (this.type == 2){
+                float hue = (time * 0.0012f + (index + localPhase) * 0.03f) % 1.0f;            // 全色域循环
+                return Mth.hsvToRgb(hue, 1, 1) | 0xFF_000000;
+            }
+            return this.color;
         }
 
         @Override
         public boolean accept(int pos, Style style, int codePoint) {
-            FontSet fontSet = FuckFont1.this.getFontSet(style.getFont());
-            GlyphInfo glyphInfo = fontSet.getGlyphInfo(codePoint, FuckFont1.this.filterFishyGlyphs);
+            FontSet fontSet = font.getFontSet(style.getFont());
+            GlyphInfo glyphInfo = fontSet.getGlyphInfo(codePoint, font.filterFishyGlyphs);
             BakedGlyph baked = style.isObfuscated() && codePoint != ' '
                     ? fontSet.getRandomGlyph(glyphInfo)
                     : fontSet.getGlyph(codePoint);
 
             boolean bold = style.isBold();
-            float shadowOff = dropShadow ? glyphInfo.getShadowOffset() : 0F;
             float advance = glyphInfo.getAdvance(bold);
 
             // 生成多段颜色
             for (int i = 0; i <= SEGMENTS; i++) {
                 float phase = (float) i / SEGMENTS;
-                segmentColors[i] = calcColor(phase, this.color);
+                segmentColors[i] = calcColor(phase);
             }
 
             // 多段渲染
-            VertexConsumer vc = bufferSource.getBuffer(baked.renderType(mode));
             if (!(baked instanceof EmptyGlyph)) {
-                renderMultiSegment(baked, style.isItalic(), this.x + shadowOff, this.y + shadowOff,
+                float shadowOff = dropShadow ? glyphInfo.getShadowOffset() : 0F;
+                float blodOff = bold ? glyphInfo.getBoldOffset() : 0F;
+                VertexConsumer vc = bufferSource.getBuffer(baked.renderType(mode));
+                renderMultiSegment(baked, style.isItalic(), this.x + shadowOff + blodOff, this.y + shadowOff,
                         this.pose, vc, segmentColors, this.packedLightCoords);
             }
 
             // 下划线和删除线效果
-            float x0 = this.x + shadowOff;
-            float y0 = this.y + shadowOff;
             float lineY = dropShadow ? 1F : 0F;
 
             if (style.isStrikethrough()) {
-                addEffect(new BakedGlyph.Effect(x0 + lineY - 1F, y0 + 4.5F, x0 + lineY + advance, y0 + 4.5F - 1F,
+                addEffect(new BakedGlyph.Effect(this.x + lineY - 1F, this.y + lineY + 4.5F, this.x + lineY + advance, this.y + lineY + 4.5F - 1F,
                         0.01F, 0F, 0F, 0F, 1F)); // 颜色在finish时统一处理
             }
 
             if (style.isUnderlined()) {
-                addEffect(new BakedGlyph.Effect(x0 + lineY - 1F, y0 + 9F, x0 + lineY + advance, y0 + 9F - 1F,
+                addEffect(new BakedGlyph.Effect(this.x + lineY - 1F, this.y + lineY + 9F, this.x + lineY + advance, this.y + lineY + 9F - 1F,
                         0.01F, 0F, 0F, 0F, 1F));
             }
 
@@ -246,7 +194,7 @@ public class FuckFont1 extends Font {
             }
 
             if (this.effects != null) {
-                BakedGlyph bakedglyph = FuckFont1.this.getFontSet(Style.DEFAULT_FONT).whiteGlyph();
+                BakedGlyph bakedglyph = font.getFontSet(Style.DEFAULT_FONT).whiteGlyph();
                 VertexConsumer vertexconsumer = this.bufferSource.getBuffer(bakedglyph.renderType(this.mode));
 
                 for(BakedGlyph.Effect bakedglyph$effect : this.effects) {
@@ -254,7 +202,7 @@ public class FuckFont1 extends Font {
                 }
             }
 
-            return x;
+            return this.x;
         }
 
         public void addEffect(BakedGlyph.Effect effect) {
