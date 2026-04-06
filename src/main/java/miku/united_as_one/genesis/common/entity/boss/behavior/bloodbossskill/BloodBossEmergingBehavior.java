@@ -33,7 +33,7 @@ public class BloodBossEmergingBehavior extends AnimatedActionBehavior<BloodBoss>
     @Override
     protected void tick(@NotNull ServerLevel level, @NotNull BloodBoss boss, long gameTime) {
         boss.getNavigation().stop();
-        boss.realSetDeltaMovement(0, boss.getDeltaMovement().y, 0);
+        boss.realSetDlM(0, boss.getDeltaMovement().y, 0);
         super.tick(level, boss, gameTime);
         emergenceTick++;
         if (emergenceTick <= 2) {

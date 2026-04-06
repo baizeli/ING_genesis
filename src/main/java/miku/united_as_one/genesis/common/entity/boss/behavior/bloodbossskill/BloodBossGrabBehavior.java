@@ -129,7 +129,7 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
 
         if (abilityTimer < DASH_START_TICK) {
 
-            boss.realSetDeltaMovement(Vec3.ZERO);
+            boss.realSetDlM(Vec3.ZERO);
             return;
         }
 
@@ -188,7 +188,7 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
 
 
             ((BloodBossMoveControl) boss.getMoveControl()).clearSkillMovements();
-            boss.realSetDeltaMovement(Vec3.ZERO);
+            boss.realSetDlM(Vec3.ZERO);
             boss.setNoGravity(true);
 
             boss.serverTriggerAnimation(ANIM_SLAM);
@@ -201,11 +201,11 @@ public class BloodBossGrabBehavior extends AnimatedActionBehavior<BloodBoss> {
 
 
         if (slamTimer < 8) {
-            boss.realSetDeltaMovement(0, 0.8, 0);
+            boss.realSetDlM(0, 0.8, 0);
         } else if (slamTimer < 14) {
-            boss.realSetDeltaMovement(0, -0.05, 0);
+            boss.realSetDlM(0, -0.05, 0);
         } else if (slamTimer < IMPACT_TIME) {
-            boss.realSetDeltaMovement(0, -2.0, 0);
+            boss.realSetDlM(0, -2.0, 0);
         }
 
         float t = slamTimer / (float) IMPACT_TIME;

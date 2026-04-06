@@ -2,6 +2,8 @@ package miku.united_as_one.genesis.common.items.weapon.sword;
 
 import io.redspace.ironsspellbooks.api.util.Utils;
 import io.redspace.ironsspellbooks.entity.spells.fiery_dagger.FieryDaggerEntity;
+import miku.united_as_one.genesis.util.mixinutil.DamageSourceInterface;
+import miku.united_as_one.genesis.util.mixinutil.LivingEventEC;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -11,6 +13,11 @@ import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.eventbus.api.EventPriority;
 import org.jetbrains.annotations.NotNull;
 
 public class Gungnir extends SwordItem {
@@ -48,5 +55,31 @@ public class Gungnir extends SwordItem {
         }
 
         return InteractionResultHolder.success(stack);
+    }
+
+    public void onAttack(ItemStack itemStack, LivingAttackEvent event) {
+        LivingEventEC ec = (LivingEventEC) event;
+        ((DamageSourceInterface) event.getSource()).revelationfix$setBypassAll(true);
+        ec.revelationfix$hackedUnCancelable(true);
+        ec.revelationfix$hackedOnlyAmountUp(true);
+    }
+
+    public void onHurt(ItemStack itemStack, LivingHurtEvent event) {
+        LivingEventEC ec = (LivingEventEC) event;
+        ((DamageSourceInterface) event.getSource()).revelationfix$setBypassAll(true);
+        ec.revelationfix$hackedUnCancelable(true);
+        ec.revelationfix$hackedOnlyAmountUp(true);
+    }
+
+    public void onDamage(ItemStack itemStack, LivingDamageEvent event) {
+        LivingEventEC ec = (LivingEventEC) event;
+        ec.revelationfix$hackedUnCancelable(true);
+        ec.revelationfix$hackedOnlyAmountUp(true);
+    }
+
+    public void onDeath(ItemStack itemStack, LivingDeathEvent event, EventPriority priority) {
+        LivingEventEC ec = (LivingEventEC) event;
+        ec.revelationfix$hackedUnCancelable(true);
+        event.getEntity().setHealth(0F);
     }
 }
