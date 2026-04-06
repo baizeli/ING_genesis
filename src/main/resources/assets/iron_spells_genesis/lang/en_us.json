@@ -77,7 +77,7 @@
   "spell.iron_spells_genesis.blood_war.guide": "As your health decreases, so does your opponent's strength.",
   "spell.iron_spells_genesis.blood_frenzy.guide": "Continuously restore health and reduce damage taken by half while also increasing damage dealt by twice. Also, push yourself towards the nearest entity.",
   "spell.iron_spells_genesis.unparalleled.guide": "Enhance your stats and allow for double jumps while also making you immune to fall damage.",
-  
+
   "spell.iron_spells_genesis.final_whisper.low_health": "Your health is too weak to unleash the Final Whisper!",
   "spell.iron_spells_genesis.warped_blood_burst.low_health": "Your health is too weak to unleash the Warped Blood Burst!",
 
@@ -130,7 +130,7 @@
   "item.iron_spells_genesis.frost_longbow": "Frost Longbow",
   "item.iron_spells_genesis.witchcraft_bow": "Witchcraft Bow",
   "item.iron_spells_genesis.flame_bow": "Flame Bow",
-  
+
   "item.iron_spells_genesis.divine_metal_helmet": "Divine Metal crown",
   "item.iron_spells_genesis.divine_metal_chestplate": "Divine Metal Chestplate",
   "item.iron_spells_genesis.divine_metal_leggings": "Divine Metal Leggings",
@@ -149,6 +149,8 @@
   "item.iron_spells_genesis.chaos_spell_chestplate": "Chaos Spell Chestplate",
   "item.iron_spells_genesis.chaos_spell_leggings": "Chaos Spell Leggings",
   "item.iron_spells_genesis.chaos_spell_boots": "Chaos Spell Boots",
+
+  "item.iron_spells_genesis.gungnir": "Gungnir",
 
   "item.iron_spells_genesis.violet_zenith_helmet": "Purple Extreme Battle Helmet",
   "item.iron_spells_genesis.violet_zenith_chestplate": "Purple Extreme Battle Chestplate",
@@ -263,7 +265,7 @@
   "iron_spells_genesis.config.whisper_of_the_past.damage": "Damage",
 
   "iron_spells_genesis.summoned_pig_name": "laowang237",
-  
+
   "entity.iron_spells_genesis.dead_star_decree_comet": "Dead Star Decree - Comet",
   "entity.iron_spells_genesis.dead_star_decree_large_comet": "Dead Star Decree - Large Comet",
   "entity.iron_spells_genesis.lighting_bolt": "Rainbow Lighting",
