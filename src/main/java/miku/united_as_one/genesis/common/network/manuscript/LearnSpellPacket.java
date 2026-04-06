@@ -11,6 +11,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.network.NetworkEvent;
 
+import java.util.Objects;
 import java.util.function.Supplier;
 
 public class LearnSpellPacket {
@@ -40,7 +41,7 @@ public class LearnSpellPacket {
         NetworkEvent.Context ctx = supplier.get();
         ctx.enqueueWork(() -> {
             ServerPlayer serverPlayer = ctx.getSender();
-            ItemStack itemStack = serverPlayer.getItemInHand(byteToHand(packet.hand));
+            ItemStack itemStack = Objects.requireNonNull(serverPlayer).getItemInHand(byteToHand(packet.hand));
             AbstractSpell spell = SpellRegistry.getSpell(packet.spell);
             var data = MagicData.getPlayerMagicData(serverPlayer).getSyncedData();
             
@@ -51,7 +52,7 @@ public class LearnSpellPacket {
                 spell.getSchoolType().equals(SpellSchoolRegistry.CHAOS.get())) {
                 canLearn = true;
             }
-            
+
             // 星源手稿
             if (itemStack.is(ItemRegistry.CELESTIAL_SOURCE_MANUSCRIPT.get()) &&
                 spell.getSchoolType().equals(SpellSchoolRegistry.CELESTIAL_SOURCE.get())) {

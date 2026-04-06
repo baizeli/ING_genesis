@@ -31,7 +31,6 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.network.PacketDistributor;
 
 import java.util.*;
-import java.util.List;
 
 import static miku.united_as_one.genesis.Genesis.CHANNEL;
 

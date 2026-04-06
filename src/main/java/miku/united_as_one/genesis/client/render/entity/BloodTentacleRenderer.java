@@ -1,9 +1,6 @@
 package miku.united_as_one.genesis.client.render.entity;
 
 import io.redspace.ironsspellbooks.entity.spells.void_tentacle.VoidTentacle;
-import io.redspace.ironsspellbooks.entity.spells.void_tentacle.VoidTentacleEmissiveLayer;
-import io.redspace.ironsspellbooks.entity.spells.void_tentacle.VoidTentacleModel;
-import io.redspace.ironsspellbooks.entity.spells.void_tentacle.VoidTentacleRenderer;
 import io.redspace.ironsspellbooks.render.GeoLivingEntityRenderer;
 import miku.united_as_one.genesis.client.model.BloodTentacleModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

@@ -2,9 +2,7 @@ package miku.united_as_one.genesis.client.render.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import io.redspace.ironsspellbooks.IronsSpellbooks;
 import io.redspace.ironsspellbooks.entity.spells.void_tentacle.VoidTentacle;
-import io.redspace.ironsspellbooks.entity.spells.void_tentacle.VoidTentacleEmissiveLayer;
 import miku.united_as_one.genesis.Genesis;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;

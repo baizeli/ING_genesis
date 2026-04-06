@@ -4,6 +4,7 @@ import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.client.renderer.entity.spell.chaos.WireBoxRenderer;
 import miku.united_as_one.genesis.common.items.curios.EternalRing;
 import miku.united_as_one.genesis.common.items.curios.rune_plus.BloodRunePlus;
+import miku.united_as_one.genesis.common.items.weapon.sword.Gungnir;
 import miku.united_as_one.genesis.init.registry.spell.SpellAttributesRegistry;
 import miku.united_as_one.genesis.util.ModCurios;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
@@ -23,6 +24,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraftforge.event.entity.living.*;
+import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -104,5 +106,40 @@ public class ESSLivingEvent {
                 maxMana.addTransientModifier(mod);
             }
         }
+    }
+
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public static void modWeaponHurtEvent1(LivingHurtEvent event) {
+        if (event.getSource().getEntity() instanceof LivingEntity living)
+            if (living.getMainHandItem().getItem() instanceof Gungnir gungnir)
+                gungnir.onHurt(living.getMainHandItem(), event);
+    }
+
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public static void modWeaponHurtEvent2(LivingAttackEvent event) {
+        if (event.getSource().getEntity() instanceof LivingEntity living)
+            if (living.getMainHandItem().getItem() instanceof Gungnir gungnir)
+                gungnir.onAttack(living.getMainHandItem(), event);
+    }
+
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public static void modWeaponHurtEvent3(LivingDamageEvent event) {
+        if (event.getSource().getEntity() instanceof LivingEntity living)
+            if (living.getMainHandItem().getItem() instanceof Gungnir gungnir)
+                gungnir.onDamage(living.getMainHandItem(), event);
+    }
+
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public static void modWeaponHurtEvent5(LivingDeathEvent event) {
+        if (event.getSource().getEntity() instanceof LivingEntity living)
+            if (living.getMainHandItem().getItem() instanceof Gungnir gungnir)
+                gungnir.onDeath(living.getMainHandItem(), event, EventPriority.HIGHEST);
+    }
+
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public static void modWeaponHurtEvent(LivingDeathEvent event) {
+        if (event.getSource().getEntity() instanceof LivingEntity living)
+            if (living.getMainHandItem().getItem() instanceof Gungnir gungnir)
+                gungnir.onDeath(living.getMainHandItem(), event, EventPriority.LOWEST);
     }
 }

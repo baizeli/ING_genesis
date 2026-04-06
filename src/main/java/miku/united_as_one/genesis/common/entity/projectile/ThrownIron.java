@@ -22,7 +22,6 @@ import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 
 import java.util.*;
-import java.util.PriorityQueue;
 
 public class ThrownIron extends ThrowableItemProjectile {
     private float damage = 6.0F;

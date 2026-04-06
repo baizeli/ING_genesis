@@ -12,7 +12,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.levelgen.structure.BuiltinStructures;
 import net.minecraftforge.common.util.ITeleporter;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;

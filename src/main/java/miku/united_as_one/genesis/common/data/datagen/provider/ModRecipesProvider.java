@@ -1,12 +1,9 @@
 package miku.united_as_one.genesis.common.data.datagen.provider;
 
-import io.github.flemmli97.mobbattle.forge.registry.ModItems;
-import io.redspace.ironsspellbooks.spells.ender.EchoingStrikesSpell;
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.init.registry.ItemRegistry;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
-import net.minecraft.data.recipes.packs.VanillaRecipeProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
@@ -14,6 +11,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraftforge.common.Tags;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Consumer;
 
@@ -23,7 +21,7 @@ public class ModRecipesProvider extends RecipeProvider {
     }
 
     @Override
-    protected void buildRecipes(Consumer<FinishedRecipe> writer) {
+    protected void buildRecipes(@NotNull Consumer<FinishedRecipe> writer) {
         test(Items.WHITE_WOOL, Tags.Items.DYES_WHITE, ItemTags.WOOL, writer);
         test(Items.BLACK_WOOL, Tags.Items.DYES_BLACK, ItemTags.WOOL, writer);
         test(Items.RED_WOOL, Tags.Items.DYES_RED, ItemTags.WOOL, writer);

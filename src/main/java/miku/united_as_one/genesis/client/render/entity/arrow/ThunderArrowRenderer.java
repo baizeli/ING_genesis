@@ -20,7 +20,6 @@ import org.joml.Matrix4f;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class ThunderArrowRenderer extends EntityRenderer<ThunderArrowEntity> {
     public ThunderArrowRenderer(EntityRendererProvider.Context context) {
