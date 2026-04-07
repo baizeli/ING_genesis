@@ -1,0 +1,23 @@
+{
+  "type": "genesis:arcane_workbench_recipe",
+  "category": "misc",
+  "pattern": [
+    "AAAAA",
+    "A   A",
+    "A B A",
+    "A   A",
+    "AAAAA"
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:stone"
+    },
+    "B": {
+      "item": "minecraft:diamond"
+    }
+  },
+  "result": {
+    "item": "minecraft:beacon",
+    "count": 1
+  }
+}
