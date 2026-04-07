@@ -166,6 +166,7 @@ dependencies {
 
         // 动画库
         jarJar(modImplementation "curse.maven:vzlinglib-1316184:7482798")
+        implementation files('libs/ix_api-1.0.7.jar')
 
         // L2
         modImplementation(jarJar("dev.xkmc.l2library:l2library:${l2library_version}-slim"))
