@@ -15,8 +15,8 @@ import static miku.united_as_one.genesis.Genesis.MODID;
 @OnlyIn(Dist.CLIENT)
 public class ArcaneWorkbenchScreen extends AbstractContainerScreen<ArcaneWorkbenchMenu> {
     private static final ResourceLocation CRAFTING_TABLE_LOCATION = new ResourceLocation(MODID,"textures/gui/container/arcane_workbench.png");
-    protected int imageWidth = 176;
-    protected int imageHeight = 203;
+    protected int imageWidth = 224;
+    protected int imageHeight = 238;
 
     public ArcaneWorkbenchScreen(ArcaneWorkbenchMenu menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
@@ -27,8 +27,10 @@ public class ArcaneWorkbenchScreen extends AbstractContainerScreen<ArcaneWorkben
         super.init();
         this.leftPos = (this.width - this.imageWidth) / 2;
         this.topPos = (int) ((this.height - this.imageHeight) / 2.5);
-        this.titleLabelX = 29;
-        this.inventoryLabelY = 110;
+        this.titleLabelX = 99999999;
+//        this.titleLabelY = this.titleLabelY+Y_SHIFTED;
+        this.inventoryLabelY = 99999999;
+//        this.inventoryLabelX = this.inventoryLabelX+X_SHIFTED;
     }
 
     @Override
