@@ -1,23 +1,27 @@
 {
-  "type": "genesis:arcane_workbench_recipe",
+  "type": "iron_spells_genesis:arcane_workbench_recipe",
   "category": "misc",
   "pattern": [
-    "AAAAA",
-    "A   A",
-    "A B A",
-    "A   A",
-    "AAAAA"
+    "  A  ",
+    " ABA ",
+    "ACBCA",
+    " ABA ",
+    "  A  "
   ],
   "key": {
     "A": {
-      "item": "minecraft:stone"
+      "item": "minecraft:iron_ingot"
     },
     "B": {
       "item": "minecraft:diamond"
+    },
+    "C": {
+      "item": "minecraft:emerald"
     }
   },
   "result": {
-    "item": "minecraft:beacon",
+    "item": "minecraft:netherite_ingot",
     "count": 1
-  }
+  },
+  "show_notification": true
 }
