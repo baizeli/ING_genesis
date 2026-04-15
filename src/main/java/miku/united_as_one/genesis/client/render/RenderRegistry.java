@@ -1,7 +1,10 @@
 package miku.united_as_one.genesis.client.render;
 
+import miku.united_as_one.genesis.client.renderer.entity.test.BaiZeLiRenderer;
 import miku.united_as_one.genesis.client.renderer.entity.warlock.WardenMageRenderer;
 import miku.united_as_one.genesis.common.entity.spell.blood_boss.blood_dagger.BloodDaggerRenderer;
+import miku.united_as_one.genesis.common.entity.test.BaiZeLiEntity;
+import miku.united_as_one.genesis.init.registry.BaiZeEntities;
 import miku.united_as_one.genesis.init.registry.EntityRegistry;
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.client.renderer.entity.boss.BloodBossRenderer;
@@ -38,7 +41,10 @@ public class RenderRegistry {
         event.registerEntityRenderer(EntityRegistry.BLOOD_FIELD.get(), NoopRenderer::new);
         event.registerEntityRenderer(EntityRegistry.TREMOR_AOE_ENTITY.get(), NoopRenderer::new);
         event.registerEntityRenderer(EntityRegistry.WARDEN_MANCER.get(), WardenMageRenderer::new);
-        
+        event.registerEntityRenderer(BaiZeEntities.BAI_ZE.get(), BaiZeLiRenderer::new);
+
+
+
         // 特效箭矢渲染器注册
         event.registerEntityRenderer(EntityRegistry.THUNDER_ARROW.get(), ThunderArrowRenderer::new);
         event.registerEntityRenderer(EntityRegistry.HOLY_ARROW.get(), HolyArrowRenderer::new);

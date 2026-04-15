@@ -8,7 +8,7 @@ import net.minecraftforge.network.simple.SimpleChannel;
 public class ModPacketHandler {
     private static final String PROTOCOL_VERSION = "1";
     public static final SimpleChannel INSTANCE = NetworkRegistry.newSimpleChannel(
-            new ResourceLocation(Genesis.MOD_ID, "main"),
+            new ResourceLocation(Genesis.MOD_ID, "sb"),
             () -> PROTOCOL_VERSION,
             PROTOCOL_VERSION::equals,
             PROTOCOL_VERSION::equals

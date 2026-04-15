@@ -29,16 +29,20 @@ public class SyncBaiZeHealthPacket {
 
     public void handle(Supplier<NetworkEvent.Context> contextSupplier) {
         NetworkEvent.Context context = contextSupplier.get();
+
         context.enqueueWork(() -> {
-            // 安全地在客户端执行
-            net.minecraftforge.fml.DistExecutor.unsafeRunWhenOn(net.minecraftforge.api.distmarker.Dist.CLIENT, () -> () -> {
-                if (Minecraft.getInstance().level != null) {
-                    Entity entity = Minecraft.getInstance().level.getEntity(this.entityId);
-                    if (entity instanceof BaiZeLiEntity baiZe) {
-                        baiZe.receiveStringHealthUpdate(this.healthString);
-                    }
+            if (context.getDirection().getReceptionSide().isClient()) {
+
+                Minecraft mc = Minecraft.getInstance();
+                if (mc.level == null) return;
+
+                Entity entity = mc.level.getEntity(this.entityId);
+                if (entity == null) return;
+
+                if (entity instanceof BaiZeLiEntity baiZe) {
+                    baiZe.receiveStringHealthUpdate(this.healthString);
                 }
-            });
+            }
         });
         context.setPacketHandled(true);
     }

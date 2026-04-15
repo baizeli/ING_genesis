@@ -192,13 +192,6 @@ public class EntityRegistry {
                     .clientTrackingRange(64)
                     .build("summoned_keeper"));
 
-    public static final RegistryObject<EntityType<BaiZeLiEntity>> BAI_ZE_LI = ENTITY_TYPES.register("bai_ze_li",
-            () -> EntityType.Builder.<BaiZeLiEntity>of(BaiZeLiEntity::new, MobCategory.CREATURE)
-                    .sized(0.6f, 1.8f)
-                    .clientTrackingRange(64)
-                    .updateInterval(1)
-                    .build("bai_ze_li"));
-
     public static final RegistryObject<EntityType<SummonedWardenEntity>> SUMMONED_WARDEN = ENTITY_TYPES.register("summoned_warden",
             () -> EntityType.Builder.<SummonedWardenEntity>of(SummonedWardenEntity::new, MobCategory.MONSTER)
                     .sized(0.9f, 2.9f)

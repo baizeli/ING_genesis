@@ -2,6 +2,7 @@ package miku.united_as_one.genesis.common.spell.chaos;
 
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.client.renderer.entity.spell.chaos.WireBoxRenderer;
+import miku.united_as_one.genesis.common.network.NetworkHandler;
 import miku.united_as_one.genesis.common.network.WireBoxSyncPacket;
 import miku.united_as_one.genesis.init.registry.spell.SpellSchoolRegistry;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
@@ -23,8 +24,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 
 import java.util.List;
-
-import static miku.united_as_one.genesis.Genesis.CHANNEL;
 
 @AutoSpellConfig
 public class WarpedBloodBurstSpell extends ChaosBaseSpell {
@@ -93,21 +92,16 @@ public class WarpedBloodBurstSpell extends ChaosBaseSpell {
             for (Entity e : serverLevel.getEntities(entity, box, e -> e instanceof LivingEntity && e != entity)) {
                 if (e.isAlive()) {
                     e.hurt(getDamageSource(entity), getSpellPower(spellLevel, entity));
-                    /*if (e instanceof LivingEntity living) {
-                        // 强制伤害
-                        living.setHealth((float) (living.getHealth() - living.getMaxHealth() * getForceDamage(spellLevel, entity) * 0.01));
-                    }*/
                     ((ServerLevel) serverLevel).sendParticles(ParticleHelper.BLOOD,
                             e.getX(), e.getY() + e.getBbHeight() * 0.5, e.getZ(),
-                            250,// 数量
+                            250,
                             e.getBbWidth() * 0.6,
                             e.getBbHeight() * 0.4,
                             e.getBbWidth() * 0.6,
                             0.12
                     );
-                    long expireAt = serverLevel.getGameTime() + 100;   // 5秒
-                    // 网络包同步
-                    CHANNEL.send(net.minecraftforge.network.PacketDistributor.ALL.noArg(),
+                    long expireAt = serverLevel.getGameTime() + 100;
+                    NetworkHandler.INSTANCE.send(net.minecraftforge.network.PacketDistributor.ALL.noArg(),
                             new WireBoxSyncPacket(e.getUUID(), true, expireAt));
                     WireBoxRenderer.entitiesForRenderWireBoxRenderer.put(e.getUUID(), expireAt);
                 }
@@ -118,7 +112,7 @@ public class WarpedBloodBurstSpell extends ChaosBaseSpell {
             entity.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200 + spellLevel * 20, spellLevel - 1, false, true, true));
             entity.addEffect(new MobEffectInstance(MobEffects.DARKNESS, 200 + spellLevel * 15, spellLevel - 1, false, true, true));
             entity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 200 + spellLevel * 15, spellLevel - 1, false, true, true));
-        } else if (!cancelled) {// 血量不够，取消施法
+        } else if (!cancelled) {
             if (entity instanceof ServerPlayer sp) {
                 sp.sendSystemMessage(
                         Component.translatable("spell.iron_spells_genesis.warped_blood_burst.low_health")

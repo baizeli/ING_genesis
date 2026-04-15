@@ -2,6 +2,7 @@ package miku.united_as_one.genesis.common.save;
 
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.client.renderer.entity.spell.chaos.WireBoxRenderer;
+import miku.united_as_one.genesis.common.network.NetworkHandler;
 import miku.united_as_one.genesis_core.utils.EventUtil;
 import miku.united_as_one.genesis.common.network.DeadListSyncPacket;
 import miku.united_as_one.genesis.common.network.WireBoxSyncPacket;
@@ -20,8 +21,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Map;
 import java.util.UUID;
-
-import static miku.united_as_one.genesis.Genesis.CHANNEL;
 
 public class SaveManager {
     private static Path SAVE_PATH;
@@ -117,12 +116,12 @@ public class SaveManager {
                 }
             }
 
-            CHANNEL.send(
+            NetworkHandler.INSTANCE.send(
                     PacketDistributor.ALL.noArg(),
                     new DeadListSyncPacket(EventUtil.deadList)
             );
 
-            CHANNEL.send(PacketDistributor.ALL.noArg(),
+            NetworkHandler.INSTANCE.send(PacketDistributor.ALL.noArg(),
                     new WireBoxSyncPacket(WireBoxRenderer.entitiesForRenderWireBoxRenderer,
                             WireBoxRenderer.entityRotationMap,
                             WireBoxRenderer.entityAxisMap));
