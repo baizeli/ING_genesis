@@ -6,7 +6,6 @@ import io.redspace.ironsspellbooks.api.spells.ISpellContainer;
 import io.redspace.ironsspellbooks.entity.mobs.keeper.KeeperRenderer;
 import io.redspace.ironsspellbooks.entity.spells.void_tentacle.VoidTentacle;
 import miku.united_as_one.genesis.client.renderer.entity.laser.DeathLaserRenderer;
-import miku.united_as_one.genesis.client.renderer.entity.test.BaiZeLiRenderer;
 import miku.united_as_one.genesis.common.data.content.arcaneWorkbench.*;
 import miku.united_as_one.genesis.common.data.content.workbenchs.*;
 import miku.united_as_one.genesis.common.entity.*;
@@ -53,14 +52,15 @@ import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.*;
 import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.*;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.forgespi.locating.IModFile;
-import net.minecraftforge.network.NetworkRegistry;
-import net.minecraftforge.network.simple.SimpleChannel;
+import net.minecraftforge.client.ConfigScreenHandler;
+import miku.united_as_one.genesis.init.config.menu.ConfigMenu;
 import net.minecraftforge.resource.PathPackResources;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
@@ -229,6 +229,7 @@ public class Genesis
     {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
+            // 1. 处理需要在主线程运行的注册任务（渲染器等）
             event.enqueueWork(() -> {
                 MenuScreens.register(ModMenuTypes.ARCANE_WORKBENCH_MENU.get(), ArcaneWorkbenchScreen::new);
                 EntityRenderers.register(EntityRegistry.NYAN_CAT.get(), NyanCatRenderer::new);
@@ -240,11 +241,11 @@ public class Genesis
                 EntityRenderers.register(EntityRegistry.THROWN_IRON.get(), ThrownIronRenderer::new);
 
                 EntityRenderers.register(EntityRegistry.DEAD_STAR_DECREE_COMET.get(),
-                    context -> new DeadStarDecreeCometRenderer(context, 0.25f)
+                        context -> new DeadStarDecreeCometRenderer(context, 0.25f)
                 );
-                
+
                 EntityRenderers.register(EntityRegistry.DEAD_STAR_DECREE_LARGE_COMET.get(),
-                    context -> new DeadStarDecreeCometRenderer(context, 6.0f)
+                        context -> new DeadStarDecreeCometRenderer(context, 6.0f)
                 );
 
                 EntityRenderers.register(EntityRegistry.SUMMONED_KEEPER.get(), KeeperRenderer::new);
@@ -254,8 +255,10 @@ public class Genesis
                 CuriosRendererRegistry.register(ItemRegistry.CELESTIAL_SOURCE_SPELL_BOOK.get(), SpellBookCurioRenderer::new);
                 DistortWorldRender.initChain(Minecraft.getInstance());
             });
-            MinecraftForge.registerConfigScreen(new ConfigurationFactory());
-            //Minecraft.getInstance().font = FuckFont1.font;
+            ModLoadingContext.get().registerExtensionPoint(
+                    ConfigScreenHandler.ConfigScreenFactory.class,
+                    () -> new ConfigScreenHandler.ConfigScreenFactory((mc, lastScreen) -> new ConfigMenu(lastScreen))
+            );
         }
 
 //        @SubscribeEvent

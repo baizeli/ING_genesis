@@ -344,14 +344,18 @@
   "item.attSpeed": " §2攻击速度",
   "AIR": "",
 
-  "iron_spells_genesis.config.title": "Iron's Spells 'n Spellbooks: New genesis",
-  "iron_spells_genesis.config.save": "SAVE",
-  "iron_spells_genesis.config.done": "DONE",
-  "iron_spells_genesis.config.reset": "Reset to default value",
-  "iron_spells_genesis.config.eternis_apple.effects": "Eternis Apple Effects",
-  "iron_spells_genesis.config.eternis_apple.effects.tooltip": "Effects when player eats Eternis Apple",
-  "iron_spells_genesis.config.whisper_of_the_past": "Whisper of the Past",
-  "iron_spells_genesis.config.whisper_of_the_past.damage": "Damage",
+  "iron_spells_genesis.config.title": "创世纪配置",
+  "iron_spells_genesis.config.client": "客户端设置",
+  "iron_spells_genesis.config.server": "服务端设置",
+  "iron_spells_genesis.config.github": "前往 GitHub",
+
+  "iron_spells_genesis.config.server.title": "服务端详细参数",
+  "iron_spells_genesis.config.save": "保存",
+  "iron_spells_genesis.config.done": "完成",
+  "iron_spells_genesis.config.reset_all": "全部重置",
+
+  "iron_spells_genesis.config.group.combat": "战斗平衡性",
+  "iron_spells_genesis.config.whisper_damage": "往昔私语伤害",
 
   "iron_spells_genesis.summoned_pig_name": "laowang237",
 
