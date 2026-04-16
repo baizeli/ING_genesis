@@ -9,9 +9,10 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = Genesis.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModModel {
-    
+
     @SubscribeEvent
     public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
+        event.registerLayerDefinition(BaiZeLiModel.LAYER_LOCATION, BaiZeLiModel::createBodyLayer);
         event.registerLayerDefinition(DeadStarDecreeCometModel.LAYER_LOCATION, DeadStarDecreeCometModel::createBodyLayer);
         event.registerLayerDefinition(ThrowBloodAndWoundsModel.LAYER_LOCATION, ThrowBloodAndWoundsModel::createBodyLayer);
         event.registerLayerDefinition(WardenMageModel.LAYER_LOCATION, WardenMageModel::createBodyLayer);
