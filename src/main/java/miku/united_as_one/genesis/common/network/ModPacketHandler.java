@@ -14,11 +14,5 @@ public class ModPacketHandler {
             PROTOCOL_VERSION::equals
     );
 
-    public static void register() {
-        int id = 0;
-        INSTANCE.registerMessage(id++, SyncBaiZeHealthPacket.class,
-                SyncBaiZeHealthPacket::toBytes,
-                SyncBaiZeHealthPacket::new,
-                SyncBaiZeHealthPacket::handle);
-    }
+    public static void register() {}
 }

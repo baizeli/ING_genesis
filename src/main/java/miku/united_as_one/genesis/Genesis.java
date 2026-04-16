@@ -236,7 +236,6 @@ public class Genesis
                 EntityRenderers.register(EntityRegistry.BOX_ENTIYT.get(), BoxEntityRenderer::new);
                 EntityRenderers.register(EntityRegistry.LIGHTNING_BOLT.get(), LightningBoltRenderer::new);
                 EntityRenderers.register(EntityRegistry.SWORD_ENTITY.get(), SwordEntityRenderer::new);
-//                EntityRenderers.register(EntityRegistry.THROW_BLOOD_AND_WOUNDS.get(), ThrowBloodAndWoundsRenderer::new);
                 EntityRenderers.register(EntityRegistry.DEATH_LASER.get(), DeathLaserRenderer::new);
                 EntityRenderers.register(EntityRegistry.THROWN_IRON.get(), ThrownIronRenderer::new);
 
