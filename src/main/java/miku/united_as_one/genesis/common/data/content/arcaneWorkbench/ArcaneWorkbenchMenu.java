@@ -15,36 +15,36 @@ public class ArcaneWorkbenchMenu extends AbstractContainerMenu {
     public static final int Y_SHIFTED = 27;
     private final ArcaneWorkbenchBlockEntity blockEntity;
     private final ContainerLevelAccess access;
-    private static final int CRAFTING_SLOT_COUNT = 5 * 5; 
-    private static final int ESSENCE_SLOT_INDEX = CRAFTING_SLOT_COUNT; 
-    private static final int TOTAL_SLOT_COUNT = CRAFTING_SLOT_COUNT + 1; 
+    private static final int CRAFTING_SLOT_COUNT = 5 * 5;
+    private static final int ESSENCE_SLOT_INDEX = CRAFTING_SLOT_COUNT;
+    private static final int TOTAL_SLOT_COUNT = CRAFTING_SLOT_COUNT + 1;
 
     public ArcaneWorkbenchMenu(MenuType<?> type, int containerId, Inventory playerInventory, ArcaneWorkbenchBlockEntity blockEntity) {
         super(type, containerId);
         this.blockEntity = blockEntity;
         this.access = ContainerLevelAccess.create(blockEntity.getLevel(), blockEntity.getBlockPos());
 
-        
+
         this.addSlot(new ResultSlot(playerInventory.player, blockEntity, blockEntity.resultSlots, 0, 131 + X_SHIFTED, 36 + Y_SHIFTED));
 
-        
+
         this.addSlot(new EssenceSlot(blockEntity, ESSENCE_SLOT_INDEX, 131 + X_SHIFTED, 36 + Y_SHIFTED + 18+16));
 
-        
+
         for(int j = 0; j < 5; ++j) {
             for(int k = 0; k < 5; ++k) {
                 this.addSlot(new Slot(blockEntity, k + j * 5, X_SHIFTED + k * 18, Y_SHIFTED + j * 18));
             }
         }
 
-        
+
         for(int l = 0; l < 3; ++l) {
             for(int j1 = 0; j1 < 9; ++j1) {
                 this.addSlot(new Slot(playerInventory, j1 + l * 9 + 9, X_SHIFTED + j1 * 18, 103 + l * 18 + Y_SHIFTED));
             }
         }
 
-        
+
         for(int i1 = 0; i1 < 9; ++i1) {
             this.addSlot(new Slot(playerInventory, i1, X_SHIFTED + i1 * 18, 161 + Y_SHIFTED));
         }
@@ -67,9 +67,9 @@ public class ArcaneWorkbenchMenu extends AbstractContainerMenu {
         ItemStack itemstack1 = slot.getItem();
         itemstack = itemstack1.copy();
 
-        
+
         int RESULT_SLOT = 0;
-        int ESSENCE_SLOT = 1; 
+        int ESSENCE_SLOT = 1;
         int CRAFTING_START = 2;
         int CRAFTING_END = CRAFTING_START + CRAFTING_SLOT_COUNT - 1;
         int INVENTORY_START = CRAFTING_END + 1;
@@ -77,37 +77,37 @@ public class ArcaneWorkbenchMenu extends AbstractContainerMenu {
         int HOTBAR_START = INVENTORY_END;
         int HOTBAR_END = HOTBAR_START + 9;
 
-        
+
         if (index == RESULT_SLOT) {
             if (!this.moveItemStackTo(itemstack1, INVENTORY_START, HOTBAR_END, true)) {
                 return ItemStack.EMPTY;
             }
             slot.onQuickCraft(itemstack1, itemstack);
         }
-        
+
         else if (index == ESSENCE_SLOT) {
             if (!this.moveItemStackTo(itemstack1, INVENTORY_START, HOTBAR_END, true)) {
                 return ItemStack.EMPTY;
             }
         }
-        
+
         else if (index >= CRAFTING_START && index <= CRAFTING_END) {
             if (!this.moveItemStackTo(itemstack1, INVENTORY_START, HOTBAR_END, true)) {
                 return ItemStack.EMPTY;
             }
         }
-        
+
         else if (index >= INVENTORY_START && index <= HOTBAR_END) {
-            
+
             if (itemstack1.getItem() == ARCANE_ESSENCE.get()) {
                 if (!this.moveItemStackTo(itemstack1, ESSENCE_SLOT, ESSENCE_SLOT + 1, false)) {
-                    
+
                     if (!this.moveItemStackTo(itemstack1, CRAFTING_START, CRAFTING_END + 1, false)) {
                         return ItemStack.EMPTY;
                     }
                 }
             } else {
-                
+
                 if (!this.moveItemStackTo(itemstack1, CRAFTING_START, CRAFTING_END + 1, false)) {
                     return ItemStack.EMPTY;
                 }
@@ -142,7 +142,7 @@ public class ArcaneWorkbenchMenu extends AbstractContainerMenu {
         super.slotsChanged(container);
     }
 
-    
+
     public class EssenceSlot extends Slot {
         public EssenceSlot(Container container, int slot, int x, int y) {
             super(container, slot, x, y);
@@ -150,7 +150,7 @@ public class ArcaneWorkbenchMenu extends AbstractContainerMenu {
 
         @Override
         public boolean mayPlace(ItemStack stack) {
-            
+
             return stack.getItem() == ARCANE_ESSENCE.get();
         }
     }
@@ -189,7 +189,7 @@ public class ArcaneWorkbenchMenu extends AbstractContainerMenu {
         public void onTake(Player player, ItemStack stack) {
             this.checkTakeAchievements(stack);
 
-            
+
             int consumedSlots = 0;
             for (int i = 0; i < craftSlots.getContainerSize(); i++) {
                 if (!craftSlots.getItem(i).isEmpty()) {
@@ -197,10 +197,10 @@ public class ArcaneWorkbenchMenu extends AbstractContainerMenu {
                 }
             }
 
-            
+
             blockEntity.consumeEssence(consumedSlots);
 
-            
+
             NonNullList<ItemStack> remainingItems = player.level().getRecipeManager()
                     .getRemainingItemsFor(ModRecipeTypes.ARCANE_WORKBENCH_RECIPE_TYPE.get(), this.craftSlots, player.level());
 

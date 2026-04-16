@@ -9,8 +9,6 @@ import net.minecraftforge.network.PacketDistributor;
 import java.util.UUID;
 import java.util.function.Supplier;
 
-import static miku.united_as_one.genesis.Genesis.CHANNEL;
-
 public class MarkDeadPacket {
     private final UUID targetUuid;
 
@@ -32,7 +30,7 @@ public class MarkDeadPacket {
 
             if (sender != null) {
                 EventUtil.deadList.add(pkt.targetUuid);
-                CHANNEL.send(PacketDistributor.ALL.noArg(), new DeadListSyncPacket(pkt.targetUuid));
+                NetworkHandler.INSTANCE.send(PacketDistributor.ALL.noArg(), new DeadListSyncPacket(pkt.targetUuid));
             }
         });
         ctx.get().setPacketHandled(true);

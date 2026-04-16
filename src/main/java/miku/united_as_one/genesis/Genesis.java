@@ -6,10 +6,12 @@ import io.redspace.ironsspellbooks.api.spells.ISpellContainer;
 import io.redspace.ironsspellbooks.entity.mobs.keeper.KeeperRenderer;
 import io.redspace.ironsspellbooks.entity.spells.void_tentacle.VoidTentacle;
 import miku.united_as_one.genesis.client.renderer.entity.laser.DeathLaserRenderer;
+import miku.united_as_one.genesis.client.renderer.entity.test.BaiZeLiRenderer;
 import miku.united_as_one.genesis.common.data.content.arcaneWorkbench.*;
 import miku.united_as_one.genesis.common.data.content.workbenchs.*;
 import miku.united_as_one.genesis.common.entity.*;
 import miku.united_as_one.genesis.common.entity.spell.eldritch.*;
+import miku.united_as_one.genesis.common.entity.test.BaiZeLiEntity;
 import miku.united_as_one.genesis.common.entity.warlock.WardenMageEntity;
 import miku.united_as_one.genesis.common.entity.spell.fire.SummonedKeeperEntity;
 import miku.united_as_one.genesis.init.registry.*;
@@ -78,12 +80,12 @@ public class Genesis
     public static final L2Registrate L2_REGISTRATE = new L2Registrate(MOD_ID);
     private static final Logger LOGGER = LogUtils.getLogger();
 
-    public static SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
-            new ResourceLocation(MOD_ID, "wirebox_sync"),
-            () -> "1.0",
-            "1.0"::equals,
-            "1.0"::equals
-    );
+//    public static SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
+//            new ResourceLocation(MOD_ID, "wirebox_sync"),
+//            () -> "1.0",
+//            "1.0"::equals,
+//            "1.0"::equals
+//    );
 
     public static ResourceLocation rl(String path) {
         return new ResourceLocation(MOD_ID, path);
@@ -97,6 +99,7 @@ public class Genesis
         CreativeTabRegistry.register(modEventBus);
         EntityRegistry.ENTITY_TYPES.register(modEventBus);
         BlockRegistry.register();
+        BaiZeEntities.ENTITY_TYPES.register(modEventBus);
         SoundRegister.SOUND_EVENTS.register(modEventBus);
 
         SpellSchoolRegistry.register(modEventBus);
@@ -161,6 +164,7 @@ public class Genesis
     private void commonSetup(final FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
             NetworkHandler.register();
+            ModPacketHandler.register();
             LOGGER.info("Fuck TTTTTT");
         });
     }
@@ -212,6 +216,7 @@ public class Genesis
         event.put(EntityRegistry.SUMMONED_KEEPER.get(), SummonedKeeperEntity.createAttributes().build());
         event.put(EntityRegistry.SUMMONED_WARDEN.get(), SummonedWardenEntity.createAttributes().build());
         event.put(EntityRegistry.WARDEN_MANCER.get(), WardenMageEntity.setAttributes().build());
+        event.put(BaiZeEntities.BAI_ZE.get(), BaiZeLiEntity.createAttributes().build());
     }
 
     public static String resource(String location)
@@ -231,7 +236,6 @@ public class Genesis
                 EntityRenderers.register(EntityRegistry.BOX_ENTIYT.get(), BoxEntityRenderer::new);
                 EntityRenderers.register(EntityRegistry.LIGHTNING_BOLT.get(), LightningBoltRenderer::new);
                 EntityRenderers.register(EntityRegistry.SWORD_ENTITY.get(), SwordEntityRenderer::new);
-//                EntityRenderers.register(EntityRegistry.THROW_BLOOD_AND_WOUNDS.get(), ThrowBloodAndWoundsRenderer::new);
                 EntityRenderers.register(EntityRegistry.DEATH_LASER.get(), DeathLaserRenderer::new);
                 EntityRenderers.register(EntityRegistry.THROWN_IRON.get(), ThrownIronRenderer::new);
 
@@ -254,25 +258,25 @@ public class Genesis
             //Minecraft.getInstance().font = FuckFont1.font;
         }
 
-        @SubscribeEvent
-        public static void onCommonSetup(FMLCommonSetupEvent event) {
-            CHANNEL.registerMessage(0, WireBoxSyncPacket.class,
-                    WireBoxSyncPacket::encode,
-                    WireBoxSyncPacket::decode,
-                    WireBoxSyncPacket::handle
-            );
-
-            CHANNEL.registerMessage(1, DeadListSyncPacket.class,
-                    DeadListSyncPacket::encode,
-                    DeadListSyncPacket::decode,
-                    DeadListSyncPacket::handle
-            );
-
-            CHANNEL.registerMessage(2, MarkDeadPacket.class,
-                    MarkDeadPacket::encode,
-                    MarkDeadPacket::decode,
-                    MarkDeadPacket::handle
-            );
-        }
+//        @SubscribeEvent
+//        public static void onCommonSetup(FMLCommonSetupEvent event) {
+//            CHANNEL.registerMessage(0, WireBoxSyncPacket.class,
+//                    WireBoxSyncPacket::encode,
+//                    WireBoxSyncPacket::decode,
+//                    WireBoxSyncPacket::handle
+//            );
+//
+//            CHANNEL.registerMessage(1, DeadListSyncPacket.class,
+//                    DeadListSyncPacket::encode,
+//                    DeadListSyncPacket::decode,
+//                    DeadListSyncPacket::handle
+//            );
+//
+//            CHANNEL.registerMessage(2, MarkDeadPacket.class,
+//                    MarkDeadPacket::encode,
+//                    MarkDeadPacket::decode,
+//                    MarkDeadPacket::handle
+//            );
+//        }
     }
 }

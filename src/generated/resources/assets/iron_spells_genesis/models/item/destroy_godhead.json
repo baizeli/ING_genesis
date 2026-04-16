@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "iron_spells_genesis:item/destroy_godhead",
+    "layer1": "iron_spells_genesis:item/misc/red_lightning"
+  }
+}

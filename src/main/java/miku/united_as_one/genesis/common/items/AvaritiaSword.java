@@ -5,6 +5,7 @@ import miku.united_as_one.genesis.util.TextUtils;
 import miku.united_as_one.genesis_core.utils.EventUtil;
 import miku.united_as_one.genesis.common.network.DeadListSyncPacket;
 import miku.united_as_one.genesis.common.network.MarkDeadPacket;
+import miku.united_as_one.genesis.common.network.NetworkHandler;
 import miku.united_as_one.genesis.common.sound.Sounds;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
@@ -30,7 +31,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-import static miku.united_as_one.genesis.Genesis.CHANNEL;
 
 public class AvaritiaSword extends SwordItem
 {
@@ -124,7 +124,7 @@ public class AvaritiaSword extends SwordItem
             Sounds.play(SoundEvents.AMETHYST_BLOCK_STEP, player, 10.0F, 1.0F);
 
             EventUtil.deadList.add(entity.uuid);
-            CHANNEL.sendToServer(new MarkDeadPacket(entity.uuid));
+            NetworkHandler.INSTANCE.sendToServer(new MarkDeadPacket(entity.uuid));
         } else {
             if (entity instanceof LivingEntity living) {
                 living.setLastHurtByMob(player);
@@ -139,7 +139,7 @@ public class AvaritiaSword extends SwordItem
             }
 
             EventUtil.deadList.add(entity.uuid);
-            CHANNEL.send(PacketDistributor.ALL.noArg(), new DeadListSyncPacket(entity.uuid));
+            NetworkHandler.INSTANCE.send(PacketDistributor.ALL.noArg(), new DeadListSyncPacket(entity.uuid));
         }
     }
 

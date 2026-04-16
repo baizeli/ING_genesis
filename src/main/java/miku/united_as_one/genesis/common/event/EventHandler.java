@@ -12,6 +12,7 @@ import miku.united_as_one.genesis.common.items.armor.ChaosSpellArmor;
 import miku.united_as_one.genesis.client.renderer.entity.spell.chaos.WireBoxRenderer;
 import miku.united_as_one.genesis_core.utils.EventUtil;
 import miku.united_as_one.genesis.common.network.DeadListSyncPacket;
+import miku.united_as_one.genesis.common.network.NetworkHandler;
 import miku.united_as_one.genesis.common.network.WireBoxSyncPacket;
 import miku.united_as_one.genesis.common.save.SaveManager;
 import com.google.common.collect.Iterables;
@@ -32,8 +33,6 @@ import net.minecraftforge.network.PacketDistributor;
 
 import java.util.*;
 
-import static miku.united_as_one.genesis.Genesis.CHANNEL;
-
 @Mod.EventBusSubscriber(modid = Genesis.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class EventHandler {
     @SubscribeEvent
@@ -51,12 +50,12 @@ public class EventHandler {
 
     @SubscribeEvent
     public static void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent event) {
-        CHANNEL.send(net.minecraftforge.network.PacketDistributor.ALL.noArg(),
+        NetworkHandler.INSTANCE.send(net.minecraftforge.network.PacketDistributor.ALL.noArg(),
                 new WireBoxSyncPacket(WireBoxRenderer.entitiesForRenderWireBoxRenderer,
                         WireBoxRenderer.entityRotationMap,
                         WireBoxRenderer.entityAxisMap));
 
-        CHANNEL.send(PacketDistributor.ALL.noArg(), new DeadListSyncPacket(EventUtil.deadList));
+        NetworkHandler.INSTANCE.send(PacketDistributor.ALL.noArg(), new DeadListSyncPacket(EventUtil.deadList));
     }
 
     @SubscribeEvent
@@ -64,7 +63,6 @@ public class EventHandler {
         if (event.level instanceof ServerLevel serverLevel) {
             List<UUID> toRemove = new ArrayList<>();
 
-            // 收集需要移除的实体
             EventUtil.deadList.removeIf(uuid -> {
                 LevelEntityGetter<Entity> entityGetter = serverLevel.entityManager.entityGetter;
                 if (Iterables.size(entityGetter.getAll()) == 0) {
@@ -78,12 +76,14 @@ public class EventHandler {
                 return shouldRemove;
             });
 
-            // 批量发送
             if (!toRemove.isEmpty()) {
-                CHANNEL.send(PacketDistributor.ALL.noArg(), DeadListSyncPacket.removeAll(toRemove));
+                NetworkHandler.INSTANCE.send(PacketDistributor.ALL.noArg(), DeadListSyncPacket.removeAll(toRemove));
             }
         }
     }
+
+// ... existing code ...
+
 
     @SubscribeEvent
     public static void onTooltipColor(RenderTooltipEvent.Color event) {

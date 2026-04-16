@@ -181,7 +181,7 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     private static final RawAnimation DEATH = RawAnimation.begin().thenPlay("blood_boss_death");
     public static final int DEATH_DURATION = (int)(20*8.25);
 
-    private Vec3 deltaMovement = Vec3.ZERO;
+    private Vec3 dlm = Vec3.ZERO;
     //================================================================ 方法 ========================================================================
 
     public TrailComponent getTrailComponent() {
@@ -1023,40 +1023,40 @@ public class BloodBoss extends Monster implements GeoEntity, Enemy, IAnimatedAtt
     }
 
     /**
-     * @deprecated 请勿直接调用此方法，请使用 {@link #realSetDeltaMovement(Vec3)}，
+     * @deprecated 请勿直接调用此方法，请使用 {@link #realSetDlM(Vec3)}，
      * 或者用withInternalCall
      */
     @Deprecated(since = "1.0")
     @Override
     public void setDeltaMovement(@NotNull Vec3 deltaMovement) {
         if (INTERNAL_CALL.get()) {
-            realSetDeltaMovement(deltaMovement);
+            realSetDlM(deltaMovement);
         }
     }
 
     /**
-     * @deprecated 请勿直接调用此方法，请使用 {@link #realSetDeltaMovement(double, double, double)}，
+     * @deprecated 请勿直接调用此方法，请使用 {@link #realSetDlM(double, double, double)}，
      * 或者用withInternalCall
      */
     @Deprecated(since = "1.0")
     @Override
     public void setDeltaMovement(double x, double y, double z) {
         if (INTERNAL_CALL.get()) {
-            realSetDeltaMovement(x, y, z);
+            realSetDlM(x, y, z);
         }
     }
 
-    public void realSetDeltaMovement(@NotNull Vec3 deltaMovement) {
-        this.deltaMovement = deltaMovement;
+    public void realSetDlM(@NotNull Vec3 deltaMovement) {
+        this.dlm = deltaMovement;
     }
 
-    public void realSetDeltaMovement(double x, double y, double z) {
-        realSetDeltaMovement(new Vec3(x, y, z));
+    public void realSetDlM(double x, double y, double z) {
+        realSetDlM(new Vec3(x, y, z));
     }
 
     @Override
     public @NotNull Vec3 getDeltaMovement() {
-        return deltaMovement;
+        return dlm;
     }
 
     public static void withInternalCall(Runnable action) {

@@ -44,7 +44,7 @@ public class BloodBossMoveControl extends MoveControl {
                 }
             }
 
-            ((BloodBoss) mob).realSetDeltaMovement(
+            ((BloodBoss) mob).realSetDlM(
                     mob.getDeltaMovement().add(total)
             );
         }

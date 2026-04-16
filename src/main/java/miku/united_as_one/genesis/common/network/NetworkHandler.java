@@ -18,14 +18,35 @@ public class NetworkHandler {
 
     public static void register() {
         int id = 0;
-        INSTANCE.registerMessage(id++, BowTypePacket.class, BowTypePacket::encode, BowTypePacket::decode, BowTypePacket::handle);
+
+        INSTANCE.registerMessage(id++, BowTypePacket.class,
+                BowTypePacket::encode,
+                BowTypePacket::decode,
+                BowTypePacket::handle);
+
         INSTANCE.registerMessage(id++, ArcaneWorkbenchRecipeTransferPacket.class,
                 ArcaneWorkbenchRecipeTransferPacket::encode,
                 ArcaneWorkbenchRecipeTransferPacket::new,
                 ArcaneWorkbenchRecipeTransferPacket::handle);
+
         INSTANCE.registerMessage(id++, LearnSpellPacket.class,
                 LearnSpellPacket::encode,
                 LearnSpellPacket::decode,
                 LearnSpellPacket::handle);
+
+        INSTANCE.registerMessage(id++, WireBoxSyncPacket.class,
+                WireBoxSyncPacket::encode,
+                WireBoxSyncPacket::decode,
+                WireBoxSyncPacket::handle);
+
+        INSTANCE.registerMessage(id++, DeadListSyncPacket.class,
+                DeadListSyncPacket::encode,
+                DeadListSyncPacket::decode,
+                DeadListSyncPacket::handle);
+
+        INSTANCE.registerMessage(id++, MarkDeadPacket.class,
+                MarkDeadPacket::encode,
+                MarkDeadPacket::decode,
+                MarkDeadPacket::handle);
     }
 }

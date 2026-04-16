@@ -5,7 +5,7 @@
   "curios.modifiers.magic_guide": "魔导佩戴时：",
 
   "itemGroup.iron_spells_genesis.iron_spells_genesis_tab": "铁之魔法书：创世纪",
-  "itemGroup.iron_spells_genesis.block": "iron的法术创世纪：gay",
+  "itemGroup.iron_spells_genesis.block": "iron的法术创世纪：方块",
   "itemGroup.iron_spells_genesis.material": "iron的法术创世纪：材料",
   "itemGroup.iron_spells_genesis.equipment": "iron的法术创世纪：装备",
   "itemGroup.iron_spells_genesis.spell_scroll": "iron的法术创世纪：法术卷轴",
@@ -99,14 +99,14 @@
   "item.iron_spells_genesis.celestial_source_staff": "星源法杖",
 
   "item.iron_spells_genesis.infinity_sword": "天火圣裁 [伪]",
-  "item.iron_spells_genesis.eternis_apple": "寰宇大苹果",
   "item.iron_spells_genesis.broyouhuashuo": "哎呀，我怎么把锭写成袋子了",
   "item.iron_spells_genesis.violet_galaxy_ingot1": "汝掌心中者，永恒之力也",
-  "item.iron_spells_genesis.whisper_of_the_past": "往世的飞花",
   "item.iron_spells_genesis.avaritia_infinity_sword": "§4暮光极致者",
   "item.iron_spells_genesis.create_star": "创造之心",
   "item.iron_spells_genesis.galaxy_scroll": "星河绘卷",
   "item.iron_spells_genesis.chaos_rune": "混沌符文",
+  "item.iron_spells_genesis.violet_upgrade_smithing_template": "锻造模板",
+  "item.iron_spells_genesis.divine_upgrade_smithing_template": "锻造模板",
   "item.iron_spells_genesis.celestial_source_rune": "星源符文",
   "item.iron_spells_genesis.chaos_upgrade_orb": "混沌升级法球",
   "item.iron_spells_genesis.celestial_source_upgrade_orb": "星源升级法球",
@@ -123,6 +123,7 @@
   "item.iron_spells_genesis.lao_wang_237": "老王237",
   "item.iron_spells_genesis.genesis_curse": "创世之诅咒",
   "item.iron_spells_genesis.infinite_shriving_stone": "无限忏悔石",
+  "item.iron_spells_genesis.destroy_godhead": "破灭神格",
   "item.iron_spells_genesis.fire_boss_dagger": "受火者的匕首",
   "item.iron_spells_genesis.blood_boss_dagger": "受血者的匕首",
 
@@ -141,6 +142,8 @@
   "item.iron_spells_genesis.divine_metal_pickaxe": "神圣金属镐",
   "item.iron_spells_genesis.divine_metal_shovel": "神圣金属铲",
   "item.iron_spells_genesis.divine_metal_hoe": "神圣金属锄",
+
+  "item.iron_spells_genesis.gungnir": "冈格尼尔",
 
   "tooltip.iron_spells_genesis.divine_metal.description_1": "§8殴打凋零骷髅掉落他的头",
   "tooltip.iron_spells_genesis.divine_metal.description_2": "自动帮你烧东西",
@@ -222,7 +225,7 @@
   "item.iron_spells_genesis.chaos_manuscript.hover": "（右键学习混沌法术）",
   "item.iron_spells_genesis.celestial_source_manuscript.hover": "（右键学习星源法术）",
 
-  "item.iron_spells_genesis.chaos_manuscript_fragment": "混沌手稿碎片",
+  "item.iron_spells_genesis.chaos_manuscript_fragment": "混沌1手稿碎片",
   "item.iron_spells_genesis.blank_celestial_source_manuscript": "空白星源手稿",
   "item.iron_spells_genesis.chaos_manuscript_fragment.hover": "（蕴含着混沌法术的学习方法）",
   "item.iron_spells_genesis.blank_celestial_source_manuscript.hover": "（蕴含着星源法术的学习方法）",
