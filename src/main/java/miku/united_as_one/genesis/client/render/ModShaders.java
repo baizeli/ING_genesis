@@ -22,6 +22,9 @@ public class ModShaders {
     public static ShaderInstance haloShader;
 
     @Nullable
+    private static ShaderInstance ribbonShader;
+
+    @Nullable
     private static ShaderInstance colorfulShader;
 
     @Nullable
@@ -54,6 +57,9 @@ public class ModShaders {
     
     public static ShaderInstance getHeatWaveShader() {
         return Objects.requireNonNull(heatWaveShader, "HeatWave shader not registered");
+    }
+    public static ShaderInstance getRibbonShader() {
+        return Objects.requireNonNull(ribbonShader, "Ribbon shader not registered");
     }
 
     @SubscribeEvent
@@ -95,6 +101,13 @@ public class ModShaders {
                 DefaultVertexFormat.POSITION_TEX
         );
         event.registerShader(heat_wave, shaderInstance -> heatWaveShader = shaderInstance);
+
+        ModShaderInstance ribbon = new ModShaderInstance(
+                resourceProvider,
+                new ResourceLocation(Genesis.MODID, "ribbon").toString(),
+                DefaultVertexFormat.POSITION_COLOR_TEX
+        );
+        event.registerShader(ribbon, shaderInstance -> ribbonShader = shaderInstance);
     }
 
     public static Minecraft getMinecraft() {

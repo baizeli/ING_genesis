@@ -99,7 +99,6 @@ public class Genesis
         CreativeTabRegistry.register(modEventBus);
         EntityRegistry.ENTITY_TYPES.register(modEventBus);
         BlockRegistry.register();
-        BaiZeEntities.ENTITY_TYPES.register(modEventBus);
         SoundRegister.SOUND_EVENTS.register(modEventBus);
 
         SpellSchoolRegistry.register(modEventBus);
@@ -216,7 +215,7 @@ public class Genesis
         event.put(EntityRegistry.SUMMONED_KEEPER.get(), SummonedKeeperEntity.createAttributes().build());
         event.put(EntityRegistry.SUMMONED_WARDEN.get(), SummonedWardenEntity.createAttributes().build());
         event.put(EntityRegistry.WARDEN_MANCER.get(), WardenMageEntity.setAttributes().build());
-        event.put(BaiZeEntities.BAI_ZE.get(), BaiZeLiEntity.createAttributes().build());
+        event.put(EntityRegistry.BAI_ZE_LI.get(), BaiZeLiEntity.createAttributes().build());
     }
 
     public static String resource(String location)

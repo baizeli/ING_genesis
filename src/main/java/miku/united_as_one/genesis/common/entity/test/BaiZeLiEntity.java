@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.common.entity.test;
 
 import com.github.NineAbyss9.ix_api.api.mobs.IFlagMob;
-import miku.united_as_one.genesis.init.registry.BaiZeEntities;
+import miku.united_as_one.genesis.init.registry.EntityRegistry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -33,7 +33,7 @@ public class BaiZeLiEntity extends PathfinderMob implements IBaiZeLi, IFlagMob {
     }
 
     public BaiZeLiEntity(PlayMessages.SpawnEntity spawn, Level level) {
-        this((EntityType<? extends PathfinderMob>) BaiZeEntities.BAI_ZE.get(), level);
+        this(EntityRegistry.BAI_ZE_LI.get(), level);
     }
 
     protected void defineSynchedData() {

@@ -12,6 +12,7 @@ import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.HumanoidArm;
 
 public class BaiZeLiModel<T extends BaiZeLiEntity> extends HierarchicalModel<T> {
     public static final ModelLayerLocation LAYER_LOCATION = new ModelLayerLocation(ResourceLocation.fromNamespaceAndPath(
@@ -71,11 +72,38 @@ public class BaiZeLiModel<T extends BaiZeLiEntity> extends HierarchicalModel<T> 
         return body;
     }
 
-    public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    @Override
+    public void setupAnim(T entity, float limbSwing, float limbSwingAmount,
+                          float ageInTicks, float netHeadYaw, float headPitch) {
         this.root().getAllParts().forEach(ModelPart::resetPose);
+        float speed = 1.0f;
+        float degree = 1.0f;
+        this.right_leg.xRot = (float) Math.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
+        this.left_leg.xRot  = (float) Math.cos(limbSwing * 0.6662F + Math.PI) * 1.4F * limbSwingAmount;
+        this.right_arm.xRot = (float) Math.cos(limbSwing * 0.6662F + Math.PI) * 1.4F * limbSwingAmount * 0.5F;
+        this.left_arm.xRot  = (float) Math.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount * 0.5F;
+        this.right_arm.xRot += -0.2F;
+        this.head.yRot = netHeadYaw * ((float)Math.PI / 180F);
+        this.head.xRot = headPitch * ((float)Math.PI / 180F);
         this.animate(entity.animation, BaiZeLiAnims.animation, ageInTicks);
         this.animate(entity.animation2, BaiZeLiAnims.animation2, ageInTicks);
     }
+    public void translateToHand(HumanoidArm arm, PoseStack poseStack) {
+        this.root().translateAndRotate(poseStack);
+
+        if (arm == HumanoidArm.RIGHT) {
+            this.right_arm.translateAndRotate(poseStack);
+            this.cube.translateAndRotate(poseStack);
+        } else {
+            this.left_arm.translateAndRotate(poseStack);
+            poseStack.translate(0, 0.75F, 0);
+        }
+
+        poseStack.mulPose(com.mojang.math.Axis.XP.rotationDegrees(-90F));
+
+        poseStack.translate(0.0F, 0.04F, -0.08F);
+    }
+
 
     public void renderToBuffer(PoseStack poseStack, VertexConsumer vertexConsumer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
         root().render(poseStack, vertexConsumer, packedLight, packedOverlay, red, green, blue, alpha);

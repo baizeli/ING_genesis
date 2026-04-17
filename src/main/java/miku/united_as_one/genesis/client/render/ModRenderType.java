@@ -44,4 +44,22 @@ public class ModRenderType extends RenderType {
                     .setWriteMaskState(COLOR_DEPTH_WRITE)
                     .createCompositeState(true)
     );
+
+    public static final RenderType ribbon = RenderType.create(
+            "ribbon",
+            DefaultVertexFormat.POSITION_COLOR_TEX,
+            VertexFormat.Mode.TRIANGLES,
+            256,
+            true,
+            true,
+            RenderType.CompositeState.builder()
+                    .setShaderState(new ShaderStateShard(ModShaders::getRibbonShader))
+                    .setTextureState(NO_TEXTURE)
+                    .setTransparencyState(TRANSLUCENT_TRANSPARENCY)
+                    .setCullState(NO_CULL)
+                    .setLightmapState(NO_LIGHTMAP)
+                    .setDepthTestState(LEQUAL_DEPTH_TEST)
+                    .setWriteMaskState(COLOR_WRITE)
+                    .createCompositeState(true)
+    );
 }
