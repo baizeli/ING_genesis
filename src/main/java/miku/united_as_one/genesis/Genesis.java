@@ -253,6 +253,8 @@ public class Genesis
                 CuriosRendererRegistry.register(ItemRegistry.CHAOS_SPELL_BOOK.get(), SpellBookCurioRenderer::new);
                 CuriosRendererRegistry.register(ItemRegistry.CELESTIAL_SOURCE_SPELL_BOOK.get(), SpellBookCurioRenderer::new);
                 DistortWorldRender.initChain(Minecraft.getInstance());
+
+                miku.united_as_one.genesis.client.render.luminous.GenesisRegistry.init();
             });
             ModLoadingContext.get().registerExtensionPoint(
                     ConfigScreenHandler.ConfigScreenFactory.class,

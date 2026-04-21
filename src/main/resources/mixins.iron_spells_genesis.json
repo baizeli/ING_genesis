@@ -50,7 +50,9 @@
     "minecraft.client.renderer.ParticleAccessor",
     "minecraft.client.renderer.ParticleEngineAccessor",
     "minecraft.client.renderer.PostChainAccessor",
-    "minecraft.client.renderer.entity.ItemRendererMixin"
+    "minecraft.client.renderer.entity.ItemRendererMixin",
+    "minecraft.client.renderer.entity.GenesisGameMixin",
+    "minecraft.client.renderer.entity.GenesisItemRenderMixin"
   ],
   "injectors": {
     "defaultRequire": 1
