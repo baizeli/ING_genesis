@@ -9,7 +9,6 @@ import miku.united_as_one.genesis.common.entity.arrow.StellarArrowEntity;
 import miku.united_as_one.genesis.common.entity.arrow.ThunderArrowEntity;
 import miku.united_as_one.genesis.common.entity.boss.BloodBoss;
 import miku.united_as_one.genesis.common.entity.laser.DeathLaserEntity;
-import miku.united_as_one.genesis.common.entity.test.BaiZeLiEntity;
 import miku.united_as_one.genesis.common.entity.warlock.WardenMageEntity;
 import miku.united_as_one.genesis.common.entity.projectile.ThrownIron;
 import miku.united_as_one.genesis.common.entity.spell.eldritch.*;
