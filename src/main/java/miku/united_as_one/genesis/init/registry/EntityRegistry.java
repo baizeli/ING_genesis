@@ -197,4 +197,11 @@ public class EntityRegistry {
                     .clientTrackingRange(16)
                     .fireImmune()
                     .build("summoned_warden"));
+
+    public static final RegistryObject<EntityType<BaiZeLiEntity>> BAI_ZE_LI = ENTITY_TYPES.register("bai_ze_li",
+            () -> EntityType.Builder.<BaiZeLiEntity>of(BaiZeLiEntity::new, MobCategory.MONSTER)
+                    .sized(0.6f, 1.8f)
+                    .clientTrackingRange(64)
+                    .updateInterval(1)
+                    .build("bai_ze_li"));
 }

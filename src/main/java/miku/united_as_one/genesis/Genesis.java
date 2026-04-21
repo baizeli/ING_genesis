@@ -99,7 +99,6 @@ public class Genesis
         CreativeTabRegistry.register(modEventBus);
         EntityRegistry.ENTITY_TYPES.register(modEventBus);
         BlockRegistry.register();
-        BaiZeEntities.ENTITY_TYPES.register(modEventBus);
         SoundRegister.SOUND_EVENTS.register(modEventBus);
 
         SpellSchoolRegistry.register(modEventBus);
@@ -216,7 +215,7 @@ public class Genesis
         event.put(EntityRegistry.SUMMONED_KEEPER.get(), SummonedKeeperEntity.createAttributes().build());
         event.put(EntityRegistry.SUMMONED_WARDEN.get(), SummonedWardenEntity.createAttributes().build());
         event.put(EntityRegistry.WARDEN_MANCER.get(), WardenMageEntity.setAttributes().build());
-        event.put(BaiZeEntities.BAI_ZE.get(), BaiZeLiEntity.createAttributes().build());
+        event.put(EntityRegistry.BAI_ZE_LI.get(), BaiZeLiEntity.createAttributes().build());
     }
 
     public static String resource(String location)
@@ -254,6 +253,8 @@ public class Genesis
                 CuriosRendererRegistry.register(ItemRegistry.CHAOS_SPELL_BOOK.get(), SpellBookCurioRenderer::new);
                 CuriosRendererRegistry.register(ItemRegistry.CELESTIAL_SOURCE_SPELL_BOOK.get(), SpellBookCurioRenderer::new);
                 DistortWorldRender.initChain(Minecraft.getInstance());
+
+                miku.united_as_one.genesis.client.render.luminous.GenesisRegistry.init();
             });
             ModLoadingContext.get().registerExtensionPoint(
                     ConfigScreenHandler.ConfigScreenFactory.class,
