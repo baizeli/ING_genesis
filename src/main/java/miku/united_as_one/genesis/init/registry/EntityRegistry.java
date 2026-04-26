@@ -19,6 +19,7 @@ import miku.united_as_one.genesis.common.entity.spell.celestial_source.*;
 import miku.united_as_one.genesis.common.entity.spell.celestial_source.notuse.*;
 import miku.united_as_one.genesis.common.entity.spell.fire.*;
 import miku.united_as_one.genesis.Genesis;
+import miku.united_as_one.genesis.common.entity.test.BaiZeLiEntity;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.*;

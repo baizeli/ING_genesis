@@ -19,10 +19,24 @@ public class GenesisOutlineRenderer {
     private static final TextureTarget[] maskBuffers = new TextureTarget[EFFECT_COUNT];
     private static final boolean[] hasCapturedWorld = new boolean[EFFECT_COUNT];
 
-    private static TextureTarget blurA, blurB, blurNear;
+    private static TextureTarget worldBlurA, worldBlurB, worldBlurNear;
+    private static TextureTarget guiBlurA, guiBlurB;
+
     private static boolean isCapturingWorld = false;
     private static boolean isCapturingGui = false;
     private static GenesisEffect activeGuiEffect = null;
+
+    // WORLD_RADIUS_BLUE 和 WORLD_RADIUS_NORMAL: 决定世界中物品发光的扩散范围
+    //WORLD_NEAR_RADIUS: 决定世界中物品发光的近景光晕效果
+    //WORLD_BLUR_PASSES: 世界发光的渲染质量（次数）
+    //GUI_RADIUS 和 GUI_BLUR_PASSES: GUI 界面（背包/快捷栏）里物品的发光范围和渲染质量
+    private static final float WORLD_RADIUS_BLUE = 2.6F;
+    private static final float WORLD_RADIUS_NORMAL = 2.2F;
+    private static final float WORLD_NEAR_RADIUS = 1.5F;
+    private static final int WORLD_BLUR_PASSES = 4;
+
+    private static final float GUI_RADIUS = 0.5F;
+    private static final int GUI_BLUR_PASSES = 1;
 
     private static int getEffectIndex(GenesisEffect effect) {
         if (effect == GenesisEffect.BLACK_RED) return 0;
@@ -42,7 +56,6 @@ public class GenesisOutlineRenderer {
         return maskBuffers[idx];
     }
 
-    // ================= 世界渲染部分 =================
     public static void beginWorldPass() {
         for (int i = 0; i < EFFECT_COUNT; i++) hasCapturedWorld[i] = false;
     }
@@ -128,7 +141,6 @@ public class GenesisOutlineRenderer {
         beginWorldPass();
     }
 
-    // ================= GUI 渲染部分 =================
     public static void startGuiCapture(ItemStack stack, GenesisEffect effect) {
         TextureTarget mb = getOrCreateMaskBuffer(0);
         mb.bindWrite(false);
@@ -173,19 +185,16 @@ public class GenesisOutlineRenderer {
         TextureTarget mb = maskBuffers[0];
         int effectIdx = getEffectIndex(activeGuiEffect);
 
-        // 1. 画回原版物品 (贴图不再丢失！)
         RenderSystem.setShader(net.minecraft.client.renderer.GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShaderTexture(0, mb.getColorTextureId());
         drawQuad();
 
-        // 2. 画外缘 Shader
         outlineShader.setSampler("DiffuseSampler", mb.getColorTextureId());
         outlineShader.setSampler("DepthSampler", mb.getDepthTextureId());
         applyGlobalUniforms(outlineShader, effectIdx, main, true);
         drawShaderQuad(outlineShader);
 
-        // 3. 画泛光 Shader
         runBloomPass(mc, main, effectIdx, true);
 
         modelViewStack.popPose();
@@ -200,32 +209,40 @@ public class GenesisOutlineRenderer {
         activeGuiEffect = null;
     }
 
-    // ================= 公共 Shader 与模糊逻辑 =================
     private static void runBloomPass(Minecraft mc, RenderTarget main, int effectIdx, boolean isGui) {
         ShaderInstance blurShader = ModShaders.getGenesisBloomBlur();
         ShaderInstance bloomShader = ModShaders.getGenesisBloom();
         if (blurShader == null || bloomShader == null) return;
 
-        int bw = Math.max(64, main.width / 2);
-        int bh = Math.max(64, main.height / 2);
+        int bw = Math.max(64, main.width / (isGui ? 4 : 2));
+        int bh = Math.max(64, main.height / (isGui ? 4 : 2));
 
-        blurA = syncBuffer(blurA, bw, bh);
-        blurB = syncBuffer(blurB, bw, bh);
-        blurNear = syncBuffer(blurNear, bw, bh);
+        TextureTarget activeBlurA = isGui ? guiBlurA : worldBlurA;
+        TextureTarget activeBlurB = isGui ? guiBlurB : worldBlurB;
+        TextureTarget activeBlurNear = isGui ? null : worldBlurNear;
+
+        activeBlurA = syncBuffer(activeBlurA, bw, bh);
+        activeBlurB = syncBuffer(activeBlurB, bw, bh);
+
+        if (isGui) {
+            guiBlurA = activeBlurA;
+            guiBlurB = activeBlurB;
+        } else {
+            activeBlurNear = syncBuffer(activeBlurNear, bw, bh);
+            worldBlurA = activeBlurA;
+            worldBlurB = activeBlurB;
+            worldBlurNear = activeBlurNear;
+        }
 
         RenderSystem.disableBlend();
         if (blurShader.getUniform("ScreenSize") != null) blurShader.getUniform("ScreenSize").set((float) bw, (float) bh);
 
-        float radius = (effectIdx == 1) ? 2.6F : 2.2F;
-        float nearRadius = 1.5F;
-        if (isGui) {
-            radius = 0.5F;
-            nearRadius = 0.3F;
-        }
+        float radius = isGui ? GUI_RADIUS : (effectIdx == 1 ? WORLD_RADIUS_BLUE : WORLD_RADIUS_NORMAL);
+        float nearRadius = isGui ? 0.0F : WORLD_NEAR_RADIUS;
+        int passes = isGui ? GUI_BLUR_PASSES : WORLD_BLUR_PASSES;
 
-        int passes = 4;
-        int nTex = runBlur(blurShader, maskBuffers[isGui ? 0 : effectIdx].getColorTextureId(), blurA, blurNear, nearRadius, 1);
-        int fTex = runBlur(blurShader, maskBuffers[isGui ? 0 : effectIdx].getColorTextureId(), blurA, blurB, radius / passes, passes);
+        int nTex = isGui ? maskBuffers[0].getColorTextureId() : runBlur(blurShader, maskBuffers[effectIdx].getColorTextureId(), activeBlurA, activeBlurNear, nearRadius, 1);
+        int fTex = runBlur(blurShader, maskBuffers[isGui ? 0 : effectIdx].getColorTextureId(), activeBlurA, activeBlurB, radius / passes, passes);
 
         main.bindWrite(true);
         RenderSystem.enableBlend();
@@ -236,7 +253,6 @@ public class GenesisOutlineRenderer {
         bloomShader.setSampler("FarBlurSampler", fTex);
         applyGlobalUniforms(bloomShader, effectIdx, main, isGui);
 
-        float guiStrength = (effectIdx == 2) ? 0.4F : 0.8F;
         if (bloomShader.getUniform("BloomStrength") != null) bloomShader.getUniform("BloomStrength").set(0.0F);
         if (bloomShader.getUniform("BloomRadius") != null) bloomShader.getUniform("BloomRadius").set(radius);
 
