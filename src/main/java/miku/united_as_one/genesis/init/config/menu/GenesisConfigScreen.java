@@ -1,5 +1,6 @@
 package miku.united_as_one.genesis.init.config.menu;
 
+import miku.united_as_one.genesis.init.config.Configuration;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.EditBox;
@@ -7,15 +8,19 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraftforge.common.ForgeConfigSpec;
 import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GenesisConfigScreen extends Screen {
     protected final Screen parent;
     protected final ForgeConfigSpec spec;
     protected final String modid = "iron_spells_genesis";
-    protected final int leftWidth = 80;
-    protected final int bottomHeight = 30;
+
+    protected final int leftWidth = 80;    // 左侧侧边栏宽度
+    protected final int bottomHeight = 30; // 底部按钮区高度
 
     protected EditBox searchBox;
     protected ConfigArray configArray;
@@ -27,17 +32,36 @@ public class GenesisConfigScreen extends Screen {
         this.parent = parent;
         this.spec = spec;
     }
-
     public class MajorCategory {
         public String nameKey;
         public List<GroupValue> subCategories = new ArrayList<>();
-        public MajorCategory(String nameKey) { this.nameKey = nameKey; }
+
+        public MajorCategory(String nameKey) {
+            this.nameKey = nameKey;
+        }
 
         public GroupValue addSub(String subNameKey) {
             GroupValue group = new GroupValue(GenesisConfigScreen.this, subNameKey, Minecraft.getInstance().font);
             group.setExpanded(false);
             subCategories.add(group);
             return group;
+        }
+    }
+    protected void buildAutoConfig(List<Configuration.ConfigEntry<?>> entries) {
+        Map<String, MajorCategory> majorMap = new HashMap<>();
+        Map<String, GroupValue> groupMap = new HashMap<>();
+
+        for (Configuration.ConfigEntry<?> entry : entries) {
+            MajorCategory major = majorMap.computeIfAbsent(entry.major, k ->
+                    createMajor("iron_spells_genesis.category." + k));
+            String groupKey = entry.major + "_" + entry.sub;
+            GroupValue group = groupMap.computeIfAbsent(groupKey, k ->
+                    major.addSub("iron_spells_genesis.config.group." + entry.sub));
+            if (entry.specValue instanceof ForgeConfigSpec.BooleanValue) {
+                group.add((ForgeConfigSpec.BooleanValue) entry.specValue, entry.key);
+            } else if (entry.specValue instanceof ForgeConfigSpec.DoubleValue) {
+                group.add((ForgeConfigSpec.DoubleValue) entry.specValue, entry.key, entry.min, entry.max);
+            }
         }
     }
 
@@ -51,11 +75,11 @@ public class GenesisConfigScreen extends Screen {
     @Override
     public void init() {
         this.clearWidgets();
-
         this.searchBox = new EditBox(this.font, 4, 8, leftWidth - 8, 14, Component.empty());
-        this.searchBox.setResponder(s -> { if(configArray != null) configArray.setSearchQuery(s); });
+        this.searchBox.setResponder(query -> {
+            if (configArray != null) configArray.setSearchQuery(query);
+        });
         this.addRenderableWidget(this.searchBox);
-
         this.configArray = new ConfigArray(this.minecraft, this.width - leftWidth, this.height - bottomHeight - 5, 5, leftWidth);
         loadMajor(currentMajor);
         this.addRenderableWidget(this.configArray);
@@ -65,13 +89,15 @@ public class GenesisConfigScreen extends Screen {
         this.currentMajor = mc;
         if (this.configArray != null && mc != null) {
             this.configArray.clear();
-            for (GroupValue sub : mc.subCategories) this.configArray.push(sub);
+            for (GroupValue sub : mc.subCategories) {
+                this.configArray.push(sub);
+            }
         }
     }
 
     @Override
     public boolean mouseClicked(double mx, double my, int button) {
-        // 搜索框焦点排他性管理
+        // 搜索框焦点逻辑
         if (this.searchBox != null) {
             if (mx >= 4 && mx <= leftWidth - 4 && my >= 8 && my <= 22) {
                 this.searchBox.setFocused(true);
@@ -80,7 +106,6 @@ public class GenesisConfigScreen extends Screen {
                 this.searchBox.setFocused(false);
             }
         }
-
         if (mx > 0 && mx < leftWidth && my > 30 && my < this.height - bottomHeight) {
             int idx = (int) ((my - 30) / 20);
             if (idx >= 0 && idx < majorCategories.size()) {
@@ -88,7 +113,6 @@ public class GenesisConfigScreen extends Screen {
                 return true;
             }
         }
-
         int y = this.height - 20;
         int doneX = this.width - font.width(Component.translatable(modid + ".config.done")) - 20;
         int resetX = doneX - font.width(Component.translatable(modid + ".config.reset_all")) - 20;
@@ -102,7 +126,6 @@ public class GenesisConfigScreen extends Screen {
         return super.mouseClicked(mx, my, button);
     }
 
-    // ============ 新增：捕捉并向下传递键盘输入 ============
     @Override
     public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
         if (this.searchBox != null && this.searchBox.isFocused()) {
@@ -127,8 +150,8 @@ public class GenesisConfigScreen extends Screen {
 
     @Override
     public void render(@NotNull GuiGraphics g, int mx, int my, float pt) {
-        g.fill(0, 0, leftWidth, this.height, 0xCC000000);
-        g.fill(leftWidth, this.height - bottomHeight, this.width, this.height, 0x88000000);
+        g.fill(0, 0, leftWidth, this.height, 0xCC000000); // 左侧侧边栏背景
+        g.fill(leftWidth, this.height - bottomHeight, this.width, this.height, 0x88000000); // 底部背景
 
         int catY = 30;
         for (MajorCategory mc : majorCategories) {
@@ -137,7 +160,6 @@ public class GenesisConfigScreen extends Screen {
             g.drawString(this.font, Component.translatable(mc.nameKey), 6, catY, color, false);
             catY += 20;
         }
-
         int y = this.height - 20;
         String doneT = Component.translatable(modid + ".config.done").getString();
         String resetT = Component.translatable(modid + ".config.reset_all").getString();
@@ -158,11 +180,15 @@ public class GenesisConfigScreen extends Screen {
     public void save() {
         for (MajorCategory mc : majorCategories) {
             for (GroupValue sub : mc.subCategories) {
-                for (ConfigValue v : sub.group) v.saveToConfig();
+                for (ConfigValue v : sub.group) {
+                    v.saveToConfig();
+                }
             }
         }
         spec.save();
+        Configuration.updateCache();
     }
+
     public void resetAll() {
         for (MajorCategory mc : majorCategories) {
             for (GroupValue sub : mc.subCategories) {
@@ -171,5 +197,9 @@ public class GenesisConfigScreen extends Screen {
         }
         this.save();
     }
-    public void close() { this.save(); this.minecraft.setScreen(this.parent); }
+
+    public void close() {
+        this.save();
+        this.minecraft.setScreen(this.parent);
+    }
 }
