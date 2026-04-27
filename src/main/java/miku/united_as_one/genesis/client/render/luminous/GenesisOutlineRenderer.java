@@ -12,6 +12,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.world.item.ItemStack;
 import miku.united_as_one.genesis.client.render.ModShaders;
+import miku.united_as_one.genesis.init.config.Configuration;
 import org.joml.Matrix4f;
 
 public class GenesisOutlineRenderer {
@@ -19,29 +20,29 @@ public class GenesisOutlineRenderer {
     private static final TextureTarget[] maskBuffers = new TextureTarget[EFFECT_COUNT];
     private static final boolean[] hasCapturedWorld = new boolean[EFFECT_COUNT];
 
-    private static TextureTarget worldBlurA, worldBlurB, worldBlurNear;
+    private static TextureTarget worldBlurA, worldBlurB;
     private static TextureTarget guiBlurA, guiBlurB;
 
     private static boolean isCapturingWorld = false;
     private static boolean isCapturingGui = false;
     private static GenesisEffect activeGuiEffect = null;
 
-    // WORLD_RADIUS_BLUE 和 WORLD_RADIUS_NORMAL: 决定世界中物品发光的扩散范围
-    //WORLD_NEAR_RADIUS: 决定世界中物品发光的近景光晕效果
-    //WORLD_BLUR_PASSES: 世界发光的渲染质量（次数）
-    //GUI_RADIUS 和 GUI_BLUR_PASSES: GUI 界面（背包/快捷栏）里物品的发光范围和渲染质量
-    private static final float WORLD_RADIUS_BLUE = 2.6F;
-    private static final float WORLD_RADIUS_NORMAL = 2.2F;
-    private static final float WORLD_NEAR_RADIUS = 1.5F;
-    private static final int WORLD_BLUR_PASSES = 4;
-
-    private static final float GUI_RADIUS = 0.5F;
-    private static final int GUI_BLUR_PASSES = 1;
-
     private static int getEffectIndex(GenesisEffect effect) {
         if (effect == GenesisEffect.BLACK_RED) return 0;
         if (effect == GenesisEffect.BLUE_WHITE) return 1;
         return 2;
+    }
+
+    private static boolean isEffectEnabled(GenesisEffect effect) {
+        if (effect == GenesisEffect.BLACK_RED) return Configuration.ENABLE_RED.get();
+        if (effect == GenesisEffect.BLUE_WHITE) return Configuration.ENABLE_BLUE.get();
+        return Configuration.ENABLE_RAINBOW.get();
+    }
+
+    private static float getEffectWidth(int effectIdx) {
+        if (effectIdx == 0) return Configuration.WIDTH_RED.get().floatValue();
+        if (effectIdx == 1) return Configuration.WIDTH_BLUE.get().floatValue();
+        return Configuration.WIDTH_RAINBOW.get().floatValue();
     }
 
     private static TextureTarget getOrCreateMaskBuffer(int idx) {
@@ -61,6 +62,7 @@ public class GenesisOutlineRenderer {
     }
 
     public static void startWorldCapture(ItemStack stack, GenesisEffect effect) {
+        if (!isEffectEnabled(effect)) return;
         int idx = getEffectIndex(effect);
         TextureTarget mb = getOrCreateMaskBuffer(idx);
 
@@ -142,6 +144,7 @@ public class GenesisOutlineRenderer {
     }
 
     public static void startGuiCapture(ItemStack stack, GenesisEffect effect) {
+        if (!isEffectEnabled(effect)) return;
         TextureTarget mb = getOrCreateMaskBuffer(0);
         mb.bindWrite(false);
         RenderSystem.clearColor(0.0F, 0.0F, 0.0F, 0.0F);
@@ -219,7 +222,6 @@ public class GenesisOutlineRenderer {
 
         TextureTarget activeBlurA = isGui ? guiBlurA : worldBlurA;
         TextureTarget activeBlurB = isGui ? guiBlurB : worldBlurB;
-        TextureTarget activeBlurNear = isGui ? null : worldBlurNear;
 
         activeBlurA = syncBuffer(activeBlurA, bw, bh);
         activeBlurB = syncBuffer(activeBlurB, bw, bh);
@@ -228,20 +230,18 @@ public class GenesisOutlineRenderer {
             guiBlurA = activeBlurA;
             guiBlurB = activeBlurB;
         } else {
-            activeBlurNear = syncBuffer(activeBlurNear, bw, bh);
             worldBlurA = activeBlurA;
             worldBlurB = activeBlurB;
-            worldBlurNear = activeBlurNear;
         }
 
         RenderSystem.disableBlend();
         if (blurShader.getUniform("ScreenSize") != null) blurShader.getUniform("ScreenSize").set((float) bw, (float) bh);
 
-        float radius = isGui ? GUI_RADIUS : (effectIdx == 1 ? WORLD_RADIUS_BLUE : WORLD_RADIUS_NORMAL);
-        float nearRadius = isGui ? 0.0F : WORLD_NEAR_RADIUS;
-        int passes = isGui ? GUI_BLUR_PASSES : WORLD_BLUR_PASSES;
+        // 移除配置项后，写死一个相对平滑合理的发光大小
+        float radius = isGui ? 0.6F : 2.5F;
+        int passes = 4;
 
-        int nTex = isGui ? maskBuffers[0].getColorTextureId() : runBlur(blurShader, maskBuffers[effectIdx].getColorTextureId(), activeBlurA, activeBlurNear, nearRadius, 1);
+        int nTex = maskBuffers[isGui ? 0 : effectIdx].getColorTextureId();
         int fTex = runBlur(blurShader, maskBuffers[isGui ? 0 : effectIdx].getColorTextureId(), activeBlurA, activeBlurB, radius / passes, passes);
 
         main.bindWrite(true);
@@ -292,28 +292,30 @@ public class GenesisOutlineRenderer {
         if (s.getUniform("ScreenSize") != null) s.getUniform("ScreenSize").set((float) t.width, (float) t.height);
         if (s.getUniform("Time") != null) s.getUniform("Time").set((float) (System.currentTimeMillis() % 24000L) / 1000.0F);
 
-        if (effectIdx == 0) {
+        if (effectIdx == 0) { // 黑红
             setVec4(s, "OutlineColor", 0.8F, 0.05F, 0.05F);
             setVec4(s, "SecondaryColor", 0.02F, 0.02F, 0.02F);
             if (s.getUniform("ColorMode") != null) s.getUniform("ColorMode").set(1.0F);
         } else if (effectIdx == 1) {
-            setVec4(s, "OutlineColor", 0.35F, 0.75F, 1.0F);
-            setVec4(s, "SecondaryColor", 0.95F, 0.95F, 1.0F);
+            setVec4(s, "OutlineColor", 0.1F, 0.5F, 1.0F); // 纯正的亮蓝色
+            setVec4(s, "SecondaryColor", 0.7F, 0.9F, 1.0F); // 浅蓝色偏白
             if (s.getUniform("ColorMode") != null) s.getUniform("ColorMode").set(1.0F);
-        } else {
+        } else { // 彩色
             setVec4(s, "OutlineColor", 1.0F, 1.0F, 1.0F);
             if (s.getUniform("ColorMode") != null) s.getUniform("ColorMode").set(2.0F);
         }
 
-        float outlineWidth = isGui ? 0.6F : 2.4F;
+        float outlineWidth = getEffectWidth(effectIdx);
         if (s.getUniform("OutlineWidth") != null) s.getUniform("OutlineWidth").set(outlineWidth);
 
+        if (s.getUniform("DistanceScale") != null) s.getUniform("DistanceScale").set(1.0F);
         if (s.getUniform("Opacity") != null) s.getUniform("Opacity").set(0.95F);
     }
 
     private static void setVec4(ShaderInstance s, String n, float r, float g, float b) {
         if (s.getUniform(n) != null) s.getUniform(n).set(r, g, b, 1.0F);
     }
+
     private static void drawQuad() {
         BufferBuilder b = Tesselator.getInstance().getBuilder();
         b.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);

@@ -124,7 +124,8 @@ public class Genesis
             MinecraftForge.EVENT_BUS.register(ClientEvent.class);
         }
 
-        context.registerConfig(ModConfig.Type.COMMON, Configuration.SPECIFICATION);
+        context.registerConfig(ModConfig.Type.SERVER, Configuration.SERVER_SPEC);
+        context.registerConfig(ModConfig.Type.CLIENT, Configuration.CLIENT_SPEC);
     }
 
     public static void registerOptionalTexturePack(ResourceLocation folderName, Component displayName, boolean defaultEnabled) {

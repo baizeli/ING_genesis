@@ -309,9 +309,6 @@
   "container.iron_spells_genesis.vanilla_workbench": "有序终极合成",
   "container.iron_spells_genesis.arcane_workbench": "奥术合成",
 
-  "key.categories.iron_spells_genesis": "永恒星空 - 按键绑定",
-  "key.iron_spells_genesis.bow_type": "弓 - 切换箭矢类型",
-
   "death.attack.chaos_magic": "%1$s被%2$s的混沌法术撕碎了。",
   "death.attack.celestial_source_magic": "%1$s被%2$s的星源法术彻底湮灭。",
   "death.attack.iron_spells_genesis.warped_blood_burst" : "%1$s的全身血液因为%2$s爆炸了。",
@@ -343,19 +340,6 @@
   "item.attDamage": " §2攻击伤害",
   "item.attSpeed": " §2攻击速度",
   "AIR": "",
-
-  "iron_spells_genesis.config.title": "创世纪配置",
-  "iron_spells_genesis.config.client": "客户端设置",
-  "iron_spells_genesis.config.server": "服务端设置",
-  "iron_spells_genesis.config.github": "前往 GitHub",
-
-  "iron_spells_genesis.config.server.title": "服务端详细参数",
-  "iron_spells_genesis.config.save": "保存",
-  "iron_spells_genesis.config.done": "完成",
-  "iron_spells_genesis.config.reset_all": "全部重置",
-
-  "iron_spells_genesis.config.group.combat": "战斗平衡性",
-  "iron_spells_genesis.config.whisper_damage": "往昔私语伤害",
 
   "iron_spells_genesis.summoned_pig_name": "laowang237",
 
@@ -397,5 +381,41 @@
   "itemGroup.iron_spells_genesis_equipment": "iron Spells: Genesis: Equipment",
 
   "upgrade.iron_spells_genesis.divine_upgrade": "神圣升级",
-  "upgrade.iron_spells_genesis.violet_upgrade": "紫极升级"
+  "upgrade.iron_spells_genesis.violet_upgrade": "紫极升级",
+
+
+  "iron_spells_genesis.config.server": "§c服务端配置",
+  "iron_spells_genesis.config.client": "§e客户端配置",
+  "iron_spells_genesis.config.github": "§bGitHub 源码库",
+  "iron_spells_genesis.config.subtitle": "§a美味大理石",
+
+  "iron_spells_genesis.category.server.combat_main": "§f战斗设置",
+  "iron_spells_genesis.category.client.visual_main": "§f渲染设置",
+
+  "iron_spells_genesis.config.group.combat": "§e武器设定",
+  "iron_spells_genesis.config.group.red": "§c黑红特效",
+  "iron_spells_genesis.config.group.blue": "§b蓝色特效",
+  "iron_spells_genesis.config.group.rainbow": "§e彩色特效",
+
+  "iron_spells_genesis.config.whisper_damage": "§6武器基础伤害",
+  "iron_spells_genesis.config.whisper_damage.desc": "§f调整武器造成的初始物理伤害数值",
+  "iron_spells_genesis.config.enable_hard_mode": "§c开启困难模式",
+  "iron_spells_genesis.config.enable_hard_mode.desc": "§f启用后敌人将获得更强的战斗属性",
+
+  "iron_spells_genesis.config.enable_red": "§f开启特效",
+  "iron_spells_genesis.config.enable_red.desc": "§f是否允许渲染黑红特效",
+  "iron_spells_genesis.config.enable_blue": "§f开启特效",
+  "iron_spells_genesis.config.enable_blue.desc": "§f是否允许渲染蓝色特效",
+  "iron_spells_genesis.config.enable_rainbow": "§f开启特效",
+  "iron_spells_genesis.config.enable_rainbow.desc": "§f是否允许渲染彩色特效",
+
+  "iron_spells_genesis.config.width": "§f勾边宽度",
+  "iron_spells_genesis.config.width.desc": "§f调整物品周围轮廓线条的粗细",
+
+  "iron_spells_genesis.config.save": "§a保存",
+  "iron_spells_genesis.config.reset_all": "§e重置全部",
+  "iron_spells_genesis.config.reset": "§f重置",
+  "iron_spells_genesis.config.done": "§f完成",
+  "gui.genesis.on": "开启",
+  "gui.genesis.off": "关闭"
 }
