@@ -45,58 +45,44 @@ public class DistortWorldRender {
     public static PostChain distortChain;
     public static PostChain vectorDistort;
     public static PostChain sphereChain;
+    private static int width;
+    private static int height;
 
     public static void processMyPostChain(float partialTicks) {
         Minecraft mc = Minecraft.getInstance();
         if (mc.level == null || mc.cameraEntity == null) return;
 
-        // 1. 处理原本的 Vector Distort
         if (vectorDistort != null) {
             vectorDistort.process(partialTicks);
         }
 
-        /*
-        * 不知道为啥使用原版深度图无效
-        * 具体表现为深度图为纯白(全1)
-        * 可能得使用rendertarget自定义一个深度图复制原版深度
-        * */
-
-
-        // 2. 处理 Sphere Chain
         if (sphereChain != null) {
-            // 使用反编译源码中实际存在的 getTempTarget 方法
             RenderTarget swapTarget = sphereChain.getTempTarget("swap");
             if (swapTarget != null) {
-                // 将主渲染目标的深度缓冲区拷贝到我们的中间目标
                 swapTarget.copyDepthFrom(mc.getMainRenderTarget());
             }
 
-            // 保持尺寸同步
-            sphereChain.resize(mc.getWindow().getWidth(), mc.getWindow().getHeight());
+            int _width = mc.getWindow().getWidth(), _height = mc.getWindow().getHeight();
+            if (_width != width || _height != height) {
+                width = _width;
+                height = _height;
+                sphereChain.resize(_width, _height);
+            }
 
-            // 注入 Uniform (CameraPos 和 ProjMat)
             Vec3 cameraPos = mc.gameRenderer.getMainCamera().getPosition();
-
-            // 获取摄像机的旋转四元数
             Quaternionf cameraRotation = mc.gameRenderer.getMainCamera().rotation();
-            // 将四元数转换为矩阵 (这是 View -> World 的旋转矩阵)
             Matrix4f viewToWorldRotMat = new Matrix4f().rotation(cameraRotation);
 
             List<PostPass> passes = ((PostChainAccessor) sphereChain).getPasses();
             for (PostPass pass : passes) {
-                // 1. 设置相机坐标
                 Uniform cameraPosUniform = pass.getEffect().getUniform("CameraPos");
                 if (cameraPosUniform != null) {
                     cameraPosUniform.set((float) cameraPos.x, (float) cameraPos.y, (float) cameraPos.z);
                 }
-
-                // 2. 设置投影矩阵
                 Uniform projMatUniform = pass.getEffect().getUniform("ProjMat");
                 if (projMatUniform != null) {
                     projMatUniform.set(RenderSystem.getProjectionMatrix());
                 }
-
-                // 3. 设置旋转矩阵 (新增)
                 Uniform rotMatUniform = pass.getEffect().getUniform("IViewRotMat");
                 if (rotMatUniform != null) {
                     rotMatUniform.set(viewToWorldRotMat);
@@ -126,6 +112,8 @@ public class DistortWorldRender {
         try {
             sphereChain = new PostChain(mc.getTextureManager(), mc.getResourceManager(), mc.getMainRenderTarget(), SPHERE_CHAIN);
             sphereChain.resize(mc.getWindow().getWidth(), mc.getWindow().getHeight());
+            width = mc.getWindow().getWidth();
+            height = mc.getWindow().getHeight();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -140,31 +128,18 @@ public class DistortWorldRender {
         Minecraft mc = Minecraft.getInstance();
         LocalPlayer player = mc.player;
         if (player == null) return;
-
-        // 处理DISTORT后处理RT
 //        handleDistortRT(event, mc);
-        
-        // 处理VECTOR_DISTORT后处理RT
         handleVectorDistortRT(event, mc);
     }
 
-    // 提取处理DISTORT后处理RT的方法
     private static void handleDistortRT(RenderLevelStageEvent event, Minecraft mc) {
-        // ① 必须有后处理在跑
         PostChain chain = distortChain;
         if (chain == null) return;
         distortChain.resize(mc.getWindow().getWidth(), mc.getWindow().getHeight());
-        // ② 拿 PostChain 自己创建的 RT（JSON 里的 "distort"）
         var rt = chain.getTempTarget("iron_spells_genesis_distort");
         if (rt == null) return;
-
-        // ③ 复制主屏幕深度 → 保证遮挡
         rt.copyDepthFrom(mc.getMainRenderTarget());
-
-        // ④ 绑定这个 RT
         rt.bindWrite(true);
-
-        // ⑤ 只清颜色，不清深度
         RenderSystem.clearColor(0, 0, 0, 0);
         RenderSystem.clear(GL11.GL_COLOR_BUFFER_BIT, false);
 
@@ -189,23 +164,17 @@ public class DistortWorldRender {
 //        );
     }
 
-    // 添加处理VECTOR_DISTORT后处理RT的方法
     private static void handleVectorDistortRT(RenderLevelStageEvent event, Minecraft mc) {
-        // ① 必须有后处理在跑
         PostChain chain = vectorDistort;
         if (chain == null) return;
         vectorDistort.resize(mc.getWindow().getWidth(), mc.getWindow().getHeight());
-        // ② 拿 PostChain 自己创建的 RT（JSON 里的 "vector_distort"）
         var rt = chain.getTempTarget("iron_spells_genesis_vector_buffer");
         if (rt == null) return;
 
-        // ③ 复制主屏幕深度 → 保证遮挡
         rt.copyDepthFrom(mc.getMainRenderTarget());
 
-        // ④ 绑定这个 RT
         rt.bindWrite(true);
 
-        // ⑤ 只清颜色，不清深度
         RenderSystem.clearColor(0, 0, 0, 0);
         RenderSystem.clear(GL11.GL_COLOR_BUFFER_BIT, false);
 
