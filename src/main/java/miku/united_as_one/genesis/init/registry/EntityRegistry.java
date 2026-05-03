@@ -198,4 +198,11 @@ public class EntityRegistry {
                     .clientTrackingRange(16)
                     .fireImmune()
                     .build("summoned_warden"));
+    private static <T extends Entity> RegistryObject<EntityType<T>> register(String name, EntityType.Builder<T> builder)
+    {
+        return ENTITY_TYPES.register(name, () -> builder.build(name));
+    }
+    public static final RegistryObject<EntityType<WardenSpellcaster>> WARDEN_SPELLCASTER =
+            register("warden_spellcaster", EntityType.Builder.of(WardenSpellcaster::new, MobCategory.MONSTER)
+                    .sized(0.9F, 2.9F).fireImmune());
 }

@@ -5,6 +5,7 @@ import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import io.redspace.ironsspellbooks.api.spells.ISpellContainer;
 import io.redspace.ironsspellbooks.entity.mobs.keeper.KeeperRenderer;
 import io.redspace.ironsspellbooks.entity.spells.void_tentacle.VoidTentacle;
+import miku.united_as_one.genesis.client.renderer.WSRenderer;
 import miku.united_as_one.genesis.client.renderer.entity.laser.DeathLaserRenderer;
 import miku.united_as_one.genesis.client.renderer.entity.test.BaiZeLiRenderer;
 import miku.united_as_one.genesis.common.data.content.arcaneWorkbench.*;
@@ -208,6 +209,7 @@ public class Genesis
     }
 
     public void onAttributeCreate(EntityAttributeCreationEvent event) {
+        event.put(EntityRegistry.WARDEN_SPELLCASTER.get(), WardenSpellcaster.createAttributes().build());
         event.put(EntityRegistry.MAGIC_CIRCLE.get(), MagicCircle.createAttributes().build());
         event.put(EntityRegistry.BOX_ENTIYT.get(), BoxEntity.createAttributes().build());
         event.put(EntityRegistry.SWORD_ENTITY.get(), SwordEntity.createAttributes().build());
@@ -238,7 +240,7 @@ public class Genesis
                 EntityRenderers.register(EntityRegistry.SWORD_ENTITY.get(), SwordEntityRenderer::new);
                 EntityRenderers.register(EntityRegistry.DEATH_LASER.get(), DeathLaserRenderer::new);
                 EntityRenderers.register(EntityRegistry.THROWN_IRON.get(), ThrownIronRenderer::new);
-
+                EntityRenderers.register(EntityRegistry.WARDEN_SPELLCASTER.get(), WSRenderer::new);
                 EntityRenderers.register(EntityRegistry.DEAD_STAR_DECREE_COMET.get(),
                     context -> new DeadStarDecreeCometRenderer(context, 0.25f)
                 );
