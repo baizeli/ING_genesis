@@ -41,7 +41,7 @@ public class GenesisOutlineRenderer {
     private static int getEffectIndex(GenesisEffect effect) {
         return EFFECT_LOOKUP[effect.ordinal()];
     }
-    
+
     private static boolean isEffectEnabled(int effectIdx) {
         if (effectIdx == 0) return Configuration.enableRed;
         if (effectIdx == 1) return Configuration.enableBlue;
@@ -153,7 +153,10 @@ public class GenesisOutlineRenderer {
 
         RenderSystem.enableDepthTest(); RenderSystem.depthMask(true);
         RenderSystem.colorMask(true, true, true, true);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.enableBlend(); RenderSystem.defaultBlendFunc();
         RenderSystem.activeTexture(org.lwjgl.opengl.GL13.GL_TEXTURE0);
+        RenderSystem.bindTexture(0);
 
         beginWorldPass();
     }
@@ -216,7 +219,10 @@ public class GenesisOutlineRenderer {
 
         RenderSystem.enableDepthTest(); RenderSystem.depthMask(true);
         RenderSystem.colorMask(true, true, true, true);
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderSystem.enableBlend(); RenderSystem.defaultBlendFunc();
         RenderSystem.activeTexture(org.lwjgl.opengl.GL13.GL_TEXTURE0);
+        RenderSystem.bindTexture(0);
 
         activeGuiEffect = null;
     }
@@ -240,7 +246,7 @@ public class GenesisOutlineRenderer {
         if (blurShader.getUniform("ScreenSize") != null) blurShader.getUniform("ScreenSize").set((float) bw, (float) bh);
 
         float radius = isGui ? 0.6F : 2.5F;
-        int passes = 4;
+        int passes = isGui ? 1 : 4;
         int srcTex = maskBuffers[isGui ? 0 : effectIdx].getColorTextureId();
         int blurResult = runBlur(blurShader, srcTex, activeBlurA, activeBlurB, radius / passes, passes);
 
@@ -291,17 +297,17 @@ public class GenesisOutlineRenderer {
         if (shader.getUniform("Time") != null) shader.getUniform("Time").set((float) (System.currentTimeMillis() % 24000L) / 1000.0F);
 
         switch (effectIdx) {
-            case 0: // 黑红
+            case 0:
                 setVec4(shader, "OutlineColor", 0.8F, 0.05F, 0.05F);
                 setVec4(shader, "SecondaryColor", 0.02F, 0.02F, 0.02F);
                 if (shader.getUniform("ColorMode") != null) shader.getUniform("ColorMode").set(1.0F);
                 break;
-            case 1: // 蓝白
+            case 1:
                 setVec4(shader, "OutlineColor", 0.1F, 0.5F, 1.0F);
                 setVec4(shader, "SecondaryColor", 0.7F, 0.9F, 1.0F);
                 if (shader.getUniform("ColorMode") != null) shader.getUniform("ColorMode").set(1.0F);
                 break;
-            default: // 彩色
+            default:
                 setVec4(shader, "OutlineColor", 1.0F, 1.0F, 1.0F);
                 if (shader.getUniform("ColorMode") != null) shader.getUniform("ColorMode").set(2.0F);
         }
