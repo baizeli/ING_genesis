@@ -14,31 +14,29 @@ import net.minecraftforge.registries.*;
 public class BlockRegistry {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Genesis.MOD_ID);
 
-    // 风化材质方块
     public static final SimpleBlockSet<Block> WEATHERED_SANDSTONE = SimpleBlockSet.buildStone("weathered_sandstone", Blocks.SANDSTONE).simpleStone();
     public static final SimpleBlockSet<Block> WEATHERED_STONE_BRICKS = SimpleBlockSet.buildStone("weathered_stone_bricks", Blocks.STONE_BRICKS).simpleStone();
     public static final SimpleBlockSet<Block> WEATHERED_SAND = SimpleBlockSet.buildStone("weathered_sand", Blocks.SAND);
-    //杂项
+
     public static final SimpleBlockSet<Block> BLOOD_SAND = SimpleBlockSet.buildStone("blood_sand", Blocks.SAND);
     public static final SimpleBlockSet<Block> FIRE_SAND = SimpleBlockSet.buildStone("fire_sand", Blocks.SAND);
     public static final SimpleBlockSet<Block> HEART_SCULPTING = SimpleBlockSet.buildStone("heart_sculpting", Blocks.STONE).simpleStone();
-    //火
+
     public static final SimpleBlockSet<Block> FIRE_STONE = SimpleBlockSet.buildStone("fire_stone", Blocks.STONE).simpleStone();
 
-    // 深怖材质方块
     public static final SimpleBlockSet<Block> DEEP_FEAR_STONE = SimpleBlockSet.buildStone("deep_fear_stone", Blocks.STONE).simpleStone();
     public static final SimpleBlockSet<Block> SMOOTH_DEEP_FEAR_STONE = SimpleBlockSet.buildStone("smooth_deep_fear_stone", Blocks.SMOOTH_STONE).simpleStone();
     public static final SimpleBlockSet<Block> DEEP_FEAR_STONE_BRICKS = SimpleBlockSet.buildStone("deep_fear_stone_bricks", Blocks.STONE_BRICKS).simpleStone();
     public static final SimpleBlockSet<Block> CRACKED_DEEP_FEAR_STONE_BRICKS = SimpleBlockSet.buildStone("cracked_deep_fear_stone_bricks", Blocks.CRACKED_STONE_BRICKS).simpleStone();
-    // 恣睢材质方块
+
     public static final SimpleBlockSet<Block> SWAY_STONE = SimpleBlockSet.buildStone("sway_stone", Blocks.STONE).simpleStone();
-    public static final SimpleBlockSet<RotatedPillarBlock> SWAY_LOG = SimpleBlockSet.buildLog("sway_log", Blocks.OAK_LOG).addStrippedLog();
+    public static final SimpleBlockSet<RotatedPillarBlock> SWAY_LOG = SimpleBlockSet.buildLog("sway_log", Blocks.OAK_LOG).addStrippedLog().addWood().addStrippedWood();
     public static final SimpleBlockSet<Block> SWAY_PLANKS = SimpleBlockSet.buildPlanks("sway", Blocks.OAK_PLANKS).simplePlank(BlockSetType.OAK);
-    public static final SimpleBlockSet<Block> SWAY_DIRT = SimpleBlockSet.buildDirt("sway", Blocks.DIRT).addGrass();
-    // 蕴谧材质方块
-    public static final SimpleBlockSet<RotatedPillarBlock> QUIETNESS_LOG = SimpleBlockSet.buildLog("quietness_log", Blocks.OAK_LOG).addStrippedLog();
+    public static final SimpleBlockSet<Block> SWAY_DIRT = SimpleBlockSet.buildDirt("sway", Blocks.DIRT).addGrass().addGrassVariant("sway_bloom");
+
+    public static final SimpleBlockSet<RotatedPillarBlock> QUIETNESS_LOG = SimpleBlockSet.buildLog("quietness_log", Blocks.OAK_LOG).addStrippedLog().addWood().addStrippedWood();
     public static final SimpleBlockSet<Block> QUIETNESS_PLANKS = SimpleBlockSet.buildPlanks("quietness", Blocks.OAK_PLANKS).simplePlank();
-    public static final SimpleBlockSet<Block> QUIETNESS_DIRT = SimpleBlockSet.buildDirt("quietness", Blocks.DIRT).addGrass();
+    public static final SimpleBlockSet<Block> QUIETNESS_DIRT = SimpleBlockSet.buildDirt("quietness", Blocks.DIRT).addGrass().addGrassVariant("quietness_dense");
 
     public static final BlockEntry<Block> ARCANE_CRYSTAL_BLOCK = Genesis.L2_REGISTRATE
             .block("arcane_crystal_block", Block::new)
@@ -105,13 +103,11 @@ public class BlockRegistry {
             .properties(p -> p.lightLevel(s -> 9).strength(3.0f, 9.0f).requiresCorrectToolForDrops().sound(SoundType.STONE))
             .register();
 
-    // 混沌传送门框架
     public static final BlockEntry<Block> CHAOS_PORTAL_FRAME = Genesis.L2_REGISTRATE
             .block("chaos_portal_frame", Block::new)
             .properties(p -> p.strength(-1, 9999).noOcclusion())
             .register();
 
-    // 混沌传送门方块
     public static final BlockEntry<ChaosPortalBlock> CHAOS_PORTAL = Genesis.L2_REGISTRATE
             .block("chaos_portal", ChaosPortalBlock::new)
             .properties(p -> p.noCollission().randomTicks().strength(-1).sound(SoundType.GLASS).lightLevel(s -> 11).noOcclusion())
@@ -122,5 +118,6 @@ public class BlockRegistry {
             .properties(p -> p.requiresCorrectToolForDrops().strength(20, 9999).sound(SoundType.NETHERITE_BLOCK))
             .tag(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.NEEDS_DIAMOND_TOOL)
             .register();
+
     public static void register() {}
 }
