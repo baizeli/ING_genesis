@@ -9,7 +9,6 @@ import miku.united_as_one.genesis.common.entity.arrow.StellarArrowEntity;
 import miku.united_as_one.genesis.common.entity.arrow.ThunderArrowEntity;
 import miku.united_as_one.genesis.common.entity.boss.BloodBoss;
 import miku.united_as_one.genesis.common.entity.laser.DeathLaserEntity;
-import miku.united_as_one.genesis.common.entity.test.BaiZeLiEntity;
 import miku.united_as_one.genesis.common.entity.warlock.WardenMageEntity;
 import miku.united_as_one.genesis.common.entity.projectile.ThrownIron;
 import miku.united_as_one.genesis.common.entity.spell.eldritch.*;
@@ -20,6 +19,7 @@ import miku.united_as_one.genesis.common.entity.spell.celestial_source.*;
 import miku.united_as_one.genesis.common.entity.spell.celestial_source.notuse.*;
 import miku.united_as_one.genesis.common.entity.spell.fire.*;
 import miku.united_as_one.genesis.Genesis;
+import miku.united_as_one.genesis.common.entity.test.BaiZeLiEntity;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.registries.*;
@@ -205,4 +205,11 @@ public class EntityRegistry {
     public static final RegistryObject<EntityType<WardenSpellcaster>> WARDEN_SPELLCASTER =
             register("warden_spellcaster", EntityType.Builder.of(WardenSpellcaster::new, MobCategory.MONSTER)
                     .sized(0.9F, 2.9F).fireImmune());
+
+    public static final RegistryObject<EntityType<BaiZeLiEntity>> BAI_ZE_LI = ENTITY_TYPES.register("bai_ze_li",
+            () -> EntityType.Builder.<BaiZeLiEntity>of(BaiZeLiEntity::new, MobCategory.MONSTER)
+                    .sized(0.6f, 1.8f)
+                    .clientTrackingRange(64)
+                    .updateInterval(1)
+                    .build("bai_ze_li"));
 }

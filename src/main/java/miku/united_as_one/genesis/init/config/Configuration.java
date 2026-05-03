@@ -1,208 +1,97 @@
 package miku.united_as_one.genesis.init.config;
 
-import com.google.common.collect.ImmutableList;
-import com.google.gson.*;
-import net.minecraft.resources.ResourceLocation;
+import miku.united_as_one.genesis.Genesis;
 import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.registries.ForgeRegistries;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.LinkedList;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
-public class Configuration
-{
-	private static final String KEY_ETERNIS_APPLE_EFFECTS = "effects";
-	private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-	private static final File ETERNIS_APPLE_CONFIG = new File("./config/eternisstarrysky-EternisApple.json");
-	private static boolean MOB_EFFECTS_STEUP = false;
-	public static final short[] NAMESPACE_DICTIONARY;
-	public static final ImmutableList<ConfigEffect> DEFAULT_ETERNIS_APPLE_EFFECTS;
-	public static final AtomicReference<List<ConfigEffect>> ETERNIS_APPLE_EFFECTS;
-	public static final ForgeConfigSpec.DoubleValue WHISPER_OF_THE_PAST_DAMAGE;
-	public static final ForgeConfigSpec SPECIFICATION;
-	public static final Logger LOGGER = LoggerFactory.getLogger("Configuration");
-	public static final Trie MOB_EFFECTS;
+@Mod.EventBusSubscriber(modid = Genesis.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+public class Configuration {
+    public static final ForgeConfigSpec SERVER_SPEC;
+    public static final ForgeConfigSpec CLIENT_SPEC;
 
-	public static void saveEternisApple()
-	{
-		JsonObject eternisApple = new JsonObject();
-		JsonArray effects = new JsonArray();
-		for (ConfigEffect eff : ETERNIS_APPLE_EFFECTS.get())
-		{
-			JsonArray effect = new JsonArray();
-			effect.add(eff.key);
-			effect.add(eff.duration);
-			effect.add(eff.amplifier);
-			effects.add(effect);
-		}
-		eternisApple.add(KEY_ETERNIS_APPLE_EFFECTS, effects);
-		String config = GSON.toJson(eternisApple);
-		try (FileWriter writer = new FileWriter(ETERNIS_APPLE_CONFIG))
-		{
-			writer.write(config);
-			writer.flush();
-		}
-		catch (IOException e)
-		{
-			LOGGER.error("Cannot save Eternis Apple config", e);
-		}
-	}
+    public static final List<ConfigEntry<?>> SERVER_ENTRIES = new ArrayList<>();
+    public static final List<ConfigEntry<?>> CLIENT_ENTRIES = new ArrayList<>();
 
-	public static void setup()
-	{
-		if (MOB_EFFECTS_STEUP)
-			return;
-		Configuration.MOB_EFFECTS.clear();
-		for (ResourceLocation eid : ForgeRegistries.MOB_EFFECTS.getKeys())
-		{
-			try
-			{
-				Configuration.MOB_EFFECTS.add(eid.toString().getBytes(StandardCharsets.UTF_8));
-			}
-			catch (Throwable e)
-			{
-				LOGGER.warn("Cannot add effect ID: {}", eid, e);
-			}
-		}
-		MOB_EFFECTS_STEUP = true;
-	}
+    public static double whisperDamage = 60.0;
+    public static boolean enableHardMode = false;
 
-	public static int searchEffectID(String prefix, byte[] str)
-	{
-		if (prefix.isEmpty())
-		{
-			String val = "minecraft:";
-			int len = Math.min(str.length, val.length());
-			System.arraycopy(val.getBytes(), 0, str, 0, len);
-			return len;
-		}
+    public static boolean enableBlue = true;
+    public static float widthBlue = 1.0f;
+    public static boolean enableRed = true;
+    public static float widthRed = 1.0f;
+    public static boolean enableRainbow = true;
+    public static float widthRainbow = 1.0f;
 
-		byte[] pfx = prefix.getBytes(StandardCharsets.UTF_8);
-		byte[] buf = new byte[str.length];
-		int slen = Configuration.MOB_EFFECTS.search(pfx, 0, pfx.length, buf, 0, buf.length);
-		if (slen == -1)
-			return -1;
+    static {
+        ForgeConfigSpec.Builder serverBuf = new ForgeConfigSpec.Builder();
+        serverBuf.push("server_settings");
+        register(serverBuf, SERVER_ENTRIES, "combat_main", "combat_stats", "whisper_damage", 60.0, 0.0, 1000.0, "武器基础伤害");
+        register(serverBuf, SERVER_ENTRIES, "combat_main", "combat_stats", "enable_hard_mode", false, "是否开启困难模式");
+        serverBuf.pop();
+        SERVER_SPEC = serverBuf.build();
 
-		int cidx = -1;
-		for (int i = 0; (i < pfx.length) && (cidx == -1); i++)
-			if (pfx[i] == ':')
-				cidx = i;
+        ForgeConfigSpec.Builder clientBuf = new ForgeConfigSpec.Builder();
+        clientBuf.push("render_settings");
+        register(clientBuf, CLIENT_ENTRIES, "visual_main", "red", "enable_red", true, "开启黑红特效");
+        register(clientBuf, CLIENT_ENTRIES, "visual_main", "red", "width_red", 1.0, 0.0, 10.0, "黑红勾边宽度");
 
-		int retVal = 0;
-		for (; retVal < Math.min(slen, str.length); retVal++)
-		{
-			str[retVal] = buf[retVal];
-			if (str[retVal] == ':')
-			{
-				retVal++;
-				break;
-			}
-		}
-		if (cidx != -1)
-		{
-			for (; retVal < Math.min(slen, str.length); retVal++)
-				str[retVal] = buf[retVal];
-		}
-		return retVal;
-	}
+        register(clientBuf, CLIENT_ENTRIES, "visual_main", "blue", "enable_blue", true, "开启蓝色特效");
+        register(clientBuf, CLIENT_ENTRIES, "visual_main", "blue", "width_blue", 1.0, 0.0, 10.0, "蓝色勾边宽度");
 
-	public static boolean validateMobEffect(Object id)
-	{
-		if (!(id instanceof String))
-			return false;
-		return ForgeRegistries.MOB_EFFECTS.containsKey(ResourceLocation.tryParse((String) id));
-	}
+        register(clientBuf, CLIENT_ENTRIES, "visual_main", "rainbow", "enable_rainbow", true, "开启彩色特效");
+        register(clientBuf, CLIENT_ENTRIES, "visual_main", "rainbow", "width_rainbow", 1.0, 0.0, 10.0, "彩色勾边宽度");
+        clientBuf.pop();
+        CLIENT_SPEC = clientBuf.build();
+    }
 
-	static
-	{
-		NAMESPACE_DICTIONARY = Trie.DEFAULT_DICTIONARY.clone();
-		NAMESPACE_DICTIONARY[':'] = 26;
-		NAMESPACE_DICTIONARY['_'] = 27;
-		for (int i = 0; i < 10; i++)
-			NAMESPACE_DICTIONARY['0' + i] = (short) (28 + i);
+    public static class ConfigEntry<T> {
+        public final String major, sub, key;
+        public final ForgeConfigSpec.ConfigValue<T> specValue;
+        public final T defaultValue;
+        public final double min, max;
 
-		MOB_EFFECTS = new Trie(NAMESPACE_DICTIONARY);
+        public ConfigEntry(String major, String sub, String key, ForgeConfigSpec.ConfigValue<T> val, T def, double min, double max) {
+            this.major = major; this.sub = sub; this.key = "iron_spells_genesis.config." + key;
+            this.specValue = val; this.defaultValue = def;
+            this.min = min; this.max = max;
+        }
+    }
 
-		// Eternis Apple
-		List<ConfigEffect> defaultEffects = List.of(
-			new ConfigEffect("minecraft:resistance", 600, 1)
-		);
-		DEFAULT_ETERNIS_APPLE_EFFECTS = ImmutableList.copyOf(defaultEffects);
-		ETERNIS_APPLE_EFFECTS = new AtomicReference<>(DEFAULT_ETERNIS_APPLE_EFFECTS);
+    private static void register(ForgeConfigSpec.Builder builder, List<ConfigEntry<?>> list, String major, String sub, String key, boolean def, String comment) {
+        list.add(new ConfigEntry<>(major, sub, key, builder.comment(comment).define(key, def), def, 0, 0));
+    }
 
-		boolean newFile = false;
-		try
-		{
-			newFile = ETERNIS_APPLE_CONFIG.createNewFile();
-			if (newFile)
-				saveEternisApple();
-		}
-		catch (IOException e)
-		{
-			LOGGER.error("Cannot create Eternis Apple config", e);
-		}
+    private static void register(ForgeConfigSpec.Builder builder, List<ConfigEntry<?>> list, String major, String sub, String key, double def, double min, double max, String comment) {
+        list.add(new ConfigEntry<>(major, sub, key, builder.comment(comment).defineInRange(key, def, min, max), def, min, max));
+    }
 
-		if (!newFile)
-		{
-			try (FileReader reader = new FileReader(ETERNIS_APPLE_CONFIG))
-			{
-				JsonObject eternisApple = JsonParser.parseReader(reader).getAsJsonObject();
-				if (eternisApple.get(KEY_ETERNIS_APPLE_EFFECTS).isJsonArray())
-				{
-					JsonArray effects = eternisApple.get(KEY_ETERNIS_APPLE_EFFECTS).getAsJsonArray();
-					List<ConfigEffect> configEffects = new LinkedList<>();
-					for (JsonElement element : effects)
-					{
-						if (!element.isJsonArray())
-							continue;
+    public static void setup() {}
 
-						JsonArray effect = element.getAsJsonArray();
-						if (effect.size() != 3)
-							continue;
+    public static void updateCache() {
+        try {
+            whisperDamage = (Double) find("whisper_damage", SERVER_ENTRIES).specValue.get();
+            enableHardMode = (Boolean) find("enable_hard_mode", SERVER_ENTRIES).specValue.get();
+            enableRed = (Boolean) find("enable_red", CLIENT_ENTRIES).specValue.get();
+            widthRed = ((Double) find("width_red", CLIENT_ENTRIES).specValue.get()).floatValue();
+            enableBlue = (Boolean) find("enable_blue", CLIENT_ENTRIES).specValue.get();
+            widthBlue = ((Double) find("width_blue", CLIENT_ENTRIES).specValue.get()).floatValue();
+            enableRainbow = (Boolean) find("enable_rainbow", CLIENT_ENTRIES).specValue.get();
+            widthRainbow = ((Double) find("width_rainbow", CLIENT_ENTRIES).specValue.get()).floatValue();
+        } catch (IllegalStateException ignored) {
+        }
+    }
 
-						JsonElement e0 = effect.get(0);
-						JsonElement e1 = effect.get(1);
-						JsonElement e2 = effect.get(2);
-						if (!(e0.isJsonPrimitive()) || !(e1.isJsonPrimitive()) || !(e2.isJsonPrimitive()))
-							continue;
+    @SubscribeEvent
+    public static void onConfigLoad(final ModConfigEvent.Loading event) { updateCache(); }
 
-						JsonPrimitive p0 = e0.getAsJsonPrimitive();
-						JsonPrimitive p1 = e1.getAsJsonPrimitive();
-						JsonPrimitive p2 = e2.getAsJsonPrimitive();
-						if (!p0.isString())
-							continue;
-						if (!p1.isNumber())
-							continue;
-						if (!p2.isNumber())
-							continue;
+    @SubscribeEvent
+    public static void onConfigReload(final ModConfigEvent.Reloading event) { updateCache(); }
 
-						ConfigEffect eff = new ConfigEffect();
-						eff.key = p0.getAsString();
-						eff.duration = p1.getAsInt();
-						eff.amplifier = p2.getAsInt();
-						configEffects.add(eff);
-					}
-					ETERNIS_APPLE_EFFECTS.set(List.copyOf(configEffects));
-				}
-			}
-			catch (IOException e)
-			{
-				LOGGER.error("Cannot read Eternis Apple config", e);
-			}
-		}
-
-		ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
-		WHISPER_OF_THE_PAST_DAMAGE = builder
-			.comment("Damage of Whisper of the Past")
-			.defineInRange("WHISPER_OF_THE_PAST_DAMAGE", 60, 0.0, Double.MAX_VALUE);
-		SPECIFICATION = builder.build();
-	}
+    private static ConfigEntry<?> find(String key, List<ConfigEntry<?>> list) {
+        return list.stream().filter(e -> e.key.endsWith(key)).findFirst().orElse(null);
+    }
 }

@@ -20,24 +20,42 @@ import java.util.Objects;
 public class ModShaders {
     @Nullable
     public static ShaderInstance haloShader;
-
+    @Nullable
+    private static ShaderInstance ribbonShader;
     @Nullable
     private static ShaderInstance colorfulShader;
-
     @Nullable
     private static ShaderInstance floridShader;
-    
     @Nullable
     private static ShaderInstance rainbowShader;
-    
     @Nullable
     private static ShaderInstance heatWaveShader;
-
+    @Nullable
+    public static ShaderInstance genesisOutline;
+    @Nullable
+    public static ShaderInstance genesisBloomBlur;
+    @Nullable
+    public static ShaderInstance genesisBloom;
     @Nullable
     private static ShaderInstance heatWavePostprocessShader;
 
     public static ShaderInstance getHaloShader() {
         return Objects.requireNonNull(haloShader, "Halo shader not registered");
+    }
+
+    @javax.annotation.Nullable
+    public static ShaderInstance getGenesisOutline() {
+        return genesisOutline;
+    }
+
+    @javax.annotation.Nullable
+    public static ShaderInstance getGenesisBloomBlur() {
+        return genesisBloomBlur;
+    }
+
+    @javax.annotation.Nullable
+    public static ShaderInstance getGenesisBloom() {
+        return genesisBloom;
     }
 
     public static ShaderInstance getColorfulShader() {
@@ -54,6 +72,9 @@ public class ModShaders {
     
     public static ShaderInstance getHeatWaveShader() {
         return Objects.requireNonNull(heatWaveShader, "HeatWave shader not registered");
+    }
+    public static ShaderInstance getRibbonShader() {
+        return Objects.requireNonNull(ribbonShader, "Ribbon shader not registered");
     }
 
     @SubscribeEvent
@@ -81,7 +102,7 @@ public class ModShaders {
                 DefaultVertexFormat.POSITION_TEX
         );
         event.registerShader(florid, shaderInstance -> floridShader = shaderInstance);
-        
+
         ModShaderInstance rainbow = new ModShaderInstance(
                 resourceProvider,
                 new ResourceLocation(Genesis.MODID, "rainbow_shader").toString(),
@@ -95,6 +116,34 @@ public class ModShaders {
                 DefaultVertexFormat.POSITION_TEX
         );
         event.registerShader(heat_wave, shaderInstance -> heatWaveShader = shaderInstance);
+
+        ModShaderInstance ribbon = new ModShaderInstance(
+                resourceProvider,
+                new ResourceLocation(Genesis.MODID, "ribbon").toString(),
+                DefaultVertexFormat.POSITION_COLOR_TEX
+        );
+        event.registerShader(ribbon, shaderInstance -> ribbonShader = shaderInstance);
+
+        ShaderInstance outline = new ShaderInstance(
+                event.getResourceProvider(),
+                new ResourceLocation(Genesis.MOD_ID, "held_item_outline"),
+                DefaultVertexFormat.POSITION_TEX
+        );
+        event.registerShader(outline, s -> genesisOutline = s);
+
+        ShaderInstance bloomBlur = new ShaderInstance(
+                event.getResourceProvider(),
+                new ResourceLocation(Genesis.MOD_ID, "held_item_bloom_blur"),
+                DefaultVertexFormat.POSITION_TEX
+        );
+        event.registerShader(bloomBlur, s -> genesisBloomBlur = s);
+
+        ShaderInstance bloomComposite = new ShaderInstance(
+                event.getResourceProvider(),
+                new ResourceLocation(Genesis.MOD_ID, "held_item_bloom"),
+                DefaultVertexFormat.POSITION_TEX
+        );
+        event.registerShader(bloomComposite, s -> genesisBloom = s);
     }
 
     public static Minecraft getMinecraft() {

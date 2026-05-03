@@ -23,7 +23,7 @@ public enum TierRegistry implements Tier {
     DARGGET(4, 8000, 20.0F, 11, 50, Ingredient::of),
 
     // 传奇
-    LEGENDARY(400, 0, 2000.0F, 15, Integer.MAX_VALUE, Ingredient::of);
+    LEGENDARY(400, 0, 2000.0F, 15, 100, Ingredient::of);
 
     private final int level;
     private final int uses;

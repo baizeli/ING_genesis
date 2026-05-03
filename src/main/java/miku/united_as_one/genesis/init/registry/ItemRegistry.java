@@ -95,12 +95,6 @@ public class ItemRegistry {
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
 
-    // 寰宇大苹果
-    public static final ItemEntry<EternisAppleItem> ETERNIS_APPLE = Genesis.L2_REGISTRATE
-            .item("eternis_apple", properties -> new EternisAppleItem(properties.stacksTo(64).rarity(Rarity.EPIC)))
-            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
-            .register();
-
     // good_cake
     public static final ItemEntry<GoodCake> GOOD_CAKE = Genesis.L2_REGISTRATE
             .item("good_cake", properties -> new GoodCake())

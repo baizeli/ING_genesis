@@ -57,6 +57,11 @@ public class Gungnir extends SwordItem {
         return InteractionResultHolder.success(stack);
     }
 
+    @Override
+    public boolean isEnchantable(ItemStack stack) {
+        return true;
+    }
+
     public void onAttack(ItemStack itemStack, LivingAttackEvent event) {
         LivingEventEC ec = (LivingEventEC) event;
         ((DamageSourceInterface) event.getSource()).revelationfix$setBypassAll(true);

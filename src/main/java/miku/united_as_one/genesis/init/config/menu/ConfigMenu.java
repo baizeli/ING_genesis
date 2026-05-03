@@ -1,184 +1,66 @@
 package miku.united_as_one.genesis.init.config.menu;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.init.config.Configuration;
-import net.minecraft.client.Minecraft;
+import net.minecraft.Util;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.client.gui.screens.ConfirmLinkScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
-
-public class ConfigMenu extends Screen
-{
-    public static final int PADDING = 8;
-    public static final int HEADER_HEIGHT = 24;
+public class ConfigMenu extends Screen {
     private final Screen parent;
+    private static final String GITHUB_LINK = "https://github.com/baizeli/ING_genesis";
 
-    public final GroupValue GROUP_ETERNIS_APPLE;
-    public final EffectArrayValue ETERNIS_APPLE_EFFECTS;
-
-    public final GroupValue GROUP_COMBAT;
-    public final DoubleValue WHISPER_OF_THE_PAST_DAMAGE;
-
-    private EditBox searchBox;
-    private String searchQuery = "";
-    private ConfigArray configArray;
-
-    public ConfigMenu(Screen parent)
-    {
+    public ConfigMenu(Screen parent) {
         super(Component.translatable(Genesis.MOD_ID + ".config.title"));
         this.parent = parent;
-        Minecraft mc = parent.getMinecraft();
-        Configuration.setup();
-
-        this.GROUP_ETERNIS_APPLE = new GroupValue(this, Genesis.MOD_ID + ".config.eternis_apple", mc.font);
-        this.GROUP_ETERNIS_APPLE.setExpanded(true);
-
-        this.ETERNIS_APPLE_EFFECTS = new EffectArrayValue(this, Genesis.MOD_ID + ".config.eternis_apple.effects", mc.font);
-        this.ETERNIS_APPLE_EFFECTS.value(Configuration.ETERNIS_APPLE_EFFECTS.get());
-        this.ETERNIS_APPLE_EFFECTS.defaultValue = Configuration.DEFAULT_ETERNIS_APPLE_EFFECTS;
-        this.ETERNIS_APPLE_EFFECTS.tooltip = Component.translatable(Genesis.MOD_ID + ".config.eternis_apple.effects.tooltip");
-        this.GROUP_ETERNIS_APPLE.group.add(this.ETERNIS_APPLE_EFFECTS);
-
-        this.GROUP_COMBAT = new GroupValue(this, Genesis.MOD_ID + ".config.combat", mc.font);
-        this.GROUP_COMBAT.setExpanded(false);
-
-        this.WHISPER_OF_THE_PAST_DAMAGE = new DoubleValue(this, Genesis.MOD_ID + ".config.whisper_of_the_past.damage", mc.font);
-        this.WHISPER_OF_THE_PAST_DAMAGE.min = 0.0;
-        this.WHISPER_OF_THE_PAST_DAMAGE.max = Double.MAX_VALUE;
-        this.WHISPER_OF_THE_PAST_DAMAGE.value(Configuration.WHISPER_OF_THE_PAST_DAMAGE.get());
-        this.WHISPER_OF_THE_PAST_DAMAGE.resetValue = (val) -> ((DoubleValue) val).value(Configuration.WHISPER_OF_THE_PAST_DAMAGE.getDefault());
-        this.WHISPER_OF_THE_PAST_DAMAGE.description = Component.translatable(Genesis.MOD_ID + ".config.whisper_of_the_past.damage.desc");
-        this.GROUP_COMBAT.group.add(this.WHISPER_OF_THE_PAST_DAMAGE);
     }
 
     @Override
-    public void onClose()
-    {
-        if (this.minecraft == null)
-            super.onClose();
-        else
-            this.minecraft.setScreen(this.parent);
-    }
-
-    @Override
-    public void init()
-    {
+    public void init() {
         this.clearWidgets();
-
         int buttonWidth = 150;
+        int bottomButtonWidth = 200;
         int buttonHeight = 20;
-        int buttonY = this.height - PADDING - buttonHeight;
+        int gap = 8;
+        int startY = this.height / 2 + 10;
 
-        Button saveButton = Button.builder(
-                Component.translatable(Genesis.MOD_ID + ".config.save"),
-                b -> this.save()
-        ).bounds(PADDING, buttonY, buttonWidth, buttonHeight).build();
+        this.addRenderableWidget(Button.builder(Component.translatable(Genesis.MOD_ID + ".config.client"), b -> this.minecraft.setScreen(new ClientConfigMenu(this)))
+                .bounds(this.width / 2 - buttonWidth - (gap / 2), startY, buttonWidth, buttonHeight).build());
 
-        Button doneButton = Button.builder(
-                Component.translatable(Genesis.MOD_ID + ".config.done"),
-                b -> this.close()
-        ).bounds(this.width - PADDING - buttonWidth, buttonY, buttonWidth, buttonHeight).build();
+        this.addRenderableWidget(Button.builder(Component.translatable(Genesis.MOD_ID + ".config.server"), b -> this.minecraft.setScreen(new ServerConfigMenu(this)))
+                .bounds(this.width / 2 + (gap / 2), startY, buttonWidth, buttonHeight).build());
 
-        Button resetAllButton = Button.builder(
-                Component.translatable(Genesis.MOD_ID + ".config.reset_all"),
-                b -> this.resetAll()
-        ).bounds((this.width - buttonWidth) / 2, buttonY, buttonWidth, buttonHeight).build();
-
-        this.addRenderableWidget(saveButton);
-        this.addRenderableWidget(doneButton);
-        this.addRenderableWidget(resetAllButton);
-
-        int arrayTop = HEADER_HEIGHT + PADDING * 2;
-        int arrayHeight = this.height - arrayTop - buttonHeight - PADDING * 2;
-        int arrayWidth = this.width - PADDING * 2;
-
-        this.configArray = new ConfigArray(this.getMinecraft(), arrayWidth, arrayHeight, arrayTop, PADDING);
-        this.configArray.setSearchQuery(this.searchQuery);
-        this.configArray.push(this.GROUP_ETERNIS_APPLE);
-        this.configArray.push(this.GROUP_COMBAT);
-        this.addRenderableWidget(this.configArray);
-
-        int searchBoxWidth = 200;
-        this.searchBox = new EditBox(
-                this.font,
-                (this.width - searchBoxWidth) / 2,
-                PADDING + 2,
-                searchBoxWidth,
-                18,
-                Component.translatable(Genesis.MOD_ID + ".config.search")
-        );
-        this.searchBox.setValue(this.searchQuery);
-        this.searchBox.setResponder(query -> {
-            this.searchQuery = query;
-            if (this.configArray != null) {
-                this.configArray.setSearchQuery(query);
-            }
-        });
-        this.addWidget(this.searchBox);
+        this.addRenderableWidget(Button.builder(Component.translatable(Genesis.MOD_ID + ".config.github"), b -> {
+            this.minecraft.setScreen(new ConfirmLinkScreen(open -> {
+                if (open) Util.getPlatform().openUri(GITHUB_LINK);
+                this.minecraft.setScreen(this);
+            }, GITHUB_LINK, true));
+        }).bounds(this.width / 2 - (bottomButtonWidth / 2), startY + buttonHeight + gap, bottomButtonWidth, buttonHeight).build());
     }
 
     @Override
-    public void render(@NotNull GuiGraphics graphics, int mouseX, int mouseY, float partialTick)
-    {
-        this.renderBackground(graphics);
+    public void render(@NotNull GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+        graphics.fill(0, 0, this.width, this.height, 0x60000000);
+        int titleY = 50;
 
-        graphics.drawCenteredString(
-                this.font,
-                this.title,
-                this.width / 2,
-                PADDING,
-                0xFFFFFF
-        );
+        graphics.pose().pushPose();
+        graphics.pose().scale(2.0F, 2.0F, 2.0F);
+        graphics.drawCenteredString(this.font, this.title, this.width / 4, titleY / 2, 0xFFFFFF);
+        graphics.pose().popPose();
+
+        graphics.drawCenteredString(this.font, Component.translatable(Genesis.MOD_ID + ".config.subtitle"), this.width / 2, titleY + 25, 0xFFFFFF);
 
         super.render(graphics, mouseX, mouseY, partialTick);
-
-        if (this.searchBox.isHovered()) {
-            graphics.renderTooltip(
-                    this.font,
-                    Component.translatable(Genesis.MOD_ID + ".config.search.tooltip"),
-                    mouseX,
-                    mouseY
-            );
-        }
     }
 
     @Override
-    public boolean keyPressed(int keyCode, int scanCode, int modifiers)
-    {
-        if (this.searchBox.keyPressed(keyCode, scanCode, modifiers)) {
-            return true;
-        }
-        return super.keyPressed(keyCode, scanCode, modifiers);
-    }
+    public void renderBackground(GuiGraphics graphics) {}
 
-    public void save()
-    {
-        Configuration.ETERNIS_APPLE_EFFECTS.set(List.copyOf(this.ETERNIS_APPLE_EFFECTS.value()));
-        Configuration.saveEternisApple();
-        Configuration.WHISPER_OF_THE_PAST_DAMAGE.set(this.WHISPER_OF_THE_PAST_DAMAGE.value.doubleValue());
-        Configuration.WHISPER_OF_THE_PAST_DAMAGE.save();
-    }
-
-    public void resetAll()
-    {
-        this.ETERNIS_APPLE_EFFECTS.reset(null);
-        this.WHISPER_OF_THE_PAST_DAMAGE.reset(null);
-        this.save();
-    }
-
-    public void close()
-    {
-        this.save();
-        this.onClose();
-    }
-
-    public String getSearchQuery() {
-        return this.searchQuery;
+    @Override
+    public void onClose() {
+        if (this.minecraft != null) this.minecraft.setScreen(this.parent);
     }
 }
-

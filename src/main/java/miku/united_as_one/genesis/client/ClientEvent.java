@@ -1,7 +1,9 @@
 package miku.united_as_one.genesis.client;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.client.renderer.*;
+import miku.united_as_one.genesis.client.renderer.AfterImageManager;
+import miku.united_as_one.genesis.client.renderer.AfterImageRenderer;
+import miku.united_as_one.genesis.client.render.SlashEffectManager;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
@@ -15,41 +17,48 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @OnlyIn(Dist.CLIENT)
-@Mod.EventBusSubscriber(modid = Genesis.MODID)
+@Mod.EventBusSubscriber(modid = Genesis.MODID, value = Dist.CLIENT)
 public class ClientEvent {
 
     @SubscribeEvent
     public static void onClientTick(TickEvent.ClientTickEvent event) {
         if (event.phase == TickEvent.Phase.END) {
             AfterImageManager.tick();
+            SlashEffectManager.tick(); // 刀光
         }
     }
 
     @SubscribeEvent
     public static void onRenderLevelStage(RenderLevelStageEvent event) {
+
+        Minecraft mc = Minecraft.getInstance();
+        if (mc.level == null || mc.player == null) return;
+
+        PoseStack poseStack = event.getPoseStack();
+        Camera camera = event.getCamera();
+        float partialTick = event.getPartialTick();
+        MultiBufferSource.BufferSource bufferSource = mc.renderBuffers().bufferSource();
+
+        // 残影
         if (event.getStage() == RenderLevelStageEvent.Stage.AFTER_ENTITIES) {
-            Minecraft mc = Minecraft.getInstance();
-            if (mc.level != null && mc.player != null && mc.player.getPersistentData().getBoolean("isUnparalleledActive")) {
-                PoseStack poseStack = event.getPoseStack();
-                Camera camera = event.getCamera();
-                float partialTick = event.getPartialTick();
-                MultiBufferSource.BufferSource bufferSource = mc.renderBuffers().bufferSource();
-//                RenderSystem.enableBlend();
-//                RenderSystem.defaultBlendFunc();
-//                RenderSystem.enableDepthTest();
-//                RenderSystem.depthMask(false);
+            if (mc.player.getPersistentData().getBoolean("isUnparalleledActive")) {
                 AfterImageRenderer.renderAfterImages(poseStack, bufferSource, camera, partialTick);
-                bufferSource.endBatch();
-//                RenderSystem.depthMask(true);
-//                RenderSystem.disableBlend();
             }
         }
+
+        // 刀光
+        if (event.getStage() == RenderLevelStageEvent.Stage.AFTER_PARTICLES) {
+            SlashEffectManager.render(poseStack, bufferSource, partialTick);
+        }
+
+        bufferSource.endBatch();
     }
 
     @SubscribeEvent
     public static void onWorldUnload(LevelEvent.Unload event) {
         if (event.getLevel().isClientSide()) {
             AfterImageManager.clear();
+            SlashEffectManager.clear();
         }
     }
 }

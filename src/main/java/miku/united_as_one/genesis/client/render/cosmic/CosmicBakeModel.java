@@ -255,7 +255,6 @@ public final class CosmicBakeModel implements BakedModel {
             COSMIC_EFFECTS.put(ModItems.INFINITY_ETERNAL_LEGGINGS.get(), new EffectConfig(0, 0.5F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
             COSMIC_EFFECTS.put(ModItems.INFINITY_ETERNAL_BOOTS.get(), new EffectConfig(0, 0.5F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));*/
             COSMIC_EFFECTS.put(ItemRegistry.VIOLET_GALAXY_INGOT.get(), new EffectConfig(0, 0.6F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
-            COSMIC_EFFECTS.put(ItemRegistry.ETERNIS_APPLE.get(), new EffectConfig(0, 0.5F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
             COSMIC_EFFECTS.put(ItemRegistry.AVARITIA_SWORD.get(), new EffectConfig(15, 0.6F, new Vector4f(0.1F, 0.1F, 0.1F, 1.0F)));
     }
 }

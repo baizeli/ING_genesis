@@ -3,6 +3,7 @@ package miku.united_as_one.genesis.common.network;
 import miku.united_as_one.genesis.common.data.content.arcaneWorkbench.ArcaneWorkbenchRecipeTransferPacket;
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.common.network.manuscript.LearnSpellPacket;
+import miku.united_as_one.genesis.common.network.packet.SpawnSlashPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.network.*;
 import net.minecraftforge.network.simple.SimpleChannel;
@@ -48,5 +49,10 @@ public class NetworkHandler {
                 MarkDeadPacket::encode,
                 MarkDeadPacket::decode,
                 MarkDeadPacket::handle);
+
+        INSTANCE.registerMessage(id++, SpawnSlashPacket.class,
+                SpawnSlashPacket::encode,
+                SpawnSlashPacket::decode,
+                SpawnSlashPacket::handle);
     }
 }
