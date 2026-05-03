@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "iron_spells_genesis:block/quietness_log_wood_horizontal",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "iron_spells_genesis:block/quietness_log_wood"
+    },
+    "axis=z": {
+      "model": "iron_spells_genesis:block/quietness_log_wood_horizontal",
+      "x": 90
+    }
+  }
+}

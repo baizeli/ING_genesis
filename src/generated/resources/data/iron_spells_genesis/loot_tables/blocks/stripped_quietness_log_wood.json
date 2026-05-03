@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "iron_spells_genesis:quietness_dirt"
+          "name": "iron_spells_genesis:stripped_quietness_log_wood"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "iron_spells_genesis:blocks/quietness_dirt"
+  "random_sequence": "iron_spells_genesis:blocks/stripped_quietness_log_wood"
 }
