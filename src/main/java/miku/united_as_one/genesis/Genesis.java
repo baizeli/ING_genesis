@@ -5,8 +5,8 @@ import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import io.redspace.ironsspellbooks.api.spells.ISpellContainer;
 import io.redspace.ironsspellbooks.entity.mobs.keeper.KeeperRenderer;
 import io.redspace.ironsspellbooks.entity.spells.void_tentacle.VoidTentacle;
+import miku.united_as_one.genesis.client.renderer.WSRenderer;
 import miku.united_as_one.genesis.client.renderer.entity.laser.DeathLaserRenderer;
-import miku.united_as_one.genesis.client.renderer.entity.test.BaiZeLiRenderer;
 import miku.united_as_one.genesis.common.data.content.arcaneWorkbench.*;
 import miku.united_as_one.genesis.common.data.content.workbenchs.*;
 import miku.united_as_one.genesis.common.entity.*;
@@ -53,14 +53,15 @@ import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.*;
 import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.*;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.fml.loading.FMLEnvironment;
 import net.minecraftforge.forgespi.locating.IModFile;
-import net.minecraftforge.network.NetworkRegistry;
-import net.minecraftforge.network.simple.SimpleChannel;
+import net.minecraftforge.client.ConfigScreenHandler;
+import miku.united_as_one.genesis.init.config.menu.ConfigMenu;
 import net.minecraftforge.resource.PathPackResources;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
@@ -99,7 +100,6 @@ public class Genesis
         CreativeTabRegistry.register(modEventBus);
         EntityRegistry.ENTITY_TYPES.register(modEventBus);
         BlockRegistry.register();
-        BaiZeEntities.ENTITY_TYPES.register(modEventBus);
         SoundRegister.SOUND_EVENTS.register(modEventBus);
 
         SpellSchoolRegistry.register(modEventBus);
@@ -125,7 +125,8 @@ public class Genesis
             MinecraftForge.EVENT_BUS.register(ClientEvent.class);
         }
 
-        context.registerConfig(ModConfig.Type.COMMON, Configuration.SPECIFICATION);
+        context.registerConfig(ModConfig.Type.SERVER, Configuration.SERVER_SPEC);
+        context.registerConfig(ModConfig.Type.CLIENT, Configuration.CLIENT_SPEC);
     }
 
     public static void registerOptionalTexturePack(ResourceLocation folderName, Component displayName, boolean defaultEnabled) {
@@ -208,6 +209,7 @@ public class Genesis
     }
 
     public void onAttributeCreate(EntityAttributeCreationEvent event) {
+        event.put(EntityRegistry.WARDEN_SPELLCASTER.get(), WardenSpellcaster.createAttributes().build());
         event.put(EntityRegistry.MAGIC_CIRCLE.get(), MagicCircle.createAttributes().build());
         event.put(EntityRegistry.BOX_ENTIYT.get(), BoxEntity.createAttributes().build());
         event.put(EntityRegistry.SWORD_ENTITY.get(), SwordEntity.createAttributes().build());
@@ -216,7 +218,7 @@ public class Genesis
         event.put(EntityRegistry.SUMMONED_KEEPER.get(), SummonedKeeperEntity.createAttributes().build());
         event.put(EntityRegistry.SUMMONED_WARDEN.get(), SummonedWardenEntity.createAttributes().build());
         event.put(EntityRegistry.WARDEN_MANCER.get(), WardenMageEntity.setAttributes().build());
-        event.put(BaiZeEntities.BAI_ZE.get(), BaiZeLiEntity.createAttributes().build());
+        event.put(EntityRegistry.BAI_ZE_LI.get(), BaiZeLiEntity.createAttributes().build());
     }
 
     public static String resource(String location)
@@ -229,6 +231,7 @@ public class Genesis
     {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
+            // 1. 处理需要在主线程运行的注册任务（渲染器等）
             event.enqueueWork(() -> {
                 MenuScreens.register(ModMenuTypes.ARCANE_WORKBENCH_MENU.get(), ArcaneWorkbenchScreen::new);
                 EntityRenderers.register(EntityRegistry.NYAN_CAT.get(), NyanCatRenderer::new);
@@ -238,13 +241,13 @@ public class Genesis
                 EntityRenderers.register(EntityRegistry.SWORD_ENTITY.get(), SwordEntityRenderer::new);
                 EntityRenderers.register(EntityRegistry.DEATH_LASER.get(), DeathLaserRenderer::new);
                 EntityRenderers.register(EntityRegistry.THROWN_IRON.get(), ThrownIronRenderer::new);
-
+                EntityRenderers.register(EntityRegistry.WARDEN_SPELLCASTER.get(), WSRenderer::new);
                 EntityRenderers.register(EntityRegistry.DEAD_STAR_DECREE_COMET.get(),
-                    context -> new DeadStarDecreeCometRenderer(context, 0.25f)
+                        context -> new DeadStarDecreeCometRenderer(context, 0.25f)
                 );
-                
+
                 EntityRenderers.register(EntityRegistry.DEAD_STAR_DECREE_LARGE_COMET.get(),
-                    context -> new DeadStarDecreeCometRenderer(context, 6.0f)
+                        context -> new DeadStarDecreeCometRenderer(context, 6.0f)
                 );
 
                 EntityRenderers.register(EntityRegistry.SUMMONED_KEEPER.get(), KeeperRenderer::new);
@@ -253,9 +256,13 @@ public class Genesis
                 CuriosRendererRegistry.register(ItemRegistry.CHAOS_SPELL_BOOK.get(), SpellBookCurioRenderer::new);
                 CuriosRendererRegistry.register(ItemRegistry.CELESTIAL_SOURCE_SPELL_BOOK.get(), SpellBookCurioRenderer::new);
                 DistortWorldRender.initChain(Minecraft.getInstance());
+
+                miku.united_as_one.genesis.client.render.luminous.GenesisRegistry.init();
             });
-            MinecraftForge.registerConfigScreen(new ConfigurationFactory());
-            //Minecraft.getInstance().font = FuckFont1.font;
+            ModLoadingContext.get().registerExtensionPoint(
+                    ConfigScreenHandler.ConfigScreenFactory.class,
+                    () -> new ConfigScreenHandler.ConfigScreenFactory((mc, lastScreen) -> new ConfigMenu(lastScreen))
+            );
         }
 
 //        @SubscribeEvent
