@@ -2,8 +2,9 @@ package miku.united_as_one.genesis.init.registry;
 
 import com.tterrag.registrate.util.entry.FluidEntry;
 import miku.united_as_one.genesis.Genesis;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.material.Fluid;
+import net.minecraft.tags.FluidTags;
 import net.minecraftforge.fluids.ForgeFlowingFluid;
 
 public class FluidRegistry {
@@ -18,6 +19,8 @@ public class FluidRegistry {
                     .slopeFindDistance(4)
                     .explosionResistance(100f))
             .source(ForgeFlowingFluid.Source::new)
+            .tag(FluidTags.WATER)
+            .renderType(RenderType::translucent)
             .bucket()
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
             .build()
