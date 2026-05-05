@@ -16,5 +16,6 @@ public class ModModel {
         event.registerLayerDefinition(DeadStarDecreeCometModel.LAYER_LOCATION, DeadStarDecreeCometModel::createBodyLayer);
         event.registerLayerDefinition(ThrowBloodAndWoundsModel.LAYER_LOCATION, ThrowBloodAndWoundsModel::createBodyLayer);
         event.registerLayerDefinition(WardenMageModel.LAYER_LOCATION, WardenMageModel::createBodyLayer);
+        event.registerLayerDefinition(WardenSpellcasterModel.LAYER_LOCATION, WardenSpellcasterModel::createBodyLayer);
     }
 }
