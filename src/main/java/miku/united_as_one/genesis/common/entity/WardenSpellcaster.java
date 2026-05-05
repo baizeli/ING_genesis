@@ -86,7 +86,9 @@ implements IFlagMob
         super.aiStep();
         if (this.sonicCooldown > 0) --this.sonicCooldown;
         if (this.getTarget() != null) {
-            this.pickFlag(this.getTarget());
+            if (this.getFlag() == 0) {
+                this.pickFlag(this.getTarget());
+            }
             this.tickFlag(this.getTarget());
         }
     }
@@ -125,9 +127,18 @@ implements IFlagMob
     {
         int flag = 0;
         if (this.closerThan(pTarget, 15.0D)) {
-            flag = 1;
+            flag = COMBAT;
         } else if (this.sonicCooldown <= 0) {
-            flag = SKILL;
+            float chance = this.randomUtil.nextFloat();
+            if (chance < 0.4F) {
+                flag = SPELL_1;
+            } else if (chance < 0.6F) {
+                flag = SPELL_2;
+            } else if (chance < 0.8F) {
+                flag = SPELL_3;
+            } else {
+                flag = SKILL;
+            }
         }
         this.setFlag(flag);
     }
