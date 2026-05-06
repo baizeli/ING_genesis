@@ -2,11 +2,16 @@ package miku.united_as_one.genesis.common.event;
 
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.init.registry.FluidRegistry;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.FillBucketEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -20,33 +25,23 @@ public class FluidCommonEvents {
 
     @SubscribeEvent
     public static void onCreateFluidSource(BlockEvent.CreateFluidSourceEvent event) {
-        if (event.getState().getFluidState().getType() == FluidRegistry.SOURCE_FLUID.get() ||
-                event.getState().getFluidState().getType() == FluidRegistry.SOURCE_FLUID.getSource() ||
-                event.getState().getFluidState().getType() == FluidRegistry.BLACKWATER_FLUID.get() ||
-                event.getState().getFluidState().getType() == FluidRegistry.BLACKWATER_FLUID.getSource()) {
-            event.setResult(Event.Result.ALLOW);
-        }
+        if (isCustomFluid(event.getState().getFluidState())) event.setResult(Event.Result.ALLOW);
     }
 
     @SubscribeEvent
     public static void onBucketFill(FillBucketEvent event) {
-        if (event.getLevel().isClientSide) return;
-
-        if (event.getTarget() != null && event.getTarget().getType() == net.minecraft.world.phys.HitResult.Type.BLOCK) {
-            net.minecraft.world.phys.BlockHitResult blockHit = (net.minecraft.world.phys.BlockHitResult) event.getTarget();
-            FluidState state = event.getLevel().getFluidState(blockHit.getBlockPos());
-            if (state.getType() == FluidRegistry.SOURCE_FLUID.getSource() || state.getType() == FluidRegistry.BLACKWATER_FLUID.getSource()) {
-                event.getLevel().playSound(null, blockHit.getBlockPos(), SoundEvents.BUCKET_FILL, SoundSource.PLAYERS, 1.0F, 1.0F);
-            }
+        if (event.getLevel().isClientSide() || event.getTarget() == null || event.getTarget().getType() != net.minecraft.world.phys.HitResult.Type.BLOCK) return;
+        net.minecraft.world.phys.BlockHitResult hit = (net.minecraft.world.phys.BlockHitResult) event.getTarget();
+        if (isCustomFluid(event.getLevel().getFluidState(hit.getBlockPos()))) {
+            event.getLevel().playSound(null, hit.getBlockPos(), SoundEvents.BUCKET_FILL, SoundSource.PLAYERS, 1.0F, 1.0F);
         }
     }
 
     @SubscribeEvent
     public static void onBucketEmpty(PlayerInteractEvent.RightClickBlock event) {
         if (event.getLevel().isClientSide) return;
-
-        if (event.getItemStack().getItem() == FluidRegistry.SOURCE_FLUID.getBucket().get() ||
-                event.getItemStack().getItem() == FluidRegistry.BLACKWATER_FLUID.getBucket().get()) {
+        var item = event.getItemStack().getItem();
+        if (isCustomBucket(item)) {
             event.getLevel().playSound(null, event.getPos(), SoundEvents.BUCKET_EMPTY, SoundSource.PLAYERS, 1.0F, 1.0F);
         }
     }
@@ -55,16 +50,53 @@ public class FluidCommonEvents {
     public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
         if (event.phase == TickEvent.Phase.END && !event.player.level().isClientSide) {
             Player player = event.player;
-            if (player.isAlive()) {
-                FluidState state = player.level().getFluidState(player.blockPosition());
-                if (state.getType() == FluidRegistry.BLACKWATER_FLUID.get() || state.getType() == FluidRegistry.BLACKWATER_FLUID.getSource()) {
-                    if (!player.hasEffect(MobEffects.WATER_BREATHING)) {
-                        if (player.tickCount % 10 == 0) {
-                            player.hurt(player.damageSources().magic(), 4.0F);
-                        }
-                    }
+            FluidState state = player.level().getFluidState(player.blockPosition());
+            if (state.getType() == FluidRegistry.BLACKWATER_FLUID.get() || state.getType() == FluidRegistry.BLACKWATER_FLUID.getSource()) {
+                if (!player.hasEffect(MobEffects.WATER_BREATHING) && player.tickCount % 10 == 0) {
+                    player.hurt(player.damageSources().magic(), 4.0F);
                 }
             }
         }
+    }
+
+    @SubscribeEvent
+    public static void onNeighborNotify(BlockEvent.NeighborNotifyEvent event) {
+        Level level = (Level) event.getLevel();
+        BlockPos pos = event.getPos();
+        FluidState state = level.getFluidState(pos);
+
+        if (isCustomFluid(state)) {
+            for (Direction dir : Direction.values()) {
+                BlockPos adjPos = pos.relative(dir);
+                FluidState adjState = level.getFluidState(adjPos);
+                if (adjState.getType() == Fluids.LAVA || adjState.getType() == Fluids.FLOWING_LAVA) {
+
+                    // --- 反应结果清单 ---
+                    if (state.getType() == FluidRegistry.SOURCE_FLUID.get() || state.getType() == FluidRegistry.SOURCE_FLUID.getSource()) {
+                        level.setBlockAndUpdate(pos, Blocks.CRYING_OBSIDIAN.defaultBlockState()); // 万化源流变哭泣黑曜石
+                    } else if (state.getType() == FluidRegistry.BLACKWATER_FLUID.get() || state.getType() == FluidRegistry.BLACKWATER_FLUID.getSource()) {
+                        level.setBlockAndUpdate(pos, Blocks.NETHERRACK.defaultBlockState()); // 黑水变下界岩
+                    } else if (state.getType() == FluidRegistry.BLOOD_FLUID.get() || state.getType() == FluidRegistry.BLOOD_FLUID.getSource()) {
+                        level.setBlockAndUpdate(pos, Blocks.MAGMA_BLOCK.defaultBlockState()); // 血变岩浆块
+                    }
+
+                    level.playSound(null, pos, SoundEvents.LAVA_EXTINGUISH, SoundSource.BLOCKS, 0.5F, 2.6F);
+                    break;
+                }
+            }
+        }
+    }
+
+    private static boolean isCustomFluid(FluidState state) {
+        var t = state.getType();
+        return t == FluidRegistry.SOURCE_FLUID.get() || t == FluidRegistry.SOURCE_FLUID.getSource() ||
+                t == FluidRegistry.BLACKWATER_FLUID.get() || t == FluidRegistry.BLACKWATER_FLUID.getSource() ||
+                t == FluidRegistry.BLOOD_FLUID.get() || t == FluidRegistry.BLOOD_FLUID.getSource();
+    }
+
+    private static boolean isCustomBucket(net.minecraft.world.item.Item item) {
+        return item == FluidRegistry.SOURCE_FLUID.getBucket().get() ||
+                item == FluidRegistry.BLACKWATER_FLUID.getBucket().get() ||
+                item == FluidRegistry.BLOOD_FLUID.getBucket().get();
     }
 }

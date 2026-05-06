@@ -14,10 +14,7 @@ public class FluidRegistry {
                     ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "block/source_fluid_still"),
                     ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "block/source_fluid_flow")
             )
-            .fluidProperties(p -> p.levelDecreasePerBlock(1)
-                    .tickRate(5)
-                    .slopeFindDistance(4)
-                    .explosionResistance(100f))
+            .fluidProperties(p -> p.levelDecreasePerBlock(1).tickRate(5).slopeFindDistance(4).explosionResistance(100f))
             .source(ForgeFlowingFluid.Source::new)
             .tag(FluidTags.WATER)
             .renderType(RenderType::translucent)
@@ -31,10 +28,21 @@ public class FluidRegistry {
                     ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "block/blackwater_fluid_still"),
                     ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "block/blackwater_fluid_flow")
             )
-            .fluidProperties(p -> p.levelDecreasePerBlock(1)
-                    .tickRate(5)
-                    .slopeFindDistance(4)
-                    .explosionResistance(100f))
+            .fluidProperties(p -> p.levelDecreasePerBlock(1).tickRate(5).slopeFindDistance(4).explosionResistance(100f))
+            .source(ForgeFlowingFluid.Source::new)
+            .tag(FluidTags.WATER)
+            .renderType(RenderType::translucent)
+            .bucket()
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
+            .build()
+            .register();
+
+    public static final FluidEntry<ForgeFlowingFluid.Flowing> BLOOD_FLUID = Genesis.L2_REGISTRATE
+            .fluid("blood_fluid",
+                    ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "block/blood_fluid_still"),
+                    ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "block/blood_fluid_flow")
+            )
+            .fluidProperties(p -> p.levelDecreasePerBlock(1).tickRate(5).slopeFindDistance(4).explosionResistance(100f))
             .source(ForgeFlowingFluid.Source::new)
             .tag(FluidTags.WATER)
             .renderType(RenderType::translucent)
