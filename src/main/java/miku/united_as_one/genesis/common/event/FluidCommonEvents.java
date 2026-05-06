@@ -61,30 +61,6 @@ public class FluidCommonEvents {
 
     @SubscribeEvent
     public static void onNeighborNotify(BlockEvent.NeighborNotifyEvent event) {
-        Level level = (Level) event.getLevel();
-        BlockPos pos = event.getPos();
-        FluidState state = level.getFluidState(pos);
-
-        if (isCustomFluid(state)) {
-            for (Direction dir : Direction.values()) {
-                BlockPos adjPos = pos.relative(dir);
-                FluidState adjState = level.getFluidState(adjPos);
-                if (adjState.getType() == Fluids.LAVA || adjState.getType() == Fluids.FLOWING_LAVA) {
-
-                    // --- 反应结果清单 ---
-                    if (state.getType() == FluidRegistry.SOURCE_FLUID.get() || state.getType() == FluidRegistry.SOURCE_FLUID.getSource()) {
-                        level.setBlockAndUpdate(pos, Blocks.CRYING_OBSIDIAN.defaultBlockState()); // 万化源流变哭泣黑曜石
-                    } else if (state.getType() == FluidRegistry.BLACKWATER_FLUID.get() || state.getType() == FluidRegistry.BLACKWATER_FLUID.getSource()) {
-                        level.setBlockAndUpdate(pos, Blocks.NETHERRACK.defaultBlockState()); // 黑水变下界岩
-                    } else if (state.getType() == FluidRegistry.BLOOD_FLUID.get() || state.getType() == FluidRegistry.BLOOD_FLUID.getSource()) {
-                        level.setBlockAndUpdate(pos, Blocks.MAGMA_BLOCK.defaultBlockState()); // 血变岩浆块
-                    }
-
-                    level.playSound(null, pos, SoundEvents.LAVA_EXTINGUISH, SoundSource.BLOCKS, 0.5F, 2.6F);
-                    break;
-                }
-            }
-        }
     }
 
     private static boolean isCustomFluid(FluidState state) {
