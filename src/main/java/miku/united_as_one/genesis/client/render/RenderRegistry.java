@@ -1,5 +1,6 @@
 package miku.united_as_one.genesis.client.render;
 
+import miku.united_as_one.genesis.client.renderer.WSRenderer;
 import miku.united_as_one.genesis.client.renderer.entity.test.BaiZeLiRenderer;
 import miku.united_as_one.genesis.client.renderer.entity.warlock.WardenMageRenderer;
 import miku.united_as_one.genesis.common.entity.spell.blood_boss.blood_dagger.BloodDaggerRenderer;
@@ -41,7 +42,7 @@ public class RenderRegistry {
         event.registerEntityRenderer(EntityRegistry.TREMOR_AOE_ENTITY.get(), NoopRenderer::new);
         event.registerEntityRenderer(EntityRegistry.WARDEN_MANCER.get(), WardenMageRenderer::new);
         event.registerEntityRenderer(EntityRegistry.BAI_ZE_LI.get(), BaiZeLiRenderer::new);
-
+        event.registerEntityRenderer(EntityRegistry.WARDEN_SPELLCASTER.get(), WSRenderer::new);
 
 
 

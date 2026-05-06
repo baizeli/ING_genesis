@@ -1,0 +1,10 @@
+{
+  "values": [
+    "iron_spells_genesis:flowing_source_fluid",
+    "iron_spells_genesis:source_fluid",
+    "iron_spells_genesis:flowing_blackwater_fluid",
+    "iron_spells_genesis:blackwater_fluid",
+    "iron_spells_genesis:flowing_blood_fluid",
+    "iron_spells_genesis:blood_fluid"
+  ]
+}
