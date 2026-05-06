@@ -26,8 +26,10 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.*;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
@@ -38,6 +40,8 @@ import java.util.*;
 
 @SuppressWarnings("removal")
 public class ItemRegistry {
+    private static final int FOOD_EFFECT_DURATION = 20 * 60;
+
     // 紫极锭
     public static final ItemEntry<EternisMaterial> VIOLET_GALAXY_INGOT = Genesis.L2_REGISTRATE
             .item("violet_galaxy_ingot", properties -> new EternisMaterial(properties, 0))
@@ -98,6 +102,33 @@ public class ItemRegistry {
     // good_cake
     public static final ItemEntry<GoodCake> GOOD_CAKE = Genesis.L2_REGISTRATE
             .item("good_cake", properties -> new GoodCake())
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
+            .register();
+
+    public static final ItemEntry<Item> CRYSTAL_FRUIT = Genesis.L2_REGISTRATE
+            .item("crystal_fruit", properties -> new Item(properties.food(new FoodProperties.Builder()
+                    .nutrition(3)
+                    .saturationMod(3.0F)
+                    .effect(() -> new MobEffectInstance(EffectRegistry.MANA_SHIELD.get(), FOOD_EFFECT_DURATION), 1.0F)
+                    .build())))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
+            .register();
+
+    public static final ItemEntry<Item> PHANTOM_PLUM = Genesis.L2_REGISTRATE
+            .item("phantom_plum", properties -> new Item(properties.food(new FoodProperties.Builder()
+                    .nutrition(3)
+                    .saturationMod(3.0F)
+                    .effect(() -> new MobEffectInstance(EffectRegistry.MANA_OVERDRAFT.get(), FOOD_EFFECT_DURATION, 1), 1.0F)
+                    .build())))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
+            .register();
+
+    public static final ItemEntry<Item> COLORFUL_FRUITS = Genesis.L2_REGISTRATE
+            .item("colorful_fruits", properties -> new Item(properties.food(new FoodProperties.Builder()
+                    .nutrition(3)
+                    .saturationMod(3.0F)
+                    .effect(() -> new MobEffectInstance(EffectRegistry.CHAOS_RESISTANCE.get(), FOOD_EFFECT_DURATION), 1.0F)
+                    .build())))
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
 
