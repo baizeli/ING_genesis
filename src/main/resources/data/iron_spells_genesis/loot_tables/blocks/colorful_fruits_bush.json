@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "iron_spells_genesis:colorful_fruits"
+        }
+      ]
+    }
+  ],
+  "random_sequence": "iron_spells_genesis:blocks/colorful_fruits_bush"
+}

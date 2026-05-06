@@ -3,8 +3,10 @@ package miku.united_as_one.genesis.init.registry;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.common.block.ChaosPortalBlock;
+import miku.united_as_one.genesis.common.block.GenesisFruitBushBlock;
 import miku.united_as_one.genesis.common.block.util.SimpleBlockSet;
 import miku.united_as_one.genesis.common.data.content.arcaneWorkbench.ArcaneWorkbenchBlock;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.block.*;
@@ -46,6 +48,39 @@ public class BlockRegistry {
             .item()
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
             .build()
+            .register();
+
+    public static final BlockEntry<GenesisFruitBushBlock> CRYSTAL_FRUIT_BUSH = Genesis.L2_REGISTRATE
+            .block("crystal_fruit_bush", properties -> new GenesisFruitBushBlock(
+                    "crystal_fruit",
+                    state -> state.is(ARCANE_CRYSTAL_BLOCK.get()),
+                    properties
+            ))
+            .initialProperties(() -> Blocks.SWEET_BERRY_BUSH)
+            .properties(p -> p.randomTicks())
+            .addLayer(() -> RenderType::cutout)
+            .register();
+
+    public static final BlockEntry<GenesisFruitBushBlock> PHANTOM_PLUM_BUSH = Genesis.L2_REGISTRATE
+            .block("phantom_plum_bush", properties -> new GenesisFruitBushBlock(
+                    "phantom_plum",
+                    state -> state.is(GENESIS_DIRT.getBase().get()),
+                    properties
+            ))
+            .initialProperties(() -> Blocks.SWEET_BERRY_BUSH)
+            .properties(p -> p.randomTicks())
+            .addLayer(() -> RenderType::cutout)
+            .register();
+
+    public static final BlockEntry<GenesisFruitBushBlock> COLORFUL_FRUITS_BUSH = Genesis.L2_REGISTRATE
+            .block("colorful_fruits_bush", properties -> new GenesisFruitBushBlock(
+                    "colorful_fruits",
+                    state -> state.is(GENESIS_DIRT.getBase().get()),
+                    properties
+            ))
+            .initialProperties(() -> Blocks.SWEET_BERRY_BUSH)
+            .properties(p -> p.randomTicks())
+            .addLayer(() -> RenderType::cutout)
             .register();
 
     public static final BlockEntry<Block> FEAR_CRYSTALS = Genesis.L2_REGISTRATE

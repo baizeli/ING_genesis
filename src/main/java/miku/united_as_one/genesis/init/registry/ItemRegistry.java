@@ -105,8 +105,8 @@ public class ItemRegistry {
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
 
-    public static final ItemEntry<Item> CRYSTAL_FRUIT = Genesis.L2_REGISTRATE
-            .item("crystal_fruit", properties -> new Item(properties.food(new FoodProperties.Builder()
+    public static final ItemEntry<ItemNameBlockItem> CRYSTAL_FRUIT = Genesis.L2_REGISTRATE
+            .item("crystal_fruit", properties -> new ItemNameBlockItem(BlockRegistry.CRYSTAL_FRUIT_BUSH.get(), properties.food(new FoodProperties.Builder()
                     .nutrition(3)
                     .saturationMod(3.0F)
                     .effect(() -> new MobEffectInstance(EffectRegistry.MANA_SHIELD.get(), FOOD_EFFECT_DURATION), 1.0F)
@@ -114,8 +114,8 @@ public class ItemRegistry {
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
 
-    public static final ItemEntry<Item> PHANTOM_PLUM = Genesis.L2_REGISTRATE
-            .item("phantom_plum", properties -> new Item(properties.food(new FoodProperties.Builder()
+    public static final ItemEntry<ItemNameBlockItem> PHANTOM_PLUM = Genesis.L2_REGISTRATE
+            .item("phantom_plum", properties -> new ItemNameBlockItem(BlockRegistry.PHANTOM_PLUM_BUSH.get(), properties.food(new FoodProperties.Builder()
                     .nutrition(3)
                     .saturationMod(3.0F)
                     .effect(() -> new MobEffectInstance(EffectRegistry.MANA_OVERDRAFT.get(), FOOD_EFFECT_DURATION, 1), 1.0F)
@@ -123,8 +123,8 @@ public class ItemRegistry {
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
 
-    public static final ItemEntry<Item> COLORFUL_FRUITS = Genesis.L2_REGISTRATE
-            .item("colorful_fruits", properties -> new Item(properties.food(new FoodProperties.Builder()
+    public static final ItemEntry<ItemNameBlockItem> COLORFUL_FRUITS = Genesis.L2_REGISTRATE
+            .item("colorful_fruits", properties -> new ItemNameBlockItem(BlockRegistry.COLORFUL_FRUITS_BUSH.get(), properties.food(new FoodProperties.Builder()
                     .nutrition(3)
                     .saturationMod(3.0F)
                     .effect(() -> new MobEffectInstance(EffectRegistry.CHAOS_RESISTANCE.get(), FOOD_EFFECT_DURATION), 1.0F)
