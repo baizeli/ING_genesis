@@ -25,6 +25,7 @@ public final class GenesisRegistry {
             if (initialized) return;
             assignDirect(ItemRegistry.MITHRIL_SWORD.get(), GenesisEffect.BLUE_WHITE);
             assignDirect(ItemRegistry.MITHRIL_PICKAXE.get(), GenesisEffect.BLUE_WHITE);
+            assignDirect(ItemRegistry.DISK_SPELL_BOOK.get(), GenesisEffect.BLUE_WHITE);
             assignDirect(ItemRegistry.TWISTED_CHAOS_INGOT.get(), GenesisEffect.BLACK_RED);
             assignDirect(ItemRegistry.CELESTIAL_SOURCE_INGOT.get(), GenesisEffect.RAINBOW);
 

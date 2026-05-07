@@ -4,10 +4,12 @@ import com.tterrag.registrate.util.entry.BlockEntry;
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.common.block.ChaosPortalBlock;
 import miku.united_as_one.genesis.common.block.GenesisFruitBushBlock;
+import miku.united_as_one.genesis.common.block.GenesisTreeGrower;
 import miku.united_as_one.genesis.common.block.util.SimpleBlockSet;
 import miku.united_as_one.genesis.common.data.content.arcaneWorkbench.ArcaneWorkbenchBlock;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
@@ -38,7 +40,32 @@ public class BlockRegistry {
     public static final SimpleBlockSet<RotatedPillarBlock> QUIETNESS_LOG = SimpleBlockSet.buildLog("quietness_log", Blocks.OAK_LOG).addStrippedLog().addWood().addStrippedWood();
     public static final SimpleBlockSet<Block> QUIETNESS_PLANKS = SimpleBlockSet.buildPlanks("quietness", Blocks.OAK_PLANKS).simplePlank();
 
+    public static final BlockEntry<SaplingBlock> SWAY_SAPLING = Genesis.L2_REGISTRATE
+            .block("sway_sapling", properties -> new SaplingBlock(new GenesisTreeGrower("sway_fungus_tree"), properties))
+            .initialProperties(() -> Blocks.OAK_SAPLING)
+            .addLayer(() -> RenderType::cutout)
+            .tag(BlockTags.SAPLINGS)
+            .item()
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
+            .tag(ItemTags.SAPLINGS)
+            .model((ctx, prov) -> prov.withExistingParent(ctx.getName(), "item/generated").texture("layer0", "minecraft:block/oak_sapling"))
+            .build()
+            .register();
+
+    public static final BlockEntry<SaplingBlock> QUIETNESS_SAPLING = Genesis.L2_REGISTRATE
+            .block("quietness_sapling", properties -> new SaplingBlock(new GenesisTreeGrower("quietness_fungus_tree"), properties))
+            .initialProperties(() -> Blocks.OAK_SAPLING)
+            .addLayer(() -> RenderType::cutout)
+            .tag(BlockTags.SAPLINGS)
+            .item()
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
+            .tag(ItemTags.SAPLINGS)
+            .model((ctx, prov) -> prov.withExistingParent(ctx.getName(), "item/generated").texture("layer0", "minecraft:block/oak_sapling"))
+            .build()
+            .register();
+
     public static final SimpleBlockSet<Block> GENESIS_DIRT = SimpleBlockSet.buildDirt("genesis", Blocks.DIRT).addGrassVariant("sway").addGrassVariant("quietness");
+    public static final SimpleBlockSet<Block> SOURCE_DIRT = SimpleBlockSet.buildDirt("source", Blocks.DIRT).addGrass();
 
     public static final BlockEntry<Block> ARCANE_CRYSTAL_BLOCK = Genesis.L2_REGISTRATE
             .block("arcane_crystal_block", Block::new)
