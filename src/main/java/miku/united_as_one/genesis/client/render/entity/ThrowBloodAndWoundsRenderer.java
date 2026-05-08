@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import miku.united_as_one.genesis.client.model.ThrowBloodAndWoundsModel;
-import miku.united_as_one.genesis.common.entity.ThrowBloodAndWounds; 
+import miku.united_as_one.genesis.contents.entity.ThrowBloodAndWounds; 
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

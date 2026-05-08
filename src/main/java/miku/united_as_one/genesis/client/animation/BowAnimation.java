@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.client.animation;
 
-import miku.united_as_one.genesis.init.registry.ItemRegistry;
+import miku.united_as_one.genesis.registries.ItemRegistry;
 import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;

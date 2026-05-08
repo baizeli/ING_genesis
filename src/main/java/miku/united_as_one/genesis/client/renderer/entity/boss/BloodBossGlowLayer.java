@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.client.renderer.entity.boss;
 
-import miku.united_as_one.genesis.common.entity.boss.BloodBoss;
+import miku.united_as_one.genesis.contents.entity.boss.BloodBoss;
 import net.minecraft.client.renderer.LightTexture;
 import software.bernie.geckolib.renderer.GeoRenderer;
 import software.bernie.geckolib.renderer.layer.GeoRenderLayer;

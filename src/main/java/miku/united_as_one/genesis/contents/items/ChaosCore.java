@@ -1,0 +1,87 @@
+package miku.united_as_one.genesis.contents.items;
+
+import miku.united_as_one.genesis.Genesis;
+import miku.united_as_one.genesis.registries.BlockRegistry;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.*;
+import net.minecraft.sounds.*;
+import net.minecraft.world.*;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.*;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
+import net.minecraftforge.common.util.ITeleporter;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerLevel;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.function.Function;
+
+public class ChaosCore extends Item {
+    public ChaosCore() {
+        super(new Properties()
+            .stacksTo(1)
+            .rarity(Rarity.EPIC)
+        );
+    }
+
+    @Override
+    public @NotNull InteractionResult useOn(UseOnContext Context) {
+        if(Context.getPlayer() != null) {
+            ResourceKey<Level> currentDimension = Context.getPlayer().level().dimension();
+
+            if(currentDimension ==
+                ResourceKey.create(Registries.DIMENSION, ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "echo_of_decay")
+                ) || currentDimension == Level.END) {
+
+                if (!(Context.getPlayer().level() instanceof ServerLevel)) return InteractionResult.FAIL;
+
+                BlockPos clickedPos = Context.getClickedPos().relative(Context.getClickedFace());
+
+                if(BlockRegistry.CHAOS_PORTAL.get().spawnPortal(Context.getLevel(), clickedPos)) {
+                    Context.getLevel().playSound(
+                        Context.getPlayer(), 
+                        clickedPos, 
+                        SoundEvents.PORTAL_TRIGGER, 
+                        SoundSource.BLOCKS, 
+                        6,
+                        0.8f
+                    );
+                    /*if(!Context.getPlayer().isCreative()) Context.getPlayer().setItemInHand(Context.getHand(), ItemStack.EMPTY);*/
+                    return InteractionResult.SUCCESS;
+                } else return InteractionResult.FAIL;
+            }
+        }
+
+        return InteractionResult.FAIL;
+    }
+
+    @Override
+    public void inventoryTick(@NotNull ItemStack Stack, @NotNull Level Level, @NotNull Entity Entity, int SlotId, boolean IsSelected) {}
+
+    @Override
+    public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level pLevel, Player Player, @NotNull InteractionHand pUsedHand) {
+        ItemStack itemStack = Player.getItemInHand(pUsedHand);
+
+        if(Player.level().dimension() == ResourceKey.create(Registries.DIMENSION, ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "echo_of_decay"))) {
+            MinecraftServer server = pLevel.getServer();
+
+            if(server != null) {
+                ServerLevel end = server.getLevel(Level.END);
+                if(end != null) {
+                    Player.changeDimension(end, new ITeleporter() {
+                        @Override
+                        public Entity placeEntity(Entity entity, ServerLevel currentWorld, ServerLevel destWorld, float yaw, Function<Boolean, Entity> repositionEntity) {
+                            return repositionEntity.apply(false);
+                        }
+                    });
+                    return InteractionResultHolder.consume(itemStack);
+                }
+            }
+        }
+        
+        return InteractionResultHolder.pass(itemStack);
+    }
+}

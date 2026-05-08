@@ -3,7 +3,7 @@ package miku.united_as_one.genesis.client.renderer.projectile;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
-import miku.united_as_one.genesis.common.entity.projectile.ThrownIron;
+import miku.united_as_one.genesis.contents.entity.projectile.ThrownIron;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;

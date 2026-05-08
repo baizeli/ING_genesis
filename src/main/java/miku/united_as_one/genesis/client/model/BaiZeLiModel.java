@@ -5,7 +5,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.client.animation.BaiZeLiAnims;
-import miku.united_as_one.genesis.common.entity.test.BaiZeLiEntity;
+import miku.united_as_one.genesis.contents.entity.test.BaiZeLiEntity;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;

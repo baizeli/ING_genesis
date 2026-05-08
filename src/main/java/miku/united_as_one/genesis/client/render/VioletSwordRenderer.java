@@ -3,7 +3,7 @@ package miku.united_as_one.genesis.client.render;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.common.items.weapon.sword.VioletSword;
+import miku.united_as_one.genesis.contents.items.weapon.sword.VioletSword;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.InteractionHand;

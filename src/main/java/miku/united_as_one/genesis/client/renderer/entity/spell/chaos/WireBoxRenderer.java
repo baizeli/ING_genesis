@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.client.renderer.entity.spell.chaos;
 
-import miku.united_as_one.genesis.util.RenderUtils;
+import miku.united_as_one.genesis.api.RenderUtils;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.core.Direction;

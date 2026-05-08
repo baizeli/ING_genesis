@@ -12,7 +12,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ShaderInstance;
 import net.minecraft.world.item.ItemStack;
 import miku.united_as_one.genesis.client.render.ModShaders;
-import miku.united_as_one.genesis.init.config.Configuration;
+import miku.united_as_one.genesis.config.Configuration;
 import org.joml.Matrix4f;
 
 public class GenesisOutlineRenderer {

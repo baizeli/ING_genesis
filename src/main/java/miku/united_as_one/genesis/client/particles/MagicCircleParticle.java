@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.client.particles;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.util.RenderUtils;
+import miku.united_as_one.genesis.api.RenderUtils;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;

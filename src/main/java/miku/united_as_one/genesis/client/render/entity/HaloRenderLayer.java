@@ -4,7 +4,7 @@ import miku.united_as_one.genesis.client.render.ModRenderType;
 import miku.united_as_one.genesis.client.render.ModShaders;
 import miku.united_as_one.genesis.client.render.cosmic.AvaritiaShaders;
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.init.registry.ItemRegistry;
+import miku.united_as_one.genesis.registries.ItemRegistry;
 import com.mojang.blaze3d.pipeline.RenderTarget;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;

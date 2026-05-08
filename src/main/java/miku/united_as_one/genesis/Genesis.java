@@ -1,290 +1,34 @@
 package miku.united_as_one.genesis;
 
-import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
-import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
-import io.redspace.ironsspellbooks.api.spells.ISpellContainer;
-import io.redspace.ironsspellbooks.entity.mobs.keeper.KeeperRenderer;
-import io.redspace.ironsspellbooks.entity.spells.void_tentacle.VoidTentacle;
-import miku.united_as_one.genesis.client.renderer.WSRenderer;
-import miku.united_as_one.genesis.client.renderer.entity.laser.DeathLaserRenderer;
-import miku.united_as_one.genesis.common.data.content.arcaneWorkbench.*;
-import miku.united_as_one.genesis.common.data.content.workbenchs.*;
-import miku.united_as_one.genesis.common.entity.*;
-import miku.united_as_one.genesis.common.entity.spell.eldritch.*;
-import miku.united_as_one.genesis.common.entity.test.BaiZeLiEntity;
-import miku.united_as_one.genesis.common.entity.warlock.WardenMageEntity;
-import miku.united_as_one.genesis.common.entity.spell.fire.SummonedKeeperEntity;
-import miku.united_as_one.genesis.init.registry.*;
-import miku.united_as_one.genesis.common.entity.ai.ModActivity;
-import miku.united_as_one.genesis.common.entity.ai.ModMemoryModuleType;
-import miku.united_as_one.genesis.common.entity.spell.celestial_source.*;
-import miku.united_as_one.genesis.common.entity.boss.BloodBoss;
-import miku.united_as_one.genesis.common.entity.spell.celestial_source.notuse.*;
-import miku.united_as_one.genesis.client.ClientEvent;
-import miku.united_as_one.genesis.init.registry.client.ParticleRegistry;
-import miku.united_as_one.genesis.client.renderer.DistortWorldRender;
-import miku.united_as_one.genesis.client.renderer.projectile.*;
-import miku.united_as_one.genesis.client.renderer.entity.spell.celestial_source.DeadStarDecreeCometRenderer;
-import miku.united_as_one.genesis.init.config.*;
-import miku.united_as_one.genesis.common.network.*;
-import miku.united_as_one.genesis.init.registry.spell.SpellAttributesRegistry;
-import miku.united_as_one.genesis.init.registry.spell.SpellSchoolRegistry;
 import dev.xkmc.l2library.base.L2Registrate;
-import com.mojang.logging.LogUtils;
-import io.redspace.ironsspellbooks.render.SpellBookCurioRenderer;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.client.renderer.entity.EntityRenderers;
-import net.minecraft.client.renderer.entity.WardenRenderer;
+import miku.united_as_one.genesis.config.ModConfigRegistration;
+import miku.united_as_one.genesis.handlers.ModEventHandlers;
+import miku.united_as_one.genesis.registries.ModRegistries;
+import miku.united_as_one.genesis.registries.ResourcePackRegistry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.PackType;
-import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
-import net.minecraft.server.packs.repository.Pack;
-import net.minecraft.server.packs.repository.PackSource;
-import net.minecraft.world.flag.FeatureFlagSet;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.data.loading.DatagenModLoader;
-import net.minecraftforge.event.AddPackFindersEvent;
-import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
-import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
-import net.minecraftforge.eventbus.api.*;
-import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.lifecycle.*;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.minecraftforge.fml.loading.FMLEnvironment;
-import net.minecraftforge.forgespi.locating.IModFile;
-import net.minecraftforge.client.ConfigScreenHandler;
-import miku.united_as_one.genesis.init.config.menu.ConfigMenu;
-import net.minecraftforge.resource.PathPackResources;
-import org.jetbrains.annotations.Nullable;
-import org.slf4j.Logger;
-import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
-
-import java.util.Objects;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 @SuppressWarnings("removal")
 @Mod(Genesis.MOD_ID)
-public class Genesis
-{
-    
+public class Genesis {
     public static final String MOD_ID = "iron_spells_genesis";
-    public static final String MODID = MOD_ID; // 添加这个别名以保持兼容性
+    public static final String MODID = MOD_ID;
     public static final L2Registrate L2_REGISTRATE = new L2Registrate(MOD_ID);
-    private static final Logger LOGGER = LogUtils.getLogger();
 
-//    public static SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
-//            new ResourceLocation(MOD_ID, "wirebox_sync"),
-//            () -> "1.0",
-//            "1.0"::equals,
-//            "1.0"::equals
-//    );
+    public Genesis(FMLJavaModLoadingContext context) {
+        ResourcePackRegistry.registerOptionalTexturePack(Genesis.rl("genesis_old"), Component.literal("Genesis old"), false);
+        ModRegistries.register(context.getModEventBus());
+        ModEventHandlers.register();
+        ModConfigRegistration.register(context);
+    }
 
     public static ResourceLocation rl(String path) {
         return new ResourceLocation(MOD_ID, path);
     }
 
-    public Genesis(FMLJavaModLoadingContext context) {
-        registerOptionalTexturePack(Genesis.rl("genesis_old"), Component.literal("Genesis old"), false);
-        IEventBus modEventBus = context.getModEventBus();
-
-        ItemRegistry.register();
-        CreativeTabRegistry.register(modEventBus);
-        EntityRegistry.ENTITY_TYPES.register(modEventBus);
-        BlockRegistry.register();
-        FluidRegistry.register();
-        SoundRegister.SOUND_EVENTS.register(modEventBus);
-
-        SpellSchoolRegistry.register(modEventBus);
-        /*SpellRegistry.register(modEventBus);*/
-        SpellAttributesRegistry.register(modEventBus);
-        ModBlockEntities.register(modEventBus);
-        ModMenuTypes.register(modEventBus);
-        ModRecipeTypes.register(modEventBus);
-        ModRecipeSerializers.register(modEventBus);
-        EffectRegistry.register(modEventBus);
-        ParticleRegistry.register(modEventBus);
-
-        ModActivity.register(modEventBus);
-        ModMemoryModuleType.register(modEventBus);
-
-        modEventBus.addListener(this::commonSetup);
-        modEventBus.addListener(this::addToVanillaTabs); // 给自己的物品加到别人的标签栏里面
-        modEventBus.addListener(this::onAttributeCreate);
-
-        MinecraftForge.EVENT_BUS.register(this);
-
-        if (FMLEnvironment.dist == Dist.CLIENT) {
-            MinecraftForge.EVENT_BUS.register(ClientEvent.class);
-        }
-
-        context.registerConfig(ModConfig.Type.SERVER, Configuration.SERVER_SPEC);
-        context.registerConfig(ModConfig.Type.CLIENT, Configuration.CLIENT_SPEC);
-    }
-
-    public static void registerOptionalTexturePack(ResourceLocation folderName, Component displayName, boolean defaultEnabled) {
-        registerResourcePack(PackType.CLIENT_RESOURCES, () -> {
-            IModFile file = ModList.get().getModFileById(folderName.getNamespace()).getFile();
-
-            try (PathPackResources pack = new PathPackResources(folderName.toString(), true, file.findResource("resourcepacks/" + folderName.getPath()))) {
-                PackMetadataSection metadata = Objects.requireNonNull(pack.getMetadataSection(PackMetadataSection.TYPE), "Missing pack.mcmeta for pack " + folderName);
-                return Pack.create(folderName.toString(), displayName, defaultEnabled, (s) -> pack, new Pack.Info(metadata.getDescription(), metadata.getPackFormat(), FeatureFlagSet.of()), PackType.CLIENT_RESOURCES, Pack.Position.TOP, false, PackSource.BUILT_IN);
-            } catch (Exception ee) {
-                if (!DatagenModLoader.isRunningDataGen()) {
-                    ee.printStackTrace();
-                }
-
-                return null;
-            }
-        });
-    }
-
-    public static void registerResourcePack(PackType packType, @Nullable Supplier<Pack> packSupplier) {
-        if (packSupplier != null) {
-            IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-            Consumer<AddPackFindersEvent> consumer = (event) -> {
-                if (event.getPackType() == packType) {
-                    Pack p = packSupplier.get();
-                    if (p != null) {
-                        event.addRepositorySource((infoConsumer) -> infoConsumer.accept(packSupplier.get()));
-                    }
-                }
-
-            };
-            bus.addListener(consumer);
-        }
-    }
-
-    private void commonSetup(final FMLCommonSetupEvent event) {
-        event.enqueueWork(() -> {
-            NetworkHandler.register();
-            ModPacketHandler.register();
-            LOGGER.info("Fuck TTTTTT");
-        });
-    }
-
-    private void addToVanillaTabs(BuildCreativeModeTabContentsEvent e) {
-        if (e.getTabKey() == io.redspace.ironsspellbooks.registries.CreativeTabRegistry.MATERIALS_TAB.getKey()) {
-            // 加到自然符文的后面
-            e.getEntries().putAfter(io.redspace.ironsspellbooks.registries.ItemRegistry.NATURE_RUNE.get().getDefaultInstance(),
-                    ItemRegistry.CHAOS_RUNE.get().getDefaultInstance(),
-                    CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-            // 混沌后面
-            e.getEntries().putAfter(ItemRegistry.CHAOS_RUNE.get().getDefaultInstance(),
-                    ItemRegistry.CELESTIAL_SOURCE_RUNE.get().getDefaultInstance(),
-                    CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-            // 加到自然升级法球的后面
-            e.getEntries().putAfter(io.redspace.ironsspellbooks.registries.ItemRegistry.NATURE_UPGRADE_ORB.get().getDefaultInstance(),
-                    ItemRegistry.CHAOS_UPGRADE_ORB.get().getDefaultInstance(),
-                    CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-            // 混沌后面
-            e.getEntries().putAfter(ItemRegistry.CHAOS_UPGRADE_ORB.get().getDefaultInstance(),
-                    ItemRegistry.CELESTIAL_SOURCE_UPGRADE_ORB.get().getDefaultInstance(),
-                    CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-        } else if (e.getTab() == io.redspace.ironsspellbooks.registries.CreativeTabRegistry.SCROLLS_TAB.get()) {
-            // 构造地狱浮现的法术卷轴
-            ItemStack raiseHellMaxStack = new ItemStack(io.redspace.ironsspellbooks.registries.ItemRegistry.SCROLL.get());
-            AbstractSpell raiseHell = SpellRegistry.RAISE_HELL_SPELL.get();
-            ISpellContainer.createScrollContainer(raiseHell, raiseHell.getMaxLevel(), raiseHellMaxStack);
-
-            // 构造七连炽焰飞剑的法术卷轴
-            AbstractSpell spell = CreativeTabRegistry.BLAZING_BLADE_BARRAGE_SPELL.get();
-
-            // 循环插入法术的所有等级
-            for (int i = spell.getMaxLevel(); i >= spell.getMinLevel(); --i) { // 先插入等级高的，这样等级低的就可以在等级高的前面了
-                ItemStack levelStack = new ItemStack(io.redspace.ironsspellbooks.registries.ItemRegistry.SCROLL.get());
-                ISpellContainer.createScrollContainer(spell, i, levelStack);
-                // Raise Hell法术的最高级卷轴后面
-                e.getEntries().putAfter(raiseHellMaxStack, levelStack,
-                        CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-            }
-        }
-    }
-
-    public void onAttributeCreate(EntityAttributeCreationEvent event) {
-        event.put(EntityRegistry.WARDEN_SPELLCASTER.get(), WardenSpellcaster.createAttributes().build());
-        event.put(EntityRegistry.MAGIC_CIRCLE.get(), MagicCircle.createAttributes().build());
-        event.put(EntityRegistry.BOX_ENTIYT.get(), BoxEntity.createAttributes().build());
-        event.put(EntityRegistry.SWORD_ENTITY.get(), SwordEntity.createAttributes().build());
-        event.put(EntityRegistry.BLOOD_BOSS.get(), BloodBoss.setAttributes().build());
-        event.put(EntityRegistry.BLOOD_TENTACLE.get(), VoidTentacle.createLivingAttributes().build());
-        event.put(EntityRegistry.SUMMONED_KEEPER.get(), SummonedKeeperEntity.createAttributes().build());
-        event.put(EntityRegistry.SUMMONED_WARDEN.get(), SummonedWardenEntity.createAttributes().build());
-        event.put(EntityRegistry.WARDEN_MANCER.get(), WardenMageEntity.setAttributes().build());
-        event.put(EntityRegistry.BAI_ZE_LI.get(), BaiZeLiEntity.createAttributes().build());
-    }
-
-    public static String resource(String location)
-    {
+    public static String resource(String location) {
         return MOD_ID + ":" + location;
-    }
-
-    @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-    public static class ClientModEvents
-    {
-        @SubscribeEvent
-        public static void onClientSetup(FMLClientSetupEvent event) {
-            // 1. 处理需要在主线程运行的注册任务（渲染器等）
-            event.enqueueWork(() -> {
-                MenuScreens.register(ModMenuTypes.ARCANE_WORKBENCH_MENU.get(), ArcaneWorkbenchScreen::new);
-                EntityRenderers.register(EntityRegistry.NYAN_CAT.get(), NyanCatRenderer::new);
-                EntityRenderers.register(EntityRegistry.MAGIC_CIRCLE.get(), MagicCircleRenderer::new);
-                EntityRenderers.register(EntityRegistry.BOX_ENTIYT.get(), BoxEntityRenderer::new);
-                EntityRenderers.register(EntityRegistry.LIGHTNING_BOLT.get(), LightningBoltRenderer::new);
-                EntityRenderers.register(EntityRegistry.SWORD_ENTITY.get(), SwordEntityRenderer::new);
-                EntityRenderers.register(EntityRegistry.DEATH_LASER.get(), DeathLaserRenderer::new);
-                EntityRenderers.register(EntityRegistry.THROWN_IRON.get(), ThrownIronRenderer::new);
-                EntityRenderers.register(EntityRegistry.WARDEN_SPELLCASTER.get(), WSRenderer::new);
-                EntityRenderers.register(EntityRegistry.DEAD_STAR_DECREE_COMET.get(),
-                        context -> new DeadStarDecreeCometRenderer(context, 0.25f)
-                );
-
-                EntityRenderers.register(EntityRegistry.DEAD_STAR_DECREE_LARGE_COMET.get(),
-                        context -> new DeadStarDecreeCometRenderer(context, 6.0f)
-                );
-
-                EntityRenderers.register(EntityRegistry.SUMMONED_KEEPER.get(), KeeperRenderer::new);
-                EntityRenderers.register(EntityRegistry.SUMMONED_WARDEN.get(), WardenRenderer::new);
-
-                CuriosRendererRegistry.register(ItemRegistry.CHAOS_SPELL_BOOK.get(), SpellBookCurioRenderer::new);
-                CuriosRendererRegistry.register(ItemRegistry.CELESTIAL_SOURCE_SPELL_BOOK.get(), SpellBookCurioRenderer::new);
-                DistortWorldRender.initChain(Minecraft.getInstance());
-
-                miku.united_as_one.genesis.client.render.luminous.GenesisRegistry.init();
-            });
-            ModLoadingContext.get().registerExtensionPoint(
-                    ConfigScreenHandler.ConfigScreenFactory.class,
-                    () -> new ConfigScreenHandler.ConfigScreenFactory((mc, lastScreen) -> new ConfigMenu(lastScreen))
-            );
-        }
-
-//        @SubscribeEvent
-//        public static void onCommonSetup(FMLCommonSetupEvent event) {
-//            CHANNEL.registerMessage(0, WireBoxSyncPacket.class,
-//                    WireBoxSyncPacket::encode,
-//                    WireBoxSyncPacket::decode,
-//                    WireBoxSyncPacket::handle
-//            );
-//
-//            CHANNEL.registerMessage(1, DeadListSyncPacket.class,
-//                    DeadListSyncPacket::encode,
-//                    DeadListSyncPacket::decode,
-//                    DeadListSyncPacket::handle
-//            );
-//
-//            CHANNEL.registerMessage(2, MarkDeadPacket.class,
-//                    MarkDeadPacket::encode,
-//                    MarkDeadPacket::decode,
-//                    MarkDeadPacket::handle
-//            );
-//        }
     }
 }

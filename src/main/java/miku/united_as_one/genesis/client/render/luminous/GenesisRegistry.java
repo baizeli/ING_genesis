@@ -2,7 +2,7 @@ package miku.united_as_one.genesis.client.render.luminous;
 
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.world.item.Item;
-import miku.united_as_one.genesis.init.registry.ItemRegistry;
+import miku.united_as_one.genesis.registries.ItemRegistry;
 import java.util.Map;
 
 public final class GenesisRegistry {

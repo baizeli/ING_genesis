@@ -2,7 +2,7 @@ package miku.united_as_one.genesis.client.renderer.entity.laser;
 
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Axis;
-import miku.united_as_one.genesis.common.entity.laser.AbstractLaserEntity;
+import miku.united_as_one.genesis.contents.entity.laser.AbstractLaserEntity;
 import net.minecraft.client.*;
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.entity.*;

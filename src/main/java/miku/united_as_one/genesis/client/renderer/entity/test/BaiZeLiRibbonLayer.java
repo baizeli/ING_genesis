@@ -2,7 +2,7 @@ package miku.united_as_one.genesis.client.renderer.entity.test;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import miku.united_as_one.genesis.client.model.BaiZeLiModel;
-import miku.united_as_one.genesis.common.entity.test.BaiZeLiEntity;
+import miku.united_as_one.genesis.contents.entity.test.BaiZeLiEntity;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;

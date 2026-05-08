@@ -2,7 +2,7 @@
 package miku.united_as_one.genesis.client.renderer;
 
 import miku.united_as_one.genesis.client.model.WardenSpellcasterModel;
-import miku.united_as_one.genesis.common.entity.WardenSpellcaster;
+import miku.united_as_one.genesis.contents.entity.WardenSpellcaster;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
