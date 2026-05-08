@@ -3,6 +3,7 @@ package miku.united_as_one.genesis.registries;
 import miku.united_as_one.genesis.Genesis;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.*;
 
 public class SoundRegister {
@@ -34,4 +35,8 @@ public class SoundRegister {
 
     public static final RegistryObject<SoundEvent> BLOOD_BOSS_MUSIC = SOUND_EVENTS.register("battle_sanctuary",
             () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(Genesis.MOD_ID, "battle_sanctuary")));
+
+    public static void register(IEventBus eventBus) {
+        SOUND_EVENTS.register(eventBus);
+    }
 }

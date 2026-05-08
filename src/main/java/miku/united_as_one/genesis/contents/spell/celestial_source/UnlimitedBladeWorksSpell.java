@@ -1,8 +1,8 @@
 package miku.united_as_one.genesis.contents.spell.celestial_source;
 
-import miku.united_as_one.genesis.contents.entity.spell.celestial_source.notuse.MagicCircle;
+import miku.united_as_one.genesis.contents.entity.spell.celestial_source.blade_works.MagicCircle;
 import miku.united_as_one.genesis.registries.EntityRegistry;
-import miku.united_as_one.genesis.contents.entity.spell.celestial_source.notuse.SwordEntity;
+import miku.united_as_one.genesis.contents.entity.spell.celestial_source.blade_works.SwordEntity;
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.registries.client.ParticleRegistry;
 import miku.united_as_one.genesis.registries.spell.SpellSchoolRegistry;

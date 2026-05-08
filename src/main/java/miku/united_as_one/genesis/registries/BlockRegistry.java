@@ -18,6 +18,7 @@ import net.minecraftforge.registries.*;
 public class BlockRegistry {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Genesis.MOD_ID);
 
+    // 地貌装饰石材和砂类方块组，由 SimpleBlockSet 统一生成本体、楼梯、台阶、墙等变体。
     public static final SimpleBlockSet<Block> WEATHERED_SANDSTONE = SimpleBlockSet.buildStone("weathered_sandstone", Blocks.SANDSTONE).simpleStone();
     public static final SimpleBlockSet<Block> WEATHERED_STONE_BRICKS = SimpleBlockSet.buildStone("weathered_stone_bricks", Blocks.STONE_BRICKS).simpleStone();
     public static final SimpleBlockSet<Block> WEATHERED_SAND = SimpleBlockSet.buildStone("weathered_sand", Blocks.SAND);
@@ -40,6 +41,7 @@ public class BlockRegistry {
     public static final SimpleBlockSet<RotatedPillarBlock> QUIETNESS_LOG = SimpleBlockSet.buildLog("quietness_log", Blocks.OAK_LOG).addStrippedLog().addWood().addStrippedWood();
     public static final SimpleBlockSet<Block> QUIETNESS_PLANKS = SimpleBlockSet.buildPlanks("quietness", Blocks.OAK_PLANKS).simplePlank();
 
+    // 树苗和树木生长入口。
     public static final BlockEntry<SaplingBlock> SWAY_SAPLING = Genesis.L2_REGISTRATE
             .block("sway_sapling", properties -> new SaplingBlock(new GenesisTreeGrower("sway_fungus_tree"), properties))
             .initialProperties(() -> Blocks.OAK_SAPLING)
@@ -64,9 +66,11 @@ public class BlockRegistry {
             .build()
             .register();
 
+    // 泥土、草方块和作物依附方块组。
     public static final SimpleBlockSet<Block> GENESIS_DIRT = SimpleBlockSet.buildDirt("genesis", Blocks.DIRT).addGrassVariant("sway").addGrassVariant("quietness");
     public static final SimpleBlockSet<Block> SOURCE_DIRT = SimpleBlockSet.buildDirt("source", Blocks.DIRT).addGrass();
 
+    // 矿物、晶体和可采集作物。
     public static final BlockEntry<Block> ARCANE_CRYSTAL_BLOCK = Genesis.L2_REGISTRATE
             .block("arcane_crystal_block", Block::new)
             .initialProperties(() -> Blocks.AMETHYST_BLOCK)
@@ -160,6 +164,7 @@ public class BlockRegistry {
             .build()
             .register();
 
+    // 功能方块和特殊结构方块。
     public static final BlockEntry<ArcaneWorkbenchBlock> ARCANE_WORKBENCH = Genesis.L2_REGISTRATE
             .block("arcane_workbench", ArcaneWorkbenchBlock::new)
             .properties(p -> p.lightLevel(s -> 9).strength(3.0f, 9.0f).requiresCorrectToolForDrops().sound(SoundType.STONE))

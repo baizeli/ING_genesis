@@ -40,7 +40,6 @@ public class SpellSchoolRegistry {
         CELESTIAL_SOURCE_RESOURCE = ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "celestial_source");
         CULINARY_RESOURCE = ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "culinary");
 
-        // 混沌流派
         CHAOS = registerSchool(
             new SchoolType(
                 CHAOS_RESOURCE, 
@@ -57,7 +56,6 @@ public class SpellSchoolRegistry {
             )
         );
 
-        // 星源流派
         CELESTIAL_SOURCE = registerSchool(
             new SchoolType(
                 CELESTIAL_SOURCE_RESOURCE, 
@@ -74,7 +72,6 @@ public class SpellSchoolRegistry {
             )
         );
 
-        // 美食流派
         CULINARY = registerSchool(
             new SchoolType(
                 CULINARY_RESOURCE, 

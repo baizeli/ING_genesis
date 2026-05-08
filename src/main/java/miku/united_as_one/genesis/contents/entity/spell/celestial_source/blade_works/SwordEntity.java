@@ -1,4 +1,4 @@
-package miku.united_as_one.genesis.contents.entity.spell.celestial_source.notuse;
+package miku.united_as_one.genesis.contents.entity.spell.celestial_source.blade_works;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;

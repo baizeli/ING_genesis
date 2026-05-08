@@ -401,7 +401,7 @@ public class CustomArrowEntity extends AbstractArrow {
             for (int i = 0; i < 3; ++i) {
                 this.level().addFreshEntity(new LightningBolt(EntityRegistry.LIGHTNING_BOLT.get(), this.level(), this.getX(), this.getY(), this.getZ()));
             }
-            this.level().addFreshEntity(new BoxEntity(EntityRegistry.BOX_ENTIYT.get(), this.level(), this.getX(), this.getY(), this.getZ()));
+            this.level().addFreshEntity(new BoxEntity(EntityRegistry.BOX_ENTITY.get(), this.level(), this.getX(), this.getY(), this.getZ()));
 
             new Thread(() -> {
                 for (int i = 0; i < 5; ++i) {

@@ -105,6 +105,7 @@ public class ItemRegistry {
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
 
+    //方块注册中的果实灌木
     public static final ItemEntry<ItemNameBlockItem> CRYSTAL_FRUIT = Genesis.L2_REGISTRATE
             .item("crystal_fruit", properties -> new ItemNameBlockItem(BlockRegistry.CRYSTAL_FRUIT_BUSH.get(), properties.food(new FoodProperties.Builder()
                     .nutrition(3)
@@ -254,7 +255,7 @@ public class ItemRegistry {
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
-    // 紫极稿
+    // 紫极镐
     public static final ItemEntry<VioletPickaxe> VIOLET_PICKAXE = Genesis.L2_REGISTRATE
             .item("violet_pickaxe", properties -> new VioletPickaxe(
                 TierRegistry.VIOLET_GALAXY_INGOT,
@@ -709,6 +710,7 @@ public class ItemRegistry {
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
 
+    // 通用水晶材料。
     // 奥术水晶
     public static final ItemEntry<Item> ARCANE_CRYSTAL = Genesis.L2_REGISTRATE
             .item("arcane_crystal", properties -> new Item(properties
@@ -817,6 +819,7 @@ public class ItemRegistry {
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
 
+    // 法术学习材料：手稿和手稿碎片。
     // 混沌手稿
     public static final ItemEntry<ChaosManuscript> CHAOS_MANUSCRIPT = Genesis.L2_REGISTRATE
             .item("chaos_manuscript", properties -> new ChaosManuscript())
@@ -1034,9 +1037,9 @@ public class ItemRegistry {
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
 
-    public static void register() {}
+    public static void register() {
+    }
 
-    // 咕咕嘎嘎的弓模型生成
     public static <T extends Item> void createBowModel(DataGenContext<Item, T> ctx, RegistrateItemModelProvider pvd) {
         ItemModelBuilder builder = pvd.withExistingParent(ctx.getName(), "item/handheld");
         builder.texture("layer0", Genesis.MOD_ID + ":item/bow/" + ctx.getName() + "/bow");

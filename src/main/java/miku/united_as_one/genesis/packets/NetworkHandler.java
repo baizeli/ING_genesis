@@ -1,6 +1,5 @@
 package miku.united_as_one.genesis.packets;
 
-import miku.united_as_one.genesis.packets.workbench.ArcaneWorkbenchRecipeTransferPacket;
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.packets.manuscript.LearnSpellPacket;
 import miku.united_as_one.genesis.packets.packet.SpawnSlashPacket;
@@ -31,11 +30,6 @@ public class NetworkHandler {
                 BowTypePacket::encode,
                 BowTypePacket::decode,
                 BowTypePacket::handle);
-
-        INSTANCE.registerMessage(id++, ArcaneWorkbenchRecipeTransferPacket.class,
-                ArcaneWorkbenchRecipeTransferPacket::encode,
-                ArcaneWorkbenchRecipeTransferPacket::new,
-                ArcaneWorkbenchRecipeTransferPacket::handle);
 
         INSTANCE.registerMessage(id++, LearnSpellPacket.class,
                 LearnSpellPacket::encode,

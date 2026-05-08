@@ -13,8 +13,12 @@ public class ModRecipeTypes
     public static final DeferredRegister<RecipeType<?>> RECIPE_TYPES =
             DeferredRegister.create(ForgeRegistries.RECIPE_TYPES, Genesis.MOD_ID);
 
-    public static final RegistryObject<RecipeType<ArcaneWorkbenchRecipe>> ARCANE_WORKBENCH_RECIPE_TYPE = RECIPE_TYPES.register("arcane_workbench", () -> RecipeType.simple(Genesis.rl("arcane_workbench")));
+    // 奥术工作台的自定义配方类型。
+    public static final RegistryObject<RecipeType<ArcaneWorkbenchRecipe>> ARCANE_WORKBENCH_RECIPE_TYPE =
+            RECIPE_TYPES.register("arcane_workbench", () -> RecipeType.simple(Genesis.rl("arcane_workbench")));
 
-    public static void register(IEventBus eventBus) {RECIPE_TYPES.register(eventBus);}
+    public static void register(IEventBus eventBus) {
+        RECIPE_TYPES.register(eventBus);
+    }
 }
 

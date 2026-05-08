@@ -15,6 +15,7 @@ public class ModMenuTypes {
     public static final DeferredRegister<MenuType<?>> MENUS =
             DeferredRegister.create(ForgeRegistries.MENU_TYPES, Genesis.MOD_ID);
 
+    // 奥术工作台菜单：从网络缓冲读取方块坐标，再绑定对应方块实体。
     public static final RegistryObject<MenuType<ArcaneWorkbenchMenu>> ARCANE_WORKBENCH_MENU =
             MENUS.register("arcane_workbench_menu", () ->
                     IForgeMenuType.create((windowId, inv, data) -> {

@@ -15,18 +15,20 @@ import miku.united_as_one.genesis.contents.entity.spell.blood_boss.BloodBossFire
 import miku.united_as_one.genesis.contents.entity.spell.blood_boss.blood_dagger.BloodDaggerEntity;
 import miku.united_as_one.genesis.contents.entity.spell.blood_boss.blood_dagger.BloodField;
 import miku.united_as_one.genesis.contents.entity.spell.celestial_source.*;
-import miku.united_as_one.genesis.contents.entity.spell.celestial_source.notuse.*;
+import miku.united_as_one.genesis.contents.entity.spell.celestial_source.blade_works.*;
 import miku.united_as_one.genesis.contents.entity.spell.fire.*;
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.contents.entity.test.BaiZeLiEntity;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.*;
 
 public class EntityRegistry {
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES =
             DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, Genesis.MOD_ID);
 
+    // 通用投射物和短生命周期特效实体
     public static final RegistryObject<EntityType<CustomArrowEntity>> CUSTOM_ARROW = ENTITY_TYPES.register("custom_arrow",
             () -> EntityType.Builder.<CustomArrowEntity>of(CustomArrowEntity::new, MobCategory.MISC)
                     .sized(0.5F, 0.5F)
@@ -41,6 +43,7 @@ public class EntityRegistry {
                     .updateInterval(20)
                     .build("nyan_cat"));
 
+    // “无限剑制”法术使用的剑阵和魔法阵实体
     public static final RegistryObject<EntityType<MagicCircle>> MAGIC_CIRCLE = ENTITY_TYPES.register("magic_circle",
             () -> EntityType.Builder.<MagicCircle>of(MagicCircle::new, MobCategory.MISC)
                     .sized(0.5F, 0.5F)
@@ -67,7 +70,7 @@ public class EntityRegistry {
                     .clientTrackingRange(64)
                     .build("dead_star_decree-large_comet"));
 
-    public static final RegistryObject<EntityType<BoxEntity>> BOX_ENTIYT = ENTITY_TYPES.register("box_entity",
+    public static final RegistryObject<EntityType<BoxEntity>> BOX_ENTITY = ENTITY_TYPES.register("box_entity",
             () -> EntityType.Builder.<BoxEntity>of(BoxEntity::new, MobCategory.MISC)
                     .sized(0.5F, 0.5F)
                     .clientTrackingRange(30)
@@ -81,6 +84,7 @@ public class EntityRegistry {
                     .updateInterval(1)
                     .build("lighting_bolt"));
 
+    // Boss 本体、召唤物和 Boss 技能区域实体
     public static final RegistryObject<EntityType<BloodBoss>> BLOOD_BOSS = ENTITY_TYPES.register("blood_boss",
             () -> EntityType.Builder.of(BloodBoss::new, MobCategory.MONSTER)
                     .sized(1.4875001F, 3.6749997F)
@@ -135,6 +139,7 @@ public class EntityRegistry {
                     .setShouldReceiveVelocityUpdates(false)
                     .build("tremor_aoe_entity"));
 
+    // 独立法术投射物和召唤物
     public static final RegistryObject<EntityType<DeathLaserEntity>> DEATH_LASER = ENTITY_TYPES.register("death_laser",
             () -> EntityType.Builder.of(DeathLaserEntity::new, MobCategory.MISC)
                     .sized(0.5f, 0.5f)
@@ -204,4 +209,8 @@ public class EntityRegistry {
                     .clientTrackingRange(64)
                     .updateInterval(1)
                     .build("bai_ze_li"));
+
+    public static void register(IEventBus eventBus) {
+        ENTITY_TYPES.register(eventBus);
+    }
 }
