@@ -2,7 +2,7 @@ package miku.united_as_one.genesis.handlers;
 
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.registries.EffectRegistry;
+import miku.united_as_one.genesis.registries.effect.EffectRegistry;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;

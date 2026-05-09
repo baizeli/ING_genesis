@@ -5,7 +5,7 @@ import miku.united_as_one.genesis.contents.entity.boss.BloodBoss;
 import miku.united_as_one.genesis.contents.entity.boss.BloodBossMoveControl;
 import miku.united_as_one.genesis.contents.entity.boss.SkillMovementTask;
 import miku.united_as_one.genesis.contents.entity.boss.behavior.AnimatedActionBehavior;
-import miku.united_as_one.genesis.registries.SoundRegister;
+import miku.united_as_one.genesis.registries.sound.SoundRegister;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.LivingEntity;

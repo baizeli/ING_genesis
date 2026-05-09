@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.mixin.minecraft.world.damagesource;
 
-import miku.united_as_one.genesis.api.mixinutil.DamageSourceInterface;
+import miku.united_as_one.genesis.api.mixin.DamageSourceInterface;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageSource;

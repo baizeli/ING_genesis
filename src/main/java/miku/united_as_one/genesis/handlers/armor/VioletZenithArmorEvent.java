@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.handlers.armor;
 
-import miku.united_as_one.genesis.api.ArmorSetUtil;
+import miku.united_as_one.genesis.api.equipment.ArmorSetUtil;
 import net.minecraft.world.effect.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.TickEvent;

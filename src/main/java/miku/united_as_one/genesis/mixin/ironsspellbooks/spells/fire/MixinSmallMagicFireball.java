@@ -1,8 +1,8 @@
 package miku.united_as_one.genesis.mixin.ironsspellbooks.spells.fire;
 
 import miku.united_as_one.genesis.contents.items.curios.rune_plus.FireRunePlus;
-import miku.united_as_one.genesis.api.mixinutil.IMixinSmallMagicFireball;
-import miku.united_as_one.genesis.api.ModCurios;
+import miku.united_as_one.genesis.api.mixin.IMixinSmallMagicFireball;
+import miku.united_as_one.genesis.api.curios.ModCurios;
 import io.redspace.ironsspellbooks.entity.spells.AbstractMagicProjectile;
 import io.redspace.ironsspellbooks.entity.spells.fireball.SmallMagicFireball;
 import net.minecraft.world.entity.Entity;

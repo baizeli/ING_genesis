@@ -4,7 +4,7 @@ import io.redspace.ironsspellbooks.damage.DamageSources;
 import io.redspace.ironsspellbooks.entity.spells.magma_ball.FireField;
 import io.redspace.ironsspellbooks.util.ParticleHelper;
 import miku.united_as_one.genesis.data.damage.DamageTypes;
-import miku.united_as_one.genesis.registries.EntityRegistry;
+import miku.united_as_one.genesis.registries.entity.EntityRegistry;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;

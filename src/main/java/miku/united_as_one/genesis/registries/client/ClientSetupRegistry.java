@@ -5,7 +5,7 @@ import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.client.renderer.DistortWorldRender;
 import miku.united_as_one.genesis.config.menu.ConfigMenu;
 import miku.united_as_one.genesis.contents.workbench.arcane.ArcaneWorkbenchScreen;
-import miku.united_as_one.genesis.registries.ItemRegistry;
+import miku.united_as_one.genesis.registries.item.ItemRegistry;
 import miku.united_as_one.genesis.registries.workbench.ModMenuTypes;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;

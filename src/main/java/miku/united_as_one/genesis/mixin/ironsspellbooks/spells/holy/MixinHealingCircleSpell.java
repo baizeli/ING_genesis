@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.mixin.ironsspellbooks.spells.holy;
 
 import miku.united_as_one.genesis.contents.items.curios.rune_plus.HolyRunePlus;
-import miku.united_as_one.genesis.api.ModCurios;
+import miku.united_as_one.genesis.api.curios.ModCurios;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.spells.CastSource;
 import io.redspace.ironsspellbooks.entity.spells.HealingAoe;

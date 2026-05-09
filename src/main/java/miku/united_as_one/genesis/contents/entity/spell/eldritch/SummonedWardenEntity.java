@@ -3,7 +3,7 @@ package miku.united_as_one.genesis.contents.entity.spell.eldritch;
 import io.redspace.ironsspellbooks.capabilities.magic.SummonManager;
 import io.redspace.ironsspellbooks.entity.mobs.IMagicSummon;
 import io.redspace.ironsspellbooks.entity.mobs.goals.*;
-import miku.united_as_one.genesis.registries.EntityRegistry;
+import miku.united_as_one.genesis.registries.entity.EntityRegistry;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.*;
 import net.minecraft.world.damagesource.DamageSource;

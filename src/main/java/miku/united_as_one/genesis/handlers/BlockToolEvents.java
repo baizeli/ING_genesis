@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.handlers;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.registries.BlockRegistry;
+import miku.united_as_one.genesis.registries.block.BlockRegistry;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;

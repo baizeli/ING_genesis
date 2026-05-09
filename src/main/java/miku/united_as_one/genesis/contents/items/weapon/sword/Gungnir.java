@@ -2,8 +2,8 @@ package miku.united_as_one.genesis.contents.items.weapon.sword;
 
 import io.redspace.ironsspellbooks.api.util.Utils;
 import io.redspace.ironsspellbooks.entity.spells.fiery_dagger.FieryDaggerEntity;
-import miku.united_as_one.genesis.api.mixinutil.DamageSourceInterface;
-import miku.united_as_one.genesis.api.mixinutil.LivingEventEC;
+import miku.united_as_one.genesis.api.mixin.DamageSourceInterface;
+import miku.united_as_one.genesis.api.mixin.LivingEventEC;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;

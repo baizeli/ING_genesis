@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.handlers.armor;
 
-import miku.united_as_one.genesis.api.ArmorSetUtil;
+import miku.united_as_one.genesis.api.equipment.ArmorSetUtil;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.eventbus.api.*;

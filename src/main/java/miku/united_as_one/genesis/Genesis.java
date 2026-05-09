@@ -4,7 +4,7 @@ import dev.xkmc.l2library.base.L2Registrate;
 import miku.united_as_one.genesis.config.ModConfigRegistration;
 import miku.united_as_one.genesis.handlers.ModEventHandlers;
 import miku.united_as_one.genesis.registries.ModRegistries;
-import miku.united_as_one.genesis.registries.ResourcePackRegistry;
+import miku.united_as_one.genesis.registries.resource.ResourcePackRegistry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fml.common.Mod;

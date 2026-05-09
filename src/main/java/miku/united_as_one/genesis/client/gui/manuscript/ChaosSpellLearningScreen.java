@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.client.gui.manuscript;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.registries.ItemRegistry;
+import miku.united_as_one.genesis.registries.item.ItemRegistry;
 import miku.united_as_one.genesis.registries.spell.SpellSchoolRegistry;
 import io.redspace.ironsspellbooks.api.spells.*;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;

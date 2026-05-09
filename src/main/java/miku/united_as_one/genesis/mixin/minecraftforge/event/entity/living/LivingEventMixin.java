@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.mixin.minecraftforge.event.entity.living;
 
-import miku.united_as_one.genesis.api.mixinutil.LivingEventEC;
+import miku.united_as_one.genesis.api.mixin.LivingEventEC;
 import net.minecraft.world.entity.Entity;
 import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;

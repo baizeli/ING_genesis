@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.contents.spell.celestial_source;
 
-import miku.united_as_one.genesis.registries.EntityRegistry;
+import miku.united_as_one.genesis.registries.entity.EntityRegistry;
 import miku.united_as_one.genesis.contents.entity.NyanCat;
 import miku.united_as_one.genesis.Genesis;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;

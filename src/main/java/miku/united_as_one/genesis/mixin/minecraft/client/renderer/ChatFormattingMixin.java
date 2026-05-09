@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.mixin.minecraft.client.renderer;
 
-import miku.united_as_one.genesis.registries.Formatting;
+import miku.united_as_one.genesis.registries.text.Formatting;
 import net.minecraft.ChatFormatting;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;

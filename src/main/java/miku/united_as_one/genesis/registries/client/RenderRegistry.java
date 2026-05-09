@@ -21,7 +21,7 @@ import miku.united_as_one.genesis.contents.entity.spell.blood_boss.blood_dagger.
 import miku.united_as_one.genesis.contents.entity.spell.celestial_source.BoxEntityRenderer;
 import miku.united_as_one.genesis.contents.entity.spell.celestial_source.blade_works.MagicCircleRenderer;
 import miku.united_as_one.genesis.contents.entity.spell.celestial_source.blade_works.SwordEntityRenderer;
-import miku.united_as_one.genesis.registries.EntityRegistry;
+import miku.united_as_one.genesis.registries.entity.EntityRegistry;
 import net.minecraft.client.renderer.entity.NoopRenderer;
 import net.minecraft.client.renderer.entity.WardenRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;

@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.contents.items;
 
-import miku.united_as_one.genesis.registries.ItemRegistry;
+import miku.united_as_one.genesis.registries.item.ItemRegistry;
 import miku.united_as_one.genesis.contents.sound.Sounds;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;

@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.mixin.minecraft.client.renderer;
 
 import miku.united_as_one.genesis.contents.items.WeaponRenderConfig;
-import miku.united_as_one.genesis.api.mixinutil.Helper;
+import miku.united_as_one.genesis.api.mixin.Helper;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;

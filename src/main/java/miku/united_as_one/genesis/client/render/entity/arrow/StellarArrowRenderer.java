@@ -5,7 +5,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.contents.entity.arrow.StellarArrowEntity;
-import miku.united_as_one.genesis.api.helper.TrailHelp;
+import miku.united_as_one.genesis.api.render.TrailHelp;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;

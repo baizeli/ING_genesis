@@ -1,8 +1,8 @@
 package miku.united_as_one.genesis.contents.entity;
 
-import miku.united_as_one.genesis.registries.CreativeTabRegistry;
+import miku.united_as_one.genesis.registries.item.CreativeTabRegistry;
 import miku.united_as_one.genesis.contents.entity.spell.celestial_source.BoxEntity;
-import miku.united_as_one.genesis.registries.EntityRegistry;
+import miku.united_as_one.genesis.registries.entity.EntityRegistry;
 import io.redspace.ironsspellbooks.damage.SpellDamageSource;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;

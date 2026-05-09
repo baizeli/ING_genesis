@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.mixin.ironsspellbooks.spells.ender;
 
 import miku.united_as_one.genesis.contents.items.curios.rune_plus.EnderRunePlus;
-import miku.united_as_one.genesis.api.ModCurios;
+import miku.united_as_one.genesis.api.curios.ModCurios;
 import io.redspace.ironsspellbooks.entity.spells.comet.Comet;
 import io.redspace.ironsspellbooks.spells.ender.StarfallSpell;
 import net.minecraft.world.entity.LivingEntity;

@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.contents.items;
 
 import miku.united_as_one.genesis.mixin.minecraft.world.entity.LivingEntityAccessor;
-import miku.united_as_one.genesis.api.TextUtils;
+import miku.united_as_one.genesis.api.text.TextUtils;
 import miku.united_as_one.genesis_core.utils.EventUtil;
 import miku.united_as_one.genesis.packets.DeadListSyncPacket;
 import miku.united_as_one.genesis.packets.MarkDeadPacket;

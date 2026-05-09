@@ -4,7 +4,7 @@ import com.tterrag.registrate.util.DataIngredient;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.contents.block.VerticalSlabBlock;
-import miku.united_as_one.genesis.registries.CreativeTabRegistry;
+import miku.united_as_one.genesis.registries.item.CreativeTabRegistry;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.resources.ResourceLocation;

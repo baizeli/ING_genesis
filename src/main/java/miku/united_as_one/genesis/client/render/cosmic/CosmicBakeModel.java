@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.client.render.cosmic;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.registries.ItemRegistry;
+import miku.united_as_one.genesis.registries.item.ItemRegistry;
 import miku.united_as_one.genesis.registries.spell.SpellSchoolRegistry;
 import com.google.common.collect.ImmutableMap;
 import com.mojang.blaze3d.pipeline.RenderTarget;

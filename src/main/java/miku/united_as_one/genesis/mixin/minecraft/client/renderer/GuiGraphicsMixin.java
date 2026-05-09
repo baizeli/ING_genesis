@@ -2,7 +2,7 @@ package miku.united_as_one.genesis.mixin.minecraft.client.renderer;
 
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.registries.spell.SpellSchoolRegistry;
-import miku.united_as_one.genesis.api.RenderUtils;
+import miku.united_as_one.genesis.api.render.RenderUtils;
 import io.redspace.ironsspellbooks.api.spells.ISpellContainer;
 import io.redspace.ironsspellbooks.api.spells.SchoolType;
 import io.redspace.ironsspellbooks.item.Scroll;

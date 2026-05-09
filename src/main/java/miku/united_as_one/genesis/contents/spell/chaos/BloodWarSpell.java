@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.contents.spell.chaos;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.registries.EffectRegistry;
+import miku.united_as_one.genesis.registries.effect.EffectRegistry;
 import miku.united_as_one.genesis.registries.spell.SpellSchoolRegistry;
 import miku.united_as_one.genesis.api.spell.SpellUtils;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;

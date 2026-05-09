@@ -2,7 +2,7 @@ package miku.united_as_one.genesis.contents.items.weapon.sword;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import miku.united_as_one.genesis.registries.TierRegistry;
+import miku.united_as_one.genesis.registries.item.TierRegistry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;

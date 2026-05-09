@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.packets.manuscript;
 
-import miku.united_as_one.genesis.registries.ItemRegistry;
+import miku.united_as_one.genesis.registries.item.ItemRegistry;
 import miku.united_as_one.genesis.registries.spell.SpellSchoolRegistry;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.registry.SpellRegistry;

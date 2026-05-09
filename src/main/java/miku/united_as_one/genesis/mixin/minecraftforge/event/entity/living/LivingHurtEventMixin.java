@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.mixin.minecraftforge.event.entity.living;
 
-import miku.united_as_one.genesis.api.mixinutil.LivingEventEC;
+import miku.united_as_one.genesis.api.mixin.LivingEventEC;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;

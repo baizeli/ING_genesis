@@ -6,7 +6,7 @@ import miku.united_as_one.genesis.contents.items.curios.EternalRing;
 import miku.united_as_one.genesis.contents.items.curios.rune_plus.BloodRunePlus;
 import miku.united_as_one.genesis.contents.items.weapon.sword.Gungnir;
 import miku.united_as_one.genesis.registries.spell.SpellAttributesRegistry;
-import miku.united_as_one.genesis.api.ModCurios;
+import miku.united_as_one.genesis.api.curios.ModCurios;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import io.redspace.ironsspellbooks.entity.spells.blood_slash.BloodSlashProjectile;

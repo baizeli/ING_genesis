@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.mixin.minecraft.client.multiplayer;
 
-import miku.united_as_one.genesis.api.mixinutil.ParticleSuppressionManager;
+import miku.united_as_one.genesis.api.mixin.ParticleSuppressionManager;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.particles.ParticleOptions;
 import org.spongepowered.asm.mixin.Mixin;

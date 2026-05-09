@@ -3,7 +3,7 @@ package miku.united_as_one.genesis.handlers;
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.contents.items.curios.rune_plus.EnderRunePlus;
 import miku.united_as_one.genesis.contents.items.curios.rune_plus.LightningRunePlus;
-import miku.united_as_one.genesis.api.ModCurios;
+import miku.united_as_one.genesis.api.curios.ModCurios;
 import miku.united_as_one.genesis.contents.items.weapon.bow.ThunderLongBow;
 import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
 import io.redspace.ironsspellbooks.api.util.Utils;

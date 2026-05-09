@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.mixin.minecraft.client.renderer;
 
 import miku.united_as_one.genesis.client.renderer.entity.spell.celestial_source.GlazedFlowerRainRenderer;
-import miku.united_as_one.genesis.registries.EffectRegistry;
+import miku.united_as_one.genesis.registries.effect.EffectRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.LightTexture;

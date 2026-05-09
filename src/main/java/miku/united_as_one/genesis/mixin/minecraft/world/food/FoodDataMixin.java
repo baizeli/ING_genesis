@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.mixin.minecraft.world.food;
 
-import miku.united_as_one.genesis.registries.EffectRegistry;
+import miku.united_as_one.genesis.registries.effect.EffectRegistry;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.food.FoodData;
 import org.spongepowered.asm.mixin.*;

@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.contents.spell.celestial_source;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.registries.EffectRegistry;
+import miku.united_as_one.genesis.registries.effect.EffectRegistry;
 import miku.united_as_one.genesis.handlers.spell.celestial_source.UnparalleledEvent;
 import miku.united_as_one.genesis.registries.spell.SpellSchoolRegistry;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;

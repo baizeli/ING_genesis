@@ -2,7 +2,7 @@ package miku.united_as_one.genesis.mixin.minecraft.client.renderer.entity;
 
 import miku.united_as_one.genesis.client.render.cosmic.CosmicBakeModel;
 import com.mojang.blaze3d.vertex.PoseStack;
-import miku.united_as_one.genesis.registries.ItemRegistry;
+import miku.united_as_one.genesis.registries.item.ItemRegistry;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.ItemRenderer;

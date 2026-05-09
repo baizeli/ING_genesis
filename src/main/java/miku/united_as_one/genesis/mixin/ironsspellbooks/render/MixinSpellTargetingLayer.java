@@ -2,7 +2,7 @@ package miku.united_as_one.genesis.mixin.ironsspellbooks.render;
 
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import io.redspace.ironsspellbooks.capabilities.magic.ClientSpellTargetingData;
-import miku.united_as_one.genesis.api.RenderUtils;
+import miku.united_as_one.genesis.api.render.RenderUtils;
 import miku.united_as_one.genesis.registries.spell.SpellSchoolRegistry;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;

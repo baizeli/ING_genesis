@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.mixin.ironsspellbooks.spells.fire;
 
 import miku.united_as_one.genesis.contents.items.curios.rune_plus.FireRunePlus;
-import miku.united_as_one.genesis.api.ModCurios;
+import miku.united_as_one.genesis.api.curios.ModCurios;
 import io.redspace.ironsspellbooks.entity.spells.AbstractMagicProjectile;
 import io.redspace.ironsspellbooks.entity.spells.magma_ball.FireBomb;
 import io.redspace.ironsspellbooks.entity.spells.magma_ball.FireField;

@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.contents.items.tool.shovel;
 
-import miku.united_as_one.genesis.registries.TierRegistry;
+import miku.united_as_one.genesis.registries.item.TierRegistry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShovelItem;

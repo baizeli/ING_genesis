@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.contents.items;
 
-import miku.united_as_one.genesis.api.RainbowEffectHelper;
+import miku.united_as_one.genesis.api.render.RainbowEffectHelper;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;

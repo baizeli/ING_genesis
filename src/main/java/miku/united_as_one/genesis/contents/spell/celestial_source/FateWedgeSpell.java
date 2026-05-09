@@ -2,7 +2,7 @@ package miku.united_as_one.genesis.contents.spell.celestial_source;
 
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.api.spell.celestial_source.FateWedgeUtil;
-import miku.united_as_one.genesis.registries.EffectRegistry;
+import miku.united_as_one.genesis.registries.effect.EffectRegistry;
 import miku.united_as_one.genesis.registries.spell.SpellSchoolRegistry;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
 import io.redspace.ironsspellbooks.api.magic.MagicData;

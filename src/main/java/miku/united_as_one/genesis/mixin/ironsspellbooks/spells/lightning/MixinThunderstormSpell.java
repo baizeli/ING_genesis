@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.mixin.ironsspellbooks.spells.lightning;
 
 import miku.united_as_one.genesis.contents.items.curios.rune_plus.LightningRunePlus;
-import miku.united_as_one.genesis.api.ModCurios;
+import miku.united_as_one.genesis.api.curios.ModCurios;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import io.redspace.ironsspellbooks.spells.lightning.ThunderstormSpell;
 import net.minecraft.world.entity.LivingEntity;

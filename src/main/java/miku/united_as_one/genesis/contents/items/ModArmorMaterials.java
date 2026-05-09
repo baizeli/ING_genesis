@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.contents.items;
 
-import miku.united_as_one.genesis.registries.ItemRegistry;
+import miku.united_as_one.genesis.registries.item.ItemRegistry;
 import miku.united_as_one.genesis.registries.spell.SpellAttributesRegistry;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import io.redspace.ironsspellbooks.item.armor.IronsExtendedArmorMaterial;

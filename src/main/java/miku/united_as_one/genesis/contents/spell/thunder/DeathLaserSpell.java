@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.contents.spell.thunder;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.registries.EntityRegistry;
+import miku.united_as_one.genesis.registries.entity.EntityRegistry;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.registry.SchoolRegistry;

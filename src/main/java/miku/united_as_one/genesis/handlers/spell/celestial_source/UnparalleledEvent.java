@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.handlers.spell.celestial_source;
 
 import miku.united_as_one.genesis.client.renderer.AfterImageManager;
-import miku.united_as_one.genesis.registries.EffectRegistry;
+import miku.united_as_one.genesis.registries.effect.EffectRegistry;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import net.minecraft.client.player.Input;
 import net.minecraft.tags.DamageTypeTags;

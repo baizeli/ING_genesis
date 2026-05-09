@@ -2,7 +2,7 @@ package miku.united_as_one.genesis.client;
 
 import com.mojang.blaze3d.shaders.FogShape;
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.registries.FluidRegistry;
+import miku.united_as_one.genesis.registries.fluid.FluidRegistry;
 import net.minecraft.client.Camera;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.level.material.FluidState;

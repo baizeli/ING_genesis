@@ -2,7 +2,7 @@ package miku.united_as_one.genesis.registries.spell;
 
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.data.damage.DamageTypes;
-import miku.united_as_one.genesis.registries.SoundRegister;
+import miku.united_as_one.genesis.registries.sound.SoundRegister;
 import io.redspace.ironsspellbooks.api.registry.SchoolRegistry;
 import io.redspace.ironsspellbooks.api.spells.SchoolType;
 import io.redspace.ironsspellbooks.damage.ISSDamageTypes;

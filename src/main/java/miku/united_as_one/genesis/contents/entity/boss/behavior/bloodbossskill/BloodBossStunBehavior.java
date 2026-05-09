@@ -9,7 +9,7 @@ import io.redspace.ironsspellbooks.registries.MobEffectRegistry;
 import miku.united_as_one.genesis.registries.entity.ai.ModMemoryModuleType;
 import miku.united_as_one.genesis.contents.entity.boss.BloodBoss;
 import miku.united_as_one.genesis.contents.entity.boss.behavior.AnimatedActionBehavior;
-import miku.united_as_one.genesis.registries.EntityRegistry;
+import miku.united_as_one.genesis.registries.entity.EntityRegistry;
 import miku.united_as_one.genesis.registries.client.ParticleRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;

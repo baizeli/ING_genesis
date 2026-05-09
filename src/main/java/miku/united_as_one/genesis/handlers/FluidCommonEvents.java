@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.handlers;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.registries.FluidRegistry;
+import miku.united_as_one.genesis.registries.fluid.FluidRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;

@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.client.particles;
 
-import miku.united_as_one.genesis.registries.EntityRegistry;
+import miku.united_as_one.genesis.registries.entity.EntityRegistry;
 import miku.united_as_one.genesis.contents.entity.NyanCat;
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.registries.client.ParticleRegistry;
@@ -23,7 +23,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static miku.united_as_one.genesis.Genesis.MODID;
-import static miku.united_as_one.genesis.registries.ItemRegistry.INFINITY_SWORD;
+import static miku.united_as_one.genesis.registries.item.ItemRegistry.INFINITY_SWORD;
 
 @Mod.EventBusSubscriber(modid = Genesis.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class ParticleDebugEvents {

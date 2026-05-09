@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.contents.items;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.registries.BlockRegistry;
+import miku.united_as_one.genesis.registries.block.BlockRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.*;

@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.registries.workbench;
 
 import miku.united_as_one.genesis.contents.workbench.arcane.ArcaneWorkbenchBlockEntity;
-import miku.united_as_one.genesis.registries.BlockRegistry;
+import miku.united_as_one.genesis.registries.block.BlockRegistry;
 import miku.united_as_one.genesis.Genesis;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraftforge.eventbus.api.IEventBus;

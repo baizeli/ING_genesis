@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.handlers.spell.celestial_source;
 
-import miku.united_as_one.genesis.registries.EffectRegistry;
+import miku.united_as_one.genesis.registries.effect.EffectRegistry;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.living.MobEffectEvent;

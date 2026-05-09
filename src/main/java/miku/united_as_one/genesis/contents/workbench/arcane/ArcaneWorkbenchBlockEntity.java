@@ -26,7 +26,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
-import static miku.united_as_one.genesis.api.i18nUtil.translatableContainerName;
+import static miku.united_as_one.genesis.api.text.i18nUtil.translatableContainerName;
 import static io.redspace.ironsspellbooks.registries.ItemRegistry.ARCANE_ESSENCE;
 
 public class ArcaneWorkbenchBlockEntity extends BaseContainerBlockEntity implements CraftingContainer, RecipeHolder, StackedContentsCompatible {

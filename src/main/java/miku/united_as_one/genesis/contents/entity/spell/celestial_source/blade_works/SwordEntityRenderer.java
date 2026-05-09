@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.contents.entity.spell.celestial_source.blade_works;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.api.RenderUtils;
+import miku.united_as_one.genesis.api.render.RenderUtils;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;

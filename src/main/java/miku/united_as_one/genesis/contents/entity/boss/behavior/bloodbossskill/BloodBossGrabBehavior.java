@@ -7,7 +7,7 @@ import miku.united_as_one.genesis.contents.entity.boss.BloodBoss;
 import miku.united_as_one.genesis.contents.entity.boss.BloodBossMoveControl;
 import miku.united_as_one.genesis.contents.entity.boss.SkillMovementTask;
 import miku.united_as_one.genesis.contents.entity.boss.behavior.AnimatedActionBehavior;
-import miku.united_as_one.genesis.registries.EntityRegistry;
+import miku.united_as_one.genesis.registries.entity.EntityRegistry;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;

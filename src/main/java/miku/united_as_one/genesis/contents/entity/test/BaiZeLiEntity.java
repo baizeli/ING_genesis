@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.contents.entity.test;
 
 import com.github.NineAbyss9.ix_api.api.mobs.IFlagMob;
-import miku.united_as_one.genesis.registries.EntityRegistry;
+import miku.united_as_one.genesis.registries.entity.EntityRegistry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;

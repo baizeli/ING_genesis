@@ -2,7 +2,7 @@ package miku.united_as_one.genesis.handlers;
 
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.contents.items.curios.EternalRing;
-import miku.united_as_one.genesis.api.ModCurios;
+import miku.united_as_one.genesis.api.curios.ModCurios;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraftforge.api.distmarker.Dist;

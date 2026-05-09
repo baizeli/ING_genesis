@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.handlers.spell.celestial_source;
 
-import miku.united_as_one.genesis.registries.EffectRegistry;
+import miku.united_as_one.genesis.registries.effect.EffectRegistry;
 import io.redspace.ironsspellbooks.registries.MobEffectRegistry;
 import net.minecraft.world.effect.*;
 import net.minecraft.world.entity.*;

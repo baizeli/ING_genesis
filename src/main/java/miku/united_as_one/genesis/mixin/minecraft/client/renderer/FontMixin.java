@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.mixin.minecraft.client.renderer;
 
 import miku.united_as_one.genesis.client.fonts.FontUtil;
-import miku.united_as_one.genesis.registries.Formatting;
+import miku.united_as_one.genesis.registries.text.Formatting;
 import net.minecraft.Util;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.renderer.MultiBufferSource;

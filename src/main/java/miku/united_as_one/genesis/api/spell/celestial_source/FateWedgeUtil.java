@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.api.spell.celestial_source;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.registries.EffectRegistry;
+import miku.united_as_one.genesis.registries.effect.EffectRegistry;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;

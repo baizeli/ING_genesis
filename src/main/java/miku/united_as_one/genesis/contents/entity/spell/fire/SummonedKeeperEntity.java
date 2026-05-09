@@ -10,7 +10,7 @@ import io.redspace.ironsspellbooks.entity.mobs.goals.GenericOwnerHurtTargetGoal;
 import io.redspace.ironsspellbooks.entity.mobs.goals.GenericProtectOwnerTargetGoal;
 import io.redspace.ironsspellbooks.entity.mobs.keeper.KeeperAnimatedWarlockAttackGoal;
 import io.redspace.ironsspellbooks.entity.mobs.keeper.KeeperEntity;
-import miku.united_as_one.genesis.registries.EntityRegistry;
+import miku.united_as_one.genesis.registries.entity.EntityRegistry;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;

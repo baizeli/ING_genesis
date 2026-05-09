@@ -17,7 +17,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
-import static miku.united_as_one.genesis.api.i18nUtil.translatableContainerName;
+import static miku.united_as_one.genesis.api.text.i18nUtil.translatableContainerName;
 
 public class ArcaneWorkbenchBlock extends Block implements EntityBlock {
 

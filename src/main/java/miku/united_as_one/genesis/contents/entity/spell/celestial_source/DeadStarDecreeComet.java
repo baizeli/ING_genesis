@@ -5,7 +5,7 @@ import io.redspace.ironsspellbooks.capabilities.magic.MagicManager;
 import io.redspace.ironsspellbooks.damage.DamageSources;
 import io.redspace.ironsspellbooks.entity.spells.AbstractMagicProjectile;
 import io.redspace.ironsspellbooks.particle.BlastwaveParticleOptions;
-import miku.united_as_one.genesis.registries.CreativeTabRegistry;
+import miku.united_as_one.genesis.registries.item.CreativeTabRegistry;
 import net.minecraft.sounds.*;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.projectile.Projectile;

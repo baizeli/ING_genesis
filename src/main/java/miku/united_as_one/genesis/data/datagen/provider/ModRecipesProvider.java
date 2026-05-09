@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.data.datagen.provider;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.registries.ItemRegistry;
+import miku.united_as_one.genesis.registries.item.ItemRegistry;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;

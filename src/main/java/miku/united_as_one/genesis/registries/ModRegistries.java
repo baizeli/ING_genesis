@@ -1,8 +1,17 @@
 package miku.united_as_one.genesis.registries;
 
+import miku.united_as_one.genesis.registries.attribute.EntityAttributeRegistry;
+import miku.united_as_one.genesis.registries.block.BlockRegistry;
 import miku.united_as_one.genesis.registries.client.ParticleRegistry;
+import miku.united_as_one.genesis.registries.effect.EffectRegistry;
+import miku.united_as_one.genesis.registries.entity.EntityRegistry;
 import miku.united_as_one.genesis.registries.entity.ai.ModActivity;
 import miku.united_as_one.genesis.registries.entity.ai.ModMemoryModuleType;
+import miku.united_as_one.genesis.registries.fluid.FluidRegistry;
+import miku.united_as_one.genesis.registries.item.CreativeTabRegistry;
+import miku.united_as_one.genesis.registries.item.ItemRegistry;
+import miku.united_as_one.genesis.registries.network.ModNetworkRegistry;
+import miku.united_as_one.genesis.registries.sound.SoundRegister;
 import miku.united_as_one.genesis.registries.spell.SpellAttributesRegistry;
 import miku.united_as_one.genesis.registries.spell.SpellSchoolRegistry;
 import miku.united_as_one.genesis.registries.workbench.ModBlockEntities;
