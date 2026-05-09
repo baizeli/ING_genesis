@@ -326,7 +326,29 @@ public class ModArmorMaterials {
 
         @Override
         public Map<Attribute, AttributeModifier> getAdditionalAttributes() {
-            return Map.of();
+            Map<Attribute, AttributeModifier> attributes = new HashMap<>();
+            
+            // 冷却缩减
+            attributes.put(AttributeRegistry.COOLDOWN_REDUCTION.get(), new AttributeModifier(
+                "Arcane Crystal Cooldown Reduction", 0.05, AttributeModifier.Operation.MULTIPLY_TOTAL
+            ));
+            
+            // 最大法力值
+            attributes.put(AttributeRegistry.MAX_MANA.get(), new AttributeModifier(
+                "Arcane Crystal Max Mana", 175, AttributeModifier.Operation.ADDITION
+            ));
+            
+            // 法术强度
+            attributes.put(AttributeRegistry.SPELL_POWER.get(), new AttributeModifier(
+                "Arcane Crystal Spell Power", 0.07, AttributeModifier.Operation.MULTIPLY_BASE
+            ));
+            
+            // 法术抗性
+            attributes.put(AttributeRegistry.SPELL_RESIST.get(), new AttributeModifier(
+                "Arcane Crystal Spell Resist", 0.05, AttributeModifier.Operation.MULTIPLY_TOTAL
+            ));
+            
+            return attributes;
         }
     };
     
