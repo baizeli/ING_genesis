@@ -301,7 +301,7 @@ public class ModArmorMaterials {
 
         @Override
         public float getToughness() {
-            return 3333.0F;
+            return 3.0F;
         }
 
         @Override
