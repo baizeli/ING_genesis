@@ -1,5 +1,6 @@
 package miku.united_as_one.genesis.registries.block;
 
+import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.contents.block.ChaosPortalBlock;
@@ -53,6 +54,7 @@ public class BlockRegistry {
             .tag(ItemTags.SAPLINGS)
             .model((ctx, prov) -> prov.withExistingParent(ctx.getName(), "item/generated").texture("layer0", "minecraft:block/oak_sapling"))
             .build()
+            .setData(ProviderType.BLOCKSTATE, (ctx, prov) -> {})
             .register();
 
     public static final BlockEntry<SaplingBlock> QUIETNESS_SAPLING = Genesis.L2_REGISTRATE
@@ -65,6 +67,7 @@ public class BlockRegistry {
             .tag(ItemTags.SAPLINGS)
             .model((ctx, prov) -> prov.withExistingParent(ctx.getName(), "item/generated").texture("layer0", "minecraft:block/oak_sapling"))
             .build()
+            .setData(ProviderType.BLOCKSTATE, (ctx, prov) -> {})
             .register();
 
     // 泥土、草方块和作物依附方块组。
@@ -91,6 +94,7 @@ public class BlockRegistry {
             .initialProperties(() -> Blocks.SWEET_BERRY_BUSH)
             .properties(p -> p.randomTicks())
             .addLayer(() -> RenderType::cutout)
+            .setData(ProviderType.BLOCKSTATE, (ctx, prov) -> {})
             .register();
 
     public static final BlockEntry<GenesisFruitBushBlock> PHANTOM_PLUM_BUSH = Genesis.L2_REGISTRATE
@@ -102,6 +106,7 @@ public class BlockRegistry {
             .initialProperties(() -> Blocks.SWEET_BERRY_BUSH)
             .properties(p -> p.randomTicks())
             .addLayer(() -> RenderType::cutout)
+            .setData(ProviderType.BLOCKSTATE, (ctx, prov) -> {})
             .register();
 
     public static final BlockEntry<GenesisFruitBushBlock> COLORFUL_FRUITS_BUSH = Genesis.L2_REGISTRATE
@@ -113,6 +118,7 @@ public class BlockRegistry {
             .initialProperties(() -> Blocks.SWEET_BERRY_BUSH)
             .properties(p -> p.randomTicks())
             .addLayer(() -> RenderType::cutout)
+            .setData(ProviderType.BLOCKSTATE, (ctx, prov) -> {})
             .register();
 
     public static final BlockEntry<Block> FEAR_CRYSTALS = Genesis.L2_REGISTRATE

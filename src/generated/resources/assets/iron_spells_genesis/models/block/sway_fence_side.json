@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/fence_side",
-  "textures": {
-    "texture": "iron_spells_genesis:block/sway_planks"
-  }
-}

@@ -8,6 +8,7 @@ import net.minecraft.sounds.*;
 import net.minecraft.world.entity.ai.attributes.*;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
@@ -272,6 +273,60 @@ public class ModArmorMaterials {
                     "Chaos Mana Regen", 0.06, AttributeModifier.Operation.MULTIPLY_BASE
                 )
             );
+        }
+    };
+    
+    // 奥术水晶套
+    public static final ArmorMaterial ARCANE_CRYSTAL = new IronsExtendedArmorMaterial() {
+
+        @Override
+        public @NotNull Ingredient getRepairIngredient() {
+            return Ingredient.of(ItemRegistry.ARCANE_CRYSTAL.get());
+        }
+
+        @Override
+        public @NotNull SoundEvent getEquipSound() {
+            return SoundEvents.ARMOR_EQUIP_DIAMOND;
+        }
+
+        @Override
+        public @NotNull String getName() {
+            return "arcane_crystal";
+        }
+
+        @Override
+        public int getEnchantmentValue() {
+            return 30;
+        }
+
+        @Override
+        public float getToughness() {
+            return 3333.0F;
+        }
+
+        @Override
+        public float getKnockbackResistance() {
+            return 0.0F;
+        }
+
+        @Override
+        public int getDurabilityForType(ArmorItem.@NotNull Type type) {
+            return 800;
+        }
+
+        @Override
+        public int getDefenseForType(ArmorItem.Type type) {
+            return switch (type) {
+                case HELMET -> 4;
+                case CHESTPLATE -> 9;
+                case LEGGINGS -> 7;
+                case BOOTS -> 4;
+            };
+        }
+
+        @Override
+        public Map<Attribute, AttributeModifier> getAdditionalAttributes() {
+            return Map.of();
         }
     };
     
