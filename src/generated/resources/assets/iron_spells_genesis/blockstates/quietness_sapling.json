@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "stage=0": {
+      "model": "iron_spells_genesis:block/quietness_sapling"
+    },
+    "stage=1": {
+      "model": "iron_spells_genesis:block/quietness_sapling"
+    }
+  }
+}

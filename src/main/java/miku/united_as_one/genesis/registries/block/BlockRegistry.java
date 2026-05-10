@@ -1,5 +1,7 @@
 package miku.united_as_one.genesis.registries.block;
 
+import com.tterrag.registrate.providers.DataGenContext;
+import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.contents.block.ChaosPortalBlock;
@@ -13,13 +15,13 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.block.*;
+import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraftforge.registries.*;
 
 public class BlockRegistry {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Genesis.MOD_ID);
 
-    // 地貌装饰石材和砂类方块组，由 SimpleBlockSet 统一生成本体、楼梯、台阶、墙等变体。
     public static final SimpleBlockSet<Block> WEATHERED_SANDSTONE = SimpleBlockSet.buildStone("weathered_sandstone", Blocks.SANDSTONE).simpleStone();
     public static final SimpleBlockSet<Block> WEATHERED_STONE_BRICKS = SimpleBlockSet.buildStone("weathered_stone_bricks", Blocks.STONE_BRICKS).simpleStone();
     public static final SimpleBlockSet<Block> WEATHERED_SAND = SimpleBlockSet.buildStone("weathered_sand", Blocks.SAND);
@@ -42,11 +44,11 @@ public class BlockRegistry {
     public static final SimpleBlockSet<RotatedPillarBlock> QUIETNESS_LOG = SimpleBlockSet.buildLog("quietness_log", Blocks.OAK_LOG).addStrippedLog().addWood().addStrippedWood();
     public static final SimpleBlockSet<Block> QUIETNESS_PLANKS = SimpleBlockSet.buildPlanks("quietness", Blocks.OAK_PLANKS).simplePlank();
 
-    // 树苗和树木生长入口。
     public static final BlockEntry<SaplingBlock> SWAY_SAPLING = Genesis.L2_REGISTRATE
             .block("sway_sapling", properties -> new SaplingBlock(new GenesisTreeGrower("sway_fungus_tree"), properties))
             .initialProperties(() -> Blocks.OAK_SAPLING)
             .addLayer(() -> RenderType::cutout)
+            .blockstate(BlockRegistry::saplingBlockstate)
             .tag(BlockTags.SAPLINGS)
             .item()
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
@@ -59,6 +61,7 @@ public class BlockRegistry {
             .block("quietness_sapling", properties -> new SaplingBlock(new GenesisTreeGrower("quietness_fungus_tree"), properties))
             .initialProperties(() -> Blocks.OAK_SAPLING)
             .addLayer(() -> RenderType::cutout)
+            .blockstate(BlockRegistry::saplingBlockstate)
             .tag(BlockTags.SAPLINGS)
             .item()
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
@@ -67,11 +70,9 @@ public class BlockRegistry {
             .build()
             .register();
 
-    // 泥土、草方块和作物依附方块组。
     public static final SimpleBlockSet<Block> GENESIS_DIRT = SimpleBlockSet.buildDirt("genesis", Blocks.DIRT).addGrassVariant("sway").addGrassVariant("quietness");
     public static final SimpleBlockSet<Block> SOURCE_DIRT = SimpleBlockSet.buildDirt("source", Blocks.DIRT).addGrass();
 
-    // 矿物、晶体和可采集作物。
     public static final BlockEntry<Block> ARCANE_CRYSTAL_BLOCK = Genesis.L2_REGISTRATE
             .block("arcane_crystal_block", Block::new)
             .initialProperties(() -> Blocks.AMETHYST_BLOCK)
@@ -91,6 +92,7 @@ public class BlockRegistry {
             .initialProperties(() -> Blocks.SWEET_BERRY_BUSH)
             .properties(p -> p.randomTicks())
             .addLayer(() -> RenderType::cutout)
+            .blockstate(BlockRegistry::fruitBushBlockstate)
             .register();
 
     public static final BlockEntry<GenesisFruitBushBlock> PHANTOM_PLUM_BUSH = Genesis.L2_REGISTRATE
@@ -102,6 +104,7 @@ public class BlockRegistry {
             .initialProperties(() -> Blocks.SWEET_BERRY_BUSH)
             .properties(p -> p.randomTicks())
             .addLayer(() -> RenderType::cutout)
+            .blockstate(BlockRegistry::fruitBushBlockstate)
             .register();
 
     public static final BlockEntry<GenesisFruitBushBlock> COLORFUL_FRUITS_BUSH = Genesis.L2_REGISTRATE
@@ -113,6 +116,7 @@ public class BlockRegistry {
             .initialProperties(() -> Blocks.SWEET_BERRY_BUSH)
             .properties(p -> p.randomTicks())
             .addLayer(() -> RenderType::cutout)
+            .blockstate(BlockRegistry::fruitBushBlockstate)
             .register();
 
     public static final BlockEntry<Block> FEAR_CRYSTALS = Genesis.L2_REGISTRATE
@@ -165,7 +169,6 @@ public class BlockRegistry {
             .build()
             .register();
 
-    // 功能方块和特殊结构方块。
     public static final BlockEntry<ArcaneWorkbenchBlock> ARCANE_WORKBENCH = Genesis.L2_REGISTRATE
             .block("arcane_workbench", ArcaneWorkbenchBlock::new)
             .properties(p -> p.lightLevel(s -> 9).strength(3.0f, 9.0f).requiresCorrectToolForDrops().sound(SoundType.STONE))
@@ -186,6 +189,31 @@ public class BlockRegistry {
             .properties(p -> p.requiresCorrectToolForDrops().strength(20, 9999).sound(SoundType.NETHERITE_BLOCK))
             .tag(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.NEEDS_DIAMOND_TOOL)
             .register();
+
+    private static void saplingBlockstate(DataGenContext<Block, SaplingBlock> ctx, RegistrateBlockstateProvider provider) {
+        var model = provider.models().cross(ctx.getName(), provider.mcLoc("block/oak_sapling"));
+        provider.getVariantBuilder(ctx.get()).forAllStates(state -> ConfiguredModel.builder()
+                .modelFile(model)
+                .build());
+    }
+
+    private static void fruitBushBlockstate(DataGenContext<Block, GenesisFruitBushBlock> ctx, RegistrateBlockstateProvider provider) {
+        var stage0 = provider.models().cross(ctx.getName() + "_stage0", provider.mcLoc("block/sweet_berry_bush_stage0"));
+        var stage1 = provider.models().cross(ctx.getName() + "_stage1", provider.mcLoc("block/sweet_berry_bush_stage1"));
+        var stage2 = provider.models().cross(ctx.getName() + "_stage2", provider.mcLoc("block/sweet_berry_bush_stage2"));
+        var stage3 = provider.models().cross(ctx.getName() + "_stage3", provider.mcLoc("block/sweet_berry_bush_stage3"));
+        provider.getVariantBuilder(ctx.get()).forAllStates(state -> {
+            var model = switch (state.getValue(SweetBerryBushBlock.AGE)) {
+                case 0 -> stage0;
+                case 1 -> stage1;
+                case 2 -> stage2;
+                default -> stage3;
+            };
+            return ConfiguredModel.builder()
+                    .modelFile(model)
+                    .build();
+        });
+    }
 
     public static void register() {}
 }

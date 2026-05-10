@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "iron_spells_genesis:source_grass_block"
+          "name": "iron_spells_genesis:quietness_sapling"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "iron_spells_genesis:blocks/source_grass_block"
+  "random_sequence": "iron_spells_genesis:blocks/quietness_sapling"
 }
