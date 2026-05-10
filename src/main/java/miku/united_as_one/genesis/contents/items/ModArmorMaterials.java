@@ -8,6 +8,7 @@ import net.minecraft.sounds.*;
 import net.minecraft.world.entity.ai.attributes.*;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.crafting.Ingredient;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
@@ -272,6 +273,82 @@ public class ModArmorMaterials {
                     "Chaos Mana Regen", 0.06, AttributeModifier.Operation.MULTIPLY_BASE
                 )
             );
+        }
+    };
+    
+    // 奥术水晶套
+    public static final ArmorMaterial ARCANE_CRYSTAL = new IronsExtendedArmorMaterial() {
+
+        @Override
+        public @NotNull Ingredient getRepairIngredient() {
+            return Ingredient.of(ItemRegistry.ARCANE_CRYSTAL.get());
+        }
+
+        @Override
+        public @NotNull SoundEvent getEquipSound() {
+            return SoundEvents.ARMOR_EQUIP_DIAMOND;
+        }
+
+        @Override
+        public @NotNull String getName() {
+            return "arcane_crystal";
+        }
+
+        @Override
+        public int getEnchantmentValue() {
+            return 30;
+        }
+
+        @Override
+        public float getToughness() {
+            return 3.0F;
+        }
+
+        @Override
+        public float getKnockbackResistance() {
+            return 0.0F;
+        }
+
+        @Override
+        public int getDurabilityForType(ArmorItem.@NotNull Type type) {
+            return 800;
+        }
+
+        @Override
+        public int getDefenseForType(ArmorItem.Type type) {
+            return switch (type) {
+                case HELMET -> 4;
+                case CHESTPLATE -> 9;
+                case LEGGINGS -> 7;
+                case BOOTS -> 4;
+            };
+        }
+
+        @Override
+        public Map<Attribute, AttributeModifier> getAdditionalAttributes() {
+            Map<Attribute, AttributeModifier> attributes = new HashMap<>();
+            
+            // 冷却缩减
+            attributes.put(AttributeRegistry.COOLDOWN_REDUCTION.get(), new AttributeModifier(
+                "Arcane Crystal Cooldown Reduction", 0.05, AttributeModifier.Operation.MULTIPLY_TOTAL
+            ));
+            
+            // 最大法力值
+            attributes.put(AttributeRegistry.MAX_MANA.get(), new AttributeModifier(
+                "Arcane Crystal Max Mana", 175, AttributeModifier.Operation.ADDITION
+            ));
+            
+            // 法术强度
+            attributes.put(AttributeRegistry.SPELL_POWER.get(), new AttributeModifier(
+                "Arcane Crystal Spell Power", 0.07, AttributeModifier.Operation.MULTIPLY_BASE
+            ));
+            
+            // 法术抗性
+            attributes.put(AttributeRegistry.SPELL_RESIST.get(), new AttributeModifier(
+                "Arcane Crystal Spell Resist", 0.05, AttributeModifier.Operation.MULTIPLY_TOTAL
+            ));
+            
+            return attributes;
         }
     };
     

@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/inner_stairs",
-  "textures": {
-    "bottom": "iron_spells_genesis:block/deep_fear_stone",
-    "side": "iron_spells_genesis:block/deep_fear_stone",
-    "top": "iron_spells_genesis:block/deep_fear_stone"
-  }
-}

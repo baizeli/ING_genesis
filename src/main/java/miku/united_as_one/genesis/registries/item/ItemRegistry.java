@@ -352,8 +352,7 @@ public class ItemRegistry {
             .item("divine_metal_helmet", properties -> new DivineMetalArmor(
                 (IronsExtendedArmorMaterial) ModArmorMaterials.DIVINE_METAL, ArmorItem.Type.HELMET, properties
             ))
-            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {
-            })
+            .setData(ProviderType.ITEM_MODEL, ItemRegistry::createArmorModel)
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
@@ -361,8 +360,7 @@ public class ItemRegistry {
             .item("divine_metal_chestplate", properties -> new DivineMetalArmor(
                 (IronsExtendedArmorMaterial) ModArmorMaterials.DIVINE_METAL, ArmorItem.Type.CHESTPLATE, properties
             ))
-            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {
-            })
+            .setData(ProviderType.ITEM_MODEL, ItemRegistry::createArmorModel)
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
@@ -370,8 +368,7 @@ public class ItemRegistry {
             .item("divine_metal_leggings", properties -> new DivineMetalArmor(
                 (IronsExtendedArmorMaterial) ModArmorMaterials.DIVINE_METAL, ArmorItem.Type.LEGGINGS, properties
             ))
-            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {
-            })
+            .setData(ProviderType.ITEM_MODEL, ItemRegistry::createArmorModel)
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
@@ -379,8 +376,7 @@ public class ItemRegistry {
             .item("divine_metal_boots", properties -> new DivineMetalArmor(
                 (IronsExtendedArmorMaterial) ModArmorMaterials.DIVINE_METAL, ArmorItem.Type.BOOTS, properties
             ))
-            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {
-            })
+            .setData(ProviderType.ITEM_MODEL, ItemRegistry::createArmorModel)
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
@@ -389,8 +385,7 @@ public class ItemRegistry {
             .item("celestial_source_spell_helmet", properties -> new CelestialSourceSpellArmor(
                 ModArmorMaterials.CELESTIAL_SOURCE_SPELL, ArmorItem.Type.HELMET, properties
             ))
-            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {
-            })
+            .setData(ProviderType.ITEM_MODEL, ItemRegistry::createArmorModel)
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
@@ -398,8 +393,7 @@ public class ItemRegistry {
             .item("celestial_source_spell_chestplate", properties -> new CelestialSourceSpellArmor(
                 ModArmorMaterials.CELESTIAL_SOURCE_SPELL, ArmorItem.Type.CHESTPLATE, properties
             ))
-            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {
-            })
+            .setData(ProviderType.ITEM_MODEL, ItemRegistry::createArmorModel)
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
@@ -407,8 +401,7 @@ public class ItemRegistry {
             .item("celestial_source_spell_leggings", properties -> new CelestialSourceSpellArmor(
                 ModArmorMaterials.CELESTIAL_SOURCE_SPELL, ArmorItem.Type.LEGGINGS, properties
             ))
-            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {
-            })
+            .setData(ProviderType.ITEM_MODEL, ItemRegistry::createArmorModel)
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
@@ -416,8 +409,7 @@ public class ItemRegistry {
             .item("celestial_source_spell_boots", properties -> new CelestialSourceSpellArmor(
                 ModArmorMaterials.CELESTIAL_SOURCE_SPELL, ArmorItem.Type.BOOTS, properties
             ))
-            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {
-            })
+            .setData(ProviderType.ITEM_MODEL, ItemRegistry::createArmorModel)
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
@@ -426,8 +418,7 @@ public class ItemRegistry {
             .item("chaos_spell_helmet", properties -> new ChaosSpellArmor(
                 ModArmorMaterials.CHAOS_SPELL, ArmorItem.Type.HELMET, properties
             ))
-            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {
-            })
+            .setData(ProviderType.ITEM_MODEL, ItemRegistry::createArmorModel)
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
@@ -435,8 +426,7 @@ public class ItemRegistry {
             .item("chaos_spell_chestplate", properties -> new ChaosSpellArmor(
                 ModArmorMaterials.CHAOS_SPELL, ArmorItem.Type.CHESTPLATE, properties
             ))
-            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {
-            })
+            .setData(ProviderType.ITEM_MODEL, ItemRegistry::createArmorModel)
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
@@ -444,8 +434,7 @@ public class ItemRegistry {
             .item("chaos_spell_leggings", properties -> new ChaosSpellArmor(
                 ModArmorMaterials.CHAOS_SPELL, ArmorItem.Type.LEGGINGS, properties
             ))
-            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {
-            })
+            .setData(ProviderType.ITEM_MODEL, ItemRegistry::createArmorModel)
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
@@ -453,8 +442,7 @@ public class ItemRegistry {
             .item("chaos_spell_boots", properties -> new ChaosSpellArmor(
                 ModArmorMaterials.CHAOS_SPELL, ArmorItem.Type.BOOTS, properties
             ))
-            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {
-            })
+            .setData(ProviderType.ITEM_MODEL, ItemRegistry::createArmorModel)
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
@@ -463,8 +451,7 @@ public class ItemRegistry {
             .item("violet_zenith_helmet", properties -> new VioletZenithArmor(
                 ModArmorMaterials.VIOLET_ZENITH, ArmorItem.Type.HELMET, properties
             ))
-            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {
-            })
+            .setData(ProviderType.ITEM_MODEL, ItemRegistry::createArmorModel)
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
@@ -472,8 +459,7 @@ public class ItemRegistry {
             .item("violet_zenith_chestplate", properties -> new VioletZenithArmor(
                 ModArmorMaterials.VIOLET_ZENITH, ArmorItem.Type.CHESTPLATE, properties
             ))
-            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {
-            })
+            .setData(ProviderType.ITEM_MODEL, ItemRegistry::createArmorModel)
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
@@ -481,8 +467,7 @@ public class ItemRegistry {
             .item("violet_zenith_leggings", properties -> new VioletZenithArmor(
                 ModArmorMaterials.VIOLET_ZENITH, ArmorItem.Type.LEGGINGS, properties
             ))
-            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {
-            })
+            .setData(ProviderType.ITEM_MODEL, ItemRegistry::createArmorModel)
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
@@ -490,7 +475,40 @@ public class ItemRegistry {
             .item("violet_zenith_boots", properties -> new VioletZenithArmor(
                 ModArmorMaterials.VIOLET_ZENITH, ArmorItem.Type.BOOTS, properties
             ))
-            .setData(ProviderType.ITEM_MODEL, (ctx, prov) -> {})
+            .setData(ProviderType.ITEM_MODEL, ItemRegistry::createArmorModel)
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
+            .register();
+
+    // 奥术水晶套
+    public static final ItemEntry<ArcaneCrystalArmor> ARCANE_CRYSTAL_HELMET = Genesis.L2_REGISTRATE
+            .item("arcane_crystal_helmet", properties -> new ArcaneCrystalArmor(
+                (IronsExtendedArmorMaterial) ModArmorMaterials.ARCANE_CRYSTAL, ArmorItem.Type.HELMET, properties
+            ))
+            .setData(ProviderType.ITEM_MODEL, ItemRegistry::createArmorModel)
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
+            .register();
+
+    public static final ItemEntry<ArcaneCrystalArmor> ARCANE_CRYSTAL_CHESTPLATE = Genesis.L2_REGISTRATE
+            .item("arcane_crystal_chestplate", properties -> new ArcaneCrystalArmor(
+                (IronsExtendedArmorMaterial) ModArmorMaterials.ARCANE_CRYSTAL, ArmorItem.Type.CHESTPLATE, properties
+            ))
+            .setData(ProviderType.ITEM_MODEL, ItemRegistry::createArmorModel)
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
+            .register();
+
+    public static final ItemEntry<ArcaneCrystalArmor> ARCANE_CRYSTAL_LEGGINGS = Genesis.L2_REGISTRATE
+            .item("arcane_crystal_leggings", properties -> new ArcaneCrystalArmor(
+                (IronsExtendedArmorMaterial) ModArmorMaterials.ARCANE_CRYSTAL, ArmorItem.Type.LEGGINGS, properties
+            ))
+            .setData(ProviderType.ITEM_MODEL, ItemRegistry::createArmorModel)
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
+            .register();
+
+    public static final ItemEntry<ArcaneCrystalArmor> ARCANE_CRYSTAL_BOOTS = Genesis.L2_REGISTRATE
+            .item("arcane_crystal_boots", properties -> new ArcaneCrystalArmor(
+                (IronsExtendedArmorMaterial) ModArmorMaterials.ARCANE_CRYSTAL, ArmorItem.Type.BOOTS, properties
+            ))
+            .setData(ProviderType.ITEM_MODEL, ItemRegistry::createArmorModel)
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_EQUIPMENT)
             .register();
 
@@ -1039,7 +1057,11 @@ public class ItemRegistry {
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
 
-    public static void register() {
+    public static void register() {}
+
+    public static void createArmorModel(DataGenContext<Item, ? extends Item> ctx, RegistrateItemModelProvider pvd) {
+        pvd.withExistingParent(ctx.getName(), "item/generated")
+            .texture("layer0", Genesis.MOD_ID + ":item/armor/" + ctx.getName());
     }
 
     public static <T extends Item> void createBowModel(DataGenContext<Item, T> ctx, RegistrateItemModelProvider pvd) {

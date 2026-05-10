@@ -1,6 +1,0 @@
-{
-  "parent": "item/generated",
-  "textures": {
-    "layer0": "iron_spells_genesis:item/armor/divine_metal_chestplate"
-  }
-}

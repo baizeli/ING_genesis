@@ -1,5 +1,6 @@
 package miku.united_as_one.genesis.contents.block.util;
 
+import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.util.DataIngredient;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import miku.united_as_one.genesis.Genesis;
@@ -57,7 +58,9 @@ public class SimpleBlockSet<T extends Block> {
                 .item()
                 .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
                 .tag(itemTag)
+                .model((ctx, prov) -> {})
                 .build()
+                .setData(ProviderType.BLOCKSTATE, (ctx, prov) -> {})
                 .register();
         return simpleBlockSet;
     }
@@ -71,7 +74,9 @@ public class SimpleBlockSet<T extends Block> {
                 .item()
                 .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
                 .tag(itemTag)
+                .model((ctx, prov) -> {})
                 .build()
+                .setData(ProviderType.BLOCKSTATE, (ctx, prov) -> {})
                 .register();
         simpleBlockSet.texture = ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "block/" + name + suffix);
         return simpleBlockSet;
@@ -98,7 +103,9 @@ public class SimpleBlockSet<T extends Block> {
                 .item()
                 .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
                 .tag(ItemTags.LOGS)
+                .model((ctx, prov) -> {})
                 .build()
+                .setData(ProviderType.BLOCKSTATE, (ctx, prov) -> {})
                 .register();
         return simpleBlockSet;
     }
@@ -131,8 +138,9 @@ public class SimpleBlockSet<T extends Block> {
                 .item()
                 .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
                 .tag(ItemTags.STAIRS)
-                .model((ctx, pvd) -> pvd.stairs(ctx.getName(), texture, texture, texture))
+                .model((ctx, pvd) -> {})
                 .build()
+                .setData(ProviderType.BLOCKSTATE, (ctx, prov) -> {})
                 .recipe((ctx, prov) -> prov.stairs(DataIngredient.items(base.get()), RecipeCategory.BUILDING_BLOCKS, ctx, null, minable.equals(BlockTags.MINEABLE_WITH_PICKAXE)))
                 .register();
         return this;
@@ -146,8 +154,9 @@ public class SimpleBlockSet<T extends Block> {
                 .item()
                 .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
                 .tag(ItemTags.SLABS)
-                .model((ctx, pvd) -> pvd.slab(ctx.getName(), texture, texture, texture))
+                .model((ctx, pvd) -> {})
                 .build()
+                .setData(ProviderType.BLOCKSTATE, (ctx, prov) -> {})
                 .recipe((ctx, prov) -> prov.slab(DataIngredient.items(base.get()), RecipeCategory.BUILDING_BLOCKS, ctx, null, minable.equals(BlockTags.MINEABLE_WITH_PICKAXE)))
                 .register();
         return this;
@@ -160,7 +169,9 @@ public class SimpleBlockSet<T extends Block> {
                 .tag(minable)
                 .item()
                 .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
+                .model((ctx, prov) -> {})
                 .build()
+                .setData(ProviderType.BLOCKSTATE, (ctx, prov) -> {})
                 .recipe((ctx, prov) -> prov.singleItem(DataIngredient.items(base.get()), RecipeCategory.BUILDING_BLOCKS, ctx, 1, 2))
                 .register();
         return this;
@@ -215,9 +226,10 @@ public class SimpleBlockSet<T extends Block> {
                 .tag(BlockTags.MINEABLE_WITH_AXE, BlockTags.WOODEN_FENCES)
                 .item()
                 .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
-                .model((ctx, pvd) -> pvd.fenceInventory(ctx.getName(), texture))
+                .model((ctx, pvd) -> {})
                 .tag(ItemTags.WOODEN_FENCES)
                 .build()
+                .setData(ProviderType.BLOCKSTATE, (ctx, prov) -> {})
                 .recipe((ctx, prov) -> prov.fence(DataIngredient.items(base.get()), RecipeCategory.DECORATIONS, ctx, null))
                 .register();
         return this;
@@ -231,8 +243,9 @@ public class SimpleBlockSet<T extends Block> {
                 .item()
                 .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
                 .tag(ItemTags.WALLS)
-                .model((ctx, pvd) -> pvd.wallInventory(ctx.getName(), texture))
+                .model((ctx, pvd) -> {})
                 .build()
+                .setData(ProviderType.BLOCKSTATE, (ctx, prov) -> {})
                 .recipe((ctx, prov) -> prov.wall(DataIngredient.items(base.get()), RecipeCategory.BUILDING_BLOCKS, ctx))
                 .register();
         return this;
@@ -305,7 +318,9 @@ public class SimpleBlockSet<T extends Block> {
                 .tag(BlockTags.MINEABLE_WITH_SHOVEL, BlockTags.DIRT)
                 .item()
                 .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
+                .model((ctx, prov) -> {})
                 .build()
+                .setData(ProviderType.BLOCKSTATE, (ctx, prov) -> {})
                 .register();
         return this;
     }
@@ -324,7 +339,9 @@ public class SimpleBlockSet<T extends Block> {
                 .tag(BlockTags.MINEABLE_WITH_SHOVEL, BlockTags.DIRT)
                 .item()
                 .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
+                .model((ctx, prov) -> {})
                 .build()
+                .setData(ProviderType.BLOCKSTATE, (ctx, prov) -> {})
                 .register();
         grassVariants.add(variant);
         return this;
