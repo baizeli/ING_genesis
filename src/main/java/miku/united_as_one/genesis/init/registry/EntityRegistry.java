@@ -8,6 +8,8 @@ import miku.united_as_one.genesis.common.entity.arrow.HolyArrowEntity;
 import miku.united_as_one.genesis.common.entity.arrow.StellarArrowEntity;
 import miku.united_as_one.genesis.common.entity.arrow.ThunderArrowEntity;
 import miku.united_as_one.genesis.common.entity.boss.BloodBoss;
+import miku.united_as_one.genesis.common.entity.gungnir.GungnirChainLightning;
+import miku.united_as_one.genesis.common.entity.gungnir.GungnirDaggerEntity;
 import miku.united_as_one.genesis.common.entity.laser.DeathLaserEntity;
 import miku.united_as_one.genesis.common.entity.warlock.WardenMageEntity;
 import miku.united_as_one.genesis.common.entity.projectile.ThrownIron;
@@ -212,4 +214,20 @@ public class EntityRegistry {
                     .clientTrackingRange(64)
                     .updateInterval(1)
                     .build("bai_ze_li"));
+
+    public static final RegistryObject<EntityType<GungnirDaggerEntity>> GUNGNIR_DAGGER_PROJECTILE = ENTITY_TYPES.register("gungnir_dagger",
+            () -> EntityType.Builder.of(
+                            (EntityType<GungnirDaggerEntity> type, Level level) -> new GungnirDaggerEntity(type, level),
+                            MobCategory.MISC)
+                    .sized(0.5F, 0.5F)
+                    .clientTrackingRange(64)
+                    .build("gungnir_dagger"));
+
+    public static final RegistryObject<EntityType<GungnirChainLightning>> GUNGNIR_CHAIN_LIGHTNING_PROJECTILE = ENTITY_TYPES.register("gungnir_chain_lightning",
+            () -> EntityType.Builder.of(
+                            (EntityType<GungnirChainLightning> type, Level level) -> new GungnirChainLightning(type, level),
+                            MobCategory.MISC)
+                    .sized(0.5F, 0.5F)
+                    .clientTrackingRange(64)
+                    .build("gungnir_chain_lightning"));
 }

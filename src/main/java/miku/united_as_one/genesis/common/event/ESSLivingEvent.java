@@ -2,9 +2,11 @@ package miku.united_as_one.genesis.common.event;
 
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.client.renderer.entity.spell.chaos.WireBoxRenderer;
+import miku.united_as_one.genesis.common.entity.gungnir.GungnirDaggerEntity;
 import miku.united_as_one.genesis.common.items.curios.EternalRing;
 import miku.united_as_one.genesis.common.items.curios.rune_plus.BloodRunePlus;
 import miku.united_as_one.genesis.common.items.weapon.sword.Gungnir;
+import miku.united_as_one.genesis.init.registry.ItemRegistry;
 import miku.united_as_one.genesis.init.registry.spell.SpellAttributesRegistry;
 import miku.united_as_one.genesis.util.ModCurios;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
@@ -110,36 +112,51 @@ public class ESSLivingEvent {
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void modWeaponHurtEvent1(LivingHurtEvent event) {
-        if (event.getSource().getEntity() instanceof LivingEntity living)
+        if (event.getSource().directEntity instanceof GungnirDaggerEntity) {
+            ItemRegistry.GUNGNIR.get().onHurt(null, event);
+        } else if (event.getSource().getEntity() instanceof LivingEntity living) {
             if (living.getMainHandItem().getItem() instanceof Gungnir gungnir)
                 gungnir.onHurt(living.getMainHandItem(), event);
+        }
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void modWeaponHurtEvent2(LivingAttackEvent event) {
-        if (event.getSource().getEntity() instanceof LivingEntity living)
+        if (event.getSource().directEntity instanceof GungnirDaggerEntity) {
+            ItemRegistry.GUNGNIR.get().onAttack(null, event);
+        } else if (event.getSource().getEntity() instanceof LivingEntity living) {
             if (living.getMainHandItem().getItem() instanceof Gungnir gungnir)
                 gungnir.onAttack(living.getMainHandItem(), event);
+        }
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void modWeaponHurtEvent3(LivingDamageEvent event) {
-        if (event.getSource().getEntity() instanceof LivingEntity living)
+        if (event.getSource().directEntity instanceof GungnirDaggerEntity) {
+            ItemRegistry.GUNGNIR.get().onDamage(null, event);
+        } else if (event.getSource().getEntity() instanceof LivingEntity living) {
             if (living.getMainHandItem().getItem() instanceof Gungnir gungnir)
                 gungnir.onDamage(living.getMainHandItem(), event);
+        }
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void modWeaponHurtEvent5(LivingDeathEvent event) {
-        if (event.getSource().getEntity() instanceof LivingEntity living)
+        if (event.getSource().directEntity instanceof GungnirDaggerEntity) {
+            ItemRegistry.GUNGNIR.get().onDeath(null, event,  EventPriority.HIGHEST);
+        } else if (event.getSource().getEntity() instanceof LivingEntity living) {
             if (living.getMainHandItem().getItem() instanceof Gungnir gungnir)
                 gungnir.onDeath(living.getMainHandItem(), event, EventPriority.HIGHEST);
+        }
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void modWeaponHurtEvent(LivingDeathEvent event) {
-        if (event.getSource().getEntity() instanceof LivingEntity living)
+        if (event.getSource().directEntity instanceof GungnirDaggerEntity) {
+            ItemRegistry.GUNGNIR.get().onDeath(null, event,  EventPriority.LOWEST);
+        } else if (event.getSource().getEntity() instanceof LivingEntity living) {
             if (living.getMainHandItem().getItem() instanceof Gungnir gungnir)
                 gungnir.onDeath(living.getMainHandItem(), event, EventPriority.LOWEST);
+        }
     }
 }
