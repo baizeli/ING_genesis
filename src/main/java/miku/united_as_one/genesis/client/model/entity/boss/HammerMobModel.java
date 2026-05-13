@@ -7,6 +7,7 @@ package miku.united_as_one.genesis.client.model.entity.boss;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import miku.united_as_one.genesis.Genesis;
+import miku.united_as_one.genesis.client.animation.entity.boss.HammerMobAnimation;
 import miku.united_as_one.genesis.contents.entity.boss.HammerMob;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
@@ -183,6 +184,10 @@ public class HammerMobModel<T extends HammerMob> extends HierarchicalModel<T> {
     @Override
     public void setupAnim(@NotNull T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.root().getAllParts().forEach(ModelPart::resetPose);
+        this.animate(entity.awaken, HammerMobAnimation.AWAKEN, ageInTicks);
+        this.animate(entity.idle, HammerMobAnimation.IDLE, ageInTicks);
+        this.animateWalk(HammerMobAnimation.WALKING, limbSwing, limbSwingAmount, 2.0F, 2.5F);
+        this.animate(entity.sprinting, HammerMobAnimation.SPRINTING, ageInTicks);
     }
 
     @Override
