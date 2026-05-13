@@ -13,6 +13,7 @@ public class HammerMobRenderer extends MobRenderer<HammerMob, HammerMobModel<Ham
 
     public HammerMobRenderer(EntityRendererProvider.Context context) {
         super(context, new HammerMobModel<>(context.bakeLayer(HammerMobModel.LAYER_LOCATION)), 0.5F);
+        this.addLayer(new HammerMobGlowLayer(this));
     }
 
     @Override

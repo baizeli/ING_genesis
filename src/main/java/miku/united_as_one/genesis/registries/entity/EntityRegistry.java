@@ -94,7 +94,7 @@ public class EntityRegistry {
 
     public static final RegistryObject<EntityType<HammerMob>> HAMMER_MOB = ENTITY_TYPES.register("hammer_mob",
             () -> EntityType.Builder.of(HammerMob::new, MobCategory.MONSTER)
-                    .sized(1.0F, 2.0F)
+                    .sized(2.0F, 3.3F)
                     .clientTrackingRange(128)
                     .build("hammer_mob"));
 
