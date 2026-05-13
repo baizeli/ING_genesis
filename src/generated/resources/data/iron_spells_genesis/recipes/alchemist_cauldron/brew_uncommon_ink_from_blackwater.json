@@ -1,0 +1,16 @@
+{
+  "type": "irons_spellbooks:alchemist_cauldron_brew",
+  "base_fluid": {
+    "Amount": 1000,
+    "FluidName": "iron_spells_genesis:blackwater_fluid"
+  },
+  "input": {
+    "item": "iron_spells_genesis:arcane_crystal"
+  },
+  "results": [
+    {
+      "Amount": 250,
+      "FluidName": "irons_spellbooks:uncommon_ink"
+    }
+  ]
+}

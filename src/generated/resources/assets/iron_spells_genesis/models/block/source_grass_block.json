@@ -1,0 +1,10 @@
+{
+  "parent": "minecraft:block/grass_block",
+  "textures": {
+    "bottom": "iron_spells_genesis:block/source_dirt",
+    "overlay": "iron_spells_genesis:block/source_grass_block",
+    "particle": "iron_spells_genesis:block/source_dirt",
+    "side": "iron_spells_genesis:block/source_grass_block",
+    "top": "iron_spells_genesis:block/source_grass_block_top"
+  }
+}
