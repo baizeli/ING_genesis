@@ -3,6 +3,7 @@ package miku.united_as_one.genesis.registries.attribute;
 import io.redspace.ironsspellbooks.entity.spells.void_tentacle.VoidTentacle;
 import miku.united_as_one.genesis.contents.entity.WardenSpellcaster;
 import miku.united_as_one.genesis.contents.entity.boss.BloodBoss;
+import miku.united_as_one.genesis.contents.entity.boss.HammerMob;
 import miku.united_as_one.genesis.contents.entity.spell.celestial_source.BoxEntity;
 import miku.united_as_one.genesis.contents.entity.spell.celestial_source.blade_works.MagicCircle;
 import miku.united_as_one.genesis.contents.entity.spell.celestial_source.blade_works.SwordEntity;
@@ -27,6 +28,7 @@ public final class EntityAttributeRegistry {
         event.put(EntityRegistry.BOX_ENTITY.get(), BoxEntity.createAttributes().build());
         event.put(EntityRegistry.SWORD_ENTITY.get(), SwordEntity.createAttributes().build());
         event.put(EntityRegistry.BLOOD_BOSS.get(), BloodBoss.setAttributes().build());
+        event.put(EntityRegistry.HAMMER_MOB.get(), HammerMob.setAttributes().build());
         event.put(EntityRegistry.BLOOD_TENTACLE.get(), VoidTentacle.createLivingAttributes().build());
         event.put(EntityRegistry.SUMMONED_KEEPER.get(), SummonedKeeperEntity.createAttributes().build());
         event.put(EntityRegistry.SUMMONED_WARDEN.get(), SummonedWardenEntity.createAttributes().build());

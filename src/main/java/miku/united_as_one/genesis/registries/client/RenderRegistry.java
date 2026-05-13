@@ -10,7 +10,7 @@ import miku.united_as_one.genesis.client.render.entity.arrow.HolyArrowRenderer;
 import miku.united_as_one.genesis.client.render.entity.arrow.StellarArrowRenderer;
 import miku.united_as_one.genesis.client.render.entity.arrow.ThunderArrowRenderer;
 import miku.united_as_one.genesis.client.renderer.WSRenderer;
-import miku.united_as_one.genesis.client.renderer.entity.boss.BloodBossRenderer;
+import miku.united_as_one.genesis.client.renderer.entity.boss.*;
 import miku.united_as_one.genesis.client.renderer.entity.laser.DeathLaserRenderer;
 import miku.united_as_one.genesis.client.renderer.entity.spell.celestial_source.DeadStarDecreeCometRenderer;
 import miku.united_as_one.genesis.client.renderer.entity.test.BaiZeLiRenderer;
@@ -55,6 +55,7 @@ public class RenderRegistry {
 
         // Boss、召唤物与 Boss 技能区域实体
         event.registerEntityRenderer(EntityRegistry.BLOOD_BOSS.get(), BloodBossRenderer::new);
+        event.registerEntityRenderer(EntityRegistry.HAMMER_MOB.get(), HammerMobRenderer::new);
         event.registerEntityRenderer(EntityRegistry.BLOOD_TENTACLE.get(), BloodTentacleRenderer::new);
         event.registerEntityRenderer(EntityRegistry.BLOOD_BOSS_FIRE_ERUPTION_AOE.get(), NoopRenderer::new);
         event.registerEntityRenderer(EntityRegistry.BLOOD_DAGGER_PROJECTILE.get(), BloodDaggerRenderer::new);

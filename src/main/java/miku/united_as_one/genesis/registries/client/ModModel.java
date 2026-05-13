@@ -2,6 +2,7 @@ package miku.united_as_one.genesis.registries.client;
 
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.client.model.BaiZeLiModel;
+import miku.united_as_one.genesis.client.model.entity.boss.*;
 import miku.united_as_one.genesis.client.model.ThrowBloodAndWoundsModel;
 import miku.united_as_one.genesis.client.model.WardenSpellcasterModel;
 import miku.united_as_one.genesis.client.model.spell.celestial_source.DeadStarDecreeCometModel;
@@ -18,5 +19,6 @@ public class ModModel {
         event.registerLayerDefinition(DeadStarDecreeCometModel.LAYER_LOCATION, DeadStarDecreeCometModel::createBodyLayer);
         event.registerLayerDefinition(ThrowBloodAndWoundsModel.LAYER_LOCATION, ThrowBloodAndWoundsModel::createBodyLayer);
         event.registerLayerDefinition(WardenSpellcasterModel.LAYER_LOCATION, WardenSpellcasterModel::createBodyLayer);
+        event.registerLayerDefinition(HammerMobModel.LAYER_LOCATION, HammerMobModel::createBodyLayer);
     }
 }

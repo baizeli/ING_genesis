@@ -8,6 +8,7 @@ import miku.united_as_one.genesis.contents.entity.arrow.HolyArrowEntity;
 import miku.united_as_one.genesis.contents.entity.arrow.StellarArrowEntity;
 import miku.united_as_one.genesis.contents.entity.arrow.ThunderArrowEntity;
 import miku.united_as_one.genesis.contents.entity.boss.BloodBoss;
+import miku.united_as_one.genesis.contents.entity.boss.HammerMob;
 import miku.united_as_one.genesis.contents.entity.laser.DeathLaserEntity;
 import miku.united_as_one.genesis.contents.entity.projectile.ThrownIron;
 import miku.united_as_one.genesis.contents.entity.spell.eldritch.*;
@@ -90,6 +91,12 @@ public class EntityRegistry {
                     .sized(1.4875001F, 3.6749997F)
                     .clientTrackingRange(128)
                     .build("blood_boss"));
+
+    public static final RegistryObject<EntityType<HammerMob>> HAMMER_MOB = ENTITY_TYPES.register("hammer_mob",
+            () -> EntityType.Builder.of(HammerMob::new, MobCategory.MONSTER)
+                    .sized(1.0F, 2.0F)
+                    .clientTrackingRange(128)
+                    .build("hammer_mob"));
 
     public static final RegistryObject<EntityType<VoidTentacle>> BLOOD_TENTACLE = ENTITY_TYPES.register("blood_tentacle",
             () -> EntityType.Builder.of(

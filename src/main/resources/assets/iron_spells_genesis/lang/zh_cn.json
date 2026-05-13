@@ -383,6 +383,7 @@
   "entity.iron_spells_genesis.iron": "铁锭",
   "entity.iron_spells_genesis.summoned_keeper": "被召唤的远古骑士",
   "entity.iron_spells_genesis.summoned_warden": "被召唤的坚守者",
+  "entity.iron_spells_genesis.hammer_mob": "粉碎",
 
   "item.iron_spells_genesis.infinity_eternal_helmet": "Purpleite Galaxy Helmet",
   "damage_type.iron_spells_genesis.celestial_source_magic": "Celestial Source Magic Damage",
