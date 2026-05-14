@@ -1,5 +1,9 @@
 {
   "values": [
-    "iron_spells_genesis:genesis_dirt"
+    "iron_spells_genesis:genesis_dirt",
+    "iron_spells_genesis:sway_grass_block",
+    "iron_spells_genesis:quietness_grass_block",
+    "iron_spells_genesis:source_dirt",
+    "iron_spells_genesis:source_grass_block"
   ]
 }

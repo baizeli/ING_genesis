@@ -1,9 +1,9 @@
 package miku.united_as_one.genesis.client.particles;
 
-import miku.united_as_one.genesis.init.registry.EntityRegistry;
-import miku.united_as_one.genesis.common.entity.NyanCat;
+import miku.united_as_one.genesis.registries.entity.EntityRegistry;
+import miku.united_as_one.genesis.contents.entity.NyanCat;
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.init.registry.client.ParticleRegistry;
+import miku.united_as_one.genesis.registries.client.ParticleRegistry;
 import miku.united_as_one.genesis.client.render.ModShaders;
 import com.mojang.blaze3d.pipeline.TextureTarget;
 import com.mojang.blaze3d.platform.GlStateManager;
@@ -23,7 +23,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import static miku.united_as_one.genesis.Genesis.MODID;
-import static miku.united_as_one.genesis.init.registry.ItemRegistry.INFINITY_SWORD;
+import static miku.united_as_one.genesis.registries.item.ItemRegistry.INFINITY_SWORD;
 
 @Mod.EventBusSubscriber(modid = Genesis.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE, value = Dist.CLIENT)
 public class ParticleDebugEvents {

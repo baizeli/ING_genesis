@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "stage=0": {
+      "model": "iron_spells_genesis:block/sway_sapling"
+    },
+    "stage=1": {
+      "model": "iron_spells_genesis:block/sway_sapling"
+    }
+  }
+}

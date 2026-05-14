@@ -4,7 +4,7 @@ package miku.united_as_one.genesis.client.model;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import miku.united_as_one.genesis.client.animation.WSAnims;
-import miku.united_as_one.genesis.common.entity.WardenSpellcaster;
+import miku.united_as_one.genesis.contents.entity.WardenSpellcaster;
 import net.minecraft.client.model.HierarchicalModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.geom.ModelPart;

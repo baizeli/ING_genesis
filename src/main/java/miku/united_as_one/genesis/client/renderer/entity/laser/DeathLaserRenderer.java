@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.client.renderer.entity.laser;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.common.entity.laser.DeathLaserEntity;
+import miku.united_as_one.genesis.contents.entity.laser.DeathLaserEntity;
 import net.minecraft.client.renderer.entity.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.*;

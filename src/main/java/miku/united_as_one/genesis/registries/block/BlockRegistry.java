@@ -1,0 +1,219 @@
+package miku.united_as_one.genesis.registries.block;
+
+import com.tterrag.registrate.providers.DataGenContext;
+import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
+import com.tterrag.registrate.util.entry.BlockEntry;
+import miku.united_as_one.genesis.Genesis;
+import miku.united_as_one.genesis.contents.block.ChaosPortalBlock;
+import miku.united_as_one.genesis.contents.block.GenesisFruitBushBlock;
+import miku.united_as_one.genesis.contents.block.GenesisTreeGrower;
+import miku.united_as_one.genesis.contents.block.util.SimpleBlockSet;
+import miku.united_as_one.genesis.contents.workbench.arcane.ArcaneWorkbenchBlock;
+import miku.united_as_one.genesis.registries.item.CreativeTabRegistry;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.level.block.*;
+import net.minecraftforge.client.model.generators.ConfiguredModel;
+import net.minecraft.world.level.block.state.properties.BlockSetType;
+import net.minecraftforge.registries.*;
+
+public class BlockRegistry {
+    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Genesis.MOD_ID);
+
+    public static final SimpleBlockSet<Block> WEATHERED_SANDSTONE = SimpleBlockSet.buildStone("weathered_sandstone", Blocks.SANDSTONE).simpleStone();
+    public static final SimpleBlockSet<Block> WEATHERED_STONE_BRICKS = SimpleBlockSet.buildStone("weathered_stone_bricks", Blocks.STONE_BRICKS).simpleStone();
+    public static final SimpleBlockSet<Block> WEATHERED_SAND = SimpleBlockSet.buildStone("weathered_sand", Blocks.SAND);
+
+    public static final SimpleBlockSet<Block> BLOOD_SAND = SimpleBlockSet.buildStone("blood_sand", Blocks.SAND);
+    public static final SimpleBlockSet<Block> FIRE_SAND = SimpleBlockSet.buildStone("fire_sand", Blocks.SAND);
+    public static final SimpleBlockSet<Block> HEART_SCULPTING = SimpleBlockSet.buildStone("heart_sculpting", Blocks.STONE).simpleStone();
+
+    public static final SimpleBlockSet<Block> FIRE_STONE = SimpleBlockSet.buildStone("fire_stone", Blocks.STONE).simpleStone();
+
+    public static final SimpleBlockSet<Block> DEEP_FEAR_STONE = SimpleBlockSet.buildStone("deep_fear_stone", Blocks.STONE).simpleStone();
+    public static final SimpleBlockSet<Block> SMOOTH_DEEP_FEAR_STONE = SimpleBlockSet.buildStone("smooth_deep_fear_stone", Blocks.SMOOTH_STONE).simpleStone();
+    public static final SimpleBlockSet<Block> DEEP_FEAR_STONE_BRICKS = SimpleBlockSet.buildStone("deep_fear_stone_bricks", Blocks.STONE_BRICKS).simpleStone();
+    public static final SimpleBlockSet<Block> CRACKED_DEEP_FEAR_STONE_BRICKS = SimpleBlockSet.buildStone("cracked_deep_fear_stone_bricks", Blocks.CRACKED_STONE_BRICKS).simpleStone();
+
+    public static final SimpleBlockSet<Block> SWAY_STONE = SimpleBlockSet.buildStone("sway_stone", Blocks.STONE).simpleStone();
+    public static final SimpleBlockSet<RotatedPillarBlock> SWAY_LOG = SimpleBlockSet.buildLog("sway_log", Blocks.OAK_LOG).addStrippedLog().addWood().addStrippedWood();
+    public static final SimpleBlockSet<Block> SWAY_PLANKS = SimpleBlockSet.buildPlanks("sway", Blocks.OAK_PLANKS).simplePlank(BlockSetType.OAK);
+
+    public static final SimpleBlockSet<RotatedPillarBlock> QUIETNESS_LOG = SimpleBlockSet.buildLog("quietness_log", Blocks.OAK_LOG).addStrippedLog().addWood().addStrippedWood();
+    public static final SimpleBlockSet<Block> QUIETNESS_PLANKS = SimpleBlockSet.buildPlanks("quietness", Blocks.OAK_PLANKS).simplePlank();
+
+    public static final BlockEntry<SaplingBlock> SWAY_SAPLING = Genesis.L2_REGISTRATE
+            .block("sway_sapling", properties -> new SaplingBlock(new GenesisTreeGrower("sway_fungus_tree"), properties))
+            .initialProperties(() -> Blocks.OAK_SAPLING)
+            .addLayer(() -> RenderType::cutout)
+            .blockstate(BlockRegistry::saplingBlockstate)
+            .tag(BlockTags.SAPLINGS)
+            .item()
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
+            .tag(ItemTags.SAPLINGS)
+            .model((ctx, prov) -> prov.withExistingParent(ctx.getName(), "item/generated").texture("layer0", "minecraft:block/oak_sapling"))
+            .build()
+            .register();
+
+    public static final BlockEntry<SaplingBlock> QUIETNESS_SAPLING = Genesis.L2_REGISTRATE
+            .block("quietness_sapling", properties -> new SaplingBlock(new GenesisTreeGrower("quietness_fungus_tree"), properties))
+            .initialProperties(() -> Blocks.OAK_SAPLING)
+            .addLayer(() -> RenderType::cutout)
+            .blockstate(BlockRegistry::saplingBlockstate)
+            .tag(BlockTags.SAPLINGS)
+            .item()
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
+            .tag(ItemTags.SAPLINGS)
+            .model((ctx, prov) -> prov.withExistingParent(ctx.getName(), "item/generated").texture("layer0", "minecraft:block/oak_sapling"))
+            .build()
+            .register();
+
+    public static final SimpleBlockSet<Block> GENESIS_DIRT = SimpleBlockSet.buildDirt("genesis", Blocks.DIRT).addGrassVariant("sway").addGrassVariant("quietness");
+    public static final SimpleBlockSet<Block> SOURCE_DIRT = SimpleBlockSet.buildDirt("source", Blocks.DIRT).addGrass();
+
+    public static final BlockEntry<Block> ARCANE_CRYSTAL_BLOCK = Genesis.L2_REGISTRATE
+            .block("arcane_crystal_block", Block::new)
+            .initialProperties(() -> Blocks.AMETHYST_BLOCK)
+            .properties(p -> p.strength(5.0F, 6.0F).requiresCorrectToolForDrops())
+            .tag(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.NEEDS_DIAMOND_TOOL)
+            .item()
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
+            .build()
+            .register();
+
+    public static final BlockEntry<GenesisFruitBushBlock> CRYSTAL_FRUIT_BUSH = Genesis.L2_REGISTRATE
+            .block("crystal_fruit_bush", properties -> new GenesisFruitBushBlock(
+                    "crystal_fruit",
+                    state -> state.is(ARCANE_CRYSTAL_BLOCK.get()),
+                    properties
+            ))
+            .initialProperties(() -> Blocks.SWEET_BERRY_BUSH)
+            .properties(p -> p.randomTicks())
+            .addLayer(() -> RenderType::cutout)
+            .blockstate(BlockRegistry::fruitBushBlockstate)
+            .register();
+
+    public static final BlockEntry<GenesisFruitBushBlock> PHANTOM_PLUM_BUSH = Genesis.L2_REGISTRATE
+            .block("phantom_plum_bush", properties -> new GenesisFruitBushBlock(
+                    "phantom_plum",
+                    state -> state.is(GENESIS_DIRT.getBase().get()),
+                    properties
+            ))
+            .initialProperties(() -> Blocks.SWEET_BERRY_BUSH)
+            .properties(p -> p.randomTicks())
+            .addLayer(() -> RenderType::cutout)
+            .blockstate(BlockRegistry::fruitBushBlockstate)
+            .register();
+
+    public static final BlockEntry<GenesisFruitBushBlock> COLORFUL_FRUITS_BUSH = Genesis.L2_REGISTRATE
+            .block("colorful_fruits_bush", properties -> new GenesisFruitBushBlock(
+                    "colorful_fruits",
+                    state -> state.is(GENESIS_DIRT.getBase().get()),
+                    properties
+            ))
+            .initialProperties(() -> Blocks.SWEET_BERRY_BUSH)
+            .properties(p -> p.randomTicks())
+            .addLayer(() -> RenderType::cutout)
+            .blockstate(BlockRegistry::fruitBushBlockstate)
+            .register();
+
+    public static final BlockEntry<Block> FEAR_CRYSTALS = Genesis.L2_REGISTRATE
+            .block("fear_crystals", Block::new)
+            .initialProperties(() -> Blocks.AMETHYST_BLOCK)
+            .properties(p -> p.strength(5.0F, 6.0F).requiresCorrectToolForDrops())
+            .tag(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.NEEDS_DIAMOND_TOOL)
+            .item()
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
+            .build()
+            .register();
+
+    public static final BlockEntry<DropExperienceBlock> ARCANE_CRYSTAL_ORE = Genesis.L2_REGISTRATE
+            .block("arcane_crystal_ore", p -> new DropExperienceBlock(p, UniformInt.of(3, 7)))
+            .initialProperties(() -> Blocks.DIAMOND_ORE)
+            .properties(p -> p.lightLevel(s -> 9).strength(3.0f, 3.0f).requiresCorrectToolForDrops().sound(SoundType.STONE))
+            .tag(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.NEEDS_DIAMOND_TOOL)
+            .item()
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
+            .build()
+            .register();
+
+    public static final BlockEntry<DropExperienceBlock> ARCANE_CRYSTAL_ORE_DEEPSLATE = Genesis.L2_REGISTRATE
+            .block("deepslate_arcane_crystal_ore", p -> new DropExperienceBlock(p, UniformInt.of(3, 7)))
+            .initialProperties(() -> Blocks.DEEPSLATE_DIAMOND_ORE)
+            .properties(p -> p.lightLevel(s -> 9).strength(4.5f, 3.0f).requiresCorrectToolForDrops().sound(SoundType.DEEPSLATE))
+            .tag(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.NEEDS_DIAMOND_TOOL)
+            .item()
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
+            .build()
+            .register();
+
+    public static final BlockEntry<DropExperienceBlock> NETHER_ARCANE_CRYSTAL_ORE = Genesis.L2_REGISTRATE
+            .block("nether_arcane_crystal_ore", p -> new DropExperienceBlock(p, UniformInt.of(3, 7)))
+            .initialProperties(() -> Blocks.NETHER_QUARTZ_ORE)
+            .properties(p -> p.lightLevel(s -> 9).strength(3.0f, 3.0f).requiresCorrectToolForDrops().sound(SoundType.NETHER_ORE))
+            .tag(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.NEEDS_DIAMOND_TOOL)
+            .item()
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
+            .build()
+            .register();
+
+    public static final BlockEntry<DropExperienceBlock> END_ARCANE_CRYSTAL_ORE = Genesis.L2_REGISTRATE
+            .block("end_arcane_crystal_ore", p -> new DropExperienceBlock(p, UniformInt.of(3, 7)))
+            .initialProperties(() -> Blocks.END_STONE)
+            .properties(p -> p.lightLevel(s -> 9).strength(3.0f, 9.0f).requiresCorrectToolForDrops().sound(SoundType.STONE))
+            .tag(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.NEEDS_DIAMOND_TOOL)
+            .item()
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
+            .build()
+            .register();
+
+    public static final BlockEntry<ArcaneWorkbenchBlock> ARCANE_WORKBENCH = Genesis.L2_REGISTRATE
+            .block("arcane_workbench", ArcaneWorkbenchBlock::new)
+            .properties(p -> p.lightLevel(s -> 9).strength(3.0f, 9.0f).requiresCorrectToolForDrops().sound(SoundType.STONE))
+            .register();
+
+    public static final BlockEntry<Block> CHAOS_PORTAL_FRAME = Genesis.L2_REGISTRATE
+            .block("chaos_portal_frame", Block::new)
+            .properties(p -> p.strength(-1, 9999).noOcclusion())
+            .register();
+
+    public static final BlockEntry<ChaosPortalBlock> CHAOS_PORTAL = Genesis.L2_REGISTRATE
+            .block("chaos_portal", ChaosPortalBlock::new)
+            .properties(p -> p.noCollission().randomTicks().strength(-1).sound(SoundType.GLASS).lightLevel(s -> 11).noOcclusion())
+            .register();
+
+    public static final BlockEntry<Block> CELESTIAL_SOURCE_BLOCK = Genesis.L2_REGISTRATE
+            .block("celestial_source_block", Block::new)
+            .properties(p -> p.requiresCorrectToolForDrops().strength(20, 9999).sound(SoundType.NETHERITE_BLOCK))
+            .tag(BlockTags.MINEABLE_WITH_PICKAXE, BlockTags.NEEDS_DIAMOND_TOOL)
+            .register();
+
+    private static void saplingBlockstate(DataGenContext<Block, SaplingBlock> ctx, RegistrateBlockstateProvider provider) {
+        var model = provider.models().cross(ctx.getName(), provider.mcLoc("block/oak_sapling"));
+        provider.getVariantBuilder(ctx.get()).forAllStates(state -> ConfiguredModel.builder()
+                .modelFile(model)
+                .build());
+    }
+
+    private static void fruitBushBlockstate(DataGenContext<Block, GenesisFruitBushBlock> ctx, RegistrateBlockstateProvider provider) {
+        var stage0 = provider.models().cross(ctx.getName() + "_stage0", provider.mcLoc("block/sweet_berry_bush_stage0"));
+        var stage1 = provider.models().cross(ctx.getName() + "_stage1", provider.mcLoc("block/sweet_berry_bush_stage1"));
+        var stage2 = provider.models().cross(ctx.getName() + "_stage2", provider.mcLoc("block/sweet_berry_bush_stage2"));
+        var stage3 = provider.models().cross(ctx.getName() + "_stage3", provider.mcLoc("block/sweet_berry_bush_stage3"));
+        provider.getVariantBuilder(ctx.get()).forAllStates(state -> {
+            var model = switch (state.getValue(SweetBerryBushBlock.AGE)) {
+                case 0 -> stage0;
+                case 1 -> stage1;
+                case 2 -> stage2;
+                default -> stage3;
+            };
+            return ConfiguredModel.builder()
+                    .modelFile(model)
+                    .build();
+        });
+    }
+
+    public static void register() {}
+}

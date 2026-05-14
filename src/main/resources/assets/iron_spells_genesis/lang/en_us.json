@@ -94,6 +94,9 @@
   "effect.iron_spells_genesis.confusion": "Confusion",
   "effect.iron_spells_genesis.never_miss": "Never Miss",
   "effect.iron_spells_genesis.warped_barrier": "Warped Barrier",
+  "effect.iron_spells_genesis.chaos_resistance": "Chaos Resistance",
+  "effect.iron_spells_genesis.mana_overdraft": "Mana Overdraft",
+  "effect.iron_spells_genesis.mana_shield": "Mana Resistance",
 
   "item.iron_spells_genesis.chaos_staff": "Chaos Staff",
   "item.iron_spells_genesis.celestial_source_staff": "Celestial Source Staff",
@@ -295,6 +298,13 @@
   "item.iron_spells_genesis.lightning_rune_plus.hover": "......",
   "item.iron_spells_genesis.nature_rune_plus": "§bNature Rune Plus",
   "item.iron_spells_genesis.nature_rune_plus.hover": "......",
+  "block.iron_spells_genesis.sway_sapling": "Sway Sapling",
+  "block.iron_spells_genesis.quietness_sapling": "Quietness Sapling",
+  "block.iron_spells_genesis.source_dirt": "Source Dirt",
+  "block.iron_spells_genesis.source_grass_block": "Source Grass Block",
+  "item.iron_spells_genesis.crystal_fruit": "Crystal Fruit",
+  "item.iron_spells_genesis.phantom_plum": "Phantom Plum",
+  "item.iron_spells_genesis.colorful_fruits": "Colorful Fruits",
   "item_group.iron_spells_genesis.iron_spells_genesis": "Iron's Spells 'n Spellbooks: New genesis",
 
   "upgrade.iron_spells_genesis.divine_upgrade": "Divine Upgrade",
