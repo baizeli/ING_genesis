@@ -21,6 +21,10 @@ public class HammerMob extends Monster {
     public final AnimationState idle = new AnimationState();
     public final AnimationState sprinting = new AnimationState();
     public final AnimationState death = new AnimationState();
+    public final AnimationState jumpAttack = new AnimationState();
+    public final AnimationState heavyAttack = new AnimationState();
+    public final AnimationState sweepAttack = new AnimationState();
+    public final AnimationState throwHammer = new AnimationState();
 
     public HammerMob(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);
