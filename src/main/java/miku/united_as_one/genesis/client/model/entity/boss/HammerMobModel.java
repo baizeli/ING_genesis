@@ -184,6 +184,7 @@ public class HammerMobModel<T extends HammerMob> extends HierarchicalModel<T> {
     @Override
     public void setupAnim(@NotNull T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.root().getAllParts().forEach(ModelPart::resetPose);
+
         this.animate(entity.awaken, HammerMobAnimation.AWAKEN, ageInTicks);
         this.animate(entity.idle, HammerMobAnimation.IDLE, ageInTicks);
         this.animateWalk(HammerMobAnimation.WALKING, limbSwing, limbSwingAmount, 2.0F, 2.5F);

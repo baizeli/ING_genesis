@@ -14,7 +14,7 @@ public class SprintAttackGoal extends Goal {
     private LivingEntity target;
 
     private static final int SPRINT_DURATION = 15;
-    private static final int COOLDOWN_TICKS = 20 * 8;
+    private static final int COOLDOWN_TICKS = /*20 * 30*/ 0;
     private static final double SPRINT_DISTANCE = 15.0D;
     private static final double DAMAGE_RADIUS = 2.0D;
     private static final double TRIGGER_RANGE = 8.0D;
@@ -80,8 +80,11 @@ public class SprintAttackGoal extends Goal {
 
         for (LivingEntity entity : this.mob.level().getEntitiesOfClass(LivingEntity.class, attackBox)) {
             if (entity != this.mob) {
-                double attackDamage = this.mob.getAttributeValue(Attributes.ATTACK_DAMAGE) * 0.5;
+                double attackDamage = this.mob.getAttributeValue(Attributes.ATTACK_DAMAGE) * 2;
                 entity.hurt(this.mob.level().damageSources().mobAttack(this.mob), (float) attackDamage);
+                
+                Vec3 knockbackDir = entity.position().subtract(this.mob.position()).normalize();
+                entity.push(knockbackDir.x * 5.0D, 0.5D, knockbackDir.z * 5.0D);
             }
         }
 
@@ -89,6 +92,7 @@ public class SprintAttackGoal extends Goal {
 
         if (this.sprintTick >= SPRINT_DURATION) {
             this.mob.setSprinting(false);
+            this.mob.setAnimBufferTick(20);
             this.cooldown = COOLDOWN_TICKS;
         }
     }

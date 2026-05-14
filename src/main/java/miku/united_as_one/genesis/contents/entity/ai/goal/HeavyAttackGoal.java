@@ -16,7 +16,7 @@ public class HeavyAttackGoal extends Goal {
     private static final int ATTACK_RANGE = 3;
     private static final int DAMAGE_TICK = 26;
     private static final int COOLDOWN_TICKS = 20*5;
-    private static final double DAMAGE_RADIUS = 5;
+    private static final double DAMAGE_RADIUS = 2.5;
 
     private int cooldown;
     private boolean attackDone;
@@ -83,8 +83,7 @@ public class HeavyAttackGoal extends Goal {
 
                 for (LivingEntity entity : this.mob.level().getEntitiesOfClass(LivingEntity.class, attackBox)) {
                     if (entity != this.mob) {
-                        double attackDamage = this.mob.getAttributeValue(Attributes.ATTACK_DAMAGE);
-                        entity.hurt(this.mob.level().damageSources().mobAttack(this.mob), (float) attackDamage);
+                        entity.hurt(this.mob.level().damageSources().mobAttack(this.mob),40);
                     }
                 }
 

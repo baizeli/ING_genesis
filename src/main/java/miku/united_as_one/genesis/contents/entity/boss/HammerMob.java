@@ -25,7 +25,6 @@ public class HammerMob extends Monster {
     private static final EntityDataAccessor<Integer> DATA_ATTACK_TICK = SynchedEntityData.defineId(HammerMob.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> DATA_ANIM_BUFFER_TICK = SynchedEntityData.defineId(HammerMob.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> DATA_SPRINT_COOLING = SynchedEntityData.defineId(HammerMob.class, EntityDataSerializers.BOOLEAN);
-    private static final EntityDataAccessor<Boolean> DATA_IS_SPRINTING = SynchedEntityData.defineId(HammerMob.class, EntityDataSerializers.BOOLEAN);
 
     public static final int ATTACK_IDLE = 0;
     public static final int ATTACK_HEAVY = 1;
@@ -46,19 +45,17 @@ public class HammerMob extends Monster {
     public static AttributeSupplier.Builder setAttributes() {
         return Monster.createMonsterAttributes()
                 .add(Attributes.MAX_HEALTH, 1000.0D)
-                .add(Attributes.ATTACK_DAMAGE, 100.0D)
+                .add(Attributes.ATTACK_DAMAGE, 25.0D)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 1.0D)
                 .add(Attributes.MOVEMENT_SPEED, 0.21D);
     }
 
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        this.entityData.define(AWAKEN_PLAYED, false);
-        this.entityData.define(DATA_ATTACK_STATE, ATTACK_IDLE);
-        this.entityData.define(DATA_ATTACK_TICK, 0);
-        this.entityData.define(DATA_ANIM_BUFFER_TICK, 0);
-        this.entityData.define(DATA_SPRINT_COOLING, false);
-        this.entityData.define(DATA_IS_SPRINTING, false);
+    protected void registerGoals() {
+        this.goalSelector.addGoal(0, new FloatGoal(this));
+        this.goalSelector.addGoal(1, new HeavyAttackGoal(this));
+        this.goalSelector.addGoal(2, new SprintAttackGoal(this));
+        this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, LivingEntity.class, 10.0F));
+        this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
     }
 
     public void tick() {
@@ -89,13 +86,16 @@ public class HammerMob extends Monster {
         }
     }
 
-    private void updateAnimations() {
-        if (this.isSprinting() && !this.sprinting.isStarted()) {
-            this.sprinting.start(this.tickCount);
-        } else if (!this.isSprinting() && this.sprinting.isStarted()) {
-            this.sprinting.stop();
-        }
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(AWAKEN_PLAYED, false);
+        this.entityData.define(DATA_ATTACK_STATE, ATTACK_IDLE);
+        this.entityData.define(DATA_ATTACK_TICK, 0);
+        this.entityData.define(DATA_ANIM_BUFFER_TICK, 0);
+        this.entityData.define(DATA_SPRINT_COOLING, false);
+    }
 
+    private void updateAnimations() {
         if (this.getAttackState() == ATTACK_HEAVY && !this.heavyAttack.isStarted()) {
             this.heavyAttack.start(this.tickCount);
         } else if (this.getAttackState() == ATTACK_IDLE && this.getAnimBufferTick() <= 0) {
@@ -138,22 +138,6 @@ public class HammerMob extends Monster {
 
     public void setSprintAttackCooling(boolean cooling) {
         this.entityData.set(DATA_SPRINT_COOLING, cooling);
-    }
-
-    public boolean isSprinting() {
-        return this.entityData.get(DATA_IS_SPRINTING);
-    }
-
-    public void setSprinting(boolean sprinting) {
-        this.entityData.set(DATA_IS_SPRINTING, sprinting);
-    }
-
-    protected void registerGoals() {
-        this.goalSelector.addGoal(0, new FloatGoal(this));
-        this.goalSelector.addGoal(1, new HeavyAttackGoal(this));
-        this.goalSelector.addGoal(2, new SprintAttackGoal(this));
-        this.goalSelector.addGoal(3, new LookAtPlayerGoal(this, LivingEntity.class, 10.0F));
-        this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
     }
 
     public void addAdditionalSaveData(@NotNull CompoundTag compound) {
