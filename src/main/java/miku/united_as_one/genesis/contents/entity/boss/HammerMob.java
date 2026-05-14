@@ -11,7 +11,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
-import miku.united_as_one.genesis.contents.entity.ai.goal.HeavyAttackGoal;
+import miku.united_as_one.genesis.contents.entity.ai.goal.*;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.level.Level;
@@ -24,6 +24,8 @@ public class HammerMob extends Monster {
     private static final EntityDataAccessor<Integer> DATA_ATTACK_STATE = SynchedEntityData.defineId(HammerMob.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> DATA_ATTACK_TICK = SynchedEntityData.defineId(HammerMob.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> DATA_ANIM_BUFFER_TICK = SynchedEntityData.defineId(HammerMob.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Boolean> DATA_SPRINT_COOLING = SynchedEntityData.defineId(HammerMob.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> DATA_IS_SPRINTING = SynchedEntityData.defineId(HammerMob.class, EntityDataSerializers.BOOLEAN);
 
     public static final int ATTACK_IDLE = 0;
     public static final int ATTACK_HEAVY = 1;
@@ -55,6 +57,8 @@ public class HammerMob extends Monster {
         this.entityData.define(DATA_ATTACK_STATE, ATTACK_IDLE);
         this.entityData.define(DATA_ATTACK_TICK, 0);
         this.entityData.define(DATA_ANIM_BUFFER_TICK, 0);
+        this.entityData.define(DATA_SPRINT_COOLING, false);
+        this.entityData.define(DATA_IS_SPRINTING, false);
     }
 
     public void tick() {
@@ -63,11 +67,11 @@ public class HammerMob extends Monster {
             if (!this.entityData.get(AWAKEN_PLAYED) && this.tickCount > AWAKEN_DELAY_TICKS) {
                 this.entityData.set(AWAKEN_PLAYED, true);
             }
-            
+
             if (this.getAttackState() != ATTACK_IDLE) {
                 this.entityData.set(DATA_ATTACK_TICK, this.entityData.get(DATA_ATTACK_TICK) + 1);
             }
-            
+
             if (this.getAnimBufferTick() > 0) {
                 this.entityData.set(DATA_ANIM_BUFFER_TICK, this.entityData.get(DATA_ANIM_BUFFER_TICK) - 1);
             }
@@ -80,53 +84,76 @@ public class HammerMob extends Monster {
             } else if (this.getDeltaMovement().horizontalDistanceSqr() >= 0.01) {
                 this.idle.stop();
             }
-            
+
             this.updateAnimations();
         }
     }
-    
+
     private void updateAnimations() {
+        if (this.isSprinting() && !this.sprinting.isStarted()) {
+            this.sprinting.start(this.tickCount);
+        } else if (!this.isSprinting() && this.sprinting.isStarted()) {
+            this.sprinting.stop();
+        }
+
         if (this.getAttackState() == ATTACK_HEAVY && !this.heavyAttack.isStarted()) {
             this.heavyAttack.start(this.tickCount);
         } else if (this.getAttackState() == ATTACK_IDLE && this.getAnimBufferTick() <= 0) {
             this.heavyAttack.stop();
         }
     }
-    
+
     public boolean isPushable() {
         return false;
     }
-    
+
     public void checkDespawn() {}
-    
+
     public int getAttackState() {
         return this.entityData.get(DATA_ATTACK_STATE);
     }
-    
+
     public void setAttackState(int state) {
         this.entityData.set(DATA_ATTACK_STATE, state);
         if (state == ATTACK_IDLE) {
             this.entityData.set(DATA_ATTACK_TICK, 0);
         }
     }
-    
+
     public int getAttackTick() {
         return this.entityData.get(DATA_ATTACK_TICK);
     }
-    
+
     public int getAnimBufferTick() {
         return this.entityData.get(DATA_ANIM_BUFFER_TICK);
     }
-    
-    public void setAnimBufferTick(int ticks) {
-        this.entityData.set(DATA_ANIM_BUFFER_TICK, ticks);
+
+    public void setAnimBufferTick(int tick) {
+        this.entityData.set(DATA_ANIM_BUFFER_TICK, tick);
+    }
+
+    public boolean isSprintAttackCooling() {
+        return this.entityData.get(DATA_SPRINT_COOLING);
+    }
+
+    public void setSprintAttackCooling(boolean cooling) {
+        this.entityData.set(DATA_SPRINT_COOLING, cooling);
+    }
+
+    public boolean isSprinting() {
+        return this.entityData.get(DATA_IS_SPRINTING);
+    }
+
+    public void setSprinting(boolean sprinting) {
+        this.entityData.set(DATA_IS_SPRINTING, sprinting);
     }
 
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new HeavyAttackGoal(this));
-        this.goalSelector.addGoal(2, new LookAtPlayerGoal(this, LivingEntity.class, 10.0F));
-        this.goalSelector.addGoal(2, new RandomLookAroundGoal(this));
+        this.goalSelector.addGoal(2, new SprintAttackGoal(this));
+        this.goalSelector.addGoal(3, new LookAtPlayerGoal(this, LivingEntity.class, 10.0F));
+        this.goalSelector.addGoal(3, new RandomLookAroundGoal(this));
     }
 
     public void addAdditionalSaveData(@NotNull CompoundTag compound) {
