@@ -5,7 +5,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
-public class HeavyAttackGoal extends AbstractHammerAttackGoal {
+public class HeavyAttackGoal extends AbstractNavigationAttackGoal {
     private static final int DAMAGE_TICK = 26;
     private static final double DAMAGE_RADIUS = 2.5;
     private static final double HAMMER_DISTANCE = 4D;
@@ -43,11 +43,15 @@ public class HeavyAttackGoal extends AbstractHammerAttackGoal {
             if (this.mob.distanceTo(this.target) > ATTACK_RANGE) {
                 this.moveToTarget();
             } else {
+                this.lockAttackDirection();
                 this.mob.setAttackState(HammerMob.ATTACK_HEAVY);
             }
         } else {
+            Vec3 attackDir = this.getLockedAttackDirection();
+            this.mob.setYRot((float) Math.toDegrees(Math.atan2(attackDir.z, attackDir.x)) - 90.0F);
+
             if (this.mob.getAttackTick() >= DAMAGE_TICK) {
-                Vec3 hammerPos = this.mob.position().add(this.mob.getLookAngle().normalize().scale(HAMMER_DISTANCE));
+                Vec3 hammerPos = this.mob.position().add(attackDir.scale(HAMMER_DISTANCE));
 
                 AABB attackBox = new AABB(
                     hammerPos.x - DAMAGE_RADIUS,

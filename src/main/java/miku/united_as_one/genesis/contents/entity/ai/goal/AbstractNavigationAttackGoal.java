@@ -7,7 +7,7 @@ import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.phys.Vec3;
 import java.util.EnumSet;
 
-public abstract class AbstractHammerAttackGoal extends Goal {
+public abstract class AbstractNavigationAttackGoal extends Goal {
     protected final HammerMob mob;
     protected final PathNavigation navigation;
     protected LivingEntity target;
@@ -17,7 +17,9 @@ public abstract class AbstractHammerAttackGoal extends Goal {
 
     protected int lastAttackTick = -COOLDOWN_TICKS;
 
-    protected AbstractHammerAttackGoal(HammerMob mob) {
+    protected Vec3 lockedAttackDirection;
+
+    protected AbstractNavigationAttackGoal(HammerMob mob) {
         this.mob = mob;
         this.navigation = mob.getNavigation();
         this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
@@ -40,6 +42,21 @@ public abstract class AbstractHammerAttackGoal extends Goal {
         if (currentTarget != null) {
             this.target = currentTarget;
         }
+    }
+
+    protected void lockAttackDirection() {
+        if (this.target != null) {
+            this.lockedAttackDirection = this.target.position()
+                .subtract(this.mob.position())
+                .normalize();
+        }
+    }
+
+    protected Vec3 getLockedAttackDirection() {
+        if (this.lockedAttackDirection != null) {
+            return this.lockedAttackDirection;
+        }
+        return this.mob.getLookAngle();
     }
 
     protected void moveToTarget() {

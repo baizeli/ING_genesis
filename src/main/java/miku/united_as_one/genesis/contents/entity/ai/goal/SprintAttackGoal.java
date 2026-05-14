@@ -21,6 +21,7 @@ public class SprintAttackGoal extends Goal {
 
     private int cooldown;
     private int sprintTick;
+    private Vec3 sprintDirection;
 
     public SprintAttackGoal(HammerMob mob) {
         this.mob = mob;
@@ -53,21 +54,20 @@ public class SprintAttackGoal extends Goal {
     public void start() {
         this.sprintTick = 0;
         this.mob.setSprinting(true);
+        this.sprintDirection = this.target.position().subtract(this.mob.position()).normalize();
     }
 
     public void tick() {
         if (this.target == null) return;
 
-        Vec3 direction = this.target.position().subtract(this.mob.position()).normalize();
         double speed = SPRINT_DISTANCE / SPRINT_DURATION;
-        this.mob.setDeltaMovement(direction.x * speed, 0, direction.z * speed);
+        this.mob.setDeltaMovement(this.sprintDirection.x * speed, 0, this.sprintDirection.z * speed);
 
-        float targetYRot = (float) (Mth.atan2(direction.z, direction.x) * 180.0D / Math.PI) - 90.0F;
+        float targetYRot = (float) (Mth.atan2(this.sprintDirection.z, this.sprintDirection.x) * 180.0D / Math.PI) - 90.0F;
         this.mob.setYRot(targetYRot);
         this.mob.setXRot(0.0F);
         this.mob.yRotO = targetYRot;
         this.mob.xRotO = 0.0F;
-        this.mob.getLookControl().setLookAt(this.target);
 
         AABB attackBox = new AABB(
             this.mob.getX() - DAMAGE_RADIUS,

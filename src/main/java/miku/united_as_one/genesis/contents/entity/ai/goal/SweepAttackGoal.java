@@ -8,7 +8,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
-public class SweepAttackGoal extends AbstractHammerAttackGoal {
+public class SweepAttackGoal extends AbstractNavigationAttackGoal {
     private static final int SWEEP_TICK_1 = 12;
     private static final int SWEEP_TICK_2 = 24;
     private static final int TOTAL_DURATION = 61;
@@ -69,9 +69,12 @@ public class SweepAttackGoal extends AbstractHammerAttackGoal {
                 this.moveToTarget();
             } else {
                 this.navigation.stop();
+                this.lockAttackDirection();
                 this.mob.setAttackState(HammerMob.ATTACK_SWEEP);
             }
         } else if (this.mob.getAttackState() == HammerMob.ATTACK_SWEEP) {
+            Vec3 attackDir = this.getLockedAttackDirection();
+            this.mob.setYRot((float) Math.toDegrees(Math.atan2(attackDir.z, attackDir.x)) - 90.0F);
             if (this.mob.getAttackTick() >= SWEEP_TICK_1 && !this.damage1Done && !this.targetDead) {
                 this.damage1Done = true;
                 this.performSweep1Damage();
@@ -92,18 +95,31 @@ public class SweepAttackGoal extends AbstractHammerAttackGoal {
     }
 
     private void performSweep1Damage() {
+        Vec3 attackDir = this.getLockedAttackDirection();
         Vec3 startPos = this.mob.position();
-        Vec3 endPos = startPos.add(this.mob.getLookAngle().normalize().scale(SWEEP_1_LENGTH));
+        Vec3 endPos = startPos.add(attackDir.scale(SWEEP_1_LENGTH));
         double halfWidth = SWEEP_1_WIDTH / 2.0D;
 
-        AABB attackBox = new AABB(
-            Math.min(startPos.x, endPos.x) - halfWidth,
-            this.mob.getY(),
-            Math.min(startPos.z, endPos.z) - halfWidth,
-            Math.max(startPos.x, endPos.x) + halfWidth,
-            this.mob.getY() + 2.0D,
-            Math.max(startPos.z, endPos.z) + halfWidth
-        );
+        AABB attackBox;
+        if (Math.abs(attackDir.x) > Math.abs(attackDir.z)) {
+            attackBox = new AABB(
+                Math.min(startPos.x, endPos.x),
+                this.mob.getY(),
+                Math.min(startPos.z, endPos.z) - halfWidth,
+                Math.max(startPos.x, endPos.x),
+                this.mob.getY() + 2.0D,
+                Math.max(startPos.z, endPos.z) + halfWidth
+            );
+        } else {
+            attackBox = new AABB(
+                Math.min(startPos.x, endPos.x) - halfWidth,
+                this.mob.getY(),
+                Math.min(startPos.z, endPos.z),
+                Math.max(startPos.x, endPos.x) + halfWidth,
+                this.mob.getY() + 2.0D,
+                Math.max(startPos.z, endPos.z)
+            );
+        }
 
         for (LivingEntity entity : this.mob.level().getEntitiesOfClass(LivingEntity.class, attackBox)) {
             if (entity != this.mob) {
@@ -114,8 +130,8 @@ public class SweepAttackGoal extends AbstractHammerAttackGoal {
     }
 
     private void performSweep2Damage() {
-        Vec3 lookDir = this.mob.getLookAngle().normalize();
-        Vec3 centerPos = this.mob.position().add(lookDir.scale(SWEEP_2_DISTANCE));
+        Vec3 attackDir = this.getLockedAttackDirection();
+        Vec3 centerPos = this.mob.position().add(attackDir.scale(SWEEP_2_DISTANCE));
 
         AABB attackBox = new AABB(
             centerPos.x - SWEEP_2_RADIUS,
