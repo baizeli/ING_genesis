@@ -16,6 +16,8 @@ import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
+import java.util.HashMap;
+import java.util.Map;
 
 public class HammerMob extends Monster {
     private static final int AWAKEN_DELAY_TICKS = 30;
@@ -30,6 +32,15 @@ public class HammerMob extends Monster {
     public static final int ATTACK_HEAVY = 1;
     public static final int ATTACK_SWEEP = 2;
     public static final int ATTACK_SPRINT = 3;
+
+    private static final Map<Integer, Integer> ATTACK_WEIGHTS = new HashMap<>();
+
+    static {
+        ATTACK_WEIGHTS.put(ATTACK_HEAVY, 1);
+        ATTACK_WEIGHTS.put(ATTACK_SWEEP, 1);
+    }
+
+    private int selectedAttack = ATTACK_IDLE;
 
     public final AnimationState awaken = new AnimationState();
     public final AnimationState idle = new AnimationState();
@@ -54,7 +65,7 @@ public class HammerMob extends Monster {
 
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
-        /*this.goalSelector.addGoal(1, new SweepAttackGoal(this));*/
+        this.goalSelector.addGoal(1, new SweepAttackGoal(this));
         this.goalSelector.addGoal(1, new HeavyAttackGoal(this));
         this.goalSelector.addGoal(1, new SprintAttackGoal(this));
         this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, LivingEntity.class, 10.0F));
@@ -74,6 +85,23 @@ public class HammerMob extends Monster {
 
             if (this.getAnimBufferTick() > 0) {
                 this.entityData.set(DATA_ANIM_BUFFER_TICK, this.entityData.get(DATA_ANIM_BUFFER_TICK) - 1);
+            }
+
+            if (this.getAttackState() == ATTACK_IDLE && this.getTarget() != null && this.getAnimBufferTick() <= 0 && this.selectedAttack == ATTACK_IDLE) {
+                int totalWeight = 0;
+                for (int weight : ATTACK_WEIGHTS.values()) {
+                    totalWeight += weight;
+                }
+                int random = this.random.nextInt(totalWeight);
+                for (Map.Entry<Integer, Integer> entry : ATTACK_WEIGHTS.entrySet()) {
+                    random -= entry.getValue();
+                    if (random < 0) {
+                        this.selectedAttack = entry.getKey();
+                        break;
+                    }
+                }
+            } else {
+                this.getAttackState();
             }
         }
         if (this.level().isClientSide) {
@@ -112,6 +140,14 @@ public class HammerMob extends Monster {
         } else if (this.getAnimBufferTick() <= 0 && this.heavyAttack.isStarted()) {
             this.heavyAttack.stop();
         }
+
+        if (this.getAttackState() == ATTACK_SWEEP) {
+            if (this.getAttackTick() <= 1 || !this.sweepAttack.isStarted()) {
+                this.sweepAttack.start(this.tickCount);
+            }
+        } else if (this.getAnimBufferTick() <= 0 && this.sweepAttack.isStarted()) {
+            this.sweepAttack.stop();
+        }
     }
 
     public boolean isPushable() {
@@ -124,10 +160,15 @@ public class HammerMob extends Monster {
         return this.entityData.get(DATA_ATTACK_STATE);
     }
 
+    public int getSelectedAttack() {
+        return this.selectedAttack;
+    }
+
     public void setAttackState(int state) {
         this.entityData.set(DATA_ATTACK_STATE, state);
         if (state == ATTACK_IDLE) {
             this.entityData.set(DATA_ATTACK_TICK, 0);
+            this.selectedAttack = ATTACK_IDLE;
         }
     }
 
