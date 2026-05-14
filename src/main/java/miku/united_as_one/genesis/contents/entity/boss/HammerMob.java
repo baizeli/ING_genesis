@@ -13,11 +13,14 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
 public class HammerMob extends Monster {
+    private static final int AWAKEN_DELAY_TICKS = 30;
+
+    private static final EntityDataAccessor<Boolean> AWAKEN_PLAYED = SynchedEntityData.defineId(HammerMob.class, EntityDataSerializers.BOOLEAN);
+
     public final AnimationState awaken = new AnimationState();
     public final AnimationState idle = new AnimationState();
     public final AnimationState sprinting = new AnimationState();
-    private static final EntityDataAccessor<Boolean> AWAKEN_PLAYED = SynchedEntityData.defineId(HammerMob.class, EntityDataSerializers.BOOLEAN);
-    private static final int AWAKEN_DELAY_TICKS = 30;
+    public final AnimationState death = new AnimationState();
 
     public HammerMob(EntityType<? extends Monster> entityType, Level level) {
         super(entityType, level);

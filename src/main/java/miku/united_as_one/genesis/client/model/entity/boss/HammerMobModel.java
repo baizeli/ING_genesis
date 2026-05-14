@@ -188,6 +188,7 @@ public class HammerMobModel<T extends HammerMob> extends HierarchicalModel<T> {
         this.animate(entity.idle, HammerMobAnimation.IDLE, ageInTicks);
         this.animateWalk(HammerMobAnimation.WALKING, limbSwing, limbSwingAmount, 2.0F, 2.5F);
         this.animate(entity.sprinting, HammerMobAnimation.SPRINTING, ageInTicks);
+        this.animate(entity.death, HammerMobAnimation.DEATH, ageInTicks);
     }
 
     @Override
