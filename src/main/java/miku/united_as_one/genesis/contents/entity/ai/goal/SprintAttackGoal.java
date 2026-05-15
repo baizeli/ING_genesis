@@ -13,6 +13,7 @@ public class SprintAttackGoal extends Goal {
     private final HammerMob mob;
     private LivingEntity target;
 
+    private static final int CHARGE_TICKS = 15;
     private static final int SPRINT_DURATION = 15;
     private static final int COOLDOWN_TICKS = /*20*30*/20;
     private static final double SPRINT_DISTANCE = 15.0D;
@@ -48,26 +49,35 @@ public class SprintAttackGoal extends Goal {
     }
 
     public boolean canContinueToUse() {
-        return this.target != null && this.target.isAlive() && this.sprintTick < SPRINT_DURATION;
+        return this.target != null && this.target.isAlive() && this.sprintTick < CHARGE_TICKS + SPRINT_DURATION;
     }
 
     public void start() {
         this.sprintTick = 0;
-        this.mob.setSprinting(true);
+        this.mob.setAttackState(HammerMob.ATTACK_SPRINT);
         this.sprintDirection = this.target.position().subtract(this.mob.position()).normalize();
     }
 
     public void tick() {
         if (this.target == null) return;
 
-        double speed = SPRINT_DISTANCE / SPRINT_DURATION;
-        this.mob.setDeltaMovement(this.sprintDirection.x * speed, 0, this.sprintDirection.z * speed);
-
         float targetYRot = (float) (Mth.atan2(this.sprintDirection.z, this.sprintDirection.x) * 180.0D / Math.PI) - 90.0F;
         this.mob.setYRot(targetYRot);
         this.mob.setXRot(0.0F);
         this.mob.yRotO = targetYRot;
         this.mob.xRotO = 0.0F;
+
+        if (this.sprintTick < CHARGE_TICKS) {
+            this.sprintTick++;
+            return;
+        }
+
+        if (this.sprintTick == CHARGE_TICKS) {
+            this.mob.setSprinting(true);
+        }
+
+        double speed = SPRINT_DISTANCE / SPRINT_DURATION;
+        this.mob.setDeltaMovement(this.sprintDirection.x * speed, 0, this.sprintDirection.z * speed);
 
         AABB attackBox = new AABB(
             this.mob.getX() - DAMAGE_RADIUS,
@@ -90,9 +100,9 @@ public class SprintAttackGoal extends Goal {
 
         this.sprintTick++;
 
-        if (this.sprintTick >= SPRINT_DURATION) {
+        if (this.sprintTick >= CHARGE_TICKS + SPRINT_DURATION) {
             this.mob.setSprinting(false);
-            this.mob.setAnimBufferTick(20);
+            this.mob.setAnimBufferTick(40);
             this.cooldown = COOLDOWN_TICKS;
         }
     }
@@ -100,5 +110,6 @@ public class SprintAttackGoal extends Goal {
     public void stop() {
         this.target = null;
         this.mob.setSprinting(false);
+        this.mob.setAttackState(HammerMob.ATTACK_IDLE);
     }
 }

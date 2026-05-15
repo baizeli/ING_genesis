@@ -131,9 +131,11 @@ public class HammerMob extends Monster {
     }
 
     private void updateAnimations() {
-        if (this.isSprinting() && !this.sprinting.isStarted()) {
-            this.sprinting.start(this.tickCount);
-        } else if (!this.isSprinting() && this.sprinting.isStarted()) {
+        if (this.getAttackState() == ATTACK_SPRINT) {
+            if (!this.sprinting.isStarted()) {
+                this.sprinting.start(this.tickCount);
+            }
+        } else if (this.getAnimBufferTick() <= 0 && this.sprinting.isStarted()) {
             this.sprinting.stop();
         }
 
