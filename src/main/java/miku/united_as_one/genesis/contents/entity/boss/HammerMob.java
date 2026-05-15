@@ -34,12 +34,14 @@ public class HammerMob extends Monster {
     public static final int ATTACK_HEAVY = 1;
     public static final int ATTACK_SWEEP = 2;
     public static final int ATTACK_SPRINT = 3;
+    public static final int ATTACK_THROW = 4;
 
     private static final Map<Integer, Integer> ATTACK_WEIGHTS = new HashMap<>();
 
     static {
         ATTACK_WEIGHTS.put(ATTACK_HEAVY, 1);
         ATTACK_WEIGHTS.put(ATTACK_SWEEP, 1);
+        ATTACK_WEIGHTS.put(ATTACK_THROW, 1);
     }
 
     private int selectedAttack = ATTACK_IDLE;
@@ -70,6 +72,7 @@ public class HammerMob extends Monster {
         this.goalSelector.addGoal(1, new SweepAttackGoal(this));
         this.goalSelector.addGoal(1, new HeavyAttackGoal(this));
         this.goalSelector.addGoal(1, new SprintAttackGoal(this));
+        this.goalSelector.addGoal(1, new ThrowHammerGoal(this));
         this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, LivingEntity.class, 10.0F));
         this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
         
@@ -153,6 +156,14 @@ public class HammerMob extends Monster {
             }
         } else if (this.getAnimBufferTick() <= 0 && this.sweepAttack.isStarted()) {
             this.sweepAttack.stop();
+        }
+
+        if (this.getAttackState() == ATTACK_THROW) {
+            if (this.getAttackTick() <= 1 || !this.throwHammer.isStarted()) {
+                this.throwHammer.start(this.tickCount);
+            }
+        } else if (this.getAnimBufferTick() <= 0 && this.throwHammer.isStarted()) {
+            this.throwHammer.stop();
         }
     }
 

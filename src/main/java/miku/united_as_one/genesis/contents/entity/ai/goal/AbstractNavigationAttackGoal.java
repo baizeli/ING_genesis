@@ -61,6 +61,12 @@ public abstract class AbstractNavigationAttackGoal extends Goal {
         return this.mob.getLookAngle();
     }
 
+    protected void forceLookAtDirection(Vec3 direction) {
+        this.mob.forceLookAt((float) Math.toDegrees(Math.atan2(direction.z, direction.x)) - 90.0F);
+        Vec3 lookTarget = this.mob.position().add(direction.scale(5.0D));
+        this.mob.getLookControl().setLookAt(lookTarget.x, lookTarget.y, lookTarget.z);
+    }
+
     protected void moveToTarget() {
         this.mob.getMoveControl().setWantedPosition(
             this.target.getX(), this.target.getY(), this.target.getZ(), 1.0D

@@ -11,7 +11,7 @@ public class HeavyAttackGoal extends AbstractNavigationAttackGoal {
     private static final double HAMMER_DISTANCE = 4D;
     private static final float ATTACK_DAMAGE = 40;
 
-    private static final int COOLDOWN_TICKS = /*20*5*/20;
+    private static final int COOLDOWN_TICKS = 20*5;
 
     public HeavyAttackGoal(HammerMob mob) {
         super(mob, COOLDOWN_TICKS);
@@ -50,7 +50,7 @@ public class HeavyAttackGoal extends AbstractNavigationAttackGoal {
             }
         } else {
             Vec3 attackDir = this.getLockedAttackDirection();
-            this.mob.setYRot((float) Math.toDegrees(Math.atan2(attackDir.z, attackDir.x)) - 90.0F);
+            this.forceLookAtDirection(attackDir);
 
             if (this.mob.getAttackTick() >= DAMAGE_TICK) {
                 Vec3 hammerPos = this.mob.position().add(attackDir.scale(HAMMER_DISTANCE));

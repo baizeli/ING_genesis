@@ -23,7 +23,7 @@ public class SweepAttackGoal extends AbstractNavigationAttackGoal {
     private boolean damage2Done;
     private boolean targetDead;
 
-    private static final int COOLDOWN_TICKS = /*20*5*/20;
+    private static final int COOLDOWN_TICKS = 20*5;
 
     public SweepAttackGoal(HammerMob mob) {
         super(mob, COOLDOWN_TICKS);
@@ -76,7 +76,7 @@ public class SweepAttackGoal extends AbstractNavigationAttackGoal {
             }
         } else if (this.mob.getAttackState() == HammerMob.ATTACK_SWEEP) {
             Vec3 attackDir = this.getLockedAttackDirection();
-            this.mob.setYRot((float) Math.toDegrees(Math.atan2(attackDir.z, attackDir.x)) - 90.0F);
+            this.forceLookAtDirection(attackDir);
             if (this.mob.getAttackTick() >= SWEEP_TICK_1 && !this.damage1Done && !this.targetDead) {
                 this.damage1Done = true;
                 this.performSweep1Damage();
