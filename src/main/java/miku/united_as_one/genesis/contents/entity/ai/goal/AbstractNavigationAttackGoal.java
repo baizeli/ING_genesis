@@ -13,15 +13,17 @@ public abstract class AbstractNavigationAttackGoal extends Goal {
     protected LivingEntity target;
 
     protected static final int ATTACK_RANGE = 3;
-    protected static final int COOLDOWN_TICKS = /*20*5*/20;
+    protected final int cooldownTicks;
 
-    protected int lastAttackTick = -COOLDOWN_TICKS;
+    protected int lastAttackTick;
 
     protected Vec3 lockedAttackDirection;
 
-    protected AbstractNavigationAttackGoal(HammerMob mob) {
+    protected AbstractNavigationAttackGoal(HammerMob mob, int cooldownTicks) {
         this.mob = mob;
         this.navigation = mob.getNavigation();
+        this.cooldownTicks = cooldownTicks;
+        this.lastAttackTick = -cooldownTicks;
         this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
     }
 
@@ -30,7 +32,7 @@ public abstract class AbstractNavigationAttackGoal extends Goal {
     }
 
     protected boolean isCoolingDown() {
-        return this.mob.tickCount - this.lastAttackTick < COOLDOWN_TICKS;
+        return this.mob.tickCount - this.lastAttackTick < this.cooldownTicks;
     }
 
     protected void resetCooldown() {

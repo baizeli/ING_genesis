@@ -23,8 +23,10 @@ public class SweepAttackGoal extends AbstractNavigationAttackGoal {
     private boolean damage2Done;
     private boolean targetDead;
 
+    private static final int COOLDOWN_TICKS = /*20*5*/20;
+
     public SweepAttackGoal(HammerMob mob) {
-        super(mob);
+        super(mob, COOLDOWN_TICKS);
     }
 
     public boolean canUse() {

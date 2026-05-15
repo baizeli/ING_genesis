@@ -11,8 +11,10 @@ public class HeavyAttackGoal extends AbstractNavigationAttackGoal {
     private static final double HAMMER_DISTANCE = 4D;
     private static final float ATTACK_DAMAGE = 40;
 
+    private static final int COOLDOWN_TICKS = /*20*5*/20;
+
     public HeavyAttackGoal(HammerMob mob) {
-        super(mob);
+        super(mob, COOLDOWN_TICKS);
     }
 
     public boolean canUse() {
