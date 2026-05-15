@@ -13,7 +13,7 @@ public abstract class AbstractNavigationAttackGoal extends Goal {
     protected final PathNavigation navigation;
     protected LivingEntity target;
 
-    protected static final int ATTACK_RANGE = 3;
+    protected static final int ATTACK_RANGE = 5;
     protected final int cooldownTicks;
 
     protected int lastAttackTick;
