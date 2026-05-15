@@ -9,6 +9,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 public class SweepAttackGoal extends AbstractNavigationAttackGoal {
+    private static final int COOLDOWN_TICKS = /*20*5*/20;
     private static final int SWEEP_TICK_1 = 12;
     private static final int SWEEP_TICK_2 = 24;
     private static final int TOTAL_DURATION = 61;
@@ -22,8 +23,6 @@ public class SweepAttackGoal extends AbstractNavigationAttackGoal {
     private boolean damage1Done;
     private boolean damage2Done;
     private boolean targetDead;
-
-    private static final int COOLDOWN_TICKS = 20*5;
 
     public SweepAttackGoal(HammerMob mob) {
         super(mob, COOLDOWN_TICKS);

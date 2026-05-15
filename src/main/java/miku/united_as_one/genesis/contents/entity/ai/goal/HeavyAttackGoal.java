@@ -6,12 +6,14 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 public class HeavyAttackGoal extends AbstractNavigationAttackGoal {
+    private static final int COOLDOWN_TICKS = /*20*5*/20;
     private static final int DAMAGE_TICK = 26;
+    private static final int TOTAL_DURATION = 41;
     private static final double DAMAGE_RADIUS = 2.5;
     private static final double HAMMER_DISTANCE = 4D;
     private static final float ATTACK_DAMAGE = 40;
 
-    private static final int COOLDOWN_TICKS = 20*5;
+    private boolean damageDone;
 
     public HeavyAttackGoal(HammerMob mob) {
         super(mob, COOLDOWN_TICKS);
@@ -24,6 +26,7 @@ public class HeavyAttackGoal extends AbstractNavigationAttackGoal {
         LivingEntity livingentity = this.mob.getTarget();
         if (livingentity != null && livingentity.isAlive()) {
             this.target = livingentity;
+            this.damageDone = false;
             return true;
         }
 
@@ -33,7 +36,12 @@ public class HeavyAttackGoal extends AbstractNavigationAttackGoal {
     public boolean canContinueToUse() {
         LivingEntity currentTarget = this.mob.getTarget();
         if (currentTarget == null || !currentTarget.isAlive()) return false;
-        return this.mob.getAttackState() != HammerMob.ATTACK_IDLE;
+
+        if (this.mob.getAttackState() == HammerMob.ATTACK_HEAVY) {
+            return this.mob.getAttackTick() < TOTAL_DURATION;
+        }
+
+        return false;
     }
 
     public void tick() {
@@ -48,11 +56,13 @@ public class HeavyAttackGoal extends AbstractNavigationAttackGoal {
                 this.lockAttackDirection();
                 this.mob.setAttackState(HammerMob.ATTACK_HEAVY);
             }
-        } else {
+        } else if (this.mob.getAttackState() == HammerMob.ATTACK_HEAVY) {
             Vec3 attackDir = this.getLockedAttackDirection();
             this.forceLookAtDirection(attackDir);
 
-            if (this.mob.getAttackTick() >= DAMAGE_TICK) {
+            if (this.mob.getAttackTick() >= DAMAGE_TICK && !this.damageDone) {
+                this.damageDone = true;
+
                 Vec3 hammerPos = this.mob.position().add(attackDir.scale(HAMMER_DISTANCE));
 
                 AABB attackBox = new AABB(
@@ -69,7 +79,9 @@ public class HeavyAttackGoal extends AbstractNavigationAttackGoal {
                         entity.hurt(this.mob.level().damageSources().mobAttack(this.mob), ATTACK_DAMAGE);
                     }
                 }
+            }
 
+            if (this.mob.getAttackTick() >= TOTAL_DURATION) {
                 this.resetCooldown();
                 this.mob.setAnimBufferTick(20);
                 this.mob.setAttackState(HammerMob.ATTACK_IDLE);
