@@ -39,9 +39,6 @@ public class ThrowHammerGoal extends AbstractNavigationAttackGoal {
     }
 
     public boolean canContinueToUse() {
-        LivingEntity currentTarget = this.mob.getTarget();
-        if (currentTarget == null || !currentTarget.isAlive()) return false;
-
         if (this.mob.getAttackState() == HammerMob.ATTACK_THROW) {
             return this.mob.getAttackTick() < TOTAL_DURATION;
         }
@@ -55,13 +52,9 @@ public class ThrowHammerGoal extends AbstractNavigationAttackGoal {
         if (this.target == null) return;
 
         if (this.mob.getAttackState() == HammerMob.ATTACK_IDLE) {
-            if (this.mob.distanceTo(this.target) > ATTACK_RANGE) {
-                this.moveToTarget();
-            } else {
-                this.navigation.stop();
-                this.lockAttackDirection();
-                this.mob.setAttackState(HammerMob.ATTACK_THROW);
-            }
+            this.navigation.stop();
+            this.lockAttackDirection();
+            this.mob.setAttackState(HammerMob.ATTACK_THROW);
         } else if (this.mob.getAttackState() == HammerMob.ATTACK_THROW) {
             Vec3 attackDir = this.getLockedAttackDirection();
             this.forceLookAtDirection(attackDir);

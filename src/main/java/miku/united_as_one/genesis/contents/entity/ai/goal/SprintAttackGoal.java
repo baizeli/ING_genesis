@@ -19,7 +19,7 @@ public class SprintAttackGoal extends Goal {
     private static final int COOLDOWN_TICKS = /*20*30*/20;
     private static final double SPRINT_DISTANCE = 15.0D;
     private static final double DAMAGE_RADIUS = 2.0D;
-    private static final double TRIGGER_RANGE = 8.0D;
+    private static final double TRIGGER_RANGE = 16.0D;
 
     private int cooldown;
     private int sprintTick;

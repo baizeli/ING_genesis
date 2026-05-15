@@ -18,6 +18,7 @@ import net.minecraft.world.entity.AnimationState;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -64,7 +65,8 @@ public class HammerMob extends Monster {
                 .add(Attributes.MAX_HEALTH, 1000.0D)
                 .add(Attributes.ATTACK_DAMAGE, 25.0D)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 1.0D)
-                .add(Attributes.MOVEMENT_SPEED, 0.21D);
+                .add(Attributes.MOVEMENT_SPEED, 0.21D)
+                .add(Attributes.FOLLOW_RANGE, 24.0D);
     }
 
     protected void registerGoals() {
@@ -95,16 +97,21 @@ public class HammerMob extends Monster {
             }
 
             if (this.getAttackState() == ATTACK_IDLE && this.getTarget() != null && this.getAnimBufferTick() <= 0 && this.selectedAttack == ATTACK_IDLE) {
-                int totalWeight = 0;
-                for (int weight : ATTACK_WEIGHTS.values()) {
-                    totalWeight += weight;
-                }
-                int random = this.random.nextInt(totalWeight);
-                for (Map.Entry<Integer, Integer> entry : ATTACK_WEIGHTS.entrySet()) {
-                    random -= entry.getValue();
-                    if (random < 0) {
-                        this.selectedAttack = entry.getKey();
-                        break;
+                double dist = this.distanceTo(this.getTarget());
+                if (dist > 3D && dist <= 10D) {
+                    this.selectedAttack = ATTACK_THROW;
+                } else {
+                    int totalWeight = 0;
+                    for (int weight : ATTACK_WEIGHTS.values()) {
+                        totalWeight += weight;
+                    }
+                    int random = this.random.nextInt(totalWeight);
+                    for (Map.Entry<Integer, Integer> entry : ATTACK_WEIGHTS.entrySet()) {
+                        random -= entry.getValue();
+                        if (random < 0) {
+                            this.selectedAttack = entry.getKey();
+                            break;
+                        }
                     }
                 }
             } else {
