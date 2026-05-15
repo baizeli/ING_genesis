@@ -190,6 +190,15 @@ public class HammerMob extends Monster {
         this.entityData.set(DATA_ANIM_BUFFER_TICK, tick);
     }
 
+    public void forceLookAt(float yRot) {
+        this.setYRot(yRot);
+        this.yRotO = yRot;
+        this.yBodyRot = yRot;
+        this.yBodyRotO = yRot;
+        this.yHeadRot = yRot;
+        this.yHeadRotO = yRot;
+    }
+
     public boolean isSprintAttackCooling() {
         return this.entityData.get(DATA_SPRINT_COOLING);
     }

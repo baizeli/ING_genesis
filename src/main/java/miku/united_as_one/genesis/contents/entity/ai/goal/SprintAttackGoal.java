@@ -56,6 +56,9 @@ public class SprintAttackGoal extends Goal {
         this.sprintTick = 0;
         this.mob.setAttackState(HammerMob.ATTACK_SPRINT);
         this.sprintDirection = this.target.position().subtract(this.mob.position()).normalize();
+
+        float targetYRot = (float) (Mth.atan2(this.sprintDirection.z, this.sprintDirection.x) * 180.0D / Math.PI) - 90.0F;
+        this.mob.forceLookAt(targetYRot);
     }
 
     public void tick() {
