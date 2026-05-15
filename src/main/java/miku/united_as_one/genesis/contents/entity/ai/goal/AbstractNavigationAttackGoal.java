@@ -62,22 +62,9 @@ public abstract class AbstractNavigationAttackGoal extends Goal {
     }
 
     protected void moveToTarget() {
-        if (this.mob.horizontalCollision) {
-            Vec3 toTarget = new Vec3(
-                this.target.getX() - this.mob.getX(),
-                0,
-                this.target.getZ() - this.mob.getZ()
-            ).normalize();
-            Vec3 look = this.mob.getLookAngle();
-            double cross = look.x * toTarget.z - look.z * toTarget.x;
-
-            float strafe = cross > 0 ? 1.0F : -1.0F;
-            this.mob.getMoveControl().strafe(0.3F, strafe);
-        } else {
-            this.mob.getMoveControl().setWantedPosition(
-                this.target.getX(), this.target.getY(), this.target.getZ(), 1.0D
-            );
-        }
+        this.mob.getMoveControl().setWantedPosition(
+            this.target.getX(), this.target.getY(), this.target.getZ(), 1.0D
+        );
     }
 
     public void stop() {
