@@ -14,9 +14,9 @@ public class SprintAttackGoal extends Goal {
     private final HammerMob mob;
     private LivingEntity target;
 
+    private static final int COOLDOWN_TICKS = 0;
     private static final int CHARGE_TICKS = 15;
     private static final int SPRINT_DURATION = 15;
-    private static final int COOLDOWN_TICKS = /*20*30*/20;
     private static final double SPRINT_DISTANCE = 15.0D;
     private static final double DAMAGE_RADIUS = 2.0D;
     private static final double TRIGGER_RANGE = 16.0D;

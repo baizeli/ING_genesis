@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class ThrowHammerGoal extends AbstractNavigationAttackGoal {
-    private static final int COOLDOWN_TICKS = /*20*5*/20;
+    private static final int COOLDOWN_TICKS = 0;
     private static final int THROW_TICK = 11;
     private static final int RETURN_TICK = 24;
     private static final int TOTAL_DURATION = 35;

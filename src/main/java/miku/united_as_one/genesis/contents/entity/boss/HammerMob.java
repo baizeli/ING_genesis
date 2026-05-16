@@ -36,6 +36,7 @@ public class HammerMob extends Monster {
     public static final int ATTACK_SWEEP = 2;
     public static final int ATTACK_SPRINT = 3;
     public static final int ATTACK_THROW = 4;
+    public static final int ATTACK_JUMP = 5;
 
     private static final Map<Integer, Integer> ATTACK_WEIGHTS = new HashMap<>();
 
@@ -43,6 +44,7 @@ public class HammerMob extends Monster {
         ATTACK_WEIGHTS.put(ATTACK_HEAVY, 1);
         ATTACK_WEIGHTS.put(ATTACK_SWEEP, 1);
         ATTACK_WEIGHTS.put(ATTACK_THROW, 1);
+        ATTACK_WEIGHTS.put(ATTACK_JUMP, 1);
     }
 
     private int selectedAttack = ATTACK_IDLE;
@@ -75,6 +77,7 @@ public class HammerMob extends Monster {
         this.goalSelector.addGoal(1, new HeavyAttackGoal(this));
         this.goalSelector.addGoal(1, new SprintAttackGoal(this));
         this.goalSelector.addGoal(1, new ThrowHammerGoal(this));
+        this.goalSelector.addGoal(1, new JumpAttackGoal(this));
         this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, LivingEntity.class, 10.0F));
         this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
         
@@ -98,7 +101,7 @@ public class HammerMob extends Monster {
 
             if (this.getAttackState() == ATTACK_IDLE && this.getTarget() != null && this.getAnimBufferTick() <= 0 && this.selectedAttack == ATTACK_IDLE) {
                 double dist = this.distanceTo(this.getTarget());
-                if (dist > 3D && dist <= 10D) {
+                if (dist > 5D && dist <= 10D) {
                     this.selectedAttack = ATTACK_THROW;
                 } else {
                     int totalWeight = 0;
@@ -171,6 +174,14 @@ public class HammerMob extends Monster {
             }
         } else if (this.getAnimBufferTick() <= 0 && this.throwHammer.isStarted()) {
             this.throwHammer.stop();
+        }
+
+        if (this.getAttackState() == ATTACK_JUMP) {
+            if (this.getAttackTick() <= 1 || !this.jumpAttack.isStarted()) {
+                this.jumpAttack.start(this.tickCount);
+            }
+        } else if (this.getAnimBufferTick() <= 0 && this.jumpAttack.isStarted()) {
+            this.jumpAttack.stop();
         }
     }
 

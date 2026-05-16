@@ -6,7 +6,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 public class HeavyAttackGoal extends AbstractNavigationAttackGoal {
-    private static final int COOLDOWN_TICKS = /*20*5*/20;
+    private static final int COOLDOWN_TICKS = 0;
     private static final int DAMAGE_TICK = 26;
     private static final int TOTAL_DURATION = 41;
     private static final double DAMAGE_RADIUS = 2.5;

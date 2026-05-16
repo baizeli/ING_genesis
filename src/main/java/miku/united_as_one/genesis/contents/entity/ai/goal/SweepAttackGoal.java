@@ -9,7 +9,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 public class SweepAttackGoal extends AbstractNavigationAttackGoal {
-    private static final int COOLDOWN_TICKS = /*20*5*/20;
+    private static final int COOLDOWN_TICKS = 0;
     private static final int SWEEP_TICK_1 = 12;
     private static final int SWEEP_TICK_2 = 24;
     private static final int TOTAL_DURATION = 61;
