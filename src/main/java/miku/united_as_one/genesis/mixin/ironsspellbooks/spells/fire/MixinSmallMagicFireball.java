@@ -18,20 +18,20 @@ import org.spongepowered.asm.mixin.Unique;
 public abstract class MixinSmallMagicFireball extends AbstractMagicProjectile implements IMixinSmallMagicFireball {
 
     @Unique
-    private boolean eternisStarrySky$needReborn = true;
+    private boolean ironSpellGenesis$needReborn = true;
 
     public MixinSmallMagicFireball(EntityType<? extends Projectile> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
     }
 
     @Unique
-    public void eternisStarrySky$setNotNeedReborn() {
-        eternisStarrySky$needReborn = false;
+    public void ironSpellGenesis$setNotNeedReborn() {
+        ironSpellGenesis$needReborn = false;
     }
 
     @Override
     public void tick() {
-        if(!this.level.isClientSide && this.tickCount == 40 && eternisStarrySky$needReborn) {
+        if(!this.level.isClientSide && this.tickCount == 40 && ironSpellGenesis$needReborn) {
             Entity owner = getOwner();
             if(owner instanceof LivingEntity entity) {
                 if(ModCurios.hasCurios(entity, FireRunePlus::test)) {
@@ -43,7 +43,7 @@ public abstract class MixinSmallMagicFireball extends AbstractMagicProjectile im
                     fireball.shoot(vec.scale(0.5F), inaccuracy);
                     fireball.setDamage(getDamage() * 1.8f);
                     fireball.setCursorHoming(true);
-                    ((IMixinSmallMagicFireball)fireball).eternisStarrySky$setNotNeedReborn();
+                    ((IMixinSmallMagicFireball)fireball).ironSpellGenesis$setNotNeedReborn();
                     level.addFreshEntity(fireball);
                     this.discard();
                 }
