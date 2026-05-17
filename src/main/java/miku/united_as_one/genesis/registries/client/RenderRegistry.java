@@ -17,6 +17,7 @@ import miku.united_as_one.genesis.client.renderer.entity.test.BaiZeLiRenderer;
 import miku.united_as_one.genesis.client.renderer.projectile.ThrownIronRenderer;
 import miku.united_as_one.genesis.contents.entity.LightningBoltRenderer;
 import miku.united_as_one.genesis.contents.entity.NyanCatRenderer;
+import miku.united_as_one.genesis.contents.entity.gungnir.GungnirDaggerRenderer;
 import miku.united_as_one.genesis.contents.entity.spell.blood_boss.blood_dagger.BloodDaggerRenderer;
 import miku.united_as_one.genesis.contents.entity.spell.celestial_source.BoxEntityRenderer;
 import miku.united_as_one.genesis.contents.entity.spell.celestial_source.blade_works.MagicCircleRenderer;
@@ -62,6 +63,7 @@ public class RenderRegistry {
         event.registerEntityRenderer(EntityRegistry.BLOOD_FIELD.get(), NoopRenderer::new);
         event.registerEntityRenderer(EntityRegistry.TREMOR_AOE_ENTITY.get(), NoopRenderer::new);
         event.registerEntityRenderer(EntityRegistry.BAI_ZE_LI.get(), BaiZeLiRenderer::new);
+        event.registerEntityRenderer(EntityRegistry.GUNGNIR_DAGGER_PROJECTILE.get(), GungnirDaggerRenderer::new);
         event.registerEntityRenderer(EntityRegistry.WARDEN_SPELLCASTER.get(), WSRenderer::new);
         event.registerEntityRenderer(EntityRegistry.DEAD_STAR_DECREE_COMET.get(),
                 context -> new DeadStarDecreeCometRenderer(context, 0.25f)

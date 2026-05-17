@@ -12,7 +12,6 @@ import miku.united_as_one.genesis.contents.entity.boss.HammerMob;
 import miku.united_as_one.genesis.contents.entity.gungnir.GungnirChainLightning;
 import miku.united_as_one.genesis.contents.entity.gungnir.GungnirDaggerEntity;
 import miku.united_as_one.genesis.contents.entity.laser.DeathLaserEntity;
-import miku.united_as_one.genesis.contents.entity.warlock.WardenMageEntity;
 import miku.united_as_one.genesis.contents.entity.projectile.ThrownIron;
 import miku.united_as_one.genesis.contents.entity.spell.eldritch.*;
 import miku.united_as_one.genesis.contents.entity.spell.blood_boss.BloodBossFireEruptionAoe;
@@ -20,7 +19,6 @@ import miku.united_as_one.genesis.contents.entity.spell.blood_boss.blood_dagger.
 import miku.united_as_one.genesis.contents.entity.spell.blood_boss.blood_dagger.BloodField;
 import miku.united_as_one.genesis.contents.entity.spell.celestial_source.*;
 import miku.united_as_one.genesis.contents.entity.spell.celestial_source.blade_works.*;
-import miku.united_as_one.genesis.contents.entity.spell.celestial_source.notuse.*;
 import miku.united_as_one.genesis.contents.entity.spell.fire.*;
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.contents.entity.test.BaiZeLiEntity;
@@ -221,9 +219,6 @@ public class EntityRegistry {
                     .updateInterval(1)
                     .build("bai_ze_li"));
 
-    public static void register(IEventBus eventBus) {
-        ENTITY_TYPES.register(eventBus);
-    }
 
     public static final RegistryObject<EntityType<GungnirDaggerEntity>> GUNGNIR_DAGGER_PROJECTILE = ENTITY_TYPES.register("gungnir_dagger",
             () -> EntityType.Builder.of(
@@ -240,4 +235,8 @@ public class EntityRegistry {
                     .sized(0.5F, 0.5F)
                     .clientTrackingRange(64)
                     .build("gungnir_chain_lightning"));
+
+    public static void register(IEventBus eventBus) {
+        ENTITY_TYPES.register(eventBus);
+    }
 }

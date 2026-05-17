@@ -1,4 +1,4 @@
-package miku.united_as_one.genesis.common.entity.gungnir;
+package miku.united_as_one.genesis.contents.entity.gungnir;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;

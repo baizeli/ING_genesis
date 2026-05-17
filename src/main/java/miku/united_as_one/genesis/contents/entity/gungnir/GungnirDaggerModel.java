@@ -1,4 +1,4 @@
-package miku.united_as_one.genesis.common.entity.gungnir;
+package miku.united_as_one.genesis.contents.entity.gungnir;
 
 import io.redspace.ironsspellbooks.entity.mobs.abstract_spell_casting_mob.AbstractSpellCastingMob;
 import io.redspace.ironsspellbooks.render.RenderHelper;
