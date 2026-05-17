@@ -2,101 +2,90 @@ package miku.united_as_one.genesis.contents.entity.ai.goal;
 
 import miku.united_as_one.genesis.contents.entity.boss.HammerMob;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.phys.AABB;
-import java.util.EnumSet;
+import net.minecraft.world.phys.Vec3;
 
-public class HeavyAttackGoal extends Goal {
-    private final HammerMob mob;
-    private final PathNavigation navigation;
-    private LivingEntity target;
-    private static final int ATTACK_RANGE = 3;
+public class HeavyAttackGoal extends AbstractNavigationAttackGoal {
+    private static final int COOLDOWN_TICKS = 0;
     private static final int DAMAGE_TICK = 26;
-    private static final int COOLDOWN_TICKS = 20*5;
-    private static final double DAMAGE_RADIUS = 5;
-    private int cooldown;
-    private boolean attackDone;
+    private static final int TOTAL_DURATION = 41;
+    private static final double DAMAGE_RADIUS = 2.5;
+    private static final double HAMMER_DISTANCE = 4D;
+    private static final float ATTACK_DAMAGE = 40;
+
+    private boolean damageDone;
 
     public HeavyAttackGoal(HammerMob mob) {
-        this.mob = mob;
-        this.navigation = mob.getNavigation();
-        this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
+        super(mob, COOLDOWN_TICKS);
     }
 
     public boolean canUse() {
-        if (this.cooldown > 0) {
-            --this.cooldown;
-            return false;
-        }
-        
+        if (this.mob.getSelectedAttack() != HammerMob.ATTACK_HEAVY) return false;
+        if (this.isCoolingDown()) return false;
+
         LivingEntity livingentity = this.mob.getTarget();
         if (livingentity != null && livingentity.isAlive()) {
             this.target = livingentity;
-            this.attackDone = false;
+            this.damageDone = false;
             return true;
         }
+
         return false;
     }
 
     public boolean canContinueToUse() {
-        if (this.target == null || !this.target.isAlive()) {
-            return false;
+        LivingEntity currentTarget = this.mob.getTarget();
+        if (currentTarget == null || !currentTarget.isAlive()) return false;
+
+        if (this.mob.getAttackState() == HammerMob.ATTACK_HEAVY) {
+            return this.mob.getAttackTick() < TOTAL_DURATION;
         }
-        
-        if (this.mob.getAttackState() != HammerMob.ATTACK_IDLE) {
-            return true;
-        }
-        
-        return !this.attackDone;
+
+        return false;
     }
 
     public void tick() {
+        this.updateTarget();
+
         if (this.target == null) return;
-        
-        this.mob.lookAt(this.target, 30.0F, 30.0F);
 
         if (this.mob.getAttackState() == HammerMob.ATTACK_IDLE) {
-            double distance = this.mob.distanceTo(this.target);
-            
-            if (distance > ATTACK_RANGE) {
-                this.navigation.moveTo(this.target, 1.0D);
+            if (this.mob.distanceTo(this.target) > ATTACK_RANGE) {
+                this.moveToTarget();
             } else {
-                this.navigation.stop();
+                this.lockAttackDirection();
                 this.mob.setAttackState(HammerMob.ATTACK_HEAVY);
             }
-        } else {
-            this.navigation.stop();
-            
-            if (this.mob.getAttackTick() >= DAMAGE_TICK) {
-                this.attackDone = true;
-                double radius = DAMAGE_RADIUS;
+        } else if (this.mob.getAttackState() == HammerMob.ATTACK_HEAVY) {
+            Vec3 attackDir = this.getLockedAttackDirection();
+            this.forceLookAtDirection(attackDir);
+
+            if (this.mob.getAttackTick() >= DAMAGE_TICK && !this.damageDone) {
+                this.damageDone = true;
+
+                Vec3 hammerPos = this.mob.position().add(attackDir.scale(HAMMER_DISTANCE));
+
                 AABB attackBox = new AABB(
-                    this.mob.getX() - radius,
-                    this.mob.getY(),
-                    this.mob.getZ() - radius,
-                    this.mob.getX() + radius,
-                    this.mob.getY() + radius,
-                    this.mob.getZ() + radius
+                    hammerPos.x - DAMAGE_RADIUS,
+                    hammerPos.y,
+                    hammerPos.z - DAMAGE_RADIUS,
+                    hammerPos.x + DAMAGE_RADIUS,
+                    hammerPos.y + DAMAGE_RADIUS,
+                    hammerPos.z + DAMAGE_RADIUS
                 );
 
                 for (LivingEntity entity : this.mob.level().getEntitiesOfClass(LivingEntity.class, attackBox)) {
                     if (entity != this.mob) {
-                        double attackDamage = this.mob.getAttributeValue(Attributes.ATTACK_DAMAGE);
-                        entity.hurt(this.mob.level().damageSources().mobAttack(this.mob), (float) attackDamage);
+                        entity.hurt(this.mob.level().damageSources().mobAttack(this.mob), ATTACK_DAMAGE);
                     }
                 }
-                
+            }
+
+            if (this.mob.getAttackTick() >= TOTAL_DURATION) {
+                this.resetCooldown();
                 this.mob.setAnimBufferTick(20);
                 this.mob.setAttackState(HammerMob.ATTACK_IDLE);
-                this.cooldown = COOLDOWN_TICKS;
             }
         }
-    }
-
-    public void stop() {
-        this.target = null;
-        this.mob.setAttackState(HammerMob.ATTACK_IDLE);
     }
 }
