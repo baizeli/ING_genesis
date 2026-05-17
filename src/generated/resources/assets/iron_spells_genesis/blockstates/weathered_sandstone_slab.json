@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "iron_spells_genesis:block/weathered_sandstone_slab"
+    },
+    "type=double": {
+      "model": "iron_spells_genesis:block/weathered_sandstone"
+    },
+    "type=top": {
+      "model": "iron_spells_genesis:block/weathered_sandstone_slab_top"
+    }
+  }
+}
