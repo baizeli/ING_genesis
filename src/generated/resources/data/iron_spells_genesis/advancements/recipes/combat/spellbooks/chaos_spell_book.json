@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "iron_spells_genesis:spellbooks/chaos_spell_book"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_twisted_chaos": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "iron_spells_genesis:twisted_chaos"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_twisted_chaos",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "iron_spells_genesis:spellbooks/chaos_spell_book"
+    ]
+  },
+  "sends_telemetry_event": false
+}

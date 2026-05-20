@@ -1,0 +1,42 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "iron_spells_genesis:blood_crystal"
+    },
+    "B": {
+      "item": "iron_spells_genesis:eldritch_crystal"
+    },
+    "C": {
+      "item": "iron_spells_genesis:evocation_crystal"
+    },
+    "D": {
+      "item": "iron_spells_genesis:fire_crystal"
+    },
+    "E": {
+      "item": "iron_spells_genesis:holy_crystal"
+    },
+    "F": {
+      "item": "iron_spells_genesis:ice_crystal"
+    },
+    "G": {
+      "item": "iron_spells_genesis:lightning_crystal"
+    },
+    "H": {
+      "item": "iron_spells_genesis:nature_crystal"
+    },
+    "I": {
+      "item": "iron_spells_genesis:ender_crystal"
+    }
+  },
+  "pattern": [
+    "ABC",
+    "DEF",
+    "GHI"
+  ],
+  "result": {
+    "item": "iron_spells_genesis:celestial_source_crystal"
+  },
+  "show_notification": true
+}

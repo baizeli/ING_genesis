@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "iron_spells_genesis:orb/holy_orb_pro"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_upgrade_orb_pro": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "iron_spells_genesis:upgrade_orb_pro"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_upgrade_orb_pro",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "iron_spells_genesis:orb/holy_orb_pro"
+    ]
+  },
+  "sends_telemetry_event": false
+}

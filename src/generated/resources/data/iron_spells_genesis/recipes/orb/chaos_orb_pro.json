@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "O": {
+      "item": "iron_spells_genesis:upgrade_orb_pro"
+    },
+    "X": {
+      "item": "iron_spells_genesis:chaos_crystal"
+    },
+    "Y": {
+      "item": "iron_spells_genesis:chaos_rune"
+    }
+  },
+  "pattern": [
+    "YXY",
+    "XOX",
+    "YXY"
+  ],
+  "result": {
+    "item": "iron_spells_genesis:chaos_orb_pro"
+  },
+  "show_notification": true
+}

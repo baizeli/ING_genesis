@@ -2,6 +2,7 @@ package miku.united_as_one.genesis.data.datagen.provider;
 
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.data.damage.DamageTypes;
+import io.redspace.ironsspellbooks.registries.UpgradeOrbTypeRegistry;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
@@ -19,6 +20,8 @@ public class ModDatapackEntriesProvider extends DatapackBuiltinEntriesProvider {
     }
 
     static {
-        BUILDER = (new RegistrySetBuilder()).add(Registries.DAMAGE_TYPE, DamageTypes::bootstrap);
+        BUILDER = new RegistrySetBuilder()
+                .add(Registries.DAMAGE_TYPE, DamageTypes::bootstrap)
+                .add(UpgradeOrbTypeRegistry.UPGRADE_ORB_REGISTRY_KEY, ModUpgradeOrbTypeProvider::bootstrap);
     }
 }

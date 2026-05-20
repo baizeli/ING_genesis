@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "iron_spells_genesis:arcane_crystal"
+    },
+    "B": {
+      "item": "minecraft:echo_shard"
+    },
+    "C": {
+      "item": "irons_spellbooks:ancient_knowledge_fragment"
+    },
+    "D": {
+      "item": "irons_spellbooks:blood_vial"
+    }
+  },
+  "pattern": [
+    " A ",
+    "DBD",
+    " C "
+  ],
+  "result": {
+    "item": "iron_spells_genesis:twisted_chaos"
+  },
+  "show_notification": true
+}

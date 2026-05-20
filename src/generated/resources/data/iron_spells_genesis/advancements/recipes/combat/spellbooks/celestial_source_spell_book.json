@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_celestial_source_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "iron_spells_genesis:celestial_source_ingot"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "iron_spells_genesis:spellbooks/celestial_source_spell_book"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_celestial_source_ingot",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "iron_spells_genesis:spellbooks/celestial_source_spell_book"
+    ]
+  },
+  "sends_telemetry_event": false
+}

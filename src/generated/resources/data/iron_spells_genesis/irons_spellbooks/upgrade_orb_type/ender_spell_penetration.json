@@ -1,0 +1,12 @@
+{
+  "amount": 0.05,
+  "attribute": "iron_spells_genesis:ender_spell_penetration",
+  "containerItem": {
+    "Count": 1,
+    "id": "iron_spells_genesis:ender_orb_pro",
+    "tag": {
+      "irons_spellbooks:upgrade_orb_type": "iron_spells_genesis:ender_spell_penetration"
+    }
+  },
+  "operation": "MULTIPLY_BASE"
+}

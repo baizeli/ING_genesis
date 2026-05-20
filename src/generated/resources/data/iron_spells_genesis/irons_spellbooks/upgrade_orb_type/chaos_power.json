@@ -1,0 +1,12 @@
+{
+  "amount": 0.05,
+  "attribute": "iron_spells_genesis:chaos_spell_power",
+  "containerItem": {
+    "Count": 1,
+    "id": "iron_spells_genesis:chaos_upgrade_orb",
+    "tag": {
+      "irons_spellbooks:upgrade_orb_type": "iron_spells_genesis:chaos_power"
+    }
+  },
+  "operation": "MULTIPLY_BASE"
+}

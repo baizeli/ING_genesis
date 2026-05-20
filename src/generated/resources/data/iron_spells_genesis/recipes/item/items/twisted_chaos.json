@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "X": {
+      "item": "iron_spells_genesis:twisted_chaos"
+    },
+    "Y": {
+      "item": "irons_spellbooks:mithril_scrap"
+    },
+    "Z": {
+      "item": "irons_spellbooks:pyrium_ingot"
+    }
+  },
+  "pattern": [
+    "YXY",
+    "XZX",
+    "YXY"
+  ],
+  "result": {
+    "item": "iron_spells_genesis:twisted_chaos_ingot"
+  },
+  "show_notification": true
+}
