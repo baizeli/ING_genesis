@@ -3,6 +3,7 @@ package miku.united_as_one.genesis.handlers;
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.client.renderer.entity.spell.chaos.WireBoxRenderer;
 import miku.united_as_one.genesis.contents.entity.gungnir.GungnirDaggerEntity;
+import miku.united_as_one.genesis.contents.items.GoodCake;
 import miku.united_as_one.genesis.contents.items.curios.EternalRing;
 import miku.united_as_one.genesis.contents.items.curios.rune_plus.BloodRunePlus;
 import miku.united_as_one.genesis.contents.items.weapon.sword.Gungnir;
@@ -117,6 +118,8 @@ public class ESSLivingEvent {
         } else if (event.getSource().getEntity() instanceof LivingEntity living) {
             if (living.getMainHandItem().getItem() instanceof Gungnir gungnir)
                 gungnir.onHurt(living.getMainHandItem(), event);
+            else if (living.getMainHandItem().getItem() instanceof GoodCake goodCake)
+                goodCake.onHurt(living.getMainHandItem(), event);
         }
     }
 
@@ -127,6 +130,8 @@ public class ESSLivingEvent {
         } else if (event.getSource().getEntity() instanceof LivingEntity living) {
             if (living.getMainHandItem().getItem() instanceof Gungnir gungnir)
                 gungnir.onAttack(living.getMainHandItem(), event);
+            else if (living.getMainHandItem().getItem() instanceof GoodCake goodCake)
+                goodCake.onAttack(living.getMainHandItem(), event);
         }
     }
 
@@ -137,6 +142,8 @@ public class ESSLivingEvent {
         } else if (event.getSource().getEntity() instanceof LivingEntity living) {
             if (living.getMainHandItem().getItem() instanceof Gungnir gungnir)
                 gungnir.onDamage(living.getMainHandItem(), event);
+            else if (living.getMainHandItem().getItem() instanceof GoodCake goodCake)
+                goodCake.onDamage(living.getMainHandItem(), event);
         }
     }
 
@@ -147,6 +154,8 @@ public class ESSLivingEvent {
         } else if (event.getSource().getEntity() instanceof LivingEntity living) {
             if (living.getMainHandItem().getItem() instanceof Gungnir gungnir)
                 gungnir.onDeath(living.getMainHandItem(), event, EventPriority.HIGHEST);
+            else if (living.getMainHandItem().getItem() instanceof GoodCake goodCake)
+                goodCake.onDeath(living.getMainHandItem(), event, EventPriority.HIGHEST);
         }
     }
 
@@ -157,6 +166,8 @@ public class ESSLivingEvent {
         } else if (event.getSource().getEntity() instanceof LivingEntity living) {
             if (living.getMainHandItem().getItem() instanceof Gungnir gungnir)
                 gungnir.onDeath(living.getMainHandItem(), event, EventPriority.LOWEST);
+            else if (living.getMainHandItem().getItem() instanceof GoodCake goodCake)
+                goodCake.onDeath(living.getMainHandItem(), event, EventPriority.LOWEST);
         }
     }
 }

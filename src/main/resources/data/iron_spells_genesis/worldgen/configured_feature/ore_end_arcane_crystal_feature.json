@@ -1,18 +1,11 @@
 {
-  "type": "minecraft:ore",
+  "type": "minecraft:simple_block",
   "config": {
-    "discard_chance_on_air_exposure": 0.0,
-    "size": 2,
-    "targets": [
-      {
-        "state": {
-          "Name": "iron_spells_genesis:end_arcane_crystal_ore"
-        },
-        "target": {
-          "predicate_type": "minecraft:block_match",
-          "block": "minecraft:end_stone"
-        }
+    "to_place": {
+      "type": "minecraft:simple_state_provider",
+      "state": {
+        "Name": "iron_spells_genesis:end_arcane_crystal_ore"
       }
-    ]
+    }
   }
 }

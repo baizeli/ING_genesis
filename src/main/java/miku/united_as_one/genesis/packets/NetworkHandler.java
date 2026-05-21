@@ -55,5 +55,15 @@ public class NetworkHandler {
                 SpawnSlashPacket::encode,
                 SpawnSlashPacket::decode,
                 SpawnSlashPacket::handle);
+
+        INSTANCE.registerMessage(id++, GoodCakeLocateOrePacket.class,
+                GoodCakeLocateOrePacket::encode,
+                GoodCakeLocateOrePacket::decode,
+                GoodCakeLocateOrePacket::handle);
+
+        INSTANCE.registerMessage(id++, GoodCakeDamageAdjustPacket.class,
+                GoodCakeDamageAdjustPacket::encode,
+                GoodCakeDamageAdjustPacket::decode,
+                GoodCakeDamageAdjustPacket::handle);
     }
 }
