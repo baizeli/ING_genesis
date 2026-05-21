@@ -9,8 +9,8 @@ import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.model.GeoModel;
 
 public class GungnirDaggerModel extends GeoModel<GungnirDaggerEntity> {
-    public static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(Genesis.MODID, "textures/item/gungnir.png");
-    public static final ResourceLocation MODEL = ResourceLocation.fromNamespaceAndPath(Genesis.MODID, "geo/item/gungnir_model.geo.json");
+    public static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(Genesis.MODID, "textures/entity/fiery_dagger.png");
+    public static final ResourceLocation MODEL = ResourceLocation.fromNamespaceAndPath("irons_spellbooks", "geo/fiery_dagger.geo.json");
 
     public ResourceLocation getModelResource(GungnirDaggerEntity animatable) {
         return MODEL;

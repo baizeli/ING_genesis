@@ -64,6 +64,7 @@ public class RenderRegistry {
         event.registerEntityRenderer(EntityRegistry.TREMOR_AOE_ENTITY.get(), NoopRenderer::new);
         event.registerEntityRenderer(EntityRegistry.BAI_ZE_LI.get(), BaiZeLiRenderer::new);
         event.registerEntityRenderer(EntityRegistry.GUNGNIR_DAGGER_PROJECTILE.get(), GungnirDaggerRenderer::new);
+        event.registerEntityRenderer(EntityRegistry.GUNGNIR_CHAIN_LIGHTNING_PROJECTILE.get(), NoopRenderer::new);
         event.registerEntityRenderer(EntityRegistry.WARDEN_SPELLCASTER.get(), WSRenderer::new);
         event.registerEntityRenderer(EntityRegistry.DEAD_STAR_DECREE_COMET.get(),
                 context -> new DeadStarDecreeCometRenderer(context, 0.25f)
