@@ -897,6 +897,13 @@ public class ItemRegistry {
             .setData(ProviderType.LANG, NonNullBiConsumer.noop())
             .register();
 
+    public static final ItemEntry<BlockItem> ARCANE_CAULDRON = Genesis.L2_REGISTRATE
+            .item("arcane_cauldron", properties -> new BlockItem(BlockRegistry.ARCANE_CAULDRON.get(), properties))
+            .model((ctx, prov) -> prov.withExistingParent(ctx.getName(), "irons_spellbooks:block/alchemist_cauldron"))
+            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_BLOCK)
+            .setData(ProviderType.LANG, NonNullBiConsumer.noop())
+            .register();
+
     // 星源块
     public static final ItemEntry<BlockItem> CELESTIAL_SOURCE_BLOCK = Genesis.L2_REGISTRATE
             .item("celestial_source_block", properties -> new BlockItem(BlockRegistry.CELESTIAL_SOURCE_BLOCK.get(), properties))

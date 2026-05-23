@@ -22,7 +22,9 @@ import miku.united_as_one.genesis.contents.entity.spell.blood_boss.blood_dagger.
 import miku.united_as_one.genesis.contents.entity.spell.celestial_source.BoxEntityRenderer;
 import miku.united_as_one.genesis.contents.entity.spell.celestial_source.blade_works.MagicCircleRenderer;
 import miku.united_as_one.genesis.contents.entity.spell.celestial_source.blade_works.SwordEntityRenderer;
+import miku.united_as_one.genesis.contents.workbench.arcane_cauldron.ArcaneCauldronRenderer;
 import miku.united_as_one.genesis.registries.entity.EntityRegistry;
+import miku.united_as_one.genesis.registries.workbench.ModBlockEntities;
 import net.minecraft.client.renderer.entity.NoopRenderer;
 import net.minecraft.client.renderer.entity.WardenRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
@@ -80,6 +82,8 @@ public class RenderRegistry {
         event.registerEntityRenderer(EntityRegistry.HOLY_ARROW.get(), HolyArrowRenderer::new);
         event.registerEntityRenderer(EntityRegistry.BLOOD_ARROW.get(), BloodArrowRenderer::new);
         event.registerEntityRenderer(EntityRegistry.STELLAR_ARROW.get(), StellarArrowRenderer::new);
+
+        event.registerBlockEntityRenderer(ModBlockEntities.ARCANE_CAULDRON.get(), ArcaneCauldronRenderer::new);
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
