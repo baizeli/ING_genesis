@@ -94,27 +94,27 @@ public class Gungnir extends SwordItem implements Vanishable {
 
     public void onAttack(ItemStack itemStack, LivingAttackEvent event) {
         LivingEventEC ec = (LivingEventEC) event;
-        ((DamageSourceInterface) event.getSource()).revelationfix$setBypassAll(true);
-        ec.revelationfix$hackedUnCancelable(true);
-        ec.revelationfix$hackedOnlyAmountUp(true);
+        ((DamageSourceInterface) event.getSource()).ironSpellGenesis$setBypassAll(true);
+        ec.ironSpellGenesis$hackedUnCancelable(true);
+        ec.ironSpellGenesis$hackedOnlyAmountUp(true);
     }
 
     public void onHurt(ItemStack itemStack, LivingHurtEvent event) {
         LivingEventEC ec = (LivingEventEC) event;
-        ((DamageSourceInterface) event.getSource()).revelationfix$setBypassAll(true);
-        ec.revelationfix$hackedUnCancelable(true);
-        ec.revelationfix$hackedOnlyAmountUp(true);
+        ((DamageSourceInterface) event.getSource()).ironSpellGenesis$setBypassAll(true);
+        ec.ironSpellGenesis$hackedUnCancelable(true);
+        ec.ironSpellGenesis$hackedOnlyAmountUp(true);
     }
 
     public void onDamage(ItemStack itemStack, LivingDamageEvent event) {
         LivingEventEC ec = (LivingEventEC) event;
-        ec.revelationfix$hackedUnCancelable(true);
-        ec.revelationfix$hackedOnlyAmountUp(true);
+        ec.ironSpellGenesis$hackedUnCancelable(true);
+        ec.ironSpellGenesis$hackedOnlyAmountUp(true);
     }
 
     public void onDeath(ItemStack itemStack, LivingDeathEvent event, EventPriority priority) {
         LivingEventEC ec = (LivingEventEC) event;
-        ec.revelationfix$hackedUnCancelable(true);
+        ec.ironSpellGenesis$hackedUnCancelable(true);
         event.getEntity().setHealth(0F);
     }
 }
