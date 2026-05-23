@@ -11,18 +11,19 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(value = LivingDamageEvent.class, remap = false)
 public abstract class LivingDamageEventMixin implements LivingEventEC {
+    //源代码来自revelationfix，原作者mega32k
     @Shadow
     private float amount;
     @Unique
     private boolean revelationfix$onlyAmountUp;
 
     @Override
-    public boolean revelationfix$isHackedOnlyAmountUp() {
+    public boolean ironSpellGenesis$isHackedOnlyAmountUp() {
         return revelationfix$onlyAmountUp;
     }
 
     @Override
-    public void revelationfix$hackedOnlyAmountUp(boolean target) {
+    public void ironSpellGenesis$hackedOnlyAmountUp(boolean target) {
         revelationfix$onlyAmountUp = target;
     }
 

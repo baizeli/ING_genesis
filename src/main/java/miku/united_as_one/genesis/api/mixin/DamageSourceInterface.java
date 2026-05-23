@@ -1,12 +1,13 @@
 package miku.united_as_one.genesis.api.mixin;
 
 public interface DamageSourceInterface {
-    void revelationfix$setBypassArmor(boolean z);
+    //源代码来自revelationfix，原作者mega32k
+    void ironSpellGenesis$setBypassArmor(boolean z);
 
-    boolean revelationfix$bypassArmor();
+    boolean ironSpellGenesis$bypassArmor();
 
-    void revelationfix$setBypassAll(boolean z);
+    void ironSpellGenesis$setBypassAll(boolean z);
 
-    boolean revelationfix$isBypassAll();
+    boolean ironSpellGenesis$isBypassAll();
 
 }

@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.Unique;
 
 @Mixin(LivingEvent.class)
 public abstract class LivingEventMixin extends EntityEvent implements LivingEventEC {
+    //源代码来自revelationfix，原作者mega32k
     @Unique
     private boolean revelationfix$unCancelable;
 
@@ -17,22 +18,22 @@ public abstract class LivingEventMixin extends EntityEvent implements LivingEven
     }
 
     @Override
-    public boolean revelationfix$isHackedUnCancelable() {
+    public boolean ironSpellGenesis$isHackedUnCancelable() {
         return revelationfix$unCancelable;
     }
 
     @Override
-    public void revelationfix$hackedUnCancelable(boolean target) {
+    public void ironSpellGenesis$hackedUnCancelable(boolean target) {
         revelationfix$unCancelable = target;
     }
 
     @Override
-    public boolean revelationfix$isHackedOnlyAmountUp() {
+    public boolean ironSpellGenesis$isHackedOnlyAmountUp() {
         return false;
     }
 
     @Override
-    public void revelationfix$hackedOnlyAmountUp(boolean target) {
+    public void ironSpellGenesis$hackedOnlyAmountUp(boolean target) {
     }
 
     @Override

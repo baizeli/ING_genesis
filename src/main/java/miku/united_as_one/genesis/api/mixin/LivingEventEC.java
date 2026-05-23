@@ -1,12 +1,13 @@
 package miku.united_as_one.genesis.api.mixin;
 
 public interface LivingEventEC {
-    boolean revelationfix$isHackedUnCancelable();
+    //源代码来自revelationfix，原作者mega32k
+    boolean ironSpellGenesis$isHackedUnCancelable();
 
-    void revelationfix$hackedUnCancelable(boolean target);
+    void ironSpellGenesis$hackedUnCancelable(boolean target);
 
     //仅适配部分事件
-    boolean revelationfix$isHackedOnlyAmountUp();
+    boolean ironSpellGenesis$isHackedOnlyAmountUp();
 
-    void revelationfix$hackedOnlyAmountUp(boolean target);
+    void ironSpellGenesis$hackedOnlyAmountUp(boolean target);
 }

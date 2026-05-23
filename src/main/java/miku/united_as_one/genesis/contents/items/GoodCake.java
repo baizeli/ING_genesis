@@ -4,6 +4,7 @@ import miku.united_as_one.genesis.api.mixin.DamageSourceInterface;
 import miku.united_as_one.genesis.api.mixin.LivingEventEC;
 import miku.united_as_one.genesis.api.render.RainbowEffectHelper;
 import miku.united_as_one.genesis.registries.block.BlockRegistry;
+import miku.united_as_one.genesis.utils.EntityUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.SectionPos;
@@ -111,13 +112,13 @@ public class GoodCake extends Item {
     }
 
     private static void makeGungnirLike(DamageSource damageSource) {
-        ((DamageSourceInterface) damageSource).revelationfix$setBypassAll(true);
+        ((DamageSourceInterface) damageSource).ironSpellGenesis$setBypassAll(true);
     }
 
     private static void makeGungnirLike(LivingEventEC event, DamageSource damageSource) {
         makeGungnirLike(damageSource);
-        event.revelationfix$hackedUnCancelable(true);
-        event.revelationfix$hackedOnlyAmountUp(true);
+        event.ironSpellGenesis$hackedUnCancelable(true);
+        event.ironSpellGenesis$hackedOnlyAmountUp(true);
     }
 
     public void onAttack(ItemStack itemStack, LivingAttackEvent event) {
@@ -130,13 +131,13 @@ public class GoodCake extends Item {
 
     public void onDamage(ItemStack itemStack, LivingDamageEvent event) {
         LivingEventEC ec = (LivingEventEC) event;
-        ec.revelationfix$hackedUnCancelable(true);
-        ec.revelationfix$hackedOnlyAmountUp(true);
+        ec.ironSpellGenesis$hackedUnCancelable(true);
+        ec.ironSpellGenesis$hackedOnlyAmountUp(true);
     }
 
     public void onDeath(ItemStack itemStack, LivingDeathEvent event, EventPriority priority) {
         LivingEventEC ec = (LivingEventEC) event;
-        ec.revelationfix$hackedUnCancelable(true);
+        ec.ironSpellGenesis$hackedUnCancelable(true);
         event.getEntity().setHealth(0F);
     }
 
@@ -164,7 +165,8 @@ public class GoodCake extends Item {
         
         // 然后统一杀死所有收集到的实体
         for (LivingEntity entity : entitiesToKill) {
-            killEntity(entity);
+            EntityUtil.killEntity(entity);
+            //killEntity(entity);
         }
     }
 
