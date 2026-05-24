@@ -15,21 +15,21 @@ public abstract class LivingDamageEventMixin implements LivingEventEC {
     @Shadow
     private float amount;
     @Unique
-    private boolean revelationfix$onlyAmountUp;
+    private boolean ironSpellGenesis$onlyAmountUp;
 
     @Override
     public boolean ironSpellGenesis$isHackedOnlyAmountUp() {
-        return revelationfix$onlyAmountUp;
+        return ironSpellGenesis$onlyAmountUp;
     }
 
     @Override
     public void ironSpellGenesis$hackedOnlyAmountUp(boolean target) {
-        revelationfix$onlyAmountUp = target;
+        ironSpellGenesis$onlyAmountUp = target;
     }
 
     @Inject(method = "setAmount", at = @At("HEAD"), cancellable = true)
     private void setAmount(float amount, CallbackInfo ci) {
-        if (revelationfix$onlyAmountUp) {
+        if (ironSpellGenesis$onlyAmountUp) {
             ci.cancel();
             this.amount = Math.max(this.amount, amount);
         }
