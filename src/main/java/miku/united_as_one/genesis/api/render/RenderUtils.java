@@ -36,6 +36,14 @@ import static com.mojang.math.Axis.*;
 public class RenderUtils {
     private static final ResourceLocation TEX = new ResourceLocation(Genesis.MODID, "textures/misc/white.png");
     private static final ResourceLocation BACKGROUND = ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "item/mask/background");
+    private static final RenderType COSMIC_BACKGROUND_RENDER_TYPE = RenderType.create("", DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP, VertexFormat.Mode.QUADS, 256, RenderType.CompositeState.builder()
+            .setShaderState(new RenderStateShard.ShaderStateShard(() -> AvaritiaShaders.cosmicShader))
+            .setTextureState(AvaritiaShaders.RenderStateShardAccess.COSMIC_TEXTURE_ISOLATED)
+            .setTransparencyState(RenderType.TRANSLUCENT_TRANSPARENCY)
+            .setLightmapState(RenderType.LIGHTMAP)
+            .setWriteMaskState(RenderStateShard.COLOR_WRITE)
+            .setCullState(RenderType.NO_CULL)
+            .createCompositeState(true));
 
     public static RenderType createTexturedQuadType(ResourceLocation texture) {
         return RenderType.create("textured_quad_no_cull",
@@ -52,14 +60,7 @@ public class RenderUtils {
     }
 
     public static RenderType cosmicBackground(ResourceLocation tex) {
-        return RenderType.create("", DefaultVertexFormat.POSITION_COLOR_TEX_LIGHTMAP, VertexFormat.Mode.QUADS, 256, RenderType.CompositeState.builder()
-                .setShaderState(new RenderStateShard.ShaderStateShard(() -> AvaritiaShaders.cosmicShader))
-                .setTextureState(AvaritiaShaders.RenderStateShardAccess.COSMIC_TEXTURE_ISOLATED)
-                .setTransparencyState(RenderType.TRANSLUCENT_TRANSPARENCY)
-                .setLightmapState(RenderType.LIGHTMAP)
-                .setWriteMaskState(RenderStateShard.COLOR_WRITE)
-                .setCullState(RenderType.NO_CULL)
-                .createCompositeState(true));
+        return COSMIC_BACKGROUND_RENDER_TYPE;
     }
 
     public static RenderType cosmicTriangles() {
@@ -287,6 +288,9 @@ public class RenderUtils {
     }
 
     public static void renderCosmicBackground(PoseStack poseStack, MultiBufferSource buffer, ResourceLocation texture, float width, float height, double x, double y, int light, int useType) {
+        if (AvaritiaShaders.cosmicShader == null || AvaritiaShaders.useType == null) {
+            return;
+        }
         if (texture == null) {
             texture = BACKGROUND;
         }
@@ -296,7 +300,7 @@ public class RenderUtils {
         float pitch = 0.0F;
         float screenWidth = (float)mainTarget.width;
         float screenHeight = (float)mainTarget.height;
-        float time = (System.currentTimeMillis() - AvaritiaShaders.renderTime) / 1000.0F;
+        float time = (AvaritiaShaders.renderTime + AvaritiaShaders.renderFrame) / 20.0F;
         float opacity = (float) (0.7F + 0.3F * MathUtils.sin(time * 2.5F));
 
         AvaritiaShaders.useType.set(useType);

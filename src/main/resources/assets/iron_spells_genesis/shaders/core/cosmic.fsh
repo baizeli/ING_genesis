@@ -295,16 +295,22 @@ void main(void)
         if (is2D != 0) {
             vec2 screenUV = (gl_FragCoord.xy / screenSize) * 2.0 - 1.0;
             screenUV.x *= screenSize.x / screenSize.y;
-            uv = screenUV / (length(screenUV) + 0.1);
+            uv = screenUV / (length(screenUV) + 0.65);
         } else {
-            uv = fPos.xy / (length(fPos) + 0.1);
+            uv = fPos.xy / (length(fPos) + 0.65);
         }
 
-        float angle = atan(uv.y, uv.x) + time * 0.05;
-        float hue = angle / (2.0 * M_PI);
-        hue = fract(hue);
-        vec3 rainbow = 0.5 + 0.5 * cos(2.0 * M_PI * (hue + vec3(0, 2.0 / 3.0, 1.0 / 3.0)));
-        col.rgb = rainbow * 0.3;
+        float mistA = perlinNoiseOctaves(vec3(uv * 1.8, time * 0.045), 5, 0.55, 2.1);
+        float mistB = perlinNoiseOctaves(vec3(uv * 4.2 + vec2(7.0, -3.5), time * 0.07), 4, 0.5, 2.0);
+        float veil = smoothstep(0.2, 0.88, mistA) * 0.65 + smoothstep(0.42, 0.95, mistB) * 0.28;
+        float drift = sin(uv.x * 5.0 + uv.y * 3.0 + time * 0.12) * 0.5 + 0.5;
+
+        vec3 deepBlue = vec3(0.012, 0.045, 0.085);
+        vec3 mistBlue = vec3(0.18, 0.48, 0.72);
+        vec3 paleBlue = vec3(0.58, 0.86, 1.0);
+        col.rgb = mix(deepBlue, mistBlue, veil);
+        col.rgb += paleBlue * pow(mistB, 4.0) * 0.28;
+        col.rgb += vec3(0.08, 0.24, 0.35) * drift * 0.12;
     }
     else if (useCosmicType == 10) {
         col = vec4(0.02, 0.03, 0.08, 1.0);
@@ -482,7 +488,7 @@ void main(void)
         col.rgb = cosmicColor0.rgb;
     }
 
-    if (useCosmicType != 14) {
+    if (useCosmicType != 14 && useCosmicType != 9) {
         vec4 dir = normalize(vec4(-fPos, 0.0));
         float sb = sin(pitch);
         float cb = cos(pitch);
@@ -535,13 +541,6 @@ void main(void)
 
             if (useCosmicType == 8) {
                 continue;
-            }
-
-            float sizeFactor = 1.0;
-            if (useCosmicType == 9) {
-                sizeFactor = 1.5 + rand(vec2(rand1, rand2)) * 1.5;
-                u *= sizeFactor;
-                v *= sizeFactor;
             }
 
             u *= pulseFactor;

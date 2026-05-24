@@ -7,6 +7,7 @@ import io.redspace.ironsspellbooks.recipe_types.alchemist_cauldron.FillAlchemist
 import io.redspace.ironsspellbooks.registries.RecipeRegistry;
 import io.redspace.ironsspellbooks.util.ModTags;
 import miku.united_as_one.genesis.Genesis;
+import miku.united_as_one.genesis.registries.client.ParticleRegistry;
 import miku.united_as_one.genesis.registries.workbench.ModBlockEntities;
 import miku.united_as_one.genesis.registries.workbench.ModRecipeTypes;
 import net.minecraft.core.BlockPos;
@@ -278,7 +279,43 @@ public class ArcaneCauldronBlockEntity extends BlockEntity implements WorldlyCon
         inputItems.set(outputSlot, result.copy());
         resetCookState(outputSlot);
         setChanged();
+        spawnCraftParticles();
         level.playSound(null, getBlockPos(), SoundEvents.BREWING_STAND_BREW, SoundSource.BLOCKS, 1.0f, 1.0f);
+    }
+
+    private void spawnCraftParticles() {
+        if (!(level instanceof ServerLevel serverLevel)) {
+            return;
+        }
+
+        int[] colors = {
+                0xFF4FD8,
+                0x7CFF6B,
+                0x51E8FF,
+                0xFFE45C,
+                0xB66CFF,
+                0xFF6A3D,
+                0xFFFFFF
+        };
+
+        for (int i = 0; i < 24; i++) {
+            int color = colors[level.random.nextInt(colors.length)];
+            double red = ((color >> 16) & 0xFF) / 255.0D;
+            double green = ((color >> 8) & 0xFF) / 255.0D;
+            double blue = (color & 0xFF) / 255.0D;
+
+            serverLevel.sendParticles(
+                    ParticleRegistry.GLOW_CUBE.get(),
+                    worldPosition.getX() + 0.5D + (level.random.nextDouble() - 0.5D) * 0.35D,
+                    worldPosition.getY() + 0.95D + level.random.nextDouble() * 0.15D,
+                    worldPosition.getZ() + 0.5D + (level.random.nextDouble() - 0.5D) * 0.35D,
+                    0,
+                    red,
+                    green,
+                    blue,
+                    1.0D
+            );
+        }
     }
 
     private boolean areAllInputItemsCooked() {

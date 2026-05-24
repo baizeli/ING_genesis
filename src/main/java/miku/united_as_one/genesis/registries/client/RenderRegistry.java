@@ -5,10 +5,7 @@ import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.client.render.cosmic.AvaritiaShaders;
 import miku.united_as_one.genesis.client.render.cosmic.CosmicModelLoader;
 import miku.united_as_one.genesis.client.render.entity.*;
-import miku.united_as_one.genesis.client.render.entity.arrow.BloodArrowRenderer;
-import miku.united_as_one.genesis.client.render.entity.arrow.HolyArrowRenderer;
-import miku.united_as_one.genesis.client.render.entity.arrow.StellarArrowRenderer;
-import miku.united_as_one.genesis.client.render.entity.arrow.ThunderArrowRenderer;
+import miku.united_as_one.genesis.client.render.entity.arrow.SpecialArrowRenderer;
 import miku.united_as_one.genesis.client.renderer.WSRenderer;
 import miku.united_as_one.genesis.client.renderer.entity.boss.*;
 import miku.united_as_one.genesis.client.renderer.entity.laser.DeathLaserRenderer;
@@ -77,11 +74,7 @@ public class RenderRegistry {
         event.registerEntityRenderer(EntityRegistry.SUMMONED_KEEPER.get(), KeeperRenderer::new);
         event.registerEntityRenderer(EntityRegistry.SUMMONED_WARDEN.get(), WardenRenderer::new);
 
-        // 特效箭渲染器注册
-        event.registerEntityRenderer(EntityRegistry.THUNDER_ARROW.get(), ThunderArrowRenderer::new);
-        event.registerEntityRenderer(EntityRegistry.HOLY_ARROW.get(), HolyArrowRenderer::new);
-        event.registerEntityRenderer(EntityRegistry.BLOOD_ARROW.get(), BloodArrowRenderer::new);
-        event.registerEntityRenderer(EntityRegistry.STELLAR_ARROW.get(), StellarArrowRenderer::new);
+        event.registerEntityRenderer(EntityRegistry.SPECIAL_ARROW.get(), SpecialArrowRenderer::new);
 
         event.registerBlockEntityRenderer(ModBlockEntities.ARCANE_CAULDRON.get(), ArcaneCauldronRenderer::new);
     }
