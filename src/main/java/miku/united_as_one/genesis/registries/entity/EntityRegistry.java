@@ -3,10 +3,7 @@ package miku.united_as_one.genesis.registries.entity;
 import io.redspace.ironsspellbooks.entity.spells.void_tentacle.VoidTentacle;
 import miku.united_as_one.genesis.contents.entity.*;
 import miku.united_as_one.genesis.contents.entity.LightningBolt;
-import miku.united_as_one.genesis.contents.entity.arrow.BloodArrowEntity;
-import miku.united_as_one.genesis.contents.entity.arrow.HolyArrowEntity;
-import miku.united_as_one.genesis.contents.entity.arrow.StellarArrowEntity;
-import miku.united_as_one.genesis.contents.entity.arrow.ThunderArrowEntity;
+import miku.united_as_one.genesis.contents.entity.arrow.SpecialArrowEntity;
 import miku.united_as_one.genesis.contents.entity.boss.BloodBoss;
 import miku.united_as_one.genesis.contents.entity.boss.HammerMob;
 import miku.united_as_one.genesis.contents.entity.gungnir.GungnirChainLightning;
@@ -163,34 +160,12 @@ public class EntityRegistry {
                     .updateInterval(1)
                     .build("iron"));
 
-    // 特效箭矢实体注册
-    public static final RegistryObject<EntityType<ThunderArrowEntity>> THUNDER_ARROW = ENTITY_TYPES.register("thunder_arrow",
-            () -> EntityType.Builder.<ThunderArrowEntity>of(ThunderArrowEntity::new, MobCategory.MISC)
+    public static final RegistryObject<EntityType<SpecialArrowEntity>> SPECIAL_ARROW = ENTITY_TYPES.register("special_arrow",
+            () -> EntityType.Builder.<SpecialArrowEntity>of(SpecialArrowEntity::new, MobCategory.MISC)
                     .sized(0.5F, 0.5F)
                     .clientTrackingRange(4)
                     .updateInterval(20)
-                    .build("thunder_arrow"));
-
-    public static final RegistryObject<EntityType<HolyArrowEntity>> HOLY_ARROW = ENTITY_TYPES.register("holy_arrow",
-            () -> EntityType.Builder.<HolyArrowEntity>of(HolyArrowEntity::new, MobCategory.MISC)
-                    .sized(0.5F, 0.5F)
-                    .clientTrackingRange(4)
-                    .updateInterval(20)
-                    .build("holy_arrow"));
-
-    public static final RegistryObject<EntityType<BloodArrowEntity>> BLOOD_ARROW = ENTITY_TYPES.register("blood_arrow",
-            () -> EntityType.Builder.<BloodArrowEntity>of(BloodArrowEntity::new, MobCategory.MISC)
-                    .sized(0.5F, 0.5F)
-                    .clientTrackingRange(4)
-                    .updateInterval(20)
-                    .build("blood_arrow"));
-
-    public static final RegistryObject<EntityType<StellarArrowEntity>> STELLAR_ARROW = ENTITY_TYPES.register("stellar_arrow",
-            () -> EntityType.Builder.<StellarArrowEntity>of(StellarArrowEntity::new, MobCategory.MISC)
-                    .sized(0.5F, 0.5F)
-                    .clientTrackingRange(4)
-                    .updateInterval(20)
-                    .build("stellar_arrow"));
+                    .build("special_arrow"));
 
     public static final RegistryObject<EntityType<SummonedKeeperEntity>> SUMMONED_KEEPER = ENTITY_TYPES.register("summoned_keeper",
             () -> EntityType.Builder.<SummonedKeeperEntity>of(SummonedKeeperEntity::new, MobCategory.MONSTER)

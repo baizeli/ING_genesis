@@ -44,7 +44,6 @@
     "minecraft.client.renderer.FontMixin",
     "minecraft.client.renderer.GameRendererAccessor",
     "minecraft.client.renderer.GameRendererMixin",
-    "minecraft.client.renderer.GuiGraphicsMixin",
     "minecraft.client.renderer.ItemInHandRendererMixin",
     "minecraft.client.renderer.LevelRendererMixin",
     "minecraft.client.renderer.ParticleAccessor",

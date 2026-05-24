@@ -213,6 +213,7 @@
 
   "block.iron_spells_genesis.celestial_source_block": "Celestial Source Block",
   "block.iron_spells_genesis.arcane_workbench": "Arcane Workbench",
+  "block.iron_spells_genesis.arcane_cauldron": "Arcane Cauldron",
   "block.iron_spells_genesis.arcane_crystal_ore": "Arcane Crystal Ore",
   "block.iron_spells_genesis.deepslate_arcane_crystal_ore": "Deepslate Arcane Crystal Ore",
   "block.iron_spells_genesis.nether_arcane_crystal_ore": "Nether Arcane Crystal Ore",
@@ -221,6 +222,8 @@
 
   "container.iron_spells_genesis.vanilla_workbench": "Ordered Ultimate Crafting",
   "container.iron_spells_genesis.arcane_workbench": "Arcane Crafting",
+  "jei.iron_spells_genesis.arcane_cauldron.fluid": "%d mB required",
+  "jei.iron_spells_genesis.arcane_cauldron.essence": "Consumes %d Arcane Essence",
 
   "key.categories.iron_spells_genesis": "Eternis Starry Sky - Key Bindings",
   "key.iron_spells_genesis.bow_type": "Bow - Switch Arrow Type",
