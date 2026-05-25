@@ -48,7 +48,9 @@ public class ClientEvent {
 
         // 刀光
         if (event.getStage() == RenderLevelStageEvent.Stage.AFTER_PARTICLES) {
-            SlashEffectManager.render(poseStack, bufferSource, partialTick);
+            if (!TrailRender.shouldDeferWorldEffects()) {
+                SlashEffectManager.render(poseStack, bufferSource, partialTick);
+            }
         }
 
         bufferSource.endBatch();

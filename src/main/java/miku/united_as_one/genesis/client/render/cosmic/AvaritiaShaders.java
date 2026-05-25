@@ -25,6 +25,7 @@ public final class AvaritiaShaders {
     public static class RenderStateShardAccess extends RenderStateShard {
         private static final DepthTestStateShard EQUAL_DEPTH_TEST = RenderStateShard.EQUAL_DEPTH_TEST;
         public static final LightmapStateShard LIGHT_MAP = RenderStateShard.LIGHTMAP;
+        public static final DepthTestStateShard NO_DEPTH_TEST = RenderStateShard.NO_DEPTH_TEST;
         private static final TransparencyStateShard TRANSLUCENT_TRANSPARENCY = RenderStateShard.TRANSLUCENT_TRANSPARENCY;
         private static final TextureStateShard BLOCK_SHEET_MIPPED = RenderStateShard.BLOCK_SHEET_MIPPED;
         public static final TextureStateShard COSMIC_TEXTURE_ISOLATED = new RenderStateShard.TextureStateShard(InventoryMenu.BLOCK_ATLAS, false, false) {
@@ -74,6 +75,21 @@ public final class AvaritiaShaders {
                     .setLightmapState(RenderStateShardAccess.LIGHT_MAP)
                     .setTransparencyState(RenderStateShardAccess.TRANSLUCENT_TRANSPARENCY)
                     .setTextureState(RenderStateShardAccess.COSMIC_TEXTURE_ISOLATED)
+                    .createCompositeState(true)
+    );
+    public static final RenderType COSMIC_HAND_RENDER_TYPE = RenderType.create(
+            Genesis.MOD_ID + ":cosmic_hand",
+            DefaultVertexFormat.BLOCK,
+            VertexFormat.Mode.QUADS,
+            2097152,
+            true,
+            false, RenderType.CompositeState.builder()
+                    .setShaderState(new RenderStateShard.ShaderStateShard(() -> cosmicShader))
+                    .setDepthTestState(RenderStateShardAccess.NO_DEPTH_TEST)
+                    .setLightmapState(RenderStateShardAccess.LIGHT_MAP)
+                    .setTransparencyState(RenderStateShardAccess.TRANSLUCENT_TRANSPARENCY)
+                    .setTextureState(RenderStateShardAccess.COSMIC_TEXTURE_ISOLATED)
+                    .setWriteMaskState(RenderStateShard.COLOR_WRITE)
                     .createCompositeState(true)
     );
     //public static final RenderType COSMIC_RENDER_TYPE_2 = RenderType.create(EternisStarrySky.MOD_ID + ":cosmic_1", DefaultVertexFormat.BLOCK, VertexFormat.Mode.QUADS, 2097152, true, false, RenderType.CompositeState.builder().setShaderState(new RenderStateShard.ShaderStateShard(() -> cosmicShader)).setDepthTestState(RenderStateShardAccess.EQUAL_DEPTH_TEST).setLightmapState(RenderStateShardAccess.LIGHT_MAP).setTransparencyState(RenderStateShardAccess.TRANSLUCENT_TRANSPARENCY).setTextureState(RenderStateShardAccess.BLOCK_SHEET_MIPPED).createCompositeState(true));

@@ -6,6 +6,7 @@ import miku.united_as_one.genesis.client.render.cosmic.AvaritiaShaders;
 import miku.united_as_one.genesis.client.render.cosmic.CosmicModelLoader;
 import miku.united_as_one.genesis.client.render.entity.*;
 import miku.united_as_one.genesis.client.render.entity.arrow.SpecialArrowRenderer;
+import miku.united_as_one.genesis.client.render.entity.arrow.UltimateWhisperArrowRenderer;
 import miku.united_as_one.genesis.client.renderer.WSRenderer;
 import miku.united_as_one.genesis.client.renderer.entity.boss.*;
 import miku.united_as_one.genesis.client.renderer.entity.laser.DeathLaserRenderer;
@@ -75,6 +76,7 @@ public class RenderRegistry {
         event.registerEntityRenderer(EntityRegistry.SUMMONED_WARDEN.get(), WardenRenderer::new);
 
         event.registerEntityRenderer(EntityRegistry.SPECIAL_ARROW.get(), SpecialArrowRenderer::new);
+        event.registerEntityRenderer(EntityRegistry.ULTIMATE_WHISPER_ARROW.get(), UltimateWhisperArrowRenderer::new);
 
         event.registerBlockEntityRenderer(ModBlockEntities.ARCANE_CAULDRON.get(), ArcaneCauldronRenderer::new);
     }

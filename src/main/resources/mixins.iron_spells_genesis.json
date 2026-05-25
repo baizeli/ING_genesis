@@ -39,6 +39,9 @@
   "client": [
     "ironsspellbooks.gui.inscription_table.InscriptionTableScreenMixin",
     "ironsspellbooks.render.MixinSpellTargetingLayer",
+    "minecraft.client.gui.GenesisGuiMixin",
+    "minecraft.client.gui.screens.GenesisScreenMixin",
+    "minecraft.client.gui.screens.inventory.GenesisAbstractContainerScreenMixin",
     "minecraft.client.multiplayer.ClientLevelMixin",
     "minecraft.client.renderer.FogRendererMixin",
     "minecraft.client.renderer.FontMixin",

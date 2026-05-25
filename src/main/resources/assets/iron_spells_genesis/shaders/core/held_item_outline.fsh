@@ -58,9 +58,9 @@ void main() {
     float nearestDepth = depthAt(texCoord);
 
     vec2 texelSize = 1.0 / max(ScreenSize, vec2(1.0));
-    float coreRadius = max(1.0, OutlineWidth * 0.65);
-    float featherRadius = max(1.0, OutlineWidth * 1.5);
-    float bridgeRadius = coreRadius * 0.5;
+    float coreRadius = max(0.25, OutlineWidth);
+    float featherRadius = max(coreRadius + 0.25, OutlineWidth * (1.0 + Softness * 0.45));
+    float bridgeRadius = max(0.25, coreRadius * 0.5);
 
     for(int i = 0; i < OUTLINE_SAMPLE_COUNT; i++) {
         vec2 direction = OUTLINE_DIRECTIONS[i] * texelSize;

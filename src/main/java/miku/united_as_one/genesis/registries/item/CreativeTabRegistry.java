@@ -63,6 +63,7 @@ public class CreativeTabRegistry {
     public static final RegistryObject<AbstractSpell> SUMMON_PIG_SWARM_SPELL;
     public static final RegistryObject<AbstractSpell> FINAL_WHISPER_SPELL;
     public static final RegistryObject<AbstractSpell> NYAN_CAT_JET_SPELL;
+    public static final RegistryObject<AbstractSpell> ULTIMATE_WHISPER_SPELL;
 
     // 其他流派法术注册。
     public static final RegistryObject<AbstractSpell> BLAZING_BLADE_BARRAGE_SPELL;
@@ -101,6 +102,7 @@ public class CreativeTabRegistry {
         SUMMON_PIG_SWARM_SPELL = registerSpell(new SummonPigSwarmSpell());
         FINAL_WHISPER_SPELL = registerSpell(new FinalWhisper());
         NYAN_CAT_JET_SPELL = registerSpell(new NyanCatJetSpell());
+        ULTIMATE_WHISPER_SPELL = registerSpell(new UltimateWhisperSpell());
 
         BLAZING_BLADE_BARRAGE_SPELL = registerSpell(new BlazingBladeBarrageSpell());
         SUMMON_KEEPER_SPELL = registerSpell(new SummonKeeperSpell());
@@ -159,7 +161,8 @@ public class CreativeTabRegistry {
                                     DEAD_STAR_DECREE_SPELL.get(),
                                     SUMMON_PIG_SWARM_SPELL.get(),
                                     FINAL_WHISPER_SPELL.get(),
-                                    NYAN_CAT_JET_SPELL.get()
+                                    NYAN_CAT_JET_SPELL.get(),
+                                    ULTIMATE_WHISPER_SPELL.get()
                             );
 
                             addScrolls(output,

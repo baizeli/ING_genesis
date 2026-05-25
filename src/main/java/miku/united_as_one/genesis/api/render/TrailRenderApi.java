@@ -45,13 +45,16 @@ public final class TrailRenderApi {
         if (style.overlayTexture() != null) {
             renderTrailStrip(relativePositions, poseStack, buffer, style, style.overlayTexture(), time, true, entityId);
         }
-        if (style.coneTexture() != null) {
+        if (!style.headless() && style.coneTexture() != null) {
             renderTrailCone(relativePositions, poseStack, buffer, style, time, false, entityId);
             renderTrailCone(relativePositions, poseStack, buffer, style, time, true, entityId);
         }
     }
 
     private static RenderType renderType(TrailRenderStyle style, ResourceLocation texture) {
+        if (style.renderTypeProvider() != null) {
+            return style.renderTypeProvider().renderType(style, texture);
+        }
         return style.emissive() ? RenderType.entityTranslucentEmissive(texture) : RenderType.entityTranslucent(texture);
     }
 
@@ -99,8 +102,9 @@ public final class TrailRenderApi {
 
                 float subProgress1 = Mth.lerp(t1, baseProgress1, baseProgress2);
                 float subProgress2 = Mth.lerp(t2, baseProgress1, baseProgress2);
-                float width1 = TrailHelp.calculateTrailWidth(subProgress1, 0.05F, style.width());
-                float width2 = TrailHelp.calculateTrailWidth(subProgress2, 0.05F, style.width());
+                float headTaper = style.headless() ? 0.18F : 0.05F;
+                float width1 = TrailHelp.calculateTrailWidth(subProgress1, headTaper, style.width());
+                float width2 = TrailHelp.calculateTrailWidth(subProgress2, headTaper, style.width());
                 float alpha1 = TrailHelp.calculateAlpha(subProgress1, shadow) * style.alphaMultiplier();
                 float alpha2 = TrailHelp.calculateAlpha(subProgress2, shadow) * style.alphaMultiplier();
                 float[] color1 = style.color(subProgress1, time, entityId);

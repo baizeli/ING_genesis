@@ -167,6 +167,13 @@ public class EntityRegistry {
                     .updateInterval(20)
                     .build("special_arrow"));
 
+    public static final RegistryObject<EntityType<UltimateWhisperArrowEntity>> ULTIMATE_WHISPER_ARROW = ENTITY_TYPES.register("ultimate_whisper_arrow",
+            () -> EntityType.Builder.<UltimateWhisperArrowEntity>of(UltimateWhisperArrowEntity::new, MobCategory.MISC)
+                    .sized(0.5F, 0.5F)
+                    .clientTrackingRange(64)
+                    .updateInterval(1)
+                    .build("ultimate_whisper_arrow"));
+
     public static final RegistryObject<EntityType<SummonedKeeperEntity>> SUMMONED_KEEPER = ENTITY_TYPES.register("summoned_keeper",
             () -> EntityType.Builder.<SummonedKeeperEntity>of(SummonedKeeperEntity::new, MobCategory.MONSTER)
                     .sized(0.85f, 2.3f)

@@ -32,6 +32,10 @@ public class SlashEffectManager {
         }
     }
 
+    public static void renderDeferred(PoseStack poseStack, MultiBufferSource buffer, float partialTick) {
+        render(poseStack, buffer, partialTick);
+    }
+
     public static void clear() {
         EFFECTS.clear();
     }

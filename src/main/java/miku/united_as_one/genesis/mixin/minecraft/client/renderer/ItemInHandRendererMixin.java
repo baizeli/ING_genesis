@@ -1,5 +1,8 @@
 package miku.united_as_one.genesis.mixin.minecraft.client.renderer;
 
+import miku.united_as_one.genesis.client.render.luminous.GenesisEffect;
+import miku.united_as_one.genesis.client.render.luminous.GenesisOutlineRenderer;
+import miku.united_as_one.genesis.client.render.luminous.GenesisRegistry;
 import miku.united_as_one.genesis.contents.items.WeaponRenderConfig;
 import miku.united_as_one.genesis.api.mixin.Helper;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -10,6 +13,7 @@ import net.minecraft.client.renderer.ItemInHandRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
@@ -26,6 +30,14 @@ public class ItemInHandRendererMixin {
                                    InteractionHand hand, float swingProgress, ItemStack stack,
                                    float equipProgress, PoseStack poseStack,
                                    MultiBufferSource buffer, int combinedLight, CallbackInfo ci) {
+
+        if (GenesisOutlineRenderer.isHandMaskCaptureActive()) {
+            GenesisEffect effect = stack.isEmpty() ? null : GenesisRegistry.getTargetEffect(stack.getItem());
+            if (effect == null || GenesisOutlineRenderer.shouldSkipHandMask(hand)) {
+                ci.cancel();
+                return;
+            }
+        }
 
         if (WeaponRenderConfig.isSpecialWeapon(stack) && Helper.isBlocking(player)) {
             if (hand == player.getUsedItemHand()) {
@@ -61,5 +73,22 @@ public class ItemInHandRendererMixin {
         }
 
         poseStack.popPose();
+    }
+
+    @Inject(method = "renderPlayerArm", at = @At("HEAD"), cancellable = true)
+    private void genesis$skipPlayerArmForHandMask(PoseStack poseStack, MultiBufferSource bufferSource,
+                                                  int packedLight, float equippedProgress, float swingProgress,
+                                                  HumanoidArm side, CallbackInfo ci) {
+        if (GenesisOutlineRenderer.isHandMaskCaptureActive()) {
+            ci.cancel();
+        }
+    }
+
+    @Inject(method = "renderMapHand", at = @At("HEAD"), cancellable = true)
+    private void genesis$skipMapHandForHandMask(PoseStack poseStack, MultiBufferSource bufferSource,
+                                                int packedLight, HumanoidArm side, CallbackInfo ci) {
+        if (GenesisOutlineRenderer.isHandMaskCaptureActive()) {
+            ci.cancel();
+        }
     }
 }

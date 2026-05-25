@@ -31,6 +31,8 @@ public class ModShaders {
     @Nullable
     private static ShaderInstance heatWaveShader;
     @Nullable
+    private static ShaderInstance trailMaskShader;
+    @Nullable
     public static ShaderInstance genesisOutline;
     @Nullable
     public static ShaderInstance genesisBloomBlur;
@@ -75,6 +77,10 @@ public class ModShaders {
     }
     public static ShaderInstance getRibbonShader() {
         return Objects.requireNonNull(ribbonShader, "Ribbon shader not registered");
+    }
+
+    public static ShaderInstance getTrailMaskShader() {
+        return Objects.requireNonNull(trailMaskShader, "Trail mask shader not registered");
     }
 
     @SubscribeEvent
@@ -123,6 +129,13 @@ public class ModShaders {
                 DefaultVertexFormat.POSITION_COLOR_TEX
         );
         event.registerShader(ribbon, shaderInstance -> ribbonShader = shaderInstance);
+
+        ModShaderInstance trailMask = new ModShaderInstance(
+                resourceProvider,
+                new ResourceLocation(Genesis.MODID, "trail_mask").toString(),
+                DefaultVertexFormat.NEW_ENTITY
+        );
+        event.registerShader(trailMask, shaderInstance -> trailMaskShader = shaderInstance);
 
         ShaderInstance outline = new ShaderInstance(
                 event.getResourceProvider(),

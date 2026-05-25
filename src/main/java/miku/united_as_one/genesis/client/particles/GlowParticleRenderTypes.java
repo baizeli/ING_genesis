@@ -21,8 +21,8 @@ public final class GlowParticleRenderTypes {
             RenderSystem.enableDepthTest();
             RenderSystem.depthMask(true);
             RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE);
-            RenderSystem.setShader(GameRenderer::getPositionColorLightmapShader);
-            bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR_LIGHTMAP);
+            RenderSystem.setShader(GameRenderer::getPositionColorShader);
+            bufferBuilder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_COLOR);
         }
 
         @Override
