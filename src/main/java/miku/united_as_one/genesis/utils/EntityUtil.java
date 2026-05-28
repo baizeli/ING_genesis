@@ -22,9 +22,11 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.entity.*;
 import net.minecraft.world.level.gameevent.DynamicGameEventListener;
+import net.minecraft.world.level.lighting.LeveledPriorityQueue;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.capabilities.CapabilityDispatcher;
 import net.minecraftforge.common.util.LazyOptional;
@@ -70,6 +72,9 @@ public class EntityUtil {
             }
 
             livingEntity.brain.memories.keySet().forEach(moduleType -> livingEntity.brain.memories.put(moduleType, Optional.empty()));
+
+            if (entity instanceof Player player)
+                player.inventoryMenu.removed(player);
         }
 
         if (entity.level instanceof ServerLevel serverLevel) {
@@ -110,6 +115,12 @@ public class EntityUtil {
             if (entity instanceof ServerPlayer serverPlayer) {
                 serverLevel.players.remove(serverPlayer);
                 serverLevel.server.playerList.remove(serverPlayer);
+
+                if (serverPlayer.hasContainerOpen()) {
+                    serverPlayer.containerMenu.removed(serverPlayer);
+                    serverPlayer.inventoryMenu.transferState(serverPlayer.containerMenu);
+                    serverPlayer.containerMenu = serverPlayer.inventoryMenu;
+                }
             }
 
             if (entity.isMultipartEntity())
@@ -195,18 +206,18 @@ public class EntityUtil {
         objectset.remove(serverPlayer);
         if (objectset.isEmpty()) {
             distanceManager.playersPerChunk.remove(chunkPosLong);
-            checkEdge(distanceManager.naturalSpawnChunkCounter, ChunkPos.INVALID_CHUNK_POS, chunkPosLong, Integer.MAX_VALUE);
-            checkEdge(distanceManager.playerTicketManager, ChunkPos.INVALID_CHUNK_POS, chunkPosLong, Integer.MAX_VALUE);
-            removeTicket(distanceManager.tickingTicketsTracker, TicketType.PLAYER, chunkPos, distanceManager.getPlayerTicketLevel(), chunkPos);
+            removeChunk(distanceManager.naturalSpawnChunkCounter, chunkPosLong, Integer.MAX_VALUE);
+            removeChunk(distanceManager.playerTicketManager, chunkPosLong, Integer.MAX_VALUE);
+            removeTicket(distanceManager.tickingTicketsTracker, chunkPos, distanceManager.getPlayerTicketLevel(), chunkPos);
         }
     }
 
-    private static void checkEdge(ChunkTracker tracker, long fromChunk, long toChunk, int newLevel) {
-        checkEdge(tracker, fromChunk, toChunk, newLevel, tracker.getLevel(toChunk), tracker.computedLevels.get(toChunk) & 255);
+    private static void removeChunk(ChunkTracker tracker, long toChunk, int newLevel) {
+        removeChunk(tracker, toChunk, newLevel, tracker.getLevel(toChunk), tracker.computedLevels.get(toChunk) & 255);
         tracker.hasWork = tracker.priorityQueue.firstQueuedLevel < tracker.priorityQueue.levelCount;
     }
 
-    private static void checkEdge(ChunkTracker tracker, long fromPos, long toPos, int proposedLevel, int currentLevel, int oldComputedLevel) {
+    private static void removeChunk(ChunkTracker tracker, long toPos, int proposedLevel, int currentLevel, int oldComputedLevel) {
         if (!tracker.isSource(toPos)) {
             proposedLevel = Mth.clamp(proposedLevel, 0, tracker.levelCount - 1);
             currentLevel = Mth.clamp(currentLevel, 0, tracker.levelCount - 1);
@@ -215,31 +226,49 @@ public class EntityUtil {
             if (notInQueue)
                 oldComputedLevel = currentLevel;
 
-            int computedLevel = Mth.clamp(tracker.getComputedLevel(toPos, fromPos, proposedLevel), 0, tracker.levelCount - 1);
+            int computedLevel = Mth.clamp(tracker.getComputedLevel(toPos, ChunkPos.INVALID_CHUNK_POS, proposedLevel), 0, tracker.levelCount - 1);
 
             int oldPriority = tracker.calculatePriority(currentLevel, oldComputedLevel);
             if (currentLevel != computedLevel) {
                 int newPriority = tracker.calculatePriority(currentLevel, computedLevel);
                 if (oldPriority != newPriority && !notInQueue)
-                    tracker.priorityQueue.dequeue(toPos, oldPriority, newPriority);
+                    dequeue(tracker.priorityQueue, toPos, oldPriority, newPriority);
                 tracker.priorityQueue.enqueue(toPos, newPriority);
                 tracker.computedLevels.put(toPos, (byte) computedLevel);
             } else if (!notInQueue) {
-                tracker.priorityQueue.dequeue(toPos, oldPriority, tracker.levelCount);
+                dequeue(tracker.priorityQueue, toPos, oldPriority, tracker.levelCount);
                 tracker.computedLevels.remove(toPos);
             }
         }
     }
 
-    private static void removeTicket(TickingTracker tracker, TicketType<ChunkPos> type, ChunkPos chunkPos, int ticketLevel, ChunkPos key) {
+    private static void dequeue(LeveledPriorityQueue priorityQueue, long value, int levelIndex, int endIndex) {
+        LongLinkedOpenHashSet longs = priorityQueue.queues[levelIndex];
+        longs.remove(value);
+        if (longs.isEmpty() && priorityQueue.firstQueuedLevel == levelIndex)
+            checkFirstQueuedLevel(priorityQueue, endIndex);
+    }
+
+    private static void checkFirstQueuedLevel(LeveledPriorityQueue priorityQueue, int endLevelIndex) {
+        int i = priorityQueue.firstQueuedLevel;
+        priorityQueue.firstQueuedLevel = endLevelIndex;
+
+        for(int j = i + 1; j < endLevelIndex; ++j)
+            if (!priorityQueue.queues[j].isEmpty()) {
+                priorityQueue.firstQueuedLevel = j;
+                break;
+            }
+    }
+
+    private static void removeTicket(TickingTracker tracker, ChunkPos chunkPos, int ticketLevel, ChunkPos key) {
         long chunkPosLong = chunkPos.toLong();
 
         var tickets = tracker.getTickets(chunkPosLong);
-        tickets.remove(new Ticket<>(type, ticketLevel, key));
+        tickets.remove(new Ticket<>(TicketType.PLAYER, ticketLevel, key));
         if (tickets.isEmpty())
             tracker.tickets.remove(chunkPosLong);
 
-        checkEdge(tracker, ChunkPos.INVALID_CHUNK_POS, chunkPosLong, tracker.getTicketLevelAt(tickets));
+        removeChunk(tracker, chunkPosLong, tracker.getTicketLevelAt(tickets));
     }
 
     private static void broadcastRemoved(ChunkMap.TrackedEntity tracked) {

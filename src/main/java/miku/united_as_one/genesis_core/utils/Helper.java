@@ -1,10 +1,12 @@
 package miku.united_as_one.genesis_core.utils;
 
+import com.sun.management.HotSpotDiagnosticMXBean;
 import sun.misc.Unsafe;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
 import java.lang.invoke.MethodType;
+import java.lang.management.ManagementFactory;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -141,14 +143,15 @@ public class Helper {
     }
 
     public static void putClass(Object o, Class<?> classes) {
-        if (o == null || classes == null || o.getClass() == classes) return;
+        if (o == null || classes == null || o.getClass() == classes)
+            return;
         try {
             Method m = UNSAFE.getClass().getDeclaredMethod("ensureClassInitialized", Class.class);
             m.invoke(UNSAFE, classes);
 
             long addressSize = UNSAFE.addressSize();
 
-            if (shouldUse4Bytes()) {
+            if (isCompressKlassPointersEnable()) {
                 int klass_ptr = UNSAFE.getIntVolatile(UNSAFE.allocateInstance(classes), addressSize);
                 UNSAFE.putIntVolatile(o, addressSize, klass_ptr);
             } else {
@@ -160,7 +163,12 @@ public class Helper {
         }
     }
 
-    private static boolean shouldUse4Bytes() {
-        return UNSAFE.arrayBaseOffset(Object[].class) == 16 || UNSAFE.addressSize() == 4;
+    private static boolean isCompressKlassPointersEnable() {
+        try {
+            HotSpotDiagnosticMXBean hs = ManagementFactory.getPlatformMXBean(HotSpotDiagnosticMXBean.class);
+            return Boolean.parseBoolean(hs.getVMOption("UseCompressedClassPointers").getValue());
+        } catch (Exception e) {
+            return UNSAFE.addressSize() == 4 || UNSAFE.arrayBaseOffset(Object[].class) == 16;
+        }
     }
 }

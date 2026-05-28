@@ -35,28 +35,28 @@ public class DamageSourceMixin implements DamageSourceInterface {
     );
 
     @Unique
-    private boolean revelationfix$bypassArmor = false;
+    private boolean ironSpellGenesis$bypassArmor = false;
     @Unique
-    private boolean revelationfix$bypassAll = false;
+    private boolean ironSpellGenesis$bypassAll = false;
 
     @Override
     public void ironSpellGenesis$setBypassArmor(boolean z) {
-        this.revelationfix$bypassArmor = z;
+        this.ironSpellGenesis$bypassArmor = z;
     }
 
     @Override
     public boolean ironSpellGenesis$bypassArmor() {
-        return this.revelationfix$bypassArmor;
+        return this.ironSpellGenesis$bypassArmor;
     }
 
     @Override
     public void ironSpellGenesis$setBypassAll(boolean z) {
-        revelationfix$bypassAll = z;
+        ironSpellGenesis$bypassAll = z;
     }
 
     @Override
     public boolean ironSpellGenesis$isBypassAll() {
-        return revelationfix$bypassAll;
+        return ironSpellGenesis$bypassAll;
     }
 
     @Inject(method = "is(Lnet/minecraft/tags/TagKey;)Z", at = @At("HEAD"), cancellable = true)
