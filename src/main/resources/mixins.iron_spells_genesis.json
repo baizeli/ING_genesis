@@ -32,6 +32,7 @@
     "minecraft.world.entity.LivingEntityAccessor",
     "minecraft.world.entity.LivingEntityMixin",
     "minecraft.world.food.FoodDataMixin",
+    "minecraft.world.item.ItemStackMixin",
     "minecraftforge.event.entity.living.LivingDamageEventMixin",
     "minecraftforge.event.entity.living.LivingEventMixin",
     "minecraftforge.event.entity.living.LivingHurtEventMixin"

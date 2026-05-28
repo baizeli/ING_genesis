@@ -2,6 +2,7 @@ package miku.united_as_one.genesis;
 
 import dev.xkmc.l2library.base.L2Registrate;
 import miku.united_as_one.genesis.config.ModConfigRegistration;
+import miku.united_as_one.genesis.data.equipment.ModEquipmentStatsConfigs;
 import miku.united_as_one.genesis.handlers.ModEventHandlers;
 import miku.united_as_one.genesis.registries.ModRegistries;
 import miku.united_as_one.genesis.registries.resource.ResourcePackRegistry;
@@ -19,6 +20,7 @@ public class Genesis {
 
     public Genesis(FMLJavaModLoadingContext context) {
         ResourcePackRegistry.registerOptionalTexturePack(Genesis.rl("genesis_old"), Component.literal("Genesis old"), false);
+        ModEquipmentStatsConfigs.init();
         ModRegistries.register(context.getModEventBus());
         ModEventHandlers.register();
         ModConfigRegistration.register(context);

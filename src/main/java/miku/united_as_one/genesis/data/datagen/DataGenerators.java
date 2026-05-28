@@ -42,6 +42,7 @@ public class DataGenerators {
         generator.addProvider(event.includeServer(), new ModDamageTypeTagProvider(output, fullLookupProvider, existingFileHelper));
         generator.addProvider(event.includeServer(), new ModMobEffectTagProvider(output, lookupProvider, existingFileHelper));
         generator.addProvider(event.includeServer(), new ModCuriosDataProvider(output));
+        generator.addProvider(event.includeServer(), new ModEquipmentStatsProvider(generator));
         PackMetadataGenerator packMeta = new PackMetadataGenerator(output);
         MutableComponent description = Component.literal("Resources for Iron SpellRegistry Genesis");
 

@@ -2,6 +2,7 @@ package miku.united_as_one.genesis.contents.items;
 
 import miku.united_as_one.genesis.registries.item.ItemRegistry;
 import miku.united_as_one.genesis.contents.sound.Sounds;
+import miku.united_as_one.genesis.data.equipment.EquipmentStatsManager;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -62,10 +63,10 @@ public class InfinitySword extends SwordItem
 		DamageSource source = new DamageSource(player.damageSources().fellOutOfWorld().typeHolder(), player);
 		nearbyEntities.forEach(living -> {
 			player.crit(living);
-			living.hurt(source, this.getDamage() * strength);
+			living.hurt(source, (float) EquipmentStatsManager.getWeaponAttackDamage(stack, this.getDamage()) * strength);
 		});
 
-		InfinitySword.sweep(player, entity, stack, this.getDamage());
+		InfinitySword.sweep(player, entity, stack, EquipmentStatsManager.getWeaponAttackDamage(stack, this.getDamage()));
 
 		player.resetAttackStrengthTicker();
 		return true;
