@@ -34,7 +34,7 @@ public class InfinitySword extends SwordItem
 
 	public InfinitySword(Tier p_43269_, int p_43270_, float p_43271_, Properties p_43272_)
 	{
-		super(p_43269_, p_43270_, p_43271_, p_43272_);
+		super(p_43269_, (int) -p_43269_.getAttackDamageBonus(), 0.0F, p_43272_);
 	}
 
 	@Override

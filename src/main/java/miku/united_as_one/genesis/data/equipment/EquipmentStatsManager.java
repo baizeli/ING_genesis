@@ -2,7 +2,6 @@ package miku.united_as_one.genesis.data.equipment;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
-import com.mojang.logging.LogUtils;
 import miku.united_as_one.genesis.Genesis;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -14,7 +13,6 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
-import org.slf4j.Logger;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.inventory.ICurioStacksHandler;
@@ -29,15 +27,10 @@ import java.util.Set;
 import java.util.UUID;
 
 public final class EquipmentStatsManager {
-    private static final Logger LOGGER = LogUtils.getLogger();
     private static volatile Map<ResourceLocation, EquipmentStats> stats = Map.of();
     private static volatile Map<ResourceLocation, EquipmentStats> previousStats = Map.of();
 
     private EquipmentStatsManager() {
-    }
-
-    public static void warn(String message, Object... args) {
-        LOGGER.warn(message, args);
     }
 
     public static Map<ResourceLocation, EquipmentStats> currentStats() {
@@ -57,13 +50,11 @@ public final class EquipmentStatsManager {
             }
             try {
                 loaded.put(id, config.toStats());
-            } catch (RuntimeException exception) {
-                LOGGER.warn("Skipping invalid equipment stats {}", id, exception);
+            } catch (RuntimeException ignored) {
             }
         }
         previousStats = stats;
         stats = Map.copyOf(loaded);
-        LOGGER.info("Loaded {} equipment stat entries from L2Library config", stats.size());
     }
 
     public static void refreshPlayers(Collection<ServerPlayer> players) {
@@ -111,6 +102,7 @@ public final class EquipmentStatsManager {
                     itemStats.weapon().attackDamage(), AttributeModifier.Operation.ADDITION);
             addModifier(modifiers, itemId, slot.getName(), Attributes.ATTACK_SPEED, EquipmentStatsDefaults.ATTACK_SPEED,
                     itemStats.weapon().attackSpeed(), AttributeModifier.Operation.ADDITION);
+            addConfiguredAttributes(modifiers, itemId, slot.getName(), itemStats, false);
         }
 
         if (stack.getItem() instanceof ArmorItem armorItem
@@ -161,6 +153,7 @@ public final class EquipmentStatsManager {
         if (slot == EquipmentSlot.MAINHAND && hasWeapon(itemStats)) {
             ids.add(EquipmentStatsDefaults.ATTACK_DAMAGE);
             ids.add(EquipmentStatsDefaults.ATTACK_SPEED);
+            addAttributeIds(ids, itemStats);
         }
 
         if (stack.getItem() instanceof ArmorItem armorItem
@@ -226,7 +219,6 @@ public final class EquipmentStatsManager {
         for (EquipmentStats.AttributeStat attributeStat : itemStats.attributes()) {
             Attribute attribute = ForgeRegistries.ATTRIBUTES.getValue(attributeStat.attribute());
             if (attribute == null) {
-                LOGGER.warn("Skipping missing attribute {} for equipment {}", attributeStat.attribute(), itemId);
                 continue;
             }
             if (skipArmorAttributes && (attribute == Attributes.ARMOR || attribute == Attributes.ARMOR_TOUGHNESS)) {
@@ -262,6 +254,8 @@ public final class EquipmentStatsManager {
         if (hasWeapon(current) || hasWeapon(previous)) {
             attributeIds.add(EquipmentStatsDefaults.ATTACK_DAMAGE);
             attributeIds.add(EquipmentStatsDefaults.ATTACK_SPEED);
+            addAttributeIds(attributeIds, current);
+            addAttributeIds(attributeIds, previous);
         }
         if (hasArmor(current) || hasArmor(previous)) {
             attributeIds.add(EquipmentStatsDefaults.ARMOR);

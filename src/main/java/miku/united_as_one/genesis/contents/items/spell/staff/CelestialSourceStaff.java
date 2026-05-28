@@ -3,30 +3,14 @@ package miku.united_as_one.genesis.contents.items.spell.staff;
 import miku.united_as_one.genesis.client.tooltipParticleHandler.ITooltipParticleItem;
 import miku.united_as_one.genesis.client.tooltipParticleHandler.PTID;
 import miku.united_as_one.genesis.client.tooltipParticleHandler.TooltipParticleSystem;
-import miku.united_as_one.genesis.registries.spell.SpellAttributesRegistry;
-import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import io.redspace.ironsspellbooks.item.weapons.*;
 import net.minecraft.client.Minecraft;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.*;
 
 public class CelestialSourceStaff extends StaffItem implements ITooltipParticleItem {
     public CelestialSourceStaff() {
         super(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1),
-            new StaffTier(6, -3,
-                new AttributeContainer(
-                    AttributeRegistry.SPELL_POWER, 0.15,
-                    AttributeModifier.Operation.MULTIPLY_BASE
-                ),
-                new AttributeContainer(
-                    SpellAttributesRegistry.CELESTIAL_SOURCE_SPELL_POWER, 0.25,
-                    AttributeModifier.Operation.MULTIPLY_BASE
-                ),
-                new AttributeContainer(
-                    AttributeRegistry.COOLDOWN_REDUCTION, 0.20,
-                    AttributeModifier.Operation.MULTIPLY_BASE
-                )
-            )
+            new StaffTier(0, 0)
         );
     }
 

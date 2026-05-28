@@ -14,7 +14,7 @@ import java.util.Map;
 @SuppressWarnings("removal")
 public class MithrilSword extends MagicSwordItem {
     public MithrilSword(Tier tier, int attackDamage, float attackSpeed, Properties properties) {
-        super(tier, attackDamage, attackSpeed, SpellDataRegistryHolder.of(new SpellDataRegistryHolder(SpellRegistry.RAY_OF_FROST_SPELL, 5)), Map.of(), properties);
+        super(tier, (int) -tier.getAttackDamageBonus(), 0.0F, SpellDataRegistryHolder.of(new SpellDataRegistryHolder(SpellRegistry.RAY_OF_FROST_SPELL, 5)), Map.of(), properties);
     }
 
     @Override

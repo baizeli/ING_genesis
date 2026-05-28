@@ -26,7 +26,7 @@ import java.util.function.Predicate;
 
 public class Gungnir extends SwordItem implements Vanishable {
     public Gungnir(Tier tier, int attackDamageModifier, float attackSpeedModifier, Properties properties) {
-        super(tier, attackDamageModifier, attackSpeedModifier, properties);
+        super(tier, (int) -tier.getAttackDamageBonus(), 0.0F, properties);
     }
 
     public @NotNull UseAnim getUseAnimation(@NotNull ItemStack stack) {

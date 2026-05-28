@@ -15,7 +15,7 @@ import java.util.List;
 
 public class VioletHoe extends HoeItem {
     public VioletHoe(Properties props) {
-        super(TierRegistry.VIOLET_GALAXY_INGOT, 0, 96.0F, props);
+        super(TierRegistry.VIOLET_GALAXY_INGOT, (int) -TierRegistry.VIOLET_GALAXY_INGOT.getAttackDamageBonus(), 0.0F, props);
     }
 
     @Override

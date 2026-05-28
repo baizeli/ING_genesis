@@ -9,27 +9,48 @@ import java.util.List;
 import java.util.Map;
 
 public final class EquipmentStatsDefaults {
+    //攻击伤害
     public static final ResourceLocation ATTACK_DAMAGE = new ResourceLocation("minecraft", "generic.attack_damage");
+    //攻击速度
     public static final ResourceLocation ATTACK_SPEED = new ResourceLocation("minecraft", "generic.attack_speed");
+    // 护甲值
     public static final ResourceLocation ARMOR = new ResourceLocation("minecraft", "generic.armor");
+    //护甲韧性
     public static final ResourceLocation ARMOR_TOUGHNESS = new ResourceLocation("minecraft", "generic.armor_toughness");
+    //击退抗性
     public static final ResourceLocation KNOCKBACK_RESISTANCE = new ResourceLocation("minecraft", "generic.knockback_resistance");
+    //原版最大生命值
     public static final ResourceLocation MAX_HEALTH = new ResourceLocation("minecraft", "generic.max_health");
 
+    //铁魔法最大法力
     private static final ResourceLocation MAX_MANA = irons("max_mana");
+    //通用法术强度
     private static final ResourceLocation SPELL_POWER = irons("spell_power");
+    //神圣法术强度
     private static final ResourceLocation HOLY_SPELL_POWER = irons("holy_spell_power");
+    //火焰法术强度
     private static final ResourceLocation FIRE_SPELL_POWER = irons("fire_spell_power");
+    //冰霜法术强度
     private static final ResourceLocation ICE_SPELL_POWER = irons("ice_spell_power");
+    //闪电法术强度
     private static final ResourceLocation LIGHTNING_SPELL_POWER = irons("lightning_spell_power");
+    //自然法术强度
     private static final ResourceLocation NATURE_SPELL_POWER = irons("nature_spell_power");
+    //末影法术强度
     private static final ResourceLocation ENDER_SPELL_POWER = irons("ender_spell_power");
+    //鲜血法术强度
     private static final ResourceLocation BLOOD_SPELL_POWER = irons("blood_spell_power");
+    //施法时间缩减
     private static final ResourceLocation CAST_TIME_REDUCTION = irons("cast_time_reduction");
+    //冷却缩减
     private static final ResourceLocation COOLDOWN_REDUCTION = irons("cooldown_reduction");
+    //法力回复
     private static final ResourceLocation MANA_REGEN = irons("mana_regen");
+    //法术抗性
     private static final ResourceLocation SPELL_RESIST = irons("spell_resist");
+    //混沌法术强度
     private static final ResourceLocation CHAOS_SPELL_POWER = Genesis.rl("chaos_spell_power");
+    //星源法术强度
     private static final ResourceLocation CELESTIAL_SOURCE_SPELL_POWER = Genesis.rl("celestial_source_spell_power");
 
     private static final Map<ResourceLocation, EquipmentStats> DEFAULTS = createDefaults();
@@ -48,6 +69,7 @@ public final class EquipmentStatsDefaults {
     private static Map<ResourceLocation, EquipmentStats> createDefaults() {
         Map<ResourceLocation, EquipmentStats> defaults = new LinkedHashMap<>();
 
+        //durability耐久，后面两数分别是攻击伤害和攻击速度
         putWeapon(defaults, "infinity_sword", Integer.MAX_VALUE, 42.0D, -2.0D);
         putDurability(defaults, "avaritia_infinity_sword", Integer.MAX_VALUE);
         putWeapon(defaults, "mithril_sword", 4062, 7.0D, -1.7D);
@@ -57,7 +79,10 @@ public final class EquipmentStatsDefaults {
         putWeapon(defaults, "divine_metal_shovel", 5000, 4.0D, -1.0D);
         putWeapon(defaults, "divine_metal_hoe", 5000, 0.0D, 96.0D);
         putWeapon(defaults, "mithril_pickaxe", 4062, 0.0D, -1.6D);
-        putWeapon(defaults, "violet_sword", 8000, 20.0D, -2.7D);
+        //紫极剑
+        putWeapon(defaults, "violet_sword", 8000, 20.0D, -2.7D, List.of(
+                attr(COOLDOWN_REDUCTION, 0.15D, AttributeModifier.Operation.MULTIPLY_TOTAL)
+        ));
         putWeapon(defaults, "violet_axe", 8000, 26.0D, -3.3D);
         putWeapon(defaults, "violet_pickaxe", 8000, 0.0D, -1.6D);
         putWeapon(defaults, "violet_shovel", 8000, 4.0D, -1.0D);
@@ -67,11 +92,24 @@ public final class EquipmentStatsDefaults {
         putWeapon(defaults, "gungnir", 0, 17.0D, -1.9D);
         putWeapon(defaults, "flying_swallow_through_willow", 1451, 6.0D, -2.4D);
 
+        //法杖
+        putWeapon(defaults, "chaos_staff", null, 6.0D, -3.0D, List.of(
+                attr(CHAOS_SPELL_POWER, 0.15D, AttributeModifier.Operation.MULTIPLY_BASE),
+                attr(COOLDOWN_REDUCTION, 0.20D, AttributeModifier.Operation.MULTIPLY_BASE)
+        ));
+        putWeapon(defaults, "celestial_source_staff", null, 6.0D, -3.0D, List.of(
+                attr(SPELL_POWER, 0.15D, AttributeModifier.Operation.MULTIPLY_BASE),
+                attr(CELESTIAL_SOURCE_SPELL_POWER, 0.25D, AttributeModifier.Operation.MULTIPLY_BASE),
+                attr(COOLDOWN_REDUCTION, 0.20D, AttributeModifier.Operation.MULTIPLY_BASE)
+        ));
+
+        //弓
         putDurability(defaults, "thunder_longbow", 2009);
         putDurability(defaults, "frost_longbow", 2009);
         putDurability(defaults, "witchcraft_bow", 2009);
         putDurability(defaults, "flame_bow", 2009);
 
+        // 神圣金属套
         putArmorSet(defaults, "divine_metal", 1418, 1608, 1570, 1494, 5, 10, 8, 5, 5.0D, 0.2D, List.of(
                 attr(MAX_MANA, 150.0D, AttributeModifier.Operation.ADDITION),
                 attr(SPELL_POWER, 0.06D, AttributeModifier.Operation.MULTIPLY_BASE),
@@ -79,6 +117,7 @@ public final class EquipmentStatsDefaults {
                 attr(CAST_TIME_REDUCTION, 0.07D, AttributeModifier.Operation.MULTIPLY_BASE)
         ));
 
+        //星源套
         putArmorSet(defaults, "celestial_source_spell", 0, 0, 0, 0, 7, 12, 9, 6, 7.0D, 0.0D, List.of(
                 attr(SPELL_POWER, 0.10D, AttributeModifier.Operation.MULTIPLY_BASE),
                 attr(CELESTIAL_SOURCE_SPELL_POWER, 0.10D, AttributeModifier.Operation.MULTIPLY_BASE),
@@ -88,6 +127,7 @@ public final class EquipmentStatsDefaults {
                 attr(MANA_REGEN, 0.09D, AttributeModifier.Operation.MULTIPLY_BASE)
         ));
 
+        // 混沌套
         putArmorSet(defaults, "chaos_spell", 3200, 3200, 3200, 3200, 6, 8, 6, 3, 4.0D, 0.0D, List.of(
                 attr(SPELL_POWER, 0.07D, AttributeModifier.Operation.MULTIPLY_BASE),
                 attr(CHAOS_SPELL_POWER, 0.07D, AttributeModifier.Operation.MULTIPLY_BASE),
@@ -99,6 +139,7 @@ public final class EquipmentStatsDefaults {
                 attr(MANA_REGEN, 0.06D, AttributeModifier.Operation.MULTIPLY_BASE)
         ));
 
+        // 奥术水晶
         putArmorSet(defaults, "arcane_crystal", 800, 800, 800, 800, 4, 9, 7, 4, 3.0D, 0.0D, List.of(
                 attr(COOLDOWN_REDUCTION, 0.05D, AttributeModifier.Operation.MULTIPLY_TOTAL),
                 attr(MAX_MANA, 175.0D, AttributeModifier.Operation.ADDITION),
@@ -106,6 +147,7 @@ public final class EquipmentStatsDefaults {
                 attr(SPELL_RESIST, 0.05D, AttributeModifier.Operation.MULTIPLY_TOTAL)
         ));
 
+        // 紫极套
         putArmorSet(defaults, "violet_zenith", Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, Integer.MAX_VALUE, 8, 13, 10, 7, 8.0D, 1.0D, List.of(
                 attr(MAX_HEALTH, 0.10D, AttributeModifier.Operation.MULTIPLY_BASE),
                 attr(MAX_MANA, 130.0D, AttributeModifier.Operation.ADDITION),
@@ -113,6 +155,7 @@ public final class EquipmentStatsDefaults {
                 attr(COOLDOWN_REDUCTION, 0.06D, AttributeModifier.Operation.MULTIPLY_BASE)
         ));
 
+        // 饰品
         putCurio(defaults, "eternal_ring", List.of(
                 attr(CAST_TIME_REDUCTION, 0.20D, AttributeModifier.Operation.MULTIPLY_BASE),
                 attr(MAX_MANA, 200.0D, AttributeModifier.Operation.ADDITION),
@@ -121,15 +164,19 @@ public final class EquipmentStatsDefaults {
                 attr(new ResourceLocation("minecraft", "generic.luck"), 4.0D, AttributeModifier.Operation.ADDITION),
                 attr(COOLDOWN_REDUCTION, 0.20D, AttributeModifier.Operation.MULTIPLY_BASE)
         ));
+        // 创世诅咒
         putCurio(defaults, "genesis_curse", List.of(
                 attr(MAX_MANA, 100000.0D, AttributeModifier.Operation.ADDITION)
         ));
+        // lao_wang_237
         putCurio(defaults, "lao_wang_237", List.of());
+        // 闪电符文
         putCurio(defaults, "lightning_rune_plus", List.of(
                 attr(SPELL_POWER, 0.10D, AttributeModifier.Operation.MULTIPLY_BASE),
                 attr(LIGHTNING_SPELL_POWER, 0.10D, AttributeModifier.Operation.MULTIPLY_BASE),
                 attr(COOLDOWN_REDUCTION, 0.15D, AttributeModifier.Operation.MULTIPLY_BASE)
         ));
+        // 其它元素符文Plus
         putCurio(defaults, "nature_rune_plus", runePlus(NATURE_SPELL_POWER));
         putCurio(defaults, "ender_rune_plus", runePlus(ENDER_SPELL_POWER));
         putCurio(defaults, "holy_rune_plus", runePlus(ENDER_SPELL_POWER));
@@ -138,24 +185,29 @@ public final class EquipmentStatsDefaults {
         putCurio(defaults, "fire_rune_plus", runePlus(FIRE_SPELL_POWER));
         putCurio(defaults, "eldritch_rune_plus", List.of());
 
+        // 法术书
+        // 混沌法术书
         putCurio(defaults, "chaos_spell_book", List.of(
                 attr(CHAOS_SPELL_POWER, 0.10D, AttributeModifier.Operation.MULTIPLY_BASE),
                 attr(COOLDOWN_REDUCTION, 0.30D, AttributeModifier.Operation.MULTIPLY_BASE),
                 attr(SPELL_POWER, 0.10D, AttributeModifier.Operation.MULTIPLY_BASE),
                 attr(MAX_MANA, 500.0D, AttributeModifier.Operation.ADDITION)
         ));
+        //星源
         putCurio(defaults, "celestial_source_spell_book", List.of(
                 attr(SPELL_POWER, 0.10D, AttributeModifier.Operation.MULTIPLY_BASE),
                 attr(MAX_MANA, 900.0D, AttributeModifier.Operation.ADDITION),
                 attr(COOLDOWN_REDUCTION, 0.30D, AttributeModifier.Operation.MULTIPLY_BASE),
                 attr(CELESTIAL_SOURCE_SPELL_POWER, 0.10D, AttributeModifier.Operation.MULTIPLY_BASE)
         ));
+        //牢大法术
         putCurio(defaults, "lightning_spell_book", List.of(
                 attr(MAX_MANA, 100.0D, AttributeModifier.Operation.ADDITION),
                 attr(LIGHTNING_SPELL_POWER, 0.10D, AttributeModifier.Operation.MULTIPLY_BASE),
                 attr(COOLDOWN_REDUCTION, 0.08D, AttributeModifier.Operation.MULTIPLY_BASE),
                 attr(MANA_REGEN, 0.08D, AttributeModifier.Operation.MULTIPLY_BASE)
         ));
+        // 法术磁盘
         putCurio(defaults, "disk_spell_book", List.of(
                 attr(SPELL_POWER, 0.05D, AttributeModifier.Operation.MULTIPLY_BASE),
                 attr(COOLDOWN_REDUCTION, 0.15D, AttributeModifier.Operation.MULTIPLY_BASE),
@@ -168,7 +220,17 @@ public final class EquipmentStatsDefaults {
     }
 
     private static void putWeapon(Map<ResourceLocation, EquipmentStats> defaults, String item, int durability, double attackDamage, double attackSpeed) {
-        defaults.put(Genesis.rl(item), EquipmentStats.weapon(durability, attackDamage, attackSpeed));
+        putWeapon(defaults, item, durability, attackDamage, attackSpeed, List.of());
+    }
+
+    private static void putWeapon(Map<ResourceLocation, EquipmentStats> defaults, String item, Integer durability, double attackDamage, double attackSpeed, List<EquipmentStats.AttributeStat> attributes) {
+        defaults.put(Genesis.rl(item), new EquipmentStats(
+                durability,
+                new EquipmentStats.WeaponStats(attackDamage, attackSpeed),
+                null,
+                null,
+                attributes
+        ));
     }
 
     private static void putDurability(Map<ResourceLocation, EquipmentStats> defaults, String item, int durability) {

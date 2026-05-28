@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.contents.items.curios;
 
-import com.google.common.collect.HashMultimap;
+import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -18,8 +18,6 @@ import java.util.List;
 import java.util.UUID;
 
 public class ESSCurioItem extends Item implements ICurioItem {
-    protected final Multimap<Attribute, AttributeModifier> attributeModifiers = HashMultimap.create();
-
     public ESSCurioItem() {
         super(new Properties().stacksTo(1));
     }
@@ -37,7 +35,7 @@ public class ESSCurioItem extends Item implements ICurioItem {
 
     @Override
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(SlotContext slotContext, UUID uuid, ItemStack stack) {
-        return attributeModifiers;
+        return ImmutableMultimap.of();
     }
 
     public String getItemTooltipKey(Item item) {

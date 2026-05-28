@@ -1,11 +1,8 @@
 package miku.united_as_one.genesis.contents.items.curios;
 
-import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import io.redspace.ironsspellbooks.api.spells.IPresetSpellContainer;
 import io.redspace.ironsspellbooks.api.spells.ISpellContainer;
-import io.redspace.ironsspellbooks.item.weapons.AttributeContainer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -21,18 +18,13 @@ import top.theillusivec4.curios.api.type.capability.ICurio;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
 import java.util.UUID;
-import java.util.function.Function;
 
 public class GenesisCurseItem extends Item implements ICurioItem, IPresetSpellContainer {
-    static final String attributeSlot = "crown";
-    Function<Integer, Multimap<Attribute, AttributeModifier>> attributes = null;
-
     public GenesisCurseItem() {
         super(new Properties()
                 .stacksTo(1)
                 .rarity(Rarity.EPIC)
                 .fireResistant());
-        this.withAttributes(new AttributeContainer(AttributeRegistry.MAX_MANA, 100000, AttributeModifier.Operation.ADDITION));
     }
 
     public boolean isEquippedBy(@Nullable LivingEntity entity) {
@@ -49,20 +41,7 @@ public class GenesisCurseItem extends Item implements ICurioItem, IPresetSpellCo
     }
 
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(SlotContext slotContext, UUID uuid, ItemStack stack) {
-        return slotContext.identifier().equals(attributeSlot) ? this.attributes.apply(slotContext.index()) : ICurioItem.super.getAttributeModifiers(slotContext, uuid, stack);
-    }
-
-    public void withAttributes(AttributeContainer... attributes) {
-        this.attributes = (index) -> {
-            ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-
-            for(AttributeContainer holder : attributes) {
-                String id = String.format("%s_%s", attributeSlot, index);
-                builder.put(holder.attribute().get(), holder.createModifier(id));
-            }
-
-            return builder.build();
-        };
+        return ICurioItem.super.getAttributeModifiers(slotContext, uuid, stack);
     }
 
     @Override

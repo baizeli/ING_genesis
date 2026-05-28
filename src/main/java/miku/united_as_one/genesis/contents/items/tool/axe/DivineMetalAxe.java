@@ -9,7 +9,7 @@ import java.util.List;
 
 public class DivineMetalAxe extends AxeItem {
     public DivineMetalAxe(Tier tier, int attackDamage, float attackSpeed, Properties properties) {
-        super(tier, attackDamage, attackSpeed, properties);
+        super(tier, -tier.getAttackDamageBonus(), 0.0F, properties);
     }
 
     public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, @NotNull List<Component> pTooltipComponents, @NotNull TooltipFlag pIsAdvanced) {

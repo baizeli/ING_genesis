@@ -13,7 +13,7 @@ import java.util.List;
 
 public class VioletShovel extends ShovelItem {
     public VioletShovel(Properties props) {
-        super(TierRegistry.VIOLET_GALAXY_INGOT, 4.0F, -1.0F, props);
+        super(TierRegistry.VIOLET_GALAXY_INGOT, -TierRegistry.VIOLET_GALAXY_INGOT.getAttackDamageBonus(), 0.0F, props);
     }
 
     @Override

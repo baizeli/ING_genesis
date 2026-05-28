@@ -3,6 +3,7 @@ package miku.united_as_one.genesis.contents.items;
 import io.redspace.ironsspellbooks.api.util.Utils;
 import io.redspace.ironsspellbooks.registries.SoundRegistry;
 import miku.united_as_one.genesis.contents.entity.spell.blood_boss.blood_dagger.BloodDaggerEntity;
+import miku.united_as_one.genesis.data.equipment.EquipmentStatsManager;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -19,11 +20,13 @@ import org.jetbrains.annotations.NotNull;
 
 public class BloodBossDagger extends SwordItem {
     public BloodBossDagger(Tier tier, int attackDamageModifier, float attackSpeedModifier, Properties properties) {
-        super(tier, attackDamageModifier, attackSpeedModifier, properties);
+        super(tier, (int) -tier.getAttackDamageBonus(), 0.0F, properties);
     }
 
     @Override
     public boolean hurtEnemy(@NotNull ItemStack stack, @NotNull LivingEntity living, @NotNull LivingEntity attacker) {
+        float dataDamage = (float) ((EquipmentStatsManager.getWeaponAttackDamage(stack, getDamage()) + 1.0D) * 0.2D);
+
         if (attacker.isShiftKeyDown() && attacker instanceof Player player && player.getAttackStrengthScale(0.0f) >= 1.0f) {
             living.playSound(SoundRegistry.FIRE_CAST.get(), 2.0F, (float) Utils.random.nextIntBetweenInclusive(80, 110) * 0.01F);
             Vec3 pos = attacker.position();
@@ -40,14 +43,14 @@ public class BloodBossDagger extends SwordItem {
                 dagger.setPos(pos.add(offset.yRot(attacker.getYRot())));
                 dagger.delay = delay + i * 2;
                 dagger.isSword = true;
-                dagger.setDamage((getDamage() + 1) * 0.2F);
+                dagger.setDamage(dataDamage);
                 attacker.level.addFreshEntity(dagger);
             }
 
             player.resetAttackStrengthTicker();
             return true;
         } else {
-            attacker.heal((getDamage() + 1) * 0.2F);
+            attacker.heal(dataDamage);
             return super.hurtEnemy(stack, living, living);
         }
     }

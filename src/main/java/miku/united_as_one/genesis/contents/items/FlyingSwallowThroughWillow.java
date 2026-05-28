@@ -44,8 +44,8 @@ public class FlyingSwallowThroughWillow extends SwordItem implements GeoItem {
                     )
                 )
             ), 
-            6,
-            -2.4f,
+            0,
+            0.0F,
             new Item.Properties().rarity(Rarity.EPIC)
         );
     }

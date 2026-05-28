@@ -22,7 +22,7 @@ import java.util.List;
 public class VioletPickaxe extends PickaxeItem {
 
     public VioletPickaxe(Tier tier, int attackDamage, float attackSpeed, Properties properties) {
-        super(tier, attackDamage, attackSpeed, properties);
+        super(tier, (int) -tier.getAttackDamageBonus(), 0.0F, properties);
     }
 
     @Override

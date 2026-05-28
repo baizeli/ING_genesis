@@ -13,7 +13,7 @@ import java.util.List;
 
 public class VioletAxe extends AxeItem {
     public VioletAxe(Properties props) {
-        super(TierRegistry.VIOLET_GALAXY_INGOT, 26.0F, -3.3F, props);
+        super(TierRegistry.VIOLET_GALAXY_INGOT, -TierRegistry.VIOLET_GALAXY_INGOT.getAttackDamageBonus(), 0.0F, props);
     }
 
     @Override

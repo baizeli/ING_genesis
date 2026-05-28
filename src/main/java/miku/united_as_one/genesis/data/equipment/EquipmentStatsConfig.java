@@ -67,12 +67,10 @@ public class EquipmentStatsConfig extends BaseConfig {
         ArrayList<EquipmentStats.AttributeStat> attributeStats = new ArrayList<>();
         for (AttributeEntry entry : attributes) {
             if (entry.attribute == null) {
-                EquipmentStatsManager.warn("Skipping equipment stat entry with missing attribute in {}", getID());
                 continue;
             }
             AttributeModifier.Operation operation = EquipmentStats.parseOperation(entry.operation == null ? "addition" : entry.operation);
             if (operation == null) {
-                EquipmentStatsManager.warn("Skipping equipment stat entry with invalid operation {} in {}", entry.operation, getID());
                 continue;
             }
             attributeStats.add(new EquipmentStats.AttributeStat(entry.attribute, entry.amount, operation));
