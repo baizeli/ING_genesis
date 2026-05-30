@@ -338,15 +338,6 @@ public class ItemRegistry {
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
 
-    // 星源绘卷
-    public static final ItemEntry<GalaxyScroll> GALAXY_SCROLL = Genesis.L2_REGISTRATE
-            .item("galaxy_scroll", properties -> new GalaxyScroll(properties
-                .rarity(Rarity.RARE)
-                .stacksTo(1)
-            ))
-            .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
-            .register();
-
     // 神圣金属套
     public static final ItemEntry<DivineMetalArmor> DIVINE_METAL_HELMET = Genesis.L2_REGISTRATE
             .item("divine_metal_helmet", properties -> new DivineMetalArmor(

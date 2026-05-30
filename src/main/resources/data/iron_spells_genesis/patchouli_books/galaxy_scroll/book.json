@@ -1,0 +1,8 @@
+{
+  "name": "iron_spells_genesis.galaxy_scroll.book_name",
+  "landing_text": "iron_spells_genesis.galaxy_scroll.landing_text",
+  "version": 1,
+  "model": "iron_spells_genesis:book",
+  "creative_tab": "iron_spells_genesis:material",
+  "use_resource_pack": true
+}

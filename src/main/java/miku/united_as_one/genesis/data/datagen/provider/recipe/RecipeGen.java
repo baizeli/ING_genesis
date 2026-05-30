@@ -13,7 +13,6 @@ import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
-import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.data.recipes.SmithingTransformRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -100,11 +99,6 @@ public final class RecipeGen {
     }
 
     private static void materials(RegistrateRecipeProvider provider) {
-        unlock(provider, ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ItemRegistry.GALAXY_SCROLL.get())::unlockedBy, Items.BOOK)
-                .requires(Items.PURPLE_DYE)
-                .requires(Items.BOOK)
-                .save(provider, Genesis.rl("galaxy_scroll"));
-
         unlock(provider, ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ItemRegistry.CELESTIAL_SOURCE_INGOT.get())::unlockedBy, ItemRegistry.CELESTIAL_SOURCE_PEARL.get())
                 .pattern("FFF")
                 .pattern("FRF")

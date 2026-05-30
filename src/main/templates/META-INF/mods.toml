@@ -21,6 +21,12 @@ credits='''${mod_credits}'''
     versionRange="${minecraft_version_range}"
     ordering="NONE"
     side="BOTH"
+[[dependencies.${mod_id}]]
+    modId="patchouli"
+    mandatory=false
+    versionRange="[1.20.1-84.1-FORGE,)"
+    ordering="AFTER"
+    side="BOTH"
 
 [metadata]
 accesstransformer="META-INF/accesstransformer.cfg"

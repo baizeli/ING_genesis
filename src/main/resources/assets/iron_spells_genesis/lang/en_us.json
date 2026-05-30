@@ -110,8 +110,7 @@
   "item.iron_spells_genesis.divine_metal_ingot": "Divine Metal Ingot",
   "item.iron_spells_genesis.whisper_of_the_past": "Whisper of the Past",
   "item.iron_spells_genesis.avaritia_infinity_sword": "§4Twilight Zenith",
-  "item.iron_spells_genesis.create_star": "Heart of Creation",
-  "item.iron_spells_genesis.galaxy_scroll": "Galaxy Scroll",
+    "item.iron_spells_genesis.create_star": "Heart of Creation",
   "item.iron_spells_genesis.chaos_rune": "Chaos Rune",
   "item.iron_spells_genesis.celestial_source_rune": "Celestial Source Rune",
   "item.iron_spells_genesis.chaos_upgrade_orb": "Chaos Upgrade Orb",
@@ -212,6 +211,7 @@
   "item.iron_spells_genesis.eldritch_upgrade_orb": "Eldritch Upgrade Orb",
 
   "iron_spells_genesis.galaxy_scroll.book_name": "§bGalaxy Scroll",
+  "iron_spells_genesis.galaxy_scroll.landing_text": "A star-bound field note for Iron's Spells Genesis.",
 
   "block.iron_spells_genesis.celestial_source_block": "Celestial Source Block",
   "block.iron_spells_genesis.arcane_workbench": "Arcane Workbench",
