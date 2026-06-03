@@ -1,0 +1,16 @@
+{
+    "name": "神圣金属套装",
+    "icon": "genesis_magic:divine_metal_helmet",
+    "category": "genesis_magic:item/equipment",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "一套由神圣金属之力所铸而成的套装。"
+        },
+        {
+            "type": "patchouli:entity",
+            "name": "神圣金属套装",
+            "entity": "minecraft:armor_stand{ArmorItems:[{id:'genesis_magic:divine_metal_boots',Count:1b},{id:'genesis_magic:divine_metal_leggings',Count:1b},{id:'genesis_magic:divine_metal_chestplate',Count:1b},{id:'genesis_magic:divine_metal_helmet',Count:1b}],NoBasePlate:1b}"
+        }
+    ]
+}

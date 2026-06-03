@@ -1,0 +1,16 @@
+{
+    "name": "法术穿透法球",
+    "icon": "genesis_magic:upgrade_orb_pro",
+    "category": "genesis_magic:item/materials",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "法术穿透，创世纪所添加的一个新的属性；计算方式为：$(br)对应法术派系所造成的伤害x法术穿透的值=最终伤害$(br2)首先我们要把蕴含强大奥术之力的物品揉和在一起，就像这样："
+        },
+        {
+            "type": "patchouli:crafting",
+            "recipe": "genesis_magic:orb/upgrade_orb_pro",
+            "text": "而后再把蕴含强大力量的对应派系水晶和符文与之结合，就像这样："
+        }
+    ]
+}

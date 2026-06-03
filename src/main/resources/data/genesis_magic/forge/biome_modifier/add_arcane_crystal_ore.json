@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "#minecraft:is_overworld",
+  "features": "genesis_magic:ore_arcane_crystal_placement",
+  "step": "underground_ores"
+}

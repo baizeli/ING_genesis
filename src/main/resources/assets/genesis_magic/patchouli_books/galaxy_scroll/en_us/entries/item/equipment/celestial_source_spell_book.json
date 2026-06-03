@@ -1,0 +1,15 @@
+{
+    "name": "星源法术书",
+    "icon": "genesis_magic:celestial_source_spell_book",
+    "category": "genesis_magic:item/equipment",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "蕴含星源之力的法术书$(br)属性：$(br)$(li)+50%星源法术强度$(li)+60%法术强度$(li)+60%法术冷却缩减$(li)+2000最大法力值"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "旧日创世的底色是为凭依，$(br)加之混沌的磅礴生命佐以。$(br)巨龙的力量和上古的奇迹，$(br)铸出原初始源本质的奥秘。$(br2)摩挲这满溢着色彩的封皮，$(br)你享受自指尖传来的滑腻。$(br)无论何种辉煌史诗或传纪，$(br)此刻均已记叙于华彩之底。$(br2)星辰的光辉并不永恒唯一，$(br)心中的颂章正阐述着真理。$(br)待到那魂与灵相逢的时机，$(br)由你意志点亮进步的意义。"
+        }
+    ]
+}

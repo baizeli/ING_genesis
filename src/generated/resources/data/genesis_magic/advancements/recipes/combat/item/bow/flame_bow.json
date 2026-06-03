@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_fire_crystal": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "genesis_magic:fire_crystal"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "genesis_magic:item/bow/flame_bow"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_fire_crystal",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "genesis_magic:item/bow/flame_bow"
+    ]
+  },
+  "sends_telemetry_event": false
+}

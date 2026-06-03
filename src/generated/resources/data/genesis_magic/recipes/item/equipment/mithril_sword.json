@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "irons_spellbooks:mithril_ingot"
+  },
+  "base": {
+    "item": "minecraft:netherite_sword"
+  },
+  "result": {
+    "item": "genesis_magic:mithril_sword"
+  },
+  "template": {
+    "item": "irons_spellbooks:mithril_ingot"
+  }
+}

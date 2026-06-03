@@ -1,0 +1,27 @@
+{
+  "type": "genesis_magic:arcane_workbench_recipe",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "minecraft:iron_ingot"
+    },
+    "B": {
+      "item": "minecraft:diamond"
+    },
+    "C": {
+      "item": "minecraft:emerald"
+    }
+  },
+  "pattern": [
+    "  A  ",
+    " ABA ",
+    "ACBCA",
+    " ABA ",
+    "  A  "
+  ],
+  "result": {
+    "count": 1,
+    "item": "minecraft:netherite_ingot"
+  },
+  "show_notification": true
+}

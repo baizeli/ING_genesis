@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "genesis_magic:block/chaos_portal_ns"
+    },
+    "axis=z": {
+      "model": "genesis_magic:block/chaos_portal_ew"
+    }
+  }
+}

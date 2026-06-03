@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "A": {
+      "item": "irons_spellbooks:pyrium_ingot"
+    },
+    "B": {
+      "item": "irons_spellbooks:dragonskin"
+    },
+    "C": {
+      "item": "genesis_magic:fire_crystal"
+    }
+  },
+  "pattern": [
+    " CB",
+    "CAB",
+    " CB"
+  ],
+  "result": {
+    "item": "genesis_magic:flame_bow"
+  },
+  "show_notification": true
+}

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "genesis_magic:cracked_deep_fear_stone_bricks"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "item": "genesis_magic:cracked_deep_fear_stone_bricks_vertical_slab"
+  }
+}

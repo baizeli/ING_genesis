@@ -1,0 +1,25 @@
+{
+  "type": "genesis_magic:arcane_cauldron",
+  "ingredients": [
+    {
+      "item": "minecraft:amethyst_shard"
+    },
+    {
+      "item": "minecraft:glowstone_dust"
+    },
+    {
+      "item": "minecraft:lapis_lazuli"
+    }
+  ],
+  "fluids": [
+    {
+      "Amount": 250,
+      "FluidName": "minecraft:water"
+    }
+  ],
+  "essence": 1,
+  "result": {
+    "item": "minecraft:diamond",
+    "count": 1
+  }
+}

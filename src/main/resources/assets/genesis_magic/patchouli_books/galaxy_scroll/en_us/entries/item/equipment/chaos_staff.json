@@ -1,0 +1,23 @@
+{
+    "name": "无分虚实之杖",
+    "icon": "genesis_magic:chaos_staff",
+    "category": "genesis_magic:item/equipment",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "由混沌之力所铸而成的怪异法杖。$(br)属性：$(li)+15%混沌法术强度$(li)+20%法术冷却缩减"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "recipepage"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "你听到了你意志的声音，它渴求着创造一个没有限制的世界。$(br)你便告诉你自己的愿景，你终究会踏上一条没有尽头的长路。$(br)孤独的旅人，除却外在的知识和力量，只有自己与自己相伴。$(br)像水滴与水滴拥抱，最终溶解在水中。$(br)意志和愿景，是有力量的。$(br)没有什么障碍小到无法忽视，也没有什么美好重到无法放下。$(br)束缚这种东西，妨碍你活着。$(br)所以这限制重重的世界，天生就是你的敌人。"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "想来前代先贤在这件事上的态度也是如此。$(br)这代代相传的知识，终于开花结果$(br)借助这把法杖，你有了一丝撬动世界的可能。"
+        }
+    ]
+}

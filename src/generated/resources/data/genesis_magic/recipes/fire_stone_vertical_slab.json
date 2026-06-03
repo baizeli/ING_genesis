@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "genesis_magic:fire_stone"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "item": "genesis_magic:fire_stone_vertical_slab"
+  }
+}

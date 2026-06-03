@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "A": {
+      "item": "irons_spellbooks:netherite_spell_book"
+    },
+    "B": {
+      "item": "minecraft:nether_star"
+    },
+    "C": {
+      "item": "irons_spellbooks:dragonskin_spell_book"
+    },
+    "X": {
+      "item": "genesis_magic:arcane_crystal"
+    },
+    "Y": {
+      "item": "irons_spellbooks:mithril_ingot"
+    }
+  },
+  "pattern": [
+    "YXY",
+    "ABC",
+    "YXY"
+  ],
+  "result": {
+    "item": "genesis_magic:disk_spell_book"
+  },
+  "show_notification": true
+}

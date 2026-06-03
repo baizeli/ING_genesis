@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "genesis_magic:twisted_chaos_ingot"
+  },
+  "base": {
+    "item": "genesis_magic:divine_metal_leggings"
+  },
+  "result": {
+    "item": "genesis_magic:chaos_spell_leggings"
+  },
+  "template": {
+    "item": "genesis_magic:flesh_soul_fragment"
+  }
+}

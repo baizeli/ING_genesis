@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "genesis_magic:phantom_plum"
+        }
+      ]
+    }
+  ],
+  "random_sequence": "genesis_magic:blocks/phantom_plum_bush"
+}

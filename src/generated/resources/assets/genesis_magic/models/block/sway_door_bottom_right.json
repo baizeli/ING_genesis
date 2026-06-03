@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_bottom_right",
+  "textures": {
+    "bottom": "genesis_magic:block/sway_door_bottom",
+    "top": "genesis_magic:block/sway_door_top"
+  }
+}

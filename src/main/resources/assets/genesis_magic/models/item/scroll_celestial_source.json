@@ -1,0 +1,10 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "genesis_magic:item/scroll_celestial_source"
+  },
+  "loader": "genesis_magic:cosmic",
+  "cosmic": {
+    "mask": "genesis_magic:item/mask/scroll_celestial_source_mask"
+  }
+}

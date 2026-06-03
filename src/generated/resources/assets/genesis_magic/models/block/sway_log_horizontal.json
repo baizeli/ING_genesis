@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column_horizontal",
+  "textures": {
+    "end": "genesis_magic:block/sway_log_top",
+    "side": "genesis_magic:block/sway_log"
+  }
+}

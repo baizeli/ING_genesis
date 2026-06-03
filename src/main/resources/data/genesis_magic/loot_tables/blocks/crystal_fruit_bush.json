@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "genesis_magic:crystal_fruit"
+        }
+      ]
+    }
+  ],
+  "random_sequence": "genesis_magic:blocks/crystal_fruit_bush"
+}

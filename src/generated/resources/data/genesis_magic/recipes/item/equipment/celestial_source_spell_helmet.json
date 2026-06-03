@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "genesis_magic:celestial_source_ingot"
+  },
+  "base": {
+    "item": "genesis_magic:violet_zenith_helmet"
+  },
+  "result": {
+    "item": "genesis_magic:celestial_source_spell_helmet"
+  },
+  "template": {
+    "item": "genesis_magic:create_star"
+  }
+}
