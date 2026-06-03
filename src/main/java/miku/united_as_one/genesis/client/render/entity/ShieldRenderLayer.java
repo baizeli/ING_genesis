@@ -5,7 +5,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.client.render.cosmic.PerspectiveModelState;
+import miku.bai_ze_li.genesis.api.render.cosmic.PerspectiveModelState;
 import miku.united_as_one.genesis.registries.effect.EffectRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;

@@ -2,7 +2,7 @@ package miku.united_as_one.genesis.registries.client;
 
 import io.redspace.ironsspellbooks.render.SpellBookCurioRenderer;
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.client.renderer.DistortWorldRender;
+import miku.bai_ze_li.genesis.api.render.post.DistortWorldRender;
 import miku.united_as_one.genesis.config.menu.ConfigMenu;
 import miku.united_as_one.genesis.contents.workbench.arcane.ArcaneWorkbenchScreen;
 import miku.united_as_one.genesis.registries.item.ItemRegistry;

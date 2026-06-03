@@ -3,7 +3,7 @@ package miku.united_as_one.genesis.client.model.boss;
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.client.render.MathUtils;
 import miku.united_as_one.genesis.contents.entity.boss.BloodBoss;
-import miku.united_as_one.genesis.contents.entity.boss.TrailComponent;
+import miku.bai_ze_li.genesis.api.entity.TrailComponent;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;

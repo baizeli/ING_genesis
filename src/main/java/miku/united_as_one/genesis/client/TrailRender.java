@@ -3,11 +3,13 @@ package miku.united_as_one.genesis.client;
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import miku.united_as_one.genesis.contents.entity.NyanCat;
 import miku.united_as_one.genesis.contents.entity.NyanCatRenderer;
+import miku.united_as_one.genesis.contents.entity.projectile.ThrownIron;
 import miku.united_as_one.genesis.contents.entity.spell.celestial_source.UltimateWhisperArrowEntity;
-import miku.united_as_one.genesis.client.particles.GlowCubeParticle;
-import miku.united_as_one.genesis.client.particles.GlowParticleRenderTypes;
+import miku.bai_ze_li.genesis.api.render.particle.GlowCubeParticle;
+import miku.bai_ze_li.genesis.api.render.particle.GlowParticleRenderTypes;
 import miku.united_as_one.genesis.client.render.cosmic.CosmicBakeModel;
-import miku.united_as_one.genesis.client.render.SlashEffectManager;
+import miku.bai_ze_li.genesis.api.render.effect.SlashEffectManager;
+import miku.united_as_one.genesis.client.renderer.projectile.ThrownIronRenderer;
 import miku.united_as_one.genesis.client.render.entity.arrow.UltimateWhisperArrowRenderer;
 import miku.united_as_one.genesis.mixin.minecraft.client.renderer.GameRendererAccessor;
 import miku.united_as_one.genesis.mixin.minecraft.client.renderer.ParticleEngineAccessor;
@@ -129,6 +131,8 @@ public class TrailRender {
                     ((NyanCatRenderer)renderer).renderTrail((NyanCat) entity, partialTicks, entityPoseStack, bufferSource, 114514);
                 } else if (entity instanceof UltimateWhisperArrowEntity arrow) {
                     UltimateWhisperArrowRenderer.renderTrailOnly(arrow, partialTicks, entityPoseStack, bufferSource);
+                } else if (entity instanceof ThrownIron iron) {
+                    ThrownIronRenderer.renderTrailOnly(iron, partialTicks, entityPoseStack, bufferSource);
                 }
 
                 entityPoseStack.popPose();

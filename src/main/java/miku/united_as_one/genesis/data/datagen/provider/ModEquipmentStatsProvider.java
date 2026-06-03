@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.data.datagen.provider;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.data.equipment.EquipmentStatsConfig;
+import miku.bai_ze_li.genesis.api.equipment.EquipmentStatsConfig;
 import miku.united_as_one.genesis.data.equipment.EquipmentStatsDefaults;
 import miku.united_as_one.genesis.data.equipment.ModEquipmentStatsConfigs;
 import dev.xkmc.l2library.serial.config.ConfigDataProvider;
@@ -18,3 +18,4 @@ public class ModEquipmentStatsProvider extends ConfigDataProvider {
                 map.add(ModEquipmentStatsConfigs.EQUIPMENT_STATS, id, EquipmentStatsConfig.fromStats(stats)));
     }
 }
+

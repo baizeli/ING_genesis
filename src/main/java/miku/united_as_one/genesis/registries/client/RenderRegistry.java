@@ -2,7 +2,6 @@ package miku.united_as_one.genesis.registries.client;
 
 import io.redspace.ironsspellbooks.entity.mobs.keeper.KeeperRenderer;
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.client.render.cosmic.AvaritiaShaders;
 import miku.united_as_one.genesis.client.render.cosmic.CosmicModelLoader;
 import miku.united_as_one.genesis.client.render.entity.*;
 import miku.united_as_one.genesis.client.render.entity.arrow.SpecialArrowRenderer;
@@ -30,8 +29,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ModelEvent;
-import net.minecraftforge.client.event.RegisterShadersEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -79,11 +76,6 @@ public class RenderRegistry {
         event.registerEntityRenderer(EntityRegistry.ULTIMATE_WHISPER_ARROW.get(), UltimateWhisperArrowRenderer::new);
 
         event.registerBlockEntityRenderer(ModBlockEntities.ARCANE_CAULDRON.get(), ArcaneCauldronRenderer::new);
-    }
-
-    @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public static void onRegisterShaders(RegisterShadersEvent event) {
-        AvaritiaShaders.onRegisterShaders(event);
     }
 
     @SubscribeEvent

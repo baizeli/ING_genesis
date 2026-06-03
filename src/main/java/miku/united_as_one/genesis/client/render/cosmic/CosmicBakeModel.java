@@ -1,8 +1,13 @@
 package miku.united_as_one.genesis.client.render.cosmic;
 
+import miku.bai_ze_li.genesis.GenesisLib;
+import miku.bai_ze_li.genesis.api.render.cosmic.PerspectiveModelState;
+import miku.bai_ze_li.genesis.api.render.cosmic.TransformUtils;
+import miku.bai_ze_li.genesis.api.render.cosmic.AvaritiaShaders;
+import miku.bai_ze_li.genesis.api.render.shader.GenesisItemShaderEffect;
+import miku.bai_ze_li.genesis.api.render.shader.GenesisItemShaderRegistry;
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.client.TrailRender;
-import miku.united_as_one.genesis.registries.item.ItemRegistry;
 import miku.united_as_one.genesis.registries.spell.SpellSchoolRegistry;
 import com.google.common.collect.ImmutableMap;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -28,7 +33,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.inventory.InventoryMenu;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.state.BlockState;
@@ -65,8 +69,6 @@ public final class CosmicBakeModel implements BakedModel {
         this.maskSprite = maskSprite;
     }
 
-    private static final Map<Item, EffectConfig> COSMIC_EFFECTS = new HashMap<>();
-
     public void renderItem(ItemStack stack, ItemDisplayContext transformType, PoseStack pStack, MultiBufferSource buffers, int packedLight, int packedOverlay) {
         // 渲染基础模型
         BakedModel model = this.wrapped.getOverrides().resolve(this.wrapped, stack, this.world, this.entity, 0);
@@ -80,29 +82,9 @@ public final class CosmicBakeModel implements BakedModel {
         }
 
         // 检查并渲染特效
-        EffectConfig config = COSMIC_EFFECTS.get(stack.getItem());
-        if (config != null) {
-           // int shadersType = stack.getItem() instanceof AvaritiaSword ? 1 : 2;
-            renderCosmicEffect(stack, transformType, pStack, buffers, packedLight, packedOverlay, config.type, config.scale, config.v4f,2);
-        }
-
-        if (stack.getItem() instanceof Scroll) {
-            SchoolType schoolType = ISpellContainer.getOrCreate(stack).getSpellAtIndex(0).getSpell().getSchoolType();
-            if (schoolType.equals(SpellSchoolRegistry.CELESTIAL_SOURCE.get())) {
-                renderCosmicEffect(stack, transformType, pStack, buffers, packedLight, packedOverlay, 15, 0.6F, new Vector4f(0.1F, 0.1F, 0.1F, 1.0F),2);
-            }
-        }
-    }
-
-    private static class EffectConfig {
-        final int type;
-        final float scale;
-        final Vector4f v4f;
-
-        EffectConfig(int type, float scale, Vector4f v4f) {
-            this.type = type;
-            this.scale = scale;
-            this.v4f = v4f;
+        GenesisItemShaderEffect effect = GenesisItemShaderRegistry.resolve(stack);
+        if (effect != null) {
+            renderCosmicEffect(stack, transformType, pStack, buffers, packedLight, packedOverlay, effect.useType(), effect.scale(), effect.copyColor(), 2);
         }
     }
 
@@ -147,7 +129,7 @@ public final class CosmicBakeModel implements BakedModel {
 
         // 准备纹理UV
         for (int i = 0; i < 10; ++i) {
-            TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "item/misc/cosmic_" + i));
+            TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(ResourceLocation.fromNamespaceAndPath(GenesisLib.MODID, "item/misc/cosmic_" + i));
             AvaritiaShaders.COSMIC_UVS[i * 4] = sprite.getU0();
             AvaritiaShaders.COSMIC_UVS[i * 4 + 1] = sprite.getV0();
             AvaritiaShaders.COSMIC_UVS[i * 4 + 2] = sprite.getU1();
@@ -277,7 +259,7 @@ public final class CosmicBakeModel implements BakedModel {
         AvaritiaShaders.cosmicIs2D.set(0);
 
         for (int i = 0; i < 10; ++i) {
-            TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "item/misc/cosmic_" + i));
+            TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(ResourceLocation.fromNamespaceAndPath(GenesisLib.MODID, "item/misc/cosmic_" + i));
             AvaritiaShaders.COSMIC_UVS[i * 4] = sprite.getU0();
             AvaritiaShaders.COSMIC_UVS[i * 4 + 1] = sprite.getV0();
             AvaritiaShaders.COSMIC_UVS[i * 4 + 2] = sprite.getU1();
@@ -412,12 +394,17 @@ public final class CosmicBakeModel implements BakedModel {
 
     static
     {
-            COSMIC_EFFECTS.put(ItemRegistry.INFINITY_SWORD.get(), new EffectConfig(10, 0.6F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
-            /*COSMIC_EFFECTS.put(ModItems.INFINITY_ETERNAL_HELMET.get(), new EffectConfig(0, 0.5F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
-            COSMIC_EFFECTS.put(ModItems.INFINITY_ETERNAL_CHESTPLATE.get(), new EffectConfig(0, 0.5F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
-            COSMIC_EFFECTS.put(ModItems.INFINITY_ETERNAL_LEGGINGS.get(), new EffectConfig(0, 0.5F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
-            COSMIC_EFFECTS.put(ModItems.INFINITY_ETERNAL_BOOTS.get(), new EffectConfig(0, 0.5F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));*/
-            COSMIC_EFFECTS.put(ItemRegistry.VIOLET_GALAXY_INGOT.get(), new EffectConfig(0, 0.6F, new Vector4f(0.0F, 0.02F, 0.03F, 1F)));
-            COSMIC_EFFECTS.put(ItemRegistry.AVARITIA_SWORD.get(), new EffectConfig(15, 0.6F, new Vector4f(0.1F, 0.1F, 0.1F, 1.0F)));
+            GenesisItemShaderRegistry.registerResolver(stack -> {
+                if (!(stack.getItem() instanceof Scroll)) {
+                    return null;
+                }
+
+                SchoolType schoolType = ISpellContainer.getOrCreate(stack).getSpellAtIndex(0).getSpell().getSchoolType();
+                if (schoolType.equals(SpellSchoolRegistry.CELESTIAL_SOURCE.get())) {
+                    return new GenesisItemShaderEffect(15, 0.6F, new Vector4f(0.1F, 0.1F, 0.1F, 1.0F));
+                }
+
+                return null;
+            });
     }
 }

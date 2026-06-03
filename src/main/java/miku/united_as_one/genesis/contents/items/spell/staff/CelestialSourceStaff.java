@@ -1,8 +1,8 @@
 package miku.united_as_one.genesis.contents.items.spell.staff;
 
-import miku.united_as_one.genesis.client.tooltipParticleHandler.ITooltipParticleItem;
-import miku.united_as_one.genesis.client.tooltipParticleHandler.PTID;
-import miku.united_as_one.genesis.client.tooltipParticleHandler.TooltipParticleSystem;
+import miku.bai_ze_li.genesis.api.render.tooltip.ITooltipParticleItem;
+import miku.bai_ze_li.genesis.api.render.tooltip.PTID;
+import miku.bai_ze_li.genesis.api.render.tooltip.TooltipParticleSystem;
 import io.redspace.ironsspellbooks.item.weapons.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.*;

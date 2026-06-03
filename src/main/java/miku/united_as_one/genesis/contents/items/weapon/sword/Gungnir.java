@@ -1,7 +1,6 @@
 package miku.united_as_one.genesis.contents.items.weapon.sword;
 
-import miku.united_as_one.genesis.api.mixin.DamageSourceInterface;
-import miku.united_as_one.genesis.api.mixin.LivingEventEC;
+import miku.bai_ze_li.genesis.api.damage.GenesisDamageApi;
 import miku.united_as_one.genesis.contents.entity.gungnir.GungnirDaggerEntity;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
@@ -93,28 +92,19 @@ public class Gungnir extends SwordItem implements Vanishable {
     }
 
     public void onAttack(ItemStack itemStack, LivingAttackEvent event) {
-        LivingEventEC ec = (LivingEventEC) event;
-        ((DamageSourceInterface) event.getSource()).ironSpellGenesis$setBypassAll(true);
-        ec.ironSpellGenesis$hackedUnCancelable(true);
-        ec.ironSpellGenesis$hackedOnlyAmountUp(true);
+        GenesisDamageApi.makeTrueDamage(event, event.getSource());
     }
 
     public void onHurt(ItemStack itemStack, LivingHurtEvent event) {
-        LivingEventEC ec = (LivingEventEC) event;
-        ((DamageSourceInterface) event.getSource()).ironSpellGenesis$setBypassAll(true);
-        ec.ironSpellGenesis$hackedUnCancelable(true);
-        ec.ironSpellGenesis$hackedOnlyAmountUp(true);
+        GenesisDamageApi.makeTrueDamage(event, event.getSource());
     }
 
     public void onDamage(ItemStack itemStack, LivingDamageEvent event) {
-        LivingEventEC ec = (LivingEventEC) event;
-        ec.ironSpellGenesis$hackedUnCancelable(true);
-        ec.ironSpellGenesis$hackedOnlyAmountUp(true);
+        GenesisDamageApi.setUncancelable(event, true);
+        GenesisDamageApi.lockMinimumDamage(event, true);
     }
 
     public void onDeath(ItemStack itemStack, LivingDeathEvent event, EventPriority priority) {
-        LivingEventEC ec = (LivingEventEC) event;
-        ec.ironSpellGenesis$hackedUnCancelable(true);
-        event.getEntity().setHealth(0F);
+        GenesisDamageApi.forceDeath(event);
     }
 }

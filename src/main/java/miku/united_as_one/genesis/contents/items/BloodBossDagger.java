@@ -3,7 +3,7 @@ package miku.united_as_one.genesis.contents.items;
 import io.redspace.ironsspellbooks.api.util.Utils;
 import io.redspace.ironsspellbooks.registries.SoundRegistry;
 import miku.united_as_one.genesis.contents.entity.spell.blood_boss.blood_dagger.BloodDaggerEntity;
-import miku.united_as_one.genesis.data.equipment.EquipmentStatsManager;
+import miku.bai_ze_li.genesis.api.equipment.EquipmentStatsManager;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -79,3 +79,4 @@ public class BloodBossDagger extends SwordItem {
         return InteractionResultHolder.success(stack);
     }
 }
+

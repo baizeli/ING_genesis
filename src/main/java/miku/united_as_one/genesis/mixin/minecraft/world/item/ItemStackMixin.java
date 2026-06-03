@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.mixin.minecraft.world.item;
 
-import miku.united_as_one.genesis.data.equipment.EquipmentStatsManager;
+import miku.bai_ze_li.genesis.api.equipment.EquipmentStatsManager;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
@@ -35,3 +35,4 @@ public abstract class ItemStackMixin {
         return (ItemStack) (Object) this;
     }
 }
+

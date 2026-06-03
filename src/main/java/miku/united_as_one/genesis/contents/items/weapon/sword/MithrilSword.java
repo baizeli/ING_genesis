@@ -2,7 +2,7 @@ package miku.united_as_one.genesis.contents.items.weapon.sword;
 
 import io.redspace.ironsspellbooks.api.item.weapons.MagicSwordItem;
 import io.redspace.ironsspellbooks.api.registry.*;
-import miku.united_as_one.genesis.client.render.SlashEffectAPI;
+import miku.bai_ze_li.genesis.api.render.effect.SlashEffectAPI;
 import miku.united_as_one.genesis.packets.NetworkHandler;
 import miku.united_as_one.genesis.packets.packet.SpawnSlashPacket;
 import net.minecraft.world.entity.LivingEntity;

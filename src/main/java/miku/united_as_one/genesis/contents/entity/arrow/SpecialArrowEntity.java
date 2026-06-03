@@ -1,5 +1,6 @@
 package miku.united_as_one.genesis.contents.entity.arrow;
 
+import miku.bai_ze_li.genesis.api.entity.PositionTrailBuffer;
 import miku.united_as_one.genesis.registries.client.ParticleRegistry;
 import miku.united_as_one.genesis.registries.entity.EntityRegistry;
 import net.minecraft.core.particles.ParticleTypes;
@@ -19,7 +20,6 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,7 +34,7 @@ public class SpecialArrowEntity extends Entity {
     private static final EntityDataAccessor<Integer> RENDER_DEFINITION =
             SynchedEntityData.defineId(SpecialArrowEntity.class, EntityDataSerializers.INT);
 
-    private final List<Vec3> trailPositions = new ArrayList<>();
+    private final PositionTrailBuffer trailPositions = new PositionTrailBuffer(TRAIL_LENGTH + 1);
     private boolean hasHit = false;
     private boolean shouldRecordTrail = true;
     private boolean dying = false;
@@ -221,9 +221,7 @@ public class SpecialArrowEntity extends Entity {
         }
         float progress = getDeathProgress();
         int targetLength = (int) ((1.0F - progress) * (TRAIL_LENGTH + 1));
-        while (this.trailPositions.size() > targetLength && !this.trailPositions.isEmpty()) {
-            this.trailPositions.remove(0);
-        }
+        this.trailPositions.trimTo(targetLength);
     }
 
     private void recordTrailPosition() {
@@ -236,17 +234,7 @@ public class SpecialArrowEntity extends Entity {
             return;
         }
 
-        if (!this.trailPositions.isEmpty()) {
-            Vec3 lastPos = this.trailPositions.get(this.trailPositions.size() - 1);
-            if (currentPos.distanceToSqr(lastPos) < 0.001D) {
-                return;
-            }
-        }
-
-        this.trailPositions.add(currentPos);
-        while (this.trailPositions.size() > TRAIL_LENGTH + 1) {
-            this.trailPositions.remove(0);
-        }
+        this.trailPositions.record(currentPos, 0.001D);
     }
 
     private void spawnGlowCubeParticles(int count) {
@@ -335,7 +323,7 @@ public class SpecialArrowEntity extends Entity {
     }
 
     public List<Vec3> getTrailPositions() {
-        return new ArrayList<>(this.trailPositions);
+        return this.trailPositions.snapshot();
     }
 
     @Override

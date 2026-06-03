@@ -19,6 +19,7 @@ import miku.united_as_one.genesis.contents.items.tool.axe.*;
 import miku.united_as_one.genesis.contents.items.tool.shovel.*;
 import miku.united_as_one.genesis.contents.items.tool.hoe.*;
 import miku.united_as_one.genesis.contents.spell.UpgradeOrbTypes;
+import miku.bai_ze_li.genesis.api.item.GenesisGoldTooltipParticleItem;
 import miku.united_as_one.genesis.registries.block.BlockRegistry;
 import miku.united_as_one.genesis.registries.effect.EffectRegistry;
 import io.redspace.ironsspellbooks.item.UpgradeOrbItem;
@@ -66,8 +67,8 @@ public class ItemRegistry {
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
     // 神圣金属锭
-    public static final ItemEntry<Item> DIVINE_METAL_INGOT = Genesis.L2_REGISTRATE
-            .item("divine_metal_ingot", properties -> new Item(properties.rarity(Rarity.EPIC)))
+    public static final ItemEntry<GenesisGoldTooltipParticleItem> DIVINE_METAL_INGOT = Genesis.L2_REGISTRATE
+            .item("divine_metal_ingot", properties -> new GenesisGoldTooltipParticleItem(properties.rarity(Rarity.EPIC)))
             .tab(CreativeTabRegistry.IRON_SPELLS_GENESIS_MATERIAL)
             .register();
 

@@ -26,7 +26,7 @@ import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.*;
 
 import static miku.united_as_one.genesis.client.TrailRender.renderTrail;
-import static miku.united_as_one.genesis.client.renderer.DistortWorldRender.*;
+import static miku.bai_ze_li.genesis.api.render.post.DistortWorldRender.*;
 
 @Mixin(GameRenderer.class)
 public abstract class GameRendererMixin {

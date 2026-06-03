@@ -1,8 +1,8 @@
 package miku.united_as_one.genesis.contents.entity.arrow;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.api.render.ColorHelper;
-import miku.united_as_one.genesis.api.render.TrailRenderStyle;
+import miku.bai_ze_li.genesis.api.text.GenesisColor;
+import miku.bai_ze_li.genesis.api.render.TrailRenderStyle;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -11,10 +11,10 @@ import java.util.List;
 import java.util.Random;
 
 public enum ArrowRenderDefinition {
-    THUNDER(0, "thunder", "textures/images/trail_thunder.png", ColorHelper.THUNDER_THEME, 0x87CEEB, false, 4, 1),
-    HOLY(1, "holy", "textures/images/trail_holy.png", ColorHelper.HOLY_THEME, 0xFFD700, false, 4, 1),
-    BLOOD(2, "blood", "textures/images/trail_blood.png", ColorHelper.BLOOD_THEME, 0xFF0000, false, 4, 1),
-    STELLAR(3, "stellar", "textures/images/trail_stellar.png", ColorHelper.RAINBOW, 0xFFFFFF, true, 2, 2);
+    THUNDER(0, "thunder", "textures/images/trail_thunder.png", GenesisColor.THUNDER_THEME, 0x87CEEB, false, 4, 1),
+    HOLY(1, "holy", "textures/images/trail_holy.png", GenesisColor.HOLY_THEME, 0xFFD700, false, 4, 1),
+    BLOOD(2, "blood", "textures/images/trail_blood.png", GenesisColor.BLOOD_THEME, 0xFF0000, false, 4, 1),
+    STELLAR(3, "stellar", "textures/images/trail_stellar.png", GenesisColor.RAINBOW, 0xFFFFFF, true, 2, 2);
 
     private final int id;
     private final String key;

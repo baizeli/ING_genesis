@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.contents.entity.spell.celestial_source;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.api.render.RenderUtils;
+import miku.bai_ze_li.genesis.api.render.RenderUtils;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.renderer.MultiBufferSource;

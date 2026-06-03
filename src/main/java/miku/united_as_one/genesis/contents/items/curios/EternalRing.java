@@ -1,6 +1,7 @@
 package miku.united_as_one.genesis.contents.items.curios;
 
 import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
@@ -56,9 +57,7 @@ public class EternalRing extends ESSCurioItem {
 
     @Override
     public void curioTick(SlotContext slotContext, ItemStack stack) {
-        LivingEntity entity = slotContext.entity();
-        if(entity.getTicksFrozen() > 0) entity.setTicksFrozen(0);
-        if(entity.isOnFire()) entity.clearFire();
+        clearElementalState(slotContext.entity());
     }
 
     public static boolean test(ItemStack stack) {
@@ -66,6 +65,13 @@ public class EternalRing extends ESSCurioItem {
     }
 
     public static boolean immuneEffect(MobEffectInstance effectInstance) {
-        return immuneEffects.contains(effectInstance.getEffect());
+        MobEffect effect = effectInstance.getEffect();
+        return immuneEffects.contains(effect)
+                || (effect.getCategory() == MobEffectCategory.HARMFUL && effect != MobEffects.BAD_OMEN);
+    }
+
+    public static void clearElementalState(LivingEntity entity) {
+        if(entity.getTicksFrozen() > 0) entity.setTicksFrozen(0);
+        if(entity.isOnFire()) entity.clearFire();
     }
 }

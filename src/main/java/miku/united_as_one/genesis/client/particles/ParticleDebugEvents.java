@@ -4,7 +4,7 @@ import miku.united_as_one.genesis.registries.entity.EntityRegistry;
 import miku.united_as_one.genesis.contents.entity.NyanCat;
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.registries.client.ParticleRegistry;
-import miku.united_as_one.genesis.client.render.ModShaders;
+import miku.bai_ze_li.genesis.api.render.shader.GenesisShaders;
 import com.mojang.blaze3d.pipeline.TextureTarget;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -106,7 +106,7 @@ public class ParticleDebugEvents {
             false,
             false,
             RenderType.CompositeState.builder()
-                    .setShaderState(new RenderStateShard.ShaderStateShard(() -> ModShaders.getHeatWaveShader()))
+                    .setShaderState(new RenderStateShard.ShaderStateShard(() -> GenesisShaders.getHeatWaveShader()))
                     .setTextureState(new RenderStateShard.TextureStateShard(TEXTURE, false, false))
                     .setTransparencyState(createHeatWaveTransparency())
                     .setCullState(RenderStateShard.NO_CULL)
@@ -120,7 +120,7 @@ public class ParticleDebugEvents {
             false,                               
             true,                                
             RenderType.CompositeState.builder()  
-                    .setShaderState(new RenderStateShard.ShaderStateShard(ModShaders::getHeatWaveShader))
+                    .setShaderState(new RenderStateShard.ShaderStateShard(GenesisShaders::getHeatWaveShader))
                     .setTextureState(new RenderStateShard.TextureStateShard(TEXTURE, false, false))
                     .setTransparencyState(RenderStateShard.TRANSLUCENT_TRANSPARENCY)  
                     .setCullState(RenderStateShard.NO_CULL)          

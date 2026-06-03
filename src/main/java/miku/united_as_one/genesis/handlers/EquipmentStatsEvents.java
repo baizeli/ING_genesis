@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.handlers;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.data.equipment.EquipmentStatsManager;
+import miku.bai_ze_li.genesis.api.equipment.EquipmentStatsManager;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraftforge.event.ItemAttributeModifierEvent;
 import net.minecraftforge.event.OnDatapackSyncEvent;
@@ -44,3 +44,4 @@ public final class EquipmentStatsEvents {
                 .forEach(event::addModifier);
     }
 }
+

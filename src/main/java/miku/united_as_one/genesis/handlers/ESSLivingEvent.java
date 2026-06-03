@@ -9,7 +9,7 @@ import miku.united_as_one.genesis.contents.items.curios.rune_plus.BloodRunePlus;
 import miku.united_as_one.genesis.contents.items.weapon.sword.Gungnir;
 import miku.united_as_one.genesis.registries.item.ItemRegistry;
 import miku.united_as_one.genesis.registries.spell.SpellAttributesRegistry;
-import miku.united_as_one.genesis.api.curios.ModCurios;
+import miku.bai_ze_li.genesis.api.curios.ModCurios;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import io.redspace.ironsspellbooks.entity.spells.blood_slash.BloodSlashProjectile;
@@ -27,6 +27,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraftforge.event.entity.living.*;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -47,6 +48,7 @@ public class ESSLivingEvent {
             if(source.is(DamageTypeTags.IS_LIGHTNING)
                 || source.is(DamageTypeTags.IS_FREEZING)
                 || source.is(DamageTypeTags.IS_FIRE)){
+                EternalRing.clearElementalState(target);
                 event.setCanceled(true);
             }
         }
@@ -79,6 +81,16 @@ public class ESSLivingEvent {
     }
 
     @SubscribeEvent
+    public static void onEffectApplicable(MobEffectEvent.Applicable event) {
+        LivingEntity entity = event.getEntity();
+        if(ModCurios.hasCurios(entity, EternalRing::test)) {
+            if(EternalRing.immuneEffect(event.getEffectInstance())) {
+                event.setResult(Event.Result.DENY);
+            }
+        }
+    }
+
+    @SubscribeEvent
     public static void onEffectAdd(MobEffectEvent.Added event) {
         LivingEntity entity = event.getEntity();
         if(ModCurios.hasCurios(entity, EternalRing::test)) {
@@ -99,6 +111,9 @@ public class ESSLivingEvent {
     @SubscribeEvent
     public static void onLivingTick(LivingEvent.LivingTickEvent event) {
         LivingEntity living = event.getEntity();
+        if(ModCurios.hasCurios(living, EternalRing::test)) {
+            EternalRing.clearElementalState(living);
+        }
         if (!living.level.isClientSide()) {
             AttributeInstance maxMana = living.getAttribute(AttributeRegistry.MAX_MANA.get());
             if (maxMana != null) {

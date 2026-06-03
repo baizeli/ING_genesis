@@ -27,7 +27,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
-import miku.united_as_one.genesis.client.render.ModShaders;
+import miku.bai_ze_li.genesis.api.render.shader.GenesisShaders;
 import miku.united_as_one.genesis.config.Configuration;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Matrix3f;
@@ -420,9 +420,9 @@ public class GenesisOutlineRenderer {
             return;
         }
 
-        ShaderInstance outlineShader = ModShaders.getGenesisOutline();
-        ShaderInstance bloomShader = ModShaders.getGenesisBloom();
-        ShaderInstance blurShader = ModShaders.getGenesisBloomBlur();
+        ShaderInstance outlineShader = GenesisShaders.getGenesisOutline();
+        ShaderInstance bloomShader = GenesisShaders.getGenesisBloom();
+        ShaderInstance blurShader = GenesisShaders.getGenesisBloomBlur();
 
         if (outlineShader == null) {
             beginWorldPass(); return;
@@ -536,7 +536,7 @@ public class GenesisOutlineRenderer {
         for (boolean b : hasCapturedGui) if (b) { anyToRender = true; break; }
         if (!anyToRender) return;
 
-        ShaderInstance outlineShader = ModShaders.getGenesisOutline();
+        ShaderInstance outlineShader = GenesisShaders.getGenesisOutline();
         if (outlineShader == null) {
             resetGuiPass();
             getMc().getMainRenderTarget().bindWrite(false);

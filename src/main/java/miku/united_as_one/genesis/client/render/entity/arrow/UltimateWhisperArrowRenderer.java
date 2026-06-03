@@ -3,11 +3,11 @@ package miku.united_as_one.genesis.client.render.entity.arrow;
 import com.mojang.blaze3d.vertex.PoseStack;
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.client.TrailRender;
-import miku.united_as_one.genesis.client.render.ModRenderType;
-import miku.united_as_one.genesis.api.render.ColorHelper;
-import miku.united_as_one.genesis.api.render.TrailHelp;
-import miku.united_as_one.genesis.api.render.TrailRenderApi;
-import miku.united_as_one.genesis.api.render.TrailRenderStyle;
+import miku.bai_ze_li.genesis.api.render.shader.GenesisRenderType;
+import miku.bai_ze_li.genesis.api.text.GenesisColor;
+import miku.bai_ze_li.genesis.api.render.TrailHelp;
+import miku.bai_ze_li.genesis.api.render.TrailRenderApi;
+import miku.bai_ze_li.genesis.api.render.TrailRenderStyle;
 import miku.united_as_one.genesis.contents.entity.spell.celestial_source.UltimateWhisperArrowEntity;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.ArrowRenderer;
@@ -24,7 +24,7 @@ public class UltimateWhisperArrowRenderer extends ArrowRenderer<UltimateWhisperA
             .alphaMultiplier(0.78F)
             .emissive(true)
             .headless(true)
-            .renderTypeProvider((style, texture) -> ModRenderType.delayedTrail(texture))
+            .renderTypeProvider((style, texture) -> GenesisRenderType.delayedTrail(texture))
             .build();
 
     public UltimateWhisperArrowRenderer(EntityRendererProvider.Context context) {
@@ -57,7 +57,7 @@ public class UltimateWhisperArrowRenderer extends ArrowRenderer<UltimateWhisperA
     private static float[] arrowColor(float progress, float time, int entityId) {
         float gradient = wrap01(progress * 0.78F - time * 0.018F + entityId * 0.137F);
         float pulse = 0.92F + 0.08F * Mth.sin(time * 0.24F + progress * Mth.TWO_PI + entityId);
-        float[] color = TrailHelp.interpolateGradientColor(gradient, ColorHelper.RAINBOW);
+        float[] color = TrailHelp.interpolateGradientColor(gradient, GenesisColor.RAINBOW);
         return new float[]{
                 Mth.clamp(color[0] * pulse, 0.0F, 1.0F),
                 Mth.clamp(color[1] * pulse, 0.0F, 1.0F),

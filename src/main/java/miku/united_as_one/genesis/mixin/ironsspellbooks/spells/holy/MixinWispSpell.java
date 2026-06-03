@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.mixin.ironsspellbooks.spells.holy;
 
 import miku.united_as_one.genesis.contents.items.curios.rune_plus.HolyRunePlus;
-import miku.united_as_one.genesis.api.curios.ModCurios;
+import miku.bai_ze_li.genesis.api.curios.ModCurios;
 import io.redspace.ironsspellbooks.api.spells.AbstractSpell;
 import io.redspace.ironsspellbooks.spells.holy.WispSpell;
 import net.minecraft.world.entity.Entity;

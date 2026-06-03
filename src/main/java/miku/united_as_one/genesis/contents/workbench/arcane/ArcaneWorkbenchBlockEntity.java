@@ -1,5 +1,6 @@
 package miku.united_as_one.genesis.contents.workbench.arcane;
 
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.registries.workbench.ModBlockEntities;
 import miku.united_as_one.genesis.registries.workbench.ModMenuTypes;
 import miku.united_as_one.genesis.registries.workbench.ModRecipeTypes;
@@ -26,7 +27,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
-import static miku.united_as_one.genesis.api.text.i18nUtil.translatableContainerName;
+import static miku.bai_ze_li.genesis.api.text.GenesisText.translatableContainerName;
 import static io.redspace.ironsspellbooks.registries.ItemRegistry.ARCANE_ESSENCE;
 
 public class ArcaneWorkbenchBlockEntity extends BaseContainerBlockEntity implements CraftingContainer, RecipeHolder, StackedContentsCompatible {
@@ -35,7 +36,7 @@ public class ArcaneWorkbenchBlockEntity extends BaseContainerBlockEntity impleme
     private static final int ESSENCE_SLOT = CONTAINER_SIZE; 
     public static final int TOTAL_SLOTS = CONTAINER_SIZE + 1; 
 
-    public static final Component ARCANE_WORKBENCH_COMPONENT = translatableContainerName("arcane_workbench");
+    public static final Component ARCANE_WORKBENCH_COMPONENT = translatableContainerName(Genesis.MODID, "arcane_workbench");
     private final NonNullList<ItemStack> items;
     final ResultContainer resultSlots = new ResultContainer();
     private Recipe<?> recipeUsed;

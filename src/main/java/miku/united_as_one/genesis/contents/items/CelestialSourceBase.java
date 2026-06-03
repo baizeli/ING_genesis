@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.contents.items;
 
-import miku.united_as_one.genesis.client.tooltipParticleHandler.*;
+import miku.bai_ze_li.genesis.api.render.tooltip.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.item.*;
 import net.minecraft.network.chat.Component;

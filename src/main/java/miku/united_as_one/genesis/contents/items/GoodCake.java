@@ -1,8 +1,9 @@
 package miku.united_as_one.genesis.contents.items;
 
-import miku.united_as_one.genesis.api.mixin.DamageSourceInterface;
-import miku.united_as_one.genesis.api.mixin.LivingEventEC;
-import miku.united_as_one.genesis.api.render.RainbowEffectHelper;
+import miku.bai_ze_li.genesis.api.annotation.GenesisAnnotations;
+import miku.bai_ze_li.genesis.api.annotation.GenesisItemNameEffect;
+import miku.bai_ze_li.genesis.api.annotation.GenesisTextEffect.Preset;
+import miku.bai_ze_li.genesis.api.damage.GenesisDamageApi;
 import miku.united_as_one.genesis.registries.block.BlockRegistry;
 import miku.united_as_one.genesis.utils.EntityUtil;
 import net.minecraft.ChatFormatting;
@@ -42,6 +43,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+@GenesisItemNameEffect(preset = Preset.BLUE_GRADIENT)
 public class GoodCake extends Item {
     private static final int ORE_SEARCH_RADIUS = 128;
     private static final int ORE_LOCATE_COOLDOWN_TICKS = 40;
@@ -112,33 +114,28 @@ public class GoodCake extends Item {
     }
 
     private static void makeGungnirLike(DamageSource damageSource) {
-        ((DamageSourceInterface) damageSource).ironSpellGenesis$setBypassAll(true);
+        GenesisDamageApi.bypassAll(damageSource);
     }
 
-    private static void makeGungnirLike(LivingEventEC event, DamageSource damageSource) {
-        makeGungnirLike(damageSource);
-        event.ironSpellGenesis$hackedUnCancelable(true);
-        event.ironSpellGenesis$hackedOnlyAmountUp(true);
+    private static void makeGungnirLike(net.minecraftforge.event.entity.living.LivingEvent event, DamageSource damageSource) {
+        GenesisDamageApi.makeTrueDamage(event, damageSource);
     }
 
     public void onAttack(ItemStack itemStack, LivingAttackEvent event) {
-        makeGungnirLike((LivingEventEC) event, event.getSource());
+        makeGungnirLike(event, event.getSource());
     }
 
     public void onHurt(ItemStack itemStack, LivingHurtEvent event) {
-        makeGungnirLike((LivingEventEC) event, event.getSource());
+        makeGungnirLike(event, event.getSource());
     }
 
     public void onDamage(ItemStack itemStack, LivingDamageEvent event) {
-        LivingEventEC ec = (LivingEventEC) event;
-        ec.ironSpellGenesis$hackedUnCancelable(true);
-        ec.ironSpellGenesis$hackedOnlyAmountUp(true);
+        GenesisDamageApi.setUncancelable(event, true);
+        GenesisDamageApi.lockMinimumDamage(event, true);
     }
 
     public void onDeath(ItemStack itemStack, LivingDeathEvent event, EventPriority priority) {
-        LivingEventEC ec = (LivingEventEC) event;
-        ec.ironSpellGenesis$hackedUnCancelable(true);
-        event.getEntity().setHealth(0F);
+        GenesisDamageApi.forceDeath(event);
     }
 
 
@@ -385,6 +382,6 @@ public class GoodCake extends Item {
             return originalName;
         }
         stack.getOrCreateTag().putInt("HideFlags", 2);
-        return RainbowEffectHelper.createCustomGradientText(originalName.getString(), RainbowEffectHelper.BLUE, 3, 1, 0.03F, 1F);
+        return GenesisAnnotations.applyItemNameEffect(GoodCake.class, originalName);
     }
 }

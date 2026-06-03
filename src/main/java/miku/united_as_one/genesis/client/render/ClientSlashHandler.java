@@ -1,5 +1,7 @@
 package miku.united_as_one.genesis.client.render;
 
+import miku.bai_ze_li.genesis.api.render.effect.BaiZeLiSlashEffect;
+import miku.bai_ze_li.genesis.api.render.effect.SlashEffectManager;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.Items;
 import net.minecraftforge.api.distmarker.Dist;

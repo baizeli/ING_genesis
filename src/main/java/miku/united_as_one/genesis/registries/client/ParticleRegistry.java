@@ -2,6 +2,9 @@ package miku.united_as_one.genesis.registries.client;
 
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.client.particles.*;
+import miku.bai_ze_li.genesis.api.render.particle.CrescentBladeParticle;
+import miku.bai_ze_li.genesis.api.render.particle.CubeParticle;
+import miku.bai_ze_li.genesis.api.render.particle.GlowCubeParticle;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
@@ -60,6 +63,7 @@ public class ParticleRegistry {
         @SubscribeEvent
         public static void registerParticleFactories(RegisterParticleProvidersEvent event) {
             var particleEngine = Minecraft.getInstance().particleEngine;
+            CrescentBladeParticle.setBloodDripHangParticle(BLOOD_DRIP_HANG::get);
 
             particleEngine.register(STARDUST_TRAIL.get(), StardustTrailParticle.StardustProvider::new);
             particleEngine.register(CUBE.get(), CubeParticle.Provider::new);

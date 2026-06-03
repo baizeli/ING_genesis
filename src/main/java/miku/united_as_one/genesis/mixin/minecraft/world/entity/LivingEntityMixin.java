@@ -8,7 +8,7 @@ import miku.united_as_one.genesis.registries.effect.EffectRegistry;
 import miku.united_as_one.genesis.registries.sound.SoundRegister;
 import miku.united_as_one.genesis.contents.spell.chaos.ReversePlagueSpell;
 import miku.united_as_one.genesis.handlers.spell.celestial_source.LifeAndDeathRealmEvent;
-import miku.united_as_one.genesis.api.curios.ModCurios;
+import miku.bai_ze_li.genesis.api.curios.ModCurios;
 import io.redspace.ironsspellbooks.entity.spells.poison_cloud.PoisonCloud;
 import net.minecraft.server.level.*;
 import net.minecraft.sounds.SoundEvents;

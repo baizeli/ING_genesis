@@ -2,8 +2,8 @@ package miku.united_as_one.genesis.client.renderer.entity.test;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import miku.united_as_one.genesis.client.render.ModRenderType;
-import miku.united_as_one.genesis.client.render.ModShaders;
+import miku.bai_ze_li.genesis.api.render.shader.GenesisRenderType;
+import miku.bai_ze_li.genesis.api.render.shader.GenesisShaders;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.util.Mth;
@@ -45,9 +45,9 @@ public class BaiZeLiSlashEffect {
 
         if (alpha <= 0.01f) return;
 
-        ModShaders.setTime(ModShaders.getRibbonShader(), age + partialTick);
+        GenesisShaders.setTime(GenesisShaders.getRibbonShader(), age + partialTick);
 
-        VertexConsumer vc = buffer.getBuffer(ModRenderType.ribbon);
+        VertexConsumer vc = buffer.getBuffer(GenesisRenderType.ribbon);
 
         poseStack.pushPose();
         poseStack.translate(center.x, center.y + 1.5, center.z);

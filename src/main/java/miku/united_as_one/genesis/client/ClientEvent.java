@@ -1,9 +1,11 @@
 package miku.united_as_one.genesis.client;
 
+import miku.bai_ze_li.genesis.api.nbt.GenesisPersistentData;
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.client.renderer.AfterImageManager;
 import miku.united_as_one.genesis.client.renderer.AfterImageRenderer;
-import miku.united_as_one.genesis.client.render.SlashEffectManager;
+import miku.united_as_one.genesis.contents.effect.spell.celestial_source.UnparalleledEffect;
+import miku.bai_ze_li.genesis.api.render.effect.SlashEffectManager;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
@@ -41,7 +43,7 @@ public class ClientEvent {
 
         // 残影
         if (event.getStage() == RenderLevelStageEvent.Stage.AFTER_ENTITIES) {
-            if (mc.player.getPersistentData().getBoolean("isUnparalleledActive")) {
+            if (GenesisPersistentData.getBoolean(mc.player, UnparalleledEffect.ACTIVE)) {
                 AfterImageRenderer.renderAfterImages(poseStack, bufferSource, camera, partialTick);
             }
         }

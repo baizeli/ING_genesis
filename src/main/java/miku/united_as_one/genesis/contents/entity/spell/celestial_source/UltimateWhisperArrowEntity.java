@@ -4,6 +4,7 @@ import io.redspace.ironsspellbooks.capabilities.magic.MagicManager;
 import io.redspace.ironsspellbooks.damage.DamageSources;
 import io.redspace.ironsspellbooks.damage.SpellDamageSource;
 import io.redspace.ironsspellbooks.particle.BlastwaveParticleOptions;
+import miku.bai_ze_li.genesis.api.entity.PositionTrailBuffer;
 import miku.united_as_one.genesis.registries.client.ParticleRegistry;
 import miku.united_as_one.genesis.registries.entity.EntityRegistry;
 import miku.united_as_one.genesis.registries.item.CreativeTabRegistry;
@@ -23,7 +24,6 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class UltimateWhisperArrowEntity extends AbstractArrow {
@@ -40,7 +40,7 @@ public class UltimateWhisperArrowEntity extends AbstractArrow {
     );
     private static final Vector3f BLASTWAVE_COLOR = new Vector3f(0.48F, 0.86F, 1.0F);
 
-    private final List<Vec3> trailPositions = new ArrayList<>();
+    private final PositionTrailBuffer trailPositions = new PositionTrailBuffer(TRAIL_LENGTH + 1);
     private float spellDamage = 15.0F;
     private float maxRange = 30.0F;
     private double traveledDistance;
@@ -150,17 +150,7 @@ public class UltimateWhisperArrowEntity extends AbstractArrow {
 
     private void recordTrailPosition() {
         Vec3 currentPos = position();
-        if (!this.trailPositions.isEmpty()) {
-            Vec3 lastPos = this.trailPositions.get(this.trailPositions.size() - 1);
-            if (currentPos.distanceToSqr(lastPos) < 0.001D) {
-                return;
-            }
-        }
-
-        this.trailPositions.add(currentPos);
-        while (this.trailPositions.size() > TRAIL_LENGTH + 1) {
-            this.trailPositions.remove(0);
-        }
+        this.trailPositions.record(currentPos, 0.001D);
     }
 
     @Override
@@ -262,30 +252,13 @@ public class UltimateWhisperArrowEntity extends AbstractArrow {
     }
 
     public List<Vec3> getTrailPositions() {
-        return new ArrayList<>(this.trailPositions);
+        return this.trailPositions.snapshot();
     }
 
     public List<Vec3> getTrailPositions(float partialTicks) {
         Vec3 renderPosition = getRenderPosition(partialTicks);
         Vec3 motion = getDeltaMovement();
-        List<Vec3> positions = new ArrayList<>(this.trailPositions);
-
-        if (positions.isEmpty()) {
-            positions.add(renderPosition.subtract(motion.scale(2.0D)));
-            positions.add(renderPosition.subtract(motion));
-            positions.add(renderPosition);
-            return positions;
-        }
-
-        while (positions.size() < 2) {
-            positions.add(0, positions.get(0).subtract(motion));
-        }
-
-        Vec3 last = positions.get(positions.size() - 1);
-        if (last.distanceToSqr(renderPosition) > 0.000001D) {
-            positions.add(renderPosition);
-        }
-        return positions;
+        return this.trailPositions.renderSnapshot(renderPosition, motion);
     }
 
     private Vec3 getRenderPosition(float partialTicks) {

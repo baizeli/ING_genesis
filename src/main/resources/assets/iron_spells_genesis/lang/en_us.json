@@ -294,7 +294,7 @@
   "item.iron_spells_genesis.eternal_ring": "§dEternal Ring",
   "item.iron_spells_genesis.eternal_ring.hover": "......",
   "item.iron_spells_genesis.fire_rune_plus": "§bFire Rune Plus",
-  "item.iron_spells_genesis.fire_rune_plus.hover": "......",
+  "item.iron_spells_genesis.fire_rune_plus.hover": "Fire fields created by Scorch/Magma Bomb deal *1.5 damage, radius +2, duration *2\nFlaming Strike casts instantly, dashes forward like Shadow Slash, and releases a vertical flaming slash",
   "item.iron_spells_genesis.holy_rune_plus": "§bHoly Rune Plus",
   "item.iron_spells_genesis.holy_rune_plus.hover": "......",
   "item.iron_spells_genesis.ice_rune_plus": "§bIce Rune Plus",

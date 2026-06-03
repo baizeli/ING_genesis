@@ -2,7 +2,7 @@ package miku.united_as_one.genesis.contents.items;
 
 import miku.united_as_one.genesis.registries.item.ItemRegistry;
 import miku.united_as_one.genesis.contents.sound.Sounds;
-import miku.united_as_one.genesis.data.equipment.EquipmentStatsManager;
+import miku.bai_ze_li.genesis.api.equipment.EquipmentStatsManager;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -149,3 +149,4 @@ public class InfinitySword extends SwordItem
 		player.sweepAttack();
 	}
 }
+

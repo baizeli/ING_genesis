@@ -67,7 +67,7 @@ public class IronSpellSpell extends AbstractSpell {
 
             thrownIron.setDamage(getDamage(spellLevel));
             thrownIron.setLifeTime(10*20);
-            thrownIron.shootFromRotation(entity, entity.getXRot(), entity.getYRot(), 0, 0.5f, 0);
+            thrownIron.shootFromRotation(entity, entity.getXRot(), entity.getYRot(), 0, 1.0f, 0);
 
             level.addFreshEntity(thrownIron);
         }
