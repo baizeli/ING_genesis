@@ -2,26 +2,25 @@ package miku.united_as_one.genesis.registries.client;
 
 import io.redspace.ironsspellbooks.entity.mobs.keeper.KeeperRenderer;
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.client.render.cosmic.AvaritiaShaders;
 import miku.united_as_one.genesis.client.render.cosmic.CosmicModelLoader;
 import miku.united_as_one.genesis.client.render.entity.*;
-import miku.united_as_one.genesis.client.render.entity.arrow.BloodArrowRenderer;
-import miku.united_as_one.genesis.client.render.entity.arrow.HolyArrowRenderer;
-import miku.united_as_one.genesis.client.render.entity.arrow.StellarArrowRenderer;
-import miku.united_as_one.genesis.client.render.entity.arrow.ThunderArrowRenderer;
+import miku.united_as_one.genesis.client.render.entity.arrow.SpecialArrowRenderer;
+import miku.united_as_one.genesis.client.render.entity.arrow.UltimateWhisperArrowRenderer;
 import miku.united_as_one.genesis.client.renderer.WSRenderer;
 import miku.united_as_one.genesis.client.renderer.entity.boss.*;
 import miku.united_as_one.genesis.client.renderer.entity.laser.DeathLaserRenderer;
 import miku.united_as_one.genesis.client.renderer.entity.spell.celestial_source.DeadStarDecreeCometRenderer;
-import miku.united_as_one.genesis.client.renderer.entity.test.BaiZeLiRenderer;
 import miku.united_as_one.genesis.client.renderer.projectile.ThrownIronRenderer;
 import miku.united_as_one.genesis.contents.entity.LightningBoltRenderer;
 import miku.united_as_one.genesis.contents.entity.NyanCatRenderer;
+import miku.united_as_one.genesis.contents.entity.gungnir.GungnirDaggerRenderer;
 import miku.united_as_one.genesis.contents.entity.spell.blood_boss.blood_dagger.BloodDaggerRenderer;
 import miku.united_as_one.genesis.contents.entity.spell.celestial_source.BoxEntityRenderer;
 import miku.united_as_one.genesis.contents.entity.spell.celestial_source.blade_works.MagicCircleRenderer;
 import miku.united_as_one.genesis.contents.entity.spell.celestial_source.blade_works.SwordEntityRenderer;
+import miku.united_as_one.genesis.contents.workbench.arcane_cauldron.ArcaneCauldronRenderer;
 import miku.united_as_one.genesis.registries.entity.EntityRegistry;
+import miku.united_as_one.genesis.registries.workbench.ModBlockEntities;
 import net.minecraft.client.renderer.entity.NoopRenderer;
 import net.minecraft.client.renderer.entity.WardenRenderer;
 import net.minecraft.client.renderer.entity.player.PlayerRenderer;
@@ -29,8 +28,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.EntityRenderersEvent;
 import net.minecraftforge.client.event.ModelEvent;
-import net.minecraftforge.client.event.RegisterShadersEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -61,7 +58,8 @@ public class RenderRegistry {
         event.registerEntityRenderer(EntityRegistry.BLOOD_DAGGER_PROJECTILE.get(), BloodDaggerRenderer::new);
         event.registerEntityRenderer(EntityRegistry.BLOOD_FIELD.get(), NoopRenderer::new);
         event.registerEntityRenderer(EntityRegistry.TREMOR_AOE_ENTITY.get(), NoopRenderer::new);
-        event.registerEntityRenderer(EntityRegistry.BAI_ZE_LI.get(), BaiZeLiRenderer::new);
+        event.registerEntityRenderer(EntityRegistry.GUNGNIR_DAGGER_PROJECTILE.get(), GungnirDaggerRenderer::new);
+        event.registerEntityRenderer(EntityRegistry.GUNGNIR_CHAIN_LIGHTNING_PROJECTILE.get(), NoopRenderer::new);
         event.registerEntityRenderer(EntityRegistry.WARDEN_SPELLCASTER.get(), WSRenderer::new);
         event.registerEntityRenderer(EntityRegistry.DEAD_STAR_DECREE_COMET.get(),
                 context -> new DeadStarDecreeCometRenderer(context, 0.25f)
@@ -72,16 +70,10 @@ public class RenderRegistry {
         event.registerEntityRenderer(EntityRegistry.SUMMONED_KEEPER.get(), KeeperRenderer::new);
         event.registerEntityRenderer(EntityRegistry.SUMMONED_WARDEN.get(), WardenRenderer::new);
 
-        // 特效箭渲染器注册
-        event.registerEntityRenderer(EntityRegistry.THUNDER_ARROW.get(), ThunderArrowRenderer::new);
-        event.registerEntityRenderer(EntityRegistry.HOLY_ARROW.get(), HolyArrowRenderer::new);
-        event.registerEntityRenderer(EntityRegistry.BLOOD_ARROW.get(), BloodArrowRenderer::new);
-        event.registerEntityRenderer(EntityRegistry.STELLAR_ARROW.get(), StellarArrowRenderer::new);
-    }
+        event.registerEntityRenderer(EntityRegistry.SPECIAL_ARROW.get(), SpecialArrowRenderer::new);
+        event.registerEntityRenderer(EntityRegistry.ULTIMATE_WHISPER_ARROW.get(), UltimateWhisperArrowRenderer::new);
 
-    @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public static void onRegisterShaders(RegisterShadersEvent event) {
-        AvaritiaShaders.onRegisterShaders(event);
+        event.registerBlockEntityRenderer(ModBlockEntities.ARCANE_CAULDRON.get(), ArcaneCauldronRenderer::new);
     }
 
     @SubscribeEvent

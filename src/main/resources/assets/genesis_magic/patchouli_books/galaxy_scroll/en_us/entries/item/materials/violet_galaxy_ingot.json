@@ -1,0 +1,19 @@
+{
+    "name": "紫极星源锭",
+    "icon": "genesis_magic:violet_galaxy_ingot",
+    "category": "genesis_magic:item/materials",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "被限制了可能性的旧世界创造不出奇迹。于是你决定凭你的意志与想象去创造奇迹。所以，超越世界的力量齐聚在此。"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "recipepage"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "紫色是尊贵的象征，星辰是永恒的美丽，名号是它伟大的原因。它从不可能之中诞生，然后创造悖论、碾碎极限。现实的限制不能阻挡至臻的想象，仅能让它的形体处于有和无之中。但它来源于你，尽管完美而绝对无瑕，你还是能将其塑造出自己的意义。$(br)它将告知你何为伟大与永恒。"
+        }
+    ]
+}

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "F": {
+      "tag": "genesis_magic:celestial_source_focus"
+    },
+    "R": {
+      "item": "irons_spellbooks:blank_rune"
+    }
+  },
+  "pattern": [
+    "RFR",
+    "FRF",
+    "RFR"
+  ],
+  "result": {
+    "count": 5,
+    "item": "genesis_magic:celestial_source_rune"
+  },
+  "show_notification": true
+}

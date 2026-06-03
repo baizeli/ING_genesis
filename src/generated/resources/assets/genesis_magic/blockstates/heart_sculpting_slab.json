@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "genesis_magic:block/heart_sculpting_slab"
+    },
+    "type=double": {
+      "model": "genesis_magic:block/heart_sculpting"
+    },
+    "type=top": {
+      "model": "genesis_magic:block/heart_sculpting_slab_top"
+    }
+  }
+}

@@ -11,7 +11,7 @@ import net.minecraftforge.registries.RegistryObject;
 
 import java.util.*;
 
-import miku.united_as_one.genesis.api.codec.CodecUtils;
+import miku.bai_ze_li.genesis.api.codec.CodecUtils;
 import static miku.united_as_one.genesis.Genesis.MODID;
 public class ModMemoryModuleType {
     public static final DeferredRegister<MemoryModuleType<?>> MEMORY_MODULES =

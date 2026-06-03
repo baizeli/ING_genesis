@@ -2,11 +2,14 @@ package miku.united_as_one.genesis.handlers;
 
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.client.renderer.entity.spell.chaos.WireBoxRenderer;
+import miku.united_as_one.genesis.contents.entity.gungnir.GungnirDaggerEntity;
+import miku.united_as_one.genesis.contents.items.GoodCake;
 import miku.united_as_one.genesis.contents.items.curios.EternalRing;
 import miku.united_as_one.genesis.contents.items.curios.rune_plus.BloodRunePlus;
 import miku.united_as_one.genesis.contents.items.weapon.sword.Gungnir;
+import miku.united_as_one.genesis.registries.item.ItemRegistry;
 import miku.united_as_one.genesis.registries.spell.SpellAttributesRegistry;
-import miku.united_as_one.genesis.api.curios.ModCurios;
+import miku.bai_ze_li.genesis.api.curios.ModCurios;
 import io.redspace.ironsspellbooks.api.magic.MagicData;
 import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import io.redspace.ironsspellbooks.entity.spells.blood_slash.BloodSlashProjectile;
@@ -24,6 +27,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraftforge.event.entity.living.*;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -44,6 +48,7 @@ public class ESSLivingEvent {
             if(source.is(DamageTypeTags.IS_LIGHTNING)
                 || source.is(DamageTypeTags.IS_FREEZING)
                 || source.is(DamageTypeTags.IS_FIRE)){
+                EternalRing.clearElementalState(target);
                 event.setCanceled(true);
             }
         }
@@ -76,6 +81,16 @@ public class ESSLivingEvent {
     }
 
     @SubscribeEvent
+    public static void onEffectApplicable(MobEffectEvent.Applicable event) {
+        LivingEntity entity = event.getEntity();
+        if(ModCurios.hasCurios(entity, EternalRing::test)) {
+            if(EternalRing.immuneEffect(event.getEffectInstance())) {
+                event.setResult(Event.Result.DENY);
+            }
+        }
+    }
+
+    @SubscribeEvent
     public static void onEffectAdd(MobEffectEvent.Added event) {
         LivingEntity entity = event.getEntity();
         if(ModCurios.hasCurios(entity, EternalRing::test)) {
@@ -96,6 +111,9 @@ public class ESSLivingEvent {
     @SubscribeEvent
     public static void onLivingTick(LivingEvent.LivingTickEvent event) {
         LivingEntity living = event.getEntity();
+        if(ModCurios.hasCurios(living, EternalRing::test)) {
+            EternalRing.clearElementalState(living);
+        }
         if (!living.level.isClientSide()) {
             AttributeInstance maxMana = living.getAttribute(AttributeRegistry.MAX_MANA.get());
             if (maxMana != null) {
@@ -110,36 +128,61 @@ public class ESSLivingEvent {
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void modWeaponHurtEvent1(LivingHurtEvent event) {
-        if (event.getSource().getEntity() instanceof LivingEntity living)
+        if (event.getSource().directEntity instanceof GungnirDaggerEntity) {
+            ItemRegistry.GUNGNIR.get().onHurt(null, event);
+        } else if (event.getSource().getEntity() instanceof LivingEntity living) {
             if (living.getMainHandItem().getItem() instanceof Gungnir gungnir)
                 gungnir.onHurt(living.getMainHandItem(), event);
+            else if (living.getMainHandItem().getItem() instanceof GoodCake goodCake)
+                goodCake.onHurt(living.getMainHandItem(), event);
+        }
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void modWeaponHurtEvent2(LivingAttackEvent event) {
-        if (event.getSource().getEntity() instanceof LivingEntity living)
+        if (event.getSource().directEntity instanceof GungnirDaggerEntity) {
+            ItemRegistry.GUNGNIR.get().onAttack(null, event);
+        } else if (event.getSource().getEntity() instanceof LivingEntity living) {
             if (living.getMainHandItem().getItem() instanceof Gungnir gungnir)
                 gungnir.onAttack(living.getMainHandItem(), event);
+            else if (living.getMainHandItem().getItem() instanceof GoodCake goodCake)
+                goodCake.onAttack(living.getMainHandItem(), event);
+        }
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void modWeaponHurtEvent3(LivingDamageEvent event) {
-        if (event.getSource().getEntity() instanceof LivingEntity living)
+        if (event.getSource().directEntity instanceof GungnirDaggerEntity) {
+            ItemRegistry.GUNGNIR.get().onDamage(null, event);
+        } else if (event.getSource().getEntity() instanceof LivingEntity living) {
             if (living.getMainHandItem().getItem() instanceof Gungnir gungnir)
                 gungnir.onDamage(living.getMainHandItem(), event);
+            else if (living.getMainHandItem().getItem() instanceof GoodCake goodCake)
+                goodCake.onDamage(living.getMainHandItem(), event);
+        }
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void modWeaponHurtEvent5(LivingDeathEvent event) {
-        if (event.getSource().getEntity() instanceof LivingEntity living)
+        if (event.getSource().directEntity instanceof GungnirDaggerEntity) {
+            ItemRegistry.GUNGNIR.get().onDeath(null, event,  EventPriority.HIGHEST);
+        } else if (event.getSource().getEntity() instanceof LivingEntity living) {
             if (living.getMainHandItem().getItem() instanceof Gungnir gungnir)
                 gungnir.onDeath(living.getMainHandItem(), event, EventPriority.HIGHEST);
+            else if (living.getMainHandItem().getItem() instanceof GoodCake goodCake)
+                goodCake.onDeath(living.getMainHandItem(), event, EventPriority.HIGHEST);
+        }
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void modWeaponHurtEvent(LivingDeathEvent event) {
-        if (event.getSource().getEntity() instanceof LivingEntity living)
+        if (event.getSource().directEntity instanceof GungnirDaggerEntity) {
+            ItemRegistry.GUNGNIR.get().onDeath(null, event,  EventPriority.LOWEST);
+        } else if (event.getSource().getEntity() instanceof LivingEntity living) {
             if (living.getMainHandItem().getItem() instanceof Gungnir gungnir)
                 gungnir.onDeath(living.getMainHandItem(), event, EventPriority.LOWEST);
+            else if (living.getMainHandItem().getItem() instanceof GoodCake goodCake)
+                goodCake.onDeath(living.getMainHandItem(), event, EventPriority.LOWEST);
+        }
     }
 }

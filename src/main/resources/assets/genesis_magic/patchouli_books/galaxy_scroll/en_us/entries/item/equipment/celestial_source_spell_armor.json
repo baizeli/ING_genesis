@@ -1,0 +1,24 @@
+{
+    "name": "星源法术套装",
+    "icon": "genesis_magic:celestial_source_spell_helmet",
+    "category": "genesis_magic:item/equipment",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "一套由星源之力所铸而成的法术套装。"
+        },
+        {
+            "type": "patchouli:entity",
+            "name": "星源法术套装",
+            "entity": "minecraft:armor_stand{ArmorItems:[{id:'genesis_magic:celestial_source_spell_boots',Count:1b},{id:'genesis_magic:celestial_source_spell_leggings',Count:1b},{id:'genesis_magic:celestial_source_spell_chestplate',Count:1b},{id:'genesis_magic:celestial_source_spell_helmet',Count:1b}],NoBasePlate:1b}"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "群星由你的意志而闪耀。$(br)万千的可能性于弧线之上散发着微芒。$(br)每一块甲胄都是一片灿烂的天穹。$(br)在攻击落下前，总会有将其消湮成虚无的可能。$(br2)你将这套湛蓝的巫师衣袍连带披风高高挂起，满意地转身离开。$(br)却在金属的反光之中看到了你自己的身影。$(br)命定的创造者有着高贵的本质。$(br)无尽的选择里，每一个你都走上了这通往永恒的道路。"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "它有着此界之外的力量，那源于你的愿景、你的想象。$(br)你们都相信着它。$(br)此为奇迹与奥秘的表征，是超凡入圣的唯一方向。$(br)自然，也是你认定的，你自己的。$(br)长路终竟，溯源逆命。$(br)你们的所有，都注定于天外那不受束缚的地点相逢。"
+        }
+    ]
+}

@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "A": {
+      "item": "irons_spellbooks:dragonskin"
+    },
+    "B": {
+      "item": "minecraft:nether_star"
+    },
+    "C": {
+      "item": "irons_spellbooks:ruined_book"
+    },
+    "Y": {
+      "item": "genesis_magic:twisted_chaos"
+    }
+  },
+  "pattern": [
+    "YBY",
+    "ACA",
+    "YAY"
+  ],
+  "result": {
+    "item": "genesis_magic:chaos_spell_book"
+  },
+  "show_notification": true
+}

@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_celestial_source_pearl": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "genesis_magic:celestial_source_pearl"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "genesis_magic:item/items/celestial_source_ingot"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_celestial_source_pearl",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "genesis_magic:item/items/celestial_source_ingot"
+    ]
+  },
+  "sends_telemetry_event": false
+}

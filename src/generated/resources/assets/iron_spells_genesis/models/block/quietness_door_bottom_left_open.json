@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/door_bottom_left_open",
-  "textures": {
-    "bottom": "iron_spells_genesis:block/quietness_door_bottom",
-    "top": "iron_spells_genesis:block/quietness_door_top"
-  }
-}

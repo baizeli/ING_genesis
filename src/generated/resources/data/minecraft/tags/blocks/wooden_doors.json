@@ -1,6 +1,6 @@
 {
   "values": [
-    "iron_spells_genesis:sway_door",
-    "iron_spells_genesis:quietness_door"
+    "genesis_magic:sway_door",
+    "genesis_magic:quietness_door"
   ]
 }

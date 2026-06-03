@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 @SuppressWarnings("removal")
 public class MithrilPickaxe extends PickaxeItem {
     public MithrilPickaxe(Tier tier, int attackDamage, float attackSpeed, Properties properties) {
-        super(tier, attackDamage, attackSpeed, properties);
+        super(tier, (int) -tier.getAttackDamageBonus(), 0.0F, properties);
     }
 
     @Override

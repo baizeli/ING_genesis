@@ -1,6 +1,7 @@
 package miku.united_as_one.genesis.registries.workbench;
 
 import miku.united_as_one.genesis.contents.workbench.arcane.ArcaneWorkbenchRecipe;
+import miku.united_as_one.genesis.contents.workbench.arcane_cauldron.ArcaneCauldronRecipe;
 import miku.united_as_one.genesis.Genesis;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -16,6 +17,9 @@ public class ModRecipeTypes
     // 奥术工作台的自定义配方类型。
     public static final RegistryObject<RecipeType<ArcaneWorkbenchRecipe>> ARCANE_WORKBENCH_RECIPE_TYPE =
             RECIPE_TYPES.register("arcane_workbench", () -> RecipeType.simple(Genesis.rl("arcane_workbench")));
+
+    public static final RegistryObject<RecipeType<ArcaneCauldronRecipe>> ARCANE_CAULDRON_RECIPE_TYPE =
+            RECIPE_TYPES.register("arcane_cauldron", () -> RecipeType.simple(Genesis.rl("arcane_cauldron")));
 
     public static void register(IEventBus eventBus) {
         RECIPE_TYPES.register(eventBus);

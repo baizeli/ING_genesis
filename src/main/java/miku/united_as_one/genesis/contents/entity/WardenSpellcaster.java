@@ -293,7 +293,7 @@ implements IFlagMob
 
     Warden warden;
 
-    private float getAttackDamage() {
+    public float getAttackDamage() {
         return (float)this.getAttributeValue(Attributes.ATTACK_DAMAGE);
     }
 

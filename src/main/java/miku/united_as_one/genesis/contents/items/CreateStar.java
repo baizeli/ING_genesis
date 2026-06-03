@@ -1,10 +1,13 @@
 package miku.united_as_one.genesis.contents.items;
 
-import miku.united_as_one.genesis.api.render.RainbowEffectHelper;
+import miku.bai_ze_li.genesis.api.annotation.GenesisAnnotations;
+import miku.bai_ze_li.genesis.api.annotation.GenesisItemNameEffect;
+import miku.bai_ze_li.genesis.api.annotation.GenesisTextEffect.Preset;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
+@GenesisItemNameEffect(preset = Preset.BLUE_GRADIENT)
 public class CreateStar extends Item {
 
     public CreateStar(Properties p_41383_) {
@@ -18,6 +21,6 @@ public class CreateStar extends Item {
             return originalName;
         }
         stack.getOrCreateTag().putInt("HideFlags", 2);
-        return RainbowEffectHelper.createCustomGradientText(originalName.getString(), RainbowEffectHelper.BLUE, 3, 1, 0.03F, 1F);
+        return GenesisAnnotations.applyItemNameEffect(CreateStar.class, originalName);
     }
 }

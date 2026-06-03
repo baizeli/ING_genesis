@@ -9,7 +9,6 @@ import miku.united_as_one.genesis.contents.entity.spell.celestial_source.blade_w
 import miku.united_as_one.genesis.contents.entity.spell.celestial_source.blade_works.SwordEntity;
 import miku.united_as_one.genesis.contents.entity.spell.eldritch.SummonedWardenEntity;
 import miku.united_as_one.genesis.contents.entity.spell.fire.SummonedKeeperEntity;
-import miku.united_as_one.genesis.contents.entity.test.BaiZeLiEntity;
 import miku.united_as_one.genesis.registries.entity.EntityRegistry;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -32,6 +31,5 @@ public final class EntityAttributeRegistry {
         event.put(EntityRegistry.BLOOD_TENTACLE.get(), VoidTentacle.createLivingAttributes().build());
         event.put(EntityRegistry.SUMMONED_KEEPER.get(), SummonedKeeperEntity.createAttributes().build());
         event.put(EntityRegistry.SUMMONED_WARDEN.get(), SummonedWardenEntity.createAttributes().build());
-        event.put(EntityRegistry.BAI_ZE_LI.get(), BaiZeLiEntity.createAttributes().build());
     }
 }

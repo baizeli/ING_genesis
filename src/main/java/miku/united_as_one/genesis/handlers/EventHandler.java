@@ -1,6 +1,11 @@
 package miku.united_as_one.genesis.handlers;
 
+import io.redspace.ironsspellbooks.api.spells.ISpellContainer;
+import io.redspace.ironsspellbooks.api.spells.SchoolType;
+import io.redspace.ironsspellbooks.item.Scroll;
+import miku.bai_ze_li.genesis.api.render.tooltip.TooltipBackgroundRenderContext;
 import miku.united_as_one.genesis.Genesis;
+import miku.united_as_one.genesis.api.render.RenderUtils;
 import miku.united_as_one.genesis.contents.items.CelestialSourceBase;
 import miku.united_as_one.genesis.contents.items.ChaosBase;
 import miku.united_as_one.genesis.contents.items.spell.spellbook.CelestialSourceSpellBook;
@@ -15,12 +20,16 @@ import miku.united_as_one.genesis.packets.DeadListSyncPacket;
 import miku.united_as_one.genesis.packets.NetworkHandler;
 import miku.united_as_one.genesis.packets.WireBoxSyncPacket;
 import miku.united_as_one.genesis.data.save.SaveManager;
+import miku.united_as_one.genesis.registries.spell.SpellSchoolRegistry;
 import com.google.common.collect.Iterables;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.entity.LevelEntityGetter;
 import net.minecraftforge.client.event.RenderTooltipEvent;
 import net.minecraftforge.event.TickEvent;
@@ -35,6 +44,34 @@ import java.util.*;
 
 @Mod.EventBusSubscriber(modid = Genesis.MODID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class EventHandler {
+    static {
+        TooltipBackgroundRenderContext.registerTransparentNamespace(Genesis.MOD_ID);
+        TooltipBackgroundRenderContext.registerResolver(stack -> {
+            if (!(stack.getItem() instanceof Scroll)) {
+                return TooltipBackgroundRenderContext.Style.NONE;
+            }
+            return resolveScrollTooltipStyle(stack);
+        });
+    }
+
+    private static TooltipBackgroundRenderContext.Style resolveScrollTooltipStyle(ItemStack stack) {
+        try {
+            ISpellContainer container = ISpellContainer.getOrCreate(stack);
+            for (var slot : container.getActiveSpells()) {
+                SchoolType schoolType = slot.getSpell().getSchoolType();
+                if (schoolType.equals(SpellSchoolRegistry.CHAOS.get())) {
+                    return TooltipBackgroundRenderContext.Style.CHAOS;
+                }
+                if (schoolType.equals(SpellSchoolRegistry.CELESTIAL_SOURCE.get())) {
+                    return TooltipBackgroundRenderContext.Style.CELESTIAL_SOURCE;
+                }
+            }
+        } catch (RuntimeException ignored) {
+            return TooltipBackgroundRenderContext.Style.NONE;
+        }
+        return TooltipBackgroundRenderContext.Style.NONE;
+    }
+
     @SubscribeEvent
     public static void onServerStopping(ServerStoppingEvent event) {
         if (Arrays.toString(Thread.currentThread().getStackTrace()).contains("doLoad")) return;
@@ -88,6 +125,19 @@ public class EventHandler {
     @SubscribeEvent
     public static void onTooltipColor(RenderTooltipEvent.Color event) {
         try {
+            TooltipBackgroundRenderContext.Style style = resolveTooltipStyle(event.getItemStack());
+            if (style == TooltipBackgroundRenderContext.Style.TRANSPARENT) {
+                event.setBackground(0);
+                event.setBorderStart(0);
+                event.setBorderEnd(0);
+                return;
+            }
+            if (style.drawsCosmic()) {
+                event.setBackground(0);
+                renderCosmicTooltipBackground(event, style.cosmicType());
+                return;
+            }
+
             Item item = event.getItemStack().getItem();
 
             if (item instanceof CelestialSourceSpellArmor ||
@@ -119,7 +169,44 @@ public class EventHandler {
                 event.setBorderStart(0xFFFF0000); // 红色
                 event.setBorderEnd(0xFFFF0000);
             }
-        } catch (NullPointerException ignored) {}
+        } catch (RuntimeException ignored) {}
+    }
+
+    private static TooltipBackgroundRenderContext.Style resolveTooltipStyle(ItemStack stack) {
+        if (stack != null && stack.getItem() instanceof Scroll) {
+            return resolveScrollTooltipStyle(stack);
+        }
+        return TooltipBackgroundRenderContext.resolve(stack);
+    }
+
+    private static void renderCosmicTooltipBackground(RenderTooltipEvent.Color event, int cosmicType) {
+        int width = 0;
+        int height = event.getComponents().size() == 1 ? -2 : 0;
+
+        for (ClientTooltipComponent component : event.getComponents()) {
+            width = Math.max(width, component.getWidth(event.getFont()));
+            height += component.getHeight();
+        }
+
+        if (width <= 0 || height <= 0) {
+            return;
+        }
+
+        GuiGraphics graphics = event.getGraphics();
+        graphics.pose().pushPose();
+        graphics.pose().translate(0.0F, 0.0F, 400.0F);
+        RenderUtils.renderCosmicBackground(
+                graphics.pose(),
+                graphics.bufferSource(),
+                null,
+                width + 3,
+                height + 3,
+                event.getX() + width / 2.0,
+                event.getY() + height / 2.0,
+                15728880,
+                cosmicType
+        );
+        graphics.pose().popPose();
     }
 
     /**

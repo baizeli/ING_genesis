@@ -5,7 +5,7 @@ import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.client.model.boss.BloodBossModel;
 import miku.united_as_one.genesis.client.render.FFRenderTypes;
 import miku.united_as_one.genesis.contents.entity.boss.BloodBoss;
-import miku.united_as_one.genesis.contents.entity.boss.TrailComponent;
+import miku.bai_ze_li.genesis.api.entity.TrailComponent;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import com.mojang.blaze3d.vertex.PoseStack;

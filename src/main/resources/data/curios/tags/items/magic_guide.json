@@ -1,14 +1,14 @@
 {
   "values": [
-    "iron_spells_genesis:eternal_ring",
-    "iron_spells_genesis:ender_rune_plus",
-    "iron_spells_genesis:fire_rune_plus",
-    "iron_spells_genesis:holy_rune_plus",
-    "iron_spells_genesis:ice_rune_plus",
-    "iron_spells_genesis:blood_rune_plus",
-    "iron_spells_genesis:lightning_rune_plus",
-    "iron_spells_genesis:nature_rune_plus",
-    "iron_spells_genesis:eldritch_rune_plus",
-    "iron_spells_genesis:lao_wang_237"
+    "genesis_magic:eternal_ring",
+    "genesis_magic:ender_rune_plus",
+    "genesis_magic:fire_rune_plus",
+    "genesis_magic:holy_rune_plus",
+    "genesis_magic:ice_rune_plus",
+    "genesis_magic:blood_rune_plus",
+    "genesis_magic:lightning_rune_plus",
+    "genesis_magic:nature_rune_plus",
+    "genesis_magic:eldritch_rune_plus",
+    "genesis_magic:lao_wang_237"
   ]
 }

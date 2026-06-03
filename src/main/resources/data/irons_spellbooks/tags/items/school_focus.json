@@ -10,7 +10,7 @@
     "#irons_spellbooks:evocation_focus",
     "#irons_spellbooks:nature_focus",
     "#irons_spellbooks:eldritch_focus",
-    "#iron_spells_genesis:chaos_focus",
-    "#iron_spells_genesis:celestial_source_focus"
+    "#genesis_magic:chaos_focus",
+    "#genesis_magic:celestial_source_focus"
   ]
 }

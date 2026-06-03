@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "A": {
+      "item": "irons_spellbooks:energized_core"
+    },
+    "B": {
+      "item": "irons_spellbooks:dragonskin"
+    },
+    "C": {
+      "item": "genesis_magic:lightning_crystal"
+    }
+  },
+  "pattern": [
+    " CB",
+    "CAB",
+    " CB"
+  ],
+  "result": {
+    "item": "genesis_magic:thunder_longbow"
+  },
+  "show_notification": true
+}

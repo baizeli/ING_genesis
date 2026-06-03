@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "iron_spells_genesis:sway_sapling",
-    "iron_spells_genesis:quietness_sapling"
+    "genesis_magic:sway_sapling",
+    "genesis_magic:quietness_sapling"
   ]
 }

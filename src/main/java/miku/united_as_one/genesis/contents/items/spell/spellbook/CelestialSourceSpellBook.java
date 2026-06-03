@@ -1,17 +1,13 @@
 package miku.united_as_one.genesis.contents.items.spell.spellbook;
 
-import miku.united_as_one.genesis.client.tooltipParticleHandler.ITooltipParticleItem;
-import miku.united_as_one.genesis.client.tooltipParticleHandler.PTID;
-import miku.united_as_one.genesis.client.tooltipParticleHandler.TooltipParticleSystem;
-import miku.united_as_one.genesis.registries.spell.SpellAttributesRegistry;
+import miku.bai_ze_li.genesis.api.render.tooltip.ITooltipParticleItem;
+import miku.bai_ze_li.genesis.api.render.tooltip.PTID;
+import miku.bai_ze_li.genesis.api.render.tooltip.TooltipParticleSystem;
 import io.redspace.ironsspellbooks.api.item.curios.AffinityData;
-import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import io.redspace.ironsspellbooks.item.SpellBook;
-import io.redspace.ironsspellbooks.item.weapons.AttributeContainer;
 import io.redspace.ironsspellbooks.util.TooltipsUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
@@ -22,11 +18,6 @@ import java.util.List;
 public class CelestialSourceSpellBook extends SpellBook implements ITooltipParticleItem {
     public CelestialSourceSpellBook() {
         super(15);
-        this.withSpellbookAttributes(new AttributeContainer(AttributeRegistry.SPELL_POWER, 0.1,
-                AttributeModifier.Operation.MULTIPLY_BASE), new AttributeContainer(AttributeRegistry.MAX_MANA, 900,
-                AttributeModifier.Operation.ADDITION), new AttributeContainer(AttributeRegistry.COOLDOWN_REDUCTION, 0.3,
-                AttributeModifier.Operation.MULTIPLY_BASE), new AttributeContainer(SpellAttributesRegistry.CELESTIAL_SOURCE_SPELL_POWER, 0.1,
-                AttributeModifier.Operation.MULTIPLY_BASE));
     }
 
     public void appendHoverText(@NotNull ItemStack itemStack, Level context, @NotNull List<Component> lines, @NotNull TooltipFlag flag) {

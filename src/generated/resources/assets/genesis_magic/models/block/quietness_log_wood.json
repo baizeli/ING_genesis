@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "genesis_magic:block/quietness_log",
+    "side": "genesis_magic:block/quietness_log"
+  }
+}

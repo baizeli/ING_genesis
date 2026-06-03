@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 1,
+  "ingredient": {
+    "item": "genesis_magic:heart_sculpting"
+  },
+  "result": "genesis_magic:heart_sculpting_stairs"
+}

@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "genesis_magic:celestial_source_ingot"
+  },
+  "base": {
+    "item": "genesis_magic:chaos_spell_book"
+  },
+  "result": {
+    "item": "genesis_magic:celestial_source_spell_book"
+  },
+  "template": {
+    "item": "genesis_magic:create_star"
+  }
+}

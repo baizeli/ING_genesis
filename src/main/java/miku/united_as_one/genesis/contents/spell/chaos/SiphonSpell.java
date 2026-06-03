@@ -52,7 +52,7 @@ public class SiphonSpell extends ChaosBaseSpell {
     public List<MutableComponent> getUniqueInfo(int spellLevel, LivingEntity caster) {
         return List.of(
             Component.translatable(
-                "ui.iron_spells_genesis.absorption_healing", 
+                "ui.genesis_magic.absorption_healing", 
                 Utils.stringTruncation(getSpellPower(spellLevel, caster), 1)
             ),
             Component.translatable(

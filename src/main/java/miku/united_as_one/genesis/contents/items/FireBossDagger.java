@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class FireBossDagger extends SwordItem {
     public FireBossDagger(Tier tier, int attackDamageModifier, float attackSpeedModifier, Properties properties) {
-        super(tier, attackDamageModifier, attackSpeedModifier, properties);
+        super(tier, (int) -tier.getAttackDamageBonus(), 0.0F, properties);
     }
 
     @Override

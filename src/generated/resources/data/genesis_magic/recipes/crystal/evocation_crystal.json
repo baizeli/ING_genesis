@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "X": {
+      "item": "genesis_magic:arcane_crystal"
+    },
+    "Y": {
+      "item": "minecraft:emerald"
+    }
+  },
+  "pattern": [
+    "YXY",
+    "XYX",
+    "YXY"
+  ],
+  "result": {
+    "count": 2,
+    "item": "genesis_magic:evocation_crystal"
+  },
+  "show_notification": true
+}

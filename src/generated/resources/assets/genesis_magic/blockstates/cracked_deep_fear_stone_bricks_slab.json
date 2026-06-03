@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "genesis_magic:block/cracked_deep_fear_stone_bricks_slab"
+    },
+    "type=double": {
+      "model": "genesis_magic:block/cracked_deep_fear_stone_bricks"
+    },
+    "type=top": {
+      "model": "genesis_magic:block/cracked_deep_fear_stone_bricks_slab_top"
+    }
+  }
+}

@@ -2,6 +2,9 @@ package miku.united_as_one.genesis.registries.client;
 
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.client.particles.*;
+import miku.bai_ze_li.genesis.api.render.particle.CrescentBladeParticle;
+import miku.bai_ze_li.genesis.api.render.particle.CubeParticle;
+import miku.bai_ze_li.genesis.api.render.particle.GlowCubeParticle;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
@@ -25,6 +28,8 @@ public class ParticleRegistry {
     // 开发和预留粒子：当前可能只在调试入口触发，后续效果迭代仍会复用。
     public static final RegistryObject<SimpleParticleType> CUBE =
             PARTICLE_TYPES.register("cube", () -> new SimpleParticleType(false));
+    public static final RegistryObject<SimpleParticleType> GLOW_CUBE =
+            PARTICLE_TYPES.register("glow_cube", () -> new SimpleParticleType(false));
     public static final RegistryObject<SimpleParticleType> TEST =
             PARTICLE_TYPES.register("test", () -> new SimpleParticleType(false));
     public static final RegistryObject<SimpleParticleType> TESTA =
@@ -58,9 +63,11 @@ public class ParticleRegistry {
         @SubscribeEvent
         public static void registerParticleFactories(RegisterParticleProvidersEvent event) {
             var particleEngine = Minecraft.getInstance().particleEngine;
+            CrescentBladeParticle.setBloodDripHangParticle(BLOOD_DRIP_HANG::get);
 
             particleEngine.register(STARDUST_TRAIL.get(), StardustTrailParticle.StardustProvider::new);
             particleEngine.register(CUBE.get(), CubeParticle.Provider::new);
+            particleEngine.register(GLOW_CUBE.get(), GlowCubeParticle.Provider::new);
             particleEngine.register(TEST.get(), TestParticle.Provider::new);
             particleEngine.register(TESTA.get(), TestAParticle.Provider::new);
             particleEngine.register(TESTB.get(), TestBParticle.Provider::new);

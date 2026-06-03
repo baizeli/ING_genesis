@@ -3,12 +3,11 @@ package miku.united_as_one.genesis.registries.entity;
 import io.redspace.ironsspellbooks.entity.spells.void_tentacle.VoidTentacle;
 import miku.united_as_one.genesis.contents.entity.*;
 import miku.united_as_one.genesis.contents.entity.LightningBolt;
-import miku.united_as_one.genesis.contents.entity.arrow.BloodArrowEntity;
-import miku.united_as_one.genesis.contents.entity.arrow.HolyArrowEntity;
-import miku.united_as_one.genesis.contents.entity.arrow.StellarArrowEntity;
-import miku.united_as_one.genesis.contents.entity.arrow.ThunderArrowEntity;
+import miku.united_as_one.genesis.contents.entity.arrow.SpecialArrowEntity;
 import miku.united_as_one.genesis.contents.entity.boss.BloodBoss;
 import miku.united_as_one.genesis.contents.entity.boss.HammerMob;
+import miku.united_as_one.genesis.contents.entity.gungnir.GungnirChainLightning;
+import miku.united_as_one.genesis.contents.entity.gungnir.GungnirDaggerEntity;
 import miku.united_as_one.genesis.contents.entity.laser.DeathLaserEntity;
 import miku.united_as_one.genesis.contents.entity.projectile.ThrownIron;
 import miku.united_as_one.genesis.contents.entity.spell.eldritch.*;
@@ -19,7 +18,6 @@ import miku.united_as_one.genesis.contents.entity.spell.celestial_source.*;
 import miku.united_as_one.genesis.contents.entity.spell.celestial_source.blade_works.*;
 import miku.united_as_one.genesis.contents.entity.spell.fire.*;
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.contents.entity.test.BaiZeLiEntity;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -161,34 +159,19 @@ public class EntityRegistry {
                     .updateInterval(1)
                     .build("iron"));
 
-    // 特效箭矢实体注册
-    public static final RegistryObject<EntityType<ThunderArrowEntity>> THUNDER_ARROW = ENTITY_TYPES.register("thunder_arrow",
-            () -> EntityType.Builder.<ThunderArrowEntity>of(ThunderArrowEntity::new, MobCategory.MISC)
+    public static final RegistryObject<EntityType<SpecialArrowEntity>> SPECIAL_ARROW = ENTITY_TYPES.register("special_arrow",
+            () -> EntityType.Builder.<SpecialArrowEntity>of(SpecialArrowEntity::new, MobCategory.MISC)
                     .sized(0.5F, 0.5F)
                     .clientTrackingRange(4)
                     .updateInterval(20)
-                    .build("thunder_arrow"));
+                    .build("special_arrow"));
 
-    public static final RegistryObject<EntityType<HolyArrowEntity>> HOLY_ARROW = ENTITY_TYPES.register("holy_arrow",
-            () -> EntityType.Builder.<HolyArrowEntity>of(HolyArrowEntity::new, MobCategory.MISC)
+    public static final RegistryObject<EntityType<UltimateWhisperArrowEntity>> ULTIMATE_WHISPER_ARROW = ENTITY_TYPES.register("ultimate_whisper_arrow",
+            () -> EntityType.Builder.<UltimateWhisperArrowEntity>of(UltimateWhisperArrowEntity::new, MobCategory.MISC)
                     .sized(0.5F, 0.5F)
-                    .clientTrackingRange(4)
-                    .updateInterval(20)
-                    .build("holy_arrow"));
-
-    public static final RegistryObject<EntityType<BloodArrowEntity>> BLOOD_ARROW = ENTITY_TYPES.register("blood_arrow",
-            () -> EntityType.Builder.<BloodArrowEntity>of(BloodArrowEntity::new, MobCategory.MISC)
-                    .sized(0.5F, 0.5F)
-                    .clientTrackingRange(4)
-                    .updateInterval(20)
-                    .build("blood_arrow"));
-
-    public static final RegistryObject<EntityType<StellarArrowEntity>> STELLAR_ARROW = ENTITY_TYPES.register("stellar_arrow",
-            () -> EntityType.Builder.<StellarArrowEntity>of(StellarArrowEntity::new, MobCategory.MISC)
-                    .sized(0.5F, 0.5F)
-                    .clientTrackingRange(4)
-                    .updateInterval(20)
-                    .build("stellar_arrow"));
+                    .clientTrackingRange(64)
+                    .updateInterval(1)
+                    .build("ultimate_whisper_arrow"));
 
     public static final RegistryObject<EntityType<SummonedKeeperEntity>> SUMMONED_KEEPER = ENTITY_TYPES.register("summoned_keeper",
             () -> EntityType.Builder.<SummonedKeeperEntity>of(SummonedKeeperEntity::new, MobCategory.MONSTER)
@@ -210,12 +193,21 @@ public class EntityRegistry {
             register("warden_spellcaster", EntityType.Builder.of(WardenSpellcaster::new, MobCategory.MONSTER)
                     .sized(0.9F, 2.9F).fireImmune());
 
-    public static final RegistryObject<EntityType<BaiZeLiEntity>> BAI_ZE_LI = ENTITY_TYPES.register("bai_ze_li",
-            () -> EntityType.Builder.<BaiZeLiEntity>of(BaiZeLiEntity::new, MobCategory.MONSTER)
-                    .sized(0.6f, 1.8f)
+    public static final RegistryObject<EntityType<GungnirDaggerEntity>> GUNGNIR_DAGGER_PROJECTILE = ENTITY_TYPES.register("gungnir_dagger",
+            () -> EntityType.Builder.of(
+                            (EntityType<GungnirDaggerEntity> type, Level level) -> new GungnirDaggerEntity(type, level),
+                            MobCategory.MISC)
+                    .sized(0.5F, 0.5F)
                     .clientTrackingRange(64)
-                    .updateInterval(1)
-                    .build("bai_ze_li"));
+                    .build("gungnir_dagger"));
+
+    public static final RegistryObject<EntityType<GungnirChainLightning>> GUNGNIR_CHAIN_LIGHTNING_PROJECTILE = ENTITY_TYPES.register("gungnir_chain_lightning",
+            () -> EntityType.Builder.of(
+                            (EntityType<GungnirChainLightning> type, Level level) -> new GungnirChainLightning(type, level),
+                            MobCategory.MISC)
+                    .sized(0.5F, 0.5F)
+                    .clientTrackingRange(64)
+                    .build("gungnir_chain_lightning"));
 
     public static void register(IEventBus eventBus) {
         ENTITY_TYPES.register(eventBus);

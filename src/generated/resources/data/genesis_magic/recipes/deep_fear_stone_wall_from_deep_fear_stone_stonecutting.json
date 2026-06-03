@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 1,
+  "ingredient": {
+    "item": "genesis_magic:deep_fear_stone"
+  },
+  "result": "genesis_magic:deep_fear_stone_wall"
+}

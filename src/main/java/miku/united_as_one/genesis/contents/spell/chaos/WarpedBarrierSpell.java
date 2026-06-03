@@ -1,6 +1,8 @@
 package miku.united_as_one.genesis.contents.spell.chaos;
 
+import miku.bai_ze_li.genesis.api.nbt.GenesisPersistentData;
 import miku.united_as_one.genesis.Genesis;
+import miku.united_as_one.genesis.contents.effect.spell.chaos.WarpedBarrierEffect;
 import miku.united_as_one.genesis.registries.effect.EffectRegistry;
 import miku.united_as_one.genesis.registries.spell.SpellSchoolRegistry;
 import io.redspace.ironsspellbooks.api.config.DefaultConfig;
@@ -40,8 +42,8 @@ public class WarpedBarrierSpell extends ChaosBaseSpell {
 
     @Override
     public List<MutableComponent> getUniqueInfo(int spellLevel, LivingEntity caster) {
-        return List.of(Component.translatable("ui.iron_spells_genesis.health_cost_percent", 90, 1),
-                Component.translatable("ui.iron_spells_genesis.health_conversion_efficiency", Utils.stringTruncation(getSpellPower(spellLevel, caster), 1)),
+        return List.of(Component.translatable("ui.genesis_magic.health_cost_percent", 90, 1),
+                Component.translatable("ui.genesis_magic.health_conversion_efficiency", Utils.stringTruncation(getSpellPower(spellLevel, caster), 1)),
                 Component.translatable("ui.irons_spellbooks.effect_length", Utils.timeFromTicks(getEffectDuration(spellLevel, caster), 1), 1)
         );
     }
@@ -93,7 +95,7 @@ public class WarpedBarrierSpell extends ChaosBaseSpell {
         }
 
         float convertedShield = (float) (damage * getConvertPercent(spellLevel, entity));
-        entity.getPersistentData().putFloat(Genesis.MOD_ID + ":shield_amount", convertedShield);
+        GenesisPersistentData.putFloat(entity, WarpedBarrierEffect.SHIELD_AMOUNT, convertedShield);
 
         entity.addEffect(new MobEffectInstance(
                 EffectRegistry.WARPED_BARRIER.get(),

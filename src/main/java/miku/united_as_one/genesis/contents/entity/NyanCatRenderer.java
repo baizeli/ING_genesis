@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.contents.entity;
 
-import miku.united_as_one.genesis.client.render.ModShaders;
+import miku.bai_ze_li.genesis.api.render.shader.GenesisShaders;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -94,7 +94,7 @@ public class NyanCatRenderer extends EntityRenderer<NyanCat> {
             false,
             false,
             RenderType.CompositeState.builder()
-                    .setShaderState(new RenderStateShard.ShaderStateShard(ModShaders::getRainbowShader))
+                    .setShaderState(new RenderStateShard.ShaderStateShard(GenesisShaders::getRainbowShader))
                     .setCullState(RenderStateShard.NO_CULL)
                     .setTransparencyState(RenderStateShard.TRANSLUCENT_TRANSPARENCY)
                     .setDepthTestState(RenderStateShard.LEQUAL_DEPTH_TEST) // 添加深度测试

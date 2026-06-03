@@ -2,7 +2,7 @@
 {
   "replace": false,
   "values": [
-    "iron_spells_genesis:blackwater_fluid",
-    "iron_spells_genesis:blood_fluid"
+    "genesis_magic:blackwater_fluid",
+    "genesis_magic:blood_fluid"
   ]
 }

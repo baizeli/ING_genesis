@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "genesis_magic:block/quietness_slab"
+    },
+    "type=double": {
+      "model": "genesis_magic:block/quietness_planks"
+    },
+    "type=top": {
+      "model": "genesis_magic:block/quietness_slab_top"
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "girl_a": {
+    "category": "music",
+    "sounds": [
+      {
+        "name": "genesis_magic:girl_a",
+        "stream": true
+      }
+    ]
+  },
+  "chaos_cast": {
+    "sounds": [
+      "genesis_magic:generic/chaos_cast"
+    ]
+  },
+  "celestia_source": {
+    "sounds": [
+      "genesis_magic:generic/celestia_source"
+    ]
+  },
+  "culinary": {
+    "sounds": [
+      "genesis_magic:generic/culinary"
+    ]
+  },
+  "evasion": {
+    "sounds": [
+      "genesis_magic:evasion"
+    ],
+    "subtitle": "subtitles.genesis_magic.evasion"
+  },
+  "van_sh_hit": {
+    "sounds": [
+      "genesis_magic:van_sh_hit"
+    ],
+    "subtitle": "subtitles.genesis_magic.van_sh_hit"
+  },
+  "cute_hit": {
+    "sounds": [
+      "genesis_magic:cute_hit"
+    ],
+    "subtitle": "subtitles.genesis_magic.cute_hit"
+  },
+  "battle_sanctuary": {
+    "sounds": [
+      "genesis_magic:battle_sanctuary"
+    ]
+  }
+}

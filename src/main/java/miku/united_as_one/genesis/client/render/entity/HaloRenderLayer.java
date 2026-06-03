@@ -1,8 +1,9 @@
 package miku.united_as_one.genesis.client.render.entity;
 
-import miku.united_as_one.genesis.client.render.ModRenderType;
-import miku.united_as_one.genesis.client.render.ModShaders;
-import miku.united_as_one.genesis.client.render.cosmic.AvaritiaShaders;
+import miku.bai_ze_li.genesis.GenesisLib;
+import miku.bai_ze_li.genesis.api.render.shader.GenesisRenderType;
+import miku.bai_ze_li.genesis.api.render.shader.GenesisShaders;
+import miku.bai_ze_li.genesis.api.render.cosmic.AvaritiaShaders;
 import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.registries.item.ItemRegistry;
 import com.mojang.blaze3d.pipeline.RenderTarget;
@@ -117,8 +118,8 @@ public class HaloRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerMod
     }
 
     public static void setHaloShader(float pk) {
-        ModShaders.setTime(ModShaders.getHaloShader(), pk / 10F);
-        ModShaders.setScreenSize(ModShaders.getHaloShader());
+        GenesisShaders.setTime(GenesisShaders.getHaloShader(), pk / 10F);
+        GenesisShaders.setScreenSize(GenesisShaders.getHaloShader());
 
         Minecraft mc = Minecraft.getInstance();
         RenderTarget mainTarget = Minecraft.instance.mainRenderTarget;
@@ -144,7 +145,7 @@ public class HaloRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerMod
 
         // 准备纹理UV
         for (int i = 0; i < 10; ++i) {
-            TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(ResourceLocation.fromNamespaceAndPath(Genesis.MOD_ID, "item/misc/cosmic_" + i));
+            TextureAtlasSprite sprite = Minecraft.getInstance().getTextureAtlas(InventoryMenu.BLOCK_ATLAS).apply(ResourceLocation.fromNamespaceAndPath(GenesisLib.MODID, "item/misc/cosmic_" + i));
             AvaritiaShaders.COSMIC_UVS[i * 4] = sprite.getU0();
             AvaritiaShaders.COSMIC_UVS[i * 4 + 1] = sprite.getV0();
             AvaritiaShaders.COSMIC_UVS[i * 4 + 2] = sprite.getU1();
@@ -159,8 +160,8 @@ public class HaloRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerMod
         float midRadius = outerRadius * 0.4f; // 六芒星内凹点的半径
 
         VertexConsumer consumer;
-        if (type) consumer = buffer.getBuffer(ModRenderType.halo);
-        else consumer = buffer.getBuffer(ModRenderType.cosmic_world);
+        if (type) consumer = buffer.getBuffer(GenesisRenderType.halo);
+        else consumer = buffer.getBuffer(GenesisRenderType.cosmic_world);
 
         Matrix4f pose = poseStack.last().pose();
         Matrix3f normal = poseStack.last().normal();

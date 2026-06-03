@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 2,
+  "ingredient": {
+    "item": "genesis_magic:fire_stone"
+  },
+  "result": "genesis_magic:fire_stone_slab"
+}

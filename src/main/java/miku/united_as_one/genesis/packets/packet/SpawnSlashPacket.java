@@ -1,6 +1,6 @@
 package miku.united_as_one.genesis.packets.packet; // 注意你的包名
 
-import miku.united_as_one.genesis.client.render.SlashEffectAPI;
+import miku.bai_ze_li.genesis.api.render.effect.SlashEffectAPI;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;

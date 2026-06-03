@@ -4,7 +4,7 @@ import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.contents.items.curios.EternalRing;
 import miku.united_as_one.genesis.contents.items.curios.rune_plus.BloodRunePlus;
 import miku.united_as_one.genesis.contents.items.curios.rune_plus.NatureRunePlus;
-import miku.united_as_one.genesis.api.curios.ModCurios;
+import miku.bai_ze_li.genesis.api.curios.ModCurios;
 import io.redspace.ironsspellbooks.api.events.SpellOnCastEvent;
 import io.redspace.ironsspellbooks.api.registry.SpellRegistry;
 import net.minecraft.util.Mth;

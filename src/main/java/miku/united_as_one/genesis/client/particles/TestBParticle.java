@@ -1,8 +1,8 @@
 package miku.united_as_one.genesis.client.particles;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.client.render.ModShaderInstance;
-import miku.united_as_one.genesis.client.render.ModShaders;
+import miku.bai_ze_li.genesis.api.render.shader.GenesisShaderInstance;
+import miku.bai_ze_li.genesis.api.render.shader.GenesisShaders;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -127,7 +127,7 @@ public class TestBParticle extends Particle {
             false,
             false,
             RenderType.CompositeState.builder()
-                    .setShaderState(new RenderStateShard.ShaderStateShard(() -> ModShaders.getFloridShader()))
+                    .setShaderState(new RenderStateShard.ShaderStateShard(() -> GenesisShaders.getFloridShader()))
                     .setTextureState(new RenderStateShard.TextureStateShard(TEXTURE, false, false))
                     .setCullState(RenderStateShard.NO_CULL)
                     .createCompositeState(false)
@@ -139,7 +139,7 @@ public class TestBParticle extends Particle {
         if (this.removed || this.trailPointer <= -1) {
             return;
         }
-        ModShaderInstance shader = (ModShaderInstance) ModShaders.getFloridShader();
+        GenesisShaderInstance shader = (GenesisShaderInstance) GenesisShaders.getFloridShader();
         if (shader == null) {
             return; 
         }

@@ -67,7 +67,7 @@ public class BloodWarSpell extends ChaosBaseSpell {
                 Utils.timeFromTicks(duration, 1)
             ),
             Component.translatable(
-                "ui.iron_spells_genesis.spell_power", 
+                "ui.genesis_magic.spell_power", 
                 Utils.stringTruncation(spellPowerBonuses[spellLevel - 1], 1)
             ),
             Component.translatable(
@@ -75,7 +75,7 @@ public class BloodWarSpell extends ChaosBaseSpell {
                 Utils.stringTruncation(damageBonuses[spellLevel - 1], 1)
             ),
             Component.translatable(
-                "ui.iron_spells_genesis.movement_speed", 
+                "ui.genesis_magic.movement_speed", 
                 Utils.stringTruncation(speedBonuses[spellLevel - 1], 1)
             )
         );

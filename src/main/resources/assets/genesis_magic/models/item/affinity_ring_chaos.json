@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "genesis_magic:item/affinity_ring_chaos"
+  }
+}

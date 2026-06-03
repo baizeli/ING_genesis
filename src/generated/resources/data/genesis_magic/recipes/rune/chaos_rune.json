@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "F": {
+      "tag": "genesis_magic:chaos_focus"
+    },
+    "R": {
+      "item": "irons_spellbooks:blank_rune"
+    }
+  },
+  "pattern": [
+    "FFF",
+    "FRF",
+    "FFF"
+  ],
+  "result": {
+    "item": "genesis_magic:chaos_rune"
+  },
+  "show_notification": true
+}

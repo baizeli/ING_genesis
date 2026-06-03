@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "genesis_magic:block/sway_planks",
+    "side": "genesis_magic:block/sway_planks",
+    "top": "genesis_magic:block/sway_planks"
+  }
+}

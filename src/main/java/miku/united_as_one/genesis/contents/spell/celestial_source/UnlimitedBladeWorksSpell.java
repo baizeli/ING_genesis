@@ -48,7 +48,7 @@ public class UnlimitedBladeWorksSpell extends CelestialSourceBaseSpell {
     }
 
     public List<MutableComponent> getUniqueInfo(int spellLevel, LivingEntity caster) {
-        return List.of(Component.translatable("ui.iron_spells_genesis.number_of_swords", getNumberOfSwords(spellLevel), 1),
+        return List.of(Component.translatable("ui.genesis_magic.number_of_swords", getNumberOfSwords(spellLevel), 1),
                 Component.translatable("ui.irons_spellbooks.cooldown", Utils.timeFromTicks(getCooldownInTicks(CastSource.NONE, caster), 1)));
     }
 

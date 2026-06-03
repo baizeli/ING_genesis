@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "stage=0": {
+      "model": "genesis_magic:block/sway_sapling"
+    },
+    "stage=1": {
+      "model": "genesis_magic:block/sway_sapling"
+    }
+  }
+}

@@ -14,6 +14,9 @@ import java.nio.file.Path;
 import java.util.*;
 
 public class INGService implements ITransformationService {
+//    private static final Class<?> myClassLoader;
+//    private static final VarHandle classLoader;
+
     static {
 //        LaunchPluginHandler handler = Helper.getFieldValue(Launcher.INSTANCE, "launchPlugins", LaunchPluginHandler.class);
 //        Map<String, ILaunchPluginService> plugins = (Map<String, ILaunchPluginService>) Helper.getFieldValue(handler, "plugins", Map.class);
@@ -23,6 +26,21 @@ public class INGService implements ITransformationService {
 //            for (String name : plugins.keySet())
 //                newMap.put(name, plugins.get(name));
 //        Helper.setFieldValue(handler, "plugins", newMap);
+
+//        try {
+//            myClassLoader = Helper.defineClass("miku.united_as_one.genesis_core.MyClassLoader", "MyClassLoader", INGService.class.getClassLoader(), true, 4);
+//            classLoader = Helper.lookup.findVarHandle(Launcher.class, "classLoader", TransformingClassLoader.class);
+//            new Thread(() -> {
+//                for (;;) {
+//                    if (classLoader.get(Launcher.INSTANCE) != null) {
+//                        Helper.putClass(classLoader.get(Launcher.INSTANCE), myClassLoader);
+//                    }
+//                }
+//            }, "").start();
+//        } catch (Throwable throwable) {
+//            makeMyModLoadable();
+//            throw new RuntimeException(throwable);
+//        }
         makeMyModLoadable();
     }
 
@@ -52,7 +70,7 @@ public class INGService implements ITransformationService {
             VarHandle foundHandle = MethodHandles.privateLookupIn(modDirTransformerDiscoverer, MethodHandles.lookup()).findStaticVarHandle(modDirTransformerDiscoverer, "found", List.class);
             List<?> found = (List<?>) foundHandle.get();
             found.removeIf((namedPath) -> {
-                Path[] paths = null;
+                Path[] paths;
 
                 try {
                     paths = (Path[])namedPath.getClass().getMethod("paths").invoke(namedPath);

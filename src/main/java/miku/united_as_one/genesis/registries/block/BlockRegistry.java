@@ -9,13 +9,16 @@ import miku.united_as_one.genesis.contents.block.GenesisFruitBushBlock;
 import miku.united_as_one.genesis.contents.block.GenesisTreeGrower;
 import miku.united_as_one.genesis.contents.block.util.SimpleBlockSet;
 import miku.united_as_one.genesis.contents.workbench.arcane.ArcaneWorkbenchBlock;
+import miku.united_as_one.genesis.contents.workbench.arcane_cauldron.ArcaneCauldronBlock;
 import miku.united_as_one.genesis.registries.item.CreativeTabRegistry;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.block.*;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
+import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraftforge.registries.*;
 
@@ -172,6 +175,14 @@ public class BlockRegistry {
     public static final BlockEntry<ArcaneWorkbenchBlock> ARCANE_WORKBENCH = Genesis.L2_REGISTRATE
             .block("arcane_workbench", ArcaneWorkbenchBlock::new)
             .properties(p -> p.lightLevel(s -> 9).strength(3.0f, 9.0f).requiresCorrectToolForDrops().sound(SoundType.STONE))
+            .register();
+
+    public static final BlockEntry<ArcaneCauldronBlock> ARCANE_CAULDRON = Genesis.L2_REGISTRATE
+            .block("arcane_cauldron", ArcaneCauldronBlock::new)
+            .initialProperties(() -> Blocks.CAULDRON)
+            .properties(p -> p.lightLevel(s -> 3).noOcclusion())
+            .blockstate((ctx, provider) -> provider.simpleBlock(ctx.get(), new ModelFile.UncheckedModelFile(new ResourceLocation("irons_spellbooks", "block/alchemist_cauldron"))))
+            .tag(BlockTags.MINEABLE_WITH_PICKAXE)
             .register();
 
     public static final BlockEntry<Block> CHAOS_PORTAL_FRAME = Genesis.L2_REGISTRATE

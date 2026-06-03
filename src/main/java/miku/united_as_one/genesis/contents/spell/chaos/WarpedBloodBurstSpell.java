@@ -47,7 +47,7 @@ public class WarpedBloodBurstSpell extends ChaosBaseSpell {
     @Override
     public List<MutableComponent> getUniqueInfo(int spellLevel, LivingEntity caster) {
         return List.of(Component.translatable("ui.irons_spellbooks.damage", Utils.stringTruncation(getSpellPower(spellLevel, caster), 1)),
-                /*Component.translatable("ui.iron_spells_genesis.percent_force_damage", Utils.stringTruncation(getForceDamage(spellLevel, caster), 1)),*/
+                /*Component.translatable("ui.genesis_magic.percent_force_damage", Utils.stringTruncation(getForceDamage(spellLevel, caster), 1)),*/
                 Component.translatable("ui.irons_spellbooks.radius", Utils.stringTruncation(10, 1))
         );
     }
@@ -115,7 +115,7 @@ public class WarpedBloodBurstSpell extends ChaosBaseSpell {
         } else if (!cancelled) {
             if (entity instanceof ServerPlayer sp) {
                 sp.sendSystemMessage(
-                        Component.translatable("spell.iron_spells_genesis.warped_blood_burst.low_health")
+                        Component.translatable("spell.genesis_magic.warped_blood_burst.low_health")
                                 .withStyle(ChatFormatting.DARK_RED),
                         true
                 );

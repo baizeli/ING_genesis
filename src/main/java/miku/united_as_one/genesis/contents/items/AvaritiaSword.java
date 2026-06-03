@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.contents.items;
 
 import miku.united_as_one.genesis.mixin.minecraft.world.entity.LivingEntityAccessor;
-import miku.united_as_one.genesis.api.text.TextUtils;
+import miku.bai_ze_li.genesis.api.text.GenesisText;
 import miku.united_as_one.genesis_core.utils.EventUtil;
 import miku.united_as_one.genesis.packets.DeadListSyncPacket;
 import miku.united_as_one.genesis.packets.MarkDeadPacket;
@@ -145,7 +145,7 @@ public class AvaritiaSword extends SwordItem
 
     @Override
     public Component getName(ItemStack p_41458_) {
-        return Component.translatable("item.iron_spells_genesis.avaritia_infinity_sword");
+        return Component.translatable("item.genesis_magic.avaritia_infinity_sword");
     }
 
     @Override
@@ -154,7 +154,7 @@ public class AvaritiaSword extends SwordItem
         p_41423_.add(getName(p_41421_));
         p_41423_.add(Component.literal("这把剑似乎是从1.7.10穿越过来的"));
         p_41423_.add(Component.literal("§7").append(Component.translatable("item.modifiers.mainhand")));
-        p_41423_.add(Component.translatable(TextUtils.makeFabulous("infinity ")).append(TextUtils.makeGreen(I18n.get("attribute.name.generic.attack_damage"))));
-        p_41423_.add(Component.translatable(TextUtils.makeGreen("1.6 ")).append(TextUtils.makeGreen(I18n.get("attribute.name.generic.attack_speed"))));
+        p_41423_.add(Component.translatable(GenesisText.makeFabulous("infinity ")).append(GenesisText.makeGreen(I18n.get("attribute.name.generic.attack_damage"))));
+        p_41423_.add(Component.translatable(GenesisText.makeGreen("1.6 ")).append(GenesisText.makeGreen(I18n.get("attribute.name.generic.attack_speed"))));
     }
 }

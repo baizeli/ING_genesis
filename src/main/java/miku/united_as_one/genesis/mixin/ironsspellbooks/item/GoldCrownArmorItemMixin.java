@@ -21,9 +21,9 @@ import java.util.UUID;
 @Mixin(GoldCrownArmorItem.class)
 public class GoldCrownArmorItemMixin implements ICurioItem {
     @Unique
-    private static final String eternisStarrySky$SLOT = "crown";
+    private static final String ironSpellGenesis$SLOT = "crown";
     @Unique
-    private static final AttributeContainer[] eternisStarrySky$ATTRIBUTES = {
+    private static final AttributeContainer[] ironSpellGenesis$ATTRIBUTES = {
             new AttributeContainer(AttributeRegistry.MAX_MANA, 10000.0F, AttributeModifier.Operation.ADDITION),
             new AttributeContainer(AttributeRegistry.COOLDOWN_REDUCTION, 0.75, AttributeModifier.Operation.MULTIPLY_TOTAL),
             new AttributeContainer(AttributeRegistry.SPELL_POWER, 1.0F, AttributeModifier.Operation.MULTIPLY_TOTAL)
@@ -31,13 +31,13 @@ public class GoldCrownArmorItemMixin implements ICurioItem {
 
     @Override
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(SlotContext slotContext, UUID uuid, ItemStack stack) {
-        if (!slotContext.identifier().equals(eternisStarrySky$SLOT)) {
+        if (!slotContext.identifier().equals(ironSpellGenesis$SLOT)) {
             return ICurioItem.super.getAttributeModifiers(slotContext, uuid, stack);
         }
 
         ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-        String id = String.format("%s_%s", eternisStarrySky$SLOT, slotContext.index());
-        for (AttributeContainer holder : eternisStarrySky$ATTRIBUTES) {
+        String id = String.format("%s_%s", ironSpellGenesis$SLOT, slotContext.index());
+        for (AttributeContainer holder : ironSpellGenesis$ATTRIBUTES) {
             builder.put(holder.attribute().get(), holder.createModifier(id));
         }
         return builder.build();

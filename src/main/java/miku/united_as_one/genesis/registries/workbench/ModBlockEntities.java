@@ -1,6 +1,7 @@
 package miku.united_as_one.genesis.registries.workbench;
 
 import miku.united_as_one.genesis.contents.workbench.arcane.ArcaneWorkbenchBlockEntity;
+import miku.united_as_one.genesis.contents.workbench.arcane_cauldron.ArcaneCauldronBlockEntity;
 import miku.united_as_one.genesis.registries.block.BlockRegistry;
 import miku.united_as_one.genesis.Genesis;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -17,6 +18,10 @@ public class ModBlockEntities {
     public static final RegistryObject<BlockEntityType<ArcaneWorkbenchBlockEntity>> ARCANE_WORKBENCH =
             BLOCK_ENTITIES.register("arcane_workbench",
                     () -> BlockEntityType.Builder.of(ArcaneWorkbenchBlockEntity::new, BlockRegistry.ARCANE_WORKBENCH.get()).build(null));
+
+    public static final RegistryObject<BlockEntityType<ArcaneCauldronBlockEntity>> ARCANE_CAULDRON =
+            BLOCK_ENTITIES.register("arcane_cauldron",
+                    () -> BlockEntityType.Builder.of(ArcaneCauldronBlockEntity::new, BlockRegistry.ARCANE_CAULDRON.get()).build(null));
 
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);

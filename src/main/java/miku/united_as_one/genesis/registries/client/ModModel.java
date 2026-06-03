@@ -1,7 +1,6 @@
 package miku.united_as_one.genesis.registries.client;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.client.model.BaiZeLiModel;
 import miku.united_as_one.genesis.client.model.entity.boss.*;
 import miku.united_as_one.genesis.client.model.ThrowBloodAndWoundsModel;
 import miku.united_as_one.genesis.client.model.WardenSpellcasterModel;
@@ -15,7 +14,6 @@ public class ModModel {
 
     @SubscribeEvent
     public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
-        event.registerLayerDefinition(BaiZeLiModel.LAYER_LOCATION, BaiZeLiModel::createBodyLayer);
         event.registerLayerDefinition(DeadStarDecreeCometModel.LAYER_LOCATION, DeadStarDecreeCometModel::createBodyLayer);
         event.registerLayerDefinition(ThrowBloodAndWoundsModel.LAYER_LOCATION, ThrowBloodAndWoundsModel::createBodyLayer);
         event.registerLayerDefinition(WardenSpellcasterModel.LAYER_LOCATION, WardenSpellcasterModel::createBodyLayer);

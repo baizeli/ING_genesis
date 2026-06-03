@@ -1,0 +1,12 @@
+{
+  "amount": 0.05,
+  "attribute": "genesis_magic:thunder_spell_penetration",
+  "containerItem": {
+    "Count": 1,
+    "id": "genesis_magic:thunder_orb_pro",
+    "tag": {
+      "irons_spellbooks:upgrade_orb_type": "genesis_magic:thunder_spell_penetration"
+    }
+  },
+  "operation": "MULTIPLY_BASE"
+}

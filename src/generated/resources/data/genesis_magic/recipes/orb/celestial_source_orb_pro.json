@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "O": {
+      "item": "genesis_magic:upgrade_orb_pro"
+    },
+    "X": {
+      "item": "genesis_magic:celestial_source_crystal"
+    },
+    "Y": {
+      "item": "genesis_magic:celestial_source_rune"
+    }
+  },
+  "pattern": [
+    "YXY",
+    "XOX",
+    "YXY"
+  ],
+  "result": {
+    "item": "genesis_magic:celestial_source_orb_pro"
+  },
+  "show_notification": true
+}

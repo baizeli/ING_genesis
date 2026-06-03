@@ -5,7 +5,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.client.render.cosmic.PerspectiveModelState;
+import miku.bai_ze_li.genesis.api.render.cosmic.PerspectiveModelState;
 import miku.united_as_one.genesis.registries.effect.EffectRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
@@ -42,7 +42,7 @@ public class ShieldRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerM
             // 初始化缓存
             if (this.cachedQuads == null) {
                 TextureAtlasSprite sprite = mc.getTextureAtlas(TextureAtlas.LOCATION_BLOCKS)
-                        .apply(ResourceLocation.fromNamespaceAndPath("iron_spells_genesis", "item/shield"));
+                        .apply(ResourceLocation.fromNamespaceAndPath("genesis_magic", "item/shield"));
                 this.cachedQuads = new ArrayList<>();
                 List<BlockElement> unbaked = new ItemModelGenerator().processFrames(0, "layer0", sprite.contents());
                 FaceBakery bakery = new FaceBakery();

@@ -26,6 +26,7 @@ import io.redspace.ironsspellbooks.network.EntityEventPacket;
 import io.redspace.ironsspellbooks.registries.MobEffectRegistry;
 import io.redspace.ironsspellbooks.setup.PacketDistributor;
 import miku.united_as_one.genesis.Genesis;
+import miku.bai_ze_li.genesis.api.entity.TrailComponent;
 import miku.united_as_one.genesis.registries.entity.ai.ModMemoryModuleType;
 import miku.united_as_one.genesis.contents.entity.boss.behavior.bloodbossskill.BloodBossEmergingBehavior;
 import miku.united_as_one.genesis.contents.entity.boss.damage.BloodBossDamageSource;

@@ -1,12 +1,10 @@
 package miku.united_as_one.genesis.contents.items.curios;
 
-import io.redspace.ironsspellbooks.api.registry.AttributeRegistry;
 import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 import top.theillusivec4.curios.api.SlotContext;
 
@@ -57,32 +55,9 @@ public class EternalRing extends ESSCurioItem {
 //        System.out.println("immuneEffectList : " + list);
 //    }
 
-    public EternalRing() {
-        attributeModifiers.put(AttributeRegistry.CAST_TIME_REDUCTION.get(), new AttributeModifier(
-                "Eternal Ring Cast Time Reduction", 0.2, AttributeModifier.Operation.MULTIPLY_BASE
-        ));
-        attributeModifiers.put(AttributeRegistry.MAX_MANA.get(), new AttributeModifier(
-                "Eternal Ring Max Mana", 200, AttributeModifier.Operation.ADDITION
-        ));
-        attributeModifiers.put(AttributeRegistry.SPELL_POWER.get(), new AttributeModifier(
-                "Eternal Ring Spell Power", 0.15, AttributeModifier.Operation.MULTIPLY_BASE
-        ));
-        attributeModifiers.put(Attributes.ARMOR, new AttributeModifier(
-                "Eternal Ring Armor", 6, AttributeModifier.Operation.ADDITION
-        ));
-        attributeModifiers.put(Attributes.LUCK, new AttributeModifier(
-                "Eternal Ring Luck", 4, AttributeModifier.Operation.ADDITION
-        ));
-        attributeModifiers.put(AttributeRegistry.COOLDOWN_REDUCTION.get(), new AttributeModifier(
-                "Eternal Ring Cooldown Reduction", 0.2, AttributeModifier.Operation.MULTIPLY_BASE
-        ));
-    }
-
     @Override
     public void curioTick(SlotContext slotContext, ItemStack stack) {
-        LivingEntity entity = slotContext.entity();
-        if(entity.getTicksFrozen() > 0) entity.setTicksFrozen(0);
-        if(entity.isOnFire()) entity.clearFire();
+        clearElementalState(slotContext.entity());
     }
 
     public static boolean test(ItemStack stack) {
@@ -90,6 +65,13 @@ public class EternalRing extends ESSCurioItem {
     }
 
     public static boolean immuneEffect(MobEffectInstance effectInstance) {
-        return immuneEffects.contains(effectInstance.getEffect());
+        MobEffect effect = effectInstance.getEffect();
+        return immuneEffects.contains(effect)
+                || (effect.getCategory() == MobEffectCategory.HARMFUL && effect != MobEffects.BAD_OMEN);
+    }
+
+    public static void clearElementalState(LivingEntity entity) {
+        if(entity.getTicksFrozen() > 0) entity.setTicksFrozen(0);
+        if(entity.isOnFire()) entity.clearFire();
     }
 }

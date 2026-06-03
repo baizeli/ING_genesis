@@ -24,7 +24,7 @@ public class ConfigValue {
     public ConfigValue(Object parent, String key, Font font) {
         this.key = key; this.font = font;
         this.label = new StringWidget(Component.translatable(key), font);
-        this.resetBtn = Button.builder(Component.translatable("iron_spells_genesis.config.reset"), b -> this.reset(this))
+        this.resetBtn = Button.builder(Component.translatable("genesis_magic.config.reset"), b -> this.reset(this))
                 .bounds(0, 0, 32, 18).build();
     }
 

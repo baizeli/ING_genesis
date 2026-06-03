@@ -1,7 +1,7 @@
 package miku.united_as_one.genesis.contents.items.armor;
 
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.client.tooltipParticleHandler.*;
+import miku.bai_ze_li.genesis.api.render.tooltip.*;
 import miku.united_as_one.genesis.api.equipment.ArmorSetUtil;
 import io.redspace.ironsspellbooks.entity.armor.*;
 import io.redspace.ironsspellbooks.item.armor.*;

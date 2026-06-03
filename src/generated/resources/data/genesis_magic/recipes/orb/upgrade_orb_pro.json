@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "O": {
+      "item": "irons_spellbooks:mithril_ingot"
+    },
+    "X": {
+      "item": "irons_spellbooks:arcane_essence"
+    },
+    "Y": {
+      "item": "genesis_magic:arcane_crystal"
+    }
+  },
+  "pattern": [
+    "YXY",
+    "XOX",
+    "YXY"
+  ],
+  "result": {
+    "item": "genesis_magic:upgrade_orb_pro"
+  },
+  "show_notification": true
+}

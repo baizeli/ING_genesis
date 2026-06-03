@@ -1,0 +1,11 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "genesis_magic:item/infinity_sword",
+    "layer1": "genesis_magic:item/infinity_sword_layer_1"
+  },
+  "loader": "genesis_magic:cosmic",
+  "cosmic": {
+    "mask": "genesis_magic:item/mask/u_mask"
+  }
+}

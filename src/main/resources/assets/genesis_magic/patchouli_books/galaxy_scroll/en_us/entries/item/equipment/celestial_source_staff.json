@@ -1,0 +1,19 @@
+{
+    "name": "扬弃尘凡之杖",
+    "icon": "genesis_magic:celestial_source_staff",
+    "category": "genesis_magic:item/equipment",
+    "pages": [
+        {
+            "type": "patchouli:text",
+            "text": "由星源之力所铸而成的法杖。$(br)属性：$(li)+15%法术强度$(li)+25%星源法术强度$(li)+20%法术冷却缩减"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "recipepage"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "你紧握权杖，高举过顶。$(br)向世界展露你的意志。$(br)如牧者在给禽鸟播撒种子。$(br)最终，这无趣无聊的旧世将繁盛出新生。$(br)朽烂的尘凡之上终会绽放出璀璨的花朵。$(br)当生灵第一次睁开双眼，望向夜晚的天空时。$(br)看到的不止有深邃的暗与璀璨的星。$(br)还有那高远的，注定被意志所粉碎的苍穹。$(br)在那里，触及星辰的心灵终会与彼此相遇。"
+        }
+    ]
+}

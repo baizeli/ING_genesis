@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "X": {
+      "item": "genesis_magic:arcane_crystal"
+    },
+    "Y": {
+      "item": "irons_spellbooks:divine_pearl"
+    }
+  },
+  "pattern": [
+    "YXY",
+    "XYX",
+    "YXY"
+  ],
+  "result": {
+    "count": 2,
+    "item": "genesis_magic:holy_crystal"
+  },
+  "show_notification": true
+}

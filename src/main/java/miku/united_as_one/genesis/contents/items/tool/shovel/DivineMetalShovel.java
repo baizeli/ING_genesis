@@ -9,11 +9,11 @@ import java.util.List;
 
 public class DivineMetalShovel extends ShovelItem {
     public DivineMetalShovel(Tier tier, int attackDamage, float attackSpeed, Properties properties) {
-        super(tier, attackDamage, attackSpeed, properties);
+        super(tier, -tier.getAttackDamageBonus(), 0.0F, properties);
     }
 
     public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, @NotNull List<Component> pTooltipComponents, @NotNull TooltipFlag pIsAdvanced) {
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
-        pTooltipComponents.add(Component.translatable("tooltip.iron_spells_genesis.divine_metal.description_3"));
+        pTooltipComponents.add(Component.translatable("tooltip.genesis_magic.divine_metal.description_3"));
     }
 }

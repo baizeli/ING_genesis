@@ -45,7 +45,7 @@ public class FinalWhisper extends AbstractSpell {
     public List<MutableComponent> getUniqueInfo(int spellLevel, LivingEntity caster) {
         return List.of(Component.translatable("ui.irons_spellbooks.cooldown", Utils.timeFromTicks(getCooldownInTicks(CastSource.COMMAND, caster), 1)),
                 Component.translatable("ui.irons_spellbooks.damage", Utils.stringTruncation(getForceDamage(spellLevel, caster), 1)),
-                Component.translatable("ui.iron_spells_genesis.force_damage", Utils.stringTruncation(getForceDamage(spellLevel, caster), 1))
+                Component.translatable("ui.genesis_magic.force_damage", Utils.stringTruncation(getForceDamage(spellLevel, caster), 1))
                 );
     }
 
@@ -125,7 +125,7 @@ public class FinalWhisper extends AbstractSpell {
         } else if (!cancelled) {// 血量不够，取消施法
             if (entity instanceof ServerPlayer sp) {
                 sp.sendSystemMessage(
-                        Component.translatable("spell.iron_spells_genesis.final_whisper.low_health")
+                        Component.translatable("spell.genesis_magic.final_whisper.low_health")
                                 .withStyle(ChatFormatting.DARK_BLUE),
                         true
                 );

@@ -60,7 +60,7 @@ public class FateWedgeSpell extends CelestialSourceBaseSpell {
                 "ui.irons_spellbooks.effect_length",
                 Utils.timeFromTicks(getDuration(spellLevel, caster), 1)
             ),
-            Component.translatable("ui.iron_spells_genesis.max_damage_bonus", 50)
+            Component.translatable("ui.genesis_magic.max_damage_bonus", 50)
         );
     }
 

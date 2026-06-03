@@ -1,5 +1,6 @@
 package miku.united_as_one.genesis.contents.workbench.arcane;
 
+import miku.united_as_one.genesis.Genesis;
 import miku.united_as_one.genesis.registries.workbench.ModBlockEntities;
 import miku.united_as_one.genesis.registries.workbench.ModMenuTypes;
 import net.minecraft.core.BlockPos;
@@ -17,7 +18,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraftforge.network.NetworkHooks;
 import org.jetbrains.annotations.Nullable;
 
-import static miku.united_as_one.genesis.api.text.i18nUtil.translatableContainerName;
+import static miku.bai_ze_li.genesis.api.text.GenesisText.translatableContainerName;
 
 public class ArcaneWorkbenchBlock extends Block implements EntityBlock {
 
@@ -48,7 +49,7 @@ public class ArcaneWorkbenchBlock extends Block implements EntityBlock {
                                         containerId,
                                         playerInventory,
                                         (ArcaneWorkbenchBlockEntity) blockEntity),
-                        translatableContainerName("arcane_workbench")
+                        translatableContainerName(Genesis.MODID, "arcane_workbench")
                 );
                 NetworkHooks.openScreen((net.minecraft.server.level.ServerPlayer) player, menuProvider, pos);
             }

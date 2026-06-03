@@ -1,0 +1,36 @@
+{
+	"type": "genesis_magic:echo_of_decay",
+	"generator": {
+		"type": "minecraft:noise",
+		"settings": "genesis_magic:echo_of_decay",
+		"biome_source": {
+			"type": "minecraft:multi_noise",
+			"biomes": [
+				{
+					"biome": "genesis_magic:crimson_plains",
+					"parameters": {
+						"temperature": 0,
+						"humidity": 0,
+						"continentalness": 0,
+						"erosion": 0,
+						"weirdness": 0,
+						"depth": 1,
+						"offset": 0
+					}
+				},
+				{
+					"biome": "genesis_magic:deep_wastes",
+					"parameters": {
+						"temperature": 0,
+						"humidity": 0,
+						"continentalness": 0,
+						"erosion": 0,
+						"weirdness": 0,
+						"depth": -1,
+						"offset": 0
+					}
+				}
+			]
+		}
+	}
+}

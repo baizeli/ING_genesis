@@ -1,12 +1,15 @@
 package miku.united_as_one.genesis.client.renderer.projectile;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
+import miku.bai_ze_li.genesis.api.render.TrailRenderApi;
+import miku.bai_ze_li.genesis.api.render.TrailRenderStyle;
+import miku.bai_ze_li.genesis.api.render.shader.GenesisRenderType;
+import miku.united_as_one.genesis.Genesis;
+import miku.united_as_one.genesis.client.TrailRender;
 import miku.united_as_one.genesis.contents.entity.projectile.ThrownIron;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
@@ -15,74 +18,30 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Matrix4f;
-
-import java.util.List;
 
 public class ThrownIronRenderer extends EntityRenderer<ThrownIron> {
+    private static final ResourceLocation IRON_TEXTURE = new ResourceLocation("minecraft", "textures/item/iron_ingot.png");
+    private static final TrailRenderStyle IRON_TRAIL = TrailRenderStyle
+            .builder(Genesis.rl("textures/images/trail_stellar.png"), ThrownIronRenderer::trailColor)
+            .width(0.24F)
+            .alphaMultiplier(0.78F)
+            .emissive(true)
+            .headless(true)
+            .renderTypeProvider((style, texture) -> GenesisRenderType.delayedTrail(texture))
+            .build();
+
     public ThrownIronRenderer(EntityRendererProvider.Context context) {
         super(context);
     }
 
     @Override
-    public void render(ThrownIron entity, float yaw, float partialTicks, PoseStack poseStack, @NotNull MultiBufferSource bufferSource, int packedLight) {
-        List<Vec3> points = entity.trailPositions;
-
-        if (points.size() >= 3) {
-            poseStack.pushPose();
-            double renderX = Mth.lerp(partialTicks, entity.xOld, entity.getX());
-            double renderY = Mth.lerp(partialTicks, entity.yOld, entity.getY());
-            double renderZ = Mth.lerp(partialTicks, entity.zOld, entity.getZ());
-            poseStack.translate(-renderX, -renderY, -renderZ);
-
-            VertexConsumer vc = bufferSource.getBuffer(RenderType.lightning());
-            Matrix4f matrix = poseStack.last().pose();
-            Vec3 cameraPos = Minecraft.getInstance().gameRenderer.getMainCamera().getPosition();
-
-            for (int i = 0; i < points.size() - 2; i++) {
-                // 增加细分到 6，让拐弯更丝滑
-                int subdivisions = 6;
-                for (int j = 0; j < subdivisions; j++) {
-                    float t1 = (float) j / subdivisions;
-                    float t2 = (float) (j + 1) / subdivisions;
-
-                    Vec3 v1 = getBezier(points.get(i), points.get(i + 1), points.get(i + 2), t1);
-                    Vec3 v2 = getBezier(points.get(i), points.get(i + 1), points.get(i + 2), t2);
-
-                    // 整体进度系数 (0 = 末尾, 1 = 头部)
-                    float progress = (float) (i * subdivisions + j) / ((points.size() - 1) * subdivisions);
-
-                    // --- 动态宽度计算：头部 0.12f -> 末尾 0.0f ---
-                    float coreWidth = 0.05f * progress;
-                    float glowWidth = 0.18f * progress;
-
-                    // --- 向量计算 ---
-                    Vec3 segmentDir = v2.subtract(v1).normalize();
-                    Vec3 lookDir = cameraPos.subtract(v1).normalize();
-                    Vec3 sideVec = segmentDir.cross(lookDir);
-
-                    if (sideVec.lengthSqr() < 1.0E-4D) {
-                        sideVec = new Vec3(0, 1, 0);
-                    } else {
-                        sideVec = sideVec.normalize();
-                    }
-
-                    // --- 渲染逻辑 ---
-                    // 1. 外层：几乎透明且极淡
-                    int glowAlpha = (int) (progress * 60); // 调低透明度上限
-                    drawBillboardSegment(matrix, vc, v1, v2, sideVec, glowWidth, 255, 255, 255, glowAlpha);
-
-                    // 2. 内层：正常亮白色，但也随长度略微变淡
-                    int coreAlpha = (int) (progress * 255);
-                    drawBillboardSegment(matrix, vc, v1, v2, sideVec, coreWidth, 255, 255, 255, coreAlpha);
-                }
-            }
-            poseStack.popPose();
+    public void render(ThrownIron entity, float yaw, float partialTicks, PoseStack poseStack,
+                       @NotNull MultiBufferSource bufferSource, int packedLight) {
+        if (!TrailRender.shouldDeferWorldEffects()) {
+            renderTrailOnly(entity, partialTicks, poseStack, bufferSource);
         }
 
-        // 渲染铁锭图标
         poseStack.pushPose();
         poseStack.mulPose(this.entityRenderDispatcher.cameraOrientation());
         poseStack.mulPose(Axis.YP.rotationDegrees(180.0F));
@@ -96,25 +55,24 @@ public class ThrownIronRenderer extends EntityRenderer<ThrownIron> {
         super.render(entity, yaw, partialTicks, poseStack, bufferSource, packedLight);
     }
 
-    private Vec3 getBezier(Vec3 p0, Vec3 p1, Vec3 p2, float t) {
-        double x = Math.pow(1 - t, 2) * p0.x + 2 * (1 - t) * t * p1.x + Math.pow(t, 2) * p2.x;
-        double y = Math.pow(1 - t, 2) * p0.y + 2 * (1 - t) * t * p1.y + Math.pow(t, 2) * p2.y;
-        double z = Math.pow(1 - t, 2) * p0.z + 2 * (1 - t) * t * p1.z + Math.pow(t, 2) * p2.z;
-        return new Vec3(x, y, z);
+    public static void renderTrailOnly(ThrownIron entity, float partialTicks, PoseStack poseStack,
+                                       MultiBufferSource buffer) {
+        TrailRenderApi.renderTrail(entity.getTrailPositions(partialTicks), poseStack, buffer, IRON_TRAIL,
+                entity.tickCount + partialTicks, entity.getId());
     }
 
-    private void drawBillboardSegment(Matrix4f matrix, VertexConsumer vc, Vec3 v1, Vec3 v2, Vec3 side, float w, int r, int g, int b, int a) {
-        float sx = (float) (side.x * w);
-        float sy = (float) (side.y * w);
-        float sz = (float) (side.z * w);
-
-        vc.vertex(matrix, (float)v1.x + sx, (float)v1.y + sy, (float)v1.z + sz).color(r, g, b, a).endVertex();
-        vc.vertex(matrix, (float)v2.x + sx, (float)v2.y + sy, (float)v2.z + sz).color(r, g, b, a).endVertex();
-        vc.vertex(matrix, (float)v2.x - sx, (float)v2.y - sy, (float)v2.z - sz).color(r, g, b, a).endVertex();
-        vc.vertex(matrix, (float)v1.x - sx, (float)v1.y - sy, (float)v1.z - sz).color(r, g, b, a).endVertex();
+    private static float[] trailColor(float progress, float time, int entityId) {
+        float pulse = 0.92F + 0.08F * Mth.sin(time * 0.24F + progress * Mth.TWO_PI + entityId);
+        float shade = Mth.lerp(progress, 0.62F, 1.0F) * pulse;
+        return new float[]{
+                Mth.clamp(shade, 0.0F, 1.0F),
+                Mth.clamp(shade, 0.0F, 1.0F),
+                Mth.clamp(shade * 0.96F, 0.0F, 1.0F)
+        };
     }
 
-    @Override public @NotNull ResourceLocation getTextureLocation(@NotNull ThrownIron entity) {
-        return new ResourceLocation("minecraft", "textures/item/iron_ingot.png");
+    @Override
+    public @NotNull ResourceLocation getTextureLocation(@NotNull ThrownIron entity) {
+        return IRON_TEXTURE;
     }
 }

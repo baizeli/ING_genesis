@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "genesis_magic:block/stripped_quietness_log",
+    "side": "genesis_magic:block/stripped_quietness_log"
+  }
+}
