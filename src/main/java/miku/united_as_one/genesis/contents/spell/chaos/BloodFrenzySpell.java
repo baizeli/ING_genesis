@@ -53,7 +53,7 @@ public class BloodFrenzySpell extends ChaosBaseSpell {
     public List<MutableComponent> getUniqueInfo(int spellLevel, LivingEntity caster) {
         return List.of(
             Component.translatable(
-                "ui.iron_spells_genesis.damage_multiplier", 
+                "ui.genesis_magic.damage_multiplier", 
                 Utils.stringTruncation(getDamageMultiplier(spellLevel, caster), 1)
             ),
             Component.translatable(

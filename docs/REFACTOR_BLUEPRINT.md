@@ -406,7 +406,7 @@ Exit criteria:
 
 Exit criteria:
 
-- `mixins.iron_spells_genesis.json` is explainable feature by feature.
+- `mixins.genesis_magic.json` is explainable feature by feature.
 - Each mixin has a surviving reason.
 
 ### Phase 6: Resources And Datagen

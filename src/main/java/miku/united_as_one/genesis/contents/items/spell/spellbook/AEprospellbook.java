@@ -17,6 +17,6 @@ public class AEprospellbook extends SpellBook {
 
     public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, @NotNull List<Component> pTooltipComponents, @NotNull TooltipFlag pIsAdvanced) {
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
-        pTooltipComponents.add(Component.translatable("tooltip.iron_spells_genesis.disk_spell_book.description"));
+        pTooltipComponents.add(Component.translatable("tooltip.genesis_magic.disk_spell_book.description"));
     }
 }

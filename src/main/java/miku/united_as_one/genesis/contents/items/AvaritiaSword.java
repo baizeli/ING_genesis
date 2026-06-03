@@ -145,7 +145,7 @@ public class AvaritiaSword extends SwordItem
 
     @Override
     public Component getName(ItemStack p_41458_) {
-        return Component.translatable("item.iron_spells_genesis.avaritia_infinity_sword");
+        return Component.translatable("item.genesis_magic.avaritia_infinity_sword");
     }
 
     @Override

@@ -13,7 +13,7 @@ import java.util.OptionalInt;
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin {
     @Inject(method = "getMaxDamage", at = @At("HEAD"), cancellable = true)
-    private void iron_spells_genesis$getMaxDamage(CallbackInfoReturnable<Integer> cir) {
+    private void genesis_magic$getMaxDamage(CallbackInfoReturnable<Integer> cir) {
         OptionalInt durability = EquipmentStatsManager.getConfiguredDurability(self());
         if (durability.isPresent()) {
             cir.setReturnValue(durability.getAsInt());
@@ -21,7 +21,7 @@ public abstract class ItemStackMixin {
     }
 
     @Inject(method = "isDamageableItem", at = @At("HEAD"), cancellable = true)
-    private void iron_spells_genesis$isDamageableItem(CallbackInfoReturnable<Boolean> cir) {
+    private void genesis_magic$isDamageableItem(CallbackInfoReturnable<Boolean> cir) {
         OptionalInt durability = EquipmentStatsManager.getConfiguredDurability(self());
         if (durability.isEmpty()) {
             return;

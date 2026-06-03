@@ -55,7 +55,7 @@ public class Configuration {
         public final double min, max;
 
         public ConfigEntry(String major, String sub, String key, ForgeConfigSpec.ConfigValue<T> val, T def, double min, double max) {
-            this.major = major; this.sub = sub; this.key = "iron_spells_genesis.config." + key;
+            this.major = major; this.sub = sub; this.key = "genesis_magic.config." + key;
             this.specValue = val; this.defaultValue = def;
             this.min = min; this.max = max;
         }

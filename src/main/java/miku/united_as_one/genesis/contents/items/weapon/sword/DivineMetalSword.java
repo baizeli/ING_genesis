@@ -14,6 +14,6 @@ public class DivineMetalSword extends SwordItem {
 
     public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, @NotNull List<Component> pTooltipComponents, @NotNull TooltipFlag pIsAdvanced) {
         super.appendHoverText(pStack, pLevel, pTooltipComponents, pIsAdvanced);
-        pTooltipComponents.add(Component.translatable("tooltip.iron_spells_genesis.divine_metal.description_1"));
+        pTooltipComponents.add(Component.translatable("tooltip.genesis_magic.divine_metal.description_1"));
     }
 }

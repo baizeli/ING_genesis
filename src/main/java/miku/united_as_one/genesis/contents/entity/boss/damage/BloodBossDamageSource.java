@@ -18,6 +18,6 @@ public class BloodBossDamageSource extends DamageSource {
 
     public @NotNull Component getLocalizedDeathMessage(@NotNull LivingEntity livingEntity) {
         Component component = this.causingEntity == null ? Objects.requireNonNull(this.directEntity).getDisplayName() : this.causingEntity.getDisplayName();
-        return Component.translatable("death.attack.iron_spells_genesis.blood_boss", livingEntity.getDisplayName(), component);
+        return Component.translatable("death.attack.genesis_magic.blood_boss", livingEntity.getDisplayName(), component);
     }
 }

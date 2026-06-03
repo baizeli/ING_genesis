@@ -156,7 +156,7 @@ public class ArcaneCauldronRenderer implements BlockEntityRenderer<ArcaneCauldro
         }
 
         List<Component> text = new ArrayList<>();
-        text.add(Component.translatable("block.iron_spells_genesis.arcane_cauldron").withStyle(ChatFormatting.UNDERLINE, ChatFormatting.WHITE));
+        text.add(Component.translatable("block.genesis_magic.arcane_cauldron").withStyle(ChatFormatting.UNDERLINE, ChatFormatting.WHITE));
         List<FluidStack> fluids = cauldron.fluidInventory.fluids();
         if (fluids.isEmpty()) {
             text.add(Component.translatable("ui.irons_spellbooks.empty").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC));

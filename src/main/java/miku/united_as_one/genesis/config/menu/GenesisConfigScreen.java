@@ -17,7 +17,7 @@ import java.util.Map;
 public class GenesisConfigScreen extends Screen {
     protected final Screen parent;
     protected final ForgeConfigSpec spec;
-    protected final String modid = "iron_spells_genesis";
+    protected final String modid = "genesis_magic";
 
     protected final int leftWidth = 80;    // 左侧侧边栏宽度
     protected final int bottomHeight = 30; // 底部按钮区高度
@@ -53,10 +53,10 @@ public class GenesisConfigScreen extends Screen {
 
         for (Configuration.ConfigEntry<?> entry : entries) {
             MajorCategory major = majorMap.computeIfAbsent(entry.major, k ->
-                    createMajor("iron_spells_genesis.category." + k));
+                    createMajor("genesis_magic.category." + k));
             String groupKey = entry.major + "_" + entry.sub;
             GroupValue group = groupMap.computeIfAbsent(groupKey, k ->
-                    major.addSub("iron_spells_genesis.config.group." + entry.sub));
+                    major.addSub("genesis_magic.config.group." + entry.sub));
             if (entry.specValue instanceof ForgeConfigSpec.BooleanValue) {
                 group.add((ForgeConfigSpec.BooleanValue) entry.specValue, entry.key);
             } else if (entry.specValue instanceof ForgeConfigSpec.DoubleValue) {

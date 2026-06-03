@@ -18,7 +18,6 @@ import miku.united_as_one.genesis.contents.entity.spell.celestial_source.*;
 import miku.united_as_one.genesis.contents.entity.spell.celestial_source.blade_works.*;
 import miku.united_as_one.genesis.contents.entity.spell.fire.*;
 import miku.united_as_one.genesis.Genesis;
-import miku.united_as_one.genesis.contents.entity.test.BaiZeLiEntity;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -193,14 +192,6 @@ public class EntityRegistry {
     public static final RegistryObject<EntityType<WardenSpellcaster>> WARDEN_SPELLCASTER =
             register("warden_spellcaster", EntityType.Builder.of(WardenSpellcaster::new, MobCategory.MONSTER)
                     .sized(0.9F, 2.9F).fireImmune());
-
-    public static final RegistryObject<EntityType<BaiZeLiEntity>> BAI_ZE_LI = ENTITY_TYPES.register("bai_ze_li",
-            () -> EntityType.Builder.<BaiZeLiEntity>of(BaiZeLiEntity::new, MobCategory.MONSTER)
-                    .sized(0.6f, 1.8f)
-                    .clientTrackingRange(64)
-                    .updateInterval(1)
-                    .build("bai_ze_li"));
-
 
     public static final RegistryObject<EntityType<GungnirDaggerEntity>> GUNGNIR_DAGGER_PROJECTILE = ENTITY_TYPES.register("gungnir_dagger",
             () -> EntityType.Builder.of(

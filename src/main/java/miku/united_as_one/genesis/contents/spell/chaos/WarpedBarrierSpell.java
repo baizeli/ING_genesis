@@ -42,8 +42,8 @@ public class WarpedBarrierSpell extends ChaosBaseSpell {
 
     @Override
     public List<MutableComponent> getUniqueInfo(int spellLevel, LivingEntity caster) {
-        return List.of(Component.translatable("ui.iron_spells_genesis.health_cost_percent", 90, 1),
-                Component.translatable("ui.iron_spells_genesis.health_conversion_efficiency", Utils.stringTruncation(getSpellPower(spellLevel, caster), 1)),
+        return List.of(Component.translatable("ui.genesis_magic.health_cost_percent", 90, 1),
+                Component.translatable("ui.genesis_magic.health_conversion_efficiency", Utils.stringTruncation(getSpellPower(spellLevel, caster), 1)),
                 Component.translatable("ui.irons_spellbooks.effect_length", Utils.timeFromTicks(getEffectDuration(spellLevel, caster), 1), 1)
         );
     }

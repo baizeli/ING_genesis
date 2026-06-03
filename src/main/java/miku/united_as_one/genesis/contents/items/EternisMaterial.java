@@ -33,7 +33,7 @@ public final class EternisMaterial extends GenesisPurpleTooltipParticleItem
 
     @GenesisTooltipTextEffect(
             preset = Preset.RAINBOW_GRADIENT,
-            translation = "item.iron_spells_genesis.violet_galaxy_ingot1"
+            translation = "item.genesis_magic.violet_galaxy_ingot1"
     )
     private static final class VioletGalaxyIngotText {
         private VioletGalaxyIngotText() {

@@ -42,7 +42,7 @@ public class ShieldRenderLayer extends RenderLayer<AbstractClientPlayer, PlayerM
             // 初始化缓存
             if (this.cachedQuads == null) {
                 TextureAtlasSprite sprite = mc.getTextureAtlas(TextureAtlas.LOCATION_BLOCKS)
-                        .apply(ResourceLocation.fromNamespaceAndPath("iron_spells_genesis", "item/shield"));
+                        .apply(ResourceLocation.fromNamespaceAndPath("genesis_magic", "item/shield"));
                 this.cachedQuads = new ArrayList<>();
                 List<BlockElement> unbaked = new ItemModelGenerator().processFrames(0, "layer0", sprite.contents());
                 FaceBakery bakery = new FaceBakery();

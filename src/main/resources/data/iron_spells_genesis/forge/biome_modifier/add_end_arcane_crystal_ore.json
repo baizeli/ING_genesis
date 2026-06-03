@@ -1,6 +1,0 @@
-{
-  "type": "forge:add_features",
-  "biomes": "minecraft:end_highlands",
-  "features": "iron_spells_genesis:ore_end_arcane_crystal_placement",
-  "step": "underground_ores"
-}

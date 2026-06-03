@@ -1,11 +1,11 @@
 {
   "values": [
-    "iron_spells_genesis:arcane_crystal_block",
-    "iron_spells_genesis:fear_crystals",
-    "iron_spells_genesis:arcane_crystal_ore",
-    "iron_spells_genesis:deepslate_arcane_crystal_ore",
-    "iron_spells_genesis:nether_arcane_crystal_ore",
-    "iron_spells_genesis:end_arcane_crystal_ore",
-    "iron_spells_genesis:celestial_source_block"
+    "genesis_magic:arcane_crystal_block",
+    "genesis_magic:fear_crystals",
+    "genesis_magic:arcane_crystal_ore",
+    "genesis_magic:deepslate_arcane_crystal_ore",
+    "genesis_magic:nether_arcane_crystal_ore",
+    "genesis_magic:end_arcane_crystal_ore",
+    "genesis_magic:celestial_source_block"
   ]
 }

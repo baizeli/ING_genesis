@@ -44,7 +44,7 @@ public class ArcaneCauldronRecipeCategory implements IRecipeCategory<ArcaneCauld
 
     @Override
     public Component getTitle() {
-        return Component.translatable("block.iron_spells_genesis.arcane_cauldron");
+        return Component.translatable("block.genesis_magic.arcane_cauldron");
     }
 
     @Override
@@ -66,7 +66,7 @@ public class ArcaneCauldronRecipeCategory implements IRecipeCategory<ArcaneCauld
             var slot = builder.addSlot(RecipeIngredientRole.INPUT, fluidX, fluidY + i * 18)
                     .setStandardSlotBackground()
                     .setFluidRenderer(Math.max(1000, fluid.getAmount()), false, 16, 16)
-                    .addTooltipCallback((recipeSlotView, tooltip) -> tooltip.add(Component.translatable("jei.iron_spells_genesis.arcane_cauldron.fluid", fluid.getAmount())));
+                    .addTooltipCallback((recipeSlotView, tooltip) -> tooltip.add(Component.translatable("jei.genesis_magic.arcane_cauldron.fluid", fluid.getAmount())));
 
             if (fluid.hasTag()) {
                 slot.addFluidStack(fluid.getFluid(), fluid.getAmount(), fluid.getTag());
@@ -87,7 +87,7 @@ public class ArcaneCauldronRecipeCategory implements IRecipeCategory<ArcaneCauld
         builder.addSlot(RecipeIngredientRole.INPUT, 100, 52)
                 .setStandardSlotBackground()
                 .addItemStack(new ItemStack(ARCANE_ESSENCE.get(), Math.min(recipe.getEssenceCost(), 64)))
-                .addTooltipCallback((recipeSlotView, tooltip) -> tooltip.add(Component.translatable("jei.iron_spells_genesis.arcane_cauldron.essence", recipe.getEssenceCost())));
+                .addTooltipCallback((recipeSlotView, tooltip) -> tooltip.add(Component.translatable("jei.genesis_magic.arcane_cauldron.essence", recipe.getEssenceCost())));
 
         builder.addSlot(RecipeIngredientRole.OUTPUT, 142, 41)
                 .setOutputSlotBackground()

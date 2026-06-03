@@ -10,7 +10,6 @@ import miku.united_as_one.genesis.client.renderer.WSRenderer;
 import miku.united_as_one.genesis.client.renderer.entity.boss.*;
 import miku.united_as_one.genesis.client.renderer.entity.laser.DeathLaserRenderer;
 import miku.united_as_one.genesis.client.renderer.entity.spell.celestial_source.DeadStarDecreeCometRenderer;
-import miku.united_as_one.genesis.client.renderer.entity.test.BaiZeLiRenderer;
 import miku.united_as_one.genesis.client.renderer.projectile.ThrownIronRenderer;
 import miku.united_as_one.genesis.contents.entity.LightningBoltRenderer;
 import miku.united_as_one.genesis.contents.entity.NyanCatRenderer;
@@ -59,7 +58,6 @@ public class RenderRegistry {
         event.registerEntityRenderer(EntityRegistry.BLOOD_DAGGER_PROJECTILE.get(), BloodDaggerRenderer::new);
         event.registerEntityRenderer(EntityRegistry.BLOOD_FIELD.get(), NoopRenderer::new);
         event.registerEntityRenderer(EntityRegistry.TREMOR_AOE_ENTITY.get(), NoopRenderer::new);
-        event.registerEntityRenderer(EntityRegistry.BAI_ZE_LI.get(), BaiZeLiRenderer::new);
         event.registerEntityRenderer(EntityRegistry.GUNGNIR_DAGGER_PROJECTILE.get(), GungnirDaggerRenderer::new);
         event.registerEntityRenderer(EntityRegistry.GUNGNIR_CHAIN_LIGHTNING_PROJECTILE.get(), NoopRenderer::new);
         event.registerEntityRenderer(EntityRegistry.WARDEN_SPELLCASTER.get(), WSRenderer::new);

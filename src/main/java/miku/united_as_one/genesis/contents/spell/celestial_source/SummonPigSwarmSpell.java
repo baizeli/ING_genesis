@@ -82,7 +82,7 @@ public class SummonPigSwarmSpell extends CelestialSourceBaseSpell {
                         entity.getZ() + Utils.random.nextGaussian() * 2d
                     );
 
-                    pig.setCustomName(Component.translatable("iron_spells_genesis.summoned_pig_name"));
+                    pig.setCustomName(Component.translatable("genesis_magic.summoned_pig_name"));
                     serverLevel.addFreshEntity(pig);
                 }
             }

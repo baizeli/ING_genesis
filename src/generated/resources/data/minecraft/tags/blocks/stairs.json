@@ -1,15 +1,15 @@
 {
   "values": [
-    "iron_spells_genesis:weathered_sandstone_stairs",
-    "iron_spells_genesis:weathered_stone_bricks_stairs",
-    "iron_spells_genesis:heart_sculpting_stairs",
-    "iron_spells_genesis:fire_stone_stairs",
-    "iron_spells_genesis:deep_fear_stone_stairs",
-    "iron_spells_genesis:smooth_deep_fear_stone_stairs",
-    "iron_spells_genesis:deep_fear_stone_bricks_stairs",
-    "iron_spells_genesis:cracked_deep_fear_stone_bricks_stairs",
-    "iron_spells_genesis:sway_stone_stairs",
-    "iron_spells_genesis:sway_stairs",
-    "iron_spells_genesis:quietness_stairs"
+    "genesis_magic:weathered_sandstone_stairs",
+    "genesis_magic:weathered_stone_bricks_stairs",
+    "genesis_magic:heart_sculpting_stairs",
+    "genesis_magic:fire_stone_stairs",
+    "genesis_magic:deep_fear_stone_stairs",
+    "genesis_magic:smooth_deep_fear_stone_stairs",
+    "genesis_magic:deep_fear_stone_bricks_stairs",
+    "genesis_magic:cracked_deep_fear_stone_bricks_stairs",
+    "genesis_magic:sway_stone_stairs",
+    "genesis_magic:sway_stairs",
+    "genesis_magic:quietness_stairs"
   ]
 }

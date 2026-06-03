@@ -1,7 +1,0 @@
-{
-    "name": "装备",
-    "description": "一些神圣亦或者亵渎、疯狂的材料制作的装备。",
-    "icon": "iron_spells_genesis:celestial_source_spell_book",
-    "sortnum": 2,
-    "parent": "iron_spells_genesis:item"
-}

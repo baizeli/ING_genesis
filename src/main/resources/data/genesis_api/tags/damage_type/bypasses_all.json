@@ -1,6 +1,6 @@
 {
   "replace": false,
   "values": [
-    "iron_spells_genesis:celestial_source_magic"
+    "genesis_magic:celestial_source_magic"
   ]
 }

@@ -56,7 +56,7 @@ public class PerfectEvasionSpell extends CelestialSourceBaseSpell {
                 "ui.irons_spellbooks.effect_length", 
                 Utils.timeFromTicks(getDuration(spellLevel, caster), 1)
             ),
-            Component.translatable("ui.iron_spells_genesis.perfect_evasion.chance", 75)
+            Component.translatable("ui.genesis_magic.perfect_evasion.chance", 75)
         );
     }
 

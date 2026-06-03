@@ -1,6 +1,6 @@
 {
   "replace": false,
   "values": [
-    "iron_spells_genesis:chaos_magic"
+    "genesis_magic:chaos_magic"
   ]
 }

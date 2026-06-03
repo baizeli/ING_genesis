@@ -58,7 +58,7 @@ public class UnparalleledSpell extends CelestialSourceBaseSpell {
                 Utils.timeFromTicks(getDuration(spellLevel, caster), 1)
             ),
             Component.translatable(
-                "ui.iron_spells_genesis.spell_power", 
+                "ui.genesis_magic.spell_power", 
                 Utils.stringTruncation(UnparalleledEvent.SPELL_POWER_BONUS * 100, 1)
             ),
             Component.translatable(
@@ -66,7 +66,7 @@ public class UnparalleledSpell extends CelestialSourceBaseSpell {
                 Utils.stringTruncation(UnparalleledEvent.DAMAGE_BONUS * 100, 1)
             ),
             Component.translatable(
-                "ui.iron_spells_genesis.movement_speed", 
+                "ui.genesis_magic.movement_speed", 
                 Utils.stringTruncation(UnparalleledEvent.SPEED_BONUS * 100, 1)
             )
         );

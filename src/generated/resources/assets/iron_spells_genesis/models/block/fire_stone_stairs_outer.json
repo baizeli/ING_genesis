@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/outer_stairs",
-  "textures": {
-    "bottom": "iron_spells_genesis:block/fire_stone",
-    "side": "iron_spells_genesis:block/fire_stone",
-    "top": "iron_spells_genesis:block/fire_stone"
-  }
-}

@@ -18,6 +18,6 @@ extends MobRenderer<E, WardenSpellcasterModel<E>>
 
     public ResourceLocation getTextureLocation(E e)
     {
-        return new ResourceLocation("iron_spells_genesis:textures/entity/ws.png");
+        return new ResourceLocation("genesis_magic:textures/entity/ws.png");
     }
 }

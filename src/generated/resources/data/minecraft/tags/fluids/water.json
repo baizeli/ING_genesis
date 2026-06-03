@@ -1,10 +1,10 @@
 {
   "values": [
-    "iron_spells_genesis:flowing_source_fluid",
-    "iron_spells_genesis:source_fluid",
-    "iron_spells_genesis:flowing_blackwater_fluid",
-    "iron_spells_genesis:blackwater_fluid",
-    "iron_spells_genesis:flowing_blood_fluid",
-    "iron_spells_genesis:blood_fluid"
+    "genesis_magic:flowing_source_fluid",
+    "genesis_magic:source_fluid",
+    "genesis_magic:flowing_blackwater_fluid",
+    "genesis_magic:blackwater_fluid",
+    "genesis_magic:flowing_blood_fluid",
+    "genesis_magic:blood_fluid"
   ]
 }

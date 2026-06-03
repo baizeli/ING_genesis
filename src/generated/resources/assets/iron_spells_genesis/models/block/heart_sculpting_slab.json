@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/slab",
-  "textures": {
-    "bottom": "iron_spells_genesis:block/heart_sculpting",
-    "side": "iron_spells_genesis:block/heart_sculpting",
-    "top": "iron_spells_genesis:block/heart_sculpting"
-  }
-}

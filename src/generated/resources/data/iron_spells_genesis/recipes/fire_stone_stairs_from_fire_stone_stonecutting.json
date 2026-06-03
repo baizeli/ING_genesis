@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "count": 1,
-  "ingredient": {
-    "item": "iron_spells_genesis:fire_stone"
-  },
-  "result": "iron_spells_genesis:fire_stone_stairs"
-}

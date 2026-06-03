@@ -2,7 +2,7 @@
 
 GenesisLib 的物品模型星空效果由两部分组成：
 
-- 物品模型使用 `iron_spells_genesis:cosmic` loader，并提供 mask 贴图。
+- 物品模型使用 `genesis_magic:cosmic` loader，并提供 mask 贴图。
 - 通过数据配置或注解给物品注册 `GenesisItemShaderEffect`。
 
 只有第二步没有用，模型必须先接入 cosmic loader，否则 shader 不会参与渲染。
@@ -15,11 +15,11 @@ GenesisLib 的物品模型星空效果由两部分组成：
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "iron_spells_genesis:item/your_item"
+    "layer0": "genesis_magic:item/your_item"
   },
-  "loader": "iron_spells_genesis:cosmic",
+  "loader": "genesis_magic:cosmic",
   "cosmic": {
-    "mask": "iron_spells_genesis:item/mask/your_item_mask"
+    "mask": "genesis_magic:item/mask/your_item_mask"
   }
 }
 ```
@@ -33,14 +33,14 @@ GenesisLib 的物品模型星空效果由两部分组成：
 数据配置放在本体配置数据目录：
 
 ```text
-src/main/resources/data/iron_spells_genesis/iron_spells_genesis_config/item_shader_effects/
+src/main/resources/data/genesis_magic/genesis_magic_config/item_shader_effects/
 ```
 
 文件名对应物品 id。比如：
 
 ```text
-infinity_sword.json -> iron_spells_genesis:infinity_sword
-violet_galaxy_ingot.json -> iron_spells_genesis:violet_galaxy_ingot
+infinity_sword.json -> genesis_magic:infinity_sword
+violet_galaxy_ingot.json -> genesis_magic:violet_galaxy_ingot
 ```
 
 配置格式：
@@ -189,10 +189,10 @@ GenesisAnnotations.registerCosmicItemEffect(ItemRegistry.YOUR_ITEM.get(), YourAn
 
 如果物品没有星空效果，按顺序检查：
 
-1. 物品模型是否有 `"loader": "iron_spells_genesis:cosmic"`。
+1. 物品模型是否有 `"loader": "genesis_magic:cosmic"`。
 2. `cosmic.mask` 指向的 mask 贴图是否存在。
 3. 数据配置文件名是否和物品 id path 一致。
-4. 数据配置是否在 `data/iron_spells_genesis/iron_spells_genesis_config/item_shader_effects/`。
+4. 数据配置是否在 `data/genesis_magic/genesis_magic_config/item_shader_effects/`。
 5. 注解方式是否调用了 `GenesisAnnotations.registerCosmicItemEffect(...)`。
 6. 客户端日志里是否成功注册了 `genesis_api:cosmic` shader。
 
